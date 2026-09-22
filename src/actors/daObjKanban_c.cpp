@@ -76,7 +76,7 @@ extern void _ZN9ModelBase7SetFileEP8BMD_Fileii(char *self, void *file, int a, in
 extern int _ZN6Player12GetTalkStateEv(void *thisp);
 extern int _ZN6Player9StartTalkER7fBase_cb(void *actor, void *self, int b);
 extern void _ZN6Player12ShowMessage2ER7fBase_cjPK7Vector3hh(void *actor, void *self, unsigned int a, Vector3 *pos, unsigned int b, unsigned int c);
-extern int func_ov002_020bec9c(void *c, unsigned int a, int b, int d, unsigned short e);
+extern void func_ov002_020bec9c(void *c, unsigned int a, int b, int d, unsigned short e);
 
 }
 

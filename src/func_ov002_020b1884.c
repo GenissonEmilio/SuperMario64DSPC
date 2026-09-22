@@ -1,7 +1,7 @@
 extern int _ZN8dActor_c24KillAndTrackInDeathTableEv(char*);
 extern int _ZN5Sound9PlayBank3EjRK7Vector3(unsigned int, void*);
 extern void GiveCoins(int idx, int amount);
-extern int _ZN6Player4HealEi(char*, int);
+extern void _ZN6Player4HealEi(char*, int);
 void func_ov002_020b1884(char* c, char* r4){
   *(short*)(c+0x3a8)=0;
   _ZN8dActor_c24KillAndTrackInDeathTableEv(c);

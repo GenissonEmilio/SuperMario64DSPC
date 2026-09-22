@@ -1484,7 +1484,7 @@ src/_ZN5Sound22LoadAndSetMusic_Layer2Ej.cpp:
     complete
     .text start:0x02012940 end:0x02012998
 
-src/_ZN5Sound8EndMusicEjj.cpp:
+src/_ZN5Sound8EndMusicEj.cpp:
     complete
     .text start:0x02012998 end:0x02012a68
 

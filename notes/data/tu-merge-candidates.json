@@ -11419,7 +11419,7 @@
     "src/func_02012860.c",
     "src/_ZN5Sound22StopLoadedMusic_Layer2Ev.cpp",
     "src/_ZN5Sound22LoadAndSetMusic_Layer2Ej.cpp",
-    "src/_ZN5Sound8EndMusicEjj.cpp",
+    "src/_ZN5Sound8EndMusicEj.cpp",
     "src/_ZN5Sound8SetMusicEjj.cpp",
     "src/_ZN5Sound22StopLoadedMusic_Layer3Ev.cpp",
     "src/_ZN5Sound22LoadAndSetMusic_Layer3Ej.cpp",

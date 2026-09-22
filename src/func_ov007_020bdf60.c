@@ -1,4 +1,4 @@
-extern void func_0204fa2c(char* p, int v);
+extern void func_0204fa2c(int* p, int v);
 extern void func_0204f934(char* p);
 extern void func_ov007_020c3d1c(char* p);
 extern char* data_ov007_02104bbc;
@@ -9,7 +9,7 @@ void func_ov007_020bdf60(void){
   int off = 0;
   for (; i < 0x39; i++, off += 4) {
     if (((int*)data_ov007_02104bbc)[i] != 0) {
-      func_0204fa2c(data_ov007_02104bbc + off, 5);
+      func_0204fa2c((int *)(data_ov007_02104bbc + off), 5);
     }
     func_0204f934(data_ov007_02104bbc + off);
   }

@@ -1082,7 +1082,7 @@
     "src/_ZN5Sound4PlayEjjRK7Vector3.cpp",
     "src/_ZN5Sound6Play2DEjj.cpp",
     "src/_ZN5Sound6Player19SetPlayableSeqCountEii.cpp",
-    "src/_ZN5Sound8EndMusicEjj.cpp",
+    "src/_ZN5Sound8EndMusicEj.cpp",
     "src/_ZN5Sound8PlayLongEjjjRK7Vector3s.cpp",
     "src/_ZN5Sound8SetMusicEjj.cpp",
     "src/_ZN5Spiny13OnTurnIntoEggER6Player.cpp",

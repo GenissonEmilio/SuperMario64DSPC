@@ -491,7 +491,7 @@ struct Player : dActor_c {
     int GetTalkState();
     int HasFinishedTalking();
     int HasNoCap();
-    int Heal(int amt);
+    void Heal(int amt);
     int IsAnim(unsigned int a);
     int IsBeingShotOutOfCannon();
     int IsCollectingCap();

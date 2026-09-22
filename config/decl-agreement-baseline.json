@@ -417,9 +417,6 @@
   "GiveCoins": {
    "src/func_ov002_020b1674.cpp": ["return:int"]
   },
-  "GiveHealth": {
-   "include/decl_common.h": ["return:int"]
-  },
   "HideArea": {
    "src/ChangeArea.c": ["arity:0"]
   },
@@ -4537,10 +4534,6 @@
    "src/actors/daObjFire_c.cpp": ["return:void"],
    "src/func_ov022_02112654.cpp": ["return:void"],
    "src/func_ov060_02116740.cpp": ["return:void"]
-  },
-  "_ZN6Player4HealEi": {
-   "src/func_ov002_020b1674.cpp": ["return:int"],
-   "src/func_ov002_020b1884.c": ["return:int"]
   },
   "_ZN6Player4HurtERK7Vector3j5Fix12IiEjjj": {
    "src/_ZN10BulletBill8BehaviorEv.cpp": ["param:#5 unsigned int", "param:#6 unsigned int", "param:#7 unsigned int", "return:void"],
@@ -13034,8 +13027,7 @@
    "src/_ZN5Sound22LoadAndSetMusic_Layer3Ej.cpp": ["param:#1 int", "param:#2 unsigned int", "return:void"],
    "src/_ZN5Sound22StopLoadedMusic_Layer2Ev.cpp": ["return:void"],
    "src/_ZN5Sound22StopLoadedMusic_Layer3Ev.cpp": ["return:void"],
-   "src/_ZN5Sound7PlaySubEjjj5Fix12IiEb.cpp": ["param:#1 unsigned int *", "param:#2 unsigned int", "return:void"],
-   "src/_ZN5Sound8EndMusicEjj.cpp": ["return:void"]
+   "src/_ZN5Sound7PlaySubEjjj5Fix12IiEb.cpp": ["param:#1 unsigned int *", "param:#2 unsigned int", "return:void"]
   },
   "func_02011e94": {
    "src/func_0201a3e4.c": ["return:void *"]
@@ -15282,9 +15274,6 @@
   "func_0204f364": {
    "src/func_0204f63c.cpp": ["return:void *"]
   },
-  "func_0204f5a0": {
-   "src/func_0204fa2c.c": ["arity:1", "return:int"]
-  },
   "func_0204f600": {
    "src/func_02051a98.c": ["arity:4", "return:void"],
    "src/func_02051bd0.c": ["arity:4"]
@@ -15345,20 +15334,6 @@
    "src/_ZN5Sound10PauseMusicEv.cpp": ["return:int"],
    "src/func_02011c54.c": ["return:int"],
    "src/func_02012dd0.c": ["return:int"]
-  },
-  "func_0204fa2c": {
-   "include/decl_common.h": ["arity:2"],
-   "src/_ZN5Sound22LoadAndSetMusic_Layer1Ei.cpp": ["arity:2", "return:void"],
-   "src/_ZN5Sound22StopLoadedMusic_Layer1Ej.cpp": ["arity:2", "return:void"],
-   "src/_ZN5Sound22StopLoadedMusic_Layer2Ev.cpp": ["arity:2", "return:void"],
-   "src/_ZN5Sound22StopLoadedMusic_Layer3Ev.cpp": ["arity:2", "return:void"],
-   "src/_ZN5Sound8EndMusicEjj.cpp": ["arity:2", "return:void"],
-   "src/func_020132d8.cpp": ["arity:2", "return:void"],
-   "src/func_02048af4.c": ["arity:2", "return:void"],
-   "src/func_02048c30.c": ["arity:2", "return:void"],
-   "src/func_ov007_020bd9e4.c": ["arity:2", "return:void"],
-   "src/func_ov007_020bde70.c": ["arity:2", "return:void"],
-   "src/func_ov007_020bdf60.c": ["arity:2", "return:void"]
   },
   "func_0204fa3c": {
    "src/func_02052008.c": ["param:#2 int", "param:#3 int"]

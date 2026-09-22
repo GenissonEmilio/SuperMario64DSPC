@@ -1,94 +1,17 @@
 //cpp
-/* Player -- ov002.  Reconstructed translation unit: ROM ordinals 0..300 of the
- * contiguous linker run 0x020bd828..0x020e6a08, i.e. 0x020bd828..0x020cfea4, 301 functions.
+/* Player power-ups, movement, animation and interactions.
+ * This partial translation unit covers ov002:0x020bd828..0x020cfea4.
+ * The legacy entry points retain their parameter boundaries while using the
+ * existing Player fields where their types describe the accesses.
  *
- * Assembled from the 301 one-function legacy sources listed at the foot of the
- * file.  Each member keeps its OWN declarations, inside its own body: mwccarm
- * 2004/b56 gives a block-scope declaration inside an `extern "C"` region C
- * linkage (measured), so 301 independently-recovered views of one ROM symbol
- * coexist without one having to be chosen over the others, and no call site
- * had to be rewritten to fit a merged spelling.  Only what a function body
- * cannot hold -- a namespace, a class with static or declared-but-undefined
- * members, a type named in a member's own signature -- is hoisted below, and
- * those tags are made unique.
- *
- * THREE MORE SHAPES ARE HOISTED FOR THE HOST FRONT END, not for mwccarm.  A
- * body may not declare `extern` with a function-local class type, and every
- * virtual of a local class must be defined in that same body; mwccarm accepts
- * both, C++ does not ([basic.link]: a local class has no linkage), and no host
- * switch reaches either -- `/permissive` was probed and changes nothing.  So
- * the nine plain shapes an extern named, and the two shadow scaffolds whose
- * virtuals are declared and never defined, sit in the block below with unique
- * tags; the five `State` placeholders resolve to Player::State, which is what
- * those ROM symbols are; and three symbols that a body declared `int` while
- * this same file defines them `void` (func_ov002_020c14b8,
- * func_ov002_020c2b08, func_ov002_020caf68, whose results every call site
- * discards) keep one spelling.  Each body still keeps its own declaration of
- * every object.  Measured byte-neutral: the pinned 2004/b56 object for the
- * whole TU has the same sha256 before and after, and match.py reports 2004/b56
- * for all twenty-one members whose text changed.
- *
- * SOURCE ORDER IS ROM-ASCENDING AND `#pragma defer_codegen off` IS LOAD-BEARING.
- * Do not reorder the members and do not delete that pragma.  Ordinal 35,
- * _ZN6Player7SetAnimEji5Fix12IiEj, reproduces only under `#pragma
- * opt_propagation off`, and under mwccarm's default DEFERRED codegen that
- * pragma is file-global: left plain it costs 46 other members their match, and
- * bracketed in push/pop it bound to nothing, because the state that binds is
- * the state at end of file.  With codegen undeferred the bracket binds where it
- * is written -- and undeferred codegen emits .text in SOURCE order, not
- * reversed, which is why this file runs low address first.  Re-measured by the
- * builder at this revision, deferred codegen unless stated: 255/301 with a
- * file-global `opt_propagation off`; 300/301 with it deleted outright; 300/301
- * bracketed in push/pop -- identical, because the bracket buys nothing while
- * codegen is deferred; 301/301 as written.  Deleting only `defer_codegen off`
- * still scores 300/301 on bytes but reverses the emitted .text order, and it is
- * the pre-link object audit, not the byte compare, that refuses that.
- *
- * Two members carry a source change the C-to-C++ flip forced, both the same
- * construct: a two-int struct copy that C compiles as load/load/store/store and
- * C++ scalarizes into load/store/load/store.  The array-wrapper view
- * (`struct P2w { int w[2]; }`) restores the ROM's shape in func_ov002_020c14b8
- * and func_ov002_020c25a8.
- *
- * Two further bodies carry a SECOND, smaller change the flip forces, which an
- * earlier draft of this header wrongly folded into "nothing else was rewritten".
- * func_ov002_020c6fe4 and func_ov002_020c897c each do arithmetic on the result of
- * a `void **` load -- `*(void**)(c + id*4 + 0xdc) + 0x50` -- which is a GNU
- * extension C accepts under -gccext and C++ does not, so both casts became
- * `char **`.  The address arithmetic is identical and the bytes are unaffected,
- * but it IS an edit; the builder found it by diffing all 301 shipped bodies
- * against their shards.  Apart from those four members, and the local struct TAG
- * renames that hoisting forces (Vector3 -> Vec3i, V3 -> V3a/V3b, Obj -> ObjHS
- * and Obj2fec, State -> State3i, Camera -> CameraRaw), nothing in the 301 bodies
- * was rewritten.
- *
- * See config/tu_manifest.d/ov002/Player.json for the boundary evidence, and
- * notes/data/class-facts/Player.json for what the cartridge proves about the
- * class -- including that its own RTTI name is `daPly_c`, not `Player`.
- *
- * deslop (2026-09-20): this TU is a third migrated -- 98 `Player::` members and
- * 198 `extern "C"` helpers, each helper wrapped in its own `extern "C" { }` and
- * taking the object as an untyped `char *` / `void *`. 103 of those helpers now
- * open with a typed view of their own parameter:
- *
- *     Player *self = (Player *)c;
- *
- * and 431 byte-offset reads through it became the members include/Player.h
- * already declares (mIsMega, mIsMetal, mStateStep, mCharFileBase, ...). Only
- * accesses whose offset AND declared width both matched a member were
- * rewritten; the rest keep the offset form, so `c` stays live where it is still
- * needed. Retyping the PARAMETER would have been the tidier change but cascades
- * into every declaration and call site; the local does not, and costs nothing.
- *
- * Leftover: func_ov002_020c2138, func_ov002_020cec2c and func_ov002_020cef84
- *   keep the offset form -- all three re-size under the typed view, and
- *   020cef84 additionally mis-binds a _ZNK5dBgPi9GetClsnIDEv relocation.
- *   Measured, not assumed.
- * Leftover: a helper whose parameter is itself named `self` gets its view named
- *   `player` instead. Shadowing the parameter would turn a leftover
- *   `*(int *)(self + 0x5c)` into Player* pointer arithmetic -- a wrong read that
- *   still compiles.
+ * Keep ROM order and undeferred code generation: SetAnim's local optimization
+ * setting depends on it. Collision/state helpers still retain partial raw views.
  */
+
+namespace Sound {
+void EndMusic(unsigned int);
+void SetMusic(unsigned int, unsigned int);
+}
 
 #pragma defer_codegen off
 
@@ -222,7 +145,7 @@ int Player::CanPause()
     extern struct State;
     extern State data_ov002_0211067c;
     extern State data_ov002_021106ac;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   if(*(unsigned char*)((char*)&mIsUnderwater)){
     if(_ZN6Player7IsStateERNS_5StateE(((void*)this), &data_ov002_0211067c)) goto ret1a;
     if(_ZN6Player7IsStateERNS_5StateE(((void*)this), &data_ov002_021106ac)) goto ret1a;
@@ -256,15 +179,15 @@ int func_ov002_020bd8ac(unsigned char *p)
 // @symbol func_ov002_020bd8c0
 extern "C" {
 void func_ov002_020bd8c0(char* c, unsigned int r1){
-    extern int _ZN5Sound8EndMusicEjj(unsigned char);
-    extern int _ZN5Sound8SetMusicEjj(unsigned char, unsigned int);
+
+
   unsigned int r2=*(unsigned int*)(c+0x678);
   if(r2==0){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
     *(unsigned int*)(c+0x680)=0;
   } else if(*(unsigned int*)(c+0x680)==r1 && r2!=r1){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
-    _ZN5Sound8SetMusicEjj(*(unsigned char*)(c+0x6d8), *(unsigned int*)(c+0x678));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
+    Sound::SetMusic(*(unsigned char*)(c+0x6d8), *(unsigned int*)(c+0x678));
     *(unsigned int*)(c+0x680)=*(unsigned int*)(c+0x678);
   }
   *(unsigned int*)(c+0x67c)=0;
@@ -277,16 +200,16 @@ void func_ov002_020bd8c0(char* c, unsigned int r1){
 // @symbol func_ov002_020bd928
 extern "C" {
 void func_ov002_020bd928(char* c, unsigned int r4){
-    extern int _ZN5Sound8EndMusicEjj(unsigned char);
-    extern int _ZN5Sound8SetMusicEjj(unsigned char, unsigned int);
+
+
   unsigned int r2=*(unsigned int*)(c+0x678);
   if(r2==r4){ *(unsigned int*)(c+0x67c)=r4; return; }
   if((r2|*(unsigned int*)(c+0x67c))!=0){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
   }
   *(unsigned int*)(c+0x67c)=r4;
   *(unsigned int*)(c+0x680)=r4;
-  _ZN5Sound8SetMusicEjj(*(unsigned char*)(c+0x6d8),r4);
+  Sound::SetMusic(*(unsigned char*)(c+0x6d8),r4);
 }
 }
 
@@ -296,15 +219,15 @@ void func_ov002_020bd928(char* c, unsigned int r4){
 // @symbol func_ov002_020bd984
 extern "C" {
 void func_ov002_020bd984(char* c, unsigned int r1){
-    extern int _ZN5Sound8EndMusicEjj(unsigned char);
-    extern int _ZN5Sound8SetMusicEjj(unsigned char, unsigned int);
+
+
   unsigned int r2=*(unsigned int*)(c+0x67c);
   if(r2==0){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
     *(unsigned int*)(c+0x680)=0;
   } else if(*(unsigned int*)(c+0x680)==r1 && r2!=r1){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
-    _ZN5Sound8SetMusicEjj(*(unsigned char*)(c+0x6d8), *(unsigned int*)(c+0x67c));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
+    Sound::SetMusic(*(unsigned char*)(c+0x6d8), *(unsigned int*)(c+0x67c));
     *(unsigned int*)(c+0x680)=*(unsigned int*)(c+0x67c);
   }
   *(unsigned int*)(c+0x678)=0;
@@ -317,16 +240,16 @@ void func_ov002_020bd984(char* c, unsigned int r1){
 // @symbol func_ov002_020bd9ec
 extern "C" {
 void func_ov002_020bd9ec(char* c, unsigned int r4){
-    extern int _ZN5Sound8EndMusicEjj(unsigned char);
-    extern int _ZN5Sound8SetMusicEjj(unsigned char, unsigned int);
+
+
   unsigned int r2=*(unsigned int*)(c+0x67c);
   if(r2==r4){ *(unsigned int*)(c+0x678)=r4; return; }
   if((*(unsigned int*)(c+0x678)|r2)!=0){
-    _ZN5Sound8EndMusicEjj(*(unsigned char*)(c+0x6d8));
+    Sound::EndMusic(*(unsigned char*)(c+0x6d8));
   }
   *(unsigned int*)(c+0x678)=r4;
   *(unsigned int*)(c+0x680)=r4;
-  _ZN5Sound8SetMusicEjj(*(unsigned char*)(c+0x6d8),r4);
+  Sound::SetMusic(*(unsigned char*)(c+0x6d8),r4);
 }
 }
 
@@ -367,7 +290,7 @@ int Player::HasNoCap()
 {
     extern signed char data_0209f2f8;
     extern unsigned char data_0209f2d8;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN8SaveData16HasPlayerLostCapEv(void);
     extern int data_ov002_0211058c;
     if(data_0209f2f8 == 0x1f) return 0;
@@ -646,7 +569,7 @@ void func_ov002_020bdf8c(char* c){
     Player *self = (Player *)c;
     extern void func_ov002_020bda48(void*);
     extern void _ZN6Player17SetNoControlStateEhih(void*, unsigned char a, int b, unsigned char d);
-    extern void func_02012790(int a);
+    extern unsigned int func_02012790(unsigned int);
     extern void func_ov002_020bd9ec(void*, unsigned int r4);
     extern char* data_0209f318;
     extern void func_ov002_020bdf8c(int);
@@ -704,11 +627,11 @@ void Player::SetNewHatCharacter(unsigned int p1, unsigned int p2, bool p3)
     extern State data_ov002_0211013c;
     extern void func_ov002_020bdb50(void*, unsigned int p2);
     extern void func_ov002_020bda48(void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, State& s);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, State& s);
     extern void func_ov002_020d9c70(void*);
     extern void func_ov002_020da95c(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, State& s);
-    extern void func_02012790(int n);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, State& s);
+    extern unsigned int func_02012790(unsigned int);
     extern void func_ov002_020e6350(void*);
   unsigned int old = param1;
   if (p1 == old) return;
@@ -745,7 +668,7 @@ extern "C" {
 void Player::SetRealCharacter(unsigned int chr_)
 {
     extern void _ZN6Player18SetNewHatCharacterEjjb(void*, u32 a, u32 b, bool c);
-    extern void _ZN9Animation8LoadFileER13SharedFilePtr(SharedFilePtr &f);
+    extern char* _ZN9Animation8LoadFileER13SharedFilePtr(SharedFilePtr &f);
     extern void _ZN6Player4HealEi(void*, int hp);
     extern u32 _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, bool b);
     extern SharedFilePtr *data_ov002_020ff480[];
@@ -818,9 +741,9 @@ void func_ov002_020be3b0(char* c)
     extern int func_ov002_020becf4(void*, int v, int arg2);
     extern void func_ov002_020e6b74(void*, void*);
     extern void func_ov002_020d80d0(void*);
-    extern void _ZN9Animation8LoadFileER13SharedFilePtr(void*);
+    extern char* _ZN9Animation8LoadFileER13SharedFilePtr(void*);
     extern void _ZN13SharedFilePtr7ReleaseEv(void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, const struct Vector3* v);
     extern void* data_ov002_020ff480[];
     extern u8 data_02092128[];
@@ -1101,7 +1024,7 @@ void func_ov002_020bebd4(void){
 extern "C" {
 void func_ov002_020bec2c(void){
     extern int data_ov002_020ff480[];
-    extern int _ZN9Animation8LoadFileER13SharedFilePtr(void*);
+    extern char* _ZN9Animation8LoadFileER13SharedFilePtr(void*);
   int i;
   for(i=0x44;i<0x1c8;i+=4){
     _ZN9Animation8LoadFileER13SharedFilePtr((void*)data_ov002_020ff480[i]);
@@ -1129,10 +1052,10 @@ int func_ov002_020bec84(void* p, unsigned int i) {
 /* -------------------------------------------------------------------------- */
 // @symbol func_ov002_020bec9c
 extern "C" {
-int func_ov002_020bec9c(void*c,unsigned int a,int b,int d,unsigned short e){
+void func_ov002_020bec9c(void*c,unsigned int a,int b,int d,unsigned short e){
     extern int data_ov002_020ff220[];
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned short);
-  return _ZN6Player7SetAnimEji5Fix12IiEj(c,data_ov002_020ff220[a],b,d,e);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned short);
+  _ZN6Player7SetAnimEji5Fix12IiEj(c,data_ov002_020ff220[a],b,d,e);
 }
 }
 
@@ -1255,7 +1178,7 @@ extern "C" {
 #pragma opt_propagation off
 void _ZN6Player7SetAnimEji5Fix12IiEj(char *self, u32 a, int b, Fix12i c, u16 d)
 {
-    extern void _ZN9Animation8LoadFileER13SharedFilePtr(void*);
+    extern char* _ZN9Animation8LoadFileER13SharedFilePtr(void*);
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, int b);
     extern void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(void*, void*, int b, Fix12i c, u32 d);
     extern void _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(void*, void*, int b, Fix12i c, u32 d);
@@ -1534,17 +1457,17 @@ int func_ov002_020bf40c(char* c){
 /* recovered: named members + shared header, real C++ method, declarations from a shared header */
 /* recovered: named members + shared header, real C++ method */
 extern "C" {
-int Player::Heal(int amt)
+void Player::Heal(int amt)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int data_ov002_0211010c[];
     extern int data_ov002_02110124[];
-    extern int GiveHealth(int, int);
+    extern void GiveHealth(int, int);
   int r = _ZN6Player7IsStateERNS_5StateE(((char*)this), data_ov002_0211010c);
-  if(r) return r;
+  if(r) return;
   r = _ZN6Player7IsStateERNS_5StateE(((char*)this), data_ov002_02110124);
-  if(r) return r;
-  return GiveHealth(mPlayerNo, amt);
+  if(r) return;
+  GiveHealth(mPlayerNo, amt);
 }
 }
 
@@ -1608,7 +1531,7 @@ void func_ov002_020bf5e0(char *self)
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, unsigned int a, int b);
     extern int _ZNK9Animation12WillHitFrameEi(void*, int frame);
     extern void Vec3_RotateYAndTranslate(void*, void*, short angle, void*);
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int id, void*);
     extern u32 func_02022d00(u32 uniqueID, u32 effectID, int x, int y, int z, void*);
     extern int data_0209f32c;
@@ -1776,7 +1699,7 @@ extern "C" {
 void func_ov002_020bf9d4(char* c){
     Player *self = (Player *)c;
     extern int func_0200fccc(void*, int r1);
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int, int, int, int);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int, int, int, int);
     extern int data_0208e430;
   Vector3 v;
   if (data_0208e430 == 0x2e) return;
@@ -1814,13 +1737,13 @@ void func_ov002_020bf9d4(char* c){
 extern "C" {
 int func_ov002_020bfa74(Player *self)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern unsigned int func_0203ad54(void*);
     extern s16 Vec3_HorzAngle(const Vector3 *v0, const Vector3 *v1);
     extern s16 Vec3_VertAngle(const Vector3 *v0, const Vector3 *v1);
     extern s32 Vec3_HorzLen(const Vector3 *v);
     extern s16 _ZN4cstd5atan2E5Fix12IiES1_(s32 y, s32 x);
-    extern u32 _ZN5Sound8PlayLongEjjjRK7Vector3s(u32 handle, u32 bank, u32 id, const void *pos, s16 e);
+    extern int _ZN5Sound8PlayLongEjjjRK7Vector3s(u32 handle, u32 bank, u32 id, const void *pos, short);
     extern void func_ov002_020bf800(void*, Vector3_16f v);
     extern int func_ov002_020e0478(void*);
     extern s16 data_02082214[];
@@ -1900,7 +1823,7 @@ extern "C" {
 int func_ov002_020bfec0(char* self)
 {
     Player *player = (Player *)self;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player7IsInAirEv(void*);
     extern int func_ov002_020e3078(void*, void*);
     extern int func_ov002_020c5dec(void*, int arg1);
@@ -2001,7 +1924,7 @@ int func_ov002_020c0108(char *self, int p1)
     extern u32 func_0203ad54(void*);
     extern int Vec3_HorzAngle(const Vec3i *v0, const Vec3i *v1);
     extern int Vec3_VertAngle(const Vec3i *v1, const Vec3i *v0);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern char data_ov002_02110304;
     extern char data_ov002_0211025c;
     extern s32 data_ov002_020ff200[];
@@ -2064,7 +1987,7 @@ int func_ov002_020c0108(char *self, int p1)
 extern "C" {
 int func_ov002_020c031c(void*c){
     extern int data_ov002_02110514[];
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   int r4 = *(int*)((char*)c+0x658);
   if(_ZN6Player7IsStateERNS_5StateE(c, data_ov002_02110514) && *(int*)((char*)c+0x558) > 0x800){
     if(r4==0) r4=2;
@@ -2080,9 +2003,9 @@ int func_ov002_020c031c(void*c){
 extern "C" {
 void func_ov002_020c0364(char* c, u32 arg)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int AngleDiff(int a, int b);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 a, int b, Fix12i c, u32 d);
     extern char data_ov002_02110334;
     extern char data_ov002_0211031c;
@@ -2151,7 +2074,7 @@ int func_ov002_020c04e0(char *c)
     extern int AngleDiff(int a, int b);
     extern int func_ov002_020c031c(void*);
     extern int func_ov002_020f035c(u32 sel, int r1);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211010c;
     extern char data_ov002_02110304;
     extern int func_ov002_020c04e0(void*);
@@ -2263,13 +2186,13 @@ int func_ov002_020c06fc(char *c, int arg)
     extern int func_ov002_020f02c8(unsigned int sel);
     extern int func_ov002_020f035c(unsigned int sel, int r1);
     extern int Vec3_HorzLen(void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int x, int z);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int x, int z);
     extern int AngleDiff(int a, int b);
     extern void _ZN9dBgCh_LinC1Ev(void*);
     extern void _ZN9dBgCh_Lin13SetObjAndLineERK7Vector3S2_P8dActor_c(void*, void*, void*, void*);
     extern int _ZN9dBgCh_Lin10DetectClsnEv(void*);
     extern void _ZN9dBgCh_LinD1Ev(void*);
-    extern void ApproachAngle(void*, short target, int divisor, int band, int maxStep);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern unsigned char data_020a0e40;
     extern short data_0209f4a0[];
     extern char data_0209f4ac[];
@@ -2448,8 +2371,8 @@ int func_ov002_020c0d90(char* c, int y)
 {
     extern u32 func_02022a4c(Fix12i x, Fix12i y, Fix12i z);
     extern u32 func_02022d00(u32 uniqueID, u32 effectID, Fix12i x, Fix12i y, Fix12i z, void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c7f10(void*);
     extern void func_ov002_020ce9c8(void*);
     extern void func_ov002_020be008(void*);
@@ -2659,7 +2582,7 @@ int func_ov002_020c0fb4(char *c)
 extern "C" {
 void func_ov002_020c1234(char* self) {
     Player *player = (Player *)self;
-    extern int _ZN5Sound7PlaySubEjjj5Fix12IiEb(unsigned int, unsigned int, unsigned int, int, bool);
+    extern bool _ZN5Sound7PlaySubEjjj5Fix12IiEb(unsigned int, unsigned int, unsigned int, int, int);
     extern signed char data_0209f2f8;
     extern int data_0209b49c;
     extern void func_ov002_020c1234(void*);
@@ -2704,9 +2627,9 @@ void func_ov002_020c133c(char *a)
     typedef struct Vec3i { int x, y, z; } Vec3i;
     extern int func_ov002_020d82f0(void*);
     extern int _ZN6Player9GetHealthEv(void*);
-    extern unsigned int _ZN5Sound8PlayLongEjjjRK7Vector3s(unsigned int a, unsigned int b, unsigned int c, Vec3i const *v, unsigned int d);
+    extern int _ZN5Sound8PlayLongEjjjRK7Vector3s(unsigned int a, unsigned int b, unsigned int c, Vec3i const *v, short);
     extern int _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(void*, Vec3i const *v, unsigned int b, int c, unsigned int d, unsigned int e, unsigned int f);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, Vec3i const *v);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, Vec3i const *v);
     extern int func_ov002_020d91e0(void*, int damage, int doPre);
     extern int func_ov002_020c5dec(void*, int r1);
     if (self->mIsMetal != 0) return;
@@ -2873,7 +2796,7 @@ void func_ov002_020c16ec(char *o, char *s)
     extern int func_02037e38(void*);
     extern int func_02037e58(void*);
     extern void _ZNK11SurfaceInfo12CopyNormalToER7Vector3(void*, void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
     extern int func_02037e90(void*);
     extern int func_02037e48(void*);
     extern int func_02037e68(void*);
@@ -2904,7 +2827,7 @@ void func_ov002_020c16ec(char *o, char *s)
 // Matched byte-for-byte with mwccarm 1.2/sp2p3 (ov002).
 extern "C" {
 int func_ov002_020c179c(char* self, int angle) {
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
     extern short data_02082214[];
     Vector3 v1;
     Vector3 v2;
@@ -3024,10 +2947,10 @@ int func_ov002_020c1ad8(char* self, int ang)
 {
     extern int func_ov002_020c0434(void*);
     extern void func_ov002_020c0364(void*, unsigned int arg);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c19d0(void*, int arg1, int arg2);
     extern int AngleDiff(int a, int b);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_ov002_0211013c;
     extern int data_ov002_0211043c;
     extern u8 data_020a0e40;
@@ -3081,8 +3004,8 @@ int func_ov002_020c1c84(char* self, int arg)
     extern int func_ov002_020cf700(void*);
     extern int func_ov002_020e0478(void*);
     extern int AngleDiff(int a, int b);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c19d0(void*, int a, int b);
     extern char data_ov002_02110694;
     extern char data_ov002_021103ac;
@@ -3202,7 +3125,7 @@ extern "C" {
 int func_ov002_020c200c(char* self, int arg)
 {
     extern int func_ov002_020c1e44(void*, int x);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player22IsBeingShotOutOfCannonEv(void*);
     extern void func_ov002_020eedc0(void*, void*);
     extern void func_ov002_020c1eb4(void*, int arg);
@@ -3243,20 +3166,21 @@ int func_ov002_020c200c(char* self, int arg)
 // Matched byte-for-byte with mwccarm 1.2/sp2p3 (ov002).
 extern "C" {
 int func_ov002_020c2138(char* self){
+    Player *player = (Player *)self;
     typedef int Fix12i;
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(Fix12i, Fix12i);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(Fix12i, Fix12i);
     extern int AngleDiff(int a, int b);
     extern int func_ov002_020c200c(void*, int ang);
     extern int func_ov002_020c1c84(void*, int ang);
     extern int func_ov002_020c1ad8(void*, int ang);
 int ang;
-if (*(unsigned char*)(self + 0x706) || *(unsigned char*)(self + 0x6fd)) return 0;
-if (*(int*)(self + 0x564)) return 0;
+if (player->mIsUnderwater || player->mIsBalloon) return 0;
+if (player->mWallNormalY) return 0;
 if (*(int*)(self + 0x37c) || *(unsigned char*)(self + 0x708)) return 0;
-ang = _ZN4cstd5atan2E5Fix12IiES1_(*(int*)(self + 0x560), *(int*)(self + 0x568));
-if (AngleDiff(ang, *(short*)(self + 0x94)) < 0x6000) return 0;
+ang = _ZN4cstd5atan2E5Fix12IiES1_(player->mWallNormalX, player->mWallNormalZ);
+if (AngleDiff(ang, player->mPrevAngleY) < 0x6000) return 0;
 if (func_ov002_020c200c(self, ang)) return 1;
-if ((*(int*)(self+0x358) ? 1 : 0) || (*(int*)(self+0x354) ? 1 : 0)) return 0;
+if ((player->mHeldObj ? 1 : 0) || (player->mRidingShell ? 1 : 0)) return 0;
 if (func_ov002_020c1c84(self, ang)) return 1;
 return func_ov002_020c1ad8(self, ang);
 }
@@ -3301,7 +3225,7 @@ int func_ov002_020c231c(char *self)
     Player *player = (Player *)self;
     extern void SubVec3(void*, void*, void*);
     extern void AddVec3(void*, void*, void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player6IsAnimEj(void*, u32 id);
     extern char data_ov002_0211013c;
     extern char data_ov002_02110304;
@@ -3415,7 +3339,7 @@ int func_ov002_020c25a8(void *arg0, int arg1)
     extern void func_02035770(void*);
     extern void func_02035784(void*);
     extern void func_020357a0(void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern void func_020357c0(void*);
     extern void func_020355e8(void*);
     extern void func_020355fc(void*);
@@ -3604,7 +3528,7 @@ int func_ov002_020c25a8(void *arg0, int arg1)
 extern "C" {
 void func_ov002_020c29d4(Player *self)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, Player::State &s);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, Player::State &s);
     extern int Player_ScaleByCharFactor(void*, int a);
     extern int func_02037e38(void*);
     extern dBgPi *_ZNK10dBgCh_Actr14GetFloorResultEv(const dBgCh_Actr *self);
@@ -3653,7 +3577,7 @@ void func_ov002_020c2b08(void *arg0)
     extern void _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c(void*, void*, void*);
     extern int _ZN9dBgCh_Gnd10DetectClsnEv(void*);
     extern void _ZN9dBgCh_GndD1Ev(void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211013c;
     char *c = (char *)arg0;
     char rg[0x54];
@@ -3808,7 +3732,7 @@ extern "C" {
 void func_ov002_020c2e78(char* c){
     Player *self = (Player *)c;
     extern unsigned char IsPlayerWarping(int a0);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern void func_02020388(int handle);
     extern char data_ov002_02110154[];
     extern void func_ov002_020c2e78(void*);
@@ -3844,7 +3768,7 @@ extern "C" {
 int Player::CanWarp()
 {
     extern Player::State data_ov002_021102a4;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     if (_ZN6Player7IsStateERNS_5StateE((void *)this, &ST_WAIT) || _ZN6Player7IsStateERNS_5StateE((void *)this, &data_ov002_021102a4))
         return 1;
     return 0;
@@ -3870,7 +3794,7 @@ int Player::IsInAir()
 // @symbol func_ov002_020c2f64
 extern "C" {
 void func_ov002_020c2f64(void* c) {
-    extern int _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
+    extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
   if (*(unsigned char*)((char*)c+0x6df)) return;
   *(unsigned char*)((char*)c+0x6df) = 1;
   if (*(unsigned char*)((char*)c+0x6f9)) {
@@ -4063,7 +3987,7 @@ void func_ov002_020c38a0(char *c)
     Player *self = (Player *)c;
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int cc, unsigned int d);
     extern int Vec3_HorzLen(void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
     extern void _Z15ApproachLinear2Rsss(void*, short a, short b);
     extern void func_ov002_020c37a4(void*, void*);
     extern void func_ov002_020c3148(void*);
@@ -4127,7 +4051,7 @@ int func_ov002_020c3a48(char *self)
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, unsigned int a, int b);
     extern int _ZNK9Animation12WillHitFrameEi(void*, int frame);
     extern void _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(int x, int y, int z);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
     extern void func_ov002_020c37a4(void*, void*);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void func_ov002_020c3cf0(void*);
@@ -4289,7 +4213,7 @@ extern "C" {
 int Player::St_EndingFly_Init()
 {
     extern int Player_DisableInteraction(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   Player_DisableInteraction(((char*)this));
   mIsControlDisabled=1;
   mStatePhase=0;
@@ -4305,7 +4229,7 @@ int Player::St_EndingFly_Init()
 // @symbol func_ov002_020c3dbc
 extern "C" {
 void func_ov002_020c3dbc(void* player) {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211058c[];
     _ZN6Player11ChangeStateERNS_5StateE(player, data_ov002_0211058c);
 }
@@ -4351,7 +4275,7 @@ int Player::St_OpeningWakeUp_Main()
 // @symbol func_ov002_020c3e8c
 extern "C" {
 void func_ov002_020c3e8c(void* player) {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211013c[];
     _ZN6Player11ChangeStateERNS_5StateE(player, data_ov002_0211013c);
 }
@@ -4364,7 +4288,7 @@ void func_ov002_020c3e8c(void* player) {
 extern "C" {
 int func_ov002_020c3ea0(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   _ZN6Player7SetAnimEji5Fix12IiEj(c,0xb3,0x40000000,0x1000,0);
   self->mStateStep=2;
   return 2;
@@ -4379,7 +4303,7 @@ int func_ov002_020c3ea0(char* c){
 extern "C" {
 int Player::St_OpeningWakeUp_Init()
 {
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   mSleepStage=0;
   _ZN6Player7SetAnimEji5Fix12IiEj(((char*)this),0xb2,0x40000000,0x1000,0);
   mStateStep=0;
@@ -4405,7 +4329,7 @@ void func_ov002_020c3f18(char* p) {
 // @symbol func_ov002_020c3f2c
 extern "C" {
 void func_ov002_020c3f2c(void* player) {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_02110544[];
     _ZN6Player11ChangeStateERNS_5StateE(player, data_ov002_02110544);
 }
@@ -4422,7 +4346,7 @@ int Player::St_Respawn_Main()
 {
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 a, int b, int f, u32 g);
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern u8 data_0209f250;
     extern int data_ov002_02110154[];
@@ -4485,7 +4409,7 @@ int Player::St_Respawn_Init()
     extern void Player_DisableInteraction(void*);
     extern void func_02035860(void*, void*);
     extern void func_0200cf40(void*);
-    extern unsigned int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern unsigned char data_0209f250;
     extern char* data_0209f318;
     Player_DisableInteraction(this);
@@ -4822,7 +4746,7 @@ int func_ov002_020c47f4(char* c)
     extern short Vec3_VertAngle(const Vector3* v1, const Vector3* v0);
     extern int _Z15ApproachLinear2Rsss(short& dst, short to, short step);
     extern short Vec3_HorzAngle(const Vector3* v0, const Vector3* v1);
-    extern int ApproachAngle(void*, short targetAngle, short invFactor, short maxDelta, short minDelta);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern int func_ov002_020c47f4(void*);
     Vector3 vec;
     int r, a;
@@ -4860,7 +4784,7 @@ int Player::St_Talk_Main()
     extern void func_0200d3f8(void*, u8 playerID, void*);
     extern int _Z15ApproachLinear2Rsss(void*, s16 target, s16 step);
     extern void func_0200d81c(void*, u8 playerID);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern int data_0209b454;
     extern char* data_0209f318;
@@ -4979,7 +4903,7 @@ extern "C" {
 int Player::St_Talk_Init()
 {
     extern int Player_DisableInteraction(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   mIsControlDisabled=1;
   Player_DisableInteraction(((char*)this));
   _ZN6Player7SetAnimEji5Fix12IiEj(((char*)this),0x47,0,0x1000,0);
@@ -5014,7 +4938,7 @@ int Player::St_Talk_Init()
 extern "C" {
 int Player::ShowMessage2(fBase_c & actor_, unsigned int msg, const Vector3 * pos, unsigned char d, unsigned char e)
 {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_020731dc(void*, void*, void*);
     extern void Vec3_RotateYAndTranslate(void*, const Vector3 *in, int angle, const Vector3 *src);
     extern void _ZN6Camera9SetFlag_3Ev(void*);
@@ -5128,7 +5052,7 @@ int Player::HasFinishedTalking()
 {
     extern struct State;
     extern State data_ov002_0211046c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   if(_ZN6Player7IsStateERNS_5StateE(((char*)this),&data_ov002_0211046c) && mStateStep==3){
     mStateStep=4;
     return 1;
@@ -5147,7 +5071,7 @@ int Player::Unk_020c4f40(unsigned short x)
 {
     extern struct State;
     extern State data_ov002_0211046c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   if(_ZN6Player7IsStateERNS_5StateE(((char*)this),&data_ov002_0211046c) && mStateStep==3){
     mStateWaitTimer=x;
     mStateStep=5;
@@ -5228,7 +5152,7 @@ ret0:
 // @symbol func_ov002_020c51d0
 extern "C" {
 int func_ov002_020c51d0(char* c, State3i* st){
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern State3i data_ov002_0211046c;
     extern int func_ov002_020c51d0(void*, void*);
   if (!_ZN6Player7IsStateERNS_5StateE(c, &data_ov002_0211046c)) return 0;
@@ -5260,7 +5184,7 @@ int Player::GetTalkState()
 {
     extern struct State;
     extern State data_ov002_0211046c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   if(!_ZN6Player7IsStateERNS_5StateE(((char*)this),&data_ov002_0211046c)) return -1;
   unsigned char v=mStateStep;
   if(v==0) return 0;
@@ -5284,7 +5208,7 @@ int Player::St_StuckInGround_Main()
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, int b);
     extern void func_ov002_020c5444(void*);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(u32 id, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern u8 data_020a0e40;
     extern u16 data_0209f49e[];
@@ -5339,7 +5263,7 @@ int Player::St_StuckInGround_Main()
 extern "C" {
 void func_ov002_020c5444(char* c){
     Player *self = (Player *)c;
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int, int, int, int);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int, int, int, int);
   Vector3 v;
   ((int*)&v)[0] = *(int*)(c + 0x5c);
   ((int*)&v)[1] = *(int*)(c + 0x60);
@@ -5371,8 +5295,8 @@ int Player::St_StuckInGround_Init()
 {
     extern int Player_DisableInteraction(void*);
     extern int Player_ReleaseHeldActor(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
-    extern int _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
     extern int func_ov002_020c5444(void*);
     extern int data_ov002_0210a560[];
   Player_DisableInteraction(((void*)this));
@@ -5398,7 +5322,7 @@ int Player::St_BowserEarthquake_Main()
 {
     extern void _Z14ApproachLinearRiii(void*, int value, int speed);
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern short data_02082214[];
     extern char data_ov002_0211013c[];
@@ -5444,7 +5368,7 @@ int Player::St_BowserEarthquake_Main()
 extern "C" {
 int Player::St_BowserEarthquake_Init()
 {
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   if(mStateStep==0){
     _ZN6Player7SetAnimEji5Fix12IiEj(((char*)this),0x12,0x40000000,0x1000,0);
   } else {
@@ -5464,7 +5388,7 @@ int func_ov002_020c56f0(unsigned char* c, unsigned char arg)
 {
     extern int func_ov002_020d82f0(void*);
     extern int func_ov002_020d91e0(void*, int a, int b);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_ov002_0211010c;
     extern int data_ov002_021103c4;
     extern int func_ov002_020c56f0(void*, int);
@@ -5489,9 +5413,9 @@ extern "C" {
 int Player::St_DeadPit_Main()
 {
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
-    extern u32 _ZN5Sound8PlayLongEjjjRK7Vector3s(u32 a, u32 b, u32 c, void*, u32 d);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN5Sound8PlayLongEjjjRK7Vector3s(u32 a, u32 b, u32 c, void*, short);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
     extern void Vec3_RotateYAndTranslate(void*, void*, s16 angle, void*);
     extern void func_ov002_020c9718(void*);
     extern void Player_AdvanceAnims(void*);
@@ -5602,7 +5526,7 @@ int Player::St_DeadPit_Init()
     extern void HitDeathPlane(int arg);
     extern void FUN_020299f4(void);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
     Player_ReleaseHeldActor(((char*)this));
     if (*(char**)((char*)&mObjInMouth) != 0) {
         int b = (*(u16*)(*(char**)((char*)&mObjInMouth) + 0xc) == 0xbf);
@@ -5746,7 +5670,7 @@ int func_ov002_020c5d0c(char *c)
 // @symbol func_ov002_020c5d60
 extern "C" {
 void func_ov002_020c5d60(void* c) {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c5dec(void*, int);
     extern char data_ov002_02110124[];
     extern char data_ov002_02110064[];
@@ -5767,7 +5691,7 @@ void func_ov002_020c5d60(void* c) {
 extern "C" {
 int func_ov002_020c5dec(char* c, int r1){
     extern int data_ov002_02110124[];
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
   if (r1 != 1) {
     if (*(unsigned char*)(c+0x709) != 0) return 0;
   }
@@ -5788,7 +5712,7 @@ int Player::St_DeadHit_Main()
 {
     extern void func_ov002_020d94cc(void*);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(u32 a, void*);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
     extern void _Z14ApproachLinearRiii(void*, int a, int b);
     extern u32 _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, bool b);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 a, int b, int d, u32 e);
@@ -5859,7 +5783,7 @@ int Player::St_DeadHit_Init()
 {
     extern void Player_DisableInteraction(void*);
     extern char* data_0209f318;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned, int, int, unsigned);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned, int, int, unsigned);
     extern int data_ov002_0210a424[];
     extern void func_0200d89c(void*);
   Player_DisableInteraction(((char*)this));
@@ -5919,8 +5843,8 @@ int func_ov002_020c607c(char *self, int p1, int p2, int *outptr)
 extern "C" {
 int func_ov002_020c61ac(char *c) {
     Player *self = (Player *)c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_ov002_020de968(void*);
     extern void func_ov002_020bdd2c(void*);
     extern int func_ov002_020c607c(void*, int a, int b, void*);
@@ -6121,8 +6045,8 @@ int Player::St_Squish_Main()
     extern char data_ov002_021101b4;
     extern int func_ov002_020d91e0(void*, int a, int b);
     extern void func_ov002_020db8bc(void*, int a);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int _ZN6Player9GetHealthEv(void*);
     extern int func_ov002_020c6908(void*);
     extern int func_ov002_020c647c(void*, int);
@@ -6227,7 +6151,7 @@ int func_ov002_020c6908(char* c){
     Player *self = (Player *)c;
     extern Player::State data_ov002_021101b4;
     extern int func_ov002_020c6538(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c6908(void*);
   if (self->mStateWork == 1) {
     int old;
@@ -6261,7 +6185,7 @@ int Player::St_Squish_Init()
 {
     typedef int Fix12i;
     extern void Player_ReleaseHeldActor(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
   Player_ReleaseHeldActor(((void*)this));
   _ZN6Player7SetAnimEji5Fix12IiEj(((void*)this), 0x47, 0, 0x1000, 0);
   *(unsigned char*)((char*)&mStateWork) = 0;
@@ -6289,10 +6213,10 @@ int Player::St_Squish_Init()
 extern "C" {
 int Player::Unk_020c6a10(unsigned int arg_)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int func_ov002_020d91e0(void*, u32 a, int b);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_021102ec;
     extern int func_ov002_020d82f0(void*);
     u32 arg = (u32)arg_;
@@ -6329,7 +6253,7 @@ int func_ov002_020c6adc(char* c)
 {
     Player *self = (Player *)c;
     extern int data_ov002_021102a4[];
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c6adc(void*);
     unsigned short v = (unsigned short)(self->mStateFlags & 8);
     if (v == 0)
@@ -6351,13 +6275,13 @@ int Player::St_Teleport_Main()
 {
     extern ObjTeleport* GetTeleportDestObj(int i);
     extern void func_02035860(void*, void*);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(u32 a, void*);
     extern void _ZN9dBgCh_GndC1Ev(void*);
     extern void _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c(void*, void*, void*);
     extern int _ZN9dBgCh_Gnd10DetectClsnEv(void*);
     extern void _ZN9dBgCh_GndD1Ev(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern u32 func_02012790(u32 a);
     extern void _ZN3G2x18SetBlendBrightnessEPVtts(volatile u16* p, u16 a, s16 b);
     extern void Player_AdvanceAnims(void*);
@@ -6452,7 +6376,7 @@ extern "C" {
 int Player::St_Teleport_Init()
 {
     extern void Player_DisableInteraction(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned, int, int, unsigned);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned, int, int, unsigned);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned, void*);
   Player_DisableInteraction(((char*)this));
   mStateWork=0;
@@ -6567,7 +6491,7 @@ void func_ov002_020c6fe4(char* c)
     Player *self = (Player *)c;
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, u32 b);
     extern int _ZNK9Animation12WillHitFrameEi(void*, int frame);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 a, int b, Fix12i c, u32 d);
     extern u8 data_0209f20c;
@@ -6641,7 +6565,7 @@ void func_ov002_020c7194(char* c){
     Player *self = (Player *)c;
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern int func_ov002_020c44c4(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_ov002_02110214[];
   if(_ZN6Player12FinishedAnimEv(c) == 0) return;
   self->mStateStep = 1;
@@ -6657,7 +6581,7 @@ void func_ov002_020c7194(char* c){
 extern "C" {
 void func_ov002_020c71e0(char* c) {
     Player *self = (Player *)c;
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c6e14(void*);
     extern int func_ov002_020c44c4(void*);
     extern void func_ov002_020be008(void*);
@@ -6737,7 +6661,7 @@ void func_ov002_020c7350(char *c)
     extern int _ZN6Player6IsAnimEj(void*, unsigned int id);
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, unsigned int a, int b);
     extern int _ZNK9Animation12WillHitFrameEi(void*, int frame);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, void*);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int anim, int a, int b, unsigned int d);
     extern void *_ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as(unsigned int a, unsigned int b, void*, void*, int e, int f);
@@ -6843,7 +6767,7 @@ void func_ov002_020c75f0(char *c)
     extern void func_ov002_020c2f64(void*);
     extern void _ZN6Player4HealEi(void*, int amt);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 anim, int a, Fix12i b, u32 d);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
     extern void func_02012694(u32 id, void*);
     extern u8 data_0209f2fc;
     if (_ZN6Player6IsAnimEj(c, 0x56))
@@ -6942,7 +6866,7 @@ int Player::St_LevelEnter_Init()
     extern void _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c(void*, void*, void*);
     extern int _ZN9dBgCh_Gnd10DetectClsnEv(void*);
     extern int func_ov002_020c7cbc(void*);
-    extern void func_02012790(int a);
+    extern unsigned int func_02012790(unsigned int);
     extern void _ZN6Player16InitWingFeathersEb(void*, int b);
     extern void _ZN9dBgCh_GndD1Ev(void*);
     extern u8 data_0209f2d8;
@@ -7122,7 +7046,7 @@ void func_ov002_020c7dd0(PlayerRaw* p, int i) {
     extern unsigned char data_0209f2fc;
     extern int data_ov002_021104b4;
     extern void _ZN6Player4HealEi(void*, int amt);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     unsigned char g;
     *(unsigned char*)((char*)p + 0x6e3) = data_ov002_020ff240[i];
     g = data_0209f2fc;
@@ -7176,7 +7100,7 @@ extern "C" {
 int Player::IsStateEnteringLevel()
 {
     extern int data_ov002_021104b4[];
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int data_ov002_0211025c[];
   if(_ZN6Player7IsStateERNS_5StateE(((char*)this), data_ov002_021104b4)) return 1;
   return _ZN6Player7IsStateERNS_5StateE(((char*)this), data_ov002_0211025c);
@@ -7191,7 +7115,7 @@ extern "C" {
 int func_ov002_020c7f10(char* c)
 {
     Player *self = (Player *)c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, Player::State& s);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, Player::State& s);
     extern void func_ov002_020ce9c8(void*);
     extern void func_ov002_020c7ff8(void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int d, unsigned int e);
@@ -7234,8 +7158,8 @@ void func_ov002_020c7ff8(char *self)
     extern void func_0200d4b0(void*, u8 playerID, int x);
     extern void func_0200d508(void*, u8 playerID);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 anim, int a, int fix, u32 e);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
-    extern void func_02012790(int x);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(u32 a, u32 b, void*);
+    extern unsigned int func_02012790(unsigned int);
     u8 s = player->mNoCtrlKind;
     void *g = data_0209f318;
     if (s == 0 || s == 1 || s == 0x11) {
@@ -7300,7 +7224,7 @@ int Player::St_NoControl_Main()
     extern short GetAngleToCamera(int i);
     extern void func_ov002_020c9718(void*);
     extern void func_ov002_020c8a4c(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int id, int flags, int speed, unsigned int extra);
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, unsigned int a, int b);
     extern int _ZN6Player12FinishedAnimEv(void*);
@@ -7487,7 +7411,7 @@ int func_ov002_020c8540(char* self)
     extern int _ZNK9Animation12WillHitFrameEi(void*, int f);
     extern void func_0201f32c(int arg0);
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern u16 data_ov002_020ff138[];
     extern u16 data_ov002_020ff13c[];
     extern u16 data_ov002_020ff110[];
@@ -7687,7 +7611,7 @@ int func_ov002_020c897c(char* c)
 extern "C" {
 int func_ov002_020c8a4c(char* self) {
     Player *player = (Player *)self;
-    extern unsigned int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int anim, int a, int fix, unsigned int b);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int anim, int a, int fix, unsigned int b);
     extern short Vec3_HorzAngle(const Vector3*, const Vector3*);
     extern void func_020731dc(void*, void*, void*);
     extern void Vec3_RotateYAndTranslate(void*, const Vector3*, int, const Vector3*);
@@ -7754,7 +7678,7 @@ int func_ov002_020c8b78(char *self) {
     extern void _ZN5Sound17ChangeMusicVolumeEj5Fix12IiE(unsigned int, int);
     extern int _ZNK6Player14GetBodyModelIDEjb(Player const *, unsigned int, bool);
     extern int _ZNK9Animation12WillHitFrameEi(Animation const *, int);
-    extern void func_02012790(int);
+    extern unsigned int func_02012790(unsigned int);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void func_020731dc(void*, void*, void*);
     extern void _ZN7Vector3D1Ev(void);
@@ -7809,7 +7733,7 @@ int func_ov002_020c8cb0(char* c){
     Player *self = (Player *)c;
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void func_ov002_020ca108(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern signed char data_02092110;
     extern void func_ov002_020c8cb0(void*);
   if (_ZN6Player12FinishedAnimEv(c)) {
@@ -7834,11 +7758,11 @@ int func_ov002_020c8d14(char *self)
 {
     Player *player = (Player *)self;
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, unsigned int a, int b);
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
     extern void func_ov002_020c9e18(void*);
     extern int func_ov002_020d22ec(void*, int arg);
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_ov002_021106ac;
     extern int data_ov002_0211013c;
     extern void func_ov002_020c8d14(void*);
@@ -8019,7 +7943,7 @@ int func_ov002_020c9128(char* c){
     Player *self = (Player *)c;
     extern Player::State data_ov002_0211013c;
     extern short _Z15ApproachLinear2Rsss(short& v, short t, short s);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020c9128(void*);
   if (self->mStateStep == 4) {
     _Z15ApproachLinear2Rsss(self->mAngleYSpeed, 0x1000, 0x400);
@@ -8048,7 +7972,7 @@ int func_ov002_020c91bc(char* c)
     extern unsigned char data_0209d660;
     extern int data_0209b454;
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_ov002_0211067c;
     extern int data_ov002_0211013c;
     extern int func_ov002_020c91bc(void*);
@@ -8092,7 +8016,7 @@ int func_ov002_020c9288(char* c){
     Player *self = (Player *)c;
     extern int func_ov002_020bea7c(void*);
     extern void func_ov002_020c43c4(void*, int a);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211067c[];
     extern char data_ov002_0211013c[];
     extern void func_ov002_020c9288(void*);
@@ -8123,7 +8047,7 @@ int func_ov002_020c92fc(char *self)
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern int _ZN8SaveData19IsCharacterUnlockedEj(unsigned int a);
     extern void func_0200d3f8(void*, unsigned char playerID, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int data_0209b454;
     extern unsigned char data_0209f2d8;
     extern int data_0209caa0[];
@@ -8365,7 +8289,7 @@ void func_ov002_020c97e0(char *p)
 extern "C" {
 void func_ov002_020c97f8(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   self->mStateStep = 0x1a;
   self->mAngleYSpeed = 0;
   _ZN6Player7SetAnimEji5Fix12IiEj(c, 0x47, 0, 0x1000, 0);
@@ -8381,8 +8305,8 @@ void func_ov002_020c97f8(char* c){
 extern "C" {
 void func_ov002_020c9840(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
-    extern int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, void*);
   self->mHasNoCap = 0;
   self->mStateStep = 0x18;
   _ZN6Player7SetAnimEji5Fix12IiEj(c, 0x47, 0, 0x1000, 0);
@@ -8401,7 +8325,7 @@ void func_ov002_020c9840(char* c){
 extern "C" {
 void func_ov002_020c98a4(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, int, int, int, unsigned int);
     extern void func_0200d148(void*, unsigned char);
     extern void* data_0209f318[];
   self->mHasNoCap=0;
@@ -8422,8 +8346,8 @@ void func_ov002_020c98a4(char* c){
 extern "C" {
 void func_ov002_020c990c(void* c) {
     typedef int Fix12;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12, unsigned int);
-    extern int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12, unsigned int);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, void*);
   *(unsigned char*)((char*)c+0x71a)=1;
   if (*(unsigned char*)((char*)c+0x6de)) {
     *(unsigned char*)((char*)c+0x6e3)=0x16;
@@ -8446,7 +8370,7 @@ void func_ov002_020c990c(void* c) {
 extern "C" {
 void func_ov002_020c9998(void* c) {
     typedef int Fix12i;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
     extern int _ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as(unsigned int, unsigned int, const struct Vector3*, const struct Vector3_16*, int, int);
   *(unsigned char*)((char*)c+0x6e3) = 0x12;
   _ZN6Player7SetAnimEji5Fix12IiEj(c, 0x92, 0x40000000, 0x1000, 0);
@@ -8466,7 +8390,7 @@ void func_ov002_020c9a04(char *c)
 {
     Player *self = (Player *)c;
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int id, int x, int y, int z);
     struct Vector3 v;
 
     self->mStateStep = 0x11;
@@ -8512,7 +8436,7 @@ void func_ov002_020c9ac0(char* c){
 extern "C" {
 int func_ov002_020c9b10(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     self->mStateStep=0xe;
     _ZN6Player7SetAnimEji5Fix12IiEj(c,0x47,0,0x1000,0);
     self->mStateTimer=0x14;
@@ -8544,8 +8468,8 @@ void func_ov002_020c9b5c(char *self) {
 extern "C" {
 void func_ov002_020c9b7c(void* c) {
     typedef int Fix12i;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
-    extern int _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
+    extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
     extern int func_ov002_020e25f0(void*, int);
   *(char*)((char*)c+0x6e3)=0xb;
   *(char*)((char*)c+0x713)=0;
@@ -8569,7 +8493,7 @@ void func_ov002_020c9b7c(void* c) {
 extern "C" {
 int func_ov002_020c9c00(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     if(self->mIsAirborne!=0){
         _ZN6Player7SetAnimEji5Fix12IiEj(c,0x54,0x40000000,0x1000,0);
     }
@@ -8588,7 +8512,7 @@ extern "C" {
 void func_ov002_020c9c4c(char* c) {
     Player *self = (Player *)c;
     typedef int Fix12i;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
     extern unsigned int data_ov002_020ff118[];
     _ZN6Player7SetAnimEji5Fix12IiEj(c, data_ov002_020ff118[self->mStateStep], 0x40000000, 0x1000, 0);
     *(unsigned char*)(((int)c + 0x6e3)) += 7;
@@ -8625,7 +8549,7 @@ void func_ov002_020c9cc0(char* c){
 extern "C" {
 int func_ov002_020c9d1c(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     self->mStateStep=4;
     self->mAngleYSpeed=0x4000;
     _ZN6Player7SetAnimEji5Fix12IiEj(c,0x47,0,0x1000,0);
@@ -8796,7 +8720,7 @@ int Player::Unk_020c9e5c(unsigned char h)
 // @symbol func_ov002_020ca0f4
 extern "C" {
 int func_ov002_020ca0f4(void* player) {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211022c[];
     return _ZN6Player7IsStateERNS_5StateE(player, data_ov002_0211022c);
 }
@@ -8810,7 +8734,7 @@ extern "C" {
 void func_ov002_020ca108(char* c){
     Player *self = (Player *)c;
     extern int data_ov002_0211013c[];
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_ov002_020ca108(void*);
   if(self->mIsOpeningBigDoor){
     self->mStateStep=0x13;
@@ -8867,8 +8791,8 @@ extern "C" {
 int Player::SetNoControlState(unsigned char a_, int b, unsigned char c_)
 {
     struct State;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern struct State data_ov002_0211010c;
     extern struct State data_ov002_02110124;
     extern struct State data_ov002_0211022c;
@@ -8905,7 +8829,7 @@ extern "C" {
 int func_ov002_020ca270(char* c){
     Player *self = (Player *)c;
     extern Player::State data_ov002_02110124;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
   if(_ZN6Player7IsStateERNS_5StateE(c, &data_ov002_02110124)){
     if(self->mStateStep==1) return 1;
   }
@@ -8948,7 +8872,7 @@ int Player::JumpIntoBooCage(Vector3 & v_)
 extern "C" {
 int Player::TryTalkToDoor(unsigned char a)
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player17SetNoControlStateEhih(void*, unsigned char, int, unsigned char);
     extern int data_ov002_0211013c[];
     extern int data_ov002_0211043c[];
@@ -8983,7 +8907,7 @@ int Player::IsOpeningDoorWithStar()
 extern "C" {
 int Player::TryTalkToKeyDoor()
 {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player17SetNoControlStateEhih(void*, unsigned char, int, unsigned char);
     extern int data_ov002_0211013c[];
     extern int data_ov002_0211043c[];
@@ -9073,7 +8997,7 @@ int Player::TryEnterStarDoor(Vector3 & pos_, short kind)
 extern "C" {
 int Player::CanEnterDoor(unsigned char door)
 {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int _ZN6Player17SetNoControlStateEhih(void*, unsigned char, int, unsigned char);
     extern int data_ov002_0211022c[];
     extern int data_ov002_0211013c[];
@@ -9107,7 +9031,7 @@ int Player::CanEnterDoor(unsigned char door)
 extern "C" {
 void Player::PlayMammaMiaSound()
 {
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, const Vector3 *v);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int a, unsigned int b, const Vector3 *v);
     /* mCamSpacePosX/Y/Z are three consecutive words; dActor_c.h declares them
        individually rather than as one Vector3. */
     _ZN5Sound13PlayCharVoiceEjjRK7Vector3(mCharacter, 0x27, (const Vector3 *)&mCamSpacePosX);
@@ -9137,7 +9061,7 @@ int Player::TryExitWhiteDoorWithStar()
 // @symbol func_ov002_020ca78c
 extern "C" {
 int func_ov002_020ca78c(void *c){
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZN6Player17SetNoControlStateEhih(void*, unsigned char a, int b, unsigned char d);
     extern struct State2i data_ov002_0211022c;
   if(_ZN6Player7IsStateERNS_5StateE(c, &data_ov002_0211022c)){
@@ -9156,7 +9080,7 @@ extern "C" {
 int Player::St_DebugFly_Main()
 {
     extern int func_ov002_020bf224(int a, int b, int c);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern u8 data_020a0e40;
     extern char data_0209f4a0[];
@@ -9244,7 +9168,7 @@ void func_ov002_020ca940(char* self)
     extern char data_ov002_0211064c;
     extern char data_ov002_02110664;
     extern int func_0200d0ac(int a, unsigned int b);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern unsigned int func_02012790(unsigned int a);
     extern void func_0200d064(int a, unsigned int b);
     extern void func_ov002_020ca940(void*);
@@ -9323,7 +9247,7 @@ extern "C" {
 void func_ov002_020cabe0(char* c){
     Player *self = (Player *)c;
     extern int data_ov002_0211064c[];
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
   unsigned short v = (unsigned short)(self->mStateFlags & 4);
   if (v == 0) return;
   _ZN6Player11ChangeStateERNS_5StateE(c, data_ov002_0211064c);
@@ -9417,7 +9341,7 @@ int func_ov002_020cac60(char *self)
     extern short GetAngleToCamera(int i);
     extern void LoadLevel(int a, int b, int c, int d, int e);
     extern void _ZN8dScene_c20SetAndStopColorFaderEv(void);
-    extern void func_02012790(int a);
+    extern unsigned int func_02012790(unsigned int);
     extern short data_0209f5e8;
     short ang;
     short angle;
@@ -9450,7 +9374,7 @@ int func_ov002_020cac60(char *self)
 extern "C" {
 int Player::St_CameraZoom_Main()
 {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, Player::State&);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, Player::State&);
     extern void func_ov002_020cae10(void*);
     extern int func_ov002_020cac60(void*);
     extern void Player_AdvanceAnims(void*);
@@ -9522,7 +9446,7 @@ int Player::St_CameraZoom_Init()
 {
     extern int func_0200d064(void*, int playerID);
     extern void func_0200d7e0(void*, int playerID);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern struct CameraRaw* data_0209f318;
     extern unsigned char data_0209f28c;
   *(int*)((char*)&mHorzSpeed)=0;
@@ -9622,8 +9546,8 @@ extern "C" {
 int Player::St_Headstand_Main()
 {
     extern int _ZN6Player12FinishedAnimEv(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int d, unsigned int e);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int d, unsigned int e);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void Player_AdvanceAnims(void*);
     extern u8 data_020a0e40;
     extern u16 data_0209f49c[];
@@ -9686,7 +9610,7 @@ int Player::St_Headstand_Main()
 extern "C" {
 int Player::St_Headstand_Init()
 {
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int d);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int d);
     extern void func_0200d580(void*, int playerID);
     extern struct CameraRaw *data_0209f318;
   _ZN6Player7SetAnimEji5Fix12IiEj(((void *)this), 0x1e, 0x40000000, 0x1000, 0);
@@ -9843,9 +9767,9 @@ int Player::St_Climb_Main()
     extern void Vec3_RotateYAndTranslate(void*, void*, s16 angle, void*);
     extern void func_0200d5c0(void*, u8 playerID);
     extern void func_0200d5fc(void*, s32 playerID);
-    extern void ApproachAngle(void*, s16 target, s32 divisor, s32 band, s32 maxStep);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 anim, s32 a, s32 b, u32 d);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020cb354(void*);
     extern s16 GetAngleToCamera(u8 i);
     extern void _Z14ApproachLinearRsss(void*, s16 target, s16 step);
@@ -10075,7 +9999,7 @@ extern "C" {
 int Player::St_Climb_Init() {
     extern int Player_ReleaseHeldActor(void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, Fix12i, unsigned int);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, const Vector3&);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned int, unsigned int, const Vector3&);
     extern int func_ov002_020e3078(void*, void*);
     extern char data_ov002_021106f4[];
     char* self = (char*)this;
@@ -10187,7 +10111,7 @@ extern "C" {
 int func_ov002_020cc01c(char* c){
     Player *self = (Player *)c;
     extern int data_ov002_021101b4[];
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
   if (self->mWalkTimer == 0) return 0;
   _ZN6Player11ChangeStateERNS_5StateE(c, data_ov002_021101b4);
   return 1;
@@ -10277,7 +10201,7 @@ extern "C" {
 void func_ov002_020cc1f4(char *c) {
     Player *self = (Player *)c;
     extern void _ZN6Player16St_Shell_CleanupEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211013c[];
     if (self->mRidingShell == 0) return;
     _ZN6Player16St_Shell_CleanupEv(c);
@@ -10319,12 +10243,12 @@ int Player::St_Shell_Main()
     extern void* _ZN8dActor_c10FindWithIDEj(u32 id);
     extern void func_ov002_020eeca8(void*, int arg);
     extern int _ZNK10dBgCh_Actr8IsOnWallEv(void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
     extern int func_02037e58(void*);
-    extern void ApproachAngle(void*, short target, int divisor, int band, int maxStep);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern void _Z14ApproachLinearRiii(void*, int b, int c);
     extern void func_ov002_020e25f0(void*, int a);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_ov002_020e28d4(void*, int a, int b);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern int _ZN6Player6IsAnimEj(void*, u32 anim);
@@ -10461,7 +10385,7 @@ int Player::St_Shell_Main()
 // @symbol func_ov002_020cc660
 extern "C" {
 void func_ov002_020cc660(char *self, int angle){
-    extern s32 ApproachAngle(void*, s16 from, s16 start, s16 speed, s16 max);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern void func_ov002_020cc660(void*, int);
  s16 v,w; int delta; int third;
  delta=angle-*(s16*)(self+0x94);
@@ -10488,7 +10412,7 @@ extern "C" {
 int Player::St_Shell_Init()
 {
     extern int Player_ReleaseHeldActor(void*);
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern int func_ov002_020bd928(void*, int);
   Player_ReleaseHeldActor(((char*)this));
   _ZN6Player7SetAnimEji5Fix12IiEj(((char*)this),0x35,0x40000000,0x1000,0);
@@ -10511,7 +10435,7 @@ int Player::St_HurtWater_Main()
     extern int func_ov002_020ceaf4(void*);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern int _ZN6Player9GetHealthEv(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_ov002_020c5dec(void*, int);
     extern int func_ov002_020ceb7c(void*);
     extern int Player_AdvanceAnims(void*);
@@ -10605,13 +10529,13 @@ extern "C" {
 int Player::St_MetalWaterWater_Main()
 {
     extern int func_ov002_020cec2c(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020eeca8(void*, void*);
     extern int func_ov002_020bf224(void*, int a, int b);
-    extern void ApproachAngle(void*, int target, int a, int b, int d);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern void _Z14ApproachLinearRiii(void*, int a, int b);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(u32 a, void*);
-    extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(u32 id, int x, int y, int z);
+    extern void* _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(u32 id, int x, int y, int z);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 a, int b, int d, u32 e);
     extern void Player_AdvanceAnims(void*);
     extern u8 data_020a0e40;
@@ -10729,8 +10653,8 @@ extern "C" {
 int Player::St_MetalWaterGround_Main()
 {
     extern int func_ov002_020cec2c(void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
-    extern void ApproachAngle(void*, short, int, int, int);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern int func_ov002_020bf224(void*, int, int);
     extern void _Z14ApproachLinearRiii(void*, int, int);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
@@ -10821,7 +10745,7 @@ int Player::St_MetalWaterGround_Main()
 extern "C" {
 int Player::St_MetalWaterGround_Init()
 {
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned, unsigned, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned, unsigned, void*);
     int* p = *(int**)((char*)&mHeldObj);
     int b0 = (p != 0);
     if (b0) {
@@ -10898,7 +10822,7 @@ void func_ov002_020cd218(char* c, int v, int* out1, int* out2){
 extern "C" {
 int func_ov002_020cd28c(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
   _ZN6Player7SetAnimEji5Fix12IiEj(c,0xaf,0x40000000,0x1000,0);
   self->mStateStep=7;
   return 7;
@@ -10912,7 +10836,7 @@ int func_ov002_020cd28c(char* c){
 extern "C" {
 void func_ov002_020cd2c4(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     extern void func_ov002_020cd2c4(void*);
   _ZN6Player7SetAnimEji5Fix12IiEj(c,0xab,0x40000000,0x1000,0);
   self->mStateStep=1;
@@ -10927,7 +10851,7 @@ void func_ov002_020cd2c4(char* c){
 extern "C" {
 void func_ov002_020cd308(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     extern void func_ov002_020cd308(void*);
   _ZN6Player7SetAnimEji5Fix12IiEj(c,0xae,0x40000000,0x1000,0);
   self->mStateStep=6;
@@ -10962,7 +10886,7 @@ void func_ov002_020cd364(char *c) {
 extern "C" {
 void func_ov002_020cd39c(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int a, int b, int f, unsigned int g);
     extern void func_ov002_020cd39c(void*);
   _ZN6Player7SetAnimEji5Fix12IiEj(c,0xaa,0x40000000,0x1000,0);
   self->mStateStep=4;
@@ -10977,8 +10901,8 @@ void func_ov002_020cd39c(char* c){
 extern "C" {
 void func_ov002_020cd3e0(char* c){
     Player *self = (Player *)c;
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, int, int, int, unsigned int);
-    extern int _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, int, int, int, unsigned int);
+    extern void _ZN5Sound9PlayBank0EjRK7Vector3(unsigned int, void*);
     extern void func_ov002_020cd3e0(void*);
   _ZN6Player7SetAnimEji5Fix12IiEj(c, 0xa9, 0x40000000, 0x1000, 0);
   self->mStateStep=2;
@@ -11154,8 +11078,7 @@ void func_ov002_020cd71c(char *self)
 extern "C" {
 int Player::St_Swim_Main()
 {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
-    extern int _ZN6Player9GetHealthEv(void);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void func_ov002_020c5dec(void*, int);
     extern int func_ov002_020cede0(void*);
     extern int func_ov002_020cec2c(void*);
@@ -11165,7 +11088,7 @@ int Player::St_Swim_Main()
     extern int _ZNK10dBgCh_Actr10IsOnGroundEv(void*);
     extern void* _ZNK10dBgCh_Actr14GetFloorResultEv(void*);
     extern void* func_02037dc4(void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int, int);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int, int);
     extern void Vec3_RotateYAndTranslate(void*, void*, short, void*);
     extern void _Z14ApproachLinearRiii(void*, int, int);
     extern int _ZN6Player6IsAnimEj(void*, unsigned int);
@@ -11219,7 +11142,7 @@ int Player::St_Swim_Main()
         _ZN6Player11ChangeStateERNS_5StateE(this, data_ov002_021106ac);
         return 1;
     }
-    if (_ZN6Player9GetHealthEv() == 0) {
+    if (GetHealth() == 0) {
         func_ov002_020c5dec(this, 8);
         return 1;
     }
@@ -11466,9 +11389,9 @@ int func_ov002_020ce324(char* c)
     extern void _ZN9dBgCh_Lin13SetObjAndLineERK7Vector3S2_P8dActor_c(void*, const Vec3i* a, const Vec3i* b, void*);
     extern int _ZN9dBgCh_Lin10DetectClsnEv(void*);
     extern void _ZNK11SurfaceInfo12CopyNormalToER7Vector3(const void* self, void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(int a, int b);
     extern int AngleDiff(int a, int b);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020ce324(void*);
     Vec3i a1, a2, b1, b2, nrm;
     char rl1[0x78];
@@ -11545,7 +11468,7 @@ extern "C" {
 int Player::St_Swim_Init()
 {
     extern void Player_ReleaseHeldActor(void*);
-    extern void _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned, unsigned, void*);
+    extern unsigned int _ZN5Sound13PlayCharVoiceEjjRK7Vector3(unsigned, unsigned, void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned, int, int, unsigned);
     extern int data_0209f318[];
     extern void func_0200d768(void*, unsigned char);
@@ -11576,7 +11499,7 @@ int Player::St_Swim_Init()
 extern "C" {
 int func_ov002_020ce5f8(char* c) {
     Player *self = (Player *)c;
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int func_ov002_020ceb54(void*);
     extern void _ZN5Sound9PlayBank0EjRK7Vector3(u32 id, const struct Vector3* pos);
     extern void func_ov002_020ce8bc(void*, int arg);
@@ -11659,7 +11582,7 @@ void func_ov002_020ce798(char* c)
     typedef struct dActor_c dActor_c;
     extern int data_0209f32c;
     extern char data_ov002_0211067c;
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern int _ZNK10dBgCh_Actr10IsOnGroundEv(const void* self);
     extern void _ZN9dBgCh_LinC1Ev(void*);
     extern void _ZN9dBgCh_LinD1Ev(void*);
@@ -11847,9 +11770,10 @@ void func_ov002_020ceb7c(struct CameraRaw *c)
 extern "C" {
 int func_ov002_020cec2c(char *self)
 {
+    Player *player = (Player *)self;
     extern void _ZN6Player4HealEi(void*, int a);
     extern int _ZN6Player9GetHealthEv(void*);
-    extern unsigned int _ZN5Sound8PlayLongEjjjRK7Vector3s(unsigned int a, unsigned int b, unsigned int c, const struct Vector3 *v, unsigned int d);
+    extern int _ZN5Sound8PlayLongEjjjRK7Vector3s(unsigned int a, unsigned int b, unsigned int c, const struct Vector3 *v, short);
     extern int func_ov002_020d91e0(void*, int damage, int doPre);
     extern void func_ov002_020da9d4(void*);
     extern int func_ov002_020c5dec(void*, int r1);
@@ -11858,7 +11782,7 @@ int func_ov002_020cec2c(char *self)
     int flag;
     int thresh;
 
-    if (*(u8 *)(self + 0x709) != 0 || *(u8 *)(self + 0x6f9) != 0 || *(u8 *)(self + 0x703) != 0 || *(u8 *)(self + 0x708) != 0)
+    if (player->mIsNoControl != 0 || player->mIsMetal != 0 || player->mIsMega != 0 || *(u8 *)(self + 0x708) != 0)
         return 0;
 
     flag = 0;
@@ -11867,9 +11791,9 @@ int func_ov002_020cec2c(char *self)
 
     if (func_ov002_020ceb54(self) == 0 && flag == 0) {
         *(u16 *)(self + 0x6ca) = 0;
-        if (*(u16 *)(self + 0x6b8) == 0) {
+        if (player->mWalkTimer == 0) {
             _ZN6Player4HealEi(self, 0x100);
-            *(u16 *)(self + 0x6b8) = 0xf;
+            player->mWalkTimer = 0xf;
         }
         return 0;
     }
@@ -11980,6 +11904,7 @@ int func_ov002_020cede0(void* thiz_) {
 extern "C" {
 int func_ov002_020cef84(char *self)
 {
+    Player *player = (Player *)self;
     typedef struct {
         void *tag;
         int f04, f08, f0c, f10, f14;
@@ -11987,8 +11912,8 @@ int func_ov002_020cef84(char *self)
         int f1c, f20, f24;
     } ClsnResultTmp;
     extern int _ZN6Player7IsInAirEv(void*);
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern void _ZN9dBgCh_Lin10GetClsnPosEv(void*, void*);
     extern void func_02035414(void*);
     extern void func_02035428(void*);
@@ -12003,23 +11928,23 @@ int func_ov002_020cef84(char *self)
     int lim;
 
     dBgCh_Lin line;
-    if (!_ZN6Player7IsInAirEv(self) || *(unsigned char *)(self + 0x706) != 0 || *(int *)(self + 0xa8) <= 0 || _ZN6Player7IsStateERNS_5StateE(self, &data_ov002_0211001c) || *(unsigned char *)(self + 0x703) != 0 || *(unsigned char *)(self + 0x708) != 0 || *(unsigned char *)(self + 0x709) != 0) {
+    if (!_ZN6Player7IsInAirEv(self) || player->mIsUnderwater != 0 || player->mVertSpeed <= 0 || _ZN6Player7IsStateERNS_5StateE(self, &data_ov002_0211001c) || player->mIsMega != 0 || *(unsigned char *)(self + 0x708) != 0 || player->mIsNoControl != 0) {
         return 0;
     }
 
-    v1.x = *(int *)(self + 0x5c);
-    int y1 = *(int *)(self + 0x60);
+    v1.x = player->mPosX;
+    int y1 = player->mPosY;
     v1.y = y1;
-    v1.z = *(int *)(self + 0x64);
-    v2.x = *(int *)(self + 0x5c);
-    int y2 = *(int *)(self + 0x60);
+    v1.z = player->mPosZ;
+    v2.x = player->mPosX;
+    int y2 = player->mPosY;
     v2.y = y2;
-    v2.z = *(int *)(self + 0x64);
+    v2.z = player->mPosZ;
     v1.y = y1 + 0x64000;
     v2.y = y2 + 0x96000;
     lim = 0x8c000;
     {
-        int t = *(int *)(self + 0x358) != 0;
+        int t = player->mHeldObj != 0;
         if (t != false) {
             if (*(int *)(self + 8) == 2) {
                 v2.y += 0x32000;
@@ -12028,28 +11953,28 @@ int func_ov002_020cef84(char *self)
         }
     }
     func_02035414(&line);
-    if (*(unsigned char *)(self + 0x6fb) != 0)
+    if (player->mIsVanish != 0)
         func_02035428(&line);
     line.SetObjAndLine(v1, v2, (dActor_c*)self);
     if (line.DetectClsn()) {
         _ZN9dBgCh_Lin10GetClsnPosEv(&cp, &line);
         if (func_02037e38((unsigned int *)&line.surface) == 3) {
-            int t2 = *(int *)(self + 0x358) != 0;
+            int t2 = player->mHeldObj != 0;
             if (t2 == false) {
                 _ZN6Player11ChangeStateERNS_5StateE(self, &data_ov002_0211001c);
-                *(int *)(self + 0x60) = cp.y - 0x78000;
+                player->mPosY = cp.y - 0x78000;
                 return 1;
             }
         }
         {
-            int d = cp.y - *(int *)(self + 0x60);
+            int d = cp.y - player->mPosY;
             if (d < 0) d = -d;
             if (d < lim) {
                 void *a;
                 int *dst = &tmp.f04;
                 int w0, w1;
-                *(int *)(self + 0xa8) = -0x1000;
-                *(unsigned char *)(self + 0x6e9) |= 8;
+                player->mVertSpeed = -0x1000;
+                player->mClsnFlags |= 8;
                 w0 = *(int *)((char *)&line + 0x14);
                 w1 = *(int *)((char *)&line + 0x18);
                 dst[0] = w1 ? w0 : w0;
@@ -12126,7 +12051,7 @@ int func_ov002_020cf20c(char* c) {
 extern "C" {
 void func_ov002_020cf2f8(void* c) {
     extern int _Z14ApproachLinearRiii(void*, int, int);
-    extern int ApproachAngle(void*, int, int, int, int);
+    extern int ApproachAngle(void*, short, int, int, int);
     extern int func_ov002_020bf224(void*, int, int);
     extern unsigned char data_020a0e40[];
     extern short data_0209f4a0[];
@@ -12161,7 +12086,7 @@ void func_ov002_020cf384(char *p)
 extern "C" {
 int Player::St_CeilingGrate_Main()
 {
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern int _ZN6Player12FinishedAnimEv(void*);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 anim, int a, int b, u32 d);
     extern int _ZNK6Player14GetBodyModelIDEjb(void*, u32 a, int b);
@@ -12271,7 +12196,7 @@ int Player::St_CeilingGrate_Main()
 extern "C" {
 int Player::St_CeilingGrate_Init()
 {
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern void func_ov002_020cf384(void*);
   func_ov002_020cf384(((char*)this));
   mStateStep=0;
@@ -12287,7 +12212,7 @@ int Player::St_CeilingGrate_Init()
 // @symbol func_ov002_020cf700
 extern "C" {
 int func_ov002_020cf700(void* player) {
-    extern int _ZN6Player7IsStateERNS_5StateE(void*, void*);
+    extern bool _ZN6Player7IsStateERNS_5StateE(void*, void*);
     extern char data_ov002_0211001c[];
     extern int func_ov002_020cf700(void*);
     return _ZN6Player7IsStateERNS_5StateE(player, data_ov002_0211001c);
@@ -12307,8 +12232,8 @@ int Player::St_OnWall_Main()
     extern void func_ov002_020cabe0(void*);
     extern int func_ov002_020c5244();
     extern int func_ov002_020d36d8(void*, int a);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
-    extern int _ZN4cstd5atan2E5Fix12IiES1_(Fix12i a, int b);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern s16 _ZN4cstd5atan2E5Fix12IiES1_(Fix12i a, int b);
     extern void _Z14ApproachLinearRsss(void*, s16 t, s16 s);
     extern int func_ov002_020bf224(void*, int a, int b);
     extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, u32 anim, int a, Fix12i b, u32 d);
@@ -12410,7 +12335,7 @@ int Player::St_OnWall_Main()
 extern "C" {
 int Player::St_OnWall_Init()
 {
-    extern int _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
+    extern void _ZN6Player7SetAnimEji5Fix12IiEj(void*, unsigned int, int, int, unsigned int);
     extern int data_ov002_020ff164[];
   int r3=0x1000;
   if(param1==2){
@@ -12473,7 +12398,7 @@ int func_ov002_020cfbdc(char *self)
     extern int _ZNK10dBgCh_Actr10IsOnGroundEv(void*);
     extern void *_ZNK10dBgCh_Actr14GetFloorResultEv(void*);
     extern void *_ZN8dActor_c10FindWithIDEj(unsigned int id);
-    extern void _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
+    extern int _ZN6Player11ChangeStateERNS_5StateE(void*, void*);
     extern short data_02082214[];
     extern int data_ov002_021101b4;
     extern int func_ov002_020cfbdc(void*);

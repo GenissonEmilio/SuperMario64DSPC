@@ -1,9 +1,8 @@
 //cpp
-// @symbol _ZN5Sound8EndMusicEjj
+// @symbol _ZN5Sound8EndMusicEj
 //
-// Language-mode flip only: the compiler mangles the name, it is no longer
-// spelled by hand. Signature and body preserved exactly; no codegen intent.
-// See notes/plan-cpp-language-mode.md phase 1 (layout-free SDK namespaces).
+// Resume the previous music for the active player. The six reconstructed
+// callers pass only the player number; no second argument is consumed here.
 extern "C" {
 extern int data_0209b4ac;
 extern unsigned char data_0209f250;
@@ -11,13 +10,13 @@ extern int data_0208e43c;
 extern int data_0208e444;
 extern int data_0208e440;
 extern int data_0209b4a0[];
-extern void func_02011dcc(int* g, int x);
+extern int func_02011dcc(int* g, int x);
 extern void func_0204fa2c(int* g, int z);
 }
 
 namespace Sound {
 
-void EndMusic(unsigned int j1, unsigned int j2)
+void EndMusic(unsigned int j1)
 {
   if(data_0209b4ac < 0) return;
   if(j1 != data_0209f250) return;

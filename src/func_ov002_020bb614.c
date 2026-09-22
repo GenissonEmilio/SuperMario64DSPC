@@ -42,7 +42,7 @@ extern s16 Vec3_HorzAngle(struct Vector3 *a, struct Vector3 *b);
 extern int _Z14ApproachLinearRsss(s16 *val, s16 target, s16 step);
 extern int Vec3_ApproachHorz(struct Vector3 *pos, struct Vector3 *target, s32 step);
 extern int func_ov002_020bec84(void *player, unsigned int i);
-extern int func_ov002_020bec9c(void *player, unsigned int a, int b, int d, unsigned short e);
+extern void func_ov002_020bec9c(void *player, unsigned int a, int b, int d, unsigned short e);
 extern int _ZN6Player12FinishedAnimEv(void *player);
 extern void _ZN6Player12ShowMessage2ER7fBase_cjPK7Vector3hh(
     void *player, void *actor, unsigned int msg, struct Vector3 *pos, unsigned int a, unsigned int b);

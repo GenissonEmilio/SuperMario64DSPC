@@ -1,6 +1,6 @@
 //cpp
 extern "C" {
-extern void func_0204fa2c(int player, unsigned int arg);
+extern void func_0204fa2c(int *player, int arg);
 extern unsigned int data_0209b4ac;
 extern int data_0209b4a0[];
 }
@@ -13,5 +13,5 @@ public:
 void Sound::StopLoadedMusic_Layer1(unsigned int arg)
 {
     data_0209b4ac = ~0u;
-    func_0204fa2c((int)data_0209b4a0, arg);
+    func_0204fa2c(data_0209b4a0, arg);
 }
