@@ -1,0 +1,41 @@
+{
+  "task": "nm-slot1012",
+  "class": "dScMgSlot1_c",
+  "symbol": "_ZN12dScMgSlot1_c8BehaviorEv",
+  "module": "ov006",
+  "address": "0x0210c9e0",
+  "size": 2076,
+  "input_commit": "73c5a9104ef31892ff91173b9ac4b19304594d07",
+  "outcome": "unresolved; no production edits",
+  "baseline_word_differences": 19,
+  "best_word_differences": 19,
+  "probe_sources": 216,
+  "compiled_probe_sources": 210,
+  "exact_size_probe_sources": 88,
+  "artifacts": "build/nm-slot1012",
+  "producer_receipt": "build/producer-receipt-corrected.json",
+  "production_tu": "src/minigames/d_s_mg_slot1.cpp",
+  "baseline_strict_check": "NO-REPRO; baseline-linkcheck.json. blind:0 is not relocated acceptance because no-repro short-circuits proof.",
+  "findings": [
+    "Real inline pointer/index/reference/record accessors all fold stride into ADD; in-place u16 shifts retain truncation.",
+    "Inline bool bounds or complete reel-loop helpers canonicalize to baseline; int-return bounds helpers add boolean-materialization instructions.",
+    "Coordinate aggregates, constructors, reference-updaters, arrays and semantic guard-local reuse retain baseline register allocation.",
+    "Equivalent loop exits and inverted/nested bounds retain baseline; duplicated sound-call tails increase code size.",
+    "Removing other switch cases or the first moving-reel loop diagnostically leaves touch coordinate allocation unchanged. Removing either call in the hit path changes allocation, isolating local call/control-flow graph as the context.",
+    "48 touch-reader source files were examined with compiler/disassembly oracle; no exact in-hit LSL/ADD/two-byte-load precedent found.",
+    "func_02012718 definition uses int,int; current local void*,int declaration is inaccurate. Sound::PlayBank2_2D returns u32 from Sound.h. Faithful corrections preserve div19 but were not applied because scope requests source edits only for improvements."
+  ],
+  "known_residue": {
+    "schedule_words": 5,
+    "register_words": 14,
+    "window": "0x264..0x2c4"
+  },
+  "non_claims": [
+    "Not proven compiler wall",
+    "No byte match or relocation acceptance",
+    "Existing issue #3317 interface limitations remain unchanged"
+  ],
+  "files_changed": [
+    "notes/experiments/nm-slot1012.json"
+  ]
+}
