@@ -1,0 +1,67 @@
+{
+  "task": "nm-slot-next1012",
+  "session": "astra-nm-slot-next1012",
+  "stage": "produce",
+  "candidate": "this commit",
+  "input_commit": "e1f5ecf5fe8505d6b5afb662ed778422db4d6b98",
+  "outcome": "unresolved; evidence checkpoint only; no production changes",
+  "symbol": "_ZN12dScMgSlot1_c8BehaviorEv",
+  "module": "ov006",
+  "address": "0x0210c9e0",
+  "size": 2076,
+  "compiler": "2004/b56",
+  "baseline_words": 19,
+  "best_words": 19,
+  "source_sha256": "6664618c04cafaf785afcf47f3a2d875162f2394e457b2d609df643eb529502f",
+  "prior_evidence": "C:/tmp/sm64ds-nm-slot1012/build/nm-slot1012 and its notes/experiments/nm-slot1012.json",
+  "new_oracle": "Matched src/_ZN12dScStarSel_c8BehaviorEv.cpp:4-byte TouchRecord, implicit Y load, meaningful shared first assignments",
+  "experiments": [
+    {
+      "ledger": "build\\nm-slot-next1012\\share-ledger.json",
+      "cells": 28,
+      "compiled": 28,
+      "best_exact": 19
+    },
+    {
+      "ledger": "build\\nm-slot-next1012\\product-ledger.json",
+      "cells": 60,
+      "compiled": 60,
+      "best_exact": 19
+    },
+    {
+      "ledger": "build\\nm-slot-next1012\\callbirth-ledger.json",
+      "cells": 36,
+      "compiled": 36,
+      "best_exact": 19
+    },
+    {
+      "ledger": "build\\nm-slot-next1012\\return-ledger.json",
+      "cells": 9,
+      "compiled": 9,
+      "best_exact": 19
+    }
+  ],
+  "findings": [
+    "Crossed four touch shapes (baseline narrow offset, row, implicit Y, implicit X/Y) with shared first assignments from countdown calls in mutually exclusive earlier cases and moving counters. All baseline-size cells remain19; row shapes2072bytes.",
+    "Crossed baseline/row/implicit-Y and first-assignment sharing with four implicated passes: propagation, lifetimes, strength reduction, common subexpressions. No gain; propagation-off still folds row address shift and grows other regions.",
+    "Shared genuine Sound_PlayIfNotActive and reel-result call receivers with tx/ty/dx/dy. These are distinct from previous table-load sound argument receiver probes; all canonicalize to baseline.",
+    "Converted whole hit helper to void, bool and index early returns with discarded results; all canonicalize to the existing loop-break graph.",
+    "Direct ROM branch audit confirms +31c exits to+768 after sound. Removing break would change the function and was not proposed."
+  ],
+  "reconstruction": {
+    "genuine_method": "unchanged",
+    "interfaces": "unchanged; previously reported func_02012718 and PlayBank2_2D declaration inaccuracies remain outside this evidence-only change",
+    "fields_and_metadata": "unchanged",
+    "promotion_enrollment": "not performed",
+    "attribution": "unchanged"
+  },
+  "proof": {
+    "fresh_baseline": "wallcrack actual source19/519,2076bytes",
+    "strict_linkcheck": "not repeated: no source change and no matching candidate; no relocated-byte acceptance claimed",
+    "full_rom": "not run; report-only commit",
+    "declarations_headers_port": "not run; no source, header or path changes",
+    "private_ci": "not run; no PR"
+  },
+  "next_action": "Independent verifier reviews evidence checkpoint. Coordinator retains match/integration ownership. No source impossibility claim; no new concrete improving lever from this tested product.",
+  "local_artifacts": "Sources, binaries, per-window assembly records and scripts preserved under ignored build/nm-slot-next1012."
+}
