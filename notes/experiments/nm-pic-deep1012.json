@@ -1,0 +1,38 @@
+{
+  "task": "nm-pic-deep1012",
+  "input_commit": "73c5a9104ef31892ff91173b9ac4b19304594d07",
+  "compiler": "2004/b56",
+  "target": "_ZN11daPicGate_c19func_ov080_021261f4Ev",
+  "scope": "Bounded propagation-off feasibility pass before user-directed Player reprioritization",
+  "cells": 49,
+  "baseline": {
+    "size": 760,
+    "div": 5,
+    "sha256": "7d4c3abfa66c3ed4c1335a6699580a412b1b08dcf3dea67d5869b2194e74cd9d"
+  },
+  "best_alternative": {
+    "source": "build/nm-pic-deep1012/helper-1.cpp",
+    "size": 760,
+    "div": 73,
+    "register_only_words": 46,
+    "structural_words": 27,
+    "fixed_original_window": "0xa4..0xb4 inclusive, all exact",
+    "remaining_pack_offsets": [
+      "0xc8",
+      "0xcc",
+      "0xd0"
+    ],
+    "code_sha256": "40f53d1191e1e3e0ab0dca878ef16cd0bd492e676fd02f704448916688e6116f"
+  },
+  "findings": [
+    "Inlining the four reads of local zero z restores the 8 missing bytes under propagation-off and removes the persistent zero register from the function head.",
+    "The real inline GX packing helper under propagation-off exactly repairs the original five-word window. It retains a different three-op schedule later in the pack.",
+    "Inlining coordinate conversion temporaries manually changes schedule and worsens whole-function score to 88; inlining loop bound and vertex indexing locals is inert on these candidates.",
+    "No candidate improves whole-function baseline5. No production source modified. This pass does not establish impossibility."
+  ],
+  "limits": [
+    "Iteration scoring masks relocation words; no exact match or relocation acceptance claimed.",
+    "Report and candidates remain ignored scratch, not a committed production candidate."
+  ],
+  "next_step": "If resumed, start from helper-1.cpp and study the later sizeT/plt0 scheduling tie plus vertex temporary web coloring; preserve propagation-on baseline."
+}
