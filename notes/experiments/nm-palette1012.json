@@ -1,0 +1,37 @@
+{
+  "role": "scratch-only specialist; root owns producer",
+  "production_edits": false,
+  "baseline_words": 20,
+  "baseline_size": 244,
+  "families": [
+    {
+      "ledger": "narrow-ledger.json",
+      "cells": 48,
+      "mechanism": "Actual unsigned16 storage and compound updates crossed with separate wide receiver, named/inplace shift and narrowed pack chains under default/lifetime/CSE modes",
+      "best": 20
+    },
+    {
+      "ledger": "wrapper-ledger.json",
+      "cells": 48,
+      "mechanism": "Actual scalar class storage with inline conversion, optional constructor and assignment, optional high() projection; no external ABI changes",
+      "best_size_exact": 31
+    }
+  ],
+  "evidence": [
+    "ROM +4c writes narrowed palette to r3; direct u16 compound update instead returns to r0 and scores23 under lifetime-off. Keeping separate hi receiver gives original20.",
+    "Actual u16 <<=12 packing is size-exact but31 words, so Swing-style compound narrowing alone does not recover the required r3 lifetime here.",
+    "Scalar wrapper front-end paths collapse to31-word family rather than independently allocating shifted value."
+  ],
+  "scope_limit": "No broad declaration grids or SDK setter sweeps repeated. No impossibility conclusion. Candidate source semantics were preserved at six stores; no candidate improves production.",
+  "next_hypothesis": "Need a chain preserving initial separate r3 receiver while allowing in-place shifted web and later implicit loop palette. Tested genuine narrow storage and simple class projection do not provide that combination.",
+  "task": "nm-palette1012",
+  "outcome": "No improvement over20/61 words at exact244bytes; source unchanged",
+  "input_commit": "73c5a9104ef31892ff91173b9ac4b19304594d07",
+  "symbol": "func_ov075_02116128",
+  "module": "ov075",
+  "addr": "0x02116128",
+  "compiler": "2004/b56",
+  "source": "src/unnamed/ov075/func_ov075_02116128.cpp",
+  "production_sha256": "515f2cc4b02a3f522a41978e1b3f99093b52fc1feee030c84bd00699a838f0dd",
+  "probes": 96
+}
