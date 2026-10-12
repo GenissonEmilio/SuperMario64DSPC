@@ -1,0 +1,68 @@
+{
+  "task": "nm-pic-1011",
+  "base_commit": "036b5f657f6b68ceb8b89eef8f03d61a2839d704",
+  "function": "_ZN11daPicGate_c19func_ov080_021261f4Ev",
+  "module": "ov080",
+  "address": "0x21261f4",
+  "compiler": "2004/b56",
+  "outcome": "No byte improvement; no production candidate. Current source retained.",
+  "baseline": {
+    "source": "src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp",
+    "code_sha256": "7d4c3abfa66c3ed4c1335a6699580a412b1b08dcf3dea67d5869b2194e74cd9d",
+    "size": 760,
+    "target_size": 760,
+    "divergent_words": 5,
+    "total_words": 190,
+    "offsets": [
+      "0xa4",
+      "0xa8",
+      "0xac",
+      "0xb0",
+      "0xb4"
+    ],
+    "normalized_source_sha256": "6e90cf9cb69c457fc734d23f98e3ded077e9719a27793a052be2250a8105aa11",
+    "file_sha256": "07e9368df2b08e137192d9735cc30449b9cc90f60573d0971871e897909b8fbc"
+  },
+  "compile_cells": 251,
+  "families": [
+    {
+      "family": "C++ temporary lifetime, returned aggregates, existing receivers",
+      "compile_cells": 65,
+      "best_exact_size_divergences": 5,
+      "unique_code_hashes": 16,
+      "ledger": "build/nm-pic1011/attempts.json"
+    },
+    {
+      "family": "Widened shifts with high-word masks",
+      "compile_cells": 90,
+      "best_exact_size_divergences": 5,
+      "unique_code_hashes": 18,
+      "ledger": "build/nm-pic1011/wide-attempts.json"
+    },
+    {
+      "family": "Equivalent OR identities with alternate expression trees",
+      "compile_cells": 96,
+      "best_exact_size_divergences": 5,
+      "unique_code_hashes": 26,
+      "ledger": "build/nm-pic1011/algebra-attempts.json"
+    }
+  ],
+  "extra_control": {
+    "source": "build/nm-pic1011/prop-off.cpp",
+    "change": "pragma opt_propagation off applied to current function",
+    "size": 752,
+    "note": "Compared to current 760-byte target. Historical 87-word measure used a different source shape; this remeasurement is a size mismatch."
+  },
+  "limits": [
+    "Relocation slots masked in iteration metric; no relocation-aware match or production acceptance claimed.",
+    "Signed b receiver/helper cells are diagnostic only: arithmetic shift need not preserve high-bit texAddr semantics. No such source accepted.",
+    "Failed variants and scripts retained in ignored build/nm-pic1011; baseline source remains the best."
+  ],
+  "reproduction": [
+    "python build/nm-pic1011/probe.py",
+    "python build/nm-pic1011/wide_probe.py",
+    "python build/nm-pic1011/algebra_probe.py",
+    "python tools/fdiff.py --c src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp --name _ZN11daPicGate_c19func_ov080_021261f4Ev --module ov080 --addr 0x021261f4 --size 0x2f8 --version 2004/b56 --quiet"
+  ],
+  "next_action": "Requires a lever that changes the masked-field scheduling priority before register coloring without creating extra live webs or instructions; these probes did not find it."
+}
