@@ -5,7 +5,7 @@
   "candidate": "this commit",
   "input_commit": "cb70136bff9d75b81b553bbeb9c25bd7547969f0",
   "branch": "match/nearmiss-pic1011",
-  "status": "verified candidate; independent source review pending",
+  "status": "Independent seed review passed; composed on current main and enrolled; final composed-head verification pending",
   "symbol": "_ZN11daPicGate_c19func_ov080_021261f4Ev",
   "module": "ov080",
   "address": "0x021261f4",
@@ -64,5 +64,13 @@
     "port_refs": "not applicable; no move/rename",
     "private_ci": "not run; no PR authorized"
   },
-  "next_action": "Independent verifier reviews this commit and runs explicit relocation-aware check, then coordinator handles integration. No source branch push or PR performed."
+  "next_action": "Independently verify this current-main composed and enrolled candidate. No source branch push, PR or merge authorized.",
+  "integration": {
+    "base_commit": "86dedbd8e89fd7d899a621dddf0cf6c2f1a41cfc",
+    "original_verified_commit": "de492098ed4b4d9c13103cadbdec8881b799aed9",
+    "independent_seed_review": "codex-nm-picverify1012: VERIFIED760bytes,diffs[],blind0; full local ROM build106/106 exact",
+    "enrollment": "src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp: complete .text0x021261f4..0x021264ec",
+    "records": "Supported stamp_provenance.py records gpt-6-astra/high/codex, removes only matched PicGate near-miss; existing author assignments retained (this address was unassigned)",
+    "scope": "Function-only match; no TU consolidation or shared-header edit; no PR or source push"
+  }
 }
