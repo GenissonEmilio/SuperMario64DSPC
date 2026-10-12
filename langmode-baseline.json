@@ -40,8 +40,8 @@
         "unmigrated": 2
       },
       "method": {
-        "draft": 3,
-        "migrated": 5461,
+        "draft": 2,
+        "migrated": 5462,
         "unmigrated": 67
       }
     },
@@ -49,7 +49,7 @@
     "mangled_c": 3,
     "mangled_cpp": 6439,
     "mangled_total": 6442,
-    "nonmatching_drafts": 3,
+    "nonmatching_drafts": 2,
     "unmigrated_total": 77
   },
   "shadow_decls": {
@@ -61,7 +61,7 @@
   },
   "totals": {
     "c_extension": 2093,
-    "cpp_extension": 714,
-    "src_files": 2807
+    "cpp_extension": 713,
+    "src_files": 2806
   }
 }
