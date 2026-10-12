@@ -1,0 +1,68 @@
+{
+  "task": "nm-pic-resume1012",
+  "session": "astra-nm-pic-resume1012",
+  "role": "producer",
+  "candidate": "this commit",
+  "input_commit": "cb70136bff9d75b81b553bbeb9c25bd7547969f0",
+  "branch": "match/nearmiss-pic1011",
+  "status": "verified candidate; independent source review pending",
+  "symbol": "_ZN11daPicGate_c19func_ov080_021261f4Ev",
+  "module": "ov080",
+  "address": "0x021261f4",
+  "size": 760,
+  "compiler": "2004/b56",
+  "source": "src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp",
+  "source_sha256": "09c7ea928351ed7bda4db6f7c2a804fb614355d3c043c3f2f37f189e01788b6e",
+  "changed_surfaces": [
+    "standalone source",
+    "this report"
+  ],
+  "mechanism": [
+    "Disable propagation for this real member, as in matched material-packing oracles; restore mode afterward. Use a scalar inline texture-parameter pack helper with unchanged material fields and NORMAL texgen.",
+    "Replace shared zero receiver with zero at its four uses. Load and narrow Z, then X, zero-extend packed X in its existing receiver, then load and narrow Y. This restores all vertex-loop instructions and the complete pack schedule."
+  ],
+  "semantics": [
+    "Vertex component loads are reordered without any intervening vertex writes. Signed right shift and signed16 narrowing remain before unsigned16 packing; normal, XY, Z register writes retain their order.",
+    "Texture format, S/T size, palette-zero selector, address shift and NORMAL texgen reproduce existing material interpretation. No ABI, header, layout, callee or relocation changes."
+  ],
+  "reconstruction": {
+    "method": "genuine daPicGate_c member",
+    "layout": "existing Vertex and Ov080Mat layouts retained",
+    "lifecycle_metadata": "unchanged; outside function scope",
+    "attribution": "no move or rename",
+    "remaining": "independent review and coordinator-owned integration/enrollment; no TU promotion performed"
+  },
+  "experiments": {
+    "scratch": "build/nm-pic-resume1012",
+    "region_deletions": 16,
+    "retained_field_receivers": 30,
+    "vertex_inline_forms": 36,
+    "mesh_inline_forms": 20,
+    "vertex_dataflow_forms": 48,
+    "winning_candidate": "vertexgraph-ZzXxYy-x.cpp",
+    "prior_checkpoints": "build/nm-pic1011 and build/nm-pic-deep1012 preserved",
+    "conclusion": "The former five-word floor was not a source impossibility; opt_propagation off plus faithful vertex dataflow gives exact whole-function output."
+  },
+  "proof": {
+    "linkcheck": {
+      "command": "python tools/linkcheck.py --name _ZN11daPicGate_c19func_ov080_021261f4Ev --c src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp --addr 0x021261f4 --size 0x2f8 --module ov080",
+      "exit_code": 0,
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "coverage": "760 relocated function bytes"
+    },
+    "declarations": {
+      "command": "python tools/check_decl_agreement.py --changed cb70136bff9d75b81b553bbeb9c25bd7547969f0",
+      "exit_code": 0,
+      "scoped_disagreements": 0,
+      "new_local_header_redeclarations": 0
+    },
+    "full_rom": "not run; standalone function-only change, no enrollment/config edits",
+    "tu_and_metadata": "not changed or validated",
+    "header_fanout": "not applicable; headers unchanged",
+    "port_refs": "not applicable; no move/rename",
+    "private_ci": "not run; no PR authorized"
+  },
+  "next_action": "Independent verifier reviews this commit and runs explicit relocation-aware check, then coordinator handles integration. No source branch push or PR performed."
+}
