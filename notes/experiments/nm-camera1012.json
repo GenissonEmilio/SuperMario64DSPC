@@ -1,0 +1,43 @@
+{
+  "symbol": "func_02009e70",
+  "scope": "Owned source checkpoint only; honest NONMATCHING, unchanged enrollment and external interfaces",
+  "baseline": {
+    "size": 4252,
+    "words": 72
+  },
+  "candidate": {
+    "path": "build/nm-arm9large1012/square-acc.cpp",
+    "sha256": "a1583c3064c3b5b503f4afad14d8db4004dd3d5fb83e92c0644b16f64a527d0e",
+    "size": 4252,
+    "words": 68
+  },
+  "fixed_offsets": [
+    "0xb38",
+    "0xb3c",
+    "0xb44",
+    "0xb4c"
+  ],
+  "new_mismatch_offsets": [],
+  "remaining_schedule": [
+    "0x4ac",
+    "0x4b0",
+    "0x618",
+    "0x61c",
+    "0x620",
+    "0x624",
+    "0x628"
+  ],
+  "semantics": "Signed64 distance accumulator starts from signed32 sp28, squares in signed64, subtracts signed64 height square, converts to sqrt unsigned64 argument exactly as original. No external declaration changed. Both int32 squares and their difference fit int64.",
+  "experiments": "18 branch/narrow/input-reader product cells,9 scheduling probes,12 accumulator follow-through cells; all sources/ledgers preserved",
+  "linkcheck": {
+    "verdict": "NO-REPRO",
+    "blind": 0,
+    "diff_count": 0
+  },
+  "next_action": "Parent independently verify68-word improvement before banking explicitly NONMATCHING source. No production edits, commit, queue change or publication performed.",
+  "production_source": "src/unnamed/arm9/0200/func_02009e70.cpp",
+  "independent_measurement": "root recompiled72->68 at4252bytes under2004/b56; new mismatch offsets[]",
+  "source_quality": "Same signed64 square difference and unsigned sqrt conversion; both squared operands and difference fit int64; existing externs untouched",
+  "production_sha256": "e14bbebc5cf524a2ab0aff4c4b9083f67ea505ea88906d8c55afe659c54878cc",
+  "declaration_check": "Changed scope has25 banked disagreements;0 new disagreements and0 new local header redeclarations"
+}

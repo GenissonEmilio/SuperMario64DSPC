@@ -1,5 +1,12 @@
 //cpp
-// NONMATCHING: functionally-verified C, 72 of 1063 words diverge (was 96).
+// NONMATCHING: 68/1063 words at exact size 0x109c, mwccarm 2004/b56.
+// A signed64 accumulator for distance squared minus height squared fixes
+// four words without introducing new mismatches (72 -> 68). Residue is 61
+// register words and 7 scheduling words. No exact or relocation claim.
+// This range remains supplied from retail ROM.
+// See notes/experiments/nm-camera1012.json; the prior 72-word investigation
+// remains recorded below as historical evidence.
+// Previous72-word seed: functionally-verified C (was96).
 // func_02009e70 @ 0x02009e70 (arm9, size 0x109c). Size exact; every opcode,
 // immediate, branch target and pool word is right. The residue is register
 // identity plus nine scheduling words: tools/wallcrack.py tags 63 regperm and
@@ -445,7 +452,12 @@ L_A94C:
 L_A984:
     if (sp28 >= fp) goto L_AA34;
     Math_Function_0203b14c(&sp28, fp, 0x400, r7 + 0x20000, 0x100);
-    r7 = _ZN4cstd4sqrtEy((u64)((s64)sp28 * sp28 - (s64)sp40.y * sp40.y));
+    {
+        s64 distanceSq = sp28;
+        distanceSq *= sp28;
+        distanceSq -= (s64)sp40.y * sp40.y;
+        r7 = _ZN4cstd4sqrtEy((u64)distanceSq);
+    }
     t0 = _ZN4cstd4fdivEii(r7, Vec3_HorzLen(&sp40));
     sp40.x = FXMUL(sp40.x, t0);
     sp40.z = FXMUL(sp40.z, t0);
