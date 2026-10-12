@@ -1,0 +1,64 @@
+{
+  "task": "nm-star-deep1012",
+  "base_commit": "991ffc458b",
+  "original_base": "036b5f657f6b68ceb8b89eef8f03d61a2839d704",
+  "scope": "User redirected to a small StarSel pass before prioritizing Player holes. New interface, full-TU and inline-predicate probes only; previous exhausted sweeps not repeated.",
+  "function": "_ZN12dScStarSel_c8BehaviorEv",
+  "outcome": "No byte improvement; source untouched, retained 11/525 at2100 bytes, schedule differences0. No match or relocation correctness claim.",
+  "compile_cells": 49,
+  "unique_source_texts": 49,
+  "best_source": {
+    "path": "C:\\tmp\\sm64ds-nm-star1011\\src\\_ZN12dScStarSel_c8BehaviorEv.cpp",
+    "file_sha256": "e1d1b599a9640c978d8742fa44b06695898da1a31b7994a6997024b22bff592a",
+    "size": 2100,
+    "divergences": 11
+  },
+  "families": [
+    {
+      "name": "Real dFdBrightness_c pointer / IsAtStart virtual interface",
+      "cells": 1,
+      "result": "11; byte-inert. Type evidenced by dScene_c::SetFaders; fake VObj was not required for these bytes."
+    },
+    {
+      "name": "Inline touch-hit predicate parameters and result type",
+      "cells": 24,
+      "result": "Direct obj[index+0x11a] spelling changes scheduling (168/525) or size (2128). No improvement."
+    },
+    {
+      "name": "Behavior before/after actual class TU and real/fake fader type",
+      "cells": 4,
+      "result": "All11, same root ldrb r6,[r6,#3]. Context includes original helpers, Render, destructor and tuple-shaped touch globals."
+    },
+    {
+      "name": "OAM/SaveData declaration context and include order",
+      "cells": 8,
+      "result": "All11, same code."
+    },
+    {
+      "name": "Inline predicate preserving folded (obj+index)[0x11a] address",
+      "cells": 12,
+      "result": "Bool predicates all11 at2100; int predicates2112 bytes. Restores baseline schedule but not register assignment."
+    }
+  ],
+  "measurements": "build/nm-star-deep1012/attempts.json",
+  "scripts": [
+    "python build/nm-star-deep1012/probe.py",
+    "python build/nm-star-deep1012/folded.py"
+  ],
+  "residue": [
+    "0x248",
+    "0x24c",
+    "0x250",
+    "0x254",
+    "0x258",
+    "0x25c",
+    "0x260",
+    "0x268",
+    "0x270",
+    "0x274",
+    "0x278"
+  ],
+  "preserved_readable_seed": "build/nm-star-deep1012/real_fader.cpp",
+  "source_review": "All probes pure C++; existing interfaces preserve receiver and vtable slot. No shared headers/config/DB edits. No production source edits. Scratch aggregate TU modifies local touch-array spelling to agree with its preexisting declarations. No encoded bytes or callee lies.",
+  "next_action": "Checkpoint StarSel per user priority and switch matching effort to Player. These families do not alter the in-place coalescing at +0x248; a future attempt needs a genuinely different liveness/web mechanism."
+}
