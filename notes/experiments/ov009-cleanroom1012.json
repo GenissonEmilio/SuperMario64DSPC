@@ -1,0 +1,1109 @@
+{
+  "schema": "cleanroom_experiment_v1",
+  "task": "ov009-cleanroom1012",
+  "date": "2026-10-12",
+  "base_commit": "2816d7c066e1c8226a79b46ebee4a239b4fb18c4",
+  "target": {
+    "name": "func_ov009_0211145c",
+    "module": "ov009",
+    "address": "0x0211145c",
+    "size": 380
+  },
+  "status": "partial_not_matching",
+  "summary": "Independent reconstruction reaches the exact 380-byte extent with five linked instruction-word differences and zero blind relocations. No exact candidate found in the mechanisms tested; this is not an impossibility claim.",
+  "boundary": {
+    "excluded": [
+      "Existing target implementation or assembly hatch",
+      "nearmiss/db.jsonl and other stored target drafts",
+      "Previous target branches/worktrees/attempts",
+      "Target matching notes and previous hypotheses",
+      "Memory files"
+    ],
+    "retail_inputs": [
+      "modules.read_bytes for ov009 target range and its literals",
+      "config/arm9/overlays/ov009/symbols.txt and relocs.txt",
+      "config/arm9/symbols.txt",
+      "Other module symbol metadata consumed by modules() and reloc_audit.build_name_index()"
+    ],
+    "headers_read": [
+      "include/daSBird_c.h",
+      "include/dActor_c.h",
+      "include/Player.h (initial layout/inheritance portion)",
+      "include/types.h (Vector3 and scalar types)",
+      "include/fBase_c.h (layout portion)",
+      "include/ModelAnim.h (initial portion)",
+      "include/common.h (vector declarations)",
+      "include/math/Fix12.h"
+    ],
+    "callee_definitions_read": [
+      "src/RandomIntInternal.c",
+      "src/Vec3_Sub.c",
+      "src/Vec3_HorzLen.c",
+      "src/engine/sound/Sound.cpp:561-573 (sound wrapper and adjacent bank wrapper)",
+      "src/game/actors/d_a_s_bird_head.cpp:50-64 (only attachment method window; incidental initial two statements of the following different method)"
+    ],
+    "tooling_read": [
+      "tools/modules.py",
+      "tools/wallcrack.py (compile_c/extract and helper implementation; Target never instantiated)",
+      "tools/rombuild.py (compiler flags and relevant tool paths)",
+      "tools/linkcheck.py",
+      "tools/reloc_audit.py (candidate-only selection and linking paths)",
+      "tools/build_pin.py",
+      "tools/classqueue.py (administrative CLI)",
+      "tools/classqueue_v2.py (administrative publish CLI)"
+    ],
+    "notes": "Repository headers contain comments naming the target hatch; they were used only as permitted real layout/interface evidence. Target source content was never read. Source filenames were enumerated to locate called definitions. No unrelated matched-function compiler oracle was used. Parent supplied general compiler knowledge about opt_propagation interacting with source shape in an unrelated match; no prior target hypotheses or source were supplied."
+  },
+  "semantic_reconstruction": [
+    "A leader finds the closest player; absent player or horizontal separation above 2000 fixed-point world units returns without starting flight.",
+    "The low parameter nibble counts the leader plus followers. Spawn count minus one SBIRD actors with parameter 16 at the current position, current signed area, null rotation and death-table ID -1; attach successful children to the leader unique ID.",
+    "The leader sets target x to -20 and z to -3990 in 20.12 fixed point, preserves target y, and plays sound 106 at its camera-space position.",
+    "Both leaders and followers set pitch to 5000 minus unsigned RNG modulo 4000, yaw to the next unsigned RNG high half, fly speed to 40 fixed-point units, state to 3, and clear flag 0x10000."
+  ],
+  "abi_evidence": {
+    "ClosestPlayer": "Real dActor_c method returns Player*, with Player inheriting dActor_c.",
+    "Spawn": "Real header static method takes u32,u32,const Vector3&,const Vector3_16*,s8,s16.",
+    "attachment": "Real daSBird_c method takes int owner ID and stores owner and leader flag.",
+    "Vec3_Sub": "Definition takes three pointers to a three-int vector and returns void; no invented extra parameters or return register.",
+    "Vec3_HorzLen": "Definition takes a pointer to a three-int vector and returns signed fixed-point int.",
+    "RandomIntInternal": "Definition returns int and takes int* seed; unsigned casts reproduce the retail remainder and logical shift.",
+    "sound": "Definition returns void and takes unsigned ID plus const Vector3*."
+  },
+  "progression": [
+    {
+      "candidate": "baseline",
+      "size": 380,
+      "iteration_differences": 19
+    },
+    {
+      "candidate": "stack",
+      "size": 380,
+      "iteration_differences": 11,
+      "mechanism": "Declare destination vector before out-parameter scratch vector to reproduce stack layout."
+    },
+    {
+      "candidate": "stack_loop",
+      "size": 380,
+      "iteration_differences": 5,
+      "mechanism": "Declare loop index before loop bound to reproduce r8/r9 allocation."
+    }
+  ],
+  "tested_mechanisms": [
+    "Scalar fixed-point constructors, unary negation, value return, inline setters, references, and lexical blocks.",
+    "Equivalent for/while/guarded-do loop conditions, break condition, and outer goto control.",
+    "Explicit vector scopes, value-return subtraction initialization versus assignment, vector component access and full copy/assignment.",
+    "Inline target/leader helpers, source-level conditional tail merging, and a diagnostic coordinate dependency.",
+    "Named coordinate and sound-argument lifetimes, hoisted locals, captured leader bool, and direct function reference.",
+    "Sound deletion was an explicitly nonsemantic diagnostic: it changes the negative result register but does not reproduce the required store/load schedule. It is excluded from any candidate claim.",
+    "Actual Fix12<int> free unary-minus value return and mutating reference return: aggregate initialization emits424/416; explicit val assignment emits396/380 respectively, with the latter retaining the same five differences. An object holding a Vector3 reference and SetXZ method emits384.",
+    "Bounded 2x6 product of default versus opt_propagation off crossed with direct code, scalar negative helper, scalar setter, Vector3 reference target helper, object-reference SetXZ, and actual Fix12<int> in-place negation. All five same-size shapes remain380 with the same five strict differences and blind0; object-reference shape remains384. Pragma reset to on after each diagnostic source. No unsupported-pragma warning. Retained candidate uses no pragma."
+  ],
+  "rejected_subtlety": "The value-return subtract wrapper produced a wildcard-equivalent 380-byte caller but was outlined despite inline. Its call targeted a local wrapper rather than Vec3_Sub and strict linking reported blind=1. It was rejected; the retained candidate calls Vec3_Sub directly with two Vector3 locals.",
+  "experiments": [
+    {
+      "name": "assign_argument",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "assigned_return_vector",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "baseline",
+      "size": 380,
+      "iteration_diff_count": 19,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "block_assignment",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "chained_setter",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "conditional_target",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "const_coords",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "diagnostic_coord_dep",
+      "size": 388,
+      "iteration_diff_count": 37,
+      "same_size": false,
+      "diagnostic_only": true
+    },
+    {
+      "name": "diagnostic_no_sound",
+      "size": 368,
+      "iteration_diff_count": 34,
+      "same_size": false,
+      "diagnostic_only": true
+    },
+    {
+      "name": "diagnostic_tailmerge",
+      "size": 396,
+      "iteration_diff_count": 39,
+      "same_size": false,
+      "diagnostic_only": true
+    },
+    {
+      "name": "difference_scope",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "do_loop",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "field_array",
+      "size": 384,
+      "iteration_diff_count": 36,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "field_references",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "fixed_ctor",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "fixed_negative",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "fixed_return",
+      "size": 400,
+      "iteration_diff_count": 50,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "goto_control",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "hoisted_locals",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "inline_takeoff",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "inline_target",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "leader_bool",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "leader_helper",
+      "size": 392,
+      "iteration_diff_count": 80,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "loop_break",
+      "size": 376,
+      "iteration_diff_count": 47,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "named_coords",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "named_coords_before",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "negative_helper",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "position_reference",
+      "size": 396,
+      "iteration_diff_count": 84,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "return_vector",
+      "size": 356,
+      "iteration_diff_count": 71,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "return_vector_scope",
+      "size": 356,
+      "iteration_diff_count": 71,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "sound_function_ref",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "sound_named_id",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "sound_pos_local",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "stack",
+      "size": 380,
+      "iteration_diff_count": 11,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "stack_loop",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "store_helper",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "struct_copy",
+      "size": 424,
+      "iteration_diff_count": 42,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "vector_assignment",
+      "size": 388,
+      "iteration_diff_count": 40,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "vector_scope",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "while_loop",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    },
+    {
+      "name": "real_fixed_unary",
+      "size": 424,
+      "iteration_diff_count": 50,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "real_fixed_negate_ref",
+      "size": 416,
+      "iteration_diff_count": 50,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "object_target_ref",
+      "size": 384,
+      "iteration_diff_count": 36,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "real_fixed_unary_assigned",
+      "size": 396,
+      "iteration_diff_count": 49,
+      "same_size": false,
+      "diagnostic_only": false
+    },
+    {
+      "name": "real_fixed_negate_ref_assigned",
+      "size": 380,
+      "iteration_diff_count": 5,
+      "same_size": true,
+      "diagnostic_only": false
+    }
+  ],
+  "proof": {
+    "compiler": "2004/b56",
+    "flags": "Imported directly from rombuild.CFLAGS, with only -lang c99 changed to -lang c++ for the //cpp source.",
+    "strict_cli_command": "python tools/linkcheck.py --name func_ov009_0211145c --c build/ov009-cleanroom1012/candidate.c --addr 0x0211145c --size 0x17c --module ov009",
+    "strict_cli_result": {
+      "verdict": "NO-REPRO",
+      "reason": "no-repro",
+      "note": "The CLI searches compiler variants before linked comparison; its empty diffs field does not mean a byte match."
+    },
+    "pinned_link_result": {
+      "name": "func_ov009_0211145c",
+      "module": "ov009",
+      "addr": "0x0211145c",
+      "verdict": "WRONG",
+      "diffs": [
+        {
+          "off": "+0xe0",
+          "sym": null,
+          "target": null
+        },
+        {
+          "off": "+0xe4",
+          "sym": null,
+          "target": null
+        },
+        {
+          "off": "+0xe8",
+          "sym": null,
+          "target": null
+        },
+        {
+          "off": "+0xf0",
+          "sym": null,
+          "target": null
+        },
+        {
+          "off": "+0xf4",
+          "sym": null,
+          "target": null
+        }
+      ],
+      "blind": 0
+    },
+    "relocations": [
+      {
+        "off": 24,
+        "type": 1,
+        "sym": "_ZN8dActor_c13ClosestPlayerEv",
+        "addr": 33622744,
+        "add": -8
+      },
+      {
+        "off": 56,
+        "type": 1,
+        "sym": "Vec3_Sub",
+        "addr": 33805052,
+        "add": -8
+      },
+      {
+        "off": 88,
+        "type": 1,
+        "sym": "Vec3_HorzLen",
+        "addr": 33804152,
+        "add": -8
+      },
+      {
+        "off": 188,
+        "type": 1,
+        "sym": "_ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as",
+        "addr": 33623596,
+        "add": -8
+      },
+      {
+        "off": 204,
+        "type": 1,
+        "sym": "_ZN9daSBird_c19func_ov009_02111224Ei",
+        "addr": 34673188,
+        "add": -8
+      },
+      {
+        "off": 248,
+        "type": 1,
+        "sym": "func_0201267c",
+        "addr": 33629820,
+        "add": -8
+      },
+      {
+        "off": 256,
+        "type": 1,
+        "sym": "RandomIntInternal",
+        "addr": 33798544,
+        "add": -8
+      },
+      {
+        "off": 300,
+        "type": 1,
+        "sym": "RandomIntInternal",
+        "addr": 33798544,
+        "add": -8
+      },
+      {
+        "off": 364,
+        "type": 2,
+        "sym": "data_0209e650",
+        "addr": 34203216,
+        "add": 0
+      }
+    ],
+    "remaining_offsets": [
+      "+0xe0",
+      "+0xe4",
+      "+0xe8",
+      "+0xf0",
+      "+0xf4"
+    ],
+    "remaining_description": "Negative x constant register, x store versus z literal-load scheduling, and z store versus sound ID setup scheduling. Every other linked word matches.",
+    "acceptance": "FAIL: no VERIFIED result; not eligible for production enrollment."
+  },
+  "candidate": {
+    "suggested_path": "build/ov009-cleanroom1012/candidate.c",
+    "sha256": "f5187b77daa51dab282d7b566933f3d429fb068e38c0efdfb7b89fd93874b921",
+    "source": "//cpp\n#include \"daSBird_c.h\"\n#include \"Player.h\"\n// No real include header declares the following free-function interfaces.\n// Their scalar/pointer ABI and vector layout were checked from definitions.\nextern \"C\" void Vec3_Sub(Vector3 *out, Vector3 *a, Vector3 *b);\nextern \"C\" int Vec3_HorzLen(const Vector3 *v);\nextern \"C\" int RandomIntInternal(int *seed);\nextern \"C\" int data_0209e650;\nextern \"C\" void func_0201267c(unsigned int id, const Vector3 *v);\n\nextern \"C\" void func_ov009_0211145c(daSBird_c *self)\n{\n    if (self->mIsLeader) {\n        Player *player = self->ClosestPlayer();\n        if (!player) return;\n        Vector3 delta;\n        Vector3 difference;\n        Vec3_Sub(&difference, (Vector3 *)&self->mPosX,\n                 (Vector3 *)&player->mPosX);\n        delta = difference;\n        if (Vec3_HorzLen(&delta) > 2000 * 4096) return;\n        // The low nibble counts the leader and its followers.\n        int count = self->param1 & 15;\n        if (count > 1) {\n            int i;\n            int followers = count - 1;\n            for (i = 0; i < followers; ++i) {\n                daSBird_c *bird = (daSBird_c *)dActor_c::Spawn(\n                    343, 16, *(const Vector3 *)&self->mPosX, 0, self->mAreaId, -1);\n                if (bird) bird->func_ov009_02111224(self->uniqueID);\n            }\n        }\n        self->mTargetPos.x = -20 * 4096;\n        self->mTargetPos.z = -3990 * 4096;\n        func_0201267c(106, (const Vector3 *)&self->mCamSpacePosX);\n    }\n    self->mPrevAngleX = 5000 - (unsigned)RandomIntInternal(&data_0209e650) % 4000;\n    self->mPrevAngleY = (unsigned)RandomIntInternal(&data_0209e650) >> 16;\n    self->mFlySpeed = 40 * 4096;\n    self->mState = 3;\n    self->mFlags &= ~0x10000;\n}\n"
+  },
+  "reproducer": {
+    "suggested_path": "build/ov009-cleanroom1012/reproduce.py",
+    "command": "python build/ov009-cleanroom1012/reproduce.py build/ov009-cleanroom1012/candidate.c",
+    "source": "import hashlib, json, pathlib, sys\nsys.path.insert(0, str(pathlib.Path(\"tools\")))\nfrom wallcrack import compile_c, extract  # Target is never instantiated.\nfrom modules import modules, read_bytes\nimport linkcheck, reloc_audit\nsource = pathlib.Path(sys.argv[1])\nobj, error = compile_c(source.read_text(encoding=\"utf-8\"), lang_cpp=True, version=\"2004/b56\")\nif error:\n    raise SystemExit(error)\nname = \"func_ov009_0211145c\"\ncode, relocs = extract(obj, name)\nmodule = next(m for m in modules() if m[\"name\"] == \"ov009\")\ntarget = read_bytes(module, 0x0211145c, 0x17c)\niteration_diffs = [i for i in range(0, min(len(code), len(target)), 4)\n                   if i not in relocs and code[i:i+4] != target[i:i+4]]\nresult = linkcheck.linkcheck(name, 0x0211145c, 0x17c, \"ov009\",\n                             reloc_audit.build_name_index(), obj=obj, sym=name)\nprint(json.dumps({\"compiler\": \"2004/b56\", \"source_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(),\n                  \"expected_size\": len(target), \"emitted_size\": len(code),\n                  \"iteration_diff_offsets\": iteration_diffs,\n                  \"pinned_link_result\": result}, indent=2))\n"
+  },
+  "reproduce_from_report": "Write candidate.source and reproducer.source as UTF-8 with LF newlines at their suggested paths, then run reproducer.command from a wired checkout at base_commit. Requires the private retail extraction and pinned compiler, neither included here.",
+  "continuation": "A future attempt should seek a new source-level explanation of the localized target-store/sound schedule, preserving all nine relocation destinations and the original behavior. Existing candidates remain under build/ov009-cleanroom1012. No production files, headers, metadata, or near-miss DB were changed.",
+  "propagation_product": [
+    {
+      "name": "candidate_prop_default",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "candidate_prop_off",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "negative_helper_prop_default",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "negative_helper_prop_off",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "store_helper_prop_default",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "store_helper_prop_off",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "inline_target_prop_default",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "inline_target_prop_off",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "object_target_ref_prop_default",
+      "size": 384,
+      "same_size": false,
+      "iteration_diff_count": 36,
+      "diffs": [
+        20,
+        140,
+        224,
+        228,
+        232,
+        236,
+        240,
+        248,
+        256,
+        264,
+        268,
+        272,
+        276,
+        280,
+        284,
+        288,
+        292,
+        296,
+        300,
+        308,
+        312,
+        316,
+        320,
+        324,
+        328,
+        332,
+        336,
+        340,
+        344,
+        348,
+        352,
+        356,
+        360,
+        364,
+        372,
+        376
+      ]
+    },
+    {
+      "name": "object_target_ref_prop_off",
+      "size": 384,
+      "same_size": false,
+      "iteration_diff_count": 36,
+      "diffs": [
+        20,
+        140,
+        224,
+        228,
+        232,
+        236,
+        240,
+        248,
+        256,
+        264,
+        268,
+        272,
+        276,
+        280,
+        284,
+        288,
+        292,
+        296,
+        300,
+        308,
+        312,
+        316,
+        320,
+        324,
+        328,
+        332,
+        336,
+        340,
+        344,
+        348,
+        352,
+        356,
+        360,
+        364,
+        372,
+        376
+      ]
+    },
+    {
+      "name": "real_fixed_inplace_prop_default",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    },
+    {
+      "name": "real_fixed_inplace_prop_off",
+      "size": 380,
+      "same_size": true,
+      "iteration_diff_count": 5,
+      "diffs": [
+        224,
+        228,
+        232,
+        240,
+        244
+      ],
+      "pinned_link_result": {
+        "name": "func_ov009_0211145c",
+        "module": "ov009",
+        "addr": "0x0211145c",
+        "verdict": "WRONG",
+        "diffs": [
+          {
+            "off": "+0xe0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe4",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xe8",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf0",
+            "sym": null,
+            "target": null
+          },
+          {
+            "off": "+0xf4",
+            "sym": null,
+            "target": null
+          }
+        ],
+        "blind": 0
+      }
+    }
+  ]
+}
