@@ -1,0 +1,1594 @@
+{
+  "schema": 1,
+  "task_id": "nm-pal-scout-next1012",
+  "session": "astra-nm-pal-next1012",
+  "input_commit": "e1f5ecf5fe8505d6b5afb662ed778422db4d6b98",
+  "symbol": "func_ov075_02116128",
+  "source": "src/unnamed/ov075/func_ov075_02116128.cpp",
+  "module": "ov075",
+  "address": "0x02116128",
+  "size_bytes": 244,
+  "compiler": "2004/b56",
+  "status": "nonmatching; no improvement; report-only scout",
+  "baseline": {
+    "word_differences": 20,
+    "words": 61,
+    "source_sha256": "515f2cc4b02a3f522a41978e1b3f99093b52fc1feee030c84bd00699a838f0dd"
+  },
+  "observations": [
+    "ROM truncation has r3 at +0x4c/+0x5c and in-place LSL r3,r3,#28 at +0x68. Its four first stores consume r3 shifted right16; final palette materializes in r0 at +0x7c.",
+    "Current source preserves pre-shift r3 but emits LSL r0,r3,#28. In-place and explicit final shifted-value reuse controls instead coalesce the chain to r0.",
+    "All new probes keep the external function parameters and callee declarations unchanged. Dead earlier locals or consumed parameters are reused only after their previous values are no longer needed. Parameter reuse assignments do not alter incoming ABI.",
+    "32-halfword array and struct row access products preserve map offsets and either cursor advance or loop index; no gain."
+  ],
+  "inferences": [
+    "New StarSel first-assignment evidence justified the disjoint-history product; sequential Palette histories tested here did not transfer its successful mutually-exclusive-branch coloring mechanism.",
+    "These bounded results do not establish a compiler floor or rule out other source spellings. No improved production candidate is proposed."
+  ],
+  "families": [
+    {
+      "name": "history",
+      "count": 55,
+      "compiled": 55,
+      "exact_size": 55,
+      "best_exact_size_divergent_words": 20,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r2, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r0, r5, #0x1c"
+        ]
+      ]
+    },
+    {
+      "name": "inplace-history",
+      "count": 45,
+      "compiled": 45,
+      "exact_size": 45,
+      "best_exact_size_divergent_words": 23,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ]
+      ]
+    },
+    {
+      "name": "lastuse",
+      "count": 36,
+      "compiled": 36,
+      "exact_size": 36,
+      "best_exact_size_divergent_words": 23,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ]
+      ]
+    },
+    {
+      "name": "row",
+      "count": 12,
+      "compiled": 12,
+      "exact_size": 6,
+      "best_exact_size_divergent_words": 20,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ]
+      ]
+    }
+  ],
+  "totals": {
+    "controls": 148,
+    "unique_source_hashes": 148,
+    "compiled": 148,
+    "best_exact_size_word_differences": 20
+  },
+  "validation_limits": [
+    "wallcrack.Target.compile is iteration-only and wildcards relocation words; no strict relocated-byte acceptance was attempted or claimed.",
+    "No differential execution was run for the new controls. They are diagnostic scratch candidates, not accepted source.",
+    "Tracked production source, headers, configuration and near-miss DB remain unchanged; only this report is committed."
+  ],
+  "artifacts": {
+    "scratch_directory": "build\\nm-pal-next1012",
+    "ledger": [
+      {
+        "name": "baseline",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "6c8e0919b0420a03f1868118e02a169ff35abeafe8e4b4357b0ac1811bae2f10"
+      },
+      {
+        "name": "late-w-reuse-b-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "77e7492dba8969081496991529087aebed9a474a898c5f74bb29745a8a2c0c20"
+      },
+      {
+        "name": "late-w-reuse-b-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "d1ed6912df5276ade05754f669a28a4ffc46192bad606e7ce9f1584bde5adbc9"
+      },
+      {
+        "name": "late-w-reuse-b-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "94d9aacd788fcf7b2844e58c0bb45aff7c64495b59afb6b011b5509a7ad7177d"
+      },
+      {
+        "name": "late-i-reuse-b-life",
+        "size": 244,
+        "diff": 45,
+        "error": null,
+        "shift28": [
+          "r0, r2, #0x1c"
+        ],
+        "sha256": "c6bab91c34df2906d543f5decb8923db902b0617fab47b7af395459886e523a6"
+      },
+      {
+        "name": "late-i-reuse-b-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "d28d1cb33e4f7f14f7808a512060bbfaca58151e12b2eeff37efc17a18f0f0da"
+      },
+      {
+        "name": "late-i-reuse-b-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7a1283d99c4a60fcfdcc9e8defccd77668e9daf0ca17fe2959045620e17c9b1f"
+      },
+      {
+        "name": "late-w-reuse-t-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "54560461a2707240c811584479b3596956e21cbe17ca4463bd3a4a0e76b73787"
+      },
+      {
+        "name": "late-w-reuse-t-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "1ad6628e5ddddeb85184b1e2132b8eda699b0a7126b0abac621a921c1d2a15ce"
+      },
+      {
+        "name": "late-w-reuse-t-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "0f87b148c084a8c77c97c9813b0dd968a5d425b4fe189a354343d0313508a072"
+      },
+      {
+        "name": "late-i-reuse-t-life",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "1119192dfb55068406e6fd02d73c761a66fe6c4d66ef67ffaa7458aab5eabcac"
+      },
+      {
+        "name": "late-i-reuse-t-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "cc58cb0aeb251a4f0a428999e2eac6b03d9b460ec254b20ee9b07b1b21d2a589"
+      },
+      {
+        "name": "late-i-reuse-t-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "40d54bd4fb6986ed06a557cf51ba725e1155d5a47bcfe1e93be8093c85e0e9f4"
+      },
+      {
+        "name": "late-w-reuse-m-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "5270155856d699209c6ef0d3e30978db42927e84ea37bdd2b946b9372a934e26"
+      },
+      {
+        "name": "late-w-reuse-m-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "b41198477b49635693232a466cd2076d876a818cd765a732b2222fa29e745dea"
+      },
+      {
+        "name": "late-w-reuse-m-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "114b439a8f4d9ac2ef86fd2a8c01db56ccccc37e3e10f9fcf470392d6807c0d1"
+      },
+      {
+        "name": "late-i-reuse-m-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "927b000ee3c17a0325516e75a3d97434e1d1275ac8cfc7437b673f6eaabe65f3"
+      },
+      {
+        "name": "late-i-reuse-m-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "de50fb767f65d36165e35c5d8f083a70b5a2e34be038a11ed1b6d43152b909e0"
+      },
+      {
+        "name": "late-i-reuse-m-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "a5293987d3bc40ef697df67f20aef1b2bbf61d35f56642e5bd373e7cd121b0a6"
+      },
+      {
+        "name": "late-w-reuse-a-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "f9962b18eb9d6a61f5bab79ff1317b13434e6ff794911966f35ae02db27177de"
+      },
+      {
+        "name": "late-w-reuse-a-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "42ed3cfe763bc830ab9a982b883d03c0f2204f403025d3325d66076c4ad1490c"
+      },
+      {
+        "name": "late-w-reuse-a-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "19dedbc69ea6e48878c61fcd8235fa49d158ff52325caa811a037ff0617d3be2"
+      },
+      {
+        "name": "late-i-reuse-a-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "4cdc7e59827bf3067ead8789bc050bb8670fb5c31bfea906be2a07814b183901"
+      },
+      {
+        "name": "late-i-reuse-a-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "63a2e9dc3736a523143e780f6394ef07d53b92aa5afdcd9e6665149f7f4efc6a"
+      },
+      {
+        "name": "late-i-reuse-a-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "4163f708d5015d4ca2194c9577604891f286cdaf3364698d6cefe837a3c23481"
+      },
+      {
+        "name": "late-w-reuse-slot-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "2313ea7d9506b86209106015340d31bb4ae61b350423c41f892396e9cd95db96"
+      },
+      {
+        "name": "late-w-reuse-slot-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "89cc1b727580cbea80c4e405f73b647ce11fc97219d201e10982616f290a9df5"
+      },
+      {
+        "name": "late-w-reuse-slot-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "6830d61bbde85a3fdc97630c0e1f26a6b45892108c9b8d80ba1d556016876bb9"
+      },
+      {
+        "name": "late-i-reuse-slot-life",
+        "size": 244,
+        "diff": 39,
+        "error": null,
+        "shift28": [
+          "r0, r2, #0x1c"
+        ],
+        "sha256": "958f9a7a8f6f74a099b4fd740d8a9569aaa395d1d8e4f960d68ef808ae409835"
+      },
+      {
+        "name": "late-i-reuse-slot-cse",
+        "size": 244,
+        "diff": 33,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "bca728823deb104e4b7a326d77f7bb06949149cde9f5e8601aaf64617cfffe56"
+      },
+      {
+        "name": "late-i-reuse-slot-default",
+        "size": 244,
+        "diff": 33,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "dcfd9287e9712cb5b165e4f6612389d9c2b2aeadb9a406d6a68fcfe5d21b1f79"
+      },
+      {
+        "name": "late-w-reuse-dim-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "3d29628e75cd4cacb763f0b780a939305bac84cec6c34a359cbe1ffb430f1457"
+      },
+      {
+        "name": "late-w-reuse-dim-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "80e3ae45a3b5f05589199941231acfc450ed86c8388d26b7db053233a96e5539"
+      },
+      {
+        "name": "late-w-reuse-dim-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "74ad4aa1024cd83777ff293157d1c58d72ac339fc64d72d64e9c62bc6b0b778f"
+      },
+      {
+        "name": "late-i-reuse-dim-life",
+        "size": 244,
+        "diff": 37,
+        "error": null,
+        "shift28": [
+          "r0, r2, #0x1c"
+        ],
+        "sha256": "9ad8285afe3b77c65c2842379701fb668e718c4282ca5bc7d1943f8a7ec918a8"
+      },
+      {
+        "name": "late-i-reuse-dim-cse",
+        "size": 244,
+        "diff": 39,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "8635962b4447acedf4390b9ee397554128fe544ce5262ce64c5f069a70caf518"
+      },
+      {
+        "name": "late-i-reuse-dim-default",
+        "size": 244,
+        "diff": 39,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "2a4090f8319c42d6847de41fe1dc0112d12edf632fc514881578776c35dfb17f"
+      },
+      {
+        "name": "late-w-reuse-unused-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "f053ba442810487576fd307594306ea59088d4a074d7ac56b8d3e8f0b6b95cd5"
+      },
+      {
+        "name": "late-w-reuse-unused-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "a659453e64dfb7b7ff0a57eb463ff8a150b88ac13047faa93564161b3c261915"
+      },
+      {
+        "name": "late-w-reuse-unused-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "6123143c496038b65b8b44b681e13f828cb2e8d7d8aa08d469022b4c14dbc091"
+      },
+      {
+        "name": "late-i-reuse-unused-life",
+        "size": 244,
+        "diff": 35,
+        "error": null,
+        "shift28": [
+          "r0, r2, #0x1c"
+        ],
+        "sha256": "c5ea8f6f66a80229aea639a4d096259f6ecc1f043dfbdd79c2b1059546e6616b"
+      },
+      {
+        "name": "late-i-reuse-unused-cse",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "6a3fc8dcdf374575bbb24a9ecba8c757ee2c25863bfea7dc4e7ae7fe81c59f10"
+      },
+      {
+        "name": "late-i-reuse-unused-default",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f2cb5dd0b3514265894fb1c4543b68b8fccb5f9f373c7dedd59cf7a186f2d46e"
+      },
+      {
+        "name": "early-b-into-hi-life",
+        "size": 244,
+        "diff": 37,
+        "error": null,
+        "shift28": [
+          "r0, r5, #0x1c"
+        ],
+        "sha256": "0de4738793c8ac2c146e4847012fec276580d2ac43a1f87adf7e75ac192d762b"
+      },
+      {
+        "name": "early-b-into-hi-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "2ec1cd496fac3eb64fa992138b8925c1aeea8689b9e1208a7397966cb9910cec"
+      },
+      {
+        "name": "early-b-into-hi-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e4de32429418ff8338ca41ce14106e9a6852da233aae5965539534c71db73f83"
+      },
+      {
+        "name": "early-b-into-angle-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "643a865c131bab58fdf5ac4c16e38acb9eba3be1861a89cfaad988471d9d69f8"
+      },
+      {
+        "name": "early-b-into-angle-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "aee152c969c1f2cb7abad365ccfe07665f5e06be2d780c594df4ccb8b64b48ec"
+      },
+      {
+        "name": "early-b-into-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "a302c7716f6a326975ca3fe2f485b3f215f80ccd0822aea6e2bc52098ac6bdad"
+      },
+      {
+        "name": "early-a-into-hi-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "725e71f14aea741febe6c873062d741ec15161e234266a840c230e8bcc18dd99"
+      },
+      {
+        "name": "early-a-into-hi-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "9c1cde744cd246af7a63cc830e814985a5d8d917af30bb6f8a6fb82bff8e0fd9"
+      },
+      {
+        "name": "early-a-into-hi-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "6f611e3962b786028290e9fba6cc4fd356b45df2c64de9bf8a8347b690f87e9f"
+      },
+      {
+        "name": "early-a-into-angle-life",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "dab7f262532fc044db350e69b6baefafadcfe7841d0be362d7b4e0e77bdb3c05"
+      },
+      {
+        "name": "early-a-into-angle-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "43865f04aed2eb63795da1e424c1a45ecd26c8868cb8d3c55d2d4ddb30d80652"
+      },
+      {
+        "name": "early-a-into-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "cbcc403b9ce87f4af320154459f438d55d41f1304381aed9fd244de21582eb61"
+      },
+      {
+        "name": "inplace-history-none-idx-i-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7ae1d3ec8621a64b92d59ebf0a219885a43f020d659801a150c1436967d3bd8f"
+      },
+      {
+        "name": "inplace-history-none-idx-i-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "1fe2aef3f1c6cf5e960e9c4b8875b32121322eadbba167a3c6198ffb493fa369"
+      },
+      {
+        "name": "inplace-history-none-idx-i-default",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "829b17c4c2961c1b77ed7370330ffb26f39bcbc76034b83acbb2a3832a295a18"
+      },
+      {
+        "name": "inplace-history-none-idx-unused-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "110a1dc9a26196eb52246260b856619a43d8d59ca6d6ae9fa08655d893f4aa54"
+      },
+      {
+        "name": "inplace-history-none-idx-unused-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "3b66943848eabce5c3e1c50134000caa00971fb5ca476ae9c4d6b7a7666dbeab"
+      },
+      {
+        "name": "inplace-history-none-idx-unused-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "0810dc5278aa125f0ab9ca8690f15f7884ee7d39be1aeaf87a6d2391984ed89c"
+      },
+      {
+        "name": "inplace-history-none-idx-m-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "c291a4c2650ef91b89cd06f00c930350fa843cffc4f95554a84a0ae30cdf6193"
+      },
+      {
+        "name": "inplace-history-none-idx-m-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "10918136810d1a96d4fad3471ca467e7e90514363ba0167d1e714ed132be32d6"
+      },
+      {
+        "name": "inplace-history-none-idx-m-default",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "2deb6011bb60227a0fa28e1114703afc83e4f6478b6a7749bd540c71095a15ff"
+      },
+      {
+        "name": "inplace-history-b-idx-i-life",
+        "size": 244,
+        "diff": 37,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "ce5eb5f261acd12825e9ab2bf60bec5c301981cc53c812a4a31671cf109ede77"
+      },
+      {
+        "name": "inplace-history-b-idx-i-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "1c1ed60f07f930974c00f1df45829f0392125e032208b6ae4c7e45cbedfc82fc"
+      },
+      {
+        "name": "inplace-history-b-idx-i-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "93a973e4faf5eb2a5672a5ac38447e0da23972ab145d23cbd9022b43e982236e"
+      },
+      {
+        "name": "inplace-history-b-idx-unused-life",
+        "size": 244,
+        "diff": 42,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f6d702e6c8c5e5c91c2009703162f9d5f5deacc503b77fc79f693e0f19ea0ff5"
+      },
+      {
+        "name": "inplace-history-b-idx-unused-cse",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "d07e1094c3e7bc4be521d2f6e4299cd8a2a81cde6dd7a0ba4f138d1f2422fefc"
+      },
+      {
+        "name": "inplace-history-b-idx-unused-default",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "83793f3b22b5a6a7c41b9fcaf2599bae4155701042969255f28758a2ccbf4d05"
+      },
+      {
+        "name": "inplace-history-b-idx-m-life",
+        "size": 244,
+        "diff": 37,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "c59195808c943621bb728a0ef0b320ebd41cf770646a30c4a840b5a939f80199"
+      },
+      {
+        "name": "inplace-history-b-idx-m-cse",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e97840dfa63a10bc2b3cdb350f7c2cba6eb4a9c5f38014903f0adb165a1d9166"
+      },
+      {
+        "name": "inplace-history-b-idx-m-default",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "d46ddcf307012e3c31179d6e4a2349ec5c18d8fc845bd7f1f767828261fb30fd"
+      },
+      {
+        "name": "inplace-history-a-idx-i-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "9f839f3ac7171654d9f90d4241fefb951daf8082e801e260edd45836a84dab9d"
+      },
+      {
+        "name": "inplace-history-a-idx-i-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "c6fdda7ac2f3f0187ac0595d4cfe6407b1ead8455d27125063c5823873a4f9b4"
+      },
+      {
+        "name": "inplace-history-a-idx-i-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f8962ad1b1a78efed2089f0943f3aa3be2a9e07691c847f126e9e5373e26836d"
+      },
+      {
+        "name": "inplace-history-a-idx-unused-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "303b2596ca8b9b58e95cdb4376779b523f700e05e50bd1f17023b40aab1ee522"
+      },
+      {
+        "name": "inplace-history-a-idx-unused-cse",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "65cda24bbe66327e86a39bb1061e5969e276de83b6b01a43e409ac37516e228f"
+      },
+      {
+        "name": "inplace-history-a-idx-unused-default",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "3dc1ba5fa1ca1ce321c4c29458369ceec413a920710446ae46349f5b910bbda6"
+      },
+      {
+        "name": "inplace-history-a-idx-m-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7db9b79ad3da602d8cf711d26434b0faf7a24df6fe3418e5fc0317110d3066e8"
+      },
+      {
+        "name": "inplace-history-a-idx-m-cse",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "4a6c988c3416788ec249e23b86691f9ccbfddf81a574cd283978d5bfd92ded82"
+      },
+      {
+        "name": "inplace-history-a-idx-m-default",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "05ea583a7401ee8ddcdaa51d75add490b7f8d1f5dae1f527eef0e391ae55a858"
+      },
+      {
+        "name": "inplace-history-dim-idx-i-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "862a0ebe08e736e144be9f012c19aa0f1a96944d8eb19bd9125032edad47296e"
+      },
+      {
+        "name": "inplace-history-dim-idx-i-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "5e6356f98fdb490186ed75426717f3c79d6e57284645cf5515c1e1dd722325c5"
+      },
+      {
+        "name": "inplace-history-dim-idx-i-default",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "9d9bd96c120b876d03241ed0cf5bf85d37654268df93afbdefff41d9e4e30dd7"
+      },
+      {
+        "name": "inplace-history-dim-idx-unused-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "8e0a70e19ea9e4c39fd07bfe44e973eb7887129212b23cbe308938062ff2b769"
+      },
+      {
+        "name": "inplace-history-dim-idx-unused-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "68ccbd4db5b37268b63966611fcc3197c885eb639125ff52f85608363dcb4e64"
+      },
+      {
+        "name": "inplace-history-dim-idx-unused-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "917653c5100dc716d57cb324a4bd422c3e07b0095168d6f84491d5bd03c5ed14"
+      },
+      {
+        "name": "inplace-history-dim-idx-m-life",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "92e745bf9a0f68818d71a57b5f0f853b761fce4914b11fddad058587af7646a0"
+      },
+      {
+        "name": "inplace-history-dim-idx-m-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f37a7c19ab403ea879cdacb278c4546d73896a45db2139f11bc4707e2408002e"
+      },
+      {
+        "name": "inplace-history-dim-idx-m-default",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "a50a7d473f52ecb83d6260f0dbd04d5c9950cf9855f15da70d7f440bf1ceb3ab"
+      },
+      {
+        "name": "inplace-history-slot-idx-i-life",
+        "size": 244,
+        "diff": 30,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "58fb02e41ce7f3d9fdb11504c12d665abfe822f94ea73e898bc111a3466c2a0f"
+      },
+      {
+        "name": "inplace-history-slot-idx-i-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "8e3b8988f764a3042942dee8fa267f84d3596aebb2fece188a9d3013fb36b566"
+      },
+      {
+        "name": "inplace-history-slot-idx-i-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "ec8883cf74d22ce1a0ff8b7c2bbf3c3718f0e9968301663120106949a2a3ac11"
+      },
+      {
+        "name": "inplace-history-slot-idx-unused-life",
+        "size": 244,
+        "diff": 35,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f58235a5e84e9b84c37049914e33b05d488c30806e3a6b8867fb04119651d9c6"
+      },
+      {
+        "name": "inplace-history-slot-idx-unused-cse",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "298290df6275643a3c5a4c6f106670e7f7a7ed6f671e111d35cfcc69abbc617e"
+      },
+      {
+        "name": "inplace-history-slot-idx-unused-default",
+        "size": 244,
+        "diff": 24,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e599b934dccfd743676b956b3ddbd81e3abd4cd4d9f3002521178a123adb986b"
+      },
+      {
+        "name": "inplace-history-slot-idx-m-life",
+        "size": 244,
+        "diff": 30,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "92be2cd745cff3efc242e6d697b1d499152013ef0e633158d48e0c160f00eeb6"
+      },
+      {
+        "name": "inplace-history-slot-idx-m-cse",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "0ca97e984fbeb81660c58c8712addf358837edfe186f464f0a0b0f396a2923d5"
+      },
+      {
+        "name": "inplace-history-slot-idx-m-default",
+        "size": 244,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "5397cd3385f4ea91d09a12ed2eb30caa76c033bede64456f03c23f9909f10913"
+      },
+      {
+        "name": "lastuse-two-False-implicit-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e059757a7b517f039d710a7290d1bf5bd997a409f6116553e99abbc0e0d96e3a"
+      },
+      {
+        "name": "lastuse-two-False-implicit-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "050fe8399f4a724fdb4b43db3e6813328104b2c11380de3d6df0d1cef0c9e1ad"
+      },
+      {
+        "name": "lastuse-two-False-implicit-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "757170907d0115725e54018d9d52fb4e4d29d75638bf0a8059328da87c6f4bb5"
+      },
+      {
+        "name": "lastuse-two-False-w-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "53fe76603744776b8a260a1e0e417c593238d5196bb8004ff0466f61761f940b"
+      },
+      {
+        "name": "lastuse-two-False-w-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "713df5ec5f26d4a4edc7dd7db4e911ebaedaaa88b723266744f191c52e16725d"
+      },
+      {
+        "name": "lastuse-two-False-w-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "552ca83950e8d7c1295587ce5abf31dc2a78a98293f3a20fb4477d4afcf8130e"
+      },
+      {
+        "name": "lastuse-two-False-angle-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "dcd5de4d63dad4cd735929d383c6a9f38afcef7ed1891f79ae7eefe36f8e4bfa"
+      },
+      {
+        "name": "lastuse-two-False-angle-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "0b1b1b714f9e63ef55b9fa5dec55484b5f56402d995a3013ec4d110cbaf34c7f"
+      },
+      {
+        "name": "lastuse-two-False-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7a6c4cc0a553e5e7d7ad5dd641b4e014f7044f5227c4b830bb58d1f1e3186c59"
+      },
+      {
+        "name": "lastuse-two-True-implicit-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "782e3a87c14a469ec3aa8768852083576c572dc1a089ce08fc9e8ec72eaeba4c"
+      },
+      {
+        "name": "lastuse-two-True-implicit-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "d863a6e4721c8ad3e27a3592e53f9cb3a8cec09e33b6aef1c81b9bef54f1ad3e"
+      },
+      {
+        "name": "lastuse-two-True-implicit-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7306d455be10a545493aae01342aa9313e5d9fe39f498eae717d06349f2e94f0"
+      },
+      {
+        "name": "lastuse-two-True-w-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "ae17d5dc292eb3e2ab2398280b78aaba9e617fbff0d254259b8e1b7d1a055090"
+      },
+      {
+        "name": "lastuse-two-True-w-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "78078e6c9cfde7745aa5d87f45582e62ce0c718915eac44bad06f9fcab6eb781"
+      },
+      {
+        "name": "lastuse-two-True-w-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "cc7d7334d20da0ccff0ffa124cd072fc339c3717b1c2aa45d3d9d52e51634cbf"
+      },
+      {
+        "name": "lastuse-two-True-angle-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "f3f61449ae8c9112cc609757445b0afb4a281be19bc893ab8ded32ae36b50cfd"
+      },
+      {
+        "name": "lastuse-two-True-angle-cse",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "669ced988cc6dcd7ea06aa2b793fcb94510f2726e61416faa4230d17b9b1fedb"
+      },
+      {
+        "name": "lastuse-two-True-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e441e1b701c939928dc4b8f88c68f925b6d3f351ab7e7f9fa48aac2cc24e5475"
+      },
+      {
+        "name": "lastuse-inplace-False-implicit-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "65409771758d0f918eb7ca0f943a39f6d86fbbe434481b165a2277dacbb0d5cb"
+      },
+      {
+        "name": "lastuse-inplace-False-implicit-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "583ff9c479f6810b7ab1eec64aa0342cb89c012d7841c88243447bb2117e3e9d"
+      },
+      {
+        "name": "lastuse-inplace-False-implicit-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "1ed9c54f557a662fb39b91dcc00cabeccb9e8990bc7f381fc6b3f3b3c010434b"
+      },
+      {
+        "name": "lastuse-inplace-False-w-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "355520d66e5d1408fb01d0687c689f4e080fb7c96de309568aa1f29bb571c8d0"
+      },
+      {
+        "name": "lastuse-inplace-False-w-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "43b39c216c5a81cc8f9adbb0f1f65848d54e6aaa19c88249500fb11ee0dd168e"
+      },
+      {
+        "name": "lastuse-inplace-False-w-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "cec01c66de1c185a3d0a9443d259fbe263dc69d9f653cd2b9112e01a4d4e497a"
+      },
+      {
+        "name": "lastuse-inplace-False-angle-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7e632aa39dc71eec591762d68511ac2cc705019da118be0d4a99799bc30f9963"
+      },
+      {
+        "name": "lastuse-inplace-False-angle-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "beb7817b25291f5de186b444ab1123d924a70b376c3710f06aaa24c2cf92be05"
+      },
+      {
+        "name": "lastuse-inplace-False-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "2ae92e32bfc55e4e322aa7964105ab8dfd7f4373a6d9a99dd9818a1df3e0668b"
+      },
+      {
+        "name": "lastuse-inplace-True-implicit-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "37396fdafd9e695f7b1317dc4f31b01123d6a5a12eb3bd5ba591830d77c17de4"
+      },
+      {
+        "name": "lastuse-inplace-True-implicit-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "41fd69e75272dbd5b9c56ca33299c915fcf78a84e11fd01b85017850202c9f28"
+      },
+      {
+        "name": "lastuse-inplace-True-implicit-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "71cb7b801b53dfa5be5322d502e2ea830415c487c639f4e0a7926da3c4dc5e57"
+      },
+      {
+        "name": "lastuse-inplace-True-w-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "3bd80989a53152448cc5f71aa0253a9b92c6de647b6a6f0f50227a5b46bd5fd1"
+      },
+      {
+        "name": "lastuse-inplace-True-w-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "953d55e68e50fa90350b7f88d441ff099037f399846486419693167943d4b170"
+      },
+      {
+        "name": "lastuse-inplace-True-w-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "72c252a956bf8e67a49627df7c28faa5d69ee6a4d11966911cde3c024a7b4783"
+      },
+      {
+        "name": "lastuse-inplace-True-angle-life",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "7e4a039143641634c9d71abe559cb97c09336528af495c2d7097ec7b8f67b4b7"
+      },
+      {
+        "name": "lastuse-inplace-True-angle-cse",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "8b73ba2fe33c1bac0be85064c4f15db27952ca55bbda834e3e9b7a3badfa47bf"
+      },
+      {
+        "name": "lastuse-inplace-True-angle-default",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "aa09fbe58272147f4233af3d0c9524d038411fbd9f81472741e823607a84712d"
+      },
+      {
+        "name": "row-baseline-array-cursor",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "a43ef2bf8127341d9e28a24f07f1f95e82f11112854de44c89eb0437b80e8640"
+      },
+      {
+        "name": "row-baseline-array-index",
+        "size": 248,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "55a97e181553799c7df3c42204a7c7143f0b470acee1a5e91897d117a2e271a1"
+      },
+      {
+        "name": "row-baseline-struct-cursor",
+        "size": 244,
+        "diff": 20,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "8673888a93ee5ac612a1084d5e5e2623a33b63f95f3e9ea03ecae15adb95ae19"
+      },
+      {
+        "name": "row-baseline-struct-index",
+        "size": 248,
+        "diff": 29,
+        "error": null,
+        "shift28": [
+          "r0, r3, #0x1c"
+        ],
+        "sha256": "537ff5fdcae159bcd7f48cf4018667509068cebcd662b571b29f5b9d7225b8e6"
+      },
+      {
+        "name": "row-inplace-history-b-idx-unused-life-array-cursor",
+        "size": 244,
+        "diff": 42,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "15c68f3ca69fd45f50feca0dc3887c4955eca2efdb1f4f0e443a264b4c8aad96"
+      },
+      {
+        "name": "row-inplace-history-b-idx-unused-life-array-index",
+        "size": 248,
+        "diff": 48,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "e62c9e0c2cc898ab3d1733c80ebe7d990313ae79d9bc17bc5fbe6089fccc118f"
+      },
+      {
+        "name": "row-inplace-history-b-idx-unused-life-struct-cursor",
+        "size": 244,
+        "diff": 42,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "345fc56f6db298181bc29bb17301c5d32c9f5295b7bd25908bfba818e10653a8"
+      },
+      {
+        "name": "row-inplace-history-b-idx-unused-life-struct-index",
+        "size": 248,
+        "diff": 48,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "895e188d787cb8c7ea395de6f44d17a181b9ba3c6c9c91fa2c4735a05038979a"
+      },
+      {
+        "name": "row-lastuse-inplace-True-w-life-array-cursor",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "68c34ba444eee09a71e6977ef7c10bffc1be42412a9e9df68e1c3b9282a5290e"
+      },
+      {
+        "name": "row-lastuse-inplace-True-w-life-array-index",
+        "size": 248,
+        "diff": 38,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "bfbbcec2f64f77a4e6bd876a0fc8f1e0f086e25fbfc1f80303c271745ea99c48"
+      },
+      {
+        "name": "row-lastuse-inplace-True-w-life-struct-cursor",
+        "size": 244,
+        "diff": 31,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "47473a27ca8adde49682e9114c8c671bf69352ea9ede58526b39dc8308420d26"
+      },
+      {
+        "name": "row-lastuse-inplace-True-w-life-struct-index",
+        "size": 248,
+        "diff": 38,
+        "error": null,
+        "shift28": [
+          "r0, r0, #0x1c"
+        ],
+        "sha256": "15d4914b4d1ea659fcbee432e2d27d36009eb3b900f09b149e40855e3dd8455e"
+      }
+    ],
+    "reproduction_scripts": {
+      "history_probe.py": "import sys,re,json,itertools,hashlib\nfrom pathlib import Path\nsys.path.insert(0,'tools')\nfrom wallcrack import Target,md\nt=Target('func_ov075_02116128');base=Path('src/unnamed/ov075/func_ov075_02116128.cpp').read_text();out=Path('build/nm-pal-next1012');rows=[]\ndef probe(name,s):\n p=out/(name+'.cpp');p.write_text(s);code,rel,err=t.compile(s)\n ins=[] if code is None else list(md.disasm(code,0))\n row=dict(name=name,size=None if code is None else len(code),diff=None if code is None else sum(code[o:o+4]!=t.target[o:o+4] for o in range(0,min(len(code),len(t.target)),4) if o not in rel),error=err,shift28=[i.op_str for i in ins if i.mnemonic=='lsl' and '#0x1c' in i.op_str],sha256=hashlib.sha256(s.encode()).hexdigest())\n rows.append(row)\n if code:(out/(name+'.asm')).write_text('\\n'.join('%03x %s %s'%(i.address,i.mnemonic,i.op_str) for i in ins))\n (out/'history-ledger.json').write_text(json.dumps(rows,indent=2))\n return row\nprobe('baseline',base)\n# Each earlier scalar is dead before w is assigned; hi cannot reuse a live b/t/m at its earlier assignment.\nfor early,late,pragma in itertools.product(['b','t','m','a','slot','dim','unused'],['w','i'],['life','cse','default']):\n s=base.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n s=s.replace('    unsigned int w;','') if late=='w' else s.replace('    int i;','')\n s=re.sub(r'\\b'+late+r'\\b',early,s)\n if late=='w':s=s.replace('hi = '+early+' >> 16;','hi = (unsigned int)'+early+' >> 16;')\n probe('late-'+late+'-reuse-'+early+'-'+pragma,s)\n# Reuse hi as early b or a: both early lifetimes end before hi takes the angle.\nfor early,late,pragma in itertools.product(['b','a'],['hi','angle'],['life','cse','default']):\n s=base.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n s=s.replace('    int '+early+';','');s=re.sub(r'\\b'+early+r'\\b',late,s)\n probe('early-'+early+'-into-'+late+'-'+pragma,s)\nprint(json.dumps(sorted(rows,key=lambda r:(r['size']!=244,r['diff'] if r['diff'] is not None else 999))[:8],indent=2))\nprint('shift roles',sorted(set(tuple(r['shift28']) for r in rows)))\n",
+      "inplace_history_probe.py": "exec(open('build/nm-pal-next1012/history_probe.py').read().split(\"probe('baseline',base)\")[0])\nfor hist,idx,pragma in itertools.product(['none','b','a','dim','slot'],['i','unused','m'],['life','cse','default']):\n s=base.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n # Separate original angle receiver from the final palette, preserve in-place shift.\n start=s.index('    angle = (unsigned short)');end=s.index('    p[0x20]')\n s=s[:start]+'''    angle = (unsigned short)(a + 0xa);\n    w = angle;\n    if (dim != 0) w = (unsigned short)(w - 4);\n    p = bg + m;\n    w <<= 0x1c;\n    hi = w >> 16;\n'''+s[end:]\n if hist in ['b','a']:\n  s=s.replace('    int '+hist+';','')\n  # Rename earlier scalar into hi; hi's palette assignment comes after its final prior use.\n  s=re.sub(r'\\b'+hist+r'\\b','hi',s)\n elif hist in ['dim','slot']:\n  # Copy actual parameter at entry and consume same value, no signature changes.\n  marker='    b = data_0209fc50;';s=s.replace(marker,'    hi = (unsigned int)'+hist+';\\n'+marker)\n  if hist=='dim':s=s.replace('if (dim != 0)','if (hi != 0)')\n  else:s=s.replace('func_02030958(slot)','func_02030958((int)hi)').replace('m = slot *','m = (int)hi *')\n if idx!='i':s=s.replace('    int i;','');s=re.sub(r'\\bi\\b',idx,s)\n probe('inplace-history-'+hist+'-idx-'+idx+'-'+pragma,s)\n(out/'inplace-history-ledger.json').write_text(json.dumps(rows,indent=2))\nprint('count',len(rows),'best',min((r['diff'] for r in rows if r['size']==244),default=None),'roles',sorted(set(tuple(r['shift28']) for r in rows)))\nprint(json.dumps(sorted(rows,key=lambda r:(r['size']!=244,r['diff'] if r['diff'] is not None else 999))[:3],indent=2))\n",
+      "lastuse_probe.py": "exec(open('build/nm-pal-next1012/history_probe.py').read().split(\"probe('baseline',base)\")[0])\nfor chain,overwrite,loop,pragma in itertools.product(['two','inplace'],[False,True],['implicit','w','angle'],['life','cse','default']):\n s=base.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n if chain=='inplace':\n  start=s.index('    angle = (unsigned short)');end=s.index('    p[0x20]')\n  s=s[:start]+'''    angle = (unsigned short)(a + 0xa);\n    w = angle;\n    if (dim != 0) w = (unsigned short)(w - 4);\n    p = bg + m;\n    w <<= 0x1c;\n    hi = w >> 16;\n'''+s[end:]\n for off in ['0x20','0x40','0x37','0x57']:\n  s=s.replace('(p['+off+'] & 0xfff) | hi','(p['+off+'] & 0xfff) | (w >> 16)')\n if overwrite:s=s.replace('p[0x57] = (unsigned short)((p[0x57] & 0xfff) | (w >> 16));','w = (p[0x57] & 0xfff) | (w >> 16);\\n    p[0x57] = (unsigned short)w;')\n if loop!='implicit':\n  for off in ['0','0x60']:\n   s=s.replace('p['+off+'] = (unsigned short)((p['+off+'] & 0xfff) | hi);',loop+' = (p['+off+'] & 0xfff) | hi;\\n        p['+off+'] = (unsigned short)'+loop+';')\n probe('lastuse-'+chain+'-'+str(overwrite)+'-'+loop+'-'+pragma,s)\n(out/'lastuse-ledger.json').write_text(json.dumps(rows,indent=2));print('count',len(rows),'best',min((r['diff'] for r in rows if r['size']==244),default=None),'roles',sorted(set(tuple(r['shift28']) for r in rows)))\n",
+      "row_probe.py": "exec(open('build/nm-pal-next1012/history_probe.py').read().split(\"probe('baseline',base)\")[0])\nfor basis,rowkind,loopkind in itertools.product(['baseline','inplace-history-b-idx-unused-life','lastuse-inplace-True-w-life'],['array','struct'],['cursor','index']):\n s=base if basis=='baseline' else (out/(basis+'.cpp')).read_text()\n s=s.replace('extern \"C\" void func_ov075_02116128',('typedef unsigned short Row[32];\\n' if rowkind=='array' else 'struct Row { unsigned short entry[32]; };\\n')+'extern \"C\" void func_ov075_02116128')\n s=s.replace('unsigned short *p;','Row *p;').replace('p = bg + m;','p = (Row *)(bg + m);')\n for off in ['0x20','0x40','0x37','0x57','0x60','0']:\n  v=int(off,0);idx=str(v%32);r=str(v//32)\n  # Loop index accounts for pointer advance when index form is selected.\n  if loopkind=='index' and off in ['0','0x60']:idx='i' if basis!='inplace-history-b-idx-unused-life' else 'unused'\n  access='p['+r+']'+('' if rowkind=='array' else '.entry')+'['+idx+']'\n  s=s.replace('p['+off+']',access)\n s=s.replace('p++;','p = (Row *)((unsigned short *)p + 1);' if loopkind=='cursor' else '')\n probe('row-'+basis+'-'+rowkind+'-'+loopkind,s)\n(out/'row-ledger.json').write_text(json.dumps(rows,indent=2));print('count',len(rows),'best',min((r['diff'] for r in rows if r['size']==244),default=None),'roles',sorted(set(tuple(r['shift28']) for r in rows)))\n"
+    },
+    "baseline_assembly": "000 push {r4, r5, r6, r7, lr}\n004 sub sp, sp, #4\n008 ldr r0, [pc, #0xdc]\n00c mov r6, r1\n010 ldrb r7, [r0]\n014 mov r5, r2\n018 bl #0x20\n01c mov r4, r0\n020 mov r0, r6\n024 bl #0x2c\n028 rsb r1, r7, #4\n02c lsl r2, r1, #6\n030 lsl r1, r1, #5\n034 add r0, r0, #0xa\n038 lsl r0, r0, #0x10\n03c add r2, r2, #0x84\n040 add r1, r1, #0xa0\n044 mla r1, r6, r1, r2\n048 add r2, r4, r1, lsl #1\n04c lsr r3, r0, #0x10\n050 cmp r5, #0\n054 subne r0, r3, #4\n058 lslne r0, r0, #0x10\n05c lsrne r3, r0, #0x10\n060 lsl r0, r3, #0x1c\n064 ldrh r1, [r2, #0x40]\n068 ldr r4, [pc, #0x80]\n06c lsr r3, r0, #0x10\n070 and r1, r1, r4\n074 orr r1, r1, r0, lsr #16\n078 strh r1, [r2, #0x40]\n07c ldrh r5, [r2, #0x80]\n080 mov r1, #0\n084 and r5, r5, r4\n088 orr r5, r5, r0, lsr #16\n08c strh r5, [r2, #0x80]\n090 ldrh r5, [r2, #0x6e]\n094 and r5, r5, r4\n098 orr r5, r5, r0, lsr #16\n09c strh r5, [r2, #0x6e]\n0a0 ldrh r5, [r2, #0xae]\n0a4 and r5, r5, r4\n0a8 orr r0, r5, r0, lsr #16\n0ac strh r0, [r2, #0xae]\n0b0 ldrh r0, [r2]\n0b4 add r1, r1, #1\n0b8 cmp r1, #0x18\n0bc and r0, r0, r4\n0c0 orr r0, r0, r3\n0c4 strh r0, [r2]\n0c8 ldrh r0, [r2, #0xc0]\n0cc and r0, r0, r4\n0d0 orr r0, r0, r3\n0d4 strh r0, [r2, #0xc0]\n0d8 add r2, r2, #2\n0dc blt #0xb0\n0e0 add sp, sp, #4\n0e4 pop {r4, r5, r6, r7, lr}\n0e8 bx lr\n0ec andeq r0, r0, r0\n0f0 strdeq r0, r1, [r0], -pc"
+  },
+  "next_action": "Retain production NONMATCHING source at 20/61; parent owns any subsequent source continuation. Report-only handoff, no PR or source push."
+}
