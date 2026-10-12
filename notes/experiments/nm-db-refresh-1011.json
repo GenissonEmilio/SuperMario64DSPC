@@ -1,0 +1,64 @@
+{
+  "task": "nm-db-refresh-1011",
+  "base_commit": "036b5f657f6b68ceb8b89eef8f03d61a2839d704",
+  "scope": "Stored near-miss seeds and evaluator metadata only. No production source, headers, compiler flags, attribution, or enrollment changed.",
+  "changes": [
+    {
+      "name": "_ZN12dScStarSel_c8BehaviorEv",
+      "source_sha256": "2ec0a7cea94246390a3c227b9b3bac875dfe0c81e9b794c8a2f326c32284d32a",
+      "changes": "Current nonvirtual member calls and existing concrete wipe declaration; no matching logic changed."
+    },
+    {
+      "name": "_ZN12dScMgSlot1_c8BehaviorEv",
+      "source_sha256": "df69abae96cdd15cb01e420b9e7b137a8edb87b3c014dbfe91131877b53f1b65",
+      "changes": "Current nonvirtual member calls and existing concrete wipe declaration; no matching logic changed."
+    },
+    {
+      "name": "_ZN11dScMgJump_c13OnYoshiTryEatEi",
+      "source_sha256": "926becaf377f41bae7d6601e6931d0978444473107d366cf2912242bd31d555b",
+      "changes": "Current nonvirtual member calls and existing concrete wipe declaration; no matching logic changed."
+    },
+    {
+      "name": "_ZN11daPicGate_c19func_ov080_021261f4Ev",
+      "source_sha256": "c314f8c75fe37cf4ce41d75914f8ddee1f531b4f5fa43f6e9520c949c9a2730b",
+      "changes": "Current real-method seed replaces free-function spelling; zero differences outside relocation slots, div5 at760 bytes."
+    }
+  ],
+  "measurements": {
+    "StarSel": {
+      "size": 2100,
+      "divergences": 11
+    },
+    "Slot1": {
+      "size": 2076,
+      "divergences": 19
+    },
+    "OnYoshiTryEat": {
+      "size": 356,
+      "target_size": 360,
+      "common_prefix_divergences": 65,
+      "manual_hold_preserved": true
+    },
+    "PicGate": {
+      "size": 760,
+      "divergences": 5,
+      "obsolete_name_fallback_removed": true
+    }
+  },
+  "full_reevaluation": {
+    "rows": 13,
+    "ordinary_compiling": 10,
+    "itcm_without_source": 2,
+    "manual_size_mismatch": 1,
+    "drifted_scores": 0,
+    "new_matches": 0,
+    "command": "python tools/nearmiss_db.py reeval",
+    "compiler": "2004/b56",
+    "evaluator": "2004/b56|m2"
+  },
+  "tests": {
+    "command": "python -m unittest discover -s tools -p test_nearmiss_db.py",
+    "result": "55 tests passed"
+  },
+  "limits": "These are repaired, compiling near-miss seeds. Relocation slots remain masked by the iteration metric, and no production byte match or relocation acceptance is claimed."
+}
