@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "task": "nm-camera-next1012",
+  "producer_session": "astra-nm-cam-next1012",
+  "input_commit": "e1f5ecf5fe8505d6b5afb662ed778422db4d6b98",
+  "imported_checkpoint": "065d4f22ee6838eb1423cc05795b15b8e8e51755",
+  "local_cherry_pick": "5745fe310750fbf853cf0be69549feaa58ee9a39",
+  "target": {
+    "symbol": "func_02009e70",
+    "module": "arm9",
+    "addr": "0x02009e70",
+    "size": 4252,
+    "compiler": "2004/b56"
+  },
+  "outcome": "No further improvement. Preserve the previously verified68/1063 checkpoint, imported onto current headers; still NONMATCHING. No exact-match, relocation or enrollment claim.",
+  "source": {
+    "path": "src/unnamed/arm9/0200/func_02009e70.cpp",
+    "normalized_sha256": "31ce215de96eddd1c8c7d95cf3bdcf8f8dac37630998974260f53115bec74a30",
+    "disk_sha256": "e14bbebc5cf524a2ab0aff4c4b9083f67ea505ea88906d8c55afe659c54878cc",
+    "size": 4252,
+    "divergences": 68,
+    "register_words": 61,
+    "schedule_words": 7,
+    "edits_after_import": "None"
+  },
+  "research": {
+    "cells": 64,
+    "unique_normalized_sources": 64,
+    "diagnostic_cells": 19,
+    "families": [
+      {
+        "ledger": "build/nm-camera-next1012/history-ledger.json",
+        "cells": 18,
+        "diagnostic": 3,
+        "best_valid_exact_size": 68
+      },
+      {
+        "ledger": "build/nm-camera-next1012/isolate-ledger.json",
+        "cells": 14,
+        "diagnostic": 8,
+        "best_valid_exact_size": 68
+      },
+      {
+        "ledger": "build/nm-camera-next1012/joins-ledger.json",
+        "cells": 12,
+        "diagnostic": 5,
+        "best_valid_exact_size": 68
+      },
+      {
+        "ledger": "build/nm-camera-next1012/phase-share-ledger.json",
+        "cells": 6,
+        "diagnostic": 0,
+        "best_valid_exact_size": 80
+      },
+      {
+        "ledger": "build/nm-camera-next1012/receiver-ledger.json",
+        "cells": 5,
+        "diagnostic": 0,
+        "best_valid_exact_size": 68
+      },
+      {
+        "ledger": "build/nm-camera-next1012/reuse-ledger.json",
+        "cells": 9,
+        "diagnostic": 3,
+        "best_valid_exact_size": 269
+      }
+    ]
+  },
+  "findings": [
+    "The successful StarSel first-assignment history lever is active here: sharing the f20 receiver with the limit value or earlier mode flags changes register allocation, but disrupts the exact early block and yields121-310 divergent words. It does not establish an immutable compiler floor.",
+    "Reuse of the early mode flags as later input flags remains68. Meaningful earlier scalar-copy receivers are either inert or induce a large register rotation; declaration-order grids were not repeated.",
+    "Diagnostic deletion of each late r5 zero/one assignment and the entire final flag-consumer branch leaves the original input-flags sl versus limit r5 allocation intact. Removing any combination of the three early scaling blocks also leaves that pair intact. These nonsemantic probes are not candidates.",
+    "Semantics-preserving angle/absolute-value branch forms remain68 or regress. An angle ternary changes a larger register rotation; it does not resolve the target pair.",
+    "Sharing the disjoint signed distance phase and later unsigned height phase with explicit signed reads was tested on the baseline and f20-split form. Best new variant80 fixes none of the existing68 words and adds12; it is retained only as a probe.",
+    "Overlapping receiver diagnostics are explicitly labelled: late flags into t1/sba/r7h and f20 into t0 or the still-live fl are not offered as semantically valid source."
+  ],
+  "preservation": {
+    "scratch": "build/nm-camera-next1012",
+    "baseline": "build/nm-camera-next1012/baseline.cpp",
+    "ledgers": "All probes and disassembly retained under the scratch directory. Diagnostic deletions never applied to src."
+  },
+  "scope": "Only source/report checkpoint import and this research report. No headers, config, database, enrollment, source-branch push, PR or merge changes.",
+  "next_action": "Independent review of carried68-word partial checkpoint and bounded research report; a future pass may use new evidence. No impossibility conclusion.",
+  "verification": [
+    {
+      "command": "python tools/fdiff.py --c src/unnamed/arm9/0200/func_02009e70.cpp --name func_02009e70 --module arm9 --addr 0x02009e70 --size 0x109c --version 2004/b56 --quiet",
+      "result": "match=False mismatches=68/1063; exact4252 bytes"
+    },
+    {
+      "command": "python tools/check_decl_agreement.py --changed e1f5ecf5fe8505d6b5afb662ed778422db4d6b98",
+      "result": "PASS:25 banked disagreements in scope;0 new disagreements and0 new header redeclarations"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ]
+}
