@@ -1,0 +1,159 @@
+{
+  "task": "nm-star-1011",
+  "base_commit": "036b5f657f6b68ceb8b89eef8f03d61a2839d704",
+  "function": "_ZN12dScStarSel_c8BehaviorEv",
+  "module": "ov003",
+  "address": "0x020af038",
+  "size": 2100,
+  "outcome": "No byte improvement. Current source retained; no production source, header, database, or queue modifications.",
+  "baseline": {
+    "path": "C:\\tmp\\sm64ds-nm-star1011\\src\\_ZN12dScStarSel_c8BehaviorEv.cpp",
+    "sha256": "e1d1b599a9640c978d8742fa44b06695898da1a31b7994a6997024b22bff592a",
+    "divergent_words": 11,
+    "total_words": 525,
+    "size": 2100,
+    "schedule_differences": 0
+  },
+  "best": {
+    "path": "C:\\tmp\\sm64ds-nm-star1011\\build\\nm-star1011\\best.cpp",
+    "sha256": "e1d1b599a9640c978d8742fa44b06695898da1a31b7994a6997024b22bff592a",
+    "divergent_words": 11,
+    "size": 2100,
+    "relocation_proof": "Not claimed: nonzero byte residue. No production candidate."
+  },
+  "stored_db": {
+    "divergences_recorded": 11,
+    "current_compile": "FAIL",
+    "reason": "Obsolete explicit this arguments at two helper calls now declared as member functions; current source compiles at the stored 11-word floor."
+  },
+  "experiments": {
+    "compile_cells": 192,
+    "unique_normalized_sources": 171,
+    "families": [
+      {
+        "name": "branch-crossing receiver and declaration type/rank",
+        "cells": 52,
+        "description": "Baseline plus n/touched as ty receiver and n as scratch receiver; preserve displaced values and vary receiver rank/type.",
+        "best": 11
+      },
+      {
+        "name": "paired receiver/held-value types and signedness",
+        "cells": 64,
+        "description": "n or touched receives ty; displaced value held by ty; cross both types and unsigned comparison spelling.",
+        "best": 17
+      },
+      {
+        "name": "aggregate touch coordinates",
+        "cells": 24,
+        "description": "x/y local aggregate, six scalar types at four declaration positions.",
+        "best": 31
+      },
+      {
+        "name": "typed touch record and inline accessors",
+        "cells": 36,
+        "description": "Four-byte record fields, by-value getters, or output references, with const and return-type variants. Some emitted source duplicates retained in total cell count.",
+        "best": 11
+      },
+      {
+        "name": "existing scene byte-array address and pointer qualification",
+        "cells": 16,
+        "description": "Four equivalent access spellings crossed with const/restrict record pointers.",
+        "best": 11
+      }
+    ],
+    "results_histogram": [
+      {
+        "divergences": 11,
+        "size": 2100,
+        "schedule_differences": 0,
+        "cells": 54
+      },
+      {
+        "divergences": 999,
+        "size": 2104,
+        "schedule_differences": 383,
+        "cells": 33
+      },
+      {
+        "divergences": 20,
+        "size": 2100,
+        "schedule_differences": 0,
+        "cells": 29
+      },
+      {
+        "divergences": 18,
+        "size": 2100,
+        "schedule_differences": 1,
+        "cells": 12
+      },
+      {
+        "divergences": 13,
+        "size": 2100,
+        "schedule_differences": 2,
+        "cells": 4
+      },
+      {
+        "divergences": 17,
+        "size": 2100,
+        "schedule_differences": 0,
+        "cells": 24
+      },
+      {
+        "divergences": 21,
+        "size": 2100,
+        "schedule_differences": 1,
+        "cells": 8
+      },
+      {
+        "divergences": 31,
+        "size": 2100,
+        "schedule_differences": 0,
+        "cells": 16
+      },
+      {
+        "divergences": 32,
+        "size": 2100,
+        "schedule_differences": 1,
+        "cells": 8
+      },
+      {
+        "divergences": 168,
+        "size": 2100,
+        "schedule_differences": 154,
+        "cells": 4
+      }
+    ]
+  },
+  "residue": {
+    "offsets": [
+      "0x248",
+      "0x24c",
+      "0x250",
+      "0x254",
+      "0x258",
+      "0x25c",
+      "0x260",
+      "0x268",
+      "0x270",
+      "0x274",
+      "0x278"
+    ],
+    "description": "One r6/r7 swap between ty and loop scratch. b56 emits ldrb r6,[r6,#3] at +0x248; ROM uses r7 destination."
+  },
+  "reproduction": {
+    "cwd": "C:\\tmp\\sm64ds-nm-star1011",
+    "scripts": [
+      "python build/nm-star1011/probe.py",
+      "python build/nm-star1011/paired.py",
+      "python build/nm-star1011/aggregate.py"
+    ],
+    "measurement_log": "C:\\tmp\\sm64ds-nm-star1011\\build\\nm-star1011\\measurements.json",
+    "best_check": "python tools/wallcrack.py _ZN12dScStarSel_c8BehaviorEv --src build/nm-star1011/best.cpp",
+    "fdiff_command": "C:\\Users\\andre\\AppData\\Local\\Programs\\Python\\Python311\\python.exe tools/fdiff.py --c C:\\tmp\\sm64ds-nm-star1011\\build\\nm-star1011\\best.cpp --name _ZN12dScStarSel_c8BehaviorEv --module ov003 --addr 0x020af038 --size 0x834 --version 2004/b56 --quiet",
+    "fdiff_exit_code": 0,
+    "fdiff_output": "RESULT match=False mismatches=11/525 version=2004/b56"
+  },
+  "source_review": "Pure C++ only; experimental aliases preserve byte layout, displaced values, and control-flow semantics. No asm, encoded instruction/data patches, or compiler-option substitutions.",
+  "independent_verification": "Pending parent rerun of exact retained best and representative experimental cells.",
+  "next_action": "Do not repeat ordinary type/rank or receiver/aggregate cells. A new branch-crossing receiver mechanism must demonstrably change the +0x248 destination while preserving schedule before any wider sweep."
+}
