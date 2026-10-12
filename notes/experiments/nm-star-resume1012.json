@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "task": "nm-star-resume1012",
+  "base_commit": "1700e4c2a7ed0a79c5e895d678549d778dc78cdf",
+  "producer_session": "astra-nm-star-resume1012",
+  "target": {
+    "symbol": "_ZN12dScStarSel_c8BehaviorEv",
+    "module": "ov003",
+    "addr": "0x020af038",
+    "size": 2100,
+    "compiler": "2004/b56"
+  },
+  "outcome": "Improved 11 to 7 divergent words at exact 2100 bytes. Still NONMATCHING; not a source match or relocation verification.",
+  "production": {
+    "path": "src/_ZN12dScStarSel_c8BehaviorEv.cpp",
+    "disk_sha256": "6cad8b1567d318db8af84abe5674052963849b548de5132f3ecafee42c374c7e",
+    "normalized_text_sha256": "275cfecfcf0d5859adc386bdf26e42eae8d8df8e9da769447412e11935c5e972",
+    "divergences": 7,
+    "words": 525,
+    "offsets": [
+      "0x210",
+      "0x220",
+      "0x228",
+      "0x240",
+      "0x244",
+      "0x254",
+      "0x280"
+    ],
+    "residue": "One r1/r3 swap across global touch-table base, held byte, and X-coordinate chain.",
+    "enrollment": "Unchanged; this source remains excluded from ROM reconstruction."
+  },
+  "baseline": {
+    "source": "build/nm-star-resume1012/baseline.cpp",
+    "divergences": 11,
+    "size": 2100,
+    "old_cluster": [
+      "0x248",
+      "0x24c",
+      "0x250",
+      "0x254",
+      "0x258",
+      "0x25c",
+      "0x260",
+      "0x268",
+      "0x270",
+      "0x274",
+      "0x278"
+    ],
+    "note": "Frozen original 11-word seed; harness reads this immutable scratch copy, not current production."
+  },
+  "mechanism": [
+    "Remove explicit named rec/tx/ty preheader assignments; express loop coordinate reads through small inline TouchX/TouchY accessors.",
+    "Allow normal loop-invariant motion by removing opt_loop_invariants off. Compiler generates fresh Y destination r7 and recycles row-base r6 for loop scratch, exactly as ROM.",
+    "Use unsigned long idx after touched, and range-valid s16 count n (loaded from u8, maximum 255). This restores the original index and count routing.",
+    "Remove now-unused rec/tx/ty declarations. Retain existing opt_strength_reduction off because enabling it changes frame and size to 2096."
+  ],
+  "source_quality": {
+    "status": "partial reconstruction; existing inherited virtual facade and opaque field macros retained",
+    "real_interface_artifact": "build/nm-star-resume1012/best7-review.cpp",
+    "real_interface_normalized_sha256": "66b7174c141c3d099f46960c49994243207668884575fbadcacb9e005fac45f5",
+    "real_interface_divergences": 7,
+    "deferred_reason": "Replacing the existing global VObj* declaration with dFdBrightness_c* is byte-neutral but flips declaration-check plurality for data_0209f5bc to void*, exposing 4 disagreements including 3 untouched consumers. Production retains original interface; coordinated declaration migration is separate.",
+    "semantic_basis": "Touch records are 4 bytes with held/edge/x/y as documented in PlayerInput.h. Inline reads occur on a loop path with no intervening writes or calls before hit; compiler safely hoists them. n is loaded from a scene u8 so every value is representable in s16."
+  },
+  "verification": [
+    {
+      "command": "python tools/fdiff.py --c src/_ZN12dScStarSel_c8BehaviorEv.cpp --name _ZN12dScStarSel_c8BehaviorEv --module ov003 --addr 0x020af038 --size 0x834 --version 2004/b56 --quiet",
+      "result": "match=False mismatches=7/525; exact 2100 bytes"
+    },
+    {
+      "command": "python tools/linkcheck.py --name _ZN12dScStarSel_c8BehaviorEv --c build/nm-star-resume1012/best7-review.cpp --addr 0x020af038 --size 0x834 --module ov003",
+      "result": "NO-REPRO; nonzero byte residue. No relocation proof claimed."
+    },
+    {
+      "command": "python build/nm-star-resume1012/tu_probe.py",
+      "result": "Real typed 7-word candidate stays 7/2100 before and after complete current StarSel TU, and defer_codegen off."
+    },
+    {
+      "command": "python tools/check_decl_agreement.py --changed 1700e4c2a7ed0a79c5e895d678549d778dc78cdf",
+      "result": "PASS: no new declaration disagreements; no new local redeclarations of header-declared symbols"
+    }
+  ],
+  "research": {
+    "cells": 725,
+    "unique_normalized_sources": 700,
+    "diagnostic_nonsemantic_cells": 127,
+    "families": [
+      {
+        "ledger": "build/nm-star-resume1012/algebra-ledger.json",
+        "cells": 10,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/argref-ledger.json",
+        "cells": 9,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/baseptr-ledger.json",
+        "cells": 16,
+        "diagnostics": 0,
+        "best_exact_size_div": 32
+      },
+      {
+        "ledger": "build/nm-star-resume1012/best7-ledger.json",
+        "cells": 1,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/byte-ledger.json",
+        "cells": 12,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/census-phase-ledger.json",
+        "cells": 6,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/clean-ledger.json",
+        "cells": 8,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/cleanrank-ledger.json",
+        "cells": 32,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/component-ledger.json",
+        "cells": 24,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/datarow-ledger.json",
+        "cells": 12,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/deletion-ledger.json",
+        "cells": 64,
+        "diagnostics": 64,
+        "best_exact_size_div": null
+      },
+      {
+        "ledger": "build/nm-star-resume1012/entryorder-ledger.json",
+        "cells": 24,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/getter-param-ledger.json",
+        "cells": 28,
+        "diagnostics": 0,
+        "best_exact_size_div": 14
+      },
+      {
+        "ledger": "build/nm-star-resume1012/getterform-ledger.json",
+        "cells": 22,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/globalstride-ledger.json",
+        "cells": 3,
+        "diagnostics": 0,
+        "best_exact_size_div": 14
+      },
+      {
+        "ledger": "build/nm-star-resume1012/held-ledger.json",
+        "cells": 24,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/heldalias-ledger.json",
+        "cells": 7,
+        "diagnostics": 0,
+        "best_exact_size_div": 10
+      },
+      {
+        "ledger": "build/nm-star-resume1012/hit-ledger.json",
+        "cells": 11,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/hoist-ledger.json",
+        "cells": 12,
+        "diagnostics": 0,
+        "best_exact_size_div": 14
+      },
+      {
+        "ledger": "build/nm-star-resume1012/invert-ledger.json",
+        "cells": 31,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/mixed-ledger.json",
+        "cells": 30,
+        "diagnostics": 0,
+        "best_exact_size_div": 11
+      },
+      {
+        "ledger": "build/nm-star-resume1012/narrow-ledger.json",
+        "cells": 8,
+        "diagnostics": 0,
+        "best_exact_size_div": 11
+      },
+      {
+        "ledger": "build/nm-star-resume1012/newrank-ledger.json",
+        "cells": 22,
+        "diagnostics": 0,
+        "best_exact_size_div": 11
+      },
+      {
+        "ledger": "build/nm-star-resume1012/phase-ledger.json",
+        "cells": 28,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/point-ledger.json",
+        "cells": 20,
+        "diagnostics": 0,
+        "best_exact_size_div": null
+      },
+      {
+        "ledger": "build/nm-star-resume1012/reduce7-ledger.json",
+        "cells": 63,
+        "diagnostics": 63,
+        "best_exact_size_div": null
+      },
+      {
+        "ledger": "build/nm-star-resume1012/relative-ledger.json",
+        "cells": 12,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/return-ledger.json",
+        "cells": 36,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/routing-ledger.json",
+        "cells": 36,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/rowindex-ledger.json",
+        "cells": 48,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/sig-ledger.json",
+        "cells": 36,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/stride-ledger.json",
+        "cells": 18,
+        "diagnostics": 0,
+        "best_exact_size_div": 14
+      },
+      {
+        "ledger": "build/nm-star-resume1012/tu-ledger.json",
+        "cells": 4,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      },
+      {
+        "ledger": "build/nm-star-resume1012/view-ledger.json",
+        "cells": 8,
+        "diagnostics": 0,
+        "best_exact_size_div": 7
+      }
+    ],
+    "rom_census": {
+      "scanner": "build/nm-star-resume1012/rom_census.py",
+      "data": "build/nm-star-resume1012/rom-census.json",
+      "adjacent_2_3_byte_load_pairs": 27,
+      "fresh_y_destinations": 26,
+      "matched_loop_precedents": [
+        "dScMgCup_c::StateSelect",
+        "dScMgLuigi_c::CheckTouch"
+      ],
+      "limitation": "Census identifies adjacent +2/+3 byte loads and provides contexts; it is not a full CFG liveness proof."
+    },
+    "negative_evidence": "Both systematic region-deletion passes, input-view/reference/aggregate forms, matched named-index idiom, helper signatures/return widths, branch-arm/boolean forms, narrow compound arithmetic, live-variable ordering and targeted phase controls are preserved. None establishes impossibility; best tested production form is 7."
+  },
+  "publication": "Prepared for the authorized source/report commit and coordinated producer handoff. No source-branch push, PR, merge, shared-header, config, enrollment or database changes."
+}
