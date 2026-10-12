@@ -72,5 +72,12 @@
     "enrollment": "src/_ZN11daPicGate_c19func_ov080_021261f4Ev.cpp: complete .text0x021261f4..0x021264ec",
     "records": "Supported stamp_provenance.py records gpt-6-astra/high/codex, removes only matched PicGate near-miss; existing author assignments retained (this address was unassigned)",
     "scope": "Function-only match; no TU consolidation or shared-header edit; no PR or source push"
+  },
+  "latest_composition": {
+    "base_commit": "e1f5ecf5fe8505d6b5afb662ed778422db4d6b98",
+    "previous_verified_candidate": "46d911bc2b53835de2e066853d3ec1c08e89f01b",
+    "source": "Unchanged matched source blob; rechecked VERIFIED760bytes/diffs[]/blind0 on latestheaders",
+    "metadata": "Regenerated near-miss deletion from fetched main by identity: onlyPicGate removed; no solved StarSel or Player tip resurrected",
+    "scope": "No source push, PR or merge performed; final latest-base verification pending"
   }
 }
