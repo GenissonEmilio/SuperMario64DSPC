@@ -5,7 +5,7 @@
     "cv_launder_sites": 6,
     "extern_vtable": 47,
     "extern_vtable_classes": 64,
-    "inline_asm": 12,
+    "inline_asm": 11,
     "launder_or_forced": 97,
     "launder_sites": 334
   },
