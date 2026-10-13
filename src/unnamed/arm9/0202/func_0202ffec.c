@@ -1,9 +1,10 @@
-// NONMATCHING (TERMINAL-FLOOR): functionally-verified C at the proven compiler floor.
-// func_0202ffec @ 0x0202ffec (arm9, size 0x1d8). Quaternion product. 2 words diverge:
-// two smull operand-slot swaps (+0x14, +0x50) -- mwccarm puts the second-emitted load in
-// Rm, the ROM pins the matrix operand. ~800 spellings, the real permuter (6512 candidates),
-// flags, versions, launders all closed (notes 6ay, DB row). Operand-order-only delta:
-// functionally identical (multiplication is commutative).
+// NONMATCHING: two SMULL operand-slot differences remain under 2004/b56.
+// func_0202ffec @ 0x0202ffec (arm9, size 0x1d8). Quaternion product.
+// The emitted 472 bytes differ at +0x14 and +0x50 only: Rm/Rs are swapped.
+// Those signed multiplies are semantically identical, but this is NOT a byte match.
+// Prior searches and the 2026-10-12 typed/value-numbering experiments did not
+// close these words; they do not establish a compiler impossibility.
+// Reproduction and measured hypotheses: notes/experiments/remaining4-quat1012.json.
 typedef signed int s32;
 
 struct Quat {
