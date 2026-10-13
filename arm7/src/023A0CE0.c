@@ -1,175 +1,101 @@
-// NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
-// @ 0x023A0CE0 size 0x278 (runtime 0x027D2C58, main)
-// No C attempt exists yet; asm generated from the original bytes. PLACEHOLDER: AH54 (fn_023A0CE0) still running; replace with its result when it lands.
+// NONMATCHING: best C 134/158 words match the ROM.
+// @ 0x023A0CE0 size 0x26C (runtime 0x027D2C58, main). Residue class: register allocation / frame shape.
+// Closest C attempt from AH54 (tried, closed); not enrolled, so the build keeps the original bytes for this range.
+extern void fn_02382C98(void *a1, void *a2, int a3) /* =0x037FAB30 */;
+extern int fn_0238D594(int a1, int a2) /* =0x0380542C */;
+extern int fn_02394D84(void *a1, void *a2, unsigned short *node) /* =0x027C6CFC */;
+extern void fn_0239477C(int a1, int a2) /* =0x027C66F4 */;
+extern int fn_02394DF8(void *list, unsigned short *node) /* =0x027C6D70 */;
 
-extern void fn_02382C98(void);
-extern void fn_0238D594(void);
-extern void fn_0239477C(void);
-extern void fn_02394D84(void);
-extern void fn_02394DF8(void);
-
-asm void fn_023A0CE0(void) {
-    stmdb sp!, {r4, r5, r6, r7, r8, r9, lr}
-    sub sp, sp, #4
-    mov r8, r0
-    ldr r0, =0x380FFF4
-    ldr r0, [r0]
-    add r7, r0, #0x4a0
-    add r3, r8, #8
-    ldrh r0, [r3]
-    sub r0, r0, #0x18
-    strh r0, [r3]
-    mov r3, #0
-    b L_027D2D4C
-L_027D2C88:
-    mov r0, #0x18
-    mul r5, r3, r0
-    add r0, r7, r5
-    ldrh r5, [r7, r5]
-    cmp r5, #0
-    beq L_027D2D48
-    ldrh r6, [r1, #4]
-    ldrh r5, [r0, #8]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r6, [r1, #2]
-    ldrh r5, [r0, #6]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r6, [r1]
-    ldrh r5, [r0, #4]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r6, [r1, #0xa]
-    ldrh r5, [r0, #0xe]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r6, [r1, #8]
-    ldrh r5, [r0, #0xc]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r6, [r1, #6]
-    ldrh r5, [r0, #0xa]
-    cmp r6, r5
-    bne L_027D2D48
-    ldrh r9, [r1, #0xc]
-    mov r5, r9, lsl #0x10
-    mov ip, r5, lsr #0x14
-    ldrh r5, [r0, #0x10]
-    mov r6, r5, lsl #0x10
-    cmp ip, r6, lsr #20
-    bne L_027D2D48
-    sub r4, r5, r9
-    ands r1, r4, #0x80000000
-    bne L_027D2EB8
-    ldrh r0, [r0, #2]
-    mul r1, r4, r0
-    ldrh r0, [r8, #8]
-    subs r2, r0, r1
-    beq L_027D2EB8
-    ands r0, r2, #0x80000000
-    beq L_027D2D54
-    b L_027D2EB8
-L_027D2D48:
-    add r3, r3, #1
-L_027D2D4C:
-    cmp r3, #3
-    blo L_027D2C88
-L_027D2D54:
-    cmp r3, #3
-    beq L_027D2EB8
-    mov r0, #0x18
-    mul r9, r3, r0
-    add r0, r7, r9
-    ldr r0, [r0, #0x14]
-    add r6, r0, #0x10
-    ldrh r3, [r6, #0x10]
-    add r5, r3, r2
-    ldr r0, =0x5E4
-    cmp r5, r0
-    bls L_027D2DA4
-    ldr r0, =0x380FFF4
-    ldr r0, [r0]
-    add r0, r0, #0x14c
-    sub r1, r6, #0x10
-    bl fn_02394DF8
-    mov r0, #0
-    strh r0, [r7, r9]
-    b L_027D2EB8
-L_027D2DA4:
-    add r0, r8, #0x24
-    add r0, r0, r1
-    add r1, r6, #0x2c
-    add r1, r1, r3
-    add r2, r2, #1
-    bl fn_02382C98
-    strh r5, [r6, #0x10]
-    ldrh r0, [r8]
-    and r0, r0, #0xf0
-    mov r1, #0x10
-    bl fn_0238D594
-    add r3, r7, r9
-    add r2, r3, #0x10
-    ldrh r5, [r2]
-    bic r1, r5, #0xf
-    mov r5, r5, lsl #0x1c
-    sub r4, r0, r4
-    add r4, r4, r5, lsr #28
-    mov r4, r4, lsl #0x10
-    mov r4, r4, lsr #0x10
-    and r4, r4, #0xf
-    orr r1, r1, r4
-    strh r1, [r2]
-    ldr r1, =0x380FFF4
-    ldr r4, [r1]
-    ldr r2, =0x518
-    ldr r2, [r4, r2]!
-    add r0, r2, r0
-    str r0, [r4]
-    ldrh r0, [r8]
-    ands r0, r0, #0x100
-    bne L_027D2EB8
-    mov r0, #0
-    strh r0, [r3]
-    ldrh r0, [r6, #8]
-    bic r0, r0, #0xf0
-    add r0, r0, #0x10
-    strh r0, [r6, #8]
-    add r2, r6, #0x10
-    ldrh r0, [r2]
-    add r0, r0, #0x18
-    strh r0, [r2]
-    ldrh r0, [r6, #8]
-    ands r0, r0, #0xf
-    beq L_027D2E84
-    cmp r0, #8
-    bne L_027D2EA8
-    ldr r1, [r1]
-    add r0, r1, #0x14c
-    add r1, r1, #0x188
-    sub r2, r6, #0x10
-    bl fn_02394D84
-    mov r0, #2
-    mov r1, #6
-    bl fn_0239477C
-    b L_027D2EB8
-L_027D2E84:
-    ldr r1, [r1]
-    add r0, r1, #0x14c
-    add r1, r1, #0x1a0
-    sub r2, r6, #0x10
-    bl fn_02394D84
-    mov r0, #1
-    mov r1, #7
-    bl fn_0239477C
-    b L_027D2EB8
-L_027D2EA8:
-    ldr r0, [r1]
-    add r0, r0, #0x14c
-    sub r1, r6, #0x10
-    bl fn_02394DF8
-L_027D2EB8:
-    add sp, sp, #4
-    ldmia sp!, {r4, r5, r6, r7, r8, r9, lr}
-    bx lr
+#pragma opt_propagation off
+#pragma opt_common_subs off
+void fn_023A0CE0(unsigned short *a1, unsigned short *a2, int a3) {
+    int off;
+    unsigned int i;
+    char *base;
+    unsigned short *v12;
+    unsigned int sum;
+    int pa2;
+    int off2;
+    int pa3;
+    unsigned int w9;
+    int diff;
+    int d2;
+    base = *(char **)0x0380FFF4 + 0x4A0;
+    a1[4] -= 24;
+    for (i = 0; i < 3; i++) {
+        off = i * 0x18;
+        unsigned short *lslot = (unsigned short *)(base + off);
+        if (*(unsigned short *)(base + off) != 0
+            && a2[2] == lslot[4]
+            && a2[1] == lslot[3]
+            && a2[0] == lslot[2]
+            && a2[5] == lslot[7]
+            && a2[4] == lslot[6]
+            && a2[3] == lslot[5]) {
+            if ((((unsigned int)a2[6] << 16) >> 20) == (((unsigned int)lslot[8] << 16) >> 20)) {
+                diff = (int)lslot[8] - (int)a2[6];
+                if ((diff & 0x80000000) != 0)
+                    return;
+                pa2 = diff * lslot[1];
+                pa3 = (int)a1[4] - pa2;
+                if (pa3 == 0)
+                    return;
+                if ((pa3 & 0x80000000) == 0) {
+                    d2 = diff;
+                    break;
+                }
+                return;
+            }
+        }
+    }
+    if (i != 3) {
+        char *slot16;
+        unsigned short cur;
+        int r;
+        char *slot;
+        unsigned int sh;
+        unsigned int nib;
+        unsigned int bic;
+        off2 = i * 0x18;
+        slot = base + off2;
+        v12 = (unsigned short *)(*(int *)(slot + 20) + 16);
+        w9 = v12[8];
+        sum = w9 + pa3;
+        if (sum > 0x5E4) {
+            fn_02394DF8((*(char **)0x0380FFF4 + 0x14C), (v12 - 8));
+            *(unsigned short *)(base + off2) = 0;
+        } else {
+            fn_02382C98((char *)&a1[18] + pa2, (void *)((char *)v12 + 44 + w9), pa3 + 1);
+            v12[8] = (unsigned short)sum;
+            r = fn_0238D594(*a1 & 0xF0, 16);
+            slot = base + off2;
+            slot16 = slot + 16;
+            cur = *(unsigned short *)slot16;
+            bic = cur & ~0xF;
+            sh = (unsigned int)cur << 28;
+            *(unsigned short *)slot16 = (unsigned short)(bic | ((unsigned short)(r - d2 + (sh >> 28)) & 0xF));
+            *(int *)((char *)*(char **)0x0380FFF4 + 0x518) += r;
+            if ((*a1 & 0x100) == 0) {
+                *(unsigned short *)slot = 0;
+                v12[4] = (unsigned short)((v12[4] & ~0xF0) + 0x10);
+                v12[8] += 24;
+                nib = v12[4] & 0xF;
+                if (nib == 0)
+                    goto do17;
+                if (nib != 8)
+                    goto doC;
+                fn_02394D84((*(char **)0x0380FFF4 + 0x14C), (*(char **)0x0380FFF4 + 0x188), (v12 - 8));
+                fn_0239477C(2, 6);
+                goto done;
+            do17:
+                fn_02394D84((*(char **)0x0380FFF4 + 0x14C), (*(char **)0x0380FFF4 + 0x1A0), (v12 - 8));
+                fn_0239477C(1, 7);
+                goto done;
+            doC:
+                fn_02394DF8((*(char **)0x0380FFF4 + 0x14C), (v12 - 8));
+            done:;
+            }
+        }
+    }
 }
