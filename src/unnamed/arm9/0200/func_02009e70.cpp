@@ -1,56 +1,13 @@
 //cpp
-// NONMATCHING: functionally-verified C, 72 of 1063 words diverge (was 96).
-// func_02009e70 @ 0x02009e70 (arm9, size 0x109c). Size exact; every opcode,
-// immediate, branch target and pool word is right. The residue is register
-// identity plus nine scheduling words: tools/wallcrack.py tags 63 regperm and
-// 9 SCHED, and the semantics were verified instruction by instruction (2026-08-01).
-// For recomp/port purposes the file is complete: the compiled code is
-// functionally identical to the ROM, differing only in register names and
-// instruction order.
-//
-// 2026-09-13 (run link100 crack wave 9, lane CRK-M) 96 -> 72, two source levers:
-//   * the file's own `#pragma opt_common_subs off` was a 14-word REGRESSION and
-//     is gone. Deleting it closes the whole 17-word table-lookup + FXMUL cluster
-//     at +0xa44..+0xaa4 that the near-miss DB called "RC4, the LARGEST, the one
-//     cluster with residual source-lever hope". Found by sweeping the full
-//     246-name verified pragma vocabulary at on and off (493 compiles).
-//   * `t0 = FXMUL(sp28, sp30)` instead of `FXMUL(sp30, sp28)`: the ROM wants
-//     sp28 as the smull Rm operand. Closes 10 of the 13 words at +0xe8c..+0xec4
-//     (notes 6cb lever 2, commutative operand transposition).
-// What is left, and what it is: 52 of the 72 words hang off ONE web exchange --
-// the ROM colours the mode-flags word r5 and the func_020093f4 distance limit sl,
-// this build does the reverse -- and every later cluster (the sp4c pair at
-// +0xc90, the ground height at +0xd6c..+0xdf0, the sqrt chain at +0xb38, the
-// sp28 load at +0xe8c, the +0xef8/+0xf08/+0xf18 adds) falls out of it. The
-// remaining 20 are the sp10 store interleave (+0x4ac, 6w), the self+0x100
-// materialisation schedule (+0x618, 12w) and the +0xfd4 zero temp (2w).
-// The exchange does not move on any source axis measured. Lane CRK-M swept the
-// radius-1 declaration rank x type-name neighbourhood (166 cells, twice), 20
-// random declaration orders, the pragma vocabulary (twice), 6cd dead preamble
-// stores at four positions x eleven locals, 6cb block-depth naming, 6ce pool-
-// address launders, 21 commutative transpositions and 2100 random product draws
-// over all of those jointly. Lane CRK2-M then swept, at this 72 base and scoring
-// every cell on the WHOLE function region by region, about 1,470 further cells:
-// the COMPLETE sl x r5 declaration rank cross product (156, not just radius 1),
-// that product crossed with seven equal-width type names on each of the two
-// declarations (588, the joint 6cc axis), the 246-name pragma vocabulary at on
-// and off on top of this base (492), the birth ORDER of the three sp1c loads
-// crossed with the sb initialiser's position (24) and the three FXMULC pair
-// orders (7), the limit web's callee return type, block-depth nesting of each
-// declaration, the `register` storage class, nine disjoint-local merges that
-// relieve pressure by one, dead stores at three positions inside the f20 web,
-// the flags table's pool-address launders and index spellings, sba/t1 width
-// respellings, and comparison and mask operand transpositions at every use site
-// of both webs. R01 reads exactly 4 in every one of those cells that keeps the
-// schedule; no cell anywhere reads below 72. Splitting or regrouping the webs
-// adds one live range and shifts EVERY register up by one (273-297 words), so
-// the pressure is saturated at thirteen locals. All 25 installed compiler builds
-// were swept: 2004/b56 is the only one within reach (72); every other build
-// fails the function outright. Details in the lanes' attempts.txt.
-//
-// L0() below was a u64-mask launder (`& 0xFFFFFFFFFFFFFFFFLL` through a long long
-// round trip) that lane BANK measured dead under 2004/b56; it is kept as a no-op
-// macro rather than inlined at every call site so the history stays reviewable.
+// NONMATCHING: func_02009e70 @ 0x02009e70 (arm9), 68/1063 divergent words.
+// Exact 4252-byte size under mwccarm 2004/b56; 61 register and 7 scheduling words.
+// No exact-match, relocation, or enrollment claim.
+// The signed 64-bit distance accumulator preserves the previously measured
+// four-word improvement. Both signed-32 squares and their difference fit s64.
+// Current experiments: notes/experiments/remaining4-cam1012.json.
+// Earlier 72-word source and experiment history remain at dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e.
+// L0 below preserves the spelling of an earlier, compiler-eliminated pointer
+// mask; it now expands directly to its argument.
 #include "dBgCh_Gnd.h"
 #include "dBgCh_Lin.h"
 #include "PlayerInput.h"
@@ -445,7 +402,12 @@ L_A94C:
 L_A984:
     if (sp28 >= fp) goto L_AA34;
     Math_Function_0203b14c(&sp28, fp, 0x400, r7 + 0x20000, 0x100);
-    r7 = _ZN4cstd4sqrtEy((u64)((s64)sp28 * sp28 - (s64)sp40.y * sp40.y));
+    {
+        s64 distanceSq = sp28;
+        distanceSq *= sp28;
+        distanceSq -= (s64)sp40.y * sp40.y;
+        r7 = _ZN4cstd4sqrtEy((u64)distanceSq);
+    }
     t0 = _ZN4cstd4fdivEii(r7, Vec3_HorzLen(&sp40));
     sp40.x = FXMUL(sp40.x, t0);
     sp40.z = FXMUL(sp40.z, t0);

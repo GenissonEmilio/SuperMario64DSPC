@@ -1,0 +1,233 @@
+{
+  "schema": 1,
+  "task": "remaining4-cam1012",
+  "stage": "produce",
+  "producer_session": "astra-r4-cam1012",
+  "input_commit": "dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+  "base_commit": "dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+  "workflow_commit": "dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+  "branch": "match/remaining4-cam1012",
+  "target": {
+    "symbol": "func_02009e70",
+    "module": "arm9",
+    "addr": "0x02009e70",
+    "size": 4252,
+    "compiler": "2004/b56"
+  },
+  "outcome": "Partial checkpoint: carry the prior signed-64 accumulator improvement from accepted 514f381530966231d36b5efb6e702d2beaf16acd onto current main. Main source measures72/1063; retained source measures68/1063. This continuation found no further improvement. NONMATCHING; no exact-byte, relocated-destination, full-ROM or enrollment acceptance.",
+  "source": {
+    "path": "src/unnamed/arm9/0200/func_02009e70.cpp",
+    "normalized_sha256": "e14459ecb0d6cd06b7be12be43607a9aa1fabf85f4a30580b42482f056a67ac8",
+    "disk_sha256": "6f2f89ec1e34b7e8e5590bf89d77791e5152f4c5dfb959e18d14050c9006b3f9",
+    "compiled_size": 4252,
+    "divergences": 68,
+    "register_words": 61,
+    "schedule_words": 7,
+    "change": "Replace the single square-difference expression with a signed64 accumulator. Each signed32 square is at most2^62, so both products and their difference fit signed64. Convert to u64 only at the existing sqrt call. Replace obsolete completion/floor prose with the current partial status."
+  },
+  "research": {
+    "cells": 160,
+    "unique": 159,
+    "diagnostic": 7,
+    "families": [
+      {
+        "ledger": "build/remaining4-cam1012/boundary-ledger.json",
+        "cells": 7,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/call-result-ledger.json",
+        "cells": 12,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 99
+      },
+      {
+        "ledger": "build/remaining4-cam1012/delete-regions-ledger.json",
+        "cells": 5,
+        "diagnostic_cells": 5,
+        "compile_errors": 0,
+        "best_exact_size": null
+      },
+      {
+        "ledger": "build/remaining4-cam1012/distance-class-ledger.json",
+        "cells": 10,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/effective-ledger.json",
+        "cells": 18,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/else-boundary-ledger.json",
+        "cells": 5,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/fixed-ledger.json",
+        "cells": 14,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/held-helper-ledger.json",
+        "cells": 5,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/helper-boundary-ledger.json",
+        "cells": 5,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/input-helper-ledger.json",
+        "cells": 4,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 269
+      },
+      {
+        "ledger": "build/remaining4-cam1012/input-history-ledger.json",
+        "cells": 6,
+        "diagnostic_cells": 1,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/input-order-ledger.json",
+        "cells": 10,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 269
+      },
+      {
+        "ledger": "build/remaining4-cam1012/limit-boundary-ledger.json",
+        "cells": 10,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/limits-full-ledger.json",
+        "cells": 5,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": null
+      },
+      {
+        "ledger": "build/remaining4-cam1012/origin-web-ledger.json",
+        "cells": 6,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/receiver-type-ledger.json",
+        "cells": 3,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/response-ledger.json",
+        "cells": 4,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 72
+      },
+      {
+        "ledger": "build/remaining4-cam1012/shape-ledger.json",
+        "cells": 11,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/structured-ledger.json",
+        "cells": 4,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      },
+      {
+        "ledger": "build/remaining4-cam1012/typed-object-ledger.json",
+        "cells": 1,
+        "diagnostic_cells": 1,
+        "compile_errors": 0,
+        "best_exact_size": null
+      },
+      {
+        "ledger": "build/remaining4-cam1012/window-ledger.json",
+        "cells": 15,
+        "diagnostic_cells": 0,
+        "compile_errors": 0,
+        "best_exact_size": 68
+      }
+    ]
+  },
+  "findings": [
+    "Taken-success collision response preserves the desired atan2-result narrowing before self+0x100 address materialization, but the changed branch layout adds4 bytes (4256). Failure-first else blocks canonicalize back to4252/68. This is an active scheduling mechanism, not a completed fix.",
+    "A meaningful inline CameraButtons(u16) helper changes the register-allocation graph at exact4252 bytes. Isolating it to the later held-button reload produces269 differences with flags=r5, limit=r6, self=sb; wrapping only the initial read remains68. Conditional held-button-return helpers yield254, and an output-reference helper remains68. Receiver/declaration changes on this new seed did not restore the other colors.",
+    "Complete distance/yaw regions rewritten from forward gotos to structured branches remain4252/68. Diagnostic deletions of large regions rotate many registers; deleting the flag tail preserves the old pair. These results did not isolate a single decisive source construct.",
+    "Actual dCamera_c pointer/reference receivers and a scratch-only projected member layout remain68. The speculative layout overlay was not applied to a shared header and is not offered as a source reconstruction.",
+    "Truthful inline distance helpers, Fix12 locals, aggregate returns, and local constructor/conversion forms alter register allocation or add output storage but do not improve68. No external signature was changed.",
+    "Effective optimizer probes disable defer_codegen before the function and omit restores. opt_common_subs and opt_lifetimes give positive codegen controls; propagation-off changes size to4248. Other measured toggles remain neutral. Prior restored-pragma sweeps are not treated as proof of intended settings.",
+    "The response helper with72 words reports only6 skeleton-classified scheduling differences, but fixes none of the original68 and adds4 differences. Skeleton classification alone is not improvement.",
+    "All160 final ledger cells compile, representing159 unique normalized source hashes. The seven diagnostic cells are five region deletions, one speculative header projection, and unsigned-margin arithmetic (not justified equivalent for negative inputs). They are excluded from valid-candidate claims. Temporary failed script invocations corrected before the final ledger are not additional cells.",
+    "No impossibility conclusion or minimum achievable score is inferred. The held-button PHI and collision taken-arm controls remain concrete directions for a future evidence-led attempt."
+  ],
+  "scope": {
+    "changed_files": [
+      "src/unnamed/arm9/0200/func_02009e70.cpp",
+      "notes/experiments/remaining4-cam1012.json"
+    ],
+    "unchanged": "Headers, configuration, database, enrollment, attribution and all other source files. No source-branch push, PR or merge.",
+    "remaining_debt": "Existing raw offsets, CamMode shadow layout, extern/ABI bridges and naming remain outside this bounded change; they are not certified as original source."
+  },
+  "preservation": {
+    "scratch": "build/remaining4-cam1012",
+    "original_main": "build/remaining4-cam1012/main72.cpp",
+    "prior_seed": "build/remaining4-cam1012/seed68.cpp",
+    "baseline": "build/remaining4-cam1012/baseline.cpp",
+    "reproduce": "Run each family Python script from the worktree root. harness.py uses the frozen baseline.cpp. typed_object.py alone adds its scratch include overlay. inventory.py verifies every normalized source hash and counts distinct ledgers, excluding active-ledger.json (a duplicate).",
+    "artifacts": "All scripts, candidate source files, disassemblies and final family ledgers remain in the ignored scratch directory; no private compiler or ROM data is committed."
+  },
+  "verification": [
+    {
+      "command": "python tools/fdiff.py --c build\\remaining4-cam1012\\main72.cpp --name func_02009e70 --module arm9 --addr 0x02009e70 --size 0x109c --version 2004/b56 --quiet",
+      "exit_code": 0,
+      "result": "RESULT match=False mismatches=72/1063 version=2004/b56",
+      "log": "build/remaining4-cam1012/main72-fdiff.log"
+    },
+    {
+      "command": "python tools/fdiff.py --c src\\unnamed\\arm9\\0200\\func_02009e70.cpp --name func_02009e70 --module arm9 --addr 0x02009e70 --size 0x109c --version 2004/b56 --quiet",
+      "exit_code": 0,
+      "result": "RESULT match=False mismatches=68/1063 version=2004/b56",
+      "log": "build/remaining4-cam1012/candidate68-fdiff.log"
+    },
+    {
+      "command": "python tools/check_decl_agreement.py --changed dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+      "exit_code": 0,
+      "result": "No new local redeclarations of header-declared symbols; no new declaration disagreements. Four files in expanded declaration scope,25 existing disagreements."
+    },
+    {
+      "command": "python tools/linkcheck.py / python tools/rombuild.py",
+      "result": "Not run: source remains a known68-word nonmatch and production enrollment is unchanged. No relocation or full-ROM proof is claimed."
+    }
+  ],
+  "next_action": "Independent verifier reviews this commit as a partial source checkpoint, remeasures68/1063 and checks report provenance; no ROM acceptance or PR requested."
+}
