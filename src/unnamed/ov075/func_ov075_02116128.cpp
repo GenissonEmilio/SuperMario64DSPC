@@ -15,7 +15,7 @@
  * which is how an inactive slot is drawn.
  */
 // NONMATCHING: 20 differing instruction words at 244 bytes under mwccarm 2004/b56.
-// The near-miss DB's edit-distance score is 19 for the same object; the metrics differ.
+// The current near-miss DB records score 20 under 2004/b56|m2.
 // The retained body has both register and scheduling differences around palette packing:
 // its pre-shift value is in r3, but `lsl r0,r3,#28` breaks the cartridge's in-place
 // r3 web and moves the palette materialization ahead of the first singleton stores.

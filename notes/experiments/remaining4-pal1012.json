@@ -11,7 +11,7 @@
   "size_bytes": 244,
   "compiler": "2004/b56",
   "source": "src/unnamed/ov075/func_ov075_02116128.cpp",
-  "source_sha256": "8c9baee1d8163edf6f2a6cfd50c3f2c4c8da5fcc1a851d71519379146af1b39a",
+  "source_sha256": "ec921e8bb24ede2384d3f94d5d88f6e5282d6d5520d08d874436320e2e413fb0",
   "source_changes": [
     "Use the existing callers' char* receiver instead of an integer placeholder; argument remains unused.",
     "Declare actual namespace G2::GetBG1ScrPtr with its defined void* return; cast once to the existing halfword-map view. No dedicated usable G2 header exists; generated decl_common.h is not the canonical SDK header.",
@@ -559,5 +559,12 @@
       "width_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-counter-width'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor counter,shift,flags in itertools.product(['unsigned int','unsigned long','unsigned short','unsigned char'],['unsigned int','unsigned long'],['life','strength-off','propagation-off']):\n s=seed.replace('int i;',counter+' i;').replace('unsigned int hi =',shift+' hi =')\n if flags=='strength-off':s=s.replace('#pragma opt_lifetimes off','#pragma defer_codegen off\\n#pragma opt_lifetimes off\\n#pragma opt_strength_reduction off')\n if flags=='propagation-off':s=s.replace('#pragma opt_lifetimes off','#pragma defer_codegen off\\n#pragma opt_lifetimes off\\n#pragma opt_propagation off')\n test('cursor-width-'+counter.replace('unsigned ','u')+'-'+shift.replace('unsigned ','u')+'-'+flags,s,fam)\nreport(fam)\n"
     }
   },
-  "next_action": "Independent review of this byte-neutral declaration/banner cleanup and partial investigation. Retain NONMATCHING and the existing retail gap; pursue any future source continuation without treating these experiments as an impossibility proof."
+  "next_action": "Independent review of this byte-neutral declaration/banner cleanup and partial investigation. Retain NONMATCHING and the existing retail gap; pursue any future source continuation without treating these experiments as an impossibility proof.",
+  "comment_rework": {
+    "finding": "pal1012-current-score",
+    "input_commit": "a7a83ff3ee3c8e7e0f91896c4148eafa3d86ef03",
+    "session": "astra-r4-pal-rework1012",
+    "change": "Correct current DB score from 19 to 20 for 2004/b56|m2. Executable source and DB unchanged.",
+    "validation": "Source diff is one comment only; prior byte evidence remains scoped to the unchanged executable source."
+  }
 }
