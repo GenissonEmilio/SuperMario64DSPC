@@ -10,7 +10,7 @@
  *
  * common.h is first on purpose. Matrix4x3 is either common.h's flat s32 m[12]
  * or math/Matrix.h's nested {r, t}, and the first include wins. The nested
- * form splits the model-matrix copy in func_ov090_02133338. Nothing here
+ * form splits the model-matrix copy in UpdateModelTransform. Nothing here
  * names .r or .t.
  *
  * Source order is the reverse of the ROM. mwccarm emits one .text section per
@@ -20,10 +20,10 @@
  *
  * The state record is 16 bytes, filled by __sinit_ov090_02133f4c from the
  * four 8-byte pointer-to-member words at 0x021342b8. Enter is at +0 and is
- * called by func_ov090_021332e8; main is at +8 and is called by Behavior.
+ * called by ChangeState; main is at +8 and is called by Behavior.
  * data_ov090_02134594 is swim (enter 02133290, main 02133200).
  * data_ov090_02134584 is pause (enter 021331c4, main 02133190).
- * PukuStatePMF is declared while PukuStateC is still incomplete: that is the
+ * PukuStatePMF is declared while daPukupuku_c is still incomplete: that is the
  * 8-byte member pointer the ROM table stores (function, this-delta 0).
  *
  * deslop leftovers:
@@ -55,13 +55,6 @@
 /* shadow typedef 'Fix12i' */
 typedef int Fix12i;
 
-/* Behavior calls the main PMF, which sits 8 bytes into the state record. */
-typedef void (dEnemyBase_c::*PukuMainPMF)();
-struct PukuMainView {
-    char enter[8];
-    PukuMainPMF main;
-};
-
 /* BCA handle. The sinit builds it as a SharedFilePtr; SetAnim reads +4. */
 struct AnimFilePtr { int a; struct BCA_File *file; };
 
@@ -84,22 +77,14 @@ struct PukupukuAnimationFilePtr : SharedFilePtr {
     ~PukupukuAnimationFilePtr();
 };
 
-/* One 8-byte state word (a pointer-to-member: function address, this-delta).
- * The four words live in .data; each state row copies two of them. */
-struct PukuDesc {
-    int w[2];
-};
-
-struct PukuStateRow {
-    PukuDesc x, y;
-};
-
+/* The four 8-byte member pointers live in ROM-backed .data. Each state row
+ * copies its enter and main member pointers during static initialization. */
 extern PukupukuModelFile data_ov090_02134564;
 extern PukupukuAnimationFilePtr data_ov090_0213455c;
-extern PukuDesc data_ov090_021342c0;
-extern PukuDesc data_ov090_021342b8;
-extern PukuDesc data_ov090_021342d0;
-extern PukuDesc data_ov090_021342c8;
+extern PukuStatePMF data_ov090_021342c0;
+extern PukuStatePMF data_ov090_021342b8;
+extern PukuStatePMF data_ov090_021342d0;
+extern PukuStatePMF data_ov090_021342c8;
 extern PukuStateRow data_ov090_02134594;
 extern PukuStateRow data_ov090_02134584;
 
@@ -157,7 +142,7 @@ int daPukupuku_c::InitResources()
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
         &mModelAnim, ((AnimFilePtr *)&data_ov090_0213455c)->file, 0, 0x1000, 0);
 
-    func_ov090_021332e8((PukuStatePMF *)&data_ov090_02134594);
+    ChangeState(&data_ov090_02134594);
     return 1;
 }
 
@@ -171,22 +156,22 @@ int daPukupuku_c::Behavior()
                 mdCcAcPos_c.Update();
             }
         }
-        func_ov090_02133338((char *)this);
+        UpdateModelTransform();
         return 1;
     }
 
     DecIfAbove0_Short((unsigned short *)&mStateTimer);
     UpdatePos(&mdCcAcPos_c);
     {
-        PukuMainView *q = *(PukuMainView **)pad_370;
+        PukuStateRow *q = mState;
         if (q->main != 0)
-            (((dEnemyBase_c *)this)->*(q->main))();
+            (this->*(q->main))();
     }
     mAngleY = mPrevAngleY;
     mModelAnim.speed = 0x1000;
     static_cast<dExtFrameCtrl_c &>(mModelAnim).Advance();
-    func_ov090_02133338((char *)this);
-    func_ov090_021330c8((char *)this);
+    UpdateModelTransform();
+    HandlePlayerCollision();
     mdCcAcPos_c.Clear();
     {
         Player *p = ClosestPlayer();
@@ -219,41 +204,34 @@ int daPukupuku_c::CleanupResources()
     return 1;
 }
 
-// @symbol func_ov090_02133338
-extern "C" {
-void func_ov090_02133338(char *c) {
-    daPukupuku_c *self = (daPukupuku_c *)c;
+// @symbol _ZN12daPukupuku_c20UpdateModelTransformEv
+void daPukupuku_c::UpdateModelTransform() {
     int v[3];
-    Vec3_Asr(v, &self->mPosX, 3);
+    Vec3_Asr(v, &mPosX, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, v[0], v[1], v[2]);
     Matrix4x3_ApplyInPlaceToRotationXYZExt(&data_020a0e68,
-        self->mAngleX, self->mAngleY, self->mAngleZ);
-    self->mModelAnim.mat4x3 = data_020a0e68;
-}
+        mAngleX, mAngleY, mAngleZ);
+    mModelAnim.mat4x3 = data_020a0e68;
 }
 
-// @symbol _ZN12daPukupuku_c19func_ov090_021332e8EPM10PukuStateCFivE
-struct PukuStateC { char pad[0x370]; PukuStatePMF *pp; };
-int daPukupuku_c::func_ov090_021332e8(PukuStatePMF *p)
+// @symbol _ZN12daPukupuku_c11ChangeStateEP12PukuStateRow
+int daPukupuku_c::ChangeState(PukuStateRow *state)
 {
-    *(PukuStatePMF **)((char *)this + 0x370) = p;
-    PukuStatePMF *q = *(PukuStatePMF **)((char *)this + 0x370);
-    if (*q == 0)
+    mState = state;
+    PukuStateRow *q = mState;
+    if (q->enter == 0)
         return 1;
-    return (((PukuStateC *)this)->**q)();
+    return (this->*(q->enter))();
 }
 
-// @symbol func_ov090_02133290
-extern "C" {
-int func_ov090_02133290(char* c){
-    daPukupuku_c *self = (daPukupuku_c *)c;
+// @symbol _ZN12daPukupuku_c9EnterSwimEv
+int daPukupuku_c::EnterSwim() {
     unsigned int r = RandomIntInternal(data_0209e650);
-    *(short *)(self->pad_380 + 4) = ((r >> 8) & 0xf) << 0xc;
+    *(short *)(pad_380 + 4) = ((r >> 8) & 0xf) << 0xc;
     r = RandomIntInternal(data_0209e650);
-    self->mStateTimer = (s16)(((r >> 8) & 0x3f) + 0x32);
-    self->mHorzSpeed = 0x5000;
+    mStateTimer = (s16)(((r >> 8) & 0x3f) + 0x32);
+    mHorzSpeed = 0x5000;
     return 1;
-}
 }
 
 // @symbol _ZN12daPukupuku_c19func_ov090_02133200Ev
@@ -265,40 +243,36 @@ int daPukupuku_c::func_ov090_02133200()
     }
     ApproachAngle(&mPrevAngleY, *(s16 *)(pad_380 + 4), 1, 0x100, 0x200);
     if (*(unsigned short *)&mStateTimer == 0)
-        func_ov090_021332e8((PukuStatePMF *)&data_ov090_02134584);
+        ChangeState(&data_ov090_02134584);
     return 1;
 }
 
-// @symbol func_ov090_021331c4
-extern "C" {
-int func_ov090_021331c4(char* c){
-    daPukupuku_c *self = (daPukupuku_c *)c;
+// @symbol _ZN12daPukupuku_c10EnterPauseEv
+int daPukupuku_c::EnterPause() {
     unsigned int r = RandomIntInternal(data_0209e650);
-    self->mStateTimer = (s16)(((r >> 8) & 0x3f) + 0x32);
-    self->mHorzSpeed = 0;
+    mStateTimer = (s16)(((r >> 8) & 0x3f) + 0x32);
+    mHorzSpeed = 0;
     return 1;
-}
 }
 
 // @symbol _ZN12daPukupuku_c19func_ov090_02133190Ev
 int daPukupuku_c::func_ov090_02133190() {
     if (*(unsigned short *)&mStateTimer == 0) {
-        func_ov090_021332e8((PukuStatePMF *)&data_ov090_02134594);
+        ChangeState(&data_ov090_02134594);
     }
     return 1;
 }
 
-// @symbol func_ov090_021330c8
-extern "C" void func_ov090_021330c8(char* thiz)
+// @symbol _ZN12daPukupuku_c21HandlePlayerCollisionEv
+void daPukupuku_c::HandlePlayerCollision()
 {
-    daPukupuku_c *c = (daPukupuku_c *)thiz;
     Vector3 v;
     v.x = data_ov090_021342d8.x;
     v.y = data_ov090_021342d8.y;
     v.z = data_ov090_021342d8.z;
-    c->mdCcAcPos_c.SetPosRelativeToActor(v);
+    mdCcAcPos_c.SetPosRelativeToActor(v);
     {
-        unsigned int id = c->mdCcAcPos_c.otherOwner;
+        unsigned int id = mdCcAcPos_c.otherOwner;
         if (id == 0) return;
         {
             Player* a = (Player*)dActor_c::FindWithID(id);
@@ -307,9 +281,9 @@ extern "C" void func_ov090_021330c8(char* thiz)
             if (a->mIsVanish != 0) return;
             {
                 Vector3 hv;
-                hv.x = c->mPosX;
-                hv.y = c->mPosY;
-                hv.z = c->mPosZ;
+                hv.x = mPosX;
+                hv.y = mPosY;
+                hv.z = mPosZ;
                 _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(a, hv, 1, 0xc000, 1, 0, 1);
             }
         }

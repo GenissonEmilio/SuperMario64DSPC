@@ -1,0 +1,699 @@
+{
+  "schema": 1,
+  "task_id": "cheep-native-state1013",
+  "producer_session": "astra-cheepnative1013",
+  "harness": "Codex / Astra",
+  "branch": "cpp/cheep-native-state1013",
+  "base_commit": "731efc06d5d5e84ac33ff5f97880e9f90476158e",
+  "workflow_commit": "731efc06d5d5e84ac33ff5f97880e9f90476158e",
+  "active_source_review_policy": "18af52b49b9fb5663d417bdfa86109b7b157aaa3",
+  "candidate": "this commit; exact SHA is recorded by the queue",
+  "status": "byte-verified production checkpoint; source acceptance and publication held for two cross-owner convention requirements",
+  "completion": "partial",
+  "production_mode": "intact-object, existing enrolled TU retained",
+  "summary": "Replace four char-pointer helper shells with native daPukupuku_c methods. Replace the fake PukuStateC/PukuMainView and raw state pointer slot with an actual forward-declared daPukupuku_c member pointer, named enter/main state row and mState field. ChangeState accepts that row directly; Behavior dispatches its main member directly.",
+  "scope": {
+    "module": "ov090",
+    "class": "daPukupuku_c",
+    "owned_paths": [
+      "src/actors/daPukupuku_c.cpp",
+      "include/daPukupuku_c.h",
+      "config/arm9/overlays/ov090/symbols.txt",
+      "config/tu_manifest.d/ov090/daPukupuku_c.json",
+      "notes/experiments/cheep-native-state1013.json"
+    ],
+    "ranges": {
+      ".text": [
+        "0x02133034",
+        "0x0213367c"
+      ],
+      ".init": [
+        "0x02133f4c",
+        "0x02134020"
+      ],
+      ".ctor": [
+        "0x021340cc",
+        "0x021340d0"
+      ],
+      ".bss": [
+        "0x0213455c",
+        "0x021345a4"
+      ]
+    },
+    "delinks": "unchanged complete entry; no new alias rows or ABI bridges"
+  },
+  "symbol_history": [
+    {
+      "address": "0x021330c8",
+      "old": "func_ov090_021330c8",
+      "new": "_ZN12daPukupuku_c21HandlePlayerCollisionEv",
+      "evidence": "player-contact helper; Behavior call and Player damage path"
+    },
+    {
+      "address": "0x021331c4",
+      "old": "func_ov090_021331c4",
+      "new": "_ZN12daPukupuku_c10EnterPauseEv",
+      "evidence": "pause-enter PMF at0x021342d0; timer and zero speed"
+    },
+    {
+      "address": "0x02133290",
+      "old": "func_ov090_02133290",
+      "new": "_ZN12daPukupuku_c9EnterSwimEv",
+      "evidence": "swim-enter PMF at0x021342c0; random heading/timer and swim speed"
+    },
+    {
+      "address": "0x021332e8",
+      "old": "_ZN12daPukupuku_c19func_ov090_021332e8EPM10PukuStateCFivE",
+      "new": "_ZN12daPukupuku_c11ChangeStateEP12PukuStateRow",
+      "evidence": "stores the real state pointer at0x370 and invokes the enter member"
+    },
+    {
+      "address": "0x02133338",
+      "old": "func_ov090_02133338",
+      "new": "_ZN12daPukupuku_c20UpdateModelTransformEv",
+      "evidence": "two Behavior calls; builds and stores translated/rotated model matrix"
+    }
+  ],
+  "evidence_and_inference": {
+    "rom_facts": [
+      "daPukupuku_c ownership is corroborated by RTTI, class vtable, factory allocation0x388 and existing native methods.",
+      "Behavior calls transform at0x02133478 and0x021334ec and collision at0x021334f4.",
+      "State descriptors at0x021342c0 and0x021342d0 point to swim-enter0x02133290 and pause-enter0x021331c4; main descriptors at0x021342b8 and0x021342c8 point to existing native main methods.",
+      "State rows are16 bytes with8-byte enter and main PMFs; stored state pointer is at actor+0x370; fullactor size0x388."
+    ],
+    "inferred": [
+      "UpdateModelTransform, HandlePlayerCollision, EnterSwim, EnterPause and ChangeState are reconstructed semantic names, not recovered identifiers.",
+      "PukuStateRow and the ChangeState pointer spelling are inferred; byte equality does not recover the original type name or distinguish pointer from reference spelling."
+    ],
+    "compiler_mechanism": "Declaring the actual daPukupuku_c PMF while the class is incomplete selects mwccarm2004/b56's8-byte representation. This is a true member pointer to the real class; no fake object view, asm naming, volatile or instruction injection is used. ROM size guards are disabled for SM64DS_PLATFORM_PC, matching the existing actor-size guard."
+  },
+  "proof": {
+    "compiler": "2004/b56 with imported tools/rombuild.py CFLAGS; //cpp native C++ mode",
+    "strict": {
+      "command": "python build/cheep-native-state1013/prove.py",
+      "exit_code": 0,
+      "functions": 15,
+      "initializer_bytes": 212,
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "rows": [
+        {
+          "name": "_ZN12daPukupuku_cD1Ev",
+          "module": "ov090",
+          "addr": "0x02133034",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_cD0Ev",
+          "module": "ov090",
+          "addr": "0x02133074",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c21HandlePlayerCollisionEv",
+          "module": "ov090",
+          "addr": "0x021330c8",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c19func_ov090_02133190Ev",
+          "module": "ov090",
+          "addr": "0x02133190",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c10EnterPauseEv",
+          "module": "ov090",
+          "addr": "0x021331c4",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c19func_ov090_02133200Ev",
+          "module": "ov090",
+          "addr": "0x02133200",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c9EnterSwimEv",
+          "module": "ov090",
+          "addr": "0x02133290",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c11ChangeStateEP12PukuStateRow",
+          "module": "ov090",
+          "addr": "0x021332e8",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c20UpdateModelTransformEv",
+          "module": "ov090",
+          "addr": "0x02133338",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c16CleanupResourcesEv",
+          "module": "ov090",
+          "addr": "0x021333ac",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c16OnPendingDestroyEv",
+          "module": "ov090",
+          "addr": "0x021333dc",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c6RenderEv",
+          "module": "ov090",
+          "addr": "0x021333e0",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c8BehaviorEv",
+          "module": "ov090",
+          "addr": "0x02133430",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "_ZN12daPukupuku_c13InitResourcesEv",
+          "module": "ov090",
+          "addr": "0x02133530",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "daPukupuku_c_classInit",
+          "module": "ov090",
+          "addr": "0x02133634",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        },
+        {
+          "name": "__sinit_daPukupuku_c.cpp",
+          "module": "ov090",
+          "addr": "0x02133f4c",
+          "verdict": "VERIFIED",
+          "diffs": [],
+          "blind": 0
+        }
+      ],
+      "method": "Fresh direct source compile with actual filename and real production header; tu_production.prepare_intact_object applies the unchanged standard lifecycle/vtable policies and exact new native manifest identities before strict linkcheck."
+    },
+    "lifecycle": {
+      "owned_before_ok": true,
+      "owned_after_ok": true,
+      "text_order_ok": true,
+      "paired": {
+        "baseline": {
+          "nodes": [
+            {
+              "name": "@634",
+              "canonical": "@620",
+              "size": 12,
+              "binding": "STB_LOCAL"
+            },
+            {
+              "name": "@635",
+              "canonical": "@737",
+              "size": 12,
+              "binding": "STB_LOCAL"
+            }
+          ],
+          "sections": {
+            ".ctor": {
+              "size": 4,
+              "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+              "references": [
+                {
+                  "offset": "0x0",
+                  "type": 2,
+                  "symbol": "__sinit_daPukupuku_c.cpp"
+                }
+              ]
+            },
+            ".init": {
+              "size": 212,
+              "sha256": "77198613f0cfc3f153dfe96292e605489797b5cc57d87f907bbfb8c812e9b72d",
+              "references": [
+                {
+                  "offset": "0xc",
+                  "type": 1,
+                  "symbol": "_ZN17PukupukuModelFileC1Ej"
+                },
+                {
+                  "offset": "0x1c",
+                  "type": 1,
+                  "symbol": "__register_global_object"
+                },
+                {
+                  "offset": "0x28",
+                  "type": 1,
+                  "symbol": "_ZN24PukupukuAnimationFilePtrC1Ej"
+                },
+                {
+                  "offset": "0x38",
+                  "type": 1,
+                  "symbol": "__register_global_object"
+                },
+                {
+                  "offset": "0x9c",
+                  "type": 2,
+                  "symbol": "data_ov090_02134564"
+                },
+                {
+                  "offset": "0xa4",
+                  "type": 2,
+                  "symbol": "_ZN17PukupukuModelFileD1Ev"
+                },
+                {
+                  "offset": "0xa8",
+                  "type": 2,
+                  "symbol": "@620"
+                },
+                {
+                  "offset": "0xac",
+                  "type": 2,
+                  "symbol": "data_ov090_0213455c"
+                },
+                {
+                  "offset": "0xb4",
+                  "type": 2,
+                  "symbol": "_ZN24PukupukuAnimationFilePtrD1Ev"
+                },
+                {
+                  "offset": "0xb8",
+                  "type": 2,
+                  "symbol": "@737"
+                },
+                {
+                  "offset": "0xbc",
+                  "type": 2,
+                  "symbol": "data_ov090_021342c0"
+                },
+                {
+                  "offset": "0xc0",
+                  "type": 2,
+                  "symbol": "data_ov090_021342b8"
+                },
+                {
+                  "offset": "0xc4",
+                  "type": 2,
+                  "symbol": "data_ov090_021342d0"
+                },
+                {
+                  "offset": "0xc8",
+                  "type": 2,
+                  "symbol": "data_ov090_021342c8"
+                },
+                {
+                  "offset": "0xcc",
+                  "type": 2,
+                  "symbol": "data_ov090_02134594"
+                },
+                {
+                  "offset": "0xd0",
+                  "type": 2,
+                  "symbol": "data_ov090_02134584"
+                }
+              ]
+            }
+          }
+        },
+        "candidate": {
+          "nodes": [
+            {
+              "name": "@630",
+              "canonical": "@620",
+              "size": 12,
+              "binding": "STB_LOCAL"
+            },
+            {
+              "name": "@631",
+              "canonical": "@737",
+              "size": 12,
+              "binding": "STB_LOCAL"
+            }
+          ],
+          "sections": {
+            ".ctor": {
+              "size": 4,
+              "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+              "references": [
+                {
+                  "offset": "0x0",
+                  "type": 2,
+                  "symbol": "__sinit_daPukupuku_c.cpp"
+                }
+              ]
+            },
+            ".init": {
+              "size": 212,
+              "sha256": "77198613f0cfc3f153dfe96292e605489797b5cc57d87f907bbfb8c812e9b72d",
+              "references": [
+                {
+                  "offset": "0xc",
+                  "type": 1,
+                  "symbol": "_ZN17PukupukuModelFileC1Ej"
+                },
+                {
+                  "offset": "0x1c",
+                  "type": 1,
+                  "symbol": "__register_global_object"
+                },
+                {
+                  "offset": "0x28",
+                  "type": 1,
+                  "symbol": "_ZN24PukupukuAnimationFilePtrC1Ej"
+                },
+                {
+                  "offset": "0x38",
+                  "type": 1,
+                  "symbol": "__register_global_object"
+                },
+                {
+                  "offset": "0x9c",
+                  "type": 2,
+                  "symbol": "data_ov090_02134564"
+                },
+                {
+                  "offset": "0xa4",
+                  "type": 2,
+                  "symbol": "_ZN17PukupukuModelFileD1Ev"
+                },
+                {
+                  "offset": "0xa8",
+                  "type": 2,
+                  "symbol": "@620"
+                },
+                {
+                  "offset": "0xac",
+                  "type": 2,
+                  "symbol": "data_ov090_0213455c"
+                },
+                {
+                  "offset": "0xb4",
+                  "type": 2,
+                  "symbol": "_ZN24PukupukuAnimationFilePtrD1Ev"
+                },
+                {
+                  "offset": "0xb8",
+                  "type": 2,
+                  "symbol": "@737"
+                },
+                {
+                  "offset": "0xbc",
+                  "type": 2,
+                  "symbol": "data_ov090_021342c0"
+                },
+                {
+                  "offset": "0xc0",
+                  "type": 2,
+                  "symbol": "data_ov090_021342b8"
+                },
+                {
+                  "offset": "0xc4",
+                  "type": 2,
+                  "symbol": "data_ov090_021342d0"
+                },
+                {
+                  "offset": "0xc8",
+                  "type": 2,
+                  "symbol": "data_ov090_021342c8"
+                },
+                {
+                  "offset": "0xcc",
+                  "type": 2,
+                  "symbol": "data_ov090_02134594"
+                },
+                {
+                  "offset": "0xd0",
+                  "type": 2,
+                  "symbol": "data_ov090_02134584"
+                }
+              ]
+            }
+          }
+        },
+        "exact_init_ctor_and_references": true
+      },
+      "registration_mapping": "Only generated source names@634/@635 become@630/@631. Canonical names@620/@737 and addresses0x0213456c/0x02134578 are unchanged. Nodes remain12-byte STB_LOCAL .bss in raw objects. .init ABS32 references at+0xa8/+0xb8 bind to those same canonical nodes; all other .init and .ctor references and bytes also match the fresh baseline.",
+      "ctor_bytes": 4,
+      "state_row_bytes_each": 16,
+      "existing_manifest_wrapper_aliases": "unchanged; no new helper aliases"
+    },
+    "emitted_data": {
+      "symbols": 15,
+      "verified": 6,
+      "partial": 9,
+      "differs": 0,
+      "unnamed": 0,
+      "verifiedBytes": 180,
+      "partialBytes": 48,
+      "verifiedSymbols": [
+        {
+          "module": "arm9",
+          "symbol": "_ZTI7dBase_c",
+          "addr": 34107000,
+          "bytes": 12
+        },
+        {
+          "module": "arm9",
+          "symbol": "_ZTI7fBase_c",
+          "addr": 34106736,
+          "bytes": 8
+        },
+        {
+          "module": "arm9",
+          "symbol": "_ZTI8dActor_c",
+          "addr": 34136976,
+          "bytes": 12
+        },
+        {
+          "module": "ov002",
+          "symbol": "_ZTI12dEnemyBase_c",
+          "addr": 34636224,
+          "bytes": 12
+        },
+        {
+          "module": "ov090",
+          "symbol": "_ZTI12daPukupuku_c",
+          "addr": 34816740,
+          "bytes": 12
+        },
+        {
+          "module": "ov090",
+          "symbol": "_ZTV12daPukupuku_c",
+          "addr": 34816804,
+          "bytes": 124
+        }
+      ],
+      "differingSymbols": [],
+      "verifiedRecords": 6,
+      "partialRecords": 9,
+      "differsRecords": 0,
+      "unnamedRecords": 0,
+      "totalRecords": 15,
+      "differing": []
+    },
+    "prepush": {
+      "command": "python tools/prepush_linkcheck.py --files src/actors/daPukupuku_c.cpp include/daPukupuku_c.h --json build/cheep-native-state1013/prepush.json",
+      "exit_code": 0,
+      "checked": 17,
+      "verified": 15,
+      "warnings": [
+        "raw initializer BLIND6; fully resolved by production object proof above",
+        "parser carrier daPukupuku_c NO-SYM; not a ROM function"
+      ],
+      "blocking": 0
+    },
+    "header_fanout": [
+      "src/actors/daPukupuku_c.cpp"
+    ],
+    "declarations": {
+      "command": "python tools/check_decl_agreement.py --changed 731efc06d5d5e84ac33ff5f97880e9f90476158e",
+      "exit_code": 0,
+      "scoped_files": 690,
+      "banked_disagreements": 4798,
+      "new_disagreements": 0,
+      "new_local_redeclarations": 0
+    },
+    "port": {
+      "command": "python tools/port_refcheck.py",
+      "exit_code": 0,
+      "references": 267,
+      "stale": 0
+    },
+    "language": {
+      "command": "python tools/langmode_audit.py --check build/cheep-native-state1013/langmode-baseline.json --json build/cheep-native-state1013/langmode.json",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    "rename_ledger": {
+      "command": "python tools/check_rename_ledger.py",
+      "exit_code": 1,
+      "result": "HELD: one live row atov090:0x021332e8 still names the previous fake-PMF signature; exact five-row append preview prepared, foreign ledger untouched"
+    },
+    "full_rom": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "status": "passed",
+      "source_build": {
+        "totalCodeFunctions": 11397,
+        "totalCodeBytes": 2238108,
+        "compiledFunctions": 11290,
+        "compiledBytes": 2208556,
+        "sourceFunctions": 11290,
+        "sourceBytes": 2208556,
+        "modFunctions": 0,
+        "modBytes": 0,
+        "sourceBytesPercent": 98.67959901845666,
+        "reproducingFunctions": 11290,
+        "reproducingBytes": 2208556,
+        "mismatchingFunctions": 0,
+        "mismatchingFunctionBytes": 0,
+        "differingSourceBytes": 0,
+        "sourceDataClaims": 331,
+        "sourceBssClaims": 239,
+        "sourceBssBytes": 30164,
+        "reproducingDataClaims": 331,
+        "reproducingDataClaimBytes": 13020,
+        "mismatchingDataClaims": 0,
+        "mismatchingDataClaimBytes": 0
+      },
+      "module_fidelity": {
+        "modulesChecked": 106,
+        "modulesExact": 106,
+        "modulesExpectedOnly": 106,
+        "comparedBytes": 3049600,
+        "differingBytes": 0,
+        "unexpectedDifferingBytes": 0,
+        "percent": 100.0,
+        "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b"
+      },
+      "cache": {
+        "enabled": true,
+        "reused": 2707,
+        "compiled": 1,
+        "uncacheable": 0,
+        "tuDerived": 0
+      },
+      "intact_modules_ok": true,
+      "new_symbol_errors": [],
+      "baseline_symbol_error_count": 9,
+      "storage_alias_errors": [],
+      "separate_data_inventory_existing_difference": [
+        {
+          "module": "arm9",
+          "symbol": "_ZTV10dCcAcPos_c",
+          "addr": 34137860,
+          "bytes": 16
+        }
+      ],
+      "limits": "Default stock module/link/analysis gates passed; final ROM packaging skipped by --no-rom. Global separate data inventory retains the existing _ZTV10dCcAcPos_c difference. This is not a private CI result or independent source acceptance."
+    }
+  },
+  "findings": [
+    {
+      "id": "cheep1013-state-dispatch-comment",
+      "status": "fixed",
+      "kind": "provenance",
+      "location": "config/tu_manifest.d/ov090/daPukupuku_c.json:bss pause row",
+      "detail": "Corrected stale wording: ChangeState calls enter; Behavior calls main directly."
+    },
+    {
+      "id": "cheep1013-pmf-host-guard",
+      "status": "fixed",
+      "kind": "correctness",
+      "location": "include/daPukupuku_c.h:PMF/row assertions",
+      "detail": "Pinned-ROM PMF and row size assertions guarded with !SM64DS_PLATFORM_PC; no claim that host PMF layout is proven."
+    },
+    {
+      "id": "cheep1013-rename-ledger",
+      "status": "open",
+      "kind": "provenance",
+      "owner": "root coordinator with symbols/actor_renames.tsv owner tu-kpa3bg-0927",
+      "location": "symbols/actor_renames.tsv:3320",
+      "requirement_source": "notes/tu-promotion-conventions.md:181-196,644",
+      "requirement_quote": "Every coined mangled name that encodes an argument type has its disclosure in the manifest notes, in symbols/actor_renames.tsv, and on the declaration.",
+      "action": "Reserve scoped append, preserve prior rows and add the five exact preview hops; rerun ledger gate and independent review.",
+      "preview": "build/cheep-native-state1013/actor_renames.preview.tsv"
+    },
+    {
+      "id": "cheep1013-stale-imports",
+      "status": "open",
+      "kind": "provenance",
+      "owner": "root coordinator with include/decl_common.h owner jump-contract-repair-0918",
+      "location": "include/decl_common.h:2101",
+      "requirement_source": "notes/tu-promotion-conventions.md:346-367",
+      "requirement_quote": "A promotion removes the declarations of the functions it renamed, in the same PR.",
+      "action": "Reserve exact removal of the now-unreferenced func_ov090_021330c8 and func_ov090_02133338 declarations; expand header-consumer verification on the composed result. No fake physical aliases or unrelated header cleanup.",
+      "preview": "build/cheep-native-state1013/decl_common.preview.patch"
+    }
+  ],
+  "attribution": "function-authors.json unchanged; all address-keyed authors preserved",
+  "remaining_reconstruction": [
+    "Existing raw angle/timer accesses and Fix12-by-value ABI boundaries remain documented in the TU; this change does not claim the entire class is fully reconstructed.",
+    "Existing two native state-main methods keep their prior address-based names. ROM-backed PMF descriptors retain their existing data ownership."
+  ],
+  "next_action": "Coordinator obtains exact cross-owner resources and completes both mandatory records, then a separate session reviews/verifies the exact composed candidate under active18af policy. No source PR or merge before those findings are closed.",
+  "source_sha256": {
+    "src/actors/daPukupuku_c.cpp": "f6ae128e15e242c03908654bfcaeffd9e73be6a51743ba7a665848fa6113d416",
+    "include/daPukupuku_c.h": "de67236540646869a4a9eafa8cd3f93ee780787c15e34cf1296f4da28963e241",
+    "config/arm9/overlays/ov090/symbols.txt": "d6f895826caf84ea332912f02d3bfd99459cda4439ce9c2cc149277586cae6d7",
+    "config/tu_manifest.d/ov090/daPukupuku_c.json": "accb129d9c311336806564bfd29034bd6e1daa6a0bf01f794eb96e44b75b13a6"
+  },
+  "artifact_sha256": {
+    "strict.json": "58bf1d971aaeef6944ddc82da0bb8840496ddd3676a325b34011d5639d5f91a7",
+    "intact-preparation.json": "0c2c87375e0c5f8b873fc884220bfe8b50b6bfd9e24dc8f56eb881e3dbc6e732",
+    "paired-identity.json": "579af4c357b559b43bf6401501b46f725689642c1490b58be4b0a84fd00ee62d",
+    "data.json": "0cdd1c68aca2324837ef2e9eb5421869d5b03998467cfd497bceb1ea3924119a",
+    "prepush.json": "63102ac7750e352e585a3450b132ee33d4e349d3ad3d9056012a1cc22e1cdb6a",
+    "prepush.log": "dc2a22c19915f5a63caa0e4b77d299fba47eb9a8d7a1f85f7a002d549c7a8f53",
+    "declarations.log": "2152b1eb3e47c358eb0eb2ace1b128ca80419de19cd41e9d13203748991cef01",
+    "port.log": "b010cd028d86799a0ca3fef6d8a50d00786d7610b9d12dc8e7eee993a7c1b86e",
+    "langmode.json": "ee8eabc03577ba8f12c25d4f92dab3382cc20accf27a112e5abb00957869dd88",
+    "langmode.log": "305c121709016f6ca0cd631ef8d2e0b49f2cf097c733859d1bda22fd52243ad2",
+    "rename-ledger.log": "f34d86eaa3b9f2e31534377640b3e171ed0e8a5eef4af819efbc220c5188c103",
+    "rombuild.log": "4fc527f3084b60262a5bd75b41a98876d4c53a2499e51389608ea0e753d3e7e6",
+    "actor_renames.preview.tsv": "068ee40f0f0fffa96c816447ffa45b984a027a9e46ac55a19f7270c4254ea306",
+    "decl_common.preview.patch": "da80d5272ef5de4b67090e1511e15eca194f375d7e8a474c537c6a205435cab3",
+    "prove.py": "4a5d520ad99ebc34a8be31618aafa0c876b4fd399f5caa873f575959681c122e"
+  },
+  "full_report_sha256": "b79f96cd9e0a8159f33667a04f5a3e4ec4660d1bf60780b20c50625994d475f3",
+  "private_previews": {
+    "ledger": "module\taddr\told\tnew\twhy\nov090\t0x021330c8\tfunc_ov090_021330c8\t_ZN12daPukupuku_c21HandlePlayerCollisionEv\tplayer-contact helper; Behavior call and Player damage path; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x021331c4\tfunc_ov090_021331c4\t_ZN12daPukupuku_c10EnterPauseEv\tpause-enter PMF at0x021342d0; timer and zero speed; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x02133290\tfunc_ov090_02133290\t_ZN12daPukupuku_c9EnterSwimEv\tswim-enter PMF at0x021342c0; random heading/timer and swim speed; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x021332e8\t_ZN12daPukupuku_c19func_ov090_021332e8EPM10PukuStateCFivE\t_ZN12daPukupuku_c11ChangeStateEP12PukuStateRow\tstores the real state pointer at0x370 and invokes the enter member; PukuStateRow and pointer parameter spelling inferred, ROM does not distinguish pointer from reference; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x02133338\tfunc_ov090_02133338\t_ZN12daPukupuku_c20UpdateModelTransformEv\ttwo Behavior calls; builds and stores translated/rotated model matrix; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\n",
+    "stale_declarations": "--- a/include/decl_common.h\n+++ b/include/decl_common.h\n@@ -2098,8 +2098,6 @@\n extern void func_ov085_0212c150(void*);\n extern void func_ov085_0212cd0c(void*);\n extern void func_ov089_02131f54(void*);\n-extern void func_ov090_021330c8(char*);\n-extern void func_ov090_02133338(char*);\n extern int func_ov090_021338b4(void*, void*);\n extern void func_ov091_02131cb0(void*, const struct Vector3*, const struct Vector3*);\n extern void func_ov091_02132e64(char*);\n"
+  },
+  "reproducer_python": "import pathlib,json,sys,subprocess,os,io,hashlib\nsys.path.insert(0,'tools')\nimport rombuild as RB,tu_production as TP,linkcheck as LC,reloc_audit as RA,romdata_check as RD\nfrom elftools.elf.elffile import ELFFile\nP=pathlib.Path('build/cheep-native-state1013');BASE='731efc06d5d5e84ac33ff5f97880e9f90476158e';m=json.loads(pathlib.Path('config/tu_manifest.d/ov090/daPukupuku_c.json').read_text())\ndef compile(name,src):\n d=P/name;d.mkdir(exist_ok=True);p=d/'daPukupuku_c.cpp';p.write_text(src);out=d/'raw.o';exe=pathlib.Path('tools/mwccarm/2004/b56/mwccarm.exe').resolve();env=dict(os.environ,LM_LICENSE_FILE=str(pathlib.Path('tools/mwccarm/license.dat').resolve()))\n r=subprocess.run([str(exe),*RB.CFLAGS.replace('-lang c99','-lang c++').split(),'-I'+str(pathlib.Path('include').resolve()),'-c',str(p.resolve()),'-o',str(out.resolve())],capture_output=True,text=True,env=env);assert r.returncode==0,r.stdout+r.stderr\n return out\nh=subprocess.check_output(['git','show',BASE+':include/daPukupuku_c.h']).decode();(P/'baseline-header.h').write_text(h)\ns=subprocess.check_output(['git','show',BASE+':src/actors/daPukupuku_c.cpp']).decode().replace('#include \"daPukupuku_c.h\"','#include \"'+(P/'baseline-header.h').resolve().as_posix()+'\"')\na=compile('baseline',s);b=compile('candidate',pathlib.Path('src/actors/daPukupuku_c.cpp').read_text());raw=b.read_bytes()\nobj,proof=TP.prepare_intact_object(raw,m);(P/'prepared.o').write_bytes(obj);(P/'intact-preparation.json').write_text(json.dumps(proof,indent=2))\nidx=RA.build_name_index();rows=[]\nfor f in m['functions']+m['init']:\n r=LC.linkcheck(f['symbol'],int(f['address'],0),int(f['size'],0),'ov090',idx,obj=obj,sym=f['symbol']);rows.append(r);print(r['name'],r['verdict'],r['diffs'],r['blind']);assert r['verdict']=='VERIFIED' and r['diffs']==[] and r['blind']==0,r\n(P/'strict.json').write_text(json.dumps(rows,indent=2))\ndata={'baseline':RD.check_object(a,'src/actors/daPukupuku_c.cpp'),'candidate':RD.check_object(b,'src/actors/daPukupuku_c.cpp')};data['summary']=RD.summarize(data['candidate']);(P/'data.json').write_text(json.dumps(data,indent=2));assert not data['summary']['differs'];print('data',data['summary'])\ndef identity(path,names):\n elf=ELFFile(io.BytesIO(path.read_bytes()));syms=elf.get_section_by_name('.symtab');rename=dict(zip(names,['@620','@737']));nodes=[];sections={}\n for name in names:\n  sy=[x for x in syms.iter_symbols() if x.name==name];assert len(sy)==1;v=sy[0];sec=elf.get_section(v['st_shndx']);assert v['st_info']['bind']=='STB_LOCAL' and v['st_size']==12 and sec.name=='.bss';nodes.append({'name':name,'canonical':rename[name],'size':12,'binding':'STB_LOCAL'})\n for i,sec in enumerate(elf.iter_sections()):\n  if sec.name not in ['.init','.ctor']:continue\n  refs=[]\n  for rs in elf.iter_sections():\n   if rs['sh_type'] not in ['SHT_REL','SHT_RELA'] or rs['sh_info']!=i:continue\n   for r in rs.iter_relocations():\n    name=syms.get_symbol(r['r_info_sym']).name;refs.append({'offset':hex(r['r_offset']),'type':r['r_info_type'],'symbol':rename.get(name,name)})\n  sections[sec.name]={'size':sec['sh_size'],'sha256':hashlib.sha256(sec.data()).hexdigest(),'references':refs}\n return {'nodes':nodes,'sections':sections}\naid=identity(a,['@634','@635']);bid=identity(b,['@630','@631']);assert aid['sections']==bid['sections'],'init/ctor change';(P/'paired-identity.json').write_text(json.dumps({'baseline':aid,'candidate':bid,'exact_init_ctor_and_references':True},indent=2));print('paired .init/.ctor bytes + references exact')\n",
+  "publication": "No source branch push/PR/merge; queue producer artifact only. Independent acceptance remains pending."
+}

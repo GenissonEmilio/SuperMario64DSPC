@@ -29,15 +29,21 @@
 #include "dCcAcPos_c.h"
 #include "dBgCh_Actr.h"
 
-/* Incomplete on purpose: the state pointer-to-member is 8 bytes (code, delta). */
-struct PukuStateC;
-typedef int (PukuStateC::*PukuStatePMF)();
+/* Declare the actual actor while incomplete: mwccarm 2004/b56 uses the
+ * ROM state table's 8-byte (code, this-delta) member-pointer representation. */
+struct daPukupuku_c;
+typedef int (daPukupuku_c::*PukuStatePMF)();
+struct PukuStateRow { PukuStatePMF enter, main; };
+#ifndef SM64DS_PLATFORM_PC
+typedef char PukuPMFSize[sizeof(PukuStatePMF) == 8 ? 1 : -1];
+typedef char PukuRowSize[sizeof(PukuStateRow) == 16 ? 1 : -1];
+#endif
 
 struct daPukupuku_c : dEnemyBase_c {
     dCcAcPos_c mdCcAcPos_c;/* 0x110 */
     dBgCh_Actr mWithMeshClsn;       /* 0x150 */
     ModelAnim mModelAnim;             /* 0x30c */
-    u8  pad_370[0x4];
+    PukuStateRow *mState;              /* 0x370 */
     s32 mHomePosX;                      /* 0x374 */
     s32 mHomePosY;                      /* 0x378 */
     s32 mHomePosZ;                      /* 0x37c */
@@ -49,6 +55,10 @@ struct daPukupuku_c : dEnemyBase_c {
        D0 before D1, which the production isolate refuses. */
     virtual ~daPukupuku_c() {}
 
+    /* Reconstructed helper names, not recovered SM64DS identifiers. The
+     * actor ownership, call sites, state layout and exact bytes are proven. */
+    void UpdateModelTransform();
+    void HandlePlayerCollision();
     int Behavior();
     int CleanupResources();
     int InitResources();
@@ -56,7 +66,12 @@ struct daPukupuku_c : dEnemyBase_c {
     int Render();
     int func_ov090_02133190();
     int func_ov090_02133200();
-    int func_ov090_021332e8(PukuStatePMF *p);
+    /* PukuStateRow and this pointer parameter are reconstructed source types;
+     * the ROM proves a 16-byte enter/main row and the stored pointer at 0x370,
+     * not the original type name or pointer-versus-reference spelling. */
+    int ChangeState(PukuStateRow *state);
+    int EnterSwim();
+    int EnterPause();
 
     /* Tail padding. The field span stops short of the real size:
        daPukupuku_c_classInit calls fBase_c::operator new(0x388), read off
