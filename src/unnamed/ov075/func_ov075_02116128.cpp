@@ -14,25 +14,21 @@
  * the ROM spells it, (v << 0x1c) >> 0x10. `dim` selects the palette four rows earlier,
  * which is how an inactive slot is drawn.
  */
-// NONMATCHING: register allocation, at the canonical mwccarm 2004/b56. Twenty divergent
-// words by tools/match.py, which compares word by word; nineteen by the near-miss DB's
-// scorer in nearmiss/db.jsonl, which is an edit distance over disassembled instructions.
-// Both numbers are of the same object; they count different things.
+// NONMATCHING: 20 differing instruction words at 244 bytes under mwccarm 2004/b56.
+// The near-miss DB's edit-distance score is 19 for the same object; the metrics differ.
+// The retained body has both register and scheduling differences around palette packing:
+// its pre-shift value is in r3, but `lsl r0,r3,#28` breaks the cartridge's in-place
+// r3 web and moves the palette materialization ahead of the first singleton stores.
 //
-// Logic verified against the ROM by differential execution - this body and the
-// cartridge's own instructions were interpreted on the same inputs and perform identical
-// stores over all 880 input combinations the function can distinguish - not by
-// inspection. Counts as decompiled, not matched.
+// Earlier work recorded equivalent stores over 880 differential-execution inputs.
+// The declaration cleanup here does not change the compiled function bytes. It uses
+// the actual G2 getter's void* return and the char* receiver used by this routine's
+// existing callers. This remains decompiled, not byte-matched or production-enrolled.
 //
-// The instruction SCHEDULE is exact; the whole residue is one register rotation. The
-// ROM holds the shifted palette value in r3, the store temp and loop invariant in r0
-// and the counter in r1. Here the value is born as the callee's return in r0 and the
-// truncating lsr writes in place, so it never reaches r3 and the rest rotates with it.
-// `#pragma opt_lifetimes off` together with the two-name shift chain below is what
-// pulls the truncation onto the ROM's r3 and puts the pointer and counter right;
-// neither half does anything on its own. Three attractors, the levers that are
-// measured-closed (including the TU hypothesis, in both its forms) and the one open
-// angle: notes/mwccarm-codegen.md 6bo.
+// notes/experiments/remaining4-pal1012.json preserves the latest investigation,
+// including exact-size cursor-member and oversized shared-join counterexamples.
+// Their different register assignments do not establish a compiler limitation.
+// The older source-shape measurements are in notes/mwccarm-codegen.md section 6bo.
 //
 // CAUTION for anyone permuting this function: its search space contains high-scoring
 // SEMANTICS-BREAKING shapes. Sinking the `<< 0x1c` below the four single stores scores
@@ -42,13 +38,16 @@
 // comparing the stores does. Re-audit anything a search produces here before banking it.
 #pragma opt_lifetimes off
 
+// local extern: no dedicated G2 header declares this getter; its definition in
+// src/_ZN2G212GetBG1ScrPtrEv.cpp returns void*. decl_common.h is generated.
+namespace G2 { void *GetBG1ScrPtr(); }
+
 extern "C" {
-unsigned short *_ZN2G212GetBG1ScrPtrEv();
 int func_02030958(int val);
 }
 extern unsigned char data_0209fc50;
 
-extern "C" void func_ov075_02116128(int unused, int slot, int dim)
+extern "C" void func_ov075_02116128(char *unused, int slot, int dim)
 {
     unsigned int w;
     unsigned int hi;
@@ -62,7 +61,7 @@ extern "C" void func_ov075_02116128(int unused, int slot, int dim)
     int i;
 
     b = data_0209fc50;
-    bg = _ZN2G212GetBG1ScrPtrEv();
+    bg = (unsigned short *)G2::GetBG1ScrPtr();
     a = func_02030958(slot);
     t = 4 - b;
     m = slot * (t * 0x20 + 0xa0) + (t * 0x40 + 0x84);

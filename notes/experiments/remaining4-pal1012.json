@@ -1,0 +1,563 @@
+{
+  "schema": 1,
+  "task": "remaining4-pal1012",
+  "session": "astra-r4-pal1012",
+  "role": "producer",
+  "input_commit": "dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+  "status": "partial; retained source remains NONMATCHING at 20/61 instruction words",
+  "symbol": "func_ov075_02116128",
+  "module": "ov075",
+  "address": "0x02116128",
+  "size_bytes": 244,
+  "compiler": "2004/b56",
+  "source": "src/unnamed/ov075/func_ov075_02116128.cpp",
+  "source_sha256": "8c9baee1d8163edf6f2a6cfd50c3f2c4c8da5fcc1a851d71519379146af1b39a",
+  "source_changes": [
+    "Use the existing callers' char* receiver instead of an integer placeholder; argument remains unused.",
+    "Declare actual namespace G2::GetBG1ScrPtr with its defined void* return; cast once to the existing halfword-map view. No dedicated usable G2 header exists; generated decl_common.h is not the canonical SDK header.",
+    "Correct the inaccurate claim of schedule-exact output and preserve the NONMATCHING and unsafe-shift-sinking warnings. Body, emitted code and relocation symbol identities are unchanged."
+  ],
+  "declaration_evidence": {
+    "getter_definition": "src/_ZN2G212GetBG1ScrPtrEv.cpp: namespace G2, void* GetBG1ScrPtr(void)",
+    "callers": [
+      "src/unnamed/ov075/func_ov075_02116818.c",
+      "src/unnamed/ov075/func_ov075_02117fe4.c"
+    ],
+    "header_search": "rg -n GetBG1ScrPtr include: only generated decl_common.h declaration and unrelated comments; no dedicated G2 declaration"
+  },
+  "new_oracles": [
+    {
+      "commit": "6430a71e611a92b974ca8be02994df410d850c48",
+      "mechanism": "Slot1 whole-object identity and inferred-loop load shape"
+    },
+    {
+      "commit": "a4c5885cb30018a870ccaf64413e27f1fa77cb32",
+      "mechanism": "ov009 taken-arm stores with returned fallback and common-tail call retain a pre-RA block boundary"
+    },
+    {
+      "commit": "e7eaf283929d36c88455227bfdb7106dd402f993",
+      "mechanism": "Jump branch-layout predecessor controls loop invariant hoisting"
+    }
+  ],
+  "observations": [
+    "The ROM keeps the pre-narrowed value in r3 and shifts it in place at +0x68. The loop palette is r0, loop counter r1, pointer r2, mask r4 and singleton store temporary r5.",
+    "Conditional shifted-value assignments in both dim arms can put the shift destination in r3, but preserve duplicate predicated shifts at 248 bytes. Also assigning the pointer in both arms preserves an extra branch and address calculation at 256 bytes. Factoring them to a common tail loses that assignment.",
+    "A genuine inline BorderCursor::Paint produces an exact-size 244-byte family with palette r0, pointer r2, mask r4, store temporary r5, in-place shifted value r1 and counter r3. Its 26 differing words include a prelude narrowing schedule difference.",
+    "Moving real pointer-offset construction across palette preparation gives the correct original prelude through +0x5c, but splits shifted value r3 to r1 and keeps the counter in r3: 23 differences.",
+    "Following these positive families through consumed parameter/counter references, object members, native narrowing, caller-prepared state and physical dim-arm layouts did not reach the required r3 in-place chain at 244 bytes.",
+    "Whole paint-call duplication in a returned fallback does not late-merge into the desired body; it leaves duplicated store/loop code."
+  ],
+  "inferences": [
+    "The new examples expose distinct allocator outcomes rather than a proven compiler floor. No tested candidate improves the retained 20-word draft.",
+    "The useful next constraint is simultaneous prelude r3 preservation, in-place shifted r3, palette r0 and counter r1; individual role success in an oversized or worse candidate is not a match."
+  ],
+  "totals": {
+    "probes": 416,
+    "unique_source_hashes": 412,
+    "compiled": 416,
+    "exact_244_bytes": 304,
+    "best_exact_size_differences": 20
+  },
+  "families": [
+    {
+      "family": "border-context",
+      "probes": 32,
+      "compiled": 32,
+      "exact_244_bytes": 20,
+      "best_exact_size_differences": 20,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r2, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ],
+        [
+          "r2, r2, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\border-context-ledger.json",
+      "ledger_sha256": "e8e922ef9a7291448a8b0ba0908ddf6a9bf85e7b725744bafad4ef68df98480d"
+    },
+    {
+      "family": "cursor-counter",
+      "probes": 20,
+      "compiled": 20,
+      "exact_244_bytes": 20,
+      "best_exact_size_differences": 26,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-counter-ledger.json",
+      "ledger_sha256": "46f62907038d17516778df1370003d8196f5c2c78e7ef4c81f0a1b3f7ced6b69"
+    },
+    {
+      "family": "cursor-counter-width",
+      "probes": 24,
+      "compiled": 24,
+      "exact_244_bytes": 8,
+      "best_exact_size_differences": 27,
+      "shift28_operands": [
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-counter-width-ledger.json",
+      "ledger_sha256": "6d746b36fd74f406cfa0a95756a6441e3d1b814e18e663e93db01b0a028b36d1"
+    },
+    {
+      "family": "cursor-external-counter",
+      "probes": 24,
+      "compiled": 24,
+      "exact_244_bytes": 16,
+      "best_exact_size_differences": 26,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-external-counter-ledger.json",
+      "ledger_sha256": "8ce7f1ea73a2343257fa12dd16293fc90bfe6238da1b9a09c78d45e82fd9cac3"
+    },
+    {
+      "family": "cursor-member-state",
+      "probes": 28,
+      "compiled": 28,
+      "exact_244_bytes": 28,
+      "best_exact_size_differences": 26,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-member-state-ledger.json",
+      "ledger_sha256": "7870cebf67ca76d95bbfa0e56dcba61fb74fcf59d74543c29c7a95d3ee953edf"
+    },
+    {
+      "family": "cursor-native-narrow",
+      "probes": 12,
+      "compiled": 12,
+      "exact_244_bytes": 6,
+      "best_exact_size_differences": 32,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r2, r2, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-native-narrow-ledger.json",
+      "ledger_sha256": "dffca5b0e127ad137c34e228be401f2ae0063f5c823cb5c066a9f59f6404569e"
+    },
+    {
+      "family": "cursor-prepared-state",
+      "probes": 12,
+      "compiled": 12,
+      "exact_244_bytes": 12,
+      "best_exact_size_differences": 26,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-prepared-state-ledger.json",
+      "ledger_sha256": "7777d4be29ccaf97c1d24187979a8e06f6dbd5607d7b2487ccb460a374eb3785"
+    },
+    {
+      "family": "cursor-shared-input",
+      "probes": 26,
+      "compiled": 26,
+      "exact_244_bytes": 25,
+      "best_exact_size_differences": 26,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-shared-input-ledger.json",
+      "ledger_sha256": "ac8acccda100822075a61619725bc15a7f1a3dfd030dc0304786f96f10237a5d"
+    },
+    {
+      "family": "cursor-tileword-history",
+      "probes": 21,
+      "compiled": 21,
+      "exact_244_bytes": 17,
+      "best_exact_size_differences": 23,
+      "shift28_operands": [
+        [
+          "r1, r0, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ],
+        [
+          "r5, r0, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-tileword-history-ledger.json",
+      "ledger_sha256": "f920d71769f545bd630dd5ff8c0793bb842d6233bf59bb45f637f2c0d1e2d685"
+    },
+    {
+      "family": "cursor-whole-lifetime",
+      "probes": 12,
+      "compiled": 12,
+      "exact_244_bytes": 12,
+      "best_exact_size_differences": 23,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ],
+        [
+          "r1, r2, #0x1c"
+        ],
+        [
+          "r1, r3, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\cursor-whole-lifetime-ledger.json",
+      "ledger_sha256": "dde3586308cffa50099d84d972cd3e5c73f444be03ba401dd43904951ca76cb8"
+    },
+    {
+      "family": "dim-layout",
+      "probes": 36,
+      "compiled": 36,
+      "exact_244_bytes": 7,
+      "best_exact_size_differences": 20,
+      "shift28_operands": [
+        [],
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r3, r0, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\dim-layout-ledger.json",
+      "ledger_sha256": "184d7d1b7467343efe42fdbce60bd460f8e42f382b038b1bc2b0ec2c3f2e0e8e"
+    },
+    {
+      "family": "entry-identity",
+      "probes": 25,
+      "compiled": 25,
+      "exact_244_bytes": 17,
+      "best_exact_size_differences": 20,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r2, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\entry-identity-ledger.json",
+      "ledger_sha256": "91bccab94d0e28bda594b312704e748d87fa53185102085058568918659d3947"
+    },
+    {
+      "family": "native-return-pack",
+      "probes": 16,
+      "compiled": 16,
+      "exact_244_bytes": 0,
+      "best_exact_size_differences": null,
+      "shift28_operands": [
+        []
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\native-return-pack-ledger.json",
+      "ledger_sha256": "739e392ac251542c1c9a640acf58fd78a65d55dfd645dd71c31edce07e1a112f"
+    },
+    {
+      "family": "paint-boundary",
+      "probes": 32,
+      "compiled": 32,
+      "exact_244_bytes": 32,
+      "best_exact_size_differences": 24,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r2, #0x1c"
+        ],
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\paint-boundary-ledger.json",
+      "ledger_sha256": "aa434514c1098065769cb24456319d9edee0a88e125e60931dfa6c806a09665c"
+    },
+    {
+      "family": "paint-shared-tail",
+      "probes": 12,
+      "compiled": 12,
+      "exact_244_bytes": 0,
+      "best_exact_size_differences": null,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c",
+          "r1, r0, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c",
+          "r1, r1, #0x1c"
+        ],
+        [
+          "r5, r1, #0x1c",
+          "r5, r0, #0x1c"
+        ],
+        [
+          "r5, r1, #0x1c",
+          "r5, r1, #0x1c"
+        ],
+        [
+          "r5, r2, #0x1c",
+          "r5, r0, #0x1c"
+        ],
+        [
+          "r5, r2, #0x1c",
+          "r5, r2, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\paint-shared-tail-ledger.json",
+      "ledger_sha256": "296ecf570b546b64f683da478c72b70bf76fcfc57378c96b9df97fc815d4d548"
+    },
+    {
+      "family": "shift-identity",
+      "probes": 42,
+      "compiled": 42,
+      "exact_244_bytes": 42,
+      "best_exact_size_differences": 23,
+      "shift28_operands": [
+        [
+          "r0, r0, #0x1c"
+        ],
+        [
+          "r0, r5, #0x1c"
+        ],
+        [
+          "r0, r6, #0x1c"
+        ],
+        [
+          "r0, r7, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\shift-identity-ledger.json",
+      "ledger_sha256": "5756d91214e875f822228eac3807215d0a2d8403e71b2ee113d43bcdf180283f"
+    },
+    {
+      "family": "truthful-boundaries",
+      "probes": 12,
+      "compiled": 12,
+      "exact_244_bytes": 12,
+      "best_exact_size_differences": 20,
+      "shift28_operands": [
+        [
+          "r0, r3, #0x1c"
+        ],
+        [
+          "r1, r1, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\truthful-boundaries-ledger.json",
+      "ledger_sha256": "18d11dbb391a14382de0babe8db70851e410b1eed134062c617f78ba861c2400"
+    },
+    {
+      "family": "whole-cursor-reuse",
+      "probes": 30,
+      "compiled": 30,
+      "exact_244_bytes": 30,
+      "best_exact_size_differences": 23,
+      "shift28_operands": [
+        [
+          "r1, r1, #0x1c"
+        ],
+        [
+          "r1, r2, #0x1c"
+        ],
+        [
+          "r1, r3, #0x1c"
+        ]
+      ],
+      "scratch_ledger": "build\\r4-pal1012\\whole-cursor-reuse-ledger.json",
+      "ledger_sha256": "333a7fd3e651e8c0095ba3e89beaf35b0e89f8d4cd116a3b19cf2504eac9df46"
+    }
+  ],
+  "proof": {
+    "compiled_body": {
+      "compiled_bytes_identical": true,
+      "size_bytes": 244,
+      "relocation_offsets": [
+        24,
+        36,
+        236
+      ],
+      "word_differences": 20,
+      "body_sha256": "fbd96b21743abab27e08ea44cd433afede89fafcb427e195bb61dde9d0a5700d",
+      "production_still_nonmatching": true
+    },
+    "object_relocation_identity": {
+      "unchanged": true,
+      "relocations": [
+        {
+          "offset": 24,
+          "type": 1,
+          "symbol": "_ZN2G212GetBG1ScrPtrEv"
+        },
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "func_02030958"
+        },
+        {
+          "offset": 236,
+          "type": 2,
+          "symbol": "data_0209fc50"
+        }
+      ],
+      "limit": "Object relocation identities compared against unchanged nonmatching baseline; not a strict linked-byte acceptance."
+    },
+    "strict_linkcheck": {
+      "command": "python tools/linkcheck.py --name func_ov075_02116128 --c src/unnamed/ov075/func_ov075_02116128.cpp --addr 0x02116128 --size 0xf4 --module ov075",
+      "exit_code": 0,
+      "result": {
+        "name": "func_ov075_02116128",
+        "module": "ov075",
+        "addr": "0x02116128",
+        "verdict": "NO-REPRO",
+        "reason": "no-repro",
+        "diffs": [],
+        "blind": 0,
+        "expected_size": 244,
+        "emitted_sizes": [
+          228,
+          240,
+          244
+        ]
+      },
+      "stderr": ""
+    },
+    "declarations": {
+      "command": "python tools/check_decl_agreement.py --changed dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e",
+      "exit_code": 0,
+      "scoped_existing_disagreements": 6,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "log": "build\\r4-pal1012\\declaration-check.log"
+    }
+  },
+  "limits": [
+    "Strict linkcheck returned NO-REPRO, not VERIFIED. Its empty diffs and blind=0 fields do not establish accepted linked-byte output.",
+    "wallcrack probe comparisons wildcard relocation words and are iteration-only. All new nonretained probes are scratch hypotheses, not accepted source.",
+    "The prior 880-input differential result is inherited historical evidence for the unchanged retained body. No new differential execution or full-ROM build was run; emitted body and relocation identities were checked unchanged.",
+    "No enrollment, header, config, near-miss DB, attribution or provenance edits. No source push, PR or merge. Function remains incomplete."
+  ],
+  "positive_counterexamples": {
+    "dim-shift-each-arm-life": {
+      "measurement": {
+        "name": "dim-shift-each-arm-life",
+        "family": "dim-layout",
+        "size": 248,
+        "diff": 41,
+        "error": null,
+        "sha256": "510c0f4b43641d970b9aee06cd585a0ec75ba278d30a1a235c79f38f9d72ce71",
+        "shift28": []
+      },
+      "source": "//cpp\n#pragma opt_lifetimes off\n\nextern \"C\" {\nunsigned short *_ZN2G212GetBG1ScrPtrEv();\nint func_02030958(int val);\n}\nextern unsigned char data_0209fc50;\n\nextern \"C\" void func_ov075_02116128(int unused, int slot, int dim)\n{\n    unsigned int w;\n    unsigned int hi;\n    int t;\n    int b;\n    unsigned short *p;\n    int a;\n    unsigned short *bg;\n    unsigned int angle;\n    int m;\n    int i;\n\n    b = data_0209fc50;\n    bg = _ZN2G212GetBG1ScrPtrEv();\n    a = func_02030958(slot);\n    t = 4 - b;\n    m = slot * (t * 0x20 + 0xa0) + (t * 0x40 + 0x84);\n    angle = (unsigned short)(a + 0xa);\n    hi = angle;\n    if(dim != 0) { hi = (unsigned short)(hi-4); w=hi<<28; }\n    else { w=hi<<28; }\n    p=bg+m; hi=w>>16;\n    p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);\n    p[0x40] = (unsigned short)((p[0x40] & 0xfff) | hi);\n    p[0x37] = (unsigned short)((p[0x37] & 0xfff) | hi);\n    p[0x57] = (unsigned short)((p[0x57] & 0xfff) | hi);\n    for (i = 0; i < 0x18; i++) {\n        p[0] = (unsigned short)((p[0] & 0xfff) | hi);\n        p[0x60] = (unsigned short)((p[0x60] & 0xfff) | hi);\n        p++;\n    }\n}\n",
+      "assembly": "000 push {r4, r5, r6, r7, lr}\n004 sub sp, sp, #4\n008 ldr r0, [pc, #0xe0]\n00c mov r6, r1\n010 ldrb r7, [r0]\n014 mov r5, r2\n018 bl #0x20\n01c mov r4, r0\n020 mov r0, r6\n024 bl #0x2c\n028 rsb r1, r7, #4\n02c lsl r2, r1, #6\n030 lsl r1, r1, #5\n034 add r0, r0, #0xa\n038 lsl r0, r0, #0x10\n03c add r2, r2, #0x84\n040 add r1, r1, #0xa0\n044 mla r1, r6, r1, r2\n048 add r1, r4, r1, lsl #1\n04c lsr r0, r0, #0x10\n050 cmp r5, #0\n054 subne r0, r0, #4\n058 lslne r0, r0, #0x10\n05c lsrne r0, r0, #0x10\n060 lslne r3, r0, #0x1c\n064 lsleq r3, r0, #0x1c\n068 ldrh r0, [r1, #0x40]\n06c ldr r4, [pc, #0x80]\n070 lsr r2, r3, #0x10\n074 and r0, r0, r4\n078 orr r0, r0, r3, lsr #16\n07c strh r0, [r1, #0x40]\n080 ldrh r5, [r1, #0x80]\n084 mov r0, #0\n088 and r5, r5, r4\n08c orr r5, r5, r3, lsr #16\n090 strh r5, [r1, #0x80]\n094 ldrh r5, [r1, #0x6e]\n098 and r5, r5, r4\n09c orr r5, r5, r3, lsr #16\n0a0 strh r5, [r1, #0x6e]\n0a4 ldrh r5, [r1, #0xae]\n0a8 and r5, r5, r4\n0ac orr r3, r5, r3, lsr #16\n0b0 strh r3, [r1, #0xae]\n0b4 ldrh r3, [r1]\n0b8 add r0, r0, #1\n0bc cmp r0, #0x18\n0c0 and r3, r3, r4\n0c4 orr r3, r3, r2\n0c8 strh r3, [r1]\n0cc ldrh r3, [r1, #0xc0]\n0d0 and r3, r3, r4\n0d4 orr r3, r3, r2\n0d8 strh r3, [r1, #0xc0]\n0dc add r1, r1, #2\n0e0 blt #0xb4\n0e4 add sp, sp, #4\n0e8 pop {r4, r5, r6, r7, lr}\n0ec bx lr\n0f0 andeq r0, r0, r0\n0f4 strdeq r0, r1, [r0], -pc"
+    },
+    "dim-shift-pointer-each-arm-life": {
+      "measurement": {
+        "name": "dim-shift-pointer-each-arm-life",
+        "family": "dim-layout",
+        "size": 256,
+        "diff": 44,
+        "error": null,
+        "sha256": "fbd1cec6e690fa2343cc749ae375d6d181a84dbbde469a4aa293b4cb233a74f0",
+        "shift28": [
+          "r3, r0, #0x1c"
+        ]
+      },
+      "source": "//cpp\n#pragma opt_lifetimes off\n\nextern \"C\" {\nunsigned short *_ZN2G212GetBG1ScrPtrEv();\nint func_02030958(int val);\n}\nextern unsigned char data_0209fc50;\n\nextern \"C\" void func_ov075_02116128(int unused, int slot, int dim)\n{\n    unsigned int w;\n    unsigned int hi;\n    int t;\n    int b;\n    unsigned short *p;\n    int a;\n    unsigned short *bg;\n    unsigned int angle;\n    int m;\n    int i;\n\n    b = data_0209fc50;\n    bg = _ZN2G212GetBG1ScrPtrEv();\n    a = func_02030958(slot);\n    t = 4 - b;\n    m = slot * (t * 0x20 + 0xa0) + (t * 0x40 + 0x84);\n    angle = (unsigned short)(a + 0xa);\n    hi = angle;\n    if(dim != 0) { hi = (unsigned short)(hi-4); w=hi<<28; p=bg+m; }\n    else { w=hi<<28; p=bg+m; }\n    hi=w>>16;\n    p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);\n    p[0x40] = (unsigned short)((p[0x40] & 0xfff) | hi);\n    p[0x37] = (unsigned short)((p[0x37] & 0xfff) | hi);\n    p[0x57] = (unsigned short)((p[0x57] & 0xfff) | hi);\n    for (i = 0; i < 0x18; i++) {\n        p[0] = (unsigned short)((p[0] & 0xfff) | hi);\n        p[0x60] = (unsigned short)((p[0x60] & 0xfff) | hi);\n        p++;\n    }\n}\n",
+      "assembly": "000 push {r4, r5, r6, r7, lr}\n004 sub sp, sp, #4\n008 ldr r0, [pc, #0xe8]\n00c mov r6, r1\n010 ldrb r7, [r0]\n014 mov r5, r2\n018 bl #0x20\n01c mov r4, r0\n020 mov r0, r6\n024 bl #0x2c\n028 rsb r1, r7, #4\n02c lsl r2, r1, #6\n030 lsl r1, r1, #5\n034 add r0, r0, #0xa\n038 lsl r0, r0, #0x10\n03c add r2, r2, #0x84\n040 add r1, r1, #0xa0\n044 mla r1, r6, r1, r2\n048 cmp r5, #0\n04c lsr r0, r0, #0x10\n050 lsleq r3, r0, #0x1c\n054 addeq r1, r4, r1, lsl #1\n058 beq #0x70\n05c sub r0, r0, #4\n060 lsl r0, r0, #0x10\n064 lsr r0, r0, #0x10\n068 lsl r3, r0, #0x1c\n06c add r1, r4, r1, lsl #1\n070 ldrh r0, [r1, #0x40]\n074 ldr r4, [pc, #0x80]\n078 lsr r2, r3, #0x10\n07c and r0, r0, r4\n080 orr r0, r0, r3, lsr #16\n084 strh r0, [r1, #0x40]\n088 ldrh r5, [r1, #0x80]\n08c mov r0, #0\n090 and r5, r5, r4\n094 orr r5, r5, r3, lsr #16\n098 strh r5, [r1, #0x80]\n09c ldrh r5, [r1, #0x6e]\n0a0 and r5, r5, r4\n0a4 orr r5, r5, r3, lsr #16\n0a8 strh r5, [r1, #0x6e]\n0ac ldrh r5, [r1, #0xae]\n0b0 and r5, r5, r4\n0b4 orr r3, r5, r3, lsr #16\n0b8 strh r3, [r1, #0xae]\n0bc ldrh r3, [r1]\n0c0 add r0, r0, #1\n0c4 cmp r0, #0x18\n0c8 and r3, r3, r4\n0cc orr r3, r3, r2\n0d0 strh r3, [r1]\n0d4 ldrh r3, [r1, #0xc0]\n0d8 and r3, r3, r4\n0dc orr r3, r3, r2\n0e0 strh r3, [r1, #0xc0]\n0e4 add r1, r1, #2\n0e8 blt #0xbc\n0ec add sp, sp, #4\n0f0 pop {r4, r5, r6, r7, lr}\n0f4 bx lr\n0f8 andeq r0, r0, r0\n0fc strdeq r0, r1, [r0], -pc"
+    },
+    "paint-cursor-object-result-inplace-life": {
+      "measurement": {
+        "name": "paint-cursor-object-result-inplace-life",
+        "family": "paint-boundary",
+        "size": 244,
+        "diff": 26,
+        "error": null,
+        "sha256": "7bb09921d12ce4d90e466eeee70187fba0bde532ca560f823c761013a07643f5",
+        "shift28": [
+          "r1, r1, #0x1c"
+        ]
+      },
+      "source": "//cpp\n#pragma opt_lifetimes off\n\nextern \"C\" {\nvoid *_ZN2G212GetBG1ScrPtrEv();\nint func_02030958(int val);\n}\nextern unsigned char data_0209fc50;\n\nstruct BorderCursor { unsigned short *p; void Paint(int value, int dim) { \nunsigned int hi = (unsigned short)(value+10);\nif(dim != 0) hi = (unsigned short)(hi-4);\nhi <<=28; unsigned int w=hi; hi=w>>16;\nint i;\n    p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);\n    p[0x40] = (unsigned short)((p[0x40] & 0xfff) | hi);\n    p[0x37] = (unsigned short)((p[0x37] & 0xfff) | hi);\n    p[0x57] = (unsigned short)((p[0x57] & 0xfff) | hi);\n    for (i = 0; i < 0x18; i++) {\n        p[0] = (unsigned short)((p[0] & 0xfff) | hi);\n        p[0x60] = (unsigned short)((p[0x60] & 0xfff) | hi);\n        p++;\n    }\n } };\nextern \"C\" void func_ov075_02116128(int unused, int slot, int dim) {\n int b=data_0209fc50;\n unsigned short *bg=(unsigned short*)_ZN2G212GetBG1ScrPtrEv();\n int a=func_02030958(slot);\n int t=4-b;\n int m=slot*(t*0x20+0xa0)+(t*0x40+0x84);\n BorderCursor cursor; cursor.p=bg+m; cursor.Paint(a, dim);\n}\n",
+      "assembly": "000 push {r4, r5, r6, r7, lr}\n004 sub sp, sp, #4\n008 ldr r0, [pc, #0xdc]\n00c mov r6, r1\n010 ldrb r7, [r0]\n014 mov r5, r2\n018 bl #0x20\n01c mov r4, r0\n020 mov r0, r6\n024 bl #0x2c\n028 rsb r1, r7, #4\n02c lsl r2, r1, #6\n030 lsl r1, r1, #5\n034 add r0, r0, #0xa\n038 add r2, r2, #0x84\n03c add r1, r1, #0xa0\n040 mla r1, r6, r1, r2\n044 add r2, r4, r1, lsl #1\n048 lsl r0, r0, #0x10\n04c lsr r1, r0, #0x10\n050 cmp r5, #0\n054 subne r0, r1, #4\n058 lslne r0, r0, #0x10\n05c lsrne r1, r0, #0x10\n060 ldrh r0, [r2, #0x40]\n064 ldr r4, [pc, #0x84]\n068 lsl r1, r1, #0x1c\n06c and r0, r0, r4\n070 orr r0, r0, r1, lsr #16\n074 strh r0, [r2, #0x40]\n078 ldrh r5, [r2, #0x80]\n07c lsr r0, r1, #0x10\n080 mov r3, #0\n084 and r5, r5, r4\n088 orr r5, r5, r1, lsr #16\n08c strh r5, [r2, #0x80]\n090 ldrh r5, [r2, #0x6e]\n094 and r5, r5, r4\n098 orr r5, r5, r1, lsr #16\n09c strh r5, [r2, #0x6e]\n0a0 ldrh r5, [r2, #0xae]\n0a4 and r5, r5, r4\n0a8 orr r1, r5, r1, lsr #16\n0ac strh r1, [r2, #0xae]\n0b0 ldrh r1, [r2]\n0b4 add r3, r3, #1\n0b8 cmp r3, #0x18\n0bc and r1, r1, r4\n0c0 orr r1, r1, r0\n0c4 strh r1, [r2]\n0c8 ldrh r1, [r2, #0xc0]\n0cc and r1, r1, r4\n0d0 orr r1, r1, r0\n0d4 strh r1, [r2, #0xc0]\n0d8 add r2, r2, #2\n0dc blt #0xb0\n0e0 add sp, sp, #4\n0e4 pop {r4, r5, r6, r7, lr}\n0e8 bx lr\n0ec andeq r0, r0, r0\n0f0 strdeq r0, r1, [r0], -pc"
+    },
+    "whole-cursor-after-palette-single-life": {
+      "measurement": {
+        "name": "whole-cursor-after-palette-single-life",
+        "family": "cursor-whole-lifetime",
+        "size": 244,
+        "diff": 23,
+        "error": null,
+        "sha256": "9563bf88eba4c6e85c296424a8e9e086913c91ea0adc48a69976c649f35ca5af",
+        "shift28": [
+          "r1, r3, #0x1c"
+        ]
+      },
+      "source": "//cpp\n#pragma opt_lifetimes off\n\nextern \"C\" {\nvoid *_ZN2G212GetBG1ScrPtrEv();\nint func_02030958(int val);\n}\nextern unsigned char data_0209fc50;\n\nstruct BorderCursor { unsigned short *p; void Paint(int slot, int count, int value, int dim) { \nunsigned int hi = (unsigned short)(value+10);\nint t=4-count; int m=slot*(t*0x20+0xa0)+(t*0x40+0x84); p += m;\nif(dim != 0) hi = (unsigned short)(hi-4);\nhi <<=28; unsigned int w=hi; hi=w>>16;\nint i;\n    p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);\n    p[0x40] = (unsigned short)((p[0x40] & 0xfff) | hi);\n    p[0x37] = (unsigned short)((p[0x37] & 0xfff) | hi);\n    p[0x57] = (unsigned short)((p[0x57] & 0xfff) | hi);\n    for (i = 0; i < 0x18; i++) {\n        p[0] = (unsigned short)((p[0] & 0xfff) | hi);\n        p[0x60] = (unsigned short)((p[0x60] & 0xfff) | hi);\n        p++;\n    }\n } };\nextern \"C\" void func_ov075_02116128(int unused, int slot, int dim) {\n int b=data_0209fc50;\n BorderCursor cursor; cursor.p=(unsigned short*)_ZN2G212GetBG1ScrPtrEv();\n int a=func_02030958(slot);\n\n cursor.Paint(slot, b, a, dim);\n}\n",
+      "assembly": "000 push {r4, r5, r6, r7, lr}\n004 sub sp, sp, #4\n008 ldr r0, [pc, #0xdc]\n00c mov r6, r1\n010 ldrb r7, [r0]\n014 mov r5, r2\n018 bl #0x20\n01c mov r4, r0\n020 mov r0, r6\n024 bl #0x2c\n028 rsb r1, r7, #4\n02c lsl r2, r1, #6\n030 lsl r1, r1, #5\n034 add r0, r0, #0xa\n038 lsl r0, r0, #0x10\n03c add r2, r2, #0x84\n040 add r1, r1, #0xa0\n044 mla r1, r6, r1, r2\n048 add r2, r4, r1, lsl #1\n04c lsr r3, r0, #0x10\n050 cmp r5, #0\n054 subne r0, r3, #4\n058 lslne r0, r0, #0x10\n05c lsrne r3, r0, #0x10\n060 lsl r1, r3, #0x1c\n064 ldrh r0, [r2, #0x40]\n068 ldr r4, [pc, #0x80]\n06c mov r3, #0\n070 and r0, r0, r4\n074 orr r0, r0, r1, lsr #16\n078 strh r0, [r2, #0x40]\n07c ldrh r5, [r2, #0x80]\n080 lsr r0, r1, #0x10\n084 and r5, r5, r4\n088 orr r5, r5, r1, lsr #16\n08c strh r5, [r2, #0x80]\n090 ldrh r5, [r2, #0x6e]\n094 and r5, r5, r4\n098 orr r5, r5, r1, lsr #16\n09c strh r5, [r2, #0x6e]\n0a0 ldrh r5, [r2, #0xae]\n0a4 and r5, r5, r4\n0a8 orr r1, r5, r1, lsr #16\n0ac strh r1, [r2, #0xae]\n0b0 ldrh r1, [r2]\n0b4 add r3, r3, #1\n0b8 cmp r3, #0x18\n0bc and r1, r1, r4\n0c0 orr r1, r1, r0\n0c4 strh r1, [r2]\n0c8 ldrh r1, [r2, #0xc0]\n0cc and r1, r1, r4\n0d0 orr r1, r1, r0\n0d4 strh r1, [r2, #0xc0]\n0d8 add r2, r2, #2\n0dc blt #0xb0\n0e0 add sp, sp, #4\n0e4 pop {r4, r5, r6, r7, lr}\n0e8 bx lr\n0ec andeq r0, r0, r0\n0f0 strdeq r0, r1, [r0], -pc"
+    }
+  },
+  "reproduction": {
+    "cwd": "C:/tmp/sm64ds-r4-pal1012",
+    "scratch_directory": "build\\r4-pal1012",
+    "baseline_source": "git show dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e:src/unnamed/ov075/func_ov075_02116128.cpp",
+    "scripts": {
+      "context_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='border-context'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nfor fields,order,typ,pragma in itertools.product([['p','w'],['p','hi'],['p','w','hi'],['p','hi','i']],[False,True],['unsigned int','unsigned short'],['life','default']):\n s=clean\n members={'p':'unsigned short *p;','w':'unsigned int w;','hi':typ+' hi;','i':'int i;'}\n decl='struct BorderCursor { '+' '.join(members[x] for x in (list(reversed(fields)) if order else fields))+' };\\n'\n s=s.replace('extern \"C\" void func_ov075',decl+'extern \"C\" void func_ov075')\n for f in fields:\n  s=s.replace('    '+{'p':'unsigned short *p;','w':'unsigned int w;','hi':'unsigned int hi;','i':'int i;'}[f],'')\n pos=s.index('    b = data_0209fc50;');s=s[:pos]+'    BorderCursor cursor;\\n'+s[pos:]\n body=s.index('    b = data_0209fc50;');prefix=s[:body];tail=s[body:]\n for f in fields:tail=re.sub(r'\\b'+f+r'\\b','cursor.'+f,tail)\n s=prefix+tail\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('context-'+''.join(fields)+'-'+str(order)+'-'+typ.replace('unsigned ','u')+'-'+pragma,s,fam)\nreport(fam)\n",
+      "counter_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='cursor-counter'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor receiver,order,kind in itertools.product(['i','value','dim','copyvalue','copydim'],['normal','reverse'],['int','long']):\n s=seed\n if receiver in ['value','dim']:\n  s=s.replace('int i;','');s=re.sub(r'\\bi\\b',receiver,s)\n elif receiver=='copyvalue':s=s.replace('unsigned int hi = (unsigned short)(value+10);','int i=value;\\nunsigned int hi = (unsigned short)(i+10);').replace('hi=w>>16;\\nint i;','hi=w>>16;')\n elif receiver=='copydim':s=s.replace('unsigned int hi = (unsigned short)(value+10);','int i=dim;\\nunsigned int hi = (unsigned short)(value+10);').replace('if(dim != 0)','if(i != 0)').replace('hi=w>>16;\\nint i;','hi=w>>16;')\n else:s=s.replace('unsigned int hi = (unsigned short)(value+10);','int i;\\nunsigned int hi = (unsigned short)(value+10);').replace('hi=w>>16;\\nint i;','hi=w>>16;')\n if order=='reverse':s=s.replace('Paint(int value, int dim)','Paint(int dim, int value)').replace('cursor.Paint(a, dim)','cursor.Paint(dim, a)')\n if kind=='long':\n  if receiver in ['value','dim']:s=s.replace('int '+receiver+',','long '+receiver+',').replace('int '+receiver+')','long '+receiver+')')\n  else:s=s.replace('int i','long i')\n test('cursor-counter-'+receiver+'-'+order+'-'+kind,s,fam)\nreport(fam)\n",
+      "dim_probe.py": "import itertools\nfrom probe_lib import *\nfam='dim-layout'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nold='''    hi = angle;\n    if (dim != 0)\n        hi = (unsigned short)(hi - 4);\n    p = bg + m;\n    w = hi << 0x1c;\n    hi = w >> 16;'''\nforms={\n'pointer-each-arm':'''    hi = angle;\n    if(dim != 0) { hi = (unsigned short)(hi-4); p=bg+m; }\n    else { p=bg+m; }\n    w=hi<<28; hi=w>>16;''',\n'shift-each-arm':'''    hi = angle;\n    if(dim != 0) { hi = (unsigned short)(hi-4); w=hi<<28; }\n    else { w=hi<<28; }\n    p=bg+m; hi=w>>16;''',\n'shift-pointer-each-arm':'''    hi = angle;\n    if(dim != 0) { hi = (unsigned short)(hi-4); w=hi<<28; p=bg+m; }\n    else { w=hi<<28; p=bg+m; }\n    hi=w>>16;''',\n'zero-first':'''    if(dim == 0) { hi=angle; p=bg+m; }\n    else { hi=(unsigned short)(angle-4); p=bg+m; }\n    w=hi<<28; hi=w>>16;''',\n'goto-dim-first':'''    hi=angle;\n    if(dim == 0) goto normal;\n    hi=(unsigned short)(hi-4);\n    p=bg+m;\n    goto shifted;\nnormal:\n    p=bg+m;\nshifted:\n    w=hi<<28; hi=w>>16;''',\n'goto-paint-first':'''    hi=angle;\n    if(dim != 0) goto dimmed;\n    goto normal;\ndimmed:\n    hi=(unsigned short)(hi-4);\nnormal:\n    p=bg+m; w=hi<<28; hi=w>>16;''',\n'early-pointer-else':'''    hi=angle;\n    p=bg+m;\n    if(dim == 0) { w=hi<<28; }\n    else { hi=(unsigned short)(hi-4); w=hi<<28; }\n    hi=w>>16;''',\n'do-break':'''    hi=angle;\n    do { if(dim == 0) { p=bg+m; break; }\n         hi=(unsigned short)(hi-4); p=bg+m; } while(0);\n    w=hi<<28; hi=w>>16;''',\n'switch-dim':'''    hi=angle;\n    switch(dim != 0) { case 0: p=bg+m; break;\n    default: hi=(unsigned short)(hi-4); p=bg+m; break; }\n    w=hi<<28; hi=w>>16;''',\n'branch-palette-last':'''    hi=angle;\n    if(dim == 0) { w=hi<<28; hi=w>>16; }\n    else { hi=(unsigned short)(hi-4); w=hi<<28; hi=w>>16; }\n    p=bg+m;'''\n}\nfor (name,repl),pragma in itertools.product(forms.items(),['life','cse','default']):\n s=clean.replace(old,repl).replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma]);assert old not in s\n test('dim-'+name+'-'+pragma,s,fam)\n# Physical loop placement: do-loop and explicit preheader labels preserve all 24 writes.\nfor entry,pragma in itertools.product(['goto','do','loop-in-arm'],['life','default']):\n s=clean.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n if entry=='goto':s=s.replace('    for (i = 0; i < 0x18; i++) {','    i=0; goto loop;\\nloop:\\n    {').replace('        p++;\\n    }','        p++;\\n        if(++i < 0x18) goto loop;\\n    }')\n if entry=='do':s=s.replace('    for (i = 0; i < 0x18; i++) {','    i=0; do {').replace('        p++;\\n    }','        p++;\\n    } while(++i < 0x18);')\n if entry=='loop-in-arm':\n  # Both paths compute same palette, sharing a common paint join after distinct dim arms.\n  s=s.replace(old,forms['branch-palette-last']).replace('    for (i = 0; i < 0x18; i++) {','    i=0; do {').replace('        p++;\\n    }','        p++;\\n    } while(++i < 0x18);')\n test('loop-'+entry+'-'+pragma,s,fam)\nreport(fam)\n",
+      "entry_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='entry-identity'\ntest('baseline',BASE,fam)\nclean=BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nclean='//cpp\\n'+clean.replace('unsigned short *_ZN2G212GetBG1ScrPtrEv();','void *_ZN2G212GetBG1ScrPtrEv();').replace('bg = _ZN2G212GetBG1ScrPtrEv();','bg = (unsigned short *)_ZN2G212GetBG1ScrPtrEv();')\nfor representation,single,form,pragma in itertools.product(['field','method','reference'],[False,True],['named','inside'],['life','default']):\n s=clean.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n decl='struct ScreenEntry { unsigned short value; void SetPalette(unsigned int pal) { value = (unsigned short)((value & 0xfff) | '+('pal' if form=='named' else '((pal << 28) >> 16)')+'); } };\\n'\n s=s.replace('extern \"C\" void func_ov075',decl+'extern \"C\" void func_ov075')\n s=s.replace('unsigned short *p;','ScreenEntry *p;').replace('unsigned short *bg;','ScreenEntry *bg;').replace('(unsigned short *)_ZN2G212GetBG1ScrPtrEv()','(ScreenEntry *)_ZN2G212GetBG1ScrPtrEv()')\n if form=='inside':s=s.replace('    w = hi << 0x1c;\\n    hi = w >> 16;','')\n for off in ['0x20','0x40','0x37','0x57','0','0x60']:\n  old='p['+off+'] = (unsigned short)((p['+off+'] & 0xfff) | hi);'\n  if representation=='method':new='p['+off+'].SetPalette(hi);'\n  else:\n   name='entry' if representation=='reference' else 'p['+off+']'\n   rhs='hi' if form=='named' else '((hi << 28) >> 16)'\n   new=name+'.value = (unsigned short)(('+name+'.value & 0xfff) | '+rhs+');'\n   if representation=='reference':new='{ ScreenEntry &entry = p['+off+']; '+new+' }'\n  s=s.replace(old,new)\n if single:s=s.replace('    ScreenEntry *bg;','').replace('bg = (ScreenEntry *)','p = (ScreenEntry *)').replace('p = bg + m;','p += m;')\n test('entry-'+representation+'-'+str(single)+'-'+form+'-'+pragma,s,fam)\nreport(fam)\n\n",
+      "extcounter_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-external-counter'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor passing,where,pragma in itertools.product(['reference','value','member'],['entry','after-bg','after-a','after-address'],['life','default']):\n s=seed\n s=s.replace('hi=w>>16;\\nint i;','hi=w>>16;').replace('for (i = 0; i < 0x18; i++)','for (; i < 0x18; i++)')\n if passing=='reference':s=s.replace('Paint(int value, int dim)','Paint(int value, int dim, int &i)').replace('cursor.Paint(a, dim)','cursor.Paint(a, dim, i)');init='int i=0;'\n elif passing=='value':s=s.replace('Paint(int value, int dim)','Paint(int value, int dim, int i)').replace('cursor.Paint(a, dim)','cursor.Paint(a, dim, i)');init='int i=0;'\n else:s=s.replace('unsigned short *p; void Paint','unsigned short *p; int i; void Paint').replace('BorderCursor cursor; cursor.p','cursor.p');init='cursor.i=0;';s=s.replace(' int b=data_0209fc50;',' BorderCursor cursor;\\n int b=data_0209fc50;')\n marker={'entry':' int b=data_0209fc50;','after-bg':' int a=func_02030958(slot);','after-a':' int t=4-b;','after-address':' '+('cursor.p' if passing=='member' else 'BorderCursor cursor; cursor.p')}[where]\n s=s.replace(marker,' '+init+'\\n'+marker,1)\n assert init in s\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('cursor-extcounter-'+passing+'-'+where+'-'+pragma,s,fam)\nreport(fam)\n",
+      "member_state_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='cursor-member-state'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor fields,reverse,pragma in itertools.product([['i'],['hi'],['w'],['i','hi'],['i','w'],['hi','w'],['i','hi','w']],[False,True],['life','default']):\n s=seed;members={'i':'int i;','hi':'unsigned int hi;','w':'unsigned int w;'}\n fieldlist=['unsigned short *p;']+[members[f] for f in fields]\n if reverse:fieldlist.reverse()\n s=s.replace('unsigned short *p; void Paint',' '.join(fieldlist)+' void Paint')\n if 'hi' in fields:s=s.replace('unsigned int hi =','hi =')\n if 'w' in fields:s=s.replace('unsigned int w=','w=')\n if 'i' in fields:\n  # Remove the Paint local only; leave the new field declaration.\n  s=s.replace('hi=w>>16;\\nint i;','hi=w>>16;')\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('cursor-fields-'+''.join(fields)+'-'+str(reverse)+'-'+pragma,s,fam)\nreport(fam)\n",
+      "native_cursor_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-native-narrow'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nold='''    angle = (unsigned short)(a + 0xa);\n    hi = angle;\n    if (dim != 0)\n        hi = (unsigned short)(hi - 4);\n    p = bg + m;\n    w = hi << 0x1c;\n    hi = w >> 16;'''\nfor placement,late,pragma in itertools.product(['pointer-first','palette-first'],['separate','same'],['life','cse','default']):\n decl='struct BorderCursor { '+('unsigned short *p; unsigned short palette;' if placement=='pointer-first' else 'unsigned short palette; unsigned short *p;')+' };\\n'\n s=clean.replace('extern \"C\" void func_ov075',decl+'extern \"C\" void func_ov075')\n s=s.replace('    unsigned short *p;','    BorderCursor cursor;')\n s=s.replace(old,'''    cursor.palette = a + 0xa;\n    if(dim != 0) cursor.palette -= 4;\n    cursor.p = bg + m;\n    w = (unsigned int)cursor.palette << 28;\n    '''+('hi = w >> 16;' if late=='separate' else 'cursor.palette = w >> 16;'))\n for off in ['0x20','0x40','0x37','0x57','0','0x60']:s=s.replace('p['+off+']','cursor.p['+off+']')\n s=s.replace('p++;','cursor.p++;')\n if late=='same':s=s.replace('| hi','| cursor.palette')\n s=s.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n test('native-cursor-'+placement+'-'+late+'-'+pragma,s,fam)\nreport(fam)\n",
+      "paint_probe.py": "import itertools\nfrom probe_lib import *\nfam='paint-boundary'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\npreamble=clean[:clean.index('extern \"C\" void func_ov075')]\ntail=clean[clean.index('    p[0x20]'):clean.rindex('}')]\nfor mode,inputkind,pack,pragma in itertools.product(['free-map','free-value','map-object','cursor-object'],['result','narrow'],['twoname','inplace'],['life','default']):\n valtype='int' if inputkind=='result' else 'unsigned short'\n args=valtype+' value, int dim'\n init='unsigned int hi = (unsigned short)(value+10);' if inputkind=='result' else 'unsigned int hi = value;'\n adjust='if(dim != 0) hi = (unsigned short)(hi-4);'\n chain='unsigned int w = hi << 28; hi = w >> 16;' if pack=='twoname' else 'hi <<=28; unsigned int w=hi; hi=w>>16;'\n paint='\\n'+init+'\\n'+adjust+'\\n'+chain+'\\nint i;\\n'+tail\n if mode=='free-map':helper='static inline void Paint(unsigned short *p, '+args+') { '+paint+' }\\n';call='Paint(bg+m, VALUE, dim);'\n if mode=='free-value':helper='static inline void Paint('+args+', unsigned short *p) { '+paint+' }\\n';call='Paint(VALUE, dim, bg+m);'\n if mode=='map-object':helper='struct BorderMap { unsigned short entries[128]; void Paint('+args+') { unsigned short *p=entries; '+paint+' } };\\n';call='((BorderMap *)(bg+m))->Paint(VALUE, dim);'\n if mode=='cursor-object':helper='struct BorderCursor { unsigned short *p; void Paint('+args+') { '+paint+' } };\\n';call='BorderCursor cursor; cursor.p=bg+m; cursor.Paint(VALUE, dim);'\n call=call.replace('VALUE','a' if inputkind=='result' else '(unsigned short)(a+10)')\n body='''extern \"C\" void func_ov075_02116128(int unused, int slot, int dim) {\n int b=data_0209fc50;\n unsigned short *bg=_ZN2G212GetBG1ScrPtrEv();\n int a=func_02030958(slot);\n int t=4-b;\n int m=slot*(t*0x20+0xa0)+(t*0x40+0x84);\n '''+call+'\\n}\\n'\n s=preamble+helper+body;s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n # Genuine getter prototype and cast.\n s=s.replace('unsigned short *_ZN2G212GetBG1ScrPtrEv();','void *_ZN2G212GetBG1ScrPtrEv();').replace('unsigned short *bg=_ZN2G212GetBG1ScrPtrEv();','unsigned short *bg=(unsigned short*)_ZN2G212GetBG1ScrPtrEv();')\n test('paint-'+mode+'-'+inputkind+'-'+pack+'-'+pragma,s,fam)\nreport(fam)\n",
+      "prepared_state_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-prepared-state'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor typ,body,placement,pragma in itertools.product(['unsigned int','unsigned short'],['copy','field'],['before-pointer','after-pointer'],['life','default']):\n if typ=='unsigned short' and body=='field':continue\n s=seed.replace('unsigned short *p; void Paint(int value, int dim)','unsigned short *p; '+typ+' palette; void Paint()')\n init='unsigned int hi = (unsigned short)(value+10);\\nif(dim != 0) hi = (unsigned short)(hi-4);'\n s=s.replace(init,'unsigned int hi=palette;' if body=='copy' else '')\n if body=='field':s=s.replace('hi <<=28; unsigned int w=hi; hi=w>>16;','palette <<=28; unsigned int w=palette; unsigned int hi=w>>16;')\n prep='cursor.palette = '+('(unsigned short)(a+10)' if typ=='unsigned int' else 'a+10')+'; if(dim != 0) cursor.palette '+('= (unsigned short)(cursor.palette-4);' if typ=='unsigned int' else '-=4;')\n call='cursor.p=bg+m; '+prep if placement=='after-pointer' else prep+' cursor.p=bg+m;'\n s=s.replace('cursor.p=bg+m; cursor.Paint(a, dim);',call+' cursor.Paint();')\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('prepared-'+typ.replace('unsigned ','u')+'-'+body+'-'+placement+'-'+pragma,s,fam)\nreport(fam)\n",
+      "probe_lib.py": "import sys,json,hashlib,subprocess\nfrom pathlib import Path\nsys.path.insert(0,'tools')\nfrom wallcrack import Target,md\nT=Target('func_ov075_02116128');OUT=Path('build/r4-pal1012');BASE=subprocess.check_output(['git','show','dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e:src/unnamed/ov075/func_ov075_02116128.cpp'],text=True);ROWS=[]\ndef test(name,s,family):\n path=OUT/(name+'.cpp');path.write_text(s);code,rel,err=T.compile(s)\n inst=[] if code is None else list(md.disasm(code,0));row=dict(name=name,family=family,size=None if code is None else len(code),diff=None if code is None else sum(code[o:o+4]!=T.target[o:o+4] for o in range(0,min(len(code),len(T.target)),4) if o not in rel),error=err,sha256=hashlib.sha256(s.encode()).hexdigest(),shift28=[i.op_str for i in inst if i.mnemonic=='lsl' and '#0x1c' in i.op_str])\n if code:\n  (OUT/(name+'.asm')).write_text('\\n'.join('%03x %s %s'%(i.address,i.mnemonic,i.op_str) for i in inst));(OUT/(name+'.bin')).write_bytes(code)\n ROWS.append(row);(OUT/(family+'-ledger.json')).write_text(json.dumps([r for r in ROWS if r['family']==family],indent=2))\n return row\ndef report(family):\n rs=[r for r in ROWS if r['family']==family];print(json.dumps({'family':family,'count':len(rs),'compiled':sum(r['size'] is not None for r in rs),'best':sorted(rs,key=lambda r:(r['size']!=244,r['diff'] if r['diff'] is not None else 999))[:3],'shift28_roles':sorted(set(tuple(r['shift28']) for r in rs))},indent=2))\n",
+      "return_pack_probe.py": "import itertools\nfrom probe_lib import *\nfam='native-return-pack'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nstart=clean.index('    angle = (unsigned short)');end=clean.index('    p[0x20]')\nfor ret,arg,shape,pragma in itertools.product(['unsigned short','unsigned int'],['unsigned short','unsigned int'],['function','method'],['life','default']):\n s=clean\n s=s.replace('    unsigned int hi;','    unsigned short hi;')\n start=s.index('    angle = (unsigned short)');end=s.index('    p[0x20]')\n s=s[:start]+'''    hi = a + 0xa;\n    if(dim != 0) hi -= 4;\n    p = bg + m;\n'''+s[end:]\n if shape=='function':helper='static inline '+ret+' Pack(unsigned short tile, '+arg+' palette) { return (tile & 0xfff) | (palette << 12); }\\n'\n else:helper='struct Tile { unsigned short value; '+ret+' WithPalette('+arg+' palette) const { return (value & 0xfff) | (palette << 12); } };\\n'\n s=s.replace('extern \"C\" void func_ov075',helper+'extern \"C\" void func_ov075')\n for off in ['0x20','0x40','0x37','0x57','0','0x60']:\n  s=s.replace('(p['+off+'] & 0xfff) | hi',('Pack(p['+off+'], hi)' if shape=='function' else '((Tile *)p)['+off+'].WithPalette(hi)'))\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('native-pack-'+ret.replace('unsigned ','u')+'-'+arg.replace('unsigned ','u')+'-'+shape+'-'+pragma,s,fam)\nreport(fam)\n",
+      "shared_input_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-shared-input'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor receiver,mode,flags in itertools.product(['a','b','t','m','slot','dim'],['reference','pointer'],['life','default']):\n s=seed.replace('hi=w>>16;\\nint i;','hi=w>>16;')\n if mode=='reference':\n  s=s.replace('Paint(int value, int dim)','Paint(int value, int dim, int &i)').replace('cursor.Paint(a, dim)','cursor.Paint(a, dim, '+receiver+')')\n else:\n  s=s.replace('Paint(int value, int dim)','Paint(int value, int dim, int *counter)').replace('cursor.Paint(a, dim)','cursor.Paint(a, dim, &'+receiver+')')\n  s=s.replace('for (i = 0; i < 0x18; i++)','for (*counter = 0; *counter < 0x18; ++*counter)')\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if flags=='life' else '')\n test('cursor-shared-'+receiver+'-'+mode+'-'+flags,s,fam)\nfor param in ['value','dim']:\n s=seed.replace('Paint(int '+param,'Paint(int &'+param) if param=='value' else seed.replace(', int dim)',', int &dim)')\n s=s.replace('hi=w>>16;\\nint i;','hi=w>>16;').replace('for (i = 0; i < 0x18; i++)','for ('+param+' = 0; '+param+' < 0x18; '+param+'++)')\n test('cursor-refparameter-'+param,s,fam)\nreport(fam)\n",
+      "shared_tail_probe.py": "import itertools\nfrom probe_lib import *\nfam='paint-shared-tail'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor model,condition,pragma in itertools.product(['member','free'],['taken-adjust','taken-paint'],['life','cse','default']):\n s=seed.replace('Paint(int value, int dim)','Paint(unsigned int hi)').replace('unsigned int hi = (unsigned short)(value+10);\\nif(dim != 0) hi = (unsigned short)(hi-4);','')\n if model=='free':\n  s=s.replace('struct BorderCursor { unsigned short *p; void Paint(unsigned int hi) {','static inline void Paint(unsigned short *p, unsigned int hi) {').replace(' } };',' }')\n  setup='unsigned short *p=bg+m;';call='Paint(p, hi);'\n else:setup='BorderCursor cursor; cursor.p=bg+m;';call='cursor.Paint(hi);'\n if condition=='taken-adjust':branch='if(dim != 0) { hi=(unsigned short)(hi-4); } else { '+call+' return; } '+call\n else:branch='if(dim == 0) { '+call+' return; } else { hi=(unsigned short)(hi-4); } '+call\n s=s.replace('BorderCursor cursor; cursor.p=bg+m; cursor.Paint(a, dim);',setup+' unsigned int hi=(unsigned short)(a+10); '+branch)\n s=s.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n test('paint-tail-'+model+'-'+condition+'-'+pragma,s,fam)\nreport(fam)\n",
+      "shift_identity_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='shift-identity'\nclean='//cpp\\n'+BASE[BASE.rindex('#pragma opt_lifetimes off'):]\nstart=clean.index('    angle = (unsigned short)');end=clean.index('    p[0x20]')\nfor receiver,ptrpos,pragma in itertools.product(['w','a','b','t','m','slot','dim','unused'],['before','after'],['life','cse','default']):\n if receiver in ['m','dim'] and ptrpos=='after':continue\n s=clean\n pre='    p = bg + m;\\n' if ptrpos=='before' else ''\n # dim remains live until its branch; preserve its actual value if it is the chosen destination.\n if receiver=='dim':pre+='    int isDim = dim;\\n'\n r=receiver\n body=pre+'    '+r+' = (unsigned short)(a + 0xa);\\n    if ('+('isDim' if r=='dim' else 'dim')+' != 0) '+r+' = (unsigned short)('+r+' - 4);\\n'\n body+=('    p = bg + m;\\n' if ptrpos=='after' else '')\n body+='    '+r+' = (unsigned int)'+r+' << 28;\\n    hi = (unsigned int)'+r+' >> 16;\\n'\n s=s[:start]+body+s[end:]\n if receiver!='w':s=s.replace('    unsigned int w;','')\n s=s.replace('#pragma opt_lifetimes off',{'life':'#pragma opt_lifetimes off','cse':'#pragma opt_common_subs off','default':''}[pragma])\n test('shift-identity-'+receiver+'-'+ptrpos+'-'+pragma,s,fam)\nreport(fam)\n",
+      "tileword_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-tileword-history'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor pos,span,pragma in itertools.product(['entry','before-dim','before-shift','before-store'],['load','masked','packed'],['life','default']):\n s=seed.replace('hi=w>>16;\\nint i;','hi=w>>16;')\n # Reuse the scalar first-word temporary as the subsequent column counter.\n statement='int i=p[0x20];' if span=='load' else 'int i=p[0x20] & 0xfff;'\n if span=='packed':statement='int i=(p[0x20] & 0xfff) | hi;'\n if span=='packed' and pos!='before-store':continue\n marker={'entry':'unsigned int hi =','before-dim':'if(dim != 0)','before-shift':'hi <<=28;','before-store':'    p[0x20] ='}[pos]\n s=s.replace(marker,statement+'\\n'+marker,1)\n old='p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);'\n rhs='(i & 0xfff) | hi' if span=='load' else 'i | hi' if span=='masked' else 'i'\n s=s.replace(old,'p[0x20] = (unsigned short)('+rhs+');')\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('cursor-tileword-'+pos+'-'+span+'-'+pragma,s,fam)\n# Identical first-load history outside helper with a truthful by-reference counter.\nfor pos in ['entry','before-dim','before-shift']:\n s=seed.replace('Paint(int value, int dim)','Paint(int value, int dim, int &i)').replace('hi=w>>16;\\nint i;','hi=w>>16;').replace('cursor.Paint(a, dim)','cursor.Paint(a, dim, a)')\n marker={'entry':'unsigned int hi =','before-dim':'if(dim != 0)','before-shift':'hi <<=28;'}[pos]\n s=s.replace(marker,'i = p[0x20];\\n'+marker,1).replace('p[0x20] = (unsigned short)((p[0x20] & 0xfff) | hi);','p[0x20] = (unsigned short)((i & 0xfff) | hi);')\n test('cursor-tileword-ref-'+pos,s,fam)\nreport(fam)\n",
+      "truthful_probe.py": "import itertools\nfrom probe_lib import *\nfam='truthful-boundaries'\nfor name,seed in [('baseline',BASE),('cursor',(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text())]:\n for rec in ['char *','void *','dScEntry_c *']:\n  s=seed.replace('int unused,',''+rec+'unused,')\n  if rec.startswith('dScEntry'):s=s.replace('//cpp','//cpp\\n#include \"dScEntry_c.h\"',1)\n  s=s.replace('unsigned short *_ZN2G212GetBG1ScrPtrEv();','void *_ZN2G212GetBG1ScrPtrEv();').replace('bg = _ZN2G212GetBG1ScrPtrEv();','bg = (unsigned short *)_ZN2G212GetBG1ScrPtrEv();')\n  test('truthful-'+name+'-'+rec.replace(' ','').replace('*','ptr'),s,fam)\n  # C++ namespace declaration exactly agrees with the actual definition and linker symbol.\n  s=s.replace('void *_ZN2G212GetBG1ScrPtrEv();','').replace('extern \"C\" {','namespace G2 { void *GetBG1ScrPtr(); }\\nextern \"C\" {',1).replace('_ZN2G212GetBG1ScrPtrEv()','G2::GetBG1ScrPtr()')\n  test('truthful-'+name+'-'+rec.replace(' ','').replace('*','ptr')+'-namespace',s,fam)\nreport(fam)\n",
+      "whole_cursor_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-whole-lifetime'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor where,identity,pragma in itertools.product(['before-palette','after-palette','between-dim-shift'],['single','two'],['life','default']):\n s=seed.replace('Paint(int value, int dim)','Paint(int slot, int count, int value, int dim)')\n calc='int t=4-count; int m=slot*(t*0x20+0xa0)+(t*0x40+0x84); p += m;\\n'\n marker={'before-palette':'unsigned int hi =','after-palette':'if(dim != 0)','between-dim-shift':'hi <<=28;'}[where]\n s=s.replace(marker,calc+marker,1)\n s=s.replace(' int t=4-b;\\n int m=slot*(t*0x20+0xa0)+(t*0x40+0x84);','')\n s=s.replace('cursor.p=bg+m; cursor.Paint(a, dim);','cursor.p=bg; cursor.Paint(slot, b, a, dim);')\n if identity=='single':\n  s=s.replace(' unsigned short *bg=(unsigned short*)_ZN2G212GetBG1ScrPtrEv();',' BorderCursor cursor; cursor.p=(unsigned short*)_ZN2G212GetBG1ScrPtrEv();')\n  s=s.replace(' BorderCursor cursor; cursor.p=bg; cursor.Paint',' cursor.Paint')\n s=s.replace('#pragma opt_lifetimes off','#pragma opt_lifetimes off' if pragma=='life' else '')\n test('whole-cursor-'+where+'-'+identity+'-'+pragma,s,fam)\nreport(fam)\n",
+      "whole_reuse_probe.py": "import itertools,re\nfrom probe_lib import *\nfam='whole-cursor-reuse'\nfor placement,receiver,mode in itertools.product(['before-palette','after-palette','between-dim-shift'],['t','m','slot','count','value','dim'],['plain','copy-before']):\n seed=(OUT/('whole-cursor-'+placement+'-single-life.cpp')).read_text();s=seed\n if mode=='plain':s=s.replace('hi=w>>16;\\nint i;','hi=w>>16;');s=re.sub(r'\\bi\\b',receiver,s)\n else:\n  # The old scalar supplies a real input to the palette or address calculation, then serves as counter.\n  if receiver not in ['count','value','slot','dim']:continue\n  s=s.replace('hi=w>>16;\\nint i;','hi=w>>16;')\n  s=s.replace('int value, int dim) { ', 'int value, int dim) { int i='+receiver+';\\n',1)\n  if receiver=='count':s=s.replace('int t=4-count;','int t=4-i;')\n  elif receiver=='slot':s=s.replace('int m=slot*','int m=i*')\n  elif receiver=='value':s=s.replace('(value+10)','(i+10)')\n  else:s=s.replace('if(dim != 0)','if(i != 0)')\n test('whole-reuse-'+placement+'-'+receiver+'-'+mode,s,fam)\nreport(fam)\n",
+      "width_probe.py": "import itertools\nfrom probe_lib import *\nfam='cursor-counter-width'\nseed=(OUT/'paint-cursor-object-result-inplace-life.cpp').read_text()\nfor counter,shift,flags in itertools.product(['unsigned int','unsigned long','unsigned short','unsigned char'],['unsigned int','unsigned long'],['life','strength-off','propagation-off']):\n s=seed.replace('int i;',counter+' i;').replace('unsigned int hi =',shift+' hi =')\n if flags=='strength-off':s=s.replace('#pragma opt_lifetimes off','#pragma defer_codegen off\\n#pragma opt_lifetimes off\\n#pragma opt_strength_reduction off')\n if flags=='propagation-off':s=s.replace('#pragma opt_lifetimes off','#pragma defer_codegen off\\n#pragma opt_lifetimes off\\n#pragma opt_propagation off')\n test('cursor-width-'+counter.replace('unsigned ','u')+'-'+shift.replace('unsigned ','u')+'-'+flags,s,fam)\nreport(fam)\n"
+    }
+  },
+  "next_action": "Independent review of this byte-neutral declaration/banner cleanup and partial investigation. Retain NONMATCHING and the existing retail gap; pursue any future source continuation without treating these experiments as an impossibility proof."
+}
