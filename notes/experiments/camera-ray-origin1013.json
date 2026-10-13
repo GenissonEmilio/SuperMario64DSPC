@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "status": "partial nonmatching camera draft improved 68 to62",
+  "task": "camera-ray-origin1013",
+  "input_commit": "2b82204bf4f86addec9f74f438334cda5f8707f5",
+  "target": {
+    "name": "func_02009e70",
+    "module": "arm9",
+    "address": "0x02009e70",
+    "size": 4252,
+    "compiler": "2004/b56 production CFLAGS"
+  },
+  "source_change": "Initialize the collision probe origin through the actual three-scalar Vector3 constructor at first use. Move subsequent scratch-vector declarations into the enclosing tail scope in their original lexical order.",
+  "evidence": {
+    "previous_differences": 68,
+    "differing_words": 62,
+    "register_differences": 57,
+    "other_shape_differences": 5,
+    "function_sha256": "5580ae843847d259c9206f32bad6400a1a4d5b97d6e3298b110a770168ec73a1",
+    "source_lf_sha256": "99b8bed9a612e3423c202206f681eb4059739d47bf0d5fb2c6a5f2eee48dcb24",
+    "changed_instruction_offsets": [
+      "0x4ac",
+      "0x4b0",
+      "0x4b8",
+      "0x4bc",
+      "0x4c0",
+      "0x4c4"
+    ],
+    "every_changed_instruction_matches_rom": true,
+    "all_other_instruction_bytes_unchanged": true,
+    "relocation_count": 104,
+    "all_relocation_records_identical": true,
+    "extra_function_emissions_identical": true,
+    "strict_linkcheck": {
+      "verdict": "WRONG",
+      "blind": 0,
+      "differing_words": 62,
+      "different_relocation_words": 0
+    }
+  },
+  "source_review": {
+    "canonical_interface": "Vector3(s32,s32,s32) in include/types.h; no speculative type or helper",
+    "scope": "The new block ends before L_AE14. Earlier exits bypass all initialized objects; subsequent gotos stay within legal scopes. Empty scratch constructors and destructors preserve behavior.",
+    "read_timing": "All three coordinate loads remain after LenVec3 and before the next call. The existing stack sentinel and constructor stores can be scheduled as in the ROM.",
+    "native_cleanup": "Preserves the previously reviewed four native GetClsnPos return initializers, SurfaceInfo method call and corrected s16 atan2 declaration.",
+    "compiler_controls": "The retained source adds no pragma or experimental assert. Default compiler options and explicit defer off each emit the same62-word result."
+  },
+  "experiments": [
+    {
+      "name": "initializer-off",
+      "size": 4252,
+      "masked_differences": 62,
+      "shape_differences": 5,
+      "function_sha256": "5580ae843847d259c9206f32bad6400a1a4d5b97d6e3298b110a770168ec73a1"
+    },
+    {
+      "name": "initializer-on",
+      "size": 4252,
+      "masked_differences": 62,
+      "shape_differences": 5,
+      "function_sha256": "5580ae843847d259c9206f32bad6400a1a4d5b97d6e3298b110a770168ec73a1"
+    },
+    {
+      "name": "assignment-off",
+      "size": 4252,
+      "masked_differences": 88,
+      "shape_differences": 32,
+      "function_sha256": "facbb052e3b465748134d4cf0bd4bdedef4723c34105d5e3f839d47d0dedb28e"
+    },
+    {
+      "name": "assignment-on",
+      "size": 4252,
+      "masked_differences": 88,
+      "shape_differences": 32,
+      "function_sha256": "facbb052e3b465748134d4cf0bd4bdedef4723c34105d5e3f839d47d0dedb28e"
+    },
+    {
+      "name": "initializer-y-before-sentinel",
+      "size": 4252,
+      "masked_differences": 72,
+      "shape_differences": 15,
+      "function_sha256": "23f88210ba6320f018a317515ee44920ced6b5037b7eac6451233a06dbd7f12f"
+    }
+  ],
+  "natural_controls": [
+    {
+      "name": "natural-default",
+      "error": null,
+      "size": 4252,
+      "differences": 62,
+      "function_sha256": "5580ae843847d259c9206f32bad6400a1a4d5b97d6e3298b110a770168ec73a1"
+    },
+    {
+      "name": "natural-defer-off",
+      "error": null,
+      "size": 4252,
+      "differences": 62,
+      "function_sha256": "5580ae843847d259c9206f32bad6400a1a4d5b97d6e3298b110a770168ec73a1"
+    }
+  ],
+  "limits": [
+    "62 non-relocation words still differ from the ROM; this is not an accepted byte match.",
+    "No delinks entry, header, symbol, authorship or TU manifest changes. No Source PR is ready.",
+    "Improvement concerns a concrete instruction window, not proof of a compiler floor elsewhere."
+  ],
+  "private_proof": "build/camera-ray-origin1013/parity.json",
+  "reproduce": [
+    "Compile this source and its pinned input under tools/rombuild.py CFLAGS, replacing -lang c99 with -lang c++, using tools/mwccarm/2004/b56/mwccarm.exe.",
+    "Exactly six changed non-relocated instruction words at4ac/4b0/4b8/4bc/4c0/4c4 should now equal ROM. All104 relocation offset/type/symbol/addend tuples and other emitted functions remain identical.",
+    "Supply the fresh object to tools/linkcheck.linkcheck with name func_02009e70, address0x02009e70,size4252,modulearm9 and reloc_audit.build_name_index(); expected WRONG62blind0."
+  ]
+}

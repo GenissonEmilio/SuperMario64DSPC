@@ -1,10 +1,11 @@
 //cpp
-// NONMATCHING: func_02009e70 @ 0x02009e70 (arm9), 68/1063 divergent words.
-// Exact 4252-byte size under mwccarm 2004/b56; 61 register and 7 scheduling words.
+// NONMATCHING: func_02009e70 @ 0x02009e70 (arm9), 62/1063 divergent words.
+// Exact 4252-byte size under mwccarm 2004/b56; 57 register and 5 instruction-shape words.
 // No exact-match, relocation, or enrollment claim.
 // The signed 64-bit distance accumulator preserves the previously measured
 // four-word improvement. Both signed-32 squares and their difference fit s64.
 // Matching history: notes/experiments/remaining4-cam1012.json.
+// Six-word ray-origin improvement: notes/experiments/camera-ray-origin1013.json.
 // Native collision-call parity: notes/experiments/camera-native-checkpoint1013.json.
 // Earlier 72-word source and experiment history remain at dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e.
 // L0 below preserves the spelling of an earlier, compiler-eliminated pointer
@@ -111,12 +112,6 @@ s32 func_02009e70(char *self)
     s32 sp30;
     struct Vector3 sp34;
     struct Vector3 sp40;
-    struct Vector3 sp4c;
-    struct Vector3 sp58;
-    struct Vector3 sp64;
-    struct Vector3 sp70;
-    struct Vector3 sp7c;
-    struct Vector3 sp88;
     s32 r7;
     s32 r6;
     s32 fl;
@@ -238,15 +233,16 @@ s32 func_02009e70(char *self)
     }
     Vec3_Sub(&sp40, (struct Vector3 *)(self + 0x8c), (struct Vector3 *)(self + 0x80));
     sp28 = LenVec3(&sp40);
-    sp10 = 0x80000000;
     {
-        s32 ty = *(s32 *)(self + 0x9c);
-        s32 tz = *(s32 *)(self + 0xa0);
-        s32 tx = *(s32 *)(self + 0x98);
-        sp4c.x = tx;
-        sp4c.y = ty + 0x3e8000;
-        sp4c.z = tz;
-    }
+    sp10 = 0x80000000;
+    Vector3 sp4c(*(s32 *)(self + 0x98),
+                 *(s32 *)(self + 0x9c) + 0x3e8000,
+                 *(s32 *)(self + 0xa0));
+    Vector3 sp58;
+    Vector3 sp64;
+    Vector3 sp70;
+    Vector3 sp7c;
+    Vector3 sp88;
     r4 = 0x7fffffff;
     sb = *(s32 *)(self + 0x9c) + 0x82500;
     {
@@ -503,6 +499,7 @@ L_AD94:
 L_ADD4:
     Math_Function_0203b14c((s32 *)(self + 0x90), r7h, 0x300, 0x14000, 0x100);
     *(s16 *)(self + 0x17c) = Vec3_HorzAngle((struct Vector3 *)(self + 0x80), (struct Vector3 *)(self + 0x8c));
+    }
     }
 L_AE14:
     if (r5 != 0) {
