@@ -1,81 +1,83 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x0238AE68 size 0x100 (runtime 0x03802D00, wram)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR57; asm taken from the AR57 job.
+/* storage 0x0238AE68 runtime 0x03802D00 linked 0x100 wram ARM.
+ * Keeps the redundant halfword narrowings (lsl #16 / lsr #16 / and #1). */
 
-extern void fn_0238A77C(void);
-extern void fn_0238A7E0(void);
-extern void fn_0238A8F8(void);
-extern void fn_0238AB28(void);
-extern void fn_0238AB54(void);
+extern void fn_0238AB54(void *p);
+extern void fn_0238AB28(void *p);
+extern void fn_0238A77C(int a, int b, void *p, int c);
+extern void fn_0238A8F8(void *p);
+extern void fn_0238A7E0(void *p);
 
 asm void fn_0238AE68(void) {
-    stmdb sp!, {r4, r5, lr}
-    sub sp, sp, #0xc
-    mov r4, r0
-    and r5, r4, #1
-    mov r0, r5, lsl #0x10
-    mov r0, r0, lsr #0x10
-    cmp r0, #1
-    bne L_03802DF4
-    add r0, sp, #0
-    bl fn_0238AB54
-    ldrh r1, [sp]
-    mov r0, r1, lsl #0x1e
-    mov r2, r0, lsr #0x1f
-    mov r0, r5, lsl #0x10
-    cmp r2, r0, lsr #16
-    beq L_03802DF4
-    and r4, r4, #1
-    bic r1, r1, #2
-    mov r0, r4, lsl #0x10
-    mov r0, r0, lsr #0x10
-    and r0, r0, #1
-    orr r0, r1, r0, lsl #1
-    strh r0, [sp]
-    add r0, sp, #0
-    bl fn_0238AB28
-    mov r0, #0x86
-    mov r1, #0x10
-    add r2, sp, #4
-    mov r3, #3
-    bl fn_0238A77C
-    mov r0, r4, lsl #0x10
-    movs r0, r0, lsr #0x10
-    bne L_03802D90
-    add r0, sp, #4
-    bl fn_0238A8F8
-    b L_03802D98
-L_03802D90:
-    add r0, sp, #4
-    bl fn_0238A7E0
-L_03802D98:
-    mov r0, #6
-    mov r1, #0x10
-    add r2, sp, #4
-    mov r3, #3
-    bl fn_0238A77C
-    mov r0, #0x86
-    mov r1, #0x50
-    add r2, sp, #4
-    mov r3, #3
-    bl fn_0238A77C
-    mov r0, r5, lsl #0x10
-    movs r0, r0, lsr #0x10
-    bne L_03802DD8
-    add r0, sp, #4
-    bl fn_0238A8F8
-    b L_03802DE0
-L_03802DD8:
-    add r0, sp, #4
-    bl fn_0238A7E0
-L_03802DE0:
-    mov r0, #6
-    mov r1, #0x50
-    add r2, sp, #4
-    mov r3, #3
-    bl fn_0238A77C
-L_03802DF4:
-    add sp, sp, #0xc
-    ldmia sp!, {r4, r5, lr}
-    bx lr
+    STMDB SP!, {R4, R5, LR}
+    SUB SP, SP, #0xC
+    MOV R4, R0
+    AND R5, R4, #1
+    MOV R0, R5, LSL #16
+    MOV R0, R0, LSR #16
+    CMP R0, #1
+    BNE done
+    ADD R0, SP, #0
+    BL fn_0238AB54
+    LDRH R1, [SP]
+    MOV R0, R1, LSL #30
+    MOV R2, R0, LSR #31
+    MOV R0, R5, LSL #16
+    CMP R2, R0, LSR #16
+    BEQ done
+    AND R4, R4, #1
+    BIC R1, R1, #2
+    MOV R0, R4, LSL #16
+    MOV R0, R0, LSR #16
+    AND R0, R0, #1
+    ORR R0, R1, R0, LSL #1
+    STRH R0, [SP]
+    ADD R0, SP, #0
+    BL fn_0238AB28
+    MOV R0, #0x86
+    MOV R1, #0x10
+    ADD R2, SP, #4
+    MOV R3, #3
+    BL fn_0238A77C
+    MOV R0, R4, LSL #16
+    MOVS R0, R0, LSR #16
+    BNE use_a7e0
+    ADD R0, SP, #4
+    BL fn_0238A8F8
+    B after_a
+use_a7e0:
+    ADD R0, SP, #4
+    BL fn_0238A7E0
+after_a:
+    MOV R0, #6
+    MOV R1, #0x10
+    ADD R2, SP, #4
+    MOV R3, #3
+    BL fn_0238A77C
+    MOV R0, #0x86
+    MOV R1, #0x50
+    ADD R2, SP, #4
+    MOV R3, #3
+    BL fn_0238A77C
+    MOV R0, R5, LSL #16
+    MOVS R0, R0, LSR #16
+    BNE use_a7e0b
+    ADD R0, SP, #4
+    BL fn_0238A8F8
+    B after_b
+use_a7e0b:
+    ADD R0, SP, #4
+    BL fn_0238A7E0
+after_b:
+    MOV R0, #6
+    MOV R1, #0x50
+    ADD R2, SP, #4
+    MOV R3, #3
+    BL fn_0238A77C
+done:
+    ADD SP, SP, #0xC
+    LDMIA SP!, {R4, R5, LR}
+    BX LR
 }

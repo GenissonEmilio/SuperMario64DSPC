@@ -1,65 +1,67 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x023976E8 size 0xE4 (runtime 0x027C9660, main)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR63; asm taken from the AR63 job.
+/* storage 0x023976E8 runtime 0x027C9660 linked 0xE4 main ARM.
+ * Same xor tail as 023977CC: the half comes back in r0. */
 
-asm void fn_023976E8(void) {
-    cmp r0, #1
-    bhi L_027C9670
-    cmp r1, #1
-    bls L_027C9678
-L_027C9670:
-    mov r0, #5
-    bx lr
-L_027C9678:
-    cmp r0, #0
-    beq L_027C968C
-    cmp r0, #1
-    beq L_027C96B8
-    b L_027C96E4
-L_027C968C:
-    ldr r2, =0x380FFF4
-    ldr r3, [r2]
-    ldr r2, =0x2FE
-    ldrh r2, [r3, r2]!
-    bic r2, r2, #0x20
-    mov r1, r1, lsl #0x10
-    mov r1, r1, lsr #0x10
-    and r1, r1, #1
-    orr r1, r2, r1, lsl #5
-    strh r1, [r3]
-    b L_027C96E4
-L_027C96B8:
-    ldr r1, =0x380FFF4
-    ldr r2, [r1]
-    add r1, r2, #0x200
-    ldrh r1, [r1, #0xf2]
-    cmp r1, #1
-    movne r0, #0xb
-    bxne lr
-    ldr r1, =0x2FE
-    ldrh r1, [r2, r1]!
-    bic r1, r1, #0x20
-    strh r1, [r2]
-L_027C96E4:
-    ldr r3, =0x380FFF4
-    ldr r2, [r3]
-    ldr r1, =0x2FE
-    ldrh r1, [r2, r1]!
-    bic r1, r1, #0x10
-    mov r0, r0, lsl #0x10
-    mov r0, r0, lsr #0x10
-    and r0, r0, #1
-    orr r0, r1, r0, lsl #4
-    strh r0, [r2]
-    ldr r0, [r3]
-    add r0, r0, #0x200
-    ldrh r0, [r0, #0xfe]
-    mov r1, r0, lsl #0x1a
-    mov r1, r1, lsr #0x1f
-    mov r0, r0, lsl #0x1c
-    eor r1, r1, r0, lsr #31
-    ldr r0, =0x4808290
-    strh r1, [r0]
-    mov r0, #0
-    bx lr
+asm int fn_023976E8(void) {
+    CMP R0, #1
+    BHI bad
+    CMP R1, #1
+    BLS ok
+bad:
+    MOV R0, #5
+    BX LR
+ok:
+    CMP R0, #0
+    BEQ arm0
+    CMP R0, #1
+    BEQ arm1
+    B join
+arm0:
+    LDR R2, =0x380FFF4
+    LDR R3, [R2]
+    LDR R2, =0x2FE
+    LDRH R2, [R3, R2]!
+    BIC R2, R2, #0x20
+    MOV R1, R1, LSL #16
+    MOV R1, R1, LSR #16
+    AND R1, R1, #1
+    ORR R1, R2, R1, LSL #5
+    STRH R1, [R3]
+    B join
+arm1:
+    LDR R1, =0x380FFF4
+    LDR R2, [R1]
+    ADD R1, R2, #0x200
+    LDRH R1, [R1, #0xF2]
+    CMP R1, #1
+    MOVNE R0, #0xB
+    BXNE LR
+    LDR R1, =0x2FE
+    LDRH R1, [R2, R1]!
+    BIC R1, R1, #0x20
+    STRH R1, [R2]
+join:
+    LDR R3, =0x380FFF4
+    LDR R2, [R3]
+    LDR R1, =0x2FE
+    LDRH R1, [R2, R1]!
+    BIC R1, R1, #0x10
+    MOV R0, R0, LSL #16
+    MOV R0, R0, LSR #16
+    AND R0, R0, #1
+    ORR R0, R1, R0, LSL #4
+    STRH R0, [R2]
+    LDR R0, [R3]
+    ADD R0, R0, #0x200
+    LDRH R0, [R0, #0xFE]
+    MOV R1, R0, LSL #26
+    MOV R1, R1, LSR #31
+    MOV R0, R0, LSL #28
+    EOR R1, R1, R0, LSR #31
+    LDR R0, =0x4808290
+    STRH R1, [R0]
+    MOV R0, #0
+    BX LR
 }

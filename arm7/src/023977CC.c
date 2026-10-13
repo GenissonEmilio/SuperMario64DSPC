@@ -1,30 +1,32 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x023977CC size 0x6C (runtime 0x027C9744, main)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR63; asm taken from the AR63 job.
+/* storage 0x023977CC runtime 0x027C9744 linked 0x6C main ARM.
+ * The xor tail loads the half back into r0. b56 keeps it in r2. */
 
-asm void fn_023977CC(void) {
-    cmp r0, #1
-    movhi r0, #5
-    bxhi lr
-    ldr r3, =0x380FFF4
-    ldr r2, [r3]
-    ldr r1, =0x2FE
-    ldrh r1, [r2, r1]!
-    bic r1, r1, #8
-    mov r0, r0, lsl #0x10
-    mov r0, r0, lsr #0x10
-    and r0, r0, #1
-    orr r0, r1, r0, lsl #3
-    strh r0, [r2]
-    ldr r0, [r3]
-    add r0, r0, #0x200
-    ldrh r0, [r0, #0xfe]
-    mov r1, r0, lsl #0x1a
-    mov r1, r1, lsr #0x1f
-    mov r0, r0, lsl #0x1c
-    eor r1, r1, r0, lsr #31
-    ldr r0, =0x4808290
-    strh r1, [r0]
-    mov r0, #0
-    bx lr
+asm int fn_023977CC(void) {
+    CMP R0, #1
+    MOVHI R0, #5
+    BXHI LR
+    LDR R3, =0x380FFF4
+    LDR R2, [R3]
+    LDR R1, =0x2FE
+    LDRH R1, [R2, R1]!
+    BIC R1, R1, #8
+    MOV R0, R0, LSL #16
+    MOV R0, R0, LSR #16
+    AND R0, R0, #1
+    ORR R0, R1, R0, LSL #3
+    STRH R0, [R2]
+    LDR R0, [R3]
+    ADD R0, R0, #0x200
+    LDRH R0, [R0, #0xFE]
+    MOV R1, R0, LSL #26
+    MOV R1, R1, LSR #31
+    MOV R0, R0, LSL #28
+    EOR R1, R1, R0, LSR #31
+    LDR R0, =0x4808290
+    STRH R1, [R0]
+    MOV R0, #0
+    BX LR
 }

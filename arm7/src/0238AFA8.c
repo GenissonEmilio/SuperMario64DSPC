@@ -1,24 +1,26 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x0238AFA8 size 0x40 (runtime 0x03802E40, wram)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR57; asm taken from the AR57 job.
+/* storage 0x0238AFA8 runtime 0x03802E40 linked 0x40 wram ARM.
+ * SPI control at 0x04000138. Two 2-cycle delays. No BL, no pool. */
 
 asm void fn_0238AFA8(void) {
-    mov ip, #0x4000000
-    add ip, ip, #0x138
-    ldrh r0, [ip]
-    bic r0, r0, #0x77
-    orr r0, r0, #0x72
-    strh r0, [ip]
-    mov r3, #2
-L_03802E5C:
-    subs r3, r3, #1
-    bne L_03802E5C
-    bic r0, r0, #4
-    orr r0, r0, #4
-    strh r0, [ip]
-    mov r3, #2
-L_03802E74:
-    subs r3, r3, #1
-    bne L_03802E74
-    bx lr
+    MOV IP, #0x4000000
+    ADD IP, IP, #0x138
+    LDRH R0, [IP]
+    BIC R0, R0, #0x77
+    ORR R0, R0, #0x72
+    STRH R0, [IP]
+    MOV R3, #2
+d1:
+    SUBS R3, R3, #1
+    BNE d1
+    BIC R0, R0, #4
+    ORR R0, R0, #4
+    STRH R0, [IP]
+    MOV R3, #2
+d2:
+    SUBS R3, R3, #1
+    BNE d2
+    BX LR
 }

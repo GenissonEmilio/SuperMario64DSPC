@@ -1,48 +1,51 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x02382D2C size 0x94 (runtime 0x037FABC4, wram)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR49; asm taken from the AR49 job.
+/* storage 0x02382D2C runtime 0x037FABC4 linked 0x94 wram ARM.
+ * MI_CpuFill8. Odd-byte head through a halfword RMW, then half, then
+ * words, then a predicated half and an odd tail. No pool. */
 
 asm void fn_02382D2C(void) {
-    cmp r2, #0
-    bxeq lr
-    tst r0, #1
-    beq L_037FABF0
-    ldrh ip, [r0, #-1]
-    and ip, ip, #0xff
-    orr r3, ip, r1, lsl #8
-    strh r3, [r0, #-1]
-    add r0, r0, #1
-    subs r2, r2, #1
-    bxeq lr
-L_037FABF0:
-    cmp r2, #2
-    blo L_037FAC38
-    orr r1, r1, r1, lsl #8
-    tst r0, #2
-    beq L_037FAC10
-    strh r1, [r0], #2
-    subs r2, r2, #2
-    bxeq lr
-L_037FAC10:
-    orr r1, r1, r1, lsl #16
-    bics r3, r2, #3
-    beq L_037FAC30
-    sub r2, r2, r3
-    add ip, r3, r0
-L_037FAC24:
-    str r1, [r0], #4
-    cmp r0, ip
-    blo L_037FAC24
-L_037FAC30:
-    tst r2, #2
-    strneh r1, [r0], #2
-L_037FAC38:
-    tst r2, #1
-    bxeq lr
-    ldrh r3, [r0]
-    and r3, r3, #0xff00
-    and r1, r1, #0xff
-    orr r1, r1, r3
-    strh r1, [r0]
-    bx lr
+    CMP R2, #0
+    BXEQ LR
+    TST R0, #1
+    BEQ half_ready
+    LDRH IP, [R0, #-1]
+    AND IP, IP, #0xFF
+    ORR R3, IP, R1, LSL #8
+    STRH R3, [R0, #-1]
+    ADD R0, R0, #1
+    SUBS R2, R2, #1
+    BXEQ LR
+half_ready:
+    CMP R2, #2
+    BLO byte_tail
+    ORR R1, R1, R1, LSL #8
+    TST R0, #2
+    BEQ word_ready
+    STRH R1, [R0], #2
+    SUBS R2, R2, #2
+    BXEQ LR
+word_ready:
+    ORR R1, R1, R1, LSL #16
+    BICS R3, R2, #3
+    BEQ half_tail
+    SUB R2, R2, R3
+    ADD IP, R3, R0
+word:
+    STR R1, [R0], #4
+    CMP R0, IP
+    BLO word
+half_tail:
+    TST R2, #2
+    STRNEH R1, [R0], #2
+byte_tail:
+    TST R2, #1
+    BXEQ LR
+    LDRH R3, [R0]
+    AND R3, R3, #0xFF00
+    AND R1, R1, #0xFF
+    ORR R1, R1, R3
+    STRH R1, [R0]
+    BX LR
 }

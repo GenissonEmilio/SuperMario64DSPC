@@ -1,20 +1,27 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x0238E0E4 size 0x3C (runtime 0x027C005C, main)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR59; asm taken from the AR59 job.
+/* storage 0x0238E0E4 runtime 0x027C005C linked 0x3C main ARM.
+ * Sum 16 bytes at dat_27D6A84+0x1614 and tail-call fn_0238E0BC(sum>>4).
+ * The opening mov r2,#0 / mov r3,r2 is the fresh-scratch choice b56
+ * inverts; kept here as written. */
 
-asm void fn_0238E0E4(void) {
-    mov r2, #0
-    mov r3, r2
-    ldr r1, =0x27D6A84
-L_027C0068:
-    add r0, r1, r3
-    add r0, r0, #0x1000
-    ldrb r0, [r0, #0x614]
-    add r2, r2, r0
-    add r3, r3, #1
-    cmp r3, #0x10
-    blt L_027C0068
-    mov r0, r2, lsr #4
-    ldr ip, =0x27C0034
-    bx ip
+extern unsigned char dat_27D6A84[];
+extern int fn_0238E0BC(unsigned int a1);
+
+asm int fn_0238E0E4(void) {
+    MOV R2, #0
+    MOV R3, R2
+    LDR R1, =dat_27D6A84
+loop:
+    ADD R0, R1, R3
+    ADD R0, R0, #0x1000
+    LDRB R0, [R0, #0x614]
+    ADD R2, R2, R0
+    ADD R3, R3, #1
+    CMP R3, #0x10
+    BLT loop
+    MOV R0, R2, LSR #4
+    LDR IP, =fn_0238E0BC
+    BX IP
 }

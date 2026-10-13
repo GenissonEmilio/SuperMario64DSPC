@@ -1,92 +1,96 @@
 // NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
 // @ 0x02382DC0 size 0x130 (runtime 0x037FAC58, wram)
-// No C attempt exists yet; asm generated from the original bytes.
+// C tried by: AR49; asm taken from the AR49 job.
+/* storage 0x02382DC0 runtime 0x037FAC58 linked 0x130 wram ARM.
+ * MI_CpuCopy8. Unaligned head, then a byte-lane shift copy when the
+ * two pointers disagree on alignment, otherwise half/word blocks and
+ * an odd tail. No pool. */
 
 asm void fn_02382DC0(void) {
-    cmp r2, #0
-    bxeq lr
-    tst r1, #1
-    beq L_037FAC98
-    ldrh ip, [r1, #-1]
-    and ip, ip, #0xff
-    tst r0, #1
-    ldrneh r3, [r0, #-1]
-    movne r3, r3, lsr #8
-    ldreqh r3, [r0]
-    orr r3, ip, r3, lsl #8
-    strh r3, [r1, #-1]
-    add r0, r0, #1
-    add r1, r1, #1
-    subs r2, r2, #1
-    bxeq lr
-L_037FAC98:
-    eor ip, r1, r0
-    tst ip, #1
-    beq L_037FACEC
-    bic r0, r0, #1
-    ldrh ip, [r0], #2
-    mov r3, ip, lsr #8
-    subs r2, r2, #2
-    blo L_037FACD0
-L_037FACB8:
-    ldrh ip, [r0], #2
-    orr ip, r3, ip, lsl #8
-    strh ip, [r1], #2
-    mov r3, ip, lsr #0x10
-    subs r2, r2, #2
-    bhs L_037FACB8
-L_037FACD0:
-    tst r2, #1
-    bxeq lr
-    ldrh ip, [r1]
-    and ip, ip, #0xff00
-    orr ip, ip, r3
-    strh ip, [r1]
-    bx lr
-L_037FACEC:
-    tst ip, #2
-    beq L_037FAD18
-    bics r3, r2, #1
-    beq L_037FAD64
-    sub r2, r2, r3
-    add ip, r3, r1
-L_037FAD04:
-    ldrh r3, [r0], #2
-    strh r3, [r1], #2
-    cmp r1, ip
-    blo L_037FAD04
-    b L_037FAD64
-L_037FAD18:
-    cmp r2, #2
-    blo L_037FAD64
-    tst r1, #2
-    beq L_037FAD38
-    ldrh r3, [r0], #2
-    strh r3, [r1], #2
-    subs r2, r2, #2
-    bxeq lr
-L_037FAD38:
-    bics r3, r2, #3
-    beq L_037FAD58
-    sub r2, r2, r3
-    add ip, r3, r1
-L_037FAD48:
-    ldr r3, [r0], #4
-    str r3, [r1], #4
-    cmp r1, ip
-    blo L_037FAD48
-L_037FAD58:
-    tst r2, #2
-    ldrneh r3, [r0], #2
-    strneh r3, [r1], #2
-L_037FAD64:
-    tst r2, #1
-    bxeq lr
-    ldrh r2, [r1]
-    ldrh r0, [r0]
-    and r2, r2, #0xff00
-    and r0, r0, #0xff
-    orr r0, r2, r0
-    strh r0, [r1]
-    bx lr
+    CMP R2, #0
+    BXEQ LR
+    TST R1, #1
+    BEQ L40
+    LDRH IP, [R1, #-1]
+    AND IP, IP, #0xFF
+    TST R0, #1
+    LDRNEH R3, [R0, #-1]
+    MOVNE R3, R3, LSR #8
+    LDREQH R3, [R0]
+    ORR R3, IP, R3, LSL #8
+    STRH R3, [R1, #-1]
+    ADD R0, R0, #1
+    ADD R1, R1, #1
+    SUBS R2, R2, #1
+    BXEQ LR
+L40:
+    EOR IP, R1, R0
+    TST IP, #1
+    BEQ L94
+    BIC R0, R0, #1
+    LDRH IP, [R0], #2
+    MOV R3, IP, LSR #8
+    SUBS R2, R2, #2
+    BLO L78
+L60:
+    LDRH IP, [R0], #2
+    ORR IP, R3, IP, LSL #8
+    STRH IP, [R1], #2
+    MOV R3, IP, LSR #16
+    SUBS R2, R2, #2
+    BHS L60
+L78:
+    TST R2, #1
+    BXEQ LR
+    LDRH IP, [R1]
+    AND IP, IP, #0xFF00
+    ORR IP, IP, R3
+    STRH IP, [R1]
+    BX LR
+L94:
+    TST IP, #2
+    BEQ LC0
+    BICS R3, R2, #1
+    BEQ L10C
+    SUB R2, R2, R3
+    ADD IP, R3, R1
+LAC:
+    LDRH R3, [R0], #2
+    STRH R3, [R1], #2
+    CMP R1, IP
+    BLO LAC
+    B L10C
+LC0:
+    CMP R2, #2
+    BLO L10C
+    TST R1, #2
+    BEQ LE0
+    LDRH R3, [R0], #2
+    STRH R3, [R1], #2
+    SUBS R2, R2, #2
+    BXEQ LR
+LE0:
+    BICS R3, R2, #3
+    BEQ L100
+    SUB R2, R2, R3
+    ADD IP, R3, R1
+LF0:
+    LDR R3, [R0], #4
+    STR R3, [R1], #4
+    CMP R1, IP
+    BLO LF0
+L100:
+    TST R2, #2
+    LDRNEH R3, [R0], #2
+    STRNEH R3, [R1], #2
+L10C:
+    TST R2, #1
+    BXEQ LR
+    LDRH R2, [R1]
+    LDRH R0, [R0]
+    AND R2, R2, #0xFF00
+    AND R0, R0, #0xFF
+    ORR R0, R2, R0
+    STRH R0, [R1]
+    BX LR
 }
