@@ -1,0 +1,601 @@
+{
+  "schema": 1,
+  "task": "modelanim2-cpp-probe1012",
+  "stage": "scout",
+  "role": "scout",
+  "session": "astra-modelcpp1012",
+  "input_commit": "b3f9ae055368d77a293e86fc206eea3bc276425b",
+  "status": "bounded negative promotion probe; production source retained unchanged",
+  "symbol": "_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt",
+  "module": "arm9",
+  "address": "0x020162c4",
+  "size_bytes": 92,
+  "compiler": "2004/b56",
+  "flags": "-O4,p -enum int -lang c99 -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
+  "source": "src/_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt.c",
+  "scope": "Report only. No src/include/config/DB edits, enrollment, or extension change.",
+  "existing_interfaces": [
+    "include/ModelAnim2.h",
+    "include/dExtFrameCtrl_c.h",
+    "include/math/Fix12.h"
+  ],
+  "strict_checks": {
+    "baseline": {
+      "name": "_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt",
+      "module": "arm9",
+      "addr": "0x020162c4",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0
+    },
+    "native": {
+      "name": "_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt",
+      "module": "arm9",
+      "addr": "0x020162c4",
+      "verdict": "NO-REPRO",
+      "reason": "requested-size-mismatch",
+      "diffs": [],
+      "blind": 0,
+      "expected_size": 92,
+      "emitted_sizes": [
+        112
+      ]
+    },
+    "scalar-control": {
+      "name": "_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt",
+      "module": "arm9",
+      "addr": "0x020162c4",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0
+    }
+  },
+  "findings": [
+    "Ten semantics-preserving native-header candidates emit112 or120 bytes instead of92. This covers only listed variants, not an impossibility claim.",
+    "Native method112: push {r0,r1,r2,r3} before normal prologue; fast path reloads Fix12 payload from stack; slow path address plus LDM marshals Fix12 into r3 for actual SetAnimation method.",
+    "Parameter-only AggregateRead has no calls and still homes argument registers:16bytes versus ScalarRead4bytes. Entry homing therefore does not require the slow-path aggregate call.",
+    "NativeCaller destination argument roles remain speed r3 and startFrame on stack, matching current scalar Player callers, but constructing and passing Fix12 adds local storage plus LDM. This measures native-header lowering; it does not establish that repository-inferred Fix12 type is original retail source.",
+    "Scalar C++ control retains original C structs and signatures with extern C names. Strict VERIFIED92 proves C++ language mode alone is not the cause. Diagnostic only, not a genuine class promotion candidate.",
+    "control_no_pass changes slow-path behavior to SetFlags plus speed store. Diagnostic only, never an acceptable replacement.",
+    "No broad flags grid or compiler-floor claim. Native strict NO-REPRO is a size failure; empty diffs/blind0 on that result must not be construed as acceptance."
+  ],
+  "caller_evidence": {
+    "file": "src/actors/Player.cpp",
+    "lines": [
+      1325,
+      1347,
+      1398,
+      1518,
+      20285,
+      20348,
+      27504,
+      27765,
+      27829
+    ],
+    "note": "Existing scalar int/Fix12i declarations use0x1000 speed. Pre-existing declaration at20285 has int return despite void definition; no caller edits."
+  },
+  "experiments": [
+    {
+      "name": "branch_local",
+      "size": 120,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 100,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "const_parameter",
+      "size": 112,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 92,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "control_cpp_scalar",
+      "size": 92,
+      "aligned_word_diffs_excluding_relocations": [],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 76,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "control_no_pass",
+      "size": 92,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        36,
+        40,
+        44,
+        48,
+        56,
+        60,
+        64,
+        72,
+        76,
+        80,
+        84
+      ],
+      "relocations": [
+        {
+          "offset": 32,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 68,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        }
+      ]
+    },
+    {
+      "name": "early_copy",
+      "size": 120,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 44,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 100,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "inline_payload",
+      "size": 120,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 100,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "native",
+      "size": 112,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 92,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "register_parameter",
+      "size": 112,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 92,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "register_snapshot",
+      "size": 120,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 100,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "return_join",
+      "size": 112,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 92,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    },
+    {
+      "name": "reverse_arm",
+      "size": 112,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 56,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        },
+        {
+          "offset": 84,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        }
+      ]
+    },
+    {
+      "name": "snapshot",
+      "size": 120,
+      "aligned_word_diffs_excluding_relocations": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80,
+        84,
+        88
+      ],
+      "relocations": [
+        {
+          "offset": 36,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c8SetFlagsEi"
+        },
+        {
+          "offset": 100,
+          "type": 1,
+          "symbol": "_ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt"
+        }
+      ]
+    }
+  ],
+  "assembly": {
+    "baseline": "000 push {r4, r5, lr}\n004 sub sp, sp, #4\n008 mov r5, r0\n00c ldr r0, [r5, #0x64]\n010 mov r4, r3\n014 cmp r1, r0\n018 bne #0x38\n01c mov r1, r2\n020 add r0, r5, #0x68\n024 bl #0x2c\n028 add sp, sp, #4\n02c str r4, [r5, #0x74]\n030 pop {r4, r5, lr}\n034 bx lr\n038 ldrh ip, [sp, #0x10]\n03c str r1, [r5, #0x64]\n040 add r0, r5, #0x68\n044 str ip, [sp]\n048 ldrh r1, [r1, #2]\n04c bl #0x54\n050 add sp, sp, #4\n054 pop {r4, r5, lr}\n058 bx lr",
+    "native": "000 push {r0, r1, r2, r3}\n004 push {r4, lr}\n008 sub sp, sp, #8\n00c mov r4, r0\n010 ldr r0, [r4, #0x64]\n014 cmp r1, r0\n018 bne #0x40\n01c mov r1, r2\n020 add r0, r4, #0x68\n024 bl #0x2c\n028 ldr r0, [sp, #0x1c]\n02c add sp, sp, #8\n030 str r0, [r4, #0x74]\n034 pop {r4, lr}\n038 add sp, sp, #0x10\n03c bx lr\n040 ldrh r0, [sp, #0x20]\n044 str r1, [r4, #0x64]\n048 add r3, sp, #0x1c\n04c str r0, [sp]\n050 ldrh r1, [r1, #2]\n054 add r0, r4, #0x68\n058 ldm r3, {r3}\n05c bl #0x64\n060 add sp, sp, #8\n064 pop {r4, lr}\n068 add sp, sp, #0x10\n06c bx lr",
+    "snapshot": "000 push {r0, r1, r2, r3}\n004 push {r4, lr}\n008 sub sp, sp, #8\n00c mov r4, r0\n010 ldr r0, [r4, #0x64]\n014 cmp r1, r0\n018 bne #0x40\n01c mov r1, r2\n020 add r0, r4, #0x68\n024 bl #0x2c\n028 ldr r0, [sp, #0x1c]\n02c add sp, sp, #8\n030 str r0, [r4, #0x74]\n034 pop {r4, lr}\n038 add sp, sp, #0x10\n03c bx lr\n040 str r1, [r4, #0x64]\n044 ldr r3, [sp, #0x1c]\n048 ldrh r0, [sp, #0x20]\n04c str r3, [sp, #4]\n050 add r3, sp, #4\n054 str r0, [sp]\n058 ldrh r1, [r1, #2]\n05c add r0, r4, #0x68\n060 ldm r3, {r3}\n064 bl #0x6c\n068 add sp, sp, #8\n06c pop {r4, lr}\n070 add sp, sp, #0x10\n074 bx lr",
+    "control_cpp_scalar": "000 push {r4, r5, lr}\n004 sub sp, sp, #4\n008 mov r5, r0\n00c ldr r0, [r5, #0x64]\n010 mov r4, r3\n014 cmp r1, r0\n018 bne #0x38\n01c mov r1, r2\n020 add r0, r5, #0x68\n024 bl #0x2c\n028 add sp, sp, #4\n02c str r4, [r5, #0x74]\n030 pop {r4, r5, lr}\n034 bx lr\n038 ldrh ip, [sp, #0x10]\n03c str r1, [r5, #0x64]\n040 add r0, r5, #0x68\n044 str ip, [sp]\n048 ldrh r1, [r1, #2]\n04c bl #0x54\n050 add sp, sp, #4\n054 pop {r4, r5, lr}\n058 bx lr",
+    "control_no_pass": "000 push {r0, r1, r2, r3}\n004 push {r4, lr}\n008 mov r4, r0\n00c ldr r0, [r4, #0x64]\n010 cmp r1, r0\n014 bne #0x38\n018 mov r1, r2\n01c add r0, r4, #0x68\n020 bl #0x28\n024 ldr r0, [sp, #0x14]\n028 str r0, [r4, #0x74]\n02c pop {r4, lr}\n030 add sp, sp, #0x10\n034 bx lr\n038 str r1, [r4, #0x64]\n03c mov r1, r2\n040 add r0, r4, #0x68\n044 bl #0x4c\n048 ldr r0, [sp, #0x14]\n04c str r0, [r4, #0x74]\n050 pop {r4, lr}\n054 add sp, sp, #0x10\n058 bx lr",
+    "ScalarRead": "000 bx lr",
+    "AggregateRead": "000 push {r0, r1, r2, r3}\n004 ldr r0, [sp]\n008 add sp, sp, #0x10\n00c bx lr",
+    "NativeCaller": "000 stmdb sp!, {lr}\n004 sub sp, sp, #0xc\n008 ldrh ip, [sp, #0x10]\n00c str r3, [sp, #4]\n010 add r3, sp, #4\n014 str ip, [sp]\n018 ldm r3, {r3}\n01c bl #0x24\n020 add sp, sp, #0xc\n024 ldm sp!, {lr}\n028 bx lr"
+  },
+  "reproducer": {
+    "cwd": "repository root at input_commit",
+    "steps": [
+      "Materialize embedded_files under build/modelanim2-cpp1012, preserving filenames.",
+      "Run python build/modelanim2-cpp1012/probe.py.",
+      "For ABI controls, compile abi-controls.cc using wallcrack.compile_c(source, True); extract ScalarRead, AggregateRead, NativeCaller with wallcrack.extract.",
+      "For strict verification use python tools/linkcheck.py --name _ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt --c <candidate path> --addr 0x020162c4 --size 92 --module arm9."
+    ],
+    "embedded_files": {
+      "abi-controls.cc": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nextern \"C\" int ScalarRead(int value) { return value; }\nextern \"C\" int AggregateRead(Fix12<int> value) { return value.val; }\nextern \"C\" void NativeCaller(ModelAnim2* model,u32 file,int flags,int raw,u16 start) {\n    Fix12<int> speed = {raw};\n    model->Func_020162C4(file,flags,speed,start);\n}\n",
+      "branch_local.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        Fix12<int> localSpeed = {speed.val};\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, localSpeed, startFrame);\n    }\n}\n",
+      "const_parameter.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, const Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, speed, startFrame);\n    }\n}\n",
+      "control_cpp_scalar.cpp": "//cpp\n#include \"types.h\"\n/* ModelAnim2::Func_020162C4 at 0x020162c4, size=0x5c\n * Updates otherAnim: fast path (same file) just updates flags+speed;\n * slow path stores new file, loads numFrames, calls SetAnimation.\n */\nstruct BCA_File {\n    u16 unk00;\n    u16 numFrames;\n};\n\nstruct dExtFrameCtrl_c {\n    void* vtable;\n    s32 numFramesAndFlags;\n    s32 currFrame;\n    s32 speed;\n};\n\nstruct ModelAnim2 {\n    char pad[0x64];\n    void* unk64;\n    struct dExtFrameCtrl_c otherAnim;\n};\n\nextern \"C\" void _ZN15dExtFrameCtrl_c8SetFlagsEi(struct dExtFrameCtrl_c* anim, s32 flags);\nextern \"C\" void _ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt(struct dExtFrameCtrl_c* anim, u16 frames, s32 flags, s32 speed, u16 startFrame);\n\nextern \"C\" void _ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt(struct ModelAnim2* thiz, void* newUnk64, s32 flags, s32 speed, u16 startFrame)\n{\n    if (newUnk64 == thiz->unk64)\n    {\n        _ZN15dExtFrameCtrl_c8SetFlagsEi(&thiz->otherAnim, flags);\n        thiz->otherAnim.speed = speed;\n    }\n    else\n    {\n        thiz->unk64 = newUnk64;\n        _ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt(&thiz->otherAnim, ((struct BCA_File*)newUnk64)->numFrames, flags, speed, startFrame);\n    }\n}\n",
+      "control_no_pass.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    }\n}\n",
+      "early_copy.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    Fix12<int> localSpeed = {speed.val};\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = localSpeed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, localSpeed, startFrame);\n    }\n}\n",
+      "inline_payload.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nstatic inline Fix12<int> CopySpeed(int val) { Fix12<int> result = {val}; return result; }\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, CopySpeed(speed.val), startFrame);\n    }\n}\n",
+      "native.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, speed, startFrame);\n    }\n}\n",
+      "probe.py": "import sys,io,json\nfrom pathlib import Path\nsys.path.insert(0,'tools')\nfrom wallcrack import compile_c,extract,md\nfrom elftools.elf.elffile import ELFFile\nP=Path('build/modelanim2-cpp1012');N='_ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt'\nbase=Path('src/'+N+'.c').read_text(); obj,err=compile_c(base); assert obj,err\nP.joinpath('baseline.o').write_bytes(obj); target,rel=extract(obj,N); P.joinpath('baseline.asm').write_text('\\n'.join('%03x %s %s'%(i.address,i.mnemonic,i.op_str) for i in md.disasm(target,0)))\nrows=[]\nfor f in sorted(P.glob('*.cpp')):\n obj,err=compile_c(f.read_text(),True)\n if obj is None:rows.append(dict(name=f.stem,error=err));continue\n f.with_suffix('.o').write_bytes(obj);code,rel=extract(obj,N)\n if code is None:rows.append(dict(name=f.stem,error='missing symbol'));continue\n f.with_suffix('.asm').write_text('\\n'.join('%03x %s %s'%(i.address,i.mnemonic,i.op_str) for i in md.disasm(code,0)))\n elf=ELFFile(io.BytesIO(obj));syms=elf.get_section_by_name('.symtab'); reloc=[]\n for sec in elf.iter_sections():\n  if sec.header['sh_type'] in ('SHT_REL','SHT_RELA'):\n   for r in sec.iter_relocations():reloc.append(dict(offset=r['r_offset'],type=r['r_info_type'],symbol=syms.get_symbol(r['r_info_sym']).name))\n rows.append(dict(name=f.stem,size=len(code),aligned_word_diffs_excluding_relocations=[o for o in range(0,min(len(code),len(target)),4) if o not in rel and code[o:o+4]!=target[o:o+4]],relocations=reloc))\nP.joinpath('probe-results.json').write_text(json.dumps(rows,indent=2));print(json.dumps(rows,indent=2))\n",
+      "register_parameter.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, register Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    } else {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, speed, startFrame);\n    }\n}\n",
+      "register_snapshot.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    register int rawSpeed = speed.val;\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = rawSpeed;\n    } else {\n        otherFile = animFile;\n        Fix12<int> localSpeed = {rawSpeed};\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, localSpeed, startFrame);\n    }\n}\n",
+      "return_join.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n        return;\n    }\n    {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, speed, startFrame);\n    }\n}\n",
+      "reverse_arm.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    if (animFile != otherFile) {\n        otherFile = animFile;\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, speed, startFrame);\n    } else {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = speed.val;\n    }\n}\n",
+      "snapshot.cpp": "//cpp\n#include \"ModelAnim2.h\"\n#pragma defer_codegen off\nstruct BCA_File { u16 unk00; u16 numFrames; };\nvoid ModelAnim2::Func_020162C4(u32 animFile, int flags, Fix12<int> speed, u16 startFrame)\n{\n    int rawSpeed = speed.val;\n    if (animFile == otherFile) {\n        otherAnim.SetFlags(flags);\n        otherAnim.speed = rawSpeed;\n    } else {\n        otherFile = animFile;\n        Fix12<int> localSpeed = {rawSpeed};\n        otherAnim.SetAnimation(((BCA_File*)animFile)->numFrames, flags, localSpeed, startFrame);\n    }\n}\n"
+    }
+  },
+  "artifacts": {
+    "abi-controls.cc": "184c9397843c45852760cf968ff9ee6d0ba5229358d1d840e69741b0bba80b6d",
+    "abi-controls.o": "6ffc7496f3caa292323e95e17533b6bfb0b8919148c6f32a7c839e3f77835ff3",
+    "AggregateRead.asm": "57ccb0f8dac2947f80686bc0acfe5a3ba27d4be2a36e57d2daf455b0c5966303",
+    "baseline-linkcheck.json": "badd5778a2af9607fb25a6149e4a7c0213dbdb304203e487e2e733c04286cf21",
+    "baseline.asm": "0652f7e92c092397cbdd1e78188247e401729daa1ec5b7d773de4285219da510",
+    "baseline.o": "9aaae59b219188bbff0ff97f2b4edac6dbe9fcd3dca473906402944ce3e7c4e2",
+    "branch_local.asm": "6aebafc68386743ece02a3e78b3c868d4f74ea2a2dbde0e3f930b296d894b72e",
+    "branch_local.cpp": "b25e4637548fdd790ff76f1129fcf0a430db58fd36a9e77df1c4672fe79c0d4d",
+    "branch_local.o": "bb2dc1b847d39f60ef65e5b5f3403a379ad0fc82d372a65bad2f79ff83e53b1a",
+    "const_parameter.asm": "e7ade2b7e41015fea622854268b178f36fdb7e403b4afb0dba45f1ff7226493b",
+    "const_parameter.cpp": "4492ee628d4dbcc99e9e5a86888398705a550d06d8fee4b8c38f6cdd8a923827",
+    "const_parameter.o": "363af8a5529c21bcaa0596d71a8f9549f0d5476411ca5c5907f2027a62e5c7e9",
+    "control_cpp_scalar.asm": "0652f7e92c092397cbdd1e78188247e401729daa1ec5b7d773de4285219da510",
+    "control_cpp_scalar.cpp": "9bd9e092342204e60d4976ca5af57278cb1f457c851adbe8b225e2f414f47f50",
+    "control_cpp_scalar.o": "9aaae59b219188bbff0ff97f2b4edac6dbe9fcd3dca473906402944ce3e7c4e2",
+    "control_no_pass.asm": "cafec8d412b58cc4b056b5ef8285fcd8983e37046daf209f0ddffdcef247553c",
+    "control_no_pass.cpp": "cf81b45f3635d947f6585a29b3b35b4187297b2202809464d1c810a699c8ee7d",
+    "control_no_pass.o": "13e96efc3c3764802ef920952777652b360b8b299d25dacd1e1e441f91f3ca3e",
+    "early_copy.asm": "bf52b2425db61631e1d559c3cfdc114cf4f9f888cf483e8ff8dd17f6a419523f",
+    "early_copy.cpp": "0563a73d99e829c3228a51d202dbefb23234b05700dbbda46826317ea7d3be21",
+    "early_copy.o": "39d9872f655e2e1e2b9266e8c566c419746f0fc3d05b8b5152dec7a87dd8676b",
+    "inline_payload.asm": "6aebafc68386743ece02a3e78b3c868d4f74ea2a2dbde0e3f930b296d894b72e",
+    "inline_payload.cpp": "caa7357f6d4852623fc95beae9cda1b35f2b6e0fce610432e6e95b162b1a3d68",
+    "inline_payload.o": "bb2dc1b847d39f60ef65e5b5f3403a379ad0fc82d372a65bad2f79ff83e53b1a",
+    "native-linkcheck.json": "6ac74e08a15b52e484b7d5d71dc605138090a5708298c1982be1a0a85bb8ac1b",
+    "native.asm": "e7ade2b7e41015fea622854268b178f36fdb7e403b4afb0dba45f1ff7226493b",
+    "native.cpp": "692b7d1997ee8b946ff1d648e31cbc20f68f150581b784ae9c6043cbf63fd05e",
+    "native.o": "363af8a5529c21bcaa0596d71a8f9549f0d5476411ca5c5907f2027a62e5c7e9",
+    "NativeCaller.asm": "01a76b7f31f4202427afbcb779157b16c64698c143cc5f86afb4379694342a07",
+    "probe-output.json": "8ef38a226d973004c5f3d9a1eaf0d4899675d9e5561eec528ee71a02b123f2f4",
+    "probe-results.json": "7d738cca94c6b687bb5560e1fc1c84e1b7e4b6ae6266d34e735b08cc1e64a1ab",
+    "probe.py": "800dd7989bd0a10d96e58d328ebfcb1dafa29a11a0e998322fec11c0c4653d6e",
+    "register_parameter.asm": "e7ade2b7e41015fea622854268b178f36fdb7e403b4afb0dba45f1ff7226493b",
+    "register_parameter.cpp": "52f87ebb0d47bf134e426be0261eb1ef4aa001c31dcde0e7cae763112ad3a9d8",
+    "register_parameter.o": "363af8a5529c21bcaa0596d71a8f9549f0d5476411ca5c5907f2027a62e5c7e9",
+    "register_snapshot.asm": "6aebafc68386743ece02a3e78b3c868d4f74ea2a2dbde0e3f930b296d894b72e",
+    "register_snapshot.cpp": "2839baae73df86f8b1a6f2448cf4f12fdf9a3172b85b3eb194e15f2f6b65a7ae",
+    "register_snapshot.o": "bb2dc1b847d39f60ef65e5b5f3403a379ad0fc82d372a65bad2f79ff83e53b1a",
+    "return_join.asm": "e7ade2b7e41015fea622854268b178f36fdb7e403b4afb0dba45f1ff7226493b",
+    "return_join.cpp": "ffc1164745e232e2bef9c620998fafc50613158660d360c29aaa45edeee780f7",
+    "return_join.o": "363af8a5529c21bcaa0596d71a8f9549f0d5476411ca5c5907f2027a62e5c7e9",
+    "reverse_arm.asm": "12aebdcb88ff88244d57cbe78f0a1413316e9ef44fd0afb605b6e4b05e9735b8",
+    "reverse_arm.cpp": "b342b3fb3342fedcbcacc281845dc5a5b55d3c54f526da51ac0f3171a19b0bde",
+    "reverse_arm.o": "fc5fdb89cfcb7351bd916b56e351bcfe55f9087dc9e8c9e934d43d56a6b69b79",
+    "scalar-control-linkcheck.json": "badd5778a2af9607fb25a6149e4a7c0213dbdb304203e487e2e733c04286cf21",
+    "ScalarRead.asm": "e493c301a4d8ad2865f341dcbfbd52f97d5bbf993534927d16f8b337fd9e1a2c",
+    "snapshot.asm": "6aebafc68386743ece02a3e78b3c868d4f74ea2a2dbde0e3f930b296d894b72e",
+    "snapshot.cpp": "0b48f59274e9c4cee5d9f8d01f37bafc46bda76920ac29da2e758200099405f9",
+    "snapshot.o": "bb2dc1b847d39f60ef65e5b5f3403a379ad0fc82d372a65bad2f79ff83e53b1a"
+  }
+}
