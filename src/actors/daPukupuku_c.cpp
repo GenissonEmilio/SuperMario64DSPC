@@ -227,7 +227,7 @@ int daPukupuku_c::ChangeState(PukuStateRow *state)
 // @symbol _ZN12daPukupuku_c9EnterSwimEv
 int daPukupuku_c::EnterSwim() {
     unsigned int r = RandomIntInternal(data_0209e650);
-    *(short *)(pad_380 + 4) = ((r >> 8) & 0xf) << 0xc;
+    mTargetHeading = ((r >> 8) & 0xf) << 0xc;
     r = RandomIntInternal(data_0209e650);
     mStateTimer = (s16)(((r >> 8) & 0x3f) + 0x32);
     mHorzSpeed = 0x5000;
@@ -239,9 +239,9 @@ int daPukupuku_c::func_ov090_02133200()
 {
     if (Vec3_Dist(&mPosX, &mHomePosX) > 0x3e8000) {
         *(unsigned short *)&mStateTimer = 0x32;
-        *(s16 *)(pad_380 + 4) = Vec3_HorzAngle(&mPosX, &mHomePosX);
+        mTargetHeading = Vec3_HorzAngle(&mPosX, &mHomePosX);
     }
-    ApproachAngle(&mPrevAngleY, *(s16 *)(pad_380 + 4), 1, 0x100, 0x200);
+    ApproachAngle(&mPrevAngleY, mTargetHeading, 1, 0x100, 0x200);
     if (*(unsigned short *)&mStateTimer == 0)
         ChangeState(&data_ov090_02134584);
     return 1;

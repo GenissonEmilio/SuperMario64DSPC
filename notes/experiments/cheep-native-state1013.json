@@ -11,7 +11,7 @@
   "status": "byte-verified production checkpoint; source acceptance and publication held for two cross-owner convention requirements",
   "completion": "partial",
   "production_mode": "intact-object, existing enrolled TU retained",
-  "summary": "Replace four char-pointer helper shells with native daPukupuku_c methods. Replace the fake PukuStateC/PukuMainView and raw state pointer slot with an actual forward-declared daPukupuku_c member pointer, named enter/main state row and mState field. ChangeState accepts that row directly; Behavior dispatches its main member directly.",
+  "summary": "Replace four char-pointer helper shells with native daPukupuku_c methods. Replace the fake PukuStateC/PukuMainView and raw state pointer slot with an actual forward-declared daPukupuku_c member pointer, named enter/main state row and mState field. ChangeState accepts that row directly; Behavior dispatches its main member directly. Recover signed mTargetHeading at0x384 and use it in the swim entry/update paths; retain the same0x388 object layout.",
   "scope": {
     "module": "ov090",
     "class": "daPukupuku_c",
@@ -79,18 +79,20 @@
       "daPukupuku_c ownership is corroborated by RTTI, class vtable, factory allocation0x388 and existing native methods.",
       "Behavior calls transform at0x02133478 and0x021334ec and collision at0x021334f4.",
       "State descriptors at0x021342c0 and0x021342d0 point to swim-enter0x02133290 and pause-enter0x021331c4; main descriptors at0x021342b8 and0x021342c8 point to existing native main methods.",
-      "State rows are16 bytes with8-byte enter and main PMFs; stored state pointer is at actor+0x370; fullactor size0x388."
+      "State rows are16 bytes with8-byte enter and main PMFs; stored state pointer is at actor+0x370; fullactor size0x388.",
+      "EnterSwim stores a halfword at actor+0x384; swim main stores the bearing to home and signed-loads that field into ApproachAngle. The field is now s16 mTargetHeading, with4 unrecovered bytes at0x380 and2 trailing bytes at0x386."
     ],
     "inferred": [
       "UpdateModelTransform, HandlePlayerCollision, EnterSwim, EnterPause and ChangeState are reconstructed semantic names, not recovered identifiers.",
-      "PukuStateRow and the ChangeState pointer spelling are inferred; byte equality does not recover the original type name or distinguish pointer from reference spelling."
+      "PukuStateRow and the ChangeState pointer spelling are inferred; byte equality does not recover the original type name or distinguish pointer from reference spelling.",
+      "mTargetHeading is a reconstructed semantic field name, not a recovered identifier."
     ],
     "compiler_mechanism": "Declaring the actual daPukupuku_c PMF while the class is incomplete selects mwccarm2004/b56's8-byte representation. This is a true member pointer to the real class; no fake object view, asm naming, volatile or instruction injection is used. ROM size guards are disabled for SM64DS_PLATFORM_PC, matching the existing actor-size guard."
   },
   "proof": {
     "compiler": "2004/b56 with imported tools/rombuild.py CFLAGS; //cpp native C++ mode",
     "strict": {
-      "command": "python build/cheep-native-state1013/prove.py",
+      "command": "python build/cheep-native-state1013-rework1/prove.py",
       "exit_code": 0,
       "functions": 15,
       "initializer_bytes": 212,
@@ -526,7 +528,7 @@
       "differing": []
     },
     "prepush": {
-      "command": "python tools/prepush_linkcheck.py --files src/actors/daPukupuku_c.cpp include/daPukupuku_c.h --json build/cheep-native-state1013/prepush.json",
+      "command": "python tools/prepush_linkcheck.py --files src/actors/daPukupuku_c.cpp include/daPukupuku_c.h --json build/cheep-native-state1013-rework1/prepush.json",
       "exit_code": 0,
       "checked": 17,
       "verified": 15,
@@ -554,7 +556,7 @@
       "stale": 0
     },
     "language": {
-      "command": "python tools/langmode_audit.py --check build/cheep-native-state1013/langmode-baseline.json --json build/cheep-native-state1013/langmode.json",
+      "command": "python tools/langmode_audit.py --check build/cheep-native-state1013/langmode-baseline.json --json build/cheep-native-state1013-rework1/langmode.json",
       "exit_code": 0,
       "result": "PASS"
     },
@@ -628,14 +630,20 @@
       "status": "fixed",
       "kind": "provenance",
       "location": "config/tu_manifest.d/ov090/daPukupuku_c.json:bss pause row",
-      "detail": "Corrected stale wording: ChangeState calls enter; Behavior calls main directly."
+      "detail": "Corrected stale wording: ChangeState calls enter; Behavior calls main directly.",
+      "disposition": "fixed",
+      "summary": "Corrected stale wording: ChangeState calls enter; Behavior calls main directly.",
+      "reason": "Corrected stale wording: ChangeState calls enter; Behavior calls main directly."
     },
     {
       "id": "cheep1013-pmf-host-guard",
       "status": "fixed",
       "kind": "correctness",
       "location": "include/daPukupuku_c.h:PMF/row assertions",
-      "detail": "Pinned-ROM PMF and row size assertions guarded with !SM64DS_PLATFORM_PC; no claim that host PMF layout is proven."
+      "detail": "Pinned-ROM PMF and row size assertions guarded with !SM64DS_PLATFORM_PC; no claim that host PMF layout is proven.",
+      "disposition": "fixed",
+      "summary": "Pinned-ROM PMF and row size assertions guarded with !SM64DS_PLATFORM_PC; no claim that host PMF layout is proven.",
+      "reason": "Pinned-ROM PMF and row size assertions guarded with !SM64DS_PLATFORM_PC; no claim that host PMF layout is proven."
     },
     {
       "id": "cheep1013-rename-ledger",
@@ -646,7 +654,10 @@
       "requirement_source": "notes/tu-promotion-conventions.md:181-196,644",
       "requirement_quote": "Every coined mangled name that encodes an argument type has its disclosure in the manifest notes, in symbols/actor_renames.tsv, and on the declaration.",
       "action": "Reserve scoped append, preserve prior rows and add the five exact preview hops; rerun ledger gate and independent review.",
-      "preview": "build/cheep-native-state1013/actor_renames.preview.tsv"
+      "preview": "build/cheep-native-state1013/actor_renames.preview.tsv",
+      "disposition": "open",
+      "summary": "Reserve scoped append, preserve prior rows and add the five exact preview hops; rerun ledger gate and independent review.",
+      "reason": "Every coined mangled name that encodes an argument type has its disclosure in the manifest notes, in symbols/actor_renames.tsv, and on the declaration."
     },
     {
       "id": "cheep1013-stale-imports",
@@ -657,43 +668,87 @@
       "requirement_source": "notes/tu-promotion-conventions.md:346-367",
       "requirement_quote": "A promotion removes the declarations of the functions it renamed, in the same PR.",
       "action": "Reserve exact removal of the now-unreferenced func_ov090_021330c8 and func_ov090_02133338 declarations; expand header-consumer verification on the composed result. No fake physical aliases or unrelated header cleanup.",
-      "preview": "build/cheep-native-state1013/decl_common.preview.patch"
+      "preview": "build/cheep-native-state1013/decl_common.preview.patch",
+      "disposition": "open",
+      "summary": "Reserve exact removal of the now-unreferenced func_ov090_021330c8 and func_ov090_02133338 declarations; expand header-consumer verification on the composed result. No fake physical aliases or unrelated header cleanup.",
+      "reason": "A promotion removes the declarations of the functions it renamed, in the same PR."
+    },
+    {
+      "id": "cheep1013-heading-field",
+      "kind": "reconstruction",
+      "disposition": "fixed",
+      "location": "include/daPukupuku_c.h:79; src/actors/daPukupuku_c.cpp:230,242,244",
+      "summary": "Recover the signed 16-bit target heading at object offset 0x384 and replace all three pad_380+4 casts with the member.",
+      "reason": "Retail EnterSwim stores the random heading with STRH at this+0x384; swim main stores the bearing to home there and loads it with LDRSH into ApproachAngle. A genuine s16 mTargetHeading, four preceding bytes and two trailing bytes preserve layout and all 15 text functions plus the 212-byte initializer under independent strict checks. Update the tail-padding comment to describe only the unrecovered spans. The field name is inferred, not a recovered identifier.",
+      "evidence": {
+        "log": "build/heading-review/strict.json",
+        "command": "python build/heading-review/reproduce.py",
+        "result": "16 VERIFIED; differences=[]; blind=0 for each; no production writes."
+      },
+      "status": "fixed",
+      "resolution": "Added signed mTargetHeading at0x384 with preserved padding and replaced all3rawcasts; fresh strict15text+212initializer, lifecycle/data andfullROM proof pass."
+    },
+    {
+      "id": "cheep1013-c-view-comment",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "include/daPukupuku_c.h:89",
+      "summary": "Replace the stale explanation that D0 remains a C translation unit and can never be migrated.",
+      "reason": "The enrolled src/actors/daPukupuku_c.cpp already emits the native deleting destructor. The comment contradicts the current TU and manifest; explain the flat C view only as a compatibility view without an invented permanent compiler restriction.",
+      "status": "fixed",
+      "resolution": "Legacy flat C-view description no longer claims D0 remains C or cannot be migrated; native production destructor ownership described accurately."
     }
   ],
   "attribution": "function-authors.json unchanged; all address-keyed authors preserved",
   "remaining_reconstruction": [
-    "Existing raw angle/timer accesses and Fix12-by-value ABI boundaries remain documented in the TU; this change does not claim the entire class is fully reconstructed.",
+    "Existing unsigned timer accesses and Fix12-by-value ABI boundaries remain documented in the TU; this change does not claim the entire class is fully reconstructed.",
     "Existing two native state-main methods keep their prior address-based names. ROM-backed PMF descriptors retain their existing data ownership."
   ],
   "next_action": "Coordinator obtains exact cross-owner resources and completes both mandatory records, then a separate session reviews/verifies the exact composed candidate under active18af policy. No source PR or merge before those findings are closed.",
   "source_sha256": {
-    "src/actors/daPukupuku_c.cpp": "f6ae128e15e242c03908654bfcaeffd9e73be6a51743ba7a665848fa6113d416",
-    "include/daPukupuku_c.h": "de67236540646869a4a9eafa8cd3f93ee780787c15e34cf1296f4da28963e241",
+    "src/actors/daPukupuku_c.cpp": "1fec8da75e9336a9cead99f44ea9893ce01c6beee1c11cfc8dc05a2b997589d2",
+    "include/daPukupuku_c.h": "13fb1634fcb9bfa1e0b01d54714df987a45442baf84a4378bbf317af254b5504",
     "config/arm9/overlays/ov090/symbols.txt": "d6f895826caf84ea332912f02d3bfd99459cda4439ce9c2cc149277586cae6d7",
     "config/tu_manifest.d/ov090/daPukupuku_c.json": "accb129d9c311336806564bfd29034bd6e1daa6a0bf01f794eb96e44b75b13a6"
   },
   "artifact_sha256": {
-    "strict.json": "58bf1d971aaeef6944ddc82da0bb8840496ddd3676a325b34011d5639d5f91a7",
-    "intact-preparation.json": "0c2c87375e0c5f8b873fc884220bfe8b50b6bfd9e24dc8f56eb881e3dbc6e732",
-    "paired-identity.json": "579af4c357b559b43bf6401501b46f725689642c1490b58be4b0a84fd00ee62d",
-    "data.json": "0cdd1c68aca2324837ef2e9eb5421869d5b03998467cfd497bceb1ea3924119a",
-    "prepush.json": "63102ac7750e352e585a3450b132ee33d4e349d3ad3d9056012a1cc22e1cdb6a",
-    "prepush.log": "dc2a22c19915f5a63caa0e4b77d299fba47eb9a8d7a1f85f7a002d549c7a8f53",
-    "declarations.log": "2152b1eb3e47c358eb0eb2ace1b128ca80419de19cd41e9d13203748991cef01",
-    "port.log": "b010cd028d86799a0ca3fef6d8a50d00786d7610b9d12dc8e7eee993a7c1b86e",
-    "langmode.json": "ee8eabc03577ba8f12c25d4f92dab3382cc20accf27a112e5abb00957869dd88",
-    "langmode.log": "305c121709016f6ca0cd631ef8d2e0b49f2cf097c733859d1bda22fd52243ad2",
-    "rename-ledger.log": "f34d86eaa3b9f2e31534377640b3e171ed0e8a5eef4af819efbc220c5188c103",
-    "rombuild.log": "4fc527f3084b60262a5bd75b41a98876d4c53a2499e51389608ea0e753d3e7e6",
-    "actor_renames.preview.tsv": "068ee40f0f0fffa96c816447ffa45b984a027a9e46ac55a19f7270c4254ea306",
-    "decl_common.preview.patch": "da80d5272ef5de4b67090e1511e15eca194f375d7e8a474c537c6a205435cab3",
-    "prove.py": "4a5d520ad99ebc34a8be31618aafa0c876b4fd399f5caa873f575959681c122e"
+    "build/cheep-native-state1013-rework1/strict.json": "58bf1d971aaeef6944ddc82da0bb8840496ddd3676a325b34011d5639d5f91a7",
+    "build/cheep-native-state1013-rework1/intact-preparation.json": "0c2c87375e0c5f8b873fc884220bfe8b50b6bfd9e24dc8f56eb881e3dbc6e732",
+    "build/cheep-native-state1013-rework1/paired-identity.json": "579af4c357b559b43bf6401501b46f725689642c1490b58be4b0a84fd00ee62d",
+    "build/cheep-native-state1013-rework1/data.json": "0cdd1c68aca2324837ef2e9eb5421869d5b03998467cfd497bceb1ea3924119a",
+    "build/cheep-native-state1013-rework1/prepush.json": "63102ac7750e352e585a3450b132ee33d4e349d3ad3d9056012a1cc22e1cdb6a",
+    "build/cheep-native-state1013-rework1/prepush.log": "dc2a22c19915f5a63caa0e4b77d299fba47eb9a8d7a1f85f7a002d549c7a8f53",
+    "build/cheep-native-state1013-rework1/declarations.log": "2152b1eb3e47c358eb0eb2ace1b128ca80419de19cd41e9d13203748991cef01",
+    "build/cheep-native-state1013-rework1/port.log": "b010cd028d86799a0ca3fef6d8a50d00786d7610b9d12dc8e7eee993a7c1b86e",
+    "build/cheep-native-state1013-rework1/langmode.json": "ee8eabc03577ba8f12c25d4f92dab3382cc20accf27a112e5abb00957869dd88",
+    "build/cheep-native-state1013-rework1/langmode.log": "c70dee13c469e86869280282708e71fc5eb3d82045a51dee735e08aa80366d25",
+    "build/cheep-native-state1013-rework1/rombuild.log": "2058789b60ddff0006a0fb30b87faac7195a96ed6d5f99cada39928ecea0c88f",
+    "build/cheep-native-state1013-rework1/prove.py": "dbcd69911e036676231a0b7b6a17173d150b4583a60a131f5d5e7c534c1e38c1",
+    "build/cheep-native-state1013/actor_renames.preview.tsv": "068ee40f0f0fffa96c816447ffa45b984a027a9e46ac55a19f7270c4254ea306",
+    "build/cheep-native-state1013/decl_common.preview.patch": "da80d5272ef5de4b67090e1511e15eca194f375d7e8a474c537c6a205435cab3",
+    "build/cheep-native-state1013/rename-ledger.log": "f34d86eaa3b9f2e31534377640b3e171ed0e8a5eef4af819efbc220c5188c103"
   },
   "full_report_sha256": "b79f96cd9e0a8159f33667a04f5a3e4ec4660d1bf60780b20c50625994d475f3",
   "private_previews": {
     "ledger": "module\taddr\told\tnew\twhy\nov090\t0x021330c8\tfunc_ov090_021330c8\t_ZN12daPukupuku_c21HandlePlayerCollisionEv\tplayer-contact helper; Behavior call and Player damage path; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x021331c4\tfunc_ov090_021331c4\t_ZN12daPukupuku_c10EnterPauseEv\tpause-enter PMF at0x021342d0; timer and zero speed; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x02133290\tfunc_ov090_02133290\t_ZN12daPukupuku_c9EnterSwimEv\tswim-enter PMF at0x021342c0; random heading/timer and swim speed; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x021332e8\t_ZN12daPukupuku_c19func_ov090_021332e8EPM10PukuStateCFivE\t_ZN12daPukupuku_c11ChangeStateEP12PukuStateRow\tstores the real state pointer at0x370 and invokes the enter member; PukuStateRow and pointer parameter spelling inferred, ROM does not distinguish pointer from reference; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\nov090\t0x02133338\tfunc_ov090_02133338\t_ZN12daPukupuku_c20UpdateModelTransformEv\ttwo Behavior calls; builds and stores translated/rotated model matrix; reconstructed helper spelling, not recovered SM64DS name; RTTI-proven daPukupuku_c owner, same ROM address and strict bytes\n",
     "stale_declarations": "--- a/include/decl_common.h\n+++ b/include/decl_common.h\n@@ -2098,8 +2098,6 @@\n extern void func_ov085_0212c150(void*);\n extern void func_ov085_0212cd0c(void*);\n extern void func_ov089_02131f54(void*);\n-extern void func_ov090_021330c8(char*);\n-extern void func_ov090_02133338(char*);\n extern int func_ov090_021338b4(void*, void*);\n extern void func_ov091_02131cb0(void*, const struct Vector3*, const struct Vector3*);\n extern void func_ov091_02132e64(char*);\n"
   },
-  "reproducer_python": "import pathlib,json,sys,subprocess,os,io,hashlib\nsys.path.insert(0,'tools')\nimport rombuild as RB,tu_production as TP,linkcheck as LC,reloc_audit as RA,romdata_check as RD\nfrom elftools.elf.elffile import ELFFile\nP=pathlib.Path('build/cheep-native-state1013');BASE='731efc06d5d5e84ac33ff5f97880e9f90476158e';m=json.loads(pathlib.Path('config/tu_manifest.d/ov090/daPukupuku_c.json').read_text())\ndef compile(name,src):\n d=P/name;d.mkdir(exist_ok=True);p=d/'daPukupuku_c.cpp';p.write_text(src);out=d/'raw.o';exe=pathlib.Path('tools/mwccarm/2004/b56/mwccarm.exe').resolve();env=dict(os.environ,LM_LICENSE_FILE=str(pathlib.Path('tools/mwccarm/license.dat').resolve()))\n r=subprocess.run([str(exe),*RB.CFLAGS.replace('-lang c99','-lang c++').split(),'-I'+str(pathlib.Path('include').resolve()),'-c',str(p.resolve()),'-o',str(out.resolve())],capture_output=True,text=True,env=env);assert r.returncode==0,r.stdout+r.stderr\n return out\nh=subprocess.check_output(['git','show',BASE+':include/daPukupuku_c.h']).decode();(P/'baseline-header.h').write_text(h)\ns=subprocess.check_output(['git','show',BASE+':src/actors/daPukupuku_c.cpp']).decode().replace('#include \"daPukupuku_c.h\"','#include \"'+(P/'baseline-header.h').resolve().as_posix()+'\"')\na=compile('baseline',s);b=compile('candidate',pathlib.Path('src/actors/daPukupuku_c.cpp').read_text());raw=b.read_bytes()\nobj,proof=TP.prepare_intact_object(raw,m);(P/'prepared.o').write_bytes(obj);(P/'intact-preparation.json').write_text(json.dumps(proof,indent=2))\nidx=RA.build_name_index();rows=[]\nfor f in m['functions']+m['init']:\n r=LC.linkcheck(f['symbol'],int(f['address'],0),int(f['size'],0),'ov090',idx,obj=obj,sym=f['symbol']);rows.append(r);print(r['name'],r['verdict'],r['diffs'],r['blind']);assert r['verdict']=='VERIFIED' and r['diffs']==[] and r['blind']==0,r\n(P/'strict.json').write_text(json.dumps(rows,indent=2))\ndata={'baseline':RD.check_object(a,'src/actors/daPukupuku_c.cpp'),'candidate':RD.check_object(b,'src/actors/daPukupuku_c.cpp')};data['summary']=RD.summarize(data['candidate']);(P/'data.json').write_text(json.dumps(data,indent=2));assert not data['summary']['differs'];print('data',data['summary'])\ndef identity(path,names):\n elf=ELFFile(io.BytesIO(path.read_bytes()));syms=elf.get_section_by_name('.symtab');rename=dict(zip(names,['@620','@737']));nodes=[];sections={}\n for name in names:\n  sy=[x for x in syms.iter_symbols() if x.name==name];assert len(sy)==1;v=sy[0];sec=elf.get_section(v['st_shndx']);assert v['st_info']['bind']=='STB_LOCAL' and v['st_size']==12 and sec.name=='.bss';nodes.append({'name':name,'canonical':rename[name],'size':12,'binding':'STB_LOCAL'})\n for i,sec in enumerate(elf.iter_sections()):\n  if sec.name not in ['.init','.ctor']:continue\n  refs=[]\n  for rs in elf.iter_sections():\n   if rs['sh_type'] not in ['SHT_REL','SHT_RELA'] or rs['sh_info']!=i:continue\n   for r in rs.iter_relocations():\n    name=syms.get_symbol(r['r_info_sym']).name;refs.append({'offset':hex(r['r_offset']),'type':r['r_info_type'],'symbol':rename.get(name,name)})\n  sections[sec.name]={'size':sec['sh_size'],'sha256':hashlib.sha256(sec.data()).hexdigest(),'references':refs}\n return {'nodes':nodes,'sections':sections}\naid=identity(a,['@634','@635']);bid=identity(b,['@630','@631']);assert aid['sections']==bid['sections'],'init/ctor change';(P/'paired-identity.json').write_text(json.dumps({'baseline':aid,'candidate':bid,'exact_init_ctor_and_references':True},indent=2));print('paired .init/.ctor bytes + references exact')\n",
-  "publication": "No source branch push/PR/merge; queue producer artifact only. Independent acceptance remains pending."
+  "reproducer_python": "import pathlib,json,sys,subprocess,os,io,hashlib\nsys.path.insert(0,'tools')\nimport rombuild as RB,tu_production as TP,linkcheck as LC,reloc_audit as RA,romdata_check as RD\nfrom elftools.elf.elffile import ELFFile\nP=pathlib.Path('build/cheep-native-state1013-rework1');BASE='731efc06d5d5e84ac33ff5f97880e9f90476158e';m=json.loads(pathlib.Path('config/tu_manifest.d/ov090/daPukupuku_c.json').read_text())\ndef compile(name,src):\n d=P/name;d.mkdir(exist_ok=True);p=d/'daPukupuku_c.cpp';p.write_text(src);out=d/'raw.o';exe=pathlib.Path('tools/mwccarm/2004/b56/mwccarm.exe').resolve();env=dict(os.environ,LM_LICENSE_FILE=str(pathlib.Path('tools/mwccarm/license.dat').resolve()))\n r=subprocess.run([str(exe),*RB.CFLAGS.replace('-lang c99','-lang c++').split(),'-I'+str(pathlib.Path('include').resolve()),'-c',str(p.resolve()),'-o',str(out.resolve())],capture_output=True,text=True,env=env);assert r.returncode==0,r.stdout+r.stderr\n return out\nh=subprocess.check_output(['git','show',BASE+':include/daPukupuku_c.h']).decode();(P/'baseline-header.h').write_text(h)\ns=subprocess.check_output(['git','show',BASE+':src/actors/daPukupuku_c.cpp']).decode().replace('#include \"daPukupuku_c.h\"','#include \"'+(P/'baseline-header.h').resolve().as_posix()+'\"')\na=compile('baseline',s);b=compile('candidate',pathlib.Path('src/actors/daPukupuku_c.cpp').read_text());raw=b.read_bytes()\nobj,proof=TP.prepare_intact_object(raw,m);(P/'prepared.o').write_bytes(obj);(P/'intact-preparation.json').write_text(json.dumps(proof,indent=2))\nidx=RA.build_name_index();rows=[]\nfor f in m['functions']+m['init']:\n r=LC.linkcheck(f['symbol'],int(f['address'],0),int(f['size'],0),'ov090',idx,obj=obj,sym=f['symbol']);rows.append(r);print(r['name'],r['verdict'],r['diffs'],r['blind']);assert r['verdict']=='VERIFIED' and r['diffs']==[] and r['blind']==0,r\n(P/'strict.json').write_text(json.dumps(rows,indent=2))\ndata={'baseline':RD.check_object(a,'src/actors/daPukupuku_c.cpp'),'candidate':RD.check_object(b,'src/actors/daPukupuku_c.cpp')};data['summary']=RD.summarize(data['candidate']);(P/'data.json').write_text(json.dumps(data,indent=2));assert not data['summary']['differs'];print('data',data['summary'])\ndef identity(path,names):\n elf=ELFFile(io.BytesIO(path.read_bytes()));syms=elf.get_section_by_name('.symtab');rename=dict(zip(names,['@620','@737']));nodes=[];sections={}\n for name in names:\n  sy=[x for x in syms.iter_symbols() if x.name==name];assert len(sy)==1;v=sy[0];sec=elf.get_section(v['st_shndx']);assert v['st_info']['bind']=='STB_LOCAL' and v['st_size']==12 and sec.name=='.bss';nodes.append({'name':name,'canonical':rename[name],'size':12,'binding':'STB_LOCAL'})\n for i,sec in enumerate(elf.iter_sections()):\n  if sec.name not in ['.init','.ctor']:continue\n  refs=[]\n  for rs in elf.iter_sections():\n   if rs['sh_type'] not in ['SHT_REL','SHT_RELA'] or rs['sh_info']!=i:continue\n   for r in rs.iter_relocations():\n    name=syms.get_symbol(r['r_info_sym']).name;refs.append({'offset':hex(r['r_offset']),'type':r['r_info_type'],'symbol':rename.get(name,name)})\n  sections[sec.name]={'size':sec['sh_size'],'sha256':hashlib.sha256(sec.data()).hexdigest(),'references':refs}\n return {'nodes':nodes,'sections':sections}\naid=identity(a,['@634','@635']);bid=identity(b,['@630','@631']);assert aid['sections']==bid['sections'],'init/ctor change';(P/'paired-identity.json').write_text(json.dumps({'baseline':aid,'candidate':bid,'exact_init_ctor_and_references':True},indent=2));print('paired .init/.ctor bytes + references exact')\n",
+  "publication": "No source branch push/PR/merge; queue producer artifact only. Independent acceptance remains pending.",
+  "rework": {
+    "input_commit": "b430fdbb5f2117b7442bf4d238f3cea940cded9a",
+    "review_evidence": "C:/tmp/sm64ds-cheepverify1013/build/independent-rework.json",
+    "review_evidence_sha256": "64f34445abbac23bc67c67214267b39d1285384ae705d0e550020030e1dc916e",
+    "changes": [
+      "Replace three raw heading casts with signed s16 mTargetHeading at0x384; retain4 bytes before it and2 bytes trailing padding.",
+      "Correct the legacy C-view comment: production C++ emits the destructor variants."
+    ],
+    "configuration": "No changes to native names, descriptor addresses, manifest policies, canonical BSS registration bindings, or private cross-owner previews."
+  },
+  "proof_input_sha256": {
+    "src/actors/daPukupuku_c.cpp": "1fec8da75e9336a9cead99f44ea9893ce01c6beee1c11cfc8dc05a2b997589d2",
+    "include/daPukupuku_c.h": "13fb1634fcb9bfa1e0b01d54714df987a45442baf84a4378bbf317af254b5504",
+    "config/arm9/overlays/ov090/symbols.txt": "d6f895826caf84ea332912f02d3bfd99459cda4439ce9c2cc149277586cae6d7",
+    "config/tu_manifest.d/ov090/daPukupuku_c.json": "accb129d9c311336806564bfd29034bd6e1daa6a0bf01f794eb96e44b75b13a6"
+  }
 }

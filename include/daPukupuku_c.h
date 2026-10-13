@@ -73,10 +73,10 @@ struct daPukupuku_c : dEnemyBase_c {
     int EnterSwim();
     int EnterPause();
 
-    /* Tail padding. The field span stops short of the real size:
-       daPukupuku_c_classInit calls fBase_c::operator new(0x388), read off
-       the retail instruction. A span is only a LOWER BOUND. */
-    u8 pad_380[0x8];      /* 0x380, to the ROM's 0x388 */
+    u8 pad_380[0x4];
+    s16 mTargetHeading;                 /* 0x384 */
+    /* The factory allocates 0x388 bytes; the final two bytes are padding. */
+    u8 pad_386[0x2];
 };
 
 #ifndef SM64DS_PLATFORM_PC
@@ -86,9 +86,8 @@ typedef char daPukupuku_c_size_must_be_0x388[sizeof(daPukupuku_c) == 0x388 ? 1 :
 
 #else
 
-/* The C spelling of the same object, flat. Kept because the D0 file is a C
-   translation unit that reads these fields, and D0 is compiler-generated so it
-   can never be migrated. Same arrangement as include/dExtShadowModel_c.h. */
+/* Legacy flat C view. The production actor and its compiler-generated
+ * destructor variants are built from the C++ class above. */
 struct daPukupuku_c {
     u8  pad_000[0x5c];
     s32 mPosX;            /* 0x05c */
