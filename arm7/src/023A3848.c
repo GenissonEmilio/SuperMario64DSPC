@@ -1,141 +1,92 @@
-// NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
-// @ 0x023A3848 size 0x1F4 (runtime 0x027D57C0, main)
-// No C attempt exists yet; asm generated from the original bytes.
+/* storage 0x023A3848 runtime 0x027D57C0 size 0x1F4 main. */
 
-extern void fn_02382C98(void);
-extern void fn_02395354(void);
-extern void fn_0239A8F8(void);
-extern void fn_0239AD50(void);
-extern void fn_0239E91C(void);
-extern void fn_0239F778(void);
+#pragma opt_propagation off
 
-asm void fn_023A3848(void) {
-    stmdb sp!, {r4, r5, r6, r7, lr}
-    sub sp, sp, #4
-    mov r7, r0
-    ldr r0, =0x380FFF4
-    ldr r1, [r0]
-    add r6, r1, #0x3e4
-    ldr r0, [r1, #0x474]
-    add r5, r0, #0x10
-    ldrh r0, [r6, #0x3c]
-    cmp r0, #0
-    beq L_027D59A4
-    ldrh r2, [r7, #0x1c]
-    add r0, r1, #0x300
-    ldrh r1, [r0, #0x64]
-    cmp r2, r1
-    bne L_027D59A4
-    ldrh r2, [r7, #0x1a]
-    ldrh r1, [r0, #0x62]
-    cmp r2, r1
-    bne L_027D59A4
-    ldrh r1, [r7, #0x18]
-    ldrh r0, [r0, #0x60]
-    cmp r1, r0
-    bne L_027D59A4
-    ldrh r0, [r7, #0x10]
-    sub r1, r0, #0x18
-    ldrh r0, [r5, #6]
-    sub r0, r0, #8
-    cmp r1, r0
-    bgt L_027D59A4
-    add r0, r7, #0x1e
-    bl fn_0239AD50
-    cmp r0, #0xff
-    beq L_027D59A4
-    cmp r0, #0
-    beq L_027D59A4
-    mov r1, #0x1c
-    mul r4, r0, r1
-    ldr r1, =0x380FFF4
-    ldr r1, [r1]
-    ldr r1, [r1, #0x2e0]
-    ldrh r1, [r1, r4]
-    cmp r1, #0x40
-    beq L_027D588C
-    add r0, r7, #0x1e
-    mov r1, #7
-    bl fn_0239E91C
-    cmp r0, #0
-    beq L_027D59A4
-    bl fn_0239F778
-    b L_027D59A4
-L_027D588C:
-    mov r0, r0, lsl #0x10
-    mov r0, r0, lsr #0x10
-    ldrh r1, [r7, #0x14]
-    mov r1, r1, lsl #0x13
-    mov r1, r1, lsr #0x1f
-    bl fn_0239A8F8
-    ldr r2, =0x380FFF4
-    ldr r0, [r2]
-    ldr r0, [r0, #0x2e0]
-    add r1, r0, r4
-    ldrh r0, [r1, #0x1a]
-    strh r0, [r1, #0x18]
-    mov r1, #1
-    ldr r0, [r2]
-    ldr r0, [r0, #0x2e0]
-    add r0, r0, r4
-    ldrh r0, [r0, #2]
-    mov r0, r1, lsl r0
-    mov r0, r0, lsl #0x10
-    mov r0, r0, lsr #0x10
-    ldrh r1, [r6, #0x9a]
-    ands r1, r0, r1
-    bne L_027D59A4
-    ldrh r1, [r6, #0x98]
-    ands r1, r0, r1
-    beq L_027D59A4
-    add r2, r6, #0x9a
-    ldrh r1, [r2]
-    orr r1, r1, r0
-    strh r1, [r2]
-    ldrh r2, [r5]
-    mvn r1, r0
-    and r1, r2, r1
-    strh r1, [r5]
-    add r4, r5, #0xa
-    mov r0, r0, lsl #0xf
-    mov r1, r0, lsr #0x10
-    b L_027D593C
-L_027D5924:
-    ldrh r0, [r6, #0x98]
-    ands r0, r1, r0
-    ldrneh r0, [r5, #6]
-    addne r4, r4, r0
-    mov r0, r1, lsl #0xf
-    mov r1, r0, lsr #0x10
-L_027D593C:
-    cmp r1, #1
-    bne L_027D5924
-    ldrh r0, [r7, #0x10]
-    sub r0, r0, #0x18
-    strh r0, [r4]
-    add r0, r4, #3
-    ldrh r1, [r7, #0x12]
-    and r1, r1, #0xff
-    mov r1, r1, lsl #0x10
-    mov r1, r1, lsr #0x10
-    and r1, r1, #0xff
-    bl fn_02395354
-    add r0, r4, #2
-    ldrh r1, [r7, #0xe]
-    and r1, r1, #0xff
-    mov r1, r1, lsl #0x10
-    mov r1, r1, lsr #0x10
-    and r1, r1, #0xff
-    bl fn_02395354
-    ldrh r2, [r4]
-    cmp r2, #0
-    beq L_027D59A4
-    add r0, r7, #0x2c
-    add r1, r4, #8
-    add r2, r2, #1
-    bl fn_02382C98
-L_027D59A4:
-    add sp, sp, #4
-    ldmia sp!, {r4, r5, r6, r7, lr}
-    bx lr
+extern int fn_0239AD50(unsigned short *a1);
+extern int fn_0239E91C(unsigned short *a1, int a2);
+extern int fn_0239F778(int a1);
+extern void fn_0239A8F8(unsigned int a1, unsigned int a2);
+extern int fn_02395354(unsigned int addr, unsigned int val);
+extern int fn_02382C98(unsigned short *a1, unsigned short *a2, unsigned int a3);
+
+int fn_023A3848(unsigned short *a1) {
+    unsigned char *base;
+    unsigned short *v3;
+    unsigned short *v4;
+    int result;
+    unsigned short h14;
+    unsigned short *row;
+    unsigned short h13;
+    unsigned short h12;
+    int left;
+
+    base = *(unsigned char **)0x0380FFF4;
+    v3 = (unsigned short *)(base + 996);
+    v4 = (unsigned short *)(*(int *)(base + 1140) + 16);
+    result = *(unsigned short *)((char *)v3 + 0x3C);
+    if (result == 0)
+        return result;
+    h14 = a1[14];
+    row = (unsigned short *)(base + 0x300);
+    if (h14 != *(unsigned short *)((char *)row + 0x64))
+        return (int)row;
+    h13 = a1[13];
+    if (h13 != *(unsigned short *)((char *)row + 0x62))
+        return (int)row;
+    h12 = a1[12];
+    result = *(unsigned short *)((char *)row + 0x60);
+    if (h12 != (unsigned short)result)
+        return result;
+    left = (unsigned short)a1[8] - 24;
+    result = (unsigned short)v4[3] - 8;
+    if (left > result)
+        return result;
+    result = fn_0239AD50(a1 + 15);
+    if (result != 255 && result != 0) {
+        int scale = 28 * result;
+        if (*(unsigned short *)(*(int *)(*(int *)0x0380FFF4 + 736) + scale) != 64) {
+            result = fn_0239E91C(a1 + 15, 7);
+            if (result != 0)
+                return fn_0239F778(result);
+        } else {
+            unsigned short id = (unsigned short)result;
+            unsigned int bit = ((unsigned)a1[10] << 19) >> 31;
+            unsigned char *slot;
+            unsigned short *walk;
+            unsigned int i;
+            fn_0239A8F8(id, bit);
+            slot = *(unsigned char **)(*(int *)0x0380FFF4 + 736) + scale;
+            *(unsigned short *)(slot + 24) = *(unsigned short *)(slot + 26);
+            result = (unsigned short)(1
+                << *(unsigned short *)(*(unsigned char **)(*(int *)0x0380FFF4 + 736) + scale + 2));
+            if ((result & v3[77]) == 0 && (result & v3[76]) != 0) {
+                unsigned short *flag = v3 + 77;
+                unsigned short s9;
+                unsigned short s7;
+                *flag = (unsigned short)(*flag | result);
+                *v4 = (unsigned short)(*v4 & ~result);
+                walk = v4 + 5;
+                for (i = (unsigned)(result << 15) >> 16; i != 1; i = (unsigned)(i << 15) >> 16) {
+                    if ((i & v3[76]) != 0)
+                        walk = (unsigned short *)((char *)walk + v4[3]);
+                    }
+                *walk = (unsigned short)(a1[8] - 24);
+                {
+                    unsigned int addr = (unsigned int)((char *)walk + 3);
+                    unsigned int v = a1[9] & 0xFFu;
+                    s9 = (unsigned short)v;
+                    fn_02395354(addr, (unsigned char)s9);
+                }
+                {
+                    unsigned int addr = (unsigned int)(walk + 1);
+                    unsigned int v = a1[7] & 0xFFu;
+                    s7 = (unsigned short)v;
+                    result = fn_02395354(addr, (unsigned char)s7);
+                }
+                if (*walk != 0)
+                    return fn_02382C98(a1 + 22, walk + 4, (unsigned short)*walk + 1);
+            }
+        }
+    }
+    return result;
 }

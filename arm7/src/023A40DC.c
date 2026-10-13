@@ -1,111 +1,142 @@
-// NONMATCHING (ASM-STANDIN): byte-exact whole-function asm for a function that was C; no matching C yet
-// @ 0x023A40DC size 0x170 (runtime 0x027D6054, main)
-// No C attempt exists yet; asm generated from the original bytes. PLACEHOLDER: AR67 still running; replace with its result when it lands.
+/* storage 0x023A40DC runtime 0x027D6054 size 0x16C main.
+   marionea ApList.c: UpdateApList — scans the four-entry AP list for a
+   matching BSSID (or a free/oldest slot), then clears and repopulates the
+   selected record from a received beacon frame.
+   Relocs: fn_02385334 (WL_ReadByte), fn_02385354 (WL_WriteByte),
+   fn_02382C80 (MIi_CpuClear16), fn_023969D8 (WSetMacAdrs1), wlMan @ 0x0380FFF4.
+   Literal pool at the tail holds 0x0380FFF4. */
 
-extern void fn_02382C80(void);
-extern void fn_02395334(void);
-extern void fn_02395354(void);
-extern void fn_023969D8(void);
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-asm void fn_023A40DC(void) {
-    stmdb sp!, {r4, r5, r6, r7, r8, r9, lr}
-    sub sp, sp, #4
-    mov r7, r0
-    mov r6, r1
-    mov r5, r2
-    ldr r0, =0x380FFF4
-    ldr r0, [r0]
-    add r4, r0, #0x200
-    add r0, r5, #1
-    bl fn_02395334
-    cmp r0, #0x20
-    bhi L_027D61B4
-    mov r2, #4
-    mov r1, r2
-    mov r0, #0x400
-    mov r3, #0
-    b L_027D60F4
-L_027D6098:
-    ldrh r8, [r4]
-    cmp r8, #0
-    beq L_027D60E8
-    ldrh r9, [r4, #0xa]
-    ldrh r8, [r6, #0x28]
-    cmp r9, r8
-    bne L_027D60D4
-    ldrh r9, [r4, #8]
-    ldrh r8, [r6, #0x26]
-    cmp r9, r8
-    bne L_027D60D4
-    ldrh r9, [r4, #6]
-    ldrh r8, [r6, #0x24]
-    cmp r9, r8
-    beq L_027D6114
-L_027D60D4:
-    ldrh r8, [r4, #0x30]
-    cmp r8, r0
-    movlo r0, r8
-    movlo r1, r3
-    b L_027D60EC
-L_027D60E8:
-    mov r2, r3
-L_027D60EC:
-    add r3, r3, #1
-    add r4, r4, #0x32
-L_027D60F4:
-    cmp r3, #4
-    blo L_027D6098
-    cmp r2, #4
-    movne r3, r2
-    bne L_027D6114
-    cmp r1, #4
-    movne r3, r1
-    beq L_027D61B4
-L_027D6114:
-    ldr r0, =0x380FFF4
-    ldr r0, [r0]
-    add r8, r0, #0x200
-    mov r2, #0x32
-    mul r4, r3, r2
-    add r9, r8, r4
-    mov r0, #0
-    strh r0, [sp]
-    ldrh r0, [sp]
-    mov r1, r9
-    bl fn_02382C80
-    mov r0, #0x400
-    strh r0, [r9, #0x30]
-    ldrh r0, [r6, #0x12]
-    and r0, r0, #0xff
-    strh r0, [r8, r4]
-    strh r7, [r9, #2]
-    add r0, r9, #6
-    add r1, r6, #0x24
-    bl fn_023969D8
-    add r0, r5, #1
-    bl fn_02395334
-    strh r0, [r9, #0xc]
-    mov r7, #0
-    add r5, r5, #2
-    add r4, r9, #0xe
-    b L_027D6198
-L_027D6180:
-    add r0, r5, r7
-    bl fn_02395334
-    mov r1, r0
-    add r0, r4, r7
-    bl fn_02395354
-    add r7, r7, #1
-L_027D6198:
-    ldrh r0, [r9, #0xc]
-    cmp r7, r0
-    blo L_027D6180
-    ldrh r0, [r6, #0x34]
-    strh r0, [r9, #0x2e]
-    ldrh r0, [r6, #0x36]
-    strh r0, [r9, #4]
-L_027D61B4:
-    add sp, sp, #4
-    ldmia sp!, {r4, r5, r6, r7, r8, r9, lr}
-    bx lr
+extern unsigned char fn_02385334(void *p);              /* WL_ReadByte */
+extern int fn_02385354(void *p, int data);              /* WL_WriteByte */
+extern void fn_02382C80(u16 data, void *destp, u32 size); /* MIi_CpuClear16 */
+extern unsigned short *fn_023969D8(unsigned short *dst, unsigned short *src1); /* WSetMacAdrs1 */
+
+/* Inlined by the original TU; expands to the three-halfword BSSID compare. */
+#define MatchMacAdrs(a, b) ((a)[2] == (b)[2] && (a)[1] == (b)[1] && (a)[0] == (b)[0])
+
+typedef struct {
+    u16 rssi;           /* +0x00 */
+    u16 channel;        /* +0x02 */
+    u16 capaInfo;       /* +0x04 */
+    u16 bssid[3];       /* +0x06 */
+    u16 ssidLength;     /* +0x0C */
+    u8 ssid[32];        /* +0x0E */
+    u16 beaconInterval; /* +0x2E */
+    u16 lifeTime;       /* +0x30 */
+} WlApElement;          /* size 0x32 */
+
+typedef struct {
+    char _pad[0x200];
+    WlApElement ApList[4]; /* +0x200 */
+} WlMan;
+
+#define wlMan (*(WlMan **)0x0380FFF4)
+
+typedef struct {
+    u16 _a[4];
+} FIRM_HEADER;
+
+typedef union {
+    struct {
+        u16 _p[5];
+        u16 rsv_RSSI;   /* +0x12 */
+    } Rx;
+} MAC_HEADER;
+
+typedef struct {
+    u16 FrameCtrl;      /* +0x00 */
+    u16 Duration;       /* +0x02 */
+    u16 DA[3];          /* +0x04 */
+    u16 SA[3];          /* +0x0A */
+    u16 BSSID[3];       /* +0x24 within the frame header layout used below */
+    u16 SeqCtrl;
+} MAN_HEADER;
+
+typedef union {
+    u16 Data;
+    u16 Bit;
+} CAPA_INFO;
+
+typedef struct {
+    u32 TimeStamp[2];   /* +0x00 */
+    u16 BeaconInterval; /* +0x34 within the frame */
+    CAPA_INFO CapaInfo; /* +0x36 */
+    u8 Buf[54];
+    u8 pad[2];
+} BEACON_BODY;
+
+typedef struct {
+    FIRM_HEADER FirmHeader;
+    MAC_HEADER MacHeader;
+    MAN_HEADER Dot11Header;
+    BEACON_BODY Body;
+} BEACON_FRAME;
+
+typedef struct {
+    u8 ID;      /* +0x00 */
+    u8 Length;  /* +0x01 */
+    u8 SSID[32];/* +0x02 */
+} SSID_ELEMENT;
+
+void fn_023A40DC(u16 channel, BEACON_FRAME *pFrm, SSID_ELEMENT *pSSID)
+{
+    WlApElement *pApList = wlMan->ApList;
+    u32 i, j;
+    u32 free0, free1, life1;
+
+    if (fn_02385334(&pSSID->Length) > 0x20)
+        return;
+
+    free0 = 4;
+    free1 = 4;
+    life1 = 1024;
+
+    for (i = 0; i < 4; i++, pApList++)
+    {
+        if (pApList->rssi)
+        {
+            if (MatchMacAdrs(pApList->bssid, pFrm->Dot11Header.BSSID))
+                goto lbl;
+            if (pApList->lifeTime < life1)
+            {
+                life1 = pApList->lifeTime;
+                free1 = i;
+            }
+        }
+        else
+        {
+            free0 = i;
+        }
+    }
+
+    if (free0 != 4)
+        i = free0;
+    else if (free1 != 4)
+        i = free1;
+    else
+        return;
+
+lbl:
+    pApList = &wlMan->ApList[i];
+    {
+        volatile u16 data = 0;
+        fn_02382C80(data, pApList, sizeof(*pApList));
+    }
+    pApList->lifeTime = 1024;
+    pApList->rssi = pFrm->MacHeader.Rx.rsv_RSSI & 0xFF;
+    pApList->channel = channel;
+    fn_023969D8(pApList->bssid, pFrm->Dot11Header.BSSID);
+
+    pApList->ssidLength = fn_02385334(&pSSID->Length);
+    for (j = 0; j < pApList->ssidLength; ++j)
+    {
+        fn_02385354(&pApList->ssid[j], fn_02385334(&pSSID->SSID[j]));
+    }
+
+    pApList->beaconInterval = pFrm->Body.BeaconInterval;
+    pApList->capaInfo = pFrm->Body.CapaInfo.Data;
 }
