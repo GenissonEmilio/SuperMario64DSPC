@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "task": "camera-causal-correction1013",
+  "stage": "scout",
+  "session": "astra-camera-causal-correction1013",
+  "base_commit": "8bd673f9bf46cf2849b1912e2c2b15368fe2fe60",
+  "workflow_commit": "731efc06d5d5e84ac33ff5f97880e9f90476158e",
+  "scope": "Report-only correction and evidence preservation. No new probes during correction task; no src/header/config/DB/queue resource expansion beyond these two note paths.",
+  "changed_paths": [
+    "notes/experiments/remaining4-cam1012.json",
+    "notes/experiments/camera-causality1013.json"
+  ],
+  "source": "src/unnamed/arm9/0200/func_02009e70.cpp",
+  "source_sha256": "6f2f89ec1e34b7e8e5590bf89d77791e5152f4c5dfb959e18d14050c9006b3f9",
+  "source_head": "8bd673f9bf46cf2849b1912e2c2b15368fe2fe60",
+  "compiler": "2004/b56",
+  "source_size_bytes": 4252,
+  "best_iteration_differences": 68,
+  "acceptance": "NONMATCHING. No strict zero-byte or relocation acceptance claim. Iteration counts wildcard relocated words.",
+  "correction": {
+    "previous_text": "A meaningful inline CameraButtons(u16) helper changes the register-allocation graph at exact4252 bytes. Isolating it to the later held-button reload produces269 differences with flags=r5, limit=r6, self=sb; wrapping only the initial read remains68. Conditional held-button-return helpers yield254, and an output-reference helper remains68. Receiver/declaration changes on this new seed did not restore the other colors.",
+    "corrected_text": "A meaningful inline CameraButtons(u16) helper changes the register-allocation graph at exact4252 bytes. Isolating it to the INITIAL pressed-button read (data_0209f49e) produces269 differences with flags=r5, limit=r6, self=sb; wrapping only the later HELD-button reload (data_0209f49c) remains68. The input_history.py generator and fresh current-source controls agree; see notes/experiments/camera-causality1013.json. Distinct conditional held-button-return helpers measured254 (early/else/conditional) or269 (taken), and an output-reference helper remained68. Those are separate PHI/control-flow observations. Receiver/declaration changes on the earlier helper seed did not restore the other colors.",
+    "reason": "The prior prose reversed the initial/held sites. The earlier generator removes the c (held) wrapper to leave only initial, and removes the e (initial) wrapper to leave only held. Its ledgers and fresh controls agree.",
+    "generator_path": "build/remaining4-cam1012/input_history.py",
+    "generator_excerpt": "for which in ['initial','fallback']:\n s=seed\n expr='CameraButtons(*(u16 *)((char *)data_0209f49'+('c'if which=='initial'else'e')+' + gActivePlayerSlot * 0x18))'\n plain=expr[len('CameraButtons('):-1]+' & 0x4300'\n s=s.replace(expr,plain)\n run('input-helper-only-'+which,s)\n",
+    "earlier_ledger_rows": [
+      {
+        "name": "input-helper-only-initial",
+        "sha256": "57fe286391dace37e32ab882949b324b35b946385ca4838726119b22e8370a0a",
+        "size": 4252,
+        "div": 269
+      },
+      {
+        "name": "input-helper-only-fallback",
+        "sha256": "7f85724270692008ffc81111614b4c426d9b78da99dbbb500d81cb98af949d9f",
+        "size": 4252,
+        "div": 68
+      }
+    ],
+    "fresh_controls": [
+      {
+        "name": "baseline",
+        "source_sha256": "e14459ecb0d6cd06b7be12be43607a9aa1fabf85f4a30580b42482f056a67ac8",
+        "error": null,
+        "size": 4252,
+        "diffs": 68
+      },
+      {
+        "name": "held-helper-control",
+        "source_sha256": "b27f61671c90c3ed64939e2e094be5f302c38b3521315c9ecb969b6eddc6ff65",
+        "error": null,
+        "size": 4252,
+        "diffs": 68
+      },
+      {
+        "name": "initial-helper-control",
+        "source_sha256": "8b1774891c3a448b1562ad582cfb7c83d493a66e930d5406ffb2e696e55f2d6e",
+        "error": null,
+        "size": 4252,
+        "diffs": 269
+      }
+    ],
+    "separate_conditional_held_results": [
+      {
+        "name": "held-helper-early",
+        "size": 4252,
+        "diffs": 254
+      },
+      {
+        "name": "held-helper-taken",
+        "size": 4252,
+        "diffs": 269
+      },
+      {
+        "name": "held-helper-else",
+        "size": 4252,
+        "diffs": 254
+      },
+      {
+        "name": "held-helper-conditional",
+        "size": 4252,
+        "diffs": 254
+      },
+      {
+        "name": "held-helper-ref",
+        "size": 4252,
+        "diffs": 68
+      }
+    ],
+    "earlier_ledger_sha256": "e14583387c32011ea02e36f22f8ea350cfc21d51799502041f9b1249917f2868"
+  },
+  "causal_summary": [
+    "Prior report attribution corrected: inline mask helper at INITIAL f49e read changes4252/68 to4252/269; HELD f49c-only helper stays4252/68. Existing input_history.py removes c for only-initial and removes e for only-fallback; ledgers already agree. Fresh current-source controls reproduce both. Conditional held-return helpers are a separate real PHI phenomenon, not contradicted by this correction.",
+    "Taken-success boundary after atan2 preserves add8000/lsl/asr before receiver-address calculation, but creates an unconditional branch between result and common tail:4256bytes. Moving rejection out of line restores4252 (106differences) and removes that scheduling boundary; address calculation again precedes narrowing.",
+    "Reusing earlier dead sb or fl for wall angle retains4252 but98differences; early result staysr0 and receiver-address hoist remains. Per-arm angle updates retain4252 but278differences and produce duplicated predicated add/sub+narrow operations; no positive target schedule.",
+    "Reusing nonoverlapping mode-flags or later-distance scalar for button state yields4248 bytes. Crossing this with taken boundary gives4252 (621/610 differences), but keeps its extra branch; savings instead come from a different allocation/spill pattern. This is not the requested branch elimination.",
+    "Factoring controller mask after old/new held-input join gives4252/72 and keepsflags in sl. Guarded OR/add/XOR using known-zero flags emit4256. No tested variant improves baseline68.",
+    "ROM scan of direct calls to atan2 at0203b4dc found camera itself as the only first-seven-instruction sequence with returned-angle narrowing before following address addition; another ov062 hit narrows unrelated fixed-point registers and is not a matching control. Matched Player::St_OnWall_Main at020cf714+37c shows address calculation before narrowing at020cf830..840. Its real source keeps angle across AngleDiff, demonstrating call liveness but not the desired camera schedule.",
+    "These34 compiled controls are bounded observations, not a compiler-floor or impossibility claim."
+  ],
+  "probe_counts": {
+    "total": 34,
+    "compiled": 34,
+    "exact_size": 12
+  },
+  "probe_results": [
+    {
+      "name": "baseline",
+      "size": 4252,
+      "exact_size_diffs": 68,
+      "source_sha256": "e14459ecb0d6cd06b7be12be43607a9aa1fabf85f4a30580b42482f056a67ac8"
+    },
+    {
+      "name": "taken-control",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "a3155019b242ccae29d1d9c59ab8c895a76cc94d00f28c071ec02b8d11f26db1"
+    },
+    {
+      "name": "base-angle-reuse-sb",
+      "size": 4252,
+      "exact_size_diffs": 98,
+      "source_sha256": "6fe9715b3b5567d5bcded45b80b9c7ffc918e4a9319982314bab602d2ed7cc02"
+    },
+    {
+      "name": "base-angle-reuse-fl",
+      "size": 4252,
+      "exact_size_diffs": 98,
+      "source_sha256": "d81837de0d4da8985254483c65b8eb387a476728423916d66791b3d9620546e0"
+    },
+    {
+      "name": "base-normal-negative-first",
+      "size": 4272,
+      "exact_size_diffs": null,
+      "source_sha256": "9a2dd493bed613b6b8aa3423f00430050101889caf69a37266799bfa40a133e5"
+    },
+    {
+      "name": "base-normal-positive-first",
+      "size": 4272,
+      "exact_size_diffs": null,
+      "source_sha256": "595ae2ec0187ed4c98eee584b91ad25621c1c966ebdd6e3cf5ed776bc24bfc86"
+    },
+    {
+      "name": "taken-angle-reuse-sb",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "7f51d636138e19fe1952174b0ab9eab5c983cad535ca80fa25b9780cf9f874cc"
+    },
+    {
+      "name": "taken-angle-reuse-fl",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "33c578d82589ed1bd21a9477d703c4aaf3ef1b20b9475432104932c9a9ec4a81"
+    },
+    {
+      "name": "taken-normal-negative-first",
+      "size": 4276,
+      "exact_size_diffs": null,
+      "source_sha256": "5456a516c898036f4999f0ff0bd36906b7356d8c5905f479aa18825cfb234c8e"
+    },
+    {
+      "name": "taken-normal-positive-first",
+      "size": 4276,
+      "exact_size_diffs": null,
+      "source_sha256": "9cba5108fc758d28da9ea82f24cd9031865f175db80d6a74ef3b076e1558a3ee"
+    },
+    {
+      "name": "out-of-line-after-good",
+      "size": 4252,
+      "exact_size_diffs": 106,
+      "source_sha256": "640493ab2ceee4bc64ea7fd388f2dc8d169fa7fa79f0e1649832020f124a1209"
+    },
+    {
+      "name": "out-of-line-after-held",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "0b09921edcae24113f3aa41be86b5760ce36e4f57cca61b8b78b2724272ff7aa"
+    },
+    {
+      "name": "base-angle-arms",
+      "size": 4252,
+      "exact_size_diffs": 278,
+      "source_sha256": "55fb86597988121044bcd4813d0d878d3a2eb17d2dcfe876a3fc44cb12f61aa8"
+    },
+    {
+      "name": "base-angle-arms-inverted",
+      "size": 4252,
+      "exact_size_diffs": 278,
+      "source_sha256": "68cac22b53273e6e45915406bda3dfa0ba9653e647f32834a7c313507ee96c1a"
+    },
+    {
+      "name": "base-angle-arms-byte",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "296224644859cf649afd8d495cac4f6329b4af0a43671e1eb5ad3b7cc82f6374"
+    },
+    {
+      "name": "taken-angle-arms",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "fdceea74fbf1ad57a98c03fd1be4d5151e622c09c71a5c84a4e97cd7f7a5d33e"
+    },
+    {
+      "name": "taken-angle-arms-inverted",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "d419b03654c12ca1b0ec8980db501368753a1db8f63693bcdee260f24063153a"
+    },
+    {
+      "name": "taken-angle-arms-byte",
+      "size": 4260,
+      "exact_size_diffs": null,
+      "source_sha256": "60e4eadb08f24996b3d497f70631d053fcf102bf101f5fc974d51ec1e8d0f079"
+    },
+    {
+      "name": "held-zero-or",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "2447592efccde9396d12c101719a446abf4c27a4c9777f0f4ea48aaffd320aea"
+    },
+    {
+      "name": "held-zero-add",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "70d0495bbc4d040b6aa40977523b68e4e41d4835cf546d4489990e6878e13a01"
+    },
+    {
+      "name": "held-zero-xor",
+      "size": 4256,
+      "exact_size_diffs": null,
+      "source_sha256": "612dc1bbb2282c83a53072c29fa28e9e9deb19f28773bbf48144e3bb37c3627a"
+    },
+    {
+      "name": "held-join-mask",
+      "size": 4252,
+      "exact_size_diffs": 72,
+      "source_sha256": "cbce8efea49bd5edcc13e271904fe910067d94cc0330dd1d056db1b0daa1d64d"
+    },
+    {
+      "name": "held-helper-control",
+      "size": 4252,
+      "exact_size_diffs": 68,
+      "source_sha256": "b27f61671c90c3ed64939e2e094be5f302c38b3521315c9ecb969b6eddc6ff65"
+    },
+    {
+      "name": "base-buttons-reuse-fl",
+      "size": 4248,
+      "exact_size_diffs": null,
+      "source_sha256": "87afc7b5a7a009cef0c6194a574412bbc727ac12ee32b9c3fd4777bd490578f5"
+    },
+    {
+      "name": "base-buttons-reuse-sp14",
+      "size": 4248,
+      "exact_size_diffs": null,
+      "source_sha256": "3049f26093b17af84e3e29a207fa2cd125dd658b76ef3ae889d332fccb77fefd"
+    },
+    {
+      "name": "helped-buttons-reuse-fl",
+      "size": 4248,
+      "exact_size_diffs": null,
+      "source_sha256": "b8206c8a1526f0003953d7aceea6bc8c7a42e8668286fb350851f8feb914e075"
+    },
+    {
+      "name": "helped-buttons-reuse-sp14",
+      "size": 4248,
+      "exact_size_diffs": null,
+      "source_sha256": "ff665384a76131947d0d0c915b823f9840b83ff4bac2fd1b9838763d18995506"
+    },
+    {
+      "name": "taken-buttons-reuse-fl",
+      "size": 4252,
+      "exact_size_diffs": 621,
+      "source_sha256": "c0f7c8e7ce6a8375d0d10e1e795a61630d88f2853359757d57ad0f2d61af5c45"
+    },
+    {
+      "name": "taken-buttons-reuse-sp14",
+      "size": 4252,
+      "exact_size_diffs": 610,
+      "source_sha256": "5e30b410a3b442ab401100445e819e4b7e72a6713b2805028246ba4b9e0eba98"
+    },
+    {
+      "name": "initial-helper-control",
+      "size": 4252,
+      "exact_size_diffs": 269,
+      "source_sha256": "8b1774891c3a448b1562ad582cfb7c83d493a66e930d5406ffb2e696e55f2d6e"
+    },
+    {
+      "name": "initial-helper-buttons-reuse-fl",
+      "size": 4252,
+      "exact_size_diffs": 542,
+      "source_sha256": "61b6177d9aa3942a9ed805fc2df4cba694a75ff4f9d1970e55d3eb8385b5b19c"
+    },
+    {
+      "name": "initial-helper-buttons-reuse-sp14",
+      "size": 4260,
+      "exact_size_diffs": null,
+      "source_sha256": "f05da1a5eeaa621096364160cf228b5ff995a93a50b117cbf49d73effa08ed26"
+    },
+    {
+      "name": "initial-helper-compound",
+      "size": 4260,
+      "exact_size_diffs": null,
+      "source_sha256": "ddeb53314087088aa0b25c8892920f164703b52b9e4389c8d44c07d29d928c11"
+    },
+    {
+      "name": "initial-helper-local-signed",
+      "size": 4264,
+      "exact_size_diffs": null,
+      "source_sha256": "d55afa778728c77327cf42bcd9b6f730584978761f9e5692d2b76cb92755cab0"
+    }
+  ],
+  "reproducer": {
+    "base": "Use a wired checkout at source_head with pinned2004/b56 and existing ROM inputs. Production source at that commit is the seed.",
+    "materialize_under": "build/new-cam-causal1013",
+    "run_in_order": [
+      "python build/new-cam-causal1013/probe.py",
+      "python build/new-cam-causal1013/followup.py",
+      "python build/new-cam-causal1013/receivers.py",
+      "python build/new-cam-causal1013/initial.py"
+    ],
+    "scripts": {
+      "probe.py": "import sys,json,re,hashlib\nfrom pathlib import Path\nsys.path.insert(0,'tools')\nfrom wallcrack import Target,md,_skel\nfrom linkcheck import read_at\nP=Path('build/new-cam-causal1013');T=Target('func_02009e70');base=Path('src/unnamed/arm9/0200/func_02009e70.cpp').read_text();rows=[]\noracle=list(md.disasm(read_at(0x020cf714,0x37c,('ov002',)),0x020cf714))\n(P/'matched-player-oracle.asm').write_text('\\n'.join('%08x %s %s'%(i.address,i.mnemonic,i.op_str)for i in oracle))\ndef run(n,s):\n c,r,e=T.compile(s);d={'name':n,'source_sha256':hashlib.sha256(s.encode()).hexdigest(),'error':e}\n (P/(n+'.cpp')).write_text(s)\n if c:\n  offsets=[o for o in range(0,min(len(c),len(T.target)),4)if o not in r and c[o:o+4]!=T.target[o:o+4]]\n  d.update(size=len(c),diffs=len(offsets)if len(c)==4252 else None,aligned_diffs=len(offsets),offsets=[hex(o)for o in offsets]);(P/(n+'.bin')).write_bytes(c);(P/(n+'.asm')).write_text('\\n'.join('%04x %s %s'%(i.address,i.mnemonic,i.op_str)for i in md.disasm(c,0)))\n rows.append(d);(P.parent/'new-cam-causal1013.json').write_text(json.dumps({'experiments':rows},indent=2));print(n,d.get('size'),d.get('diffs'),e)\nrun('baseline',base)\na=base.index('    if (t0 > 0xb50) {');b=base.index('    _ZN9dBgCh_Lin10GetClsnPosEv(&sp70, &line);',a);c=base.index('    t1 = *(u8 *)(self + 0x1a6);',b);fail=base[a:b];good=base[b:c];inside=fail[fail.index('{')+1:fail.rfind('}')]\ntaken=base[:a]+'    if (t0 <= 0xb50) {\\n'+good+'    } else {\\n'+inside+'    }\\n'+base[c:]\nrun('taken-control',taken)\nfor seedname,seed in [('base',base),('taken',taken)]:\n for receiver in ['sb','fl']:\n  run(seedname+'-angle-reuse-'+receiver,re.sub(r'\\bsba\\b',receiver,seed.replace('    s32 sba;\\n','')))\n # Abs normal split has two real predecessors to the rejection arm.\n aa=seed.index('    t0 = sp64.y;');bb=seed.index('    if (t0 ',aa+len('    t0 = sp64.y;\\n    if (t0 < 0) t0 = -t0;'))\n for mode in ['negative-first','positive-first']:\n  cond='(sp64.y < 0 && -sp64.y > 0xb50) || (sp64.y >= 0 && sp64.y > 0xb50)'\n  if mode=='positive-first':cond='(sp64.y >= 0 && sp64.y > 0xb50) || (sp64.y < 0 && -sp64.y > 0xb50)'\n  body=seed[bb:]\n  body=body.replace('if (t0 > 0xb50)', 'if ('+cond+')',1) if seedname=='base' else body.replace('if (t0 <= 0xb50)','if (!('+cond+'))',1)\n  run(seedname+'-normal-'+mode,seed[:aa]+body)\n# Move same rejection side effect out of the angle region, retaining one shared join.\nfor anchor,name in [('L_A534:','after-good'),('L_A5F8:','after-held')]:\n s=base[:a]+'    if (t0 > 0xb50) goto slopeReject;\\n'+base[b:]\n marker=s.index(anchor);s=s[:marker]+'    goto slopeContinue;\\nslopeReject:\\n    *(u32 *)L0(self + 0x154) |= 0x80200;\\n    goto L_A534;\\nslopeContinue:\\n'+s[marker:]\n run('out-of-line-'+name,s)\n",
+      "followup.py": "from pathlib import Path\nexec(Path('build/new-cam-causal1013/probe.py').read_text().split(\"run('baseline',base)\")[0])\nrows=json.loads((P.parent/'new-cam-causal1013.json').read_text())['experiments']\ntaken=(P/'taken-control.cpp').read_text()\nold='    if (t0 < 0) t0 = 0x4000; else t0 = -0x4000;\\n    sba = (s16)(sba + t0);'\nfor seedname,seed in [('base',base),('taken',taken)]:\n for n,body in [('angle-arms','if (t0 < 0) sba = (s16)(sba + 0x4000); else sba = (s16)(sba - 0x4000);'),('angle-arms-inverted','if (t0 >= 0) sba = (s16)(sba - 0x4000); else sba = (s16)(sba + 0x4000);'),('angle-arms-byte','if (t0 < 0) { sba = (s16)(sba + 0x4000); t1 = *(u8 *)(self + 0x1a6); } else { sba = (s16)(sba - 0x4000); t1 = *(u8 *)(self + 0x1a6); }')]:\n  ss=seed.replace(old,'    '+body)\n  if n=='angle-arms-byte':ss=ss.replace('    t1 = *(u8 *)(self + 0x1a6);\\n','')\n  run(seedname+'-'+n,ss)\nload='*(u16 *)((char *)data_0209f49c + gActivePlayerSlot * 0x18) & 0x4300'\nneedle='            r5 = '+load+';'\n# r5 is proven zero in this arm; alternative writes preserve the one guarded read.\nfor op in ['|=','+=','^=']:\n run('held-zero-'+{'|=':'or','+=':'add','^=':'xor'}[op],base.replace(needle,'            r5 '+op+' '+load+';'))\n# Factor the common controller mask after merging old and newly loaded bits.\nstart=base.index('    if (r5 != 0) {',base.index('L_A534:'));end=base.index('    if (*(s32 *)(self + 0x154) & 0x100)',start)\nregion=base[start:end].replace(' & 0x4300','')+'    r5 &= 0x4300;\\n'\nrun('held-join-mask',base[:start]+region+base[end:])\n",
+      "receivers.py": "from pathlib import Path\nexec(Path('build/new-cam-causal1013/probe.py').read_text().split(\"run('baseline',base)\")[0])\nrows=json.loads((P.parent/'new-cam-causal1013.json').read_text())['experiments']\nhelper='static inline s32 HeldBits(u16 value) { return value & 0x4300; }\\n'\nload='*(u16 *)((char *)data_0209f49c + gActivePlayerSlot * 0x18) & 0x4300'\nhelped=base.replace('s32 func_02009e70(char *self)',helper+'s32 func_02009e70(char *self)').replace(load,'HeldBits(*(u16 *)((char *)data_0209f49c + gActivePlayerSlot * 0x18))')\nrun('held-helper-control',helped)\nfor name,seed in [('base',base),('helped',helped),('taken',(P/'taken-control.cpp').read_text())]:\n a=seed.index('    r5 = *(u16 *)((char *)data_0209f49e');b=seed.index('    sp14 = sp28;',a)\n for receiver in ['fl','sp14']:\n  run(name+'-buttons-reuse-'+receiver,seed[:a]+re.sub(r'\\br5\\b',receiver,seed[a:b])+seed[b:])\n",
+      "initial.py": "from pathlib import Path\nexec(Path('build/new-cam-causal1013/probe.py').read_text().split(\"run('baseline',base)\")[0])\nrows=json.loads((P.parent/'new-cam-causal1013.json').read_text())['experiments']\nhelper='static inline s32 PressedBits(u16 value) { return value & 0x4300; }\\n'\nload='*(u16 *)((char *)data_0209f49e + gActivePlayerSlot * 0x18) & 0x4300'\nseed=base.replace('s32 func_02009e70(char *self)',helper+'s32 func_02009e70(char *self)').replace(load,'PressedBits(*(u16 *)((char *)data_0209f49e + gActivePlayerSlot * 0x18))')\nrun('initial-helper-control',seed)\n# Its prior speed-margin value dies at the initial input read. Break only this actual semantic reuse.\na=seed.index('    r5 = *(u16 *)') if '    r5 = *(u16 *)' in seed else seed.index('    r5 = PressedBits')\nb=seed.index('    sp14 = sp28;',a)\nfor receiver in ['fl','sp14']:\n run('initial-helper-buttons-reuse-'+receiver,seed[:a]+re.sub(r'\\br5\\b',receiver,seed[a:b])+seed[b:])\n# Native short input reader can consume the u16 load by assignment before masking;\n# test only the first input boundary, preserving all later flags use.\nfor name,body in [('compound','value &= 0x4300; return value;'),('local-signed','s32 buttons = value; buttons &= 0x4300; return buttons;')]:\n run('initial-helper-'+name,seed.replace('return value & 0x4300;',body))\n"
+    }
+  },
+  "frozen_scratch_summary_sha256": "34f57ef055a628a1dd108aca41cddb4a14052dfecef69aa63b119516577133cb",
+  "preserved_private_artifacts": "All34 sources, object-code bytes, disassemblies, generator scripts and ROM-oracle excerpts remain under build/new-cam-causal1013; prior experiment history and scratch are unchanged."
+}
