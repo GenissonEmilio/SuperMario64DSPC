@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "status": "partial nonmatching camera draft; byte-neutral native C++ call cleanup",
+  "input_commit": "1f96cd6e7a1e8314c80e1270ca07ff71de3d03ab",
+  "task": "camera-native-checkpoint1013",
+  "target": {
+    "name": "func_02009e70",
+    "module": "arm9",
+    "address": "0x02009e70",
+    "size": 4252,
+    "compiler": "2004/b56 production CFLAGS"
+  },
+  "changes": [
+    "Four dBgCh_Lin::GetClsnPos return values initialize real Vector3 locals in their use scopes.",
+    "SurfaceInfo::CopyNormalTo uses the canonical const method declaration.",
+    "The local scalar ABI declaration of cstd atan2 returns s16, as its matched definition does."
+  ],
+  "evidence": {
+    "function_sha256": "e69c1eba53dd50e2f2f53b286fbc278b5f3d0358b95b8a8a6b4ac6f09340fa88",
+    "size": 4252,
+    "masked_word_differences": 68,
+    "register_differences": 61,
+    "other_shape_differences": 7,
+    "all_104_relocation_records_identical": true,
+    "function_and_extra_emissions_identical": true,
+    "source_lf_sha256": "b30577e342c65778af06593dfc50a68aad1860294b3152a292310a70e1857f5d",
+    "strict_linkcheck": {
+      "verdict": "WRONG",
+      "blind": 0,
+      "differing_words": 68,
+      "differing_relocation_words": 0,
+      "mode": "Fresh object supplied to linkcheck.linkcheck; this is a failure against ROM, not NO-REPRO source filtering."
+    }
+  },
+  "source_review": {
+    "canonical_interfaces": [
+      "include/dBgCh_Lin.h",
+      "include/SurfaceInfo.h",
+      "include/types.h",
+      "src/_ZN4cstd5atan2E5Fix12IiES1_.c"
+    ],
+    "stack_order": "Nearest-use scopes restore sp94, spa0, spac, spb8 and spc4 to their original stack slots; initializing only sp94 rotates the later vector allocations and adds 14 differences.",
+    "observable_behavior": "Original call order, destination accesses and empty Vector3 constructor/destructor effects are preserved. No goto enters a new initialized scope.",
+    "remaining_raw_call": "The fifth GetClsnPos writes the unused sp70 result through the existing scalar ABI declaration. Native assignment is 4276 bytes; ignoring the native result is 4252/94. The call remains observable."
+  },
+  "limits": [
+    "The function still differs from the ROM at 68 instruction words. No ROM match, successful strict relocation check, or production enrollment is claimed.",
+    "The unchanged relocation destinations establish parity with the earlier draft, not acceptance against the ROM.",
+    "No header, symbol, delinks, authorship or TU manifest is changed; no Source PR is ready."
+  ],
+  "experiments": [
+    {
+      "name": "later-vector-group",
+      "source_sha256": "ee64bf6fc080ebaf93735260f9d6e25f2024b78c0f3dc359d8e5fb29c8ab50be",
+      "error": null,
+      "size": 4252,
+      "masked_diffs": 68,
+      "shape_diffs": 7,
+      "code_sha256": "e69c1eba53dd50e2f2f53b286fbc278b5f3d0358b95b8a8a6b4ac6f09340fa88"
+    },
+    {
+      "name": "later-vector-nearest-scope",
+      "source_sha256": "0022583893ba1ef4e3c67c1b536c4bf23b36f166ff528ecebbbea26fc7e78a00",
+      "error": null,
+      "size": 4252,
+      "masked_diffs": 68,
+      "shape_diffs": 7,
+      "code_sha256": "e69c1eba53dd50e2f2f53b286fbc278b5f3d0358b95b8a8a6b4ac6f09340fa88"
+    },
+    {
+      "name": "native-four-returns",
+      "source_sha256": "a8f9a2ce30e69e70076e3e8633e757649198a6667186819675f6784872b3cf43",
+      "error": null,
+      "size": 4252,
+      "masked_diffs": 68,
+      "shape_diffs": 7,
+      "code_sha256": "e69c1eba53dd50e2f2f53b286fbc278b5f3d0358b95b8a8a6b4ac6f09340fa88"
+    },
+    {
+      "name": "native-five-assignment",
+      "source_sha256": "64a54b94f04dd12b2c337178259afdf5acec1074d1de37ac7d7e93f10085c90f",
+      "error": null,
+      "size": 4276,
+      "masked_diffs": null,
+      "shape_diffs": null,
+      "code_sha256": "284e1490769d8ccae9d52e4071bf15cb3efea7b0ac178bccc6855ba962fb6793"
+    },
+    {
+      "name": "native-five-ignored-result",
+      "source_sha256": "40b1807947f637778c6cda2ee2253bc78b4e7d55b94c95dae5628ca6be805820",
+      "error": null,
+      "size": 4252,
+      "masked_diffs": 94,
+      "shape_diffs": 33,
+      "code_sha256": "5a533ae1f32d618db39b2ab4b83cc7eb4487cc44b56e4c3ee32615ca4c08b0ec"
+    }
+  ],
+  "private_proof": "build/camera-native-checkpoint1013/parity.json",
+  "reproduce": [
+    "Compile this source and git show 1f96cd6e7a1e8314c80e1270ca07ff71de3d03ab:src/unnamed/arm9/0200/func_02009e70.cpp under tools/rombuild.py CFLAGS with -lang c++ and 2004/b56.",
+    "Compare target text and every ELF relocation offset, type, symbol and addend; expected 4252 identical bytes and 104 identical records."
+  ]
+}

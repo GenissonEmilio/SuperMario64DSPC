@@ -4,7 +4,8 @@
 // No exact-match, relocation, or enrollment claim.
 // The signed 64-bit distance accumulator preserves the previously measured
 // four-word improvement. Both signed-32 squares and their difference fit s64.
-// Current experiments: notes/experiments/remaining4-cam1012.json.
+// Matching history: notes/experiments/remaining4-cam1012.json.
+// Native collision-call parity: notes/experiments/camera-native-checkpoint1013.json.
 // Earlier 72-word source and experiment history remain at dc1b0e7fb20a3dcd4f93c704641a25df9d4e831e.
 // L0 below preserves the spelling of an earlier, compiler-eliminated pointer
 // mask; it now expands directly to its argument.
@@ -40,7 +41,7 @@ extern void Vec3_RotateYAndTranslate(s32 *out, s32 *in, s16 angle, s32 *src);
 extern s32 Math_Function_0203b14c(s32 *p, s32 tgt, s32 rate, s32 lim, s32 step);
 extern s32 ApproachAngle(s16 *cur, s32 target, s32 div, s32 band, s32 step);
 extern s32 AngleDiff(s32 a, s32 b);
-extern s32 _ZN4cstd5atan2E5Fix12IiES1_(s32 y, s32 x);
+extern s16 _ZN4cstd5atan2E5Fix12IiES1_(s32 y, s32 x);
 extern s32 _ZN4cstd4fdivEii(s32 a, s32 b);
 extern s32 _ZN4cstd4sqrtEy(u64 v);
 extern u32 func_020093f4(void *p, s32 x);
@@ -59,8 +60,10 @@ extern void func_0200c9e0(void *self, s32 *a, s32 *b);
 extern u32 func_02012790(u32 a);
 extern s32 Sound_PlayIfNotActive(s32 a, s32 b, s32 c);
 
+// local extern: the unused-output call below keeps its original hidden-result
+// stack slot; a native ignored return moves later scratch slots. See the
+// native-call parity report for the measured alternatives.
 extern void _ZN9dBgCh_Lin10GetClsnPosEv(struct Vector3 *out, dBgCh_Lin *line);
-extern void _ZNK11SurfaceInfo12CopyNormalToER7Vector3(void *t, struct Vector3 *out);
 
 extern s16 data_02082214[];
 extern u16 data_0209f49c[];
@@ -114,11 +117,6 @@ s32 func_02009e70(char *self)
     struct Vector3 sp70;
     struct Vector3 sp7c;
     struct Vector3 sp88;
-    struct Vector3 sp94;
-    struct Vector3 spa0;
-    struct Vector3 spac;
-    struct Vector3 spb8;
-    struct Vector3 spc4;
     s32 r7;
     s32 r6;
     s32 fl;
@@ -256,7 +254,7 @@ s32 func_02009e70(char *self)
     func_0200897c(self, &line);
     line.SetObjAndLine(*(struct Vector3 *)(self + 0x98), sp4c, 0);
     if (line.DetectClsn() != 0) {
-        _ZN9dBgCh_Lin10GetClsnPosEv(&sp94, &line);
+        Vector3 sp94 = line.GetClsnPos();
         r4 = sp94.y - 0x80000;
         if (r4 < sb) r4 = sb;
     }
@@ -272,11 +270,13 @@ s32 func_02009e70(char *self)
     if (sb > r4) goto L_A534;
     line.SetObjAndLine(sp58, *(struct Vector3 *)(self + 0x8c), 0);
     if (line.DetectClsn() == 0) goto L_A534;
-    _ZNK11SurfaceInfo12CopyNormalToER7Vector3(&line.surface, &sp64);
-    _ZN9dBgCh_Lin10GetClsnPosEv(&spa0, &line);
-    *(s32 *)(self + 0xe0) = spa0.x;
-    *(s32 *)(self + 0xe4) = spa0.y;
-    *(s32 *)(self + 0xe8) = spa0.z;
+    line.surface.CopyNormalTo(sp64);
+    {
+        Vector3 spa0 = line.GetClsnPos();
+        *(s32 *)(self + 0xe0) = spa0.x;
+        *(s32 *)(self + 0xe4) = spa0.y;
+        *(s32 *)(self + 0xe8) = spa0.z;
+    }
     *(s32 *)(self + 0xec) = sp64.x;
     *(s32 *)(self + 0xf0) = sp64.y;
     *(s32 *)(self + 0xf4) = sp64.z;
@@ -423,6 +423,7 @@ L_AA6C:
     if (sb > sl) {
         Math_Function_0203b14c(&sp28, sl, 0x400, r7 + 0x20000, 0x100);
         Vec3_MulScalarInPlace((s32 *)&sp40, _ZN4cstd4fdivEii(sp28, sb));
+        Vector3 spac;
         Vec3_Add(&spac, (struct Vector3 *)(self + 0x80), &sp40);
         *(s32 *)(self + 0x8c) = spac.x;
         *(s32 *)(self + 0x90) = spac.y;
@@ -445,7 +446,7 @@ L_AAD0:
     }
     line.SetObjAndLine(*(struct Vector3 *)(self + 0x8c), sp4c, 0);
     if (line.DetectClsn() != 0) {
-        _ZN9dBgCh_Lin10GetClsnPosEv(&spb8, &line);
+        Vector3 spb8 = line.GetClsnPos();
         sp4c.y = spb8.y;
         if (r4 > spb8.y - 0x80000) r4 = spb8.y - 0x80000;
     }
@@ -456,7 +457,7 @@ L_AAD0:
     sp88.z = sp7c.z;
     line.SetObjAndLine(sp7c, sp88, 0);
     if (line.DetectClsn() != 0) {
-        _ZN9dBgCh_Lin10GetClsnPosEv(&spc4, &line);
+        Vector3 spc4 = line.GetClsnPos();
         sp88.y = spc4.y - 0x80000;
         if (r4 > sp88.y) r4 = sp88.y;
     }
