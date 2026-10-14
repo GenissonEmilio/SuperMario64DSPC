@@ -41,16 +41,16 @@
       },
       "method": {
         "draft": 0,
-        "migrated": 5465,
-        "unmigrated": 66
+        "migrated": 5466,
+        "unmigrated": 65
       }
     },
-    "cpp_still_handspelled": 73,
+    "cpp_still_handspelled": 72,
     "mangled_c": 3,
     "mangled_cpp": 6439,
     "mangled_total": 6442,
     "nonmatching_drafts": 0,
-    "unmigrated_total": 76
+    "unmigrated_total": 75
   },
   "shadow_decls": {
     "local_body_no_include": 277,
