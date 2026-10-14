@@ -6,7 +6,9 @@
 `notes/overlay-ambiguous-references.md` said 169 (later 171) references could not be
 resolved because two overlays both define the target address and nothing said which
 was loaded. Something does say: the game's own loader. **127 of the 137 that were
-genuinely overlay-ambiguous are now settled.**
+genuinely overlay-ambiguous were settled by the first model pass.** The remaining
+ten are historical cases, audited against current production source in
+[section 11](#11-2026-10-14-production-audit).
 
 ---
 
@@ -57,11 +59,11 @@ Note what this does **not** say: [ov000](../config/arm9/overlays/ov000/symbols.t
 before anything else exists:
 
 ```c
-LoadOverlay((int)&overlay_0);     /* line 41 */
-func_020aa420();                  /* == ov000's base_address */
-UnloadOverlay((int)&overlay_0);   /* line 43 */
+LoadOverlay((int)&OVERLAY_0_ID);
+func_ov000_020aa420();            /* ov000's base_address; ov001 is not loaded */
+UnloadOverlay((int)&OVERLAY_0_ID);
 ...
-LoadOverlay((int)&overlay_1);     /* line 49 */
+LoadOverlay((int)&OVERLAY_1_ID);
 ```
 
 This is exhaustive, not a sample: the ROM reaches `LoadOverlay` (`0x02018028`) and
@@ -108,7 +110,7 @@ family.
 ## 5. The level tables (**E6**)
 
 `_Z17LoadLevelOverlaysi` and `LoadOrUnloadObjectOverlays` read three tables in
-arm9 `.data`. Decoded from `extracted/dsd/arm9/arm9.bin`:
+arm9 `.data`. Decoded from the decompressed `extracted/arm9_dec.bin`:
 
 - `data_020758c8[52]` -- level -> overlay, and it is exactly `level + 8`, i.e. levels
   0..51 map to ov008..ov059. One level overlay at a time.
@@ -158,7 +160,7 @@ A referrer whose own proven set is self-contradictory is loaded in more than one
 configuration and is excluded from this rule -- [arm9](../config/arm9/symbols.txt) is the case, being always
 resident and calling both [ov002](../config/arm9/overlays/ov002/symbols.txt) and [ov004](../config/arm9/overlays/ov004/symbols.txt).
 
-## 7. Falsification
+## 7. Falsification (original census)
 
 The model is one-sided: it rules candidates out, never in, and a caller only has an
 answer when exactly one survives. It was checked against every verdict dsd reached
@@ -174,7 +176,7 @@ calls contradicted: 0
 **Zero of 2322 cross-module calls contradict it.** The 10 exceptions are all
 `kind:load` -- pointer-shaped words in [ov007](../config/arm9/overlays/ov007/symbols.txt) and [ov009](../config/arm9/overlays/ov009/symbols.txt) naming addresses in overlays they cannot coexist with, i.e. constants dsd read as pointers, no control flow.
 
-## 8. What it settled
+## 8. What it settled (original census)
 
 Of the 171 `resolve_placeholders.py` could not resolve, **137 were actually overlay
 ambiguity** (the other 34 are 26 immediates that are not relocations at all, 6
@@ -191,7 +193,7 @@ ambiguity** (the other 34 are 26 immediates that are not relocations at all, 6
 an address-shaped name there. That is a naming job with a known answer, not an
 ambiguity -- and it is now the biggest single block of work left.
 
-## 9. The 10 that remain, and what would settle them
+## 9. The ten historical residual cases
 
 | file | referrer | why residency cannot decide |
 |---|---|---|
@@ -223,16 +225,60 @@ That is weaker than residency and is deliberately **not** wired into the tool. I
 would need someone to decide the flag is trustworthy as evidence rather than as a
 hint.
 
-The remaining six need an emulator trace (`notes/emu-trace-plan.md`) or a reading of
-the call site, and three of them may have no single answer at all -- an engine
-module reaching into a slot means a different callee per level, which is a source
-structure problem, not a lookup.
+At the time, the remaining six needed an emulator trace (`notes/emu-trace-plan.md`)
+or a reading of the call site. Current source and ROM evidence are recorded below;
+this historical table is not a current work queue. In particular, the old
+`func_0201a458` data-symbol interpretation is superseded by linker-defined heap
+boundaries, not another overlay-data rename.
 
 ## 10. A misnaming found on the way
 
 `overlay_64` and `overlay_66` in [src/func_ov007_020cc2cc.c](../config/arm9/overlays/ov007/symbols.txt) and [src/unnamed/ov075/func_ov075_02117bc4.c](../config/arm9/overlays/ov075/symbols.txt) are **overlay ids 100 and 102**: the literals in the ROM are `0x64` and `0x66` and whoever named them wrote the hex digits as decimal. `func_02034fbc` in [src/actors/dScMB_c.cpp](../src/actors/dScMB_c.cpp) now names `overlay_100` and `overlay_102`.
 `overlay_75` next to them is genuine decimal 75 (`0x4b`), so the convention is not
 even consistent. Taken literally, [ov064](../config/arm9/overlays/ov064/symbols.txt) and [ov066](../config/arm9/overlays/ov066/symbols.txt) overlap and `LoadOverlay` would `Crash()`; [ov100](../config/arm9/overlays/ov100/symbols.txt) and [ov102](../config/arm9/overlays/ov102/symbols.txt) do not. Renaming them is a separate, easy change.
+
+## 11. 2026-10-14 production audit
+
+The [audit report](experiments/issue1075-overlay-audit1014.json) records the base,
+current source paths, focused relocation results, production build, and limits.
+The ten historical cases all have named references in the default source build:
+
+| Case | Current evidence and target |
+|---|---|
+| Yegg | The BATAN/BATANKING actor-ID guard selects the `daBtn_c` method in ov079. |
+| Demo | `data_ov009_02113c20` is the SBird model file handle, defined and initialized by `d_a_s_bird.cpp`, rather than a level table. |
+| FRing | ov048 contains the BMA/BTA records at `0x021115e4`/`0x021115f4`; the other two candidate levels contain different data there. |
+| ObjKey | The write names ov055's request flag, also initialized and consumed by `daLuigi_c`, with neighbouring Player references agreeing. |
+| Propeller Heyho Fire | Init and cleanup use the same ov065 model handle at `0x0211d610`. |
+| CapEnemy | `data_ov002_020ff028` contains the three cap-resource pointers; ov007 contains zeros at that address. |
+| `func_02008b4c` | Its vector/interpolation arguments agree with ov002's cubic interpolation routine, rather than ov006's unrelated function. |
+| `func_02029408` | The `Player*` receiver calls `Player::CanPause` in ov002. |
+| `func_0201a458` | The root heap uses `OV075_BSS_END` and `OV100_TEXT_START`, linker constants rather than data objects. |
+| Boot | Corrected here: the call at `0x0201a364` enters ov000 between load 0 and unload 0. Overlay 1 is loaded later. |
+
+The boot regression came from the later global co-residency rename in #1527
+(`8db09b5655e5cbc39afc6105526096cc2d848544`), despite section 3 already recording
+the narrower boot window. Both names resolve to `0x020aa420`; dsd's
+`module:overlays(0,1)` permits either, so byte checks and the current relocation
+checker accept the wrong name too. The loader sequence supplies the missing
+semantic proof. The source correction changes only that imported identity and
+comments; it does not change the generated instruction stream.
+
+Eight focused cases return `VERIFIED`, with no differences and zero blind words.
+Boot and the heap-boundary helper return `BLIND-2`: the focused checker does not
+index their linker constants. The normal production link, including all words in
+both functions, is compared to the retail ARM9 instead. This is separate evidence,
+not a claim that the focused checker returned zero blind words.
+
+The fresh resolver census is 23 derived-function entries: 13 unresolved
+compiler-generated names and 10 unnamed config targets, with no multi-overlay
+candidate rows. This does not certify every named reference in the tree. The
+residency falsification now counts 2,322 cross-module calls and 927 loads: zero
+contradicted calls, six forbidden loads (four ov007-to-ov002 and two
+ov007-to-ov006). Those six data interpretations remain outside this correction.
+
+The ticket remains open pending independent review and integration of the boot
+correction; the local byte pass is not integration evidence.
 
 ## Related
 

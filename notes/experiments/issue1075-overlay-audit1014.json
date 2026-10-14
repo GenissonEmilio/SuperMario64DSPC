@@ -1,0 +1,580 @@
+{
+  "schema": 1,
+  "issue_url": "https://github.com/tangosdev/sm64ds-decomp/issues/1075",
+  "task_id": "issue1075-overlay-audit1014",
+  "audit_date": "2026-10-14",
+  "base_commit": "91c48a5424dffbdd443b1f5e6c6139d8d194a0b0",
+  "workflow_commit": "91c48a5424dffbdd443b1f5e6c6139d8d194a0b0",
+  "candidate_identity": "This commit; independent verification must record its exact SHA outside this report.",
+  "scope": "Reconcile the ten historical residual cases and correct only the boot imported identity. No resolver heuristic, shared headers, manifest ownership, or attribution changes.",
+  "status": "producer validated; independent verification and integration required",
+  "historical_counts": {
+    "headline_references": 169,
+    "genuinely_overlay_ambiguous": 137,
+    "settled_by_residency": 127,
+    "residual_cases": 10
+  },
+  "current_cases": [
+    {
+      "case": "Boot entry",
+      "name": "func_0201a2f8",
+      "source": "src/func_0201a2f8.c",
+      "module": "arm9",
+      "addr": "0x0201a2f8",
+      "size": "0xec",
+      "changed_here": true,
+      "finding_id": "AMBIG1075-BOOT-01",
+      "old_import": "func_ov001_020aa420",
+      "new_import": "func_ov000_020aa420",
+      "target_address": "0x020aa420",
+      "call_site": "0x0201a364",
+      "semantic_evidence": "Boot loads overlay0 at0x0201a360, calls0x020aa420 at0x0201a364, unloads0 at0x0201a36c, and only loads overlay1 at0x0201a394. Both overlays start0x020aa420, but their different functions cannot coexist.",
+      "relocation_config": "config/arm9/relocs.txt: from:0x0201a364 kind:arm_call to:0x020aa420 module:overlays(0,1)",
+      "stock_focused_check": {
+        "verdict": "BLIND-2",
+        "diffs": [],
+        "blind": 2,
+        "ordinary_relocations_ok": 19,
+        "blind_names": [
+          "OVERLAY_0_ID",
+          "OVERLAY_1_ID"
+        ]
+      },
+      "object_proof": {
+        "compiler": "2004/b56",
+        "raw_object_bytes": 1672,
+        "control_sha256": "2a5105ae89777d5e5329951632eacda91d1766ef139af9c240bf72df7903cc4c",
+        "candidate_sha256": "27593f0467412c462cc2175fbd5d08143fe8a00b2edb4370e638acca737774cf",
+        "normalized_object_identical": true,
+        "symbol_rename": {
+          "renamed": [
+            {
+              "symbolIndex": 12,
+              "from": "func_ov001_020aa420",
+              "to": "func_ov000_020aa420"
+            }
+          ],
+          "error": null
+        },
+        "final_source_sha256": "58cb952355716ae95e24191c32efafa3cd487a56b510dc98258ac0ab396ebf3d"
+      },
+      "regression_commit": "8db09b5655e5cbc39afc6105526096cc2d848544",
+      "regression_pr": 1527,
+      "enrollment_commit": "57a8e080f766b75af6dfa05af490d42777470c69"
+    },
+    {
+      "name": "_ZN8daYegg_c19func_ov002_020ec670Ei",
+      "module": "ov002",
+      "addr": "0x020ec670",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/daYegg_c.cpp",
+      "size": "0xb8",
+      "case": "Yegg",
+      "target_addresses": "0x02123804",
+      "target_module_or_kind": "ov079",
+      "semantic_evidence": "Call is guarded by actor IDs BATAN/BATANKING (0xa4/0xa5), both daBtn_c; the canonical daBtn_c method is in ov079.",
+      "evidence_paths": [
+        "src/actors/daYegg_c.cpp",
+        "include/daBtn_c.h"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "_ZN8daDemo_c13InitResourcesEv",
+      "module": "ov002",
+      "addr": "0x020f83a4",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/daDemo_c.cpp",
+      "size": "0x464",
+      "case": "Demo",
+      "target_addresses": "0x02113c20",
+      "target_module_or_kind": "ov009",
+      "semantic_evidence": "InitResources loads the SBird SharedFilePtr; d_a_s_bird.cpp defines this handle with file ID1080. This is a model resource, not a level table.",
+      "evidence_paths": [
+        "src/actors/daDemo_c.cpp",
+        "src/game/actors/d_a_s_bird.cpp",
+        "config/tu_manifest.d/ov009/daSBird_c.json"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "_ZN9daFRing_c13InitResourcesEv",
+      "module": "ov060",
+      "addr": "0x02119004",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/daFRing_c.cpp",
+      "size": "0x1f0",
+      "case": "FRing",
+      "target_addresses": "0x021115e4,0x021115f4",
+      "target_module_or_kind": "ov048",
+      "semantic_evidence": "Only ov048 holds the BMA/BTA animation records at both addresses; ov044 holds profile data and ov046 unrelated scalar words.",
+      "evidence_paths": [
+        "src/actors/daFRing_c.cpp",
+        "config/arm9/overlays/ov048/relocs.txt"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "_ZN10daObjKey_c13StateStarJumpEv",
+      "module": "ov089",
+      "addr": "0x0213162c",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/daObjKey_c.cpp",
+      "size": "0x4ec",
+      "case": "ObjKey",
+      "target_addresses": "0x02111b68",
+      "target_module_or_kind": "ov055",
+      "semantic_evidence": "StateStarJump writes the request flag also initialized/read by daLuigi_c; Player names adjacent flags in ov055.",
+      "evidence_paths": [
+        "src/actors/daObjKey_c.cpp",
+        "src/actors/daLuigi_c.cpp",
+        "src/actors/Player.cpp"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "_ZN24daPropeller_Heyho_Fire_c13InitResourcesEv",
+      "module": "ov002",
+      "addr": "0x020feef4",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/daPropeller_Heyho_Fire_c.cpp",
+      "size": "0xd8",
+      "case": "Propeller Heyho Fire",
+      "target_addresses": "0x0211d610",
+      "target_module_or_kind": "ov065",
+      "semantic_evidence": "InitResources and CleanupResources agree on the same model handle; the alternate ov075 candidate is a flagged placeholder. The flag alone is not treated as proof.",
+      "evidence_paths": [
+        "src/actors/daPropeller_Heyho_Fire_c.cpp"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "_ZN11dCapEnemy_c6AddCapEj",
+      "module": "arm9",
+      "addr": "0x020063b0",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/actors/dCapEnemy_c_arm9.cpp",
+      "size": "0x130",
+      "case": "CapEnemy",
+      "target_addresses": "0x020ff028",
+      "target_module_or_kind": "ov002",
+      "semantic_evidence": "The first three ov002 words are cap resource pointers 0x0210da40,0x0210d9a0,0x0210d9c0; ov007 has zeros. The caller indexes these for resource load/release.",
+      "evidence_paths": [
+        "src/actors/dCapEnemy_c_arm9.cpp"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "func_02008b4c",
+      "module": "arm9",
+      "addr": "0x02008b4c",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/unnamed/arm9/0200/func_02008b4c.c",
+      "size": "0x168",
+      "case": "Cubic interpolation caller",
+      "target_addresses": "0x020effb8",
+      "target_module_or_kind": "ov002",
+      "semantic_evidence": "The called ov002 implementation computes vector cubic interpolation matching the caller arguments; ov006 has a different record-access function.",
+      "evidence_paths": [
+        "src/unnamed/arm9/0200/func_02008b4c.c",
+        "src/unnamed/ov002/func_ov002_020effb8.c"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "func_02029408",
+      "module": "arm9",
+      "addr": "0x02029408",
+      "verdict": "VERIFIED",
+      "diffs": [],
+      "blind": 0,
+      "source": "src/unnamed/arm9/0202/func_02029408.cpp",
+      "size": "0x24",
+      "case": "Pause gate",
+      "target_addresses": "0x020bd828",
+      "target_module_or_kind": "ov002",
+      "semantic_evidence": "The caller obtains Player* and invokes Player::CanPause, whose definition is in ov002.",
+      "evidence_paths": [
+        "src/unnamed/arm9/0202/func_02029408.cpp",
+        "src/actors/Player.cpp"
+      ],
+      "changed_here": false
+    },
+    {
+      "name": "func_0201a458",
+      "module": "arm9",
+      "addr": "0x0201a458",
+      "verdict": "BLIND-2",
+      "diffs": [],
+      "blind": 2,
+      "source": "src/unnamed/arm9/0201/func_0201a458.c",
+      "size": "0x38",
+      "case": "Root heap boundaries",
+      "target_addresses": "0x0211d9c0,0x02140d80",
+      "target_module_or_kind": "linker constants",
+      "semantic_evidence": "Current source uses OV075_BSS_END and OV100_TEXT_START as heap endpoints, not overlay data symbols. The old ov065-data interpretation is obsolete.",
+      "evidence_paths": [
+        "src/unnamed/arm9/0201/func_0201a458.c",
+        "build/arm9.lcf"
+      ],
+      "changed_here": false
+    }
+  ],
+  "fresh_resolver": {
+    "eligibility_commit": "91c48a5424dffbdd443b1f5e6c6139d8d194a0b0",
+    "eligibility_dirty": false,
+    "entry_count": 11348,
+    "command": "python tools/eligible.py -j16; python tools/resolve_placeholders.py -j8",
+    "resolver_counts": {
+      "unresolved": 13,
+      "target_unnamed_in_config": 10,
+      "multi_overlay_candidate_rows": 0
+    },
+    "unit": "derived function entries, not distinct source files",
+    "coverage_limit": "Standalone eligibility does not apply all production TU compiler-output and alias policies. These helper/runtime/static-local entries are not 23 proven missing overlay identities; normal production linking is checked separately. No resolver edits applied.",
+    "unresolvable_entries": [
+      {
+        "file": "src/actors/daDemo_c.cpp",
+        "name": "_ZN8daDemo_c10anmModel_cD0Ev",
+        "module": "ov002",
+        "reason": "unresolvable: _ZN14dExtAnmModel_cD2Ev",
+        "missing": [
+          "_ZN14dExtAnmModel_cD2Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daDemo_c.cpp",
+        "name": "_ZN8daDemo_c10anmModel_cD1Ev",
+        "module": "ov002",
+        "reason": "unresolvable: _ZN14dExtAnmModel_cD2Ev",
+        "missing": [
+          "_ZN14dExtAnmModel_cD2Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daDemo_c.cpp",
+        "name": "_ZN8daDemo_c13simpleModel_cD0Ev",
+        "module": "ov002",
+        "reason": "unresolvable: _ZN17dExtSimpleModel_cD2Ev",
+        "missing": [
+          "_ZN17dExtSimpleModel_cD2Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daDemo_c.cpp",
+        "name": "_ZN8daDemo_c13simpleModel_cD1Ev",
+        "module": "ov002",
+        "reason": "unresolvable: _ZN17dExtSimpleModel_cD2Ev",
+        "missing": [
+          "_ZN17dExtSimpleModel_cD2Ev"
+        ]
+      },
+      {
+        "file": "src/actors/unit020b2c84.cpp",
+        "name": "func_ov004_020b39a4",
+        "module": "ov004",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/unit020b2c84.cpp",
+        "name": "func_ov004_020b484c",
+        "module": "ov004",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/dMgState_c.cpp",
+        "name": "_ZN10dMgState_c8SetStateEi",
+        "module": "ov004",
+        "reason": "unresolvable: _ZGVsEnterTable$184,sEnterTable$184",
+        "missing": [
+          "_ZGVsEnterTable$184",
+          "sEnterTable$184"
+        ]
+      },
+      {
+        "file": "src/actors/dMg3DHeyhoObjAdapter_c.cpp",
+        "name": "func_ov006_020c64e4",
+        "module": "ov006",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/dMg3DHeyhoObjAdapter_c.cpp",
+        "name": "func_ov006_020c68f4",
+        "module": "ov006",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/dMg3DHeyhoObjAdapter_c.cpp",
+        "name": "func_ov006_020c6ca4",
+        "module": "ov006",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/game/actors/d_a_wanwan.cpp",
+        "name": "daWanwan_c_classInit",
+        "module": "ov014",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daMoray_c.cpp",
+        "name": "daMoray_c_classInit",
+        "module": "ov016",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daHanachan_c.cpp",
+        "name": "daHanachan_c_classInit",
+        "module": "ov034",
+        "reason": "unresolvable: _ZN7Vector3C1Ev,_ZN8Vector3sC1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev",
+          "_ZN8Vector3sC1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daTrs_c.cpp",
+        "name": "_ZN7daTrs_c19func_ov063_0211ab68Ev",
+        "module": "ov063",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/Eyerok.cpp",
+        "name": "daIwante_c_classInit",
+        "module": "ov066",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daKing_Donketu_c.cpp",
+        "name": "daKing_Donketu_c_classInit",
+        "module": "ov073",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daKuriKing_c.cpp",
+        "name": "daKuriKing_c_classInit_KURIKING_VANISH",
+        "module": "ov074",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daKuriKing_c.cpp",
+        "name": "daKuriKing_c_classInit_KURIKING",
+        "module": "ov074",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daObjFlamethrower_c.cpp",
+        "name": "daObjFlamethrower_c_classInit",
+        "module": "ov095",
+        "reason": "unresolvable: _ZN7Vector3C1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daWanwan2_c.cpp",
+        "name": "daWanwan2_c_classInit",
+        "module": "ov100",
+        "reason": "unresolvable: _ZN7Vector3C1Ev,_ZN8Vector3sC1Ev",
+        "missing": [
+          "_ZN7Vector3C1Ev",
+          "_ZN8Vector3sC1Ev"
+        ]
+      },
+      {
+        "file": "src/actors/daDoor_c.cpp",
+        "name": "_ZN8daDoor_c19func_ov100_02144a38EP6Player",
+        "module": "ov100",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/daDoor_c.cpp",
+        "name": "_ZN8daDoor_c19func_ov100_021451c4EPvP6Player",
+        "module": "ov100",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      },
+      {
+        "file": "src/actors/daDoor_c.cpp",
+        "name": "_ZN8daDoor_c13InitResourcesEv",
+        "module": "ov100",
+        "reason": "unresolvable: __register_global_object",
+        "missing": [
+          "__register_global_object"
+        ]
+      }
+    ]
+  },
+  "residency_check": {
+    "command": "python tools/overlay_residency.py --check",
+    "exit_code": 0,
+    "cross_module_calls": 2322,
+    "cross_module_loads": 927,
+    "contradicted_calls": 0,
+    "forbidden_loads": 6,
+    "forbidden_load_families": {
+      "ov007_to_ov002": 4,
+      "ov007_to_ov006": 2
+    }
+  },
+  "validation": {
+    "control": {
+      "command": "python tools/rombuild.py -j16 --no-rom --report-json build/issue1075-control-rom.json",
+      "exit_code": 0,
+      "status": "passed",
+      "modules_checked": 106,
+      "modules_exact": 106,
+      "reproducing_functions": 11334,
+      "mismatching_functions": 0,
+      "rom_data_advisory": {
+        "verified": 970,
+        "partial": 1519,
+        "differs": 1,
+        "unnamed": 21
+      }
+    },
+    "candidate": {
+      "command": "python tools/rombuild.py -j16 --no-rom --report-json build/issue1075-candidate-rom.json",
+      "exit_code": 0,
+      "status": "passed",
+      "modules_checked": 106,
+      "modules_exact": 106,
+      "differing_module_bytes": 0,
+      "reproducing_functions": 11334,
+      "mismatching_functions": 0,
+      "object_cache": {
+        "enabled": true,
+        "reused": 2751,
+        "compiled": 1,
+        "uncacheable": 0,
+        "root": "C:\\tmp\\sm64ds-issue1075-1014\\build\\objcache",
+        "tuDerived": 0
+      },
+      "control_analysis_identical": true,
+      "coverage_limit": "--no-rom proves linked module fidelity; it does not package a new ROM or replace PR validate CI. Existing ROM-data advisory counts unchanged."
+    },
+    "declaration_agreement": {
+      "command": "python tools/check_decl_agreement.py --changed 91c48a5424dffbdd443b1f5e6c6139d8d194a0b0",
+      "exit_code": 0,
+      "result": "no new local redeclarations; no new declaration disagreements"
+    },
+    "port_references": {
+      "command": "python tools/port_refcheck.py",
+      "exit_code": 0,
+      "references_checked": 267,
+      "stale": 0
+    },
+    "prepush_linkcheck": {
+      "command": "python tools/prepush_linkcheck.py --files src/func_0201a2f8.c --json build/issue1075-prepush.json",
+      "exit_code": 0,
+      "result": "BLIND-2; diffs=[]; no blocking results",
+      "coverage_limit": "The two linker-defined overlay IDs require actual linked-byte proof; this is not a zero-blind focused pass."
+    },
+    "actual_production_link": {
+      "built_module": "build/build/arm9.bin",
+      "retail_module": "extracted/dsd/arm9/arm9.bin",
+      "arm9_base": "0x2004000",
+      "ranges": [
+        {
+          "name": "func_0201a2f8",
+          "address": "0x201a2f8",
+          "size": 236,
+          "every_byte_compared": true,
+          "identical_to_retail": true,
+          "blind_words": 0,
+          "sha256": "ad780f574b6bcd2f548bf17e606a147b93a7c7c1ddb0b67cfd88087384ab09c5"
+        },
+        {
+          "name": "func_0201a458",
+          "address": "0x201a458",
+          "size": 56,
+          "every_byte_compared": true,
+          "identical_to_retail": true,
+          "blind_words": 0,
+          "sha256": "9f09cb948d2abaa74464ba5f6ce2eea8706f47848ce026a6b7c42486981e6982"
+        }
+      ],
+      "linker_symbols": {
+        "OVERLAY_0_ID": "0x0",
+        "OVERLAY_1_ID": "0x1",
+        "OV075_BSS_END": "0x211d9c0",
+        "OV100_TEXT_START": "0x2140d80"
+      },
+      "boot_literal_values_at_offsets": {
+        "+0xe0": 0,
+        "+0xe8": 1
+      },
+      "method": "Read function ranges from the real normal production module output, compare all bytes to the retail module at address minus ARM9 base; no relocated-word masks or symbol-address overrides."
+    }
+  },
+  "source_quality": {
+    "completion": "partial",
+    "scope_judgment": "The imported identity correction is source-supported; no claim of full boot reconstruction.",
+    "inherited_limits": [
+      "Address-named helper functions remain.",
+      "Raw firmware halfword read at0x027ffc40 remains.",
+      "Memory/Sound mangled ABI calls and pointer/int linker-ID expressions remain."
+    ],
+    "follow_up": "Future boot/Memory/Sound reconstruction; these inherited representations are outside this identity correction."
+  },
+  "integration": {
+    "pr_url": null,
+    "merged_main_sha": null,
+    "issue_should_remain_open": true,
+    "next_action": "Independently verify this exact candidate and its base through the queue; obtain PR/integration authorization before opening a PR or merging."
+  }
+}

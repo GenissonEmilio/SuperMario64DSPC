@@ -1,6 +1,6 @@
 /* func_0201a2f8 at 0x0201a2f8
  *
- * Matched byte-for-byte with mwccarm 1.2/sp2p3 (arm9 main).
+ * Run overlay 0 during boot before loading the resident overlay 1.
  */
 extern void func_0201fec8(void);
 extern void func_02018aa4(void);
@@ -10,7 +10,7 @@ extern void SetSoundMode(int mode);
 extern int func_0205d94c(int a, int b);
 extern void* _ZN6Memory8AllocateEj(unsigned int);
 extern void LoadOverlay(int id);
-extern void func_ov001_020aa420(void);
+extern void func_ov000_020aa420(void);
 extern void UnloadOverlay(int id);
 extern void* func_0205d23c(void* p, int n);
 extern void func_0205c91c(void);
@@ -39,7 +39,8 @@ void func_0201a2f8(void) {
         func_0205d94c((int)ptr, size);
     }
     LoadOverlay((int)&OVERLAY_0_ID);
-    func_ov001_020aa420();
+    /* Overlay 1 reuses this address, but is not loaded until below. */
+    func_ov000_020aa420();
     UnloadOverlay((int)&OVERLAY_0_ID);
     if (ptr != 0) {
         func_0205d23c(&data_0208ee5c, 3);

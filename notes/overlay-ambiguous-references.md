@@ -1,11 +1,18 @@
 # 169 references that are ambiguous between overlays
 
-**Status:** mostly closed. **See `notes/overlay-residency.md`.** The game's own
-loader answers "which overlay was resident", `tools/overlay_residency.py` encodes
-it, and `resolve_placeholders.py` uses it: of the 137 references that were really
-overlay-ambiguous, **10 remain**. The rest of this note is the original statement of
-the problem, kept because the reasoning about *why a guess is expensive* is still
-the reason the tool refuses the last 10.
+**Status (2026-10-14):** the counts below describe the original backlog. The
+residency model settled 127 of 137 genuinely ambiguous references; all ten cases
+left by that first pass now have named production references. A fresh audit found
+one of those names was wrong: boot calls overlay 0 before loading overlay 1, yet
+`func_0201a2f8` named overlay 1's same-address entry. This change corrects it to
+`func_ov000_020aa420`.
+
+See [the current audit](experiments/issue1075-overlay-audit1014.json) and
+[the residency evidence](overlay-residency.md#11-2026-10-14-production-audit).
+Issue #1075 should remain open until the correction is independently reviewed and
+landed. Named references and byte equality alone do not prove overlay identity.
+
+The original problem statement follows.
 
 169 functions cannot be enrolled because a reference in them targets an address that
 **two or more overlays both define**, and nothing in the data says which one was
@@ -35,8 +42,8 @@ something, and the two disagree**:
 | 5 | `_ZTV10dBgActor_c` | [ov006](../config/arm9/overlays/ov006/symbols.txt):`data_ov006_0213c5bc` vs [ov098](../config/arm9/overlays/ov098/symbols.txt):`data_ov098_0213c5bc` |
 
 A guess here is not cheap. `match.py` compares relocated words as wildcards, so picking
-the wrong overlay still byte-matches -- the mistake would surface only at the ROM link,
-and only for whichever files happen to get enrolled. That is exactly the blind spot
+the wrong overlay still byte-matches -- even the ROM link cannot distinguish two modules that assign the same address
+to different symbols. The loader or call-site evidence must establish the module. That is exactly the blind spot
 that hid three wrong-callee bugs already (`Door::Behavior`, `func_ov004_020b29c0`,
 `func_ov004_020b2a84`).
 
@@ -65,7 +72,10 @@ python tools/eligible.py
 python tools/resolve_placeholders.py          # report only; nothing is written
 ```
 
-Everything reported as `0x... names {...}` is one of these.
+Historically, rows reported as `0x... names {...}` identified these cases.
+The 2026-10-14 refresh reports no such rows; it reports 23 derived-function entries
+blocked by compiler-generated or unnamed targets instead. Those are a separate
+backlog, and this report does not claim to resolve them.
 
 ## Related
 
