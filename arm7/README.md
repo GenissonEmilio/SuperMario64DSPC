@@ -33,3 +33,30 @@ nothing extracted is written into the tree. Output goes to `build/arm7/`.
   NOT counted as matched (upstream tools read it as a plain `NONMATCHING` draft).
 - `// NONMATCHING` C: the closest C attempt, not enrolled (the build keeps retail bytes),
   banked in `nearmiss/db.jsonl`.
+
+## Verified coverage
+
+The current enrollment has 823 rows and reproduces the complete 150,308-byte retail
+image (SHA-1 `0efbc2d43d0a7ae4a087472fd0ec7ca2875ec865`). Of those rows,
+821 compile `.c` files and two assemble the crt0/Thumb packs. The compiled files
+include 761 pure C sources, 26 tagged ASM-PRIMITIVE sources, and 34 ASM-STANDIN
+sources. Their combined 0x22D2C bytes include assembly; the remaining 0x1DF8 bytes
+are retail gaps. A matching whole-image hash does not establish native C coverage.
+
+Under the PR's 828-entry counting convention, the pure C sources cover 763 entries.
+Two of those entries are IDA tails within `02387C98.c` and `0238F9BC.c`, rather than
+additional C functions. The 65 other entries are the 26 tagged primitives, 34
+stand-ins, and five unenrolled C drafts. Tags describe the existing inventory and
+are not independent proof that every tagged primitive was originally assembly.
+
+In particular, three stand-ins (`02381484`, `023814B8`, and `0238BB20`) contain
+privileged status-register or banked-register operations. The other 31 still need
+C matching or stronger origin evidence; the explicit stack operations in the
+`0238B11C` bit-bang routine leave its original source form uncertain. This recovery
+does not relabel any of those sources or declare a compiler limitation.
+
+The existing AH21 source `02388798.c` is now enrolled with its complete 0x224-byte
+extent: 0x208 bytes of code followed by a 0x1C-byte literal pool. It ends exactly at
+the next enrolled function, `023889BC`. Its C body is unchanged; the former draft
+extent omitted the pool. See `notes/experiments/arm7-existing-match1014.json` for
+the pinned compiler, linked relocation destinations, and recovery provenance.
