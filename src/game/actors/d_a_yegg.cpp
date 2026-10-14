@@ -1110,7 +1110,8 @@ void daYegg_c::func_ov002_020ed7f8()
 void daYegg_c::func_ov002_020ed998()
 {
     int on = (mFlags & daYegg_FLAG_ATTACHED) != 0;
-    if (on && *(int *)&mPlayer) {
+    // Under 2004/b56, this typed reference preserves the later pointer reload.
+    if (on && static_cast<Player* const&>(mPlayer) != 0) {
         volatile struct Vec3i v;
         int t9, t10, t11;
         v.x = 0;

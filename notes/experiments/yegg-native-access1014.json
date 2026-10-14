@@ -1,0 +1,73 @@
+{
+  "status": "LOCAL PRODUCER CHECKPOINT: FULL THREE-METHOD TASK UNFINISHED. No offer, publication or independent acceptance.",
+  "task": "yegg-native-access1014",
+  "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+  "input_commit": "5609f0e072654b0734b4fa260cbbad0594b1e7e4",
+  "tested_main": "9893f84287e75f5dd6305bfeaab3b4bfd6228d52",
+  "normal_composition": "52307e3e5ccf4de0fc2068fa324b90a2e4248685",
+  "source": "src/game/actors/d_a_yegg.cpp",
+  "source_sha256": "8c833c78a92c121e42e8f4e0b2a849b59e3dc6f7f9ade8dffd71a1657f834e4e",
+  "actual_source_author": {
+    "agent_uuid": "01a13996-b2f1-7d93-8bdd-510e5c78a79e",
+    "session": "codex-yegg-native-access-astra-producer1014",
+    "model": "GPT-6 Astra",
+    "scope": "Only new typed-pointer guard and empirical comment; prior Source authors and reports retained."
+  },
+  "change": "Replace the attached-state integer-lvalue read of mPlayer with a C++98 const reference bound directly to the actual Player* member. No new object, lifetime, volatility or ABI. Explicit reference cast is a measured compiler accommodation, not recovered original syntax or a C++ guarantee of reloads.",
+  "byte_proof": {
+    "whole_raw_equal": true,
+    "whole_prepared_equal": true,
+    "strict_count": 34,
+    "raw_sha256": "4de153a42bbcbff442d2c18fe506070a6e1bae7dfc93db59930a9b4105f51cc6",
+    "normal_sha256": "33fd40a6f29cb17567214b6aca43e0919276042e0b93fd0b191ca9ed32c66620"
+  },
+  "intact_storage": "Both control and actual checkpoint pass normal ownedBefore/ownedAfter. Entire raw/prepared object equality preserves all metadata, storage, symbols and typed references, including initializer and ctor.",
+  "proof_sha256": "ae97e2aa1a493e33fa70b272bc063efe7b605d0f926c798576bf4b48f533ffbf",
+  "full_ROM": "No new full global run for this unfinished checkpoint. No prior full build is asserted as current9893 candidate acceptance.",
+  "inherited_findings": {
+    "YEGG-GROUND-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-GROUND-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "src/actors/daYegg_c.cpp:57",
+      "reason": "Independent preflight flagged the stale clause before immutable Source checkpoint. Exact294789d/b934 Source removes that clause and explicitly describes real ground lifetime/clsnY and reconstructed actor-interface identifiers. Current Source/report preserve remaining raw offsets rather than presenting entire class complete.",
+      "summary": "Private combined candidate still described the replaced ground clsnY field access as a raw+0x44 read."
+    },
+    "YEGG-RECONSTRUCTION-01": {
+      "disposition": "deferred",
+      "id": "YEGG-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "kind": "reconstruction",
+      "location": "src/actors/daYegg_c.cpp and include/daYegg_c.h",
+      "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
+      "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
+      "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    }
+  },
+  "unfinished_methods": [
+    {
+      "symbol": "_ZN8daYegg_c19func_ov002_020ed0d4Ev",
+      "retail_bytes": 1244,
+      "native_scalar_bytes": 1228,
+      "finding": "Direct individual scalar reads remove four interior-base ADDs; original pointer indexing retained in this checkpoint."
+    },
+    {
+      "symbol": "_ZN8daYegg_c19func_ov002_020ed5b0Ev",
+      "retail_bytes": 140,
+      "native_scalar_bytes": 128,
+      "finding": "Direct individual position/angle reads remove three interior-base ADDs; original pointer indexing and repeated Player snapshots retained."
+    }
+  ],
+  "rejected_epochs": "Direct actual fields, named member references, inline scalar references, first-member-only references. All preserved in ignored build/yegg-native-access1014; no compiler-wall or unique original aggregate inference.",
+  "native_candidate_packet": {
+    "path": "build/yegg-native-access1014/HANDOFF-bounded-research.json",
+    "sha256": "f6914e79f37ca830e3375943c0e88a58f703dab3da0b47782f31a7da1195e409"
+  },
+  "independent_private_assist": {
+    "reviewer": "/root/fbase_delivery_fresh",
+    "sha256": "40e0ee3e16767b30c0bbdc50ef8de5014907bd09f2a17f4461fbfb33683d3d55",
+    "scope": "Typed reference is legal and removes the incompatible integer lvalue; measured nonidiomatic syntax, not formal acceptance or completion of three-method task."
+  },
+  "remaining_dependency": "One private hypothetical grouped Vector3/Vector3s header fixture may test whether genuine member grouping restores code shape. No tracked shared-header edits or field/type claim is authorized; any viable shared-layout reconstruction requires full consumer evidence and supported resource ownership.",
+  "composition_dependency": "Pending private144 Particle/native13/Yegg changes require explicit three-way integration. Preserve accepted native interfaces and prior reports; never replace their whole Source with this older composition."
+}
