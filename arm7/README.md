@@ -26,11 +26,14 @@ nothing extracted is written into the tree. Output goes to `build/arm7/`.
 ## Kinds of file
 
 - Real C, no asm of any kind: enrolled, counts as matched.
-- `// NONMATCHING (ASM-PRIMITIVE)` + `// HAND-ASM PRIMITIVE`: the original was assembly
-  (MRS/MSR, SWP, SWI, divide runtime, BX veneers, crt0). Enrolled, counts as matched.
-- `// NONMATCHING (ASM-STANDIN)`: a function that was C but has no matching C yet, kept as
-  byte-exact whole-function asm so the full binary builds from source. Enrolled here,
-  NOT counted as matched (upstream tools read it as a plain `NONMATCHING` draft).
+- `// NONMATCHING (ASM-PRIMITIVE)` + `// HAND-ASM PRIMITIVE`: enrolled assembly tagged
+  as an original primitive. Status-register, banked-register, SWP and SWI instructions
+  provide assembly evidence; a tag alone does not establish the origin of an ordinary
+  veneer or runtime routine. These entries are separate from the pure C count below.
+- `// NONMATCHING (ASM-STANDIN)`: enrolled byte-exact assembly retained pending C
+  matching or stronger original-source evidence. These are not pure C matches; three
+  currently contain privileged context operations despite the historical stand-in tag.
+  Upstream tools read them as plain `NONMATCHING` drafts.
 - `// NONMATCHING` C: the closest C attempt, not enrolled (the build keeps retail bytes),
   banked in `nearmiss/db.jsonl`.
 
