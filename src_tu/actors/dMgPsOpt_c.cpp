@@ -80,9 +80,10 @@
  *   - GetSoundMode and GetGameLanguage differed only as `(void)` vs `()` and
  *     `s32` vs `int`, which are the same declaration in C++.
  *
- * The shadow `struct C`, `struct E` and `struct Sub` below are the legacy
- * bodies' own, kept as they were reviewed. Retyping them onto dMgPsOpt_c would
- * change how the two icon loops dispatch, so it belongs to a later pass.
+ * This reference retains the legacy `struct C`, `struct E` and `struct Sub`
+ * bodies. The enrolled traversal helpers already use dMgPsOpt_c's real icon
+ * array and virtual methods with identical complete objects. This historical
+ * TU candidate has not been updated to those production bodies.
  */
 
 /* Includes: union of the legacy files', first-seen in ROM-ascending

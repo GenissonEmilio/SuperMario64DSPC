@@ -19,14 +19,14 @@ The two traversal helpers now use the actual eight-element `mIcons` array and na
 
 `TouchIcon_c::Render` uses the real `G2S` namespace and the existing definition's `u32 GetBG1ScrPtr()` address result, with explicit address conversion. Its local blitter declaration uses the actual definition's opaque `S*` and `M*` tags; no replacement class layout is invented. Screen-entry, extent, coordinate and palette locals are named. The incorrect vtable address is repaired: address point ov004:0x020bca7c, Render slot 1 at 0x020bca80, inherited Behavior slot 0. The global arrays remain declared as their existing u16 storage.
 
-The seventh implementation/reference path, existing `src_tu/actors/dMgPsOpt_c.cpp`, receives only the six mechanical `mSelectedIcon` to `mIconCount` references, including comments. This preserves compilation after the real shared-header correction. No new shadow source is created and none of these production improvements is staged only there. Its existing eleven-function text-verified manifest remains unpromoted; this explicitly smaller readability task makes no full-TU promotion claim.
+The seventh implementation/reference path, existing `src_tu/actors/dMgPsOpt_c.cpp`, originally received the six mechanical `mSelectedIcon` to `mIconCount` references, including comments. The provenance repair below also corrects its stale dispatch note. This preserves compilation after the real shared-header correction. No new shadow source is created and none of these production improvements is staged only there. Its existing eleven-function text-verified manifest remains unpromoted; this explicitly smaller readability task makes no full-TU promotion claim.
 
 ## Findings and measured limits
 
 - `PSOPT-READ-01`, fixed: typed array traversal, virtual calls and update/render locals replace the two local proxy classes and option-object raw offsets.
 - `PSOPT-LAYOUT-01`, fixed: misleading selected-index name and hidden close-delay byte are replaced by the supported count/timer fields without width, order or initialization changes.
 - `PSOPT-CONTRACT-01`, fixed: unsigned sound-wrapper result/argument, u8 update result, char* touch/initializer contracts and the native u32 G2S address result agree with their current definitions. These are present source contracts, not unique evidence of the original ABI types.
-- `PSOPT-PROV-01`, fixed: the vtable address formerly inside Render's own text is corrected from actual ov004 symbols/relocations.
+- `PSOPT-PROV-01`, fixed: the vtable address formerly inside Render's own text is corrected from actual ov004 symbol and relocation records.
 - `PSOPT-CODEGEN-01`, deferred: the volatile s16 coordinate pair remains because removing only `volatile` shrinks Render from 424 to 408 bytes, complete ELF 2168 to 2152. This is a bounded 2004/b56 result, not a claim that all cleaner forms are impossible. The minigame coordinator owns any later matching experiment under issue 2930.
 - `PSOPT-RECON-01`, partial: unnamed dThIcon fields, unnamed data/helper identities, raw C helper boundaries and the wider scene caller's pre-existing Obj facade/raw fields remain. The unpromoted combined candidate and original TU boundary still need separately scoped reconstruction/promotion; no extra method or original name is claimed here. Continuation belongs to the minigame coordinator under issue 2930.
 - `PSOPT-BASELINE-01`, inherited: three header consumers already carry NONMATCHING and are outside standard matched-source validation. Jump OnYoshiTryEat also fails to compile before and after this change; Slot1 Behavior and func_ov006_020e5450 compile identically but do not reproduce their target functions. No consumer repair or draft acceptance is included.
@@ -55,3 +55,27 @@ Fresh before/final objects use `match.compile_c` with `build_pin.version_for` an
 - `git diff --check`: PASS. Enrollment, symbols, attribution and shared baselines are untouched. `prepush_attribution.py --base 9c6104f1f4df5554b19b3a72a9a32d0eba9361d0 --head f054068c88abcacaa8d3a7025aed7138d8acc7c5 --json build/psopt-readable/attribution.json`: exit 0, 7,989 tracked, zero changed or lost credit. This follow-up changes only the handoff; all seven tested implementation/reference blobs are identical to that source checkpoint.
 
 Sources were frozen during every reported gate; this final handoff update changes no build input. Private proof records bind the unchanged source/header hashes to the final commit. Private validation, formal independent source acceptance and current-base integration are not claimed.
+
+## Provenance repair, 2026-10-14
+
+Repair producer: `codex-psopt-provenance-root-producer1014`. The original source
+producer and all seven findings above remain recorded.
+
+Independent review of the historical input found two prose defects:
+`PSOPT-SHADOW-PROVENANCE-1014` and `PSOPT-HANDOFF-DEAD-REFERENCE-1014`.
+The shadow note now says it retains legacy bodies and that the enrolled helpers
+already use typed dispatch. The vtable explanation now names symbol and relocation
+records without a false file reference. No production implementation, header,
+manifest, enrollment or attribution input changes in this repair.
+
+Fresh paired compilation of the complete shadow object and the dead-reference
+check verify these corrections. The preceding independent proof at the retained
+input covers 147 successfully compiled object pairs and 1,045 eligible strict
+function checks, with the unchanged Jump compilation failure and two other draft
+diagnostics explicit. All production build inputs remain literal to that input;
+its actual 106-module ROM result is carried by that identity, not claimed as a
+new full build of this prose repair. Exact commands and hashes are recorded in
+the producer's ignored build evidence and require fresh independent review.
+
+This remains historical-candidate work. The later promoted production TU needs
+separate reconciliation before current-main acceptance or any publication claim.
