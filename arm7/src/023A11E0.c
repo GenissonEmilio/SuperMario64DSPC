@@ -7,7 +7,9 @@ extern void fn_02394DF8(void *list, int node);
 extern void fn_0239477C(int a, int b);
 
 void fn_023A11E0(void) {
-    unsigned short buf[7];
+    /* Both receive paths use seven fields; 023A0F58 copies all 16 bytes.
+     * The final halfword remains untouched, as in the retail caller. */
+    unsigned short buf[8];
     int *base;
     unsigned short *rec;
     unsigned short *p;

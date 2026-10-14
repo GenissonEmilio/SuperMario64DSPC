@@ -74,6 +74,7 @@ The AH54 draft `023A0CE0.c` is now matched and enrolled at its full 0x278-byte
 extent, including the 0x0C-byte literal pool. A native four-bit C bitfield
 assignment reproduces the previously different nibble-update register sequence.
 Its caller `023A11E0.c` now declares the actual two-argument interface and uses
-one seven-halfword buffer for the contiguous input record. The complete caller
+one eight-halfword buffer for seven initialized fields and the final untouched
+halfword included in the sibling path's 16-byte copy. The complete caller
 output remains unchanged. See `notes/experiments/arm7-receive-native1014.json`
 for exact call destinations, the full-image replay, and remaining partial layouts.
