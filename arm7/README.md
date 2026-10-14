@@ -39,17 +39,17 @@ nothing extracted is written into the tree. Output goes to `build/arm7/`.
 
 ## Verified coverage
 
-The current enrollment has 823 rows and reproduces the complete 150,308-byte retail
+The current enrollment has 824 rows and reproduces the complete 150,308-byte retail
 image (SHA-1 `0efbc2d43d0a7ae4a087472fd0ec7ca2875ec865`). Of those rows,
-821 compile `.c` files and two assemble the crt0/Thumb packs. The compiled files
-include 762 pure C sources, 26 tagged ASM-PRIMITIVE sources, and 33 ASM-STANDIN
-sources. Their combined 0x22D2C bytes include assembly; the remaining 0x1DF8 bytes
+822 compile `.c` files and two assemble the crt0/Thumb packs. The compiled files
+include 763 pure C sources, 26 tagged ASM-PRIMITIVE sources, and 33 ASM-STANDIN
+sources. Their combined 0x22FA4 bytes include assembly; the remaining 0x1B80 bytes
 are retail gaps. A matching whole-image hash does not establish native C coverage.
 
-Under the PR's 828-entry counting convention, the pure C sources cover 764 entries.
+Under the PR's 828-entry counting convention, the pure C sources cover 765 entries.
 Two of those entries are IDA tails within `02387C98.c` and `0238F9BC.c`, rather than
-additional C functions. The 64 other entries are the 26 tagged primitives, 33
-stand-ins, and five unenrolled C drafts. Tags describe the existing inventory and
+additional C functions. The 63 other entries are the 26 tagged primitives, 33
+stand-ins, and four unenrolled C drafts. Tags describe the existing inventory and
 are not independent proof that every tagged primitive was originally assembly.
 
 In particular, three stand-ins (`02381484`, `023814B8`, and `0238BB20`) contain
@@ -69,3 +69,11 @@ classification call in genuine C. Its two literal-pool destinations and complete
 linked extent match retail. Enrollment and build settings are unchanged. See
 `notes/experiments/arm7-average-native1014.json` for the exact inputs, complete
 ARM7 image proof, and remaining reconstruction limits.
+
+The AH54 draft `023A0CE0.c` is now matched and enrolled at its full 0x278-byte
+extent, including the 0x0C-byte literal pool. A native four-bit C bitfield
+assignment reproduces the previously different nibble-update register sequence.
+Its caller `023A11E0.c` now declares the actual two-argument interface and uses
+one seven-halfword buffer for the contiguous input record. The complete caller
+output remains unchanged. See `notes/experiments/arm7-receive-native1014.json`
+for exact call destinations, the full-image replay, and remaining partial layouts.
