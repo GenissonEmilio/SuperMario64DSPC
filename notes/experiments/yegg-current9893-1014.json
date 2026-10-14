@@ -10,7 +10,7 @@
   "protocol_ancestral_base": "9893f84287e75f5dd6305bfeaab3b4bfd6228d52",
   "tested_current_base": "9893f84287e75f5dd6305bfeaab3b4bfd6228d52",
   "actual_full_build_tested_commit": "52307e3e5ccf4de0fc2068fa324b90a2e4248685",
-  "actual_composition_report_producer": "Codex /root, claude-producer-0930d",
+  "actual_composition_report_producer": "Codex /root, codex-yegg-current9893-root-producer1014",
   "source": "src/game/actors/d_a_yegg.cpp",
   "manifest": "config/tu_manifest.d/ov002/daYegg_c.json",
   "source_sha256": "d403f161af88bdd8b6e460cc13ae6e4269daad45853caced8db35b84e59f58cc",
@@ -154,10 +154,18 @@
       "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
       "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
       "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    },
+    "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "notes/experiments/yegg-current9893-1014.json:13",
+      "reason": "Independent verifier identified selection of an inherited producer session for the actual Root report writer. This report now names the actual current Root producer session directly; historical Source authors and rejected epoch remain preserved. Source and production policy are unchanged by this correction.",
+      "summary": "New composition report attributes its producer session to an unrelated inherited historical Claude label."
     }
   },
   "final_binding": "Final report-only commit must retain these exact five production trees. The queue binds the final immutable candidate and a distinct verifier reviews that exact candidate against the stated current base.",
-  "publication": "After independent exact-current acceptance, normally update the existing PR and rerun its live Source guard. No merge.",
+  "publication": "PR3851 was externally merged to25ebe8a058933f6a37ea4d130e43f566a3c10f95 while this report was being reviewed. This packet remains exact historical9893 proof; do not push the closed PR. Complete independent historical review then resume the full three-method native successor on current main.",
   "authorship": "Original native interface implementation retains its recorded authors; /root authored the four accepted coin-field stores. Astra performed normal merge52307. Root authored this current-base evidence report. No matching-credit transfer.",
   "mandatory_continuation": {
     "scope": "All three native Player-access methods remain unfinished; this baseline refresh adopts neither local typed guard nor grouped-header fixture. Resume the preserved work after baseline task completion.",
