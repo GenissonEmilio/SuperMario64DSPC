@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "task_id": "yegg-current9893-composition1014",
+  "candidate": "this commit",
+  "completion": "partial",
+  "formal_acceptance": false,
+  "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+  "pull_request": "https://github.com/tangosdev/sm64ds-decomp/pull/3851",
+  "accepted_input": "52307e3e5ccf4de0fc2068fa324b90a2e4248685",
+  "protocol_ancestral_base": "9893f84287e75f5dd6305bfeaab3b4bfd6228d52",
+  "tested_current_base": "9893f84287e75f5dd6305bfeaab3b4bfd6228d52",
+  "actual_full_build_tested_commit": "52307e3e5ccf4de0fc2068fa324b90a2e4248685",
+  "actual_composition_report_producer": "Codex /root, codex-yegg-current9893-root-producer1014",
+  "source": "src/game/actors/d_a_yegg.cpp",
+  "manifest": "config/tu_manifest.d/ov002/daYegg_c.json",
+  "source_sha256": "d403f161af88bdd8b6e460cc13ae6e4269daad45853caced8db35b84e59f58cc",
+  "production_trees_at_actual_tested_commit": {
+    "src": "0cf8d7ad29467c3e1a9d898845fcd733b5ac84c0",
+    "include": "90e59154c130c09dd74cc0d773fe0770769c301e",
+    "config": "f282119e8d2942c4def64fb28bd94a49e3ee0e50",
+    "tools": "55122625b2b352a5f15ea21d3d9baf1fdd6859b4",
+    "port": "c6bd95e7eb59d61c892c4eb233e85115eb4bc28c"
+  },
+  "change": "Adopt current main file-name sweep by normal composition; preserve the accepted implementation and record fresh current-candidate proof. This commit adds only this report after the actual tested checkpoint.",
+  "fresh_byte_proof": {
+    "path": "build/yegg-current9893-root1014/production-proof.json",
+    "sha256": "212e9d34d382276669f31b6f45a7da3035f386f6c41e460c641bdf6646d9f668",
+    "strict_functions": 34,
+    "different_words": 0,
+    "blind_relocations": 0,
+    "whole_raw_literal_equal": true,
+    "whole_prepared_literal_equal": true,
+    "raw_sha256": "4de153a42bbcbff442d2c18fe506070a6e1bae7dfc93db59930a9b4105f51cc6",
+    "ordinary_sha256": "33fd40a6f29cb17567214b6aca43e0919276042e0b93fd0b191ca9ed32c66620",
+    "canonical_metadata_records": 11,
+    "canonical_metadata_bytes": 241,
+    "canonical_metadata_references": 46,
+    "intact_owned_storage_before_after": "PASS, complete raw and ordinary output remains literal."
+  },
+  "actual_full_build": {
+    "command": [
+      "python",
+      "tools/rombuild.py",
+      "-j16",
+      "--no-rom"
+    ],
+    "terminal": 0,
+    "tested_commit": "52307e3e5ccf4de0fc2068fa324b90a2e4248685",
+    "modules_exact": 106,
+    "reproducing_source_functions": 11334,
+    "mismatching_source_functions": 0,
+    "source_data_claims_exact": 331,
+    "source_bss_claims": 239,
+    "baseline_symbol_errors": 9,
+    "new_symbol_errors": 0,
+    "intact_tu_gate": "PASS; storage aliases exact",
+    "global_data_advisories": {
+      "verified": 970,
+      "partial": 1519,
+      "differ": 1,
+      "unnamed": 21
+    },
+    "qualification": "Fresh invocation on this candidate, separate from the main-only control. Existing global advisories remain. --no-rom does not request a new candidate NDS image.",
+    "artifacts": {
+      "rombuild-report.json": {
+        "path": "build/yegg-current9893-root1014/rombuild-report.json",
+        "sha256": "2e4371583e3b0a1857d0e3fb8759727420e9242c9e8400a078d34b769ee3e25a"
+      },
+      "baseline-linkcheck.json": {
+        "path": "build/yegg-current9893-root1014/baseline-linkcheck.json",
+        "sha256": "0fd870d9d41895cbf588222a7b2a8df005af2f8535403d7eea42063b4e8085dd"
+      },
+      "full-stock-ROM.log": {
+        "path": "build/yegg-current9893-root1014/full-stock-ROM.log",
+        "sha256": "cc956cbc2ac9337ac87c5c991f974966cb47201ae33bb98c934fc430539d06b9"
+      },
+      "full-stock-ROM.exit.txt": {
+        "path": "build/yegg-current9893-root1014/full-stock-ROM.exit.txt",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    }
+  },
+  "fresh_static_checks": [
+    {
+      "name": "declarations",
+      "command": [
+        "python",
+        "tools/check_decl_agreement.py",
+        "--changed",
+        "9893f84287e75f5dd6305bfeaab3b4bfd6228d52"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "port",
+      "command": [
+        "python",
+        "tools/port_refcheck.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "duplicates",
+      "command": [
+        "python",
+        "tools/check_duplicate_sources.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "deadrefs",
+      "command": [
+        "python",
+        "tools/check_dead_references.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "9893f84287e75f5dd6305bfeaab3b4bfd6228d52..HEAD"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "prepush",
+      "command": [
+        "python",
+        "tools/prepush_linkcheck.py",
+        "--range",
+        "9893f84287e75f5dd6305bfeaab3b4bfd6228d52..HEAD"
+      ],
+      "exit": 0
+    }
+  ],
+  "inherited_findings": {
+    "YEGG-GROUND-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-GROUND-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "src/actors/daYegg_c.cpp:57",
+      "reason": "Independent preflight flagged the stale clause before immutable Source checkpoint. Exact294789d/b934 Source removes that clause and explicitly describes real ground lifetime/clsnY and reconstructed actor-interface identifiers. Current Source/report preserve remaining raw offsets rather than presenting entire class complete.",
+      "summary": "Private combined candidate still described the replaced ground clsnY field access as a raw+0x44 read."
+    },
+    "YEGG-RECONSTRUCTION-01": {
+      "disposition": "deferred",
+      "id": "YEGG-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "kind": "reconstruction",
+      "location": "src/actors/daYegg_c.cpp and include/daYegg_c.h",
+      "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
+      "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
+      "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    },
+    "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "notes/experiments/yegg-current9893-1014.json:13",
+      "reason": "Independent verifier identified selection of an inherited producer session for the actual Root report writer. This report now names the actual current Root producer session directly; historical Source authors and rejected epoch remain preserved. Source and production policy are unchanged by this correction.",
+      "summary": "New composition report attributes its producer session to an unrelated inherited historical Claude label."
+    }
+  },
+  "final_binding": "Final report-only commit must retain these exact five production trees. The queue binds the final immutable candidate and a distinct verifier reviews that exact candidate against the stated current base.",
+  "publication": "PR3851 was externally merged to25ebe8a058933f6a37ea4d130e43f566a3c10f95 while this report was being reviewed. This packet remains exact historical9893 proof; do not push the closed PR. Complete independent historical review then resume the full three-method native successor on current main.",
+  "authorship": "Original native interface implementation retains its recorded authors; /root authored the four accepted coin-field stores. Astra performed normal merge52307. Root authored this current-base evidence report. No matching-credit transfer.",
+  "mandatory_continuation": {
+    "scope": "All three native Player-access methods remain unfinished; this baseline refresh adopts neither local typed guard nor grouped-header fixture. Resume the preserved work after baseline task completion.",
+    "local_checkpoint": "313a760cabe232c0128e0945724c64f74ea59ccf",
+    "methods": [
+      "0x020ed0d4",
+      "0x020ed5b0",
+      "0x020ed998"
+    ],
+    "grouped_fixture_sha256": "cef33fe8a09a04c1c52ec0882d42eb7cc0f01f4d90569399901685df6bcc5cd0",
+    "dependency_inventory_sha256": "499ef35892b081303aab201c75cf6a6fcc4488a7c64c16eb83dedd5727dc9767",
+    "dependency": "A copied-header grouped-field experiment matches all bodies but requires reservation and full lifecycle/byte proof across308 enrolled consumers; not a production or original-type claim."
+  }
+}

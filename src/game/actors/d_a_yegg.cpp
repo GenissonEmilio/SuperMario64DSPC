@@ -56,12 +56,12 @@
  *   a class-typed by-value argument and size-DIFFs the caller
  *   (notes/mwccarm-codegen.md 6az).
  * - still raw offsets: the DOSUN byte at +0x3a2 in func_ov002_020ec670
- *   and the word at Player+0xc8 in func_ov002_020ed998. Spawned coins use
+ *   remains; the carry-matrix copy retains its measured M48 view. Coins use
  *   dActor_c's existing previous-angle and horizontal-speed fields.
  * - mSpawnPos is named in daYegg_c.h but its purpose is not known
  *   (written once, never read here); unk_41e and the 4-byte gap at 0x3f8 are
- *   unnamed. dActor_c::unk_0a4/unk_0ac and Player::unk_37c are read through
- *   their unk_ names, and func_ov002_020ed738 reads the floor result +4 raw.
+ *   unnamed. The dActor vector group names are inferred from their uses;
+ *   Player::unk_37c and the floor-result +4 read in func_ov002_020ed738 remain partial.
  * - this list is representative, not exhaustive: the flag and mask
  *   literals (mFlags 0x40000/0x10000000/0x8, the hit flags 0x8000/0x26fe0,
  *   the cylinder words 0x202000/0x200002/0xa08000) are also left numeric, and
@@ -349,9 +349,9 @@ void daYegg_c::func_ov002_020ec728()
     if (mPayoutDone[idx] != 0) return;
     n = func_ov002_020ec640();
     {
-        int tx = mPosX;
-        int tz = mPosZ;
-        int ty = mPosY + 0x28000;
+        int tx = mPosition.x;
+        int tz = mPosition.z;
+        int ty = mPosition.y + 0x28000;
         vec.x = tx;
         vec.y = ty;
         vec.z = tz;
@@ -454,7 +454,7 @@ void daYegg_c::func_ov002_020ec978() {
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN8daYegg_c19func_ov002_020ec9c4Ev
 /* State 2 (WOBBLE), execute. While mWobbling is set it steps the X and Z tilt
- * (mAngleX, mAngleZ) toward 0 by 0x400 a frame (a 64th of a turn) and clears
+ * (mAngles.x, mAngles.z) toward 0 by 0x400 a frame (a 64th of a turn) and clears
  * mWobbling once the X tilt and the Y angle are both 0. Otherwise it asks
  * func_ov002_020d5f98 about the Player; on a yes, it sets the tilt from
  * the answer (b times two entries of the s16 table at 0x021000a8, indexed by
@@ -464,10 +464,10 @@ void daYegg_c::func_ov002_020ec978() {
  * collision. */
 void daYegg_c::func_ov002_020ec9c4(){
   if (mWobbling != 0){
-    _Z15ApproachLinear2Rsss(&mAngleX, 0, 0x400);
-    _Z15ApproachLinear2Rsss(&mAngleZ, 0, 0x400);
-    if (mAngleX == 0){
-      if (mAngleY == 0)
+    _Z15ApproachLinear2Rsss(&mAngles.x, 0, 0x400);
+    _Z15ApproachLinear2Rsss(&mAngles.z, 0, 0x400);
+    if (mAngles.x == 0){
+      if (mAngles.y == 0)
         mWobbling = 0;
     }
   } else {
@@ -476,8 +476,8 @@ void daYegg_c::func_ov002_020ec9c4(){
       unsigned char ip;
       a = a * 2;
       ip = a;
-      mAngleX = b * data_ov002_021000a8[ip];
-      mAngleZ = b * data_ov002_021000a8[ip + 1];
+      mAngles.x = b * data_ov002_021000a8[ip];
+      mAngles.z = b * data_ov002_021000a8[ip + 1];
       mWobbling = 1;
     }
   }
@@ -514,7 +514,7 @@ void daYegg_c::func_ov002_020ecad4() {
  * Sound::PlayLong (3, 0x93), runs func_ov002_020ed738 (tilt), returns if
  * func_ov002_020eddc4 handled a contact (nonzero), and bursts if IsOnWall is
  * set or bit 0x10 of the same result byte is. The particle's rotation pair comes from the sine
- * table indexed by mAngleY >> 4 (sin then cos). Every pass that gets this far
+ * table indexed by mAngles.y >> 4 (sin then cos). Every pass that gets this far
  * bursts if func_ov002_020ed6cc reports the egg stalled, and otherwise clears
  * and, if flying, updates the cylinder, moves the egg and runs the ground
  * collision. */
@@ -556,19 +556,19 @@ void daYegg_c::func_ov002_020ecb0c()
         } else {
             b = (s32)((fb0 & daYegg_FLAG_FLYING) != 0);
             if (b != 0) {
-                s32 py = *(volatile s32 *)&mPosY + 0x28000;
-                pz = mPosZ;
-                px = mPosX;
+                s32 py = *(volatile s32 *)&mPosition.y + 0x28000;
+                pz = mPosition.z;
+                px = mPosition.x;
                 sp.pos.y = py;
                 sp.pos.z = pz;
                 sp.pos.x = px;
-                ang = *(u16 *)&mAngleY;
+                ang = *(u16 *)&mAngles.y;
                 onwall = data_02082214[(ang >> 4) * 2];
                 rx = (s16)onwall;
                 sp.rot.y = 0;
                 pr = &sp.rot;
                 sp.rot.x = rx;
-                ang = *(u16 *)&mAngleY;
+                ang = *(u16 *)&mAngles.y;
                 rz = data_02082214[(ang >> 4) * 2 + 1];
                 sp.rot.z = rz;
                 mParticleHandle = _ZN8Particle6System3NewEjj5Fix12IiES2_S2_PK11Vector3_16fPNS_8CallbackE(
@@ -655,7 +655,7 @@ void daYegg_c::func_ov002_020ecd18()
                 if (o != 0) {
                     Vector3 tmp = o->OnAimedAtWithEggReturnVec();
                     if (_Z14ApproachLinearR7Vector3RKS_5Fix12IiE(
-                            &mPosX, &tmp, mHorzSpeed) != 0) {
+                            &mPosition.x, &tmp, mHorzSpeed) != 0) {
                         switch (o->actorID) {
                         case ACTOR_BOMBKING:
                         case ACTOR_HOLHEI:
@@ -671,10 +671,10 @@ void daYegg_c::func_ov002_020ecd18()
                             return;
                         }
                     }
-                    mAngleY = Vec3_HorzAngle(&mPosX, &tmp);
+                    mAngles.y = Vec3_HorzAngle(&mPosition.x, &tmp);
                 }
                 _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(
-                    mPosX, mPosY, mPosZ);
+                    mPosition.x, mPosition.y, mPosition.z);
                 flag = 1;
                 if (func_ov002_020eddc4() != 0)
                     return;
@@ -737,7 +737,7 @@ void daYegg_c::func_ov002_020ecfc8(){
     r5 = (dActor_c*)func_ov002_020edb3c(0, 0xfa0000);
   }
   if (r5){
-    mAngleY = Vec3_HorzAngle((struct Vector3*)&mPosX, (struct Vector3*)&r5->mPosX);
+    mAngles.y = Vec3_HorzAngle((struct Vector3*)&mPosition.x, (struct Vector3*)&r5->mPosition.x);
   } else {
     if (mTargetedCount){
       if (!func_ov002_020ec654())
@@ -745,7 +745,7 @@ void daYegg_c::func_ov002_020ecfc8(){
     }
   }
   _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(&mdCcAc_c, this, 0x64000, 0xc8000, 0x202000, 0);
-  mPrevAngleY = mAngleY;
+  mPrevAngleY = mAngles.y;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -772,14 +772,14 @@ void daYegg_c::func_ov002_020ecfc8(){
  *    the remaining distance per call, at most 1000 units) and each eased
  *    angle toward its goal (ApproachAngle: an eighth of the remaining angle,
  *    at most 0x4000 a call, at least 0x100), then copies the eased Y angle
- *    into mAngleY;
+ *    into mAngles.y;
  *  - sets the animation: the moving one (file 0x0210e6b0) when mHorzSpeed is
  *    nonzero, else the idle one (0x0210eb78), at a speed of 1.0 to 2.0 that
  *    grows with mHorzSpeed and saturates at 0x20000 (32 units); the speed is
  *    0 while the Player's mIsAirborne is set;
  *  - for the variant func_ov002_020ec654 calls zero, rewrites the 0xa4/0xac
- *    words as absolute values capped at 0x20000 (32 units) and tilts mAngleX
- *    (negative) and mAngleZ by up to 0xe39 (20 degrees) in proportion to
+ *    words as absolute values capped at 0x20000 (32 units) and tilts mAngles.x
+ *    (negative) and mAngles.z by up to 0xe39 (20 degrees) in proportion to
  *    them; for the other variant it runs func_ov002_020ed738 instead;
  *  - clears the cylinder, and runs the discrete ground collision unless the
  *    Player's mIsNoControl is set or the Player is 0x190000 (400 units) or
@@ -788,18 +788,18 @@ void daYegg_c::func_ov002_020ed0d4()
 {
     struct Vector3 in, out;
     Player* com;
-    int* p;
+    const Vector3* p;
     volatile struct Vector3 t1, t2;
     struct Vector3 v1, v2;
     struct Vector3 sumA, sumB, sumC;
-    int *pt1, *pt2, *pv1, *pv2;
+    const Vector3 *pt1, *pt2, *pv1, *pv2;
 
     com = mPlayer;
     mHoldOffsetZ = -0x68000;
-    p = &com->unk_0a4;
-    unk_0a4 = p[0];
-    mVertSpeed = p[1];
-    unk_0ac = p[2];
+    p = &com->mVelocity;
+    mVelocity.x = p->x;
+    mVelocity.y = p->y;
+    mVelocity.z = p->z;
     mHorzSpeed = com->mHorzSpeed;
 
     if (DecIfAbove0_Byte(&unk_41e) == 0) {
@@ -814,43 +814,43 @@ void daYegg_c::func_ov002_020ed0d4()
             || func_ov002_020cf700(mPlayer) != 0
             || func_ov002_020d0d2c(mPlayer) != 0) {
             if (_ZNK10dBgCh_Actr10IsOnGroundEv(&mWithMeshClsn) != 0) {
-                mGoalAngleX = mPlayer->mAngleX;
-                mGoalAngleZ = mPlayer->mAngleZ;
-                pt1 = &com->mPrevPosX;
-                pt2 = &com->mPosX;
-                t1.x = pt1[0];
-                t1.y = pt1[1];
-                t1.z = pt1[2];
-                t2.x = pt2[0];
-                t2.y = pt2[1];
-                t2.z = pt2[2];
-                Vec3_Add(&sumA, &com->mPosX, &out);
+                mGoalAngleX = mPlayer->mAngles.x;
+                mGoalAngleZ = mPlayer->mAngles.z;
+                pt1 = &com->mPreviousPosition;
+                pt2 = &com->mPosition;
+                t1.x = pt1->x;
+                t1.y = pt1->y;
+                t1.z = pt1->z;
+                t2.x = pt2->x;
+                t2.y = pt2->y;
+                t2.z = pt2->z;
+                Vec3_Add(&sumA, &com->mPosition.x, &out);
                 mHoldTargetX = sumA.x;
                 mHoldTargetY = sumA.y;
                 mHoldTargetZ = sumA.z;
             } else {
                 mGoalAngleX = -0x4000;
                 mGoalAngleZ = 0;
-                Vec3_Add(&sumB, &com->mPosX, &out);
+                Vec3_Add(&sumB, &com->mPosition.x, &out);
                 mHoldTargetX = sumB.x;
                 mHoldTargetY = sumB.y;
                 mHoldTargetZ = sumB.z;
             }
         } else {
-            mGoalAngleX = com->mAngleX;
-            mGoalAngleZ = com->mAngleZ;
-            pv1 = &com->mPrevPosX;
-            pv2 = &com->mPosX;
-            v1.x = pv1[0];
-            v1.y = pv1[1];
-            v1.z = pv1[2];
-            v2.x = pv2[0];
-            v2.y = pv2[1];
-            v2.z = pv2[2];
+            mGoalAngleX = com->mAngles.x;
+            mGoalAngleZ = com->mAngles.z;
+            pv1 = &com->mPreviousPosition;
+            pv2 = &com->mPosition;
+            v1.x = pv1->x;
+            v1.y = pv1->y;
+            v1.z = pv1->z;
+            v2.x = pv2->x;
+            v2.y = pv2->y;
+            v2.z = pv2->z;
             if (Vec3_HorzDist(&v1, &v2) >= 0x5000) {
                 mGoalAngleY = Vec3_HorzAngle(&v1, &v2);
             }
-            Vec3_Add(&sumC, &com->mPosX, &out);
+            Vec3_Add(&sumC, &com->mPosition.x, &out);
             mHoldTargetX = sumC.x;
             mHoldTargetY = sumC.y;
             mHoldTargetZ = sumC.z;
@@ -861,16 +861,16 @@ void daYegg_c::func_ov002_020ed0d4()
     {
         /* 0x1000 / 0x3000 as Fix12: a third. */
         int fd = _ZN4cstd4fdivEii(0x1000, 0x3000);
-        Math_Function_0203b14c(&mPosX, mHoldTargetX, fd, 0x3e8000, 4);
-        Math_Function_0203b14c(&mPosY, mHoldTargetY, fd, 0x3e8000, 4);
-        Math_Function_0203b14c(&mPosZ, mHoldTargetZ, fd, 0x3e8000, 4);
+        Math_Function_0203b14c(&mPosition.x, mHoldTargetX, fd, 0x3e8000, 4);
+        Math_Function_0203b14c(&mPosition.y, mHoldTargetY, fd, 0x3e8000, 4);
+        Math_Function_0203b14c(&mPosition.z, mHoldTargetZ, fd, 0x3e8000, 4);
     }
 
     ApproachAngle(&mEasedAngleX, mGoalAngleX, 8, 0x4000, 0x100);
     ApproachAngle(&mEasedAngleY, mGoalAngleY, 8, 0x4000, 0x100);
     ApproachAngle(&mEasedAngleZ, mGoalAngleZ, 8, 0x4000, 0x100);
 
-    mAngleY = mEasedAngleY;
+    mAngles.y = mEasedAngleY;
 
     {
         int v98 = mHorzSpeed;
@@ -890,27 +890,27 @@ void daYegg_c::func_ov002_020ed0d4()
     }
 
     if (func_ov002_020ec654() == 0) {
-        int a4 = unk_0a4;
+        int a4 = mVelocity.x;
         if (a4 < 0) a4 = -a4;
-        unk_0a4 = a4;
-        int ac = unk_0ac;
+        mVelocity.x = a4;
+        int ac = mVelocity.z;
         if (ac < 0) ac = -ac;
-        unk_0ac = ac;
-        a4 = unk_0a4;
-        if (a4 > 0x20000) { a4 = 0x20000; unk_0a4 = a4; }
-        a4 = unk_0a4;
+        mVelocity.z = ac;
+        a4 = mVelocity.x;
+        if (a4 > 0x20000) { a4 = 0x20000; mVelocity.x = a4; }
+        a4 = mVelocity.x;
         {
             int fd1 = _ZN4cstd4fdivEii(a4, 0x20000);
             int r1 = (int)(((long long)fd1 * 0xe39 + 0x800) >> 12);
             short a4ang = (short)(-r1);
-            ac = unk_0ac;
-            if (ac > 0x20000) { ac = 0x20000; unk_0ac = ac; }
-            ac = unk_0ac;
+            ac = mVelocity.z;
+            if (ac > 0x20000) { ac = 0x20000; mVelocity.z = ac; }
+            ac = mVelocity.z;
             {
                 int fd2 = _ZN4cstd4fdivEii(ac, 0x20000);
                 int r2 = (int)(((long long)fd2 * 0xe39 + 0x800) >> 12);
-                mAngleX = a4ang;
-                mAngleZ = (short)r2;
+                mAngles.x = a4ang;
+                mAngles.z = (short)r2;
             }
         }
     } else {
@@ -919,7 +919,7 @@ void daYegg_c::func_ov002_020ed0d4()
 
     _ZN5dCc_c5ClearEv(&mdCcAc_c);
     {
-        int dist = Vec3_Dist(&mPosX, &com->mPosX);
+        int dist = Vec3_Dist(&mPosition.x, &com->mPosition.x);
         if (mPlayer->mIsNoControl != 0) return;
         if (dist >= 0x190000) return;
         dBgCh_Actr_UpdateDiscreteNoLava_veneer(&mWithMeshClsn);
@@ -931,34 +931,34 @@ void daYegg_c::func_ov002_020ed0d4()
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN8daYegg_c19func_ov002_020ed5b0Ev
 // State 0 (FOLLOW_PLAYER), enter. Snaps this object to the actor it follows
-// (mPlayer): copies its position (mPosX/Y/Z) and Y angle (mAngleY), mirrors
-// the position into mHoldTarget, and copies its rotation triple (mAngleX/Y/Z)
+// (mPlayer): copies its position (mPosition.x/y/z) and Y angle (mAngles.y), mirrors
+// the position into mHoldTarget, and copies its rotation triple (mAngles.x/y/z)
 // into both the goal angles and the eased angles.
 void daYegg_c::func_ov002_020ed5b0()
 {
     Player* src;
-    int* sp;
-    short* m;
+    const Vector3* sp;
+    const Vector3s* m;
     src = mPlayer;
-    sp = &src->mPosX;
-    mPosX = sp[0];
-    mPosY = sp[1];
-    mPosZ = sp[2];
+    sp = &src->mPosition;
+    mPosition.x = sp->x;
+    mPosition.y = sp->y;
+    mPosition.z = sp->z;
     src = mPlayer;
-    mAngleY = src->mAngleY;
-    mHoldTargetX = mPosX;
-    mHoldTargetY = mPosY;
-    mHoldTargetZ = mPosZ;
+    mAngles.y = src->mAngles.y;
+    mHoldTargetX = mPosition.x;
+    mHoldTargetY = mPosition.y;
+    mHoldTargetZ = mPosition.z;
     src = mPlayer;
-    m = &src->mAngleX;
-    mGoalAngleX = m[0];
-    mGoalAngleY = m[1];
-    mGoalAngleZ = m[2];
+    m = &src->mAngles;
+    mGoalAngleX = m->x;
+    mGoalAngleY = m->y;
+    mGoalAngleZ = m->z;
     src = mPlayer;
-    m = &src->mAngleX;
-    mEasedAngleX = m[0];
-    mEasedAngleY = m[1];
-    mEasedAngleZ = m[2];
+    m = &src->mAngles;
+    mEasedAngleX = m->x;
+    mEasedAngleY = m->y;
+    mEasedAngleZ = m->z;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -989,10 +989,10 @@ void daYegg_c::func_ov002_020ed684() { int j = mState; (this->*data_ov002_02110a
  * after 15 shorter moves in a row; it stays 1 while the egg stays put), else
  * 0. */
 int daYegg_c::func_ov002_020ed6cc() {
-  Fix12i d = Vec3_HorzDist((struct Vector3*)&mLastPosX, (struct Vector3*)&mPosX);
-  mLastPosX = mPosX;
-  mLastPosY = mPosY;
-  mLastPosZ = mPosZ;
+  Fix12i d = Vec3_HorzDist((struct Vector3*)&mLastPosX, (struct Vector3*)&mPosition.x);
+  mLastPosX = mPosition.x;
+  mLastPosY = mPosition.y;
+  mLastPosZ = mPosition.z;
   if (d >= 0x32000) goto fail;
   if (DecIfAbove0_Byte(&mStallTimer)) goto ret0;
   return 1;
@@ -1007,7 +1007,7 @@ ret0:
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN8daYegg_c19func_ov002_020ed738Ev
 /* recovered: shared common types */
-/* Eases the X and Z tilt (mAngleX, mAngleZ) toward a target pair, each by a
+/* Eases the X and Z tilt (mAngles.x, mAngles.z) toward a target pair, each by a
  * quarter of the remaining angle, at most 0x1000 (a 16th of a turn) a call
  * (UpdateAngle). On the ground the pair comes from the floor normal
  * (func_02010844 evaluated at the Y angle and at the Y angle minus 0x4000, a
@@ -1020,19 +1020,19 @@ void daYegg_c::func_ov002_020ed738() {
         struct Vector3 n;
         void* fr = _ZNK10dBgCh_Actr14GetFloorResultEv(&mWithMeshClsn);
         _ZNK11SurfaceInfo12CopyNormalToER7Vector3((char*)fr+4, &n);
-        e4 = func_02010844(this, &n, mAngleY);
-        e6 = func_02010844(this, &n, (short)(mAngleY - 0x4000));
+        e4 = func_02010844(this, &n, mAngles.y);
+        e6 = func_02010844(this, &n, (short)(mAngles.y - 0x4000));
     } else {
         if (mState == 0) {
             Player* p = mPlayer;
             if (p != 0) {
-                e4 = p->mAngleX;
-                e6 = p->mAngleZ;
+                e4 = p->mAngles.x;
+                e6 = p->mAngles.z;
             }
         }
     }
-    _Z11UpdateAngleRssis(&mAngleX, e4, 4, 0x1000);
-    _Z11UpdateAngleRssis(&mAngleZ, e6, 4, 0x1000);
+    _Z11UpdateAngleRssis(&mAngles.x, e4, 4, 0x1000);
+    _Z11UpdateAngleRssis(&mAngles.z, e6, 4, 0x1000);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1060,23 +1060,23 @@ void daYegg_c::func_ov002_020ed7f8()
     if (mPlayer->mOpacity < 1)
         return;
 
-    v.x = mPosX;
-    v.y = mPosY;
-    v.z = mPosZ;
+    v.x = mPosition.x;
+    v.y = mPosition.y;
+    v.z = mPosition.z;
     v.y += 0x28000;
     dBgCh_Gnd rg;
     rg.SetObjAndPos(v, 0);
     r4 = v.y;
     if (rg.DetectClsn())
         r4 = rg.clsnY;
-    r5 = mPosY - r4;
+    r5 = mPosition.y - r4;
     if (r5 <= 0x1000) r5 = 0x1000;
     r4 = 0x50000 - (int)(((long long)r5 * 0x180 + 0x800) >> 12);
     if (r4 < 0xa000) r4 = 0xa000;
-    Matrix4x3_FromRotationY(mShadowMtx, mAngleY);
-    mShadowMtx[9] = mPosX >> 3;
-    mShadowMtx[10] = mPosY >> 3;
-    mShadowMtx[11] = mPosZ >> 3;
+    Matrix4x3_FromRotationY(mShadowMtx, mAngles.y);
+    mShadowMtx[9] = mPosition.x >> 3;
+    mShadowMtx[10] = mPosition.y >> 3;
+    mShadowMtx[11] = mPosition.z >> 3;
     b = (mFlags & 0x40000) ? 1 : 0;
     if (b == 0
         && *(int*)&mPlayer->unk_37c == 0
@@ -1099,24 +1099,25 @@ void daYegg_c::func_ov002_020ed7f8()
 // @symbol _ZN8daYegg_c19func_ov002_020ed998Ev
 /* Places the egg's model matrix, called from Behavior. With
  * daYegg_FLAG_ATTACHED set and a Player, it copies the 12-word matrix the
- * word at Player+0xc8 points to (that field is padding in dActor_c.h), shifts
+ * mCarryMatrix points to through the retained M48 copy view, shifts
  * its translation by (0x3f, 9, 0xb) and applies a ZXY rotation of
  * (-0x49f5, -0xc17, -0x293f), then moves the egg's mPos to the resulting
  * translation << 3 and returns; matrix units are mPos >> 3 throughout.
  * Otherwise it builds the matrix from the egg's own pose: the translation is
  * mPos with 0x14000 (20 units) added to Y, scaled by 1/8 (x << 9 >> 12, rounded),
- * rotated by (mAngleX, mAngleY, mAngleZ), and stored into the model's own
+ * rotated by (mAngles.x, mAngles.y, mAngles.z), and stored into the model's own
  * matrix (mModelAnim.mat4x3). */
 void daYegg_c::func_ov002_020ed998()
 {
     int on = (mFlags & daYegg_FLAG_ATTACHED) != 0;
-    if (on && *(int *)&mPlayer) {
+    // Under 2004/b56, this typed reference preserves the later pointer reload.
+    if (on && static_cast<Player* const&>(mPlayer) != 0) {
         volatile struct Vec3i v;
         int t9, t10, t11;
         v.x = 0;
         v.y = 0;
         v.z = 0;
-        data_020a0e68 = *(M48 *)(*(char **)((char *)mPlayer + 0xc8));
+        data_020a0e68 = *(M48 *)mPlayer->mCarryMatrix;
         Matrix4x3_ApplyInPlaceToTranslation(&data_020a0e68, 0x3f, 9, 0xb);
         Matrix4x3_ApplyInPlaceToRotationZXYExt(&data_020a0e68, 0xffffb60b, 0xfffff3e9, 0xffffd6c1);
         t9  = ((volatile M48 *)&data_020a0e68)->w[9];
@@ -1125,17 +1126,17 @@ void daYegg_c::func_ov002_020ed998()
         v.y = t10;
         v.z = t11;
         v.x = t9;
-        mPosX = t9 << 3;
-        mPosY = v.y << 3;
-        mPosZ = v.z << 3;
+        mPosition.x = t9 << 3;
+        mPosition.y = v.y << 3;
+        mPosition.z = v.z << 3;
         return;
     }
     Matrix4x3_FromTranslation(&data_020a0e68,
-        (int)((((long long)mPosX << 9) + 0x800) >> 12),
-        (int)((((long long)(mPosY + 0x14000) * 0x200) + 0x800) >> 12),
-        (int)((((long long)mPosZ << 9) + 0x800) >> 12));
+        (int)((((long long)mPosition.x << 9) + 0x800) >> 12),
+        (int)((((long long)(mPosition.y + 0x14000) * 0x200) + 0x800) >> 12),
+        (int)((((long long)mPosition.z << 9) + 0x800) >> 12));
     Matrix4x3_ApplyInPlaceToRotationXYZExt(&data_020a0e68,
-        mAngleX, mAngleY, mAngleZ);
+        mAngles.x, mAngles.y, mAngles.z);
     *(M48 *)&mModelAnim.mat4x3 = data_020a0e68;
 }
 
@@ -1191,7 +1192,7 @@ loop:
         if (actor->Virtual50() == 0) goto next;
     }
     {
-        int d = Vec3_Dist(&mPosX, &actor->mPosX);
+        int d = Vec3_Dist(&mPosition.x, &actor->mPosition.x);
         if (d < best) {
             best = d;
             found = actor;
@@ -1237,10 +1238,10 @@ void func_ov002_020edca4(daYegg_c* self)
 
     self->func_ov002_020ec728();
 
-    yv = self->mPosY;
-    zv = self->mPosZ;
+    yv = self->mPosition.y;
+    zv = self->mPosition.z;
     sy = yv + 0x28000;
-    xv = self->mPosX;
+    xv = self->mPosition.x;
     pos.x = xv;
     pos.y = sy;
     pos.z = zv;
@@ -1254,10 +1255,10 @@ void func_ov002_020edca4(daYegg_c* self)
         }
     }
 
-    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x3f, self->mPosX, self->mPosY, self->mPosZ);
-    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x40, self->mPosX, self->mPosY, self->mPosZ);
-    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x41, self->mPosX, self->mPosY, self->mPosZ);
-    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x42, self->mPosX, self->mPosY, self->mPosZ);
+    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x3f, self->mPosition.x, self->mPosition.y, self->mPosition.z);
+    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x40, self->mPosition.x, self->mPosition.y, self->mPosition.z);
+    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x41, self->mPosition.x, self->mPosition.y, self->mPosition.z);
+    _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x42, self->mPosition.x, self->mPosition.y, self->mPosition.z);
     _ZN7fBase_c18MarkForDestructionEv((struct dActor_c*)self);
     _ZN5Sound13PlayCharVoiceEjjRK7Vector3(0, 0x103, (const struct Vector3*)&self->mCamSpacePosX);
 
@@ -1313,9 +1314,9 @@ int daYegg_c::func_ov002_020eddc4()
             }
             if (!(flags & 0x26fe0)) {
                 struct Vector3 pos;
-                pos.x = mPosX;
-                pos.y = mPosY;
-                pos.z = mPosZ;
+                pos.x = mPosition.x;
+                pos.y = mPosition.y;
+                pos.z = mPosition.z;
                 _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(actor, &pos, 1, 0xc000, 1, 0, 1);
             }
         }
@@ -1413,7 +1414,7 @@ int daYegg_c::Behavior()
             /* BOTH oddities below are load-bearing, measured one at a time.
 
                `ang` must stay a pointer: reading the three angles as
-               mPlayer->mAngleX/Y/Z instead reloads mPlayer per field and
+               mPlayer->mAngles.x/y/z instead reloads mPlayer per field and
                changes the function's size.
 
                `vin.z` really is written twice. Dropping the dead first store
@@ -1426,13 +1427,13 @@ int daYegg_c::Behavior()
             vmid.x = 0;
             vmid.y = 0;
             vmid.z = 0;
-            ang = &mPlayer->mAngleX;
+            ang = &mPlayer->mAngles.x;
             Matrix4x3_FromRotationZXYExt(&data_020a0e68, ang[0], ang[1], ang[2]);
             MulVec3Mat4x3(&vin, &data_020a0e68, &vmid);
-            Vec3_Add(&vout, &mPlayer->mPosX, &vmid);
-            mPosX = vout.x;
-            mPosY = vout.y;
-            mPosZ = vout.z;
+            Vec3_Add(&vout, &mPlayer->mPosition.x, &vmid);
+            mPosition.x = vout.x;
+            mPosition.y = vout.y;
+            mPosition.z = vout.z;
         }
         mModelAnim.ApplyOpacity(mPlayer->mOpacity, 0);
     } else {
@@ -1504,9 +1505,9 @@ int daYegg_c::InitResources()
         &mModelAnim, *(void **)(data_ov002_0210eb78 + 4), 0, 0x1000, 0);
 
     mAreaId = -1;
-    mSpawnPosX = mPosX;
-    mSpawnPosY = mPosY;
-    mSpawnPosZ = mPosZ;
+    mSpawnPosX = mPosition.x;
+    mSpawnPosY = mPosition.y;
+    mSpawnPosZ = mPosition.z;
     mVertAccel = -0x2000;
     mTerminalVelocity = -0x3c000;
     mState = param1 & 3;
@@ -1538,12 +1539,12 @@ int daYegg_c::InitResources()
     for (i = 0; i < 5; i++)
         mTargetedIds[i] = 0;
 
-    mEasedAngleX = mAngleX;
-    mEasedAngleY = mAngleY;
-    mEasedAngleZ = mAngleZ;
-    mGoalAngleX = mAngleX;
-    mGoalAngleY = mAngleY;
-    mGoalAngleZ = mAngleZ;
+    mEasedAngleX = mAngles.x;
+    mEasedAngleY = mAngles.y;
+    mEasedAngleZ = mAngles.z;
+    mGoalAngleX = mAngles.x;
+    mGoalAngleY = mAngles.y;
+    mGoalAngleZ = mAngles.z;
     mStallTimer = 0xf;
 
     if (func_ov002_020ec628() != 0)

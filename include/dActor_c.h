@@ -6,6 +6,7 @@
 #ifdef __cplusplus
 #include "dBase_c.h"
 #include "fListNode.h"
+#include "Vector3s.h"
 #endif
 
 /* The base of every enemy and object class, 0x020100dc..0x020113e4.
@@ -56,30 +57,25 @@ struct dActor_c : dBase_c {
        constructor appends this node, the destructor unlinks it, and Next() walks
        the next link and reads its owner to get back to the actor. */
     fLiNdBa_c mActorListNode; /* 0x050 -- owner is always `this` */
-    s32 mPosX;              /* 0x05c */
-    s32 mPosY;              /* 0x060 */
-    s32 mPosZ;              /* 0x064 */
-    s32 mPrevPosX;          /* 0x068 -- last frame's position, snapshotted by BeforeBehavior */
-    s32 mPrevPosY;          /* 0x06c */
-    s32 mPrevPosZ;          /* 0x070 */
+    /* Vector grouping and names are inferred from component uses and matched
+       member-access codegen; the ROM does not record these source types.
+       C++ members have real construction/destruction lifetimes. */
+    Vector3 mPosition; /* 0x05c -- world position */
+    Vector3 mPreviousPosition; /* 0x068 -- snapshotted by BeforeBehavior */
     s32 mCamSpacePosX;      /* 0x074 */
     s32 mCamSpacePosY;      /* 0x078 */
     s32 mCamSpacePosZ;      /* 0x07c */
     s32 mScaleX;            /* 0x080 */
     s32 mScaleY;            /* 0x084 */
     s32 mScaleZ;            /* 0x088 */
-    s16 mAngleX;            /* 0x08c */
-    s16 mAngleY;            /* 0x08e */
-    s16 mAngleZ;            /* 0x090 */
+    Vector3s mAngles; /* 0x08c -- actor rotation */
     s16 mPrevAngleX;        /* 0x092 */
     s16 mPrevAngleY;        /* 0x094 */
     s16 mPrevAngleZ;        /* 0x096 */
     s32 mHorzSpeed;         /* 0x098 */
     s32 mVertAccel;         /* 0x09c -- fix12, negative (gravity) */
     s32 mTerminalVelocity;  /* 0x0a0 -- fix12, negative */
-    s32 unk_0a4;            /* 0x0a4 */
-    s32 mVertSpeed;         /* 0x0a8 */
-    s32 unk_0ac;            /* 0x0ac */
+    Vector3 mVelocity; /* 0x0a4 -- added to position; y is vertical speed */
     /* Two populations of bits share this word. The profile descriptor's +0x08
      * word is copied in verbatim by the constructor; the framework then sets and
      * clears its own bits in the same storage. Across the 353 soundly-parsed
@@ -104,7 +100,7 @@ struct dActor_c : dBase_c {
     u32 mFlags;             /* 0x0b0 -- see the bit table above */
     /* The clip volume, all four set together by SetRanges out of the actor's
        entry in the spawn-info table. BeforeBehavior projects
-       (mPosX, mPosY + mClipOffsetY, mPosZ) into camera space and hands the
+       (mPosition.x, mPosition.y + mClipOffsetY, mPosition.z) into camera space and hands the
        result to the dClipper; a zero radius means "no clip volume" and skips the
        transform outright. */
     s32 mClipOffsetY;       /* 0x0b4 */
@@ -312,30 +308,22 @@ struct dActor_c {
     void *mListPrev;        /* 0x050 */
     void *mListNext;        /* 0x054 */
     struct dActor_c *mListOwner; /* 0x058 */
-    s32 mPosX;              /* 0x05c */
-    s32 mPosY;
-    s32 mPosZ;
-    s32 mPrevPosX;          /* 0x068 */
-    s32 mPrevPosY;
-    s32 mPrevPosZ;
+    Vector3 mPosition; /* 0x05c -- world position */
+    Vector3 mPreviousPosition; /* 0x068 -- snapshotted by BeforeBehavior */
     s32 mCamSpacePosX;      /* 0x074 */
     s32 mCamSpacePosY;
     s32 mCamSpacePosZ;
     s32 mScaleX;            /* 0x080 */
     s32 mScaleY;
     s32 mScaleZ;
-    s16 mAngleX;            /* 0x08c */
-    s16 mAngleY;            /* 0x08e */
-    s16 mAngleZ;            /* 0x090 */
+    Vector3s mAngles; /* 0x08c -- actor rotation */
     s16 mPrevAngleX;        /* 0x092 */
     s16 mPrevAngleY;        /* 0x094 */
     s16 mPrevAngleZ;        /* 0x096 */
     s32 mHorzSpeed;         /* 0x098 */
     s32 mVertAccel;         /* 0x09c */
     s32 mTerminalVelocity;  /* 0x0a0 */
-    s32 unk_0a4;            /* 0x0a4 */
-    s32 mVertSpeed;         /* 0x0a8 */
-    s32 unk_0ac;            /* 0x0ac */
+    Vector3 mVelocity; /* 0x0a4 -- added to position; y is vertical speed */
     u32 mFlags;             /* 0x0b0 */
     s32 mClipOffsetY;       /* 0x0b4 */
     s32 mClipRadius;        /* 0x0b8 */
