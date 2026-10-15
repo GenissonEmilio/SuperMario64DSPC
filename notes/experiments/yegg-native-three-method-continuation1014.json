@@ -14,7 +14,7 @@
   "main_source_base": "e209dacfaaa95cb5490637ff053d62182689bebe",
   "original_task_input": "313a760cabe232c0128e0945724c64f74ea59ccf",
   "source_header_manifest_sha256": {
-    "src/game/actors/d_a_yegg.cpp": "e9d6a964e29abc09a9ab1bd4fe1cc76e39fbc7fd3ab6fce82d223fe56f6e3eb1",
+    "src/game/actors/d_a_yegg.cpp": "f7d5c46ce3111230d4ffdb40bbd7ad60b0210e9ed5b47687b973f7b4d02f2555",
     "include/dActor_c.h": "d1791f40a0175097269acc0956c76cef4752dbd20031414e36058ce2b23c116a",
     "config/tu_manifest.d/ov002/daYegg_c.json": "b9a339b618d658261c369dfc1a6aa0700c8c105d9ae5b4634223c65de10a6b10"
   },
@@ -180,6 +180,15 @@
       "reason": "Actual member objects and local byte/layout proof do not establish original spelling, full lifecycle equivalence across consumers, or native agreement of retained C/opaque vector and Fix12 interfaces.",
       "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
       "owner": "codex-yegg-native-three-method-astra-producer1014"
+    },
+    {
+      "id": "YEGG-GROUPED-CARRY-MEMBER-1015",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "src/game/actors/d_a_yegg.cpp:1102 and :1120; include/dActor_c.h:mCarryMatrix",
+      "summary": "The new-header checkpoint still calls Player+0xc8 padding and bypasses the genuine mCarryMatrix member in the required third method.",
+      "reason": "Source now loads actual mPlayer->mCarryMatrix, with corrected intro and method prose. Guard, subsequent reload/evaluation order and retained M48 aggregate-copy boundary stay unchanged. Fresh whole RAW and ordinary objects are literally c13 outputs; all34strict,11fullmetadata and owned storage checks pass. This fixes the new provenance/member-use omission only; no claim of full matrix/helper reconstruction.",
+      "next_action": "Producer use the actual mPlayer->mCarryMatrix member load, correct Source intro/method prose, preserve guard/reload/evaluation order and existing matrix-copy boundary unless separately reconstructed, then provide new immutable candidate and actual scoped full-object/34strict/metadata proof before scoped acceptance."
     }
   ],
   "evidence": {
@@ -188,5 +197,25 @@
     "independent_binding_classification": "54b69cbb77839f11195e8694fb8d0dd48a44f20d4073ba1b47c20747f9e07ef9",
     "inherited_attribution_correction_commit": "09ffcc9873",
     "frozen_C8_patch_sha256": "aa9a6f830b742dae5decaf2a44d8997f1a850ae68c5ccbced0915945f0cc384a"
+  },
+  "independent_c13_review_findings_verbatim": [
+    {
+      "id": "YEGG-GROUPED-CARRY-MEMBER-1015",
+      "kind": "provenance",
+      "disposition": "open",
+      "location": "src/game/actors/d_a_yegg.cpp:1102 and :1120; include/dActor_c.h:mCarryMatrix",
+      "summary": "The new-header checkpoint still calls Player+0xc8 padding and bypasses the genuine mCarryMatrix member in the required third method.",
+      "reason": "Frozen c13 defines actual Matrix4x3* mCarryMatrix at0xc8 in both language views, but target020ed998 still loads it through *(char **)((char *)mPlayer+0xc8) and its comment says the field is padding. The new field makes that comment false, and required native member access remains unfinished. This is not a new ROM behavior or ABI mismatch claim; inherited M48 aggregate/C-helper boundaries remain separately partial.",
+      "next_action": "Producer use the actual mPlayer->mCarryMatrix member load, correct Source intro/method prose, preserve guard/reload/evaluation order and existing matrix-copy boundary unless separately reconstructed, then provide new immutable candidate and actual scoped full-object/34strict/metadata proof before scoped acceptance."
+    }
+  ],
+  "carry_member_repair": {
+    "rejected_checkpoint": "c13bb77d266871981784b615ca3f426445bbe1ed",
+    "independent_finding_artifact_sha256": "ce79ddfd5b942075ed035983c8317a7ba13da0a0f289cc5d630171be96ae2b08",
+    "fresh_proof_sha256": "05f53b1b1714950ac15455d35593b8d426524e7bc6b54cec3ae6befe1b369a7f",
+    "fresh_strict_data_sha256": "8fa25ebccad7937a9a661fe686204e0dbd2dfbd4a13d3c5b08c4fafdc7e687e8",
+    "whole_raw_literal_previous": true,
+    "whole_ordinary_literal_previous": true,
+    "retained_limit": "M48 aggregate-copy interface and other C/opaque helper boundaries remain partial; full307 migration unfinished."
   }
 }
