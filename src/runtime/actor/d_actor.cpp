@@ -41,7 +41,7 @@
  *    Matrix4x3, dCc_c, Player, Sound, Heap, and `typedef int Fix12`
  *    (types.h has a Fix12<T> TEMPLATE, so that typedef is not even legal here).
  *    Field names follow: deathTableId -> mDeathTableID, flags -> mFlags, camSpacePos
- *    -> mCamSpacePosX, pos -> mPosX, speed -> unk_0a4, areaID -> mAreaId.
+ *    -> mCamSpacePosX, pos -> mPosition.x, speed -> mVelocity.x, areaID -> mAreaId.
  *  - One spelling per global, chosen for what the ROM's use of it supports:
  *    data_0209b468 is an ADDRESS, not a value -- the ROM readers pass
  *    `&data_0209b468` as the list head's address, matching the plurality
@@ -173,9 +173,9 @@ int dActor_c::BeforeBehavior()
     } else {
         if (mClipRadius != 0) {
             Vector3 tmp;
-            tmp.x = mPosX >> 3;
-            tmp.y = (mPosY + mClipOffsetY) >> 3;
-            tmp.z = mPosZ >> 3;
+            tmp.x = mPosition.x >> 3;
+            tmp.y = (mPosition.y + mClipOffsetY) >> 3;
+            tmp.z = mPosition.z >> 3;
             MulVec3Mat4x3(&tmp, &data_0209b3ec, (Vector3 *)&mCamSpacePosX);
         }
         if (mFlags & 0x10003) {
@@ -212,9 +212,9 @@ int dActor_c::BeforeBehavior()
     return 0;
 
 do_copy:
-    mPrevPosX = mPosX;
-    mPrevPosY = mPosY;
-    mPrevPosZ = mPosZ;
+    mPreviousPosition.x = mPosition.x;
+    mPreviousPosition.y = mPosition.y;
+    mPreviousPosition.z = mPosition.z;
     return 1;
 }
 
@@ -377,10 +377,10 @@ void AddVec3(Vec3 *a, Vec3 *b, Vec3 *c);
 void func_02010da4(int *p);
 }
 void dActor_c::UpdatePosWithOnlySpeed(dCc_c *clsn) {
-    AddVec3((Vec3 *)&mPosX, (Vec3 *)&unk_0a4, (Vec3 *)&mPosX);
+    AddVec3((Vec3 *)&mPosition, (Vec3 *)&mVelocity, (Vec3 *)&mPosition);
     if (clsn != 0) {
-        *(s32 *)(&mPosX) += clsn->pushback.x;
-        *(s32 *)(&mPosZ) += clsn->pushback.z;
+        mPosition.x += clsn->pushback.x;
+        mPosition.z += clsn->pushback.z;
     }
     func_02010da4((int *)this);
 }
@@ -554,8 +554,8 @@ s16 Vec3_HorzAngle(const Vector3 *a, const Vector3 *b);
 s16 dActor_c::HorzAngleToCPlayer()
 {
     ClosestPlayer();
-    return Vec3_HorzAngle((Vector3 *)&mPosX,
-                          (Vector3 *)&((dActor_c *)data_0209b458)->mPosX);
+    return Vec3_HorzAngle(&mPosition,
+                          &((dActor_c *)data_0209b458)->mPosition);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -569,9 +569,9 @@ s16 dActor_c::HorzAngleToCPlayerOrAng()
     ClosestPlayer();
     player = (dActor_c *)data_0209b458;
     if (player == 0)
-        return mAngleY;
+        return mAngles.y;
 
-    return Vec3_HorzAngle((Vector3 *)&mPosX, (Vector3 *)&player->mPosX);
+    return Vec3_HorzAngle(&mPosition, &player->mPosition);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -591,8 +591,8 @@ Player *dActor_c::FarthestPlayer()
 s16 dActor_c::HorzAngleToFPlayer()
 {
     ClosestPlayer();
-    return Vec3_HorzAngle((Vector3 *)&mPosX,
-                          (Vector3 *)&((dActor_c *)data_0209b450)->mPosX);
+    return Vec3_HorzAngle(&mPosition,
+                          &((dActor_c *)data_0209b450)->mPosition);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -611,8 +611,8 @@ dActor_c *dActor_c::ClosestWithActorID(u32 actorID)
             break;
 
         if (actor != this) {
-            Fix12i dist = Vec3_Dist((const Vector3 *)&mPosX,
-                                    (const Vector3 *)&actor->mPosX);
+            Fix12i dist = Vec3_Dist(&mPosition,
+                                    &actor->mPosition);
             if (dist < closestDist) {
                 closestDist = dist;
                 closest = actor;
@@ -732,9 +732,9 @@ void dActor_c::GivePlayerCoins(Player &player, u8 count, u32 coinKind)
 
     /* Through a base pointer, not three field reads: the ROM materialises
        `add r2, r5, #0x5c` once and loads [r2], [r2,#4], [r2,#8] off it.
-       Reading player.mPosX/Y/Z directly costs one instruction less (0xf4, not
+       Historical flat-field reads cost one instruction less (0xf4, not
        0xf8) because the offsets fold into r5. */
-    const Vector3 *src = (const Vector3 *)&player.mPosX;
+    const Vector3 *src = &player.mPosition;
     Vector3 spawnPos;
     spawnPos.x = src->x;
     spawnPos.y = src->y;
@@ -775,12 +775,12 @@ extern "C" void func_020105cc(struct dActor_c *thiz, u32 flags)
 int dActor_c::JumpedOnByPlayer(dCc_c &clsn, Player &player)
 {
     volatile s32 pad[4];
-    s32 vel = player.mVertSpeed;
+    s32 vel = player.mVelocity.y;
 
     (void)&pad;
     if (clsn.flags & 6) {
         if (vel < 0 && player.mIsAirborne != 0
-            && mPosY < player.mPosY - 0xa000)
+            && mPosition.y < player.mPosition.y - 0xa000)
             return 1;
         return 0;
     } else {
@@ -797,8 +797,8 @@ int dActor_c::JumpedOnByPlayer(dCc_c &clsn, Player &player)
  * 0x02010518  size 0x34 */
 int dActor_c::BumpedUnderneathByPlayer(Player &player)
 {
-    if (player.mIsAirborne != 0 && player.mVertSpeed > 0
-        && player.mPosY < mPosY)
+    if (player.mIsAirborne != 0 && player.mVelocity.y > 0
+        && player.mPosition.y < mPosition.y)
         return 1;
 
     return 0;
@@ -812,7 +812,7 @@ bool dActor_c::IsPlayerInRange(s32 maxDist)
 {
     Player *closest = ClosestPlayer();
 
-    return Vec3_Dist((Vector3 *)&mPosX, (Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&mPosition, &closest->mPosition) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -825,7 +825,7 @@ extern "C" int _ZN8dActor_c15IsPlayerInRangeE5Fix12IiES1_S1_i(struct dActor_c *s
     pos.y = posY;
     pos.z = posZ;
     struct dActor_c *closest = (struct dActor_c *)self->ClosestPlayer();
-    return Vec3_Dist(&pos, (struct Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&pos, &closest->mPosition) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -836,7 +836,7 @@ bool dActor_c::IsPlayerInRange(const Vector3 &pos, s32 maxDist)
 {
     Player *closest = ClosestPlayer();
 
-    return Vec3_Dist(&pos, (Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&pos, &closest->mPosition) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1107,9 +1107,9 @@ int dActor_c::OnAimedAtWithEgg()
 Vector3 dActor_c::OnAimedAtWithEggReturnVec()
 {
     Vector3 result;
-    result.x = mPosX;
-    result.y = mPosY;
-    result.z = mPosZ;
+    result.x = mPosition.x;
+    result.y = mPosition.y;
+    result.z = mPosition.z;
     result.y += OnAimedAtWithEgg();
     return result;
 }
@@ -1209,7 +1209,7 @@ extern int data_02075244[];
 }
 s32 dActor_c::GetWaterHeightWDW()
 {
-    s32 ret = mPosY;
+    s32 ret = mPosition.y;
     if (data_0209f2f8[0] == 0x15 && mAreaId == 0) {
         unsigned int i = data_0209f2c0[0];
         if (i >= 3) i = 2;
@@ -1254,9 +1254,9 @@ extern "C" void UnloadBlueCoinModel(void)
 void dActor_c::PoofDust()
 {
     Vector3 pos;
-    pos.x = mPosX;
-    pos.y = mPosY;
-    pos.z = mPosZ;
+    pos.x = mPosition.x;
+    pos.y = mPosition.y;
+    pos.z = mPosition.z;
     PoofDustAt(pos);
 }
 
@@ -1280,9 +1280,9 @@ void dActor_c::PoofDustAt(const Vector3 &pos)
 void dActor_c::TriplePoofDust()
 {
     Vector3 pos;
-    pos.x = mPosX;
-    pos.y = mPosY;
-    pos.z = mPosZ;
+    pos.x = mPosition.x;
+    pos.y = mPosition.y;
+    pos.z = mPosition.z;
     TriplePoofDustAt(pos);
 }
 
@@ -1304,9 +1304,9 @@ void dActor_c::TriplePoofDustAt(const Vector3 &pos)
 void dActor_c::SmallPoofDust()
 {
     Vector3 pos;
-    pos.x = mPosX;
-    pos.y = mPosY;
-    pos.z = mPosZ;
+    pos.x = mPosition.x;
+    pos.y = mPosition.y;
+    pos.z = mPosition.z;
     DisappearPoofDustAt(pos);
 }
 
@@ -1367,9 +1367,9 @@ extern "C" int func_0200fc44(int a, Vector3* pos, int flag) {
 void dActor_c::LandingDust(bool doRaycast)
 {
     Vector3 pos;
-    pos.x = mPosX;
-    pos.y = mPosY;
-    pos.z = mPosZ;
+    pos.x = mPosition.x;
+    pos.y = mPosition.y;
+    pos.z = mPosition.z;
     HugeLandingDustAt(pos, doRaycast);
 }
 
@@ -1406,9 +1406,9 @@ void dActor_c::HugeLandingDustAt(Vector3 &pos, bool b)
 void dActor_c::HugeLandingDust(bool doRaycast)
 {
     Vector3 pos;
-    pos.x = mPosX;
-    pos.y = mPosY;
-    pos.z = mPosZ;
+    pos.x = mPosition.x;
+    pos.y = mPosition.y;
+    pos.z = mPosition.z;
     LandingDustAt(pos, doRaycast);
 }
 
@@ -1518,7 +1518,7 @@ void dActor_c::KillAndTrackInDeathTable()
 void dActor_c::SpawnSoundObj(u32 soundObjParam)
 {
     Spawn(
-        0x167, soundObjParam, *(const Vector3 *)&mPosX, 0,
+        0x167, soundObjParam, mPosition, 0,
         mAreaId, -1);
 }
 

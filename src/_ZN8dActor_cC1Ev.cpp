@@ -25,17 +25,17 @@ dActor_c::dActor_c() : mActorListNode(this) {
   {
     int* spawnPos = (int*)data_0209b460;
     if (spawnPos) {
-      mPosX = spawnPos[0];
-      mPosY = spawnPos[1];
-      mPosZ = spawnPos[2];
+      mPosition.x = spawnPos[0];
+      mPosition.y = spawnPos[1];
+      mPosition.z = spawnPos[2];
     }
   }
   {
     short* spawnRot = (short*)data_0209b45c;
     if (spawnRot) {
-      mAngleX = spawnRot[0];
-      mAngleY = spawnRot[1];
-      mAngleZ = spawnRot[2];
+      mAngles.x = spawnRot[0];
+      mAngles.y = spawnRot[1];
+      mAngles.z = spawnRot[2];
       /* Re-read of the same global, and the ROM does re-issue the load --
          reuse the pointer already loaded and the second group loses an ldr. */
       spawnRot = (short*)data_0209b45c;

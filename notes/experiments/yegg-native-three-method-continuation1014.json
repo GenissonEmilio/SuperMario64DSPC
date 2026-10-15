@@ -217,5 +217,109 @@
     "whole_raw_literal_previous": true,
     "whole_ordinary_literal_previous": true,
     "retained_limit": "M48 aggregate-copy interface and other C/opaque helper boundaries remain partial; full307 migration unfinished."
+  },
+  "actor_dependency_checkpoint": {
+    "status": "LOCAL_FOCUSED_PASS_FULL_307_MIGRATION_UNFINISHED",
+    "tested_main": "e209dacfaaa95cb5490637ff053d62182689bebe",
+    "prior_checkpoint": "a42fe0d0306cc7be58dd2e3a901f51fc546cae9a",
+    "source_producer": {
+      "session": "codex-yegg-native-three-method-astra-producer1014",
+      "actual_agent_uuid": "01a13996-b2f1-7d93-8bdd-510e5c78a79e"
+    },
+    "changed_sources": [
+      "src/runtime/actor/d_actor.cpp",
+      "src/_ZN8dActor_cC1Ev.cpp",
+      "src/_ZN8dActor_cC2Ev.cpp"
+    ],
+    "unchanged_proof_only_sources": [
+      "src/_ZN8dActor_cD0Ev.cpp",
+      "src/_ZN8dActor_cD1Ev.cpp",
+      "src/_ZN8dActor_cD2Ev.cpp"
+    ],
+    "source_changes": "Use real grouped member components and actual Vector3 member addresses in Actor native methods and both constructor sources; retain store/call order. Constructor external spawn arrays, base flat camera fields, C Vec3 interop, Fix12 bridges and other inherited partial interfaces remain qualified. No foreign consumer Source edit.",
+    "controls": "Six fresh control compilations use the authorized frozen C8-only header, without grouped members, and the same current compiler/settings/other headers. Six candidate contexts use the actual owned grouped header. Final Actor cosmetic dereference simplification recompiles to the identical first candidate object.",
+    "ordinary_strict_functions": 96,
+    "ordinary_strict_detail": "91 Actor manifest functions and five separately enrolled lifecycle functions; both control and candidate each zero differences/zero blind. Actor manifest stays legacy text-only.",
+    "actor_object": {
+      "raw_bytes": 29496,
+      "raw_sha256": "76b805b8458a6aeb58a48b31a47d1cff1b833ff271cea0afa9a353bcc9130b81",
+      "raw_and_prepared_literal": true,
+      "emitted_functions": 92,
+      "typed_refs": 191
+    },
+    "constructor_objects": {
+      "C1_C2_raw_not_literal": true,
+      "C1_C2_prepared_not_literal": true,
+      "all_existing_allocated_bytes_section_attrs_symbol_attrs_and_multiplicities_typed_edges_equal": true,
+      "raw_typed_refs_each": 26,
+      "prepared_typed_refs_each": 12,
+      "added_raw_helpers": [
+        {
+          "symbol": "_ZN7Vector3D1Ev",
+          "canonical_address": "0x020072c0",
+          "bytes": 4
+        },
+        {
+          "symbol": "_ZN8Vector3sD1Ev",
+          "canonical_address": "0x02011508",
+          "bytes": 4
+        }
+      ],
+      "new_helper_body_and_destination_strict": true,
+      "new_helper_incoming_outgoing_edges": 0,
+      "existing_isolation_delta": "Exactly two zero-sized .text sections, two $a mapping entries and two undefined zero-sized helper symbols remain. All preexisting descriptors and typed references stay equal. No new policy or canonical home.",
+      "existing_unconfigured_helper": "Both controls already emit _ZN7dBase_cD2Ev, 36B. Body and typed edges remain literal; unchanged single-function isolation removes it. It has no configured canonical home, so a strict retail match is not claimed or invented."
+    },
+    "destructor_objects": {
+      "all_three_raw_and_prepared_literal": true,
+      "raw_refs_each": 60,
+      "prepared_refs": [
+        8,
+        6,
+        6
+      ],
+      "complete_emitted_metadata_per_raw_object": {
+        "records": 7,
+        "bytes": 192,
+        "refs": 40,
+        "name_payload_bytes": [
+          9,
+          9,
+          10
+        ],
+        "vtable_bytes": 132,
+        "vtable_preamble_bytes": 8,
+        "blind": 0,
+        "diffs": 0
+      },
+      "padding_limit": "Unemitted linker padding beyond RTTI-name sections is not claimed as owned output."
+    },
+    "storage": "All allocated sections and BSS sizes exhaustively compared; lifecycle raw objects emit no BSS. Complete raw RTTI/type-name/vtable payloads positively relocated to retail. Ordinary Actor TU retains no nontext allocation under its existing text-only ownership.",
+    "lifetime_qualification": "Real Vector3/Vector3s member subobjects introduce C++ construction/destruction lifetimes. These six contexts show no emitted lifecycle-code or cleanup change; this does not prove source-lifetime identity or unchanged output for the other 301 consumers.",
+    "layout_transfer": "Actual grouped dActor header and Vector3s header remain exactly a42; the prior positive C/C++ offset/size witnesses transfer by those exact inputs. No new layout run claimed.",
+    "manifest_changes": [],
+    "scope_limits": "Tested e209 only. New main0c558 has not been composed. Full 257-source/307-consumer migration, foreign ownership handoffs and whole-repository gates remain outstanding; no full ROM build, publication or full-task acceptance claimed.",
+    "evidence": [
+      {
+        "path": "build/yegg-native-three-method-continuation1014/actor-currente209/six-context-proof.json",
+        "sha256": "6f67845604af5d680225db3dcb1faa07bb53f4dd14d5c1ed87be8414fb22d0ec"
+      },
+      {
+        "path": "build/yegg-native-three-method-continuation1014/actor-currente209/full-raw-metadata-proof.json",
+        "sha256": "427739a95b92a23ac88bfbc78fbe97abaa144c0c553e4a8937b3823b38775f45"
+      },
+      {
+        "path": "build/yegg-native-three-method-continuation1014/actor-currente209/all-emitted-lifecycle-bodies.json",
+        "sha256": "2d2fbd29cab14e3a5a3079b6da04bc98f29e72e99e1cf92d2735fa233e9a9911"
+      },
+      {
+        "path": "build/yegg-native-three-method-continuation1014/actor-currente209/unchanged-input-bindings.json",
+        "sha256": "f248a80a1e9efcae2685e30eb1d0afa809522fcaaeea2448a4cf2be7d91df96f"
+      },
+      {
+        "path": "build/yegg-native-three-method-continuation1014/actor-currente209/preserved-harness-diagnostics.json",
+        "sha256": "f4add5ae319445108ab31086efea34cef8f243bf10c52eeab7d2d56f03e09e5a"
+      }
+    ]
   }
 }
