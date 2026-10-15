@@ -39,17 +39,17 @@ nothing extracted is written into the tree. Output goes to `build/arm7/`.
 
 ## Verified coverage
 
-The current enrollment has 824 rows and reproduces the complete 150,308-byte retail
+The current enrollment has 825 rows and reproduces the complete 150,308-byte retail
 image (SHA-1 `0efbc2d43d0a7ae4a087472fd0ec7ca2875ec865`). Of those rows,
-822 compile `.c` files and two assemble the crt0/Thumb packs. The compiled files
-include 763 pure C sources, 26 tagged ASM-PRIMITIVE sources, and 33 ASM-STANDIN
-sources. Their combined 0x22FA4 bytes include assembly; the remaining 0x1B80 bytes
+823 compile `.c` files and two assemble the crt0/Thumb packs. The compiled files
+include 764 pure C sources, 26 tagged ASM-PRIMITIVE sources, and 33 ASM-STANDIN
+sources. Their combined 0x23770 bytes include assembly; the remaining 0x13B4 bytes
 are retail gaps. A matching whole-image hash does not establish native C coverage.
 
-Under the PR's 828-entry counting convention, the pure C sources cover 765 entries.
+Under the PR's 828-entry counting convention, the pure C sources cover 766 entries.
 Two of those entries are IDA tails within `02387C98.c` and `0238F9BC.c`, rather than
-additional C functions. The 63 other entries are the 26 tagged primitives, 33
-stand-ins, and four unenrolled C drafts. Tags describe the existing inventory and
+additional C functions. The 62 other entries are the 26 tagged primitives, 33
+stand-ins, and three unenrolled C drafts. Tags describe the existing inventory and
 are not independent proof that every tagged primitive was originally assembly.
 
 In particular, three stand-ins (`02381484`, `023814B8`, and `0238BB20`) contain
@@ -78,3 +78,14 @@ one eight-halfword buffer for seven initialized fields and the final untouched
 halfword included in the sibling path's 16-byte copy. The complete caller
 output remains unchanged. See `notes/experiments/arm7-receive-native1014.json`
 for exact call destinations, the full-image replay, and remaining partial layouts.
+
+The AH61 parent-request draft `023A2F48.c` is now matched and enrolled at its
+complete 0x7CC-byte extent: 0x78C bytes of code and all sixteen literal words
+(0x40 bytes). The final word is used by two retail loads; the previous 0x3C-byte
+pool estimate omitted it. The shared byte reader now has one compatible C
+interface across both existing symbol aliases and all callers. The observed
+28-byte record layout, native one-bit field access, and timestamp storage
+lifetimes reproduce the retail sequence without assembly or new compiler flags.
+The record prefix and many work-area fields remain uninterpreted. See
+`notes/experiments/arm7-remaining-native1014.json` for complete family proofs,
+rejected hypotheses, and the three remaining unmatched C targets.
