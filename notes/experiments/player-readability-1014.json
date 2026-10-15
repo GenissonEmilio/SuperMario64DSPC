@@ -1,6 +1,6 @@
 {
   "task": "player-readable1014",
-  "source_base": "132347a5a8d617de18c0de31b0b598788fa08329",
+  "source_base": "ea91964403017ecbc9482492397b11bc90d7d785",
   "source": "src/game/player/Player.cpp",
   "source_git_blob": "05810f9c4e729e79f3d576f5297910ce8fcf5fec",
   "scope": {
@@ -369,7 +369,43 @@
     "raw_object_bytes": 364400,
     "before_and_after_sha256": "8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132",
     "comparison": "Entire object file, including all sections, relocations, symbol metadata and emission order, is identical. Baseline source matches the exact Git base after CRLF normalization.",
-    "defined_functions_before_preparation": 618
+    "defined_functions_before_preparation": 618,
+    "current_uncached_inputs": {
+      "base-git-lf": {
+        "source_sha256": "f7c09ef86a913d61dfc4624ed576f38dea0f7425b5f48d93d63b83ced41932d7",
+        "source_bytes": 1083951,
+        "raw_sha256": "8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132",
+        "raw_bytes": 364400
+      },
+      "candidate-git-lf": {
+        "source_sha256": "ce7918b21a017b1ae99093e5a1c058ccf40804562433f992bed25cb8f8b01159",
+        "source_bytes": 1038206,
+        "raw_sha256": "8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132",
+        "raw_bytes": 364400
+      },
+      "candidate-physical": {
+        "source_sha256": "2e67b5295f7fc92ef72a6716f43c1d841ebdb6742ffac7e769580af06fe88e63",
+        "source_bytes": 1066507,
+        "raw_sha256": "8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132",
+        "raw_bytes": 364400
+      }
+    },
+    "current_whole_graph": {
+      "raw_sections": 1180,
+      "raw_symbols": 2287,
+      "raw_typed_edges": 4974,
+      "nonzero_function_bodies": 618,
+      "helpers": [
+        "_ZN11Vector3e968D1Ev",
+        "_ZN4PVecD1Ev",
+        "_ZN6V3QuadD1Ev",
+        "_ZN7Vector3D1Ev",
+        "_ZN8PVec869cD1Ev",
+        "_ZN8PVec8944D1Ev"
+      ],
+      "raw_allocated_nontext": []
+    },
+    "raw_literal_to_original_producer": true
   },
   "production": {
     "enrollment": "config/arm9/overlays/ov002/delinks.txt: complete .text 0x020bccfc..0x020e67a8; same entry in generated stock config.",
@@ -379,15 +415,22 @@
   },
   "validation": {
     "rombuild": {
-      "command": "python tools/rombuild.py -j16 --no-rom",
+      "command": "python -u tools/rombuild.py -j 16 --no-rom --report-json build\\player-current-producer1015\\full-report.json",
       "exit_code": 0,
-      "status": "passed",
+      "source_checkpoint": "ae7a3725efbaad95e90d5f7b35555991321f323e",
+      "tested_base": "ea91964403017ecbc9482492397b11bc90d7d785",
+      "elapsed_seconds": 356.625,
       "modules_exact": 106,
       "source_built_functions_reproducing": 11334,
       "mismatching_functions": 0,
-      "cache": {
-        "reused": 2751,
-        "compiled": 1
+      "source_owned_data_claims": 331,
+      "source_owned_BSS_claims": 239,
+      "object_cache": {
+        "enabled": true,
+        "reused": 2752,
+        "compiled": 0,
+        "uncacheable": 0,
+        "tuDerived": 0
       },
       "new_symbol_errors": [],
       "baseline_symbol_errors": [
@@ -401,42 +444,79 @@
         "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
         "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
       ],
-      "log": "build/player-readable/rombuild.log"
+      "log": "build/player-current-producer1015/full.log",
+      "log_sha256": "cff25547eaaea35428cfb4f52f4a7006a7cc3ad11b31d42588436aca664fdf15",
+      "report_sha256": "e0fa08727ea201c502a004956340f1e523673fa2479f5fc771fe54126647d8bc",
+      "qualification": "Actual current-composition full run. Its2752 reused objects are distinct from four fresh focused compilations; no claim every source was recompiled."
     },
     "final_object_linkcheck": {
-      "method": "Compile final source with pinned flags; resolve every enrolled symbol with srcpath.symbols_for and stamp_provenance.load_symbol; call linkcheck.linkcheck with the fresh object and exact symbol. Require VERIFIED, diffs empty, blind zero for every row.",
       "verified": 612,
       "blind": 0,
       "differing": 0,
-      "local_report": "build/player-readable/final-object-linkcheck.json"
+      "source_checkpoint": "ae7a3725efbaad95e90d5f7b35555991321f323e",
+      "object_sha256": "8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132",
+      "report": "build/player-current-producer1015/all612-strict.json",
+      "report_sha256": "f039d3494792090ff4da9ed26cf17ae7b91dd1d8a40c420de4ac63186926ff94",
+      "method": "Fresh full object and exact current module/address/size/name index for every612owned symbol."
     },
-    "declarations": {
-      "command": "python tools/check_decl_agreement.py --changed 132347a5a8d617de18c0de31b0b598788fa08329",
-      "exit_code": 0,
-      "new_disagreements": 0,
-      "new_local_header_redeclarations": 0,
-      "limit": "Ratchet and parser coverage only; existing banked disagreements remain.",
-      "log": "build/player-readable/declarations-final.log"
+    "ordinary_production": {
+      "fresh_compile": true,
+      "prepared_sha256": "285238d9b2627e66076e7f73d947bb9346188968fb7d3c5d0c87e42152da23d6",
+      "literal_to_original_prepared_object": true,
+      "literal_to_current_full_build_input": true,
+      "six_existing_helper_policies_unchanged": true
     },
-    "port_references": {
-      "command": "python tools/port_refcheck.py",
-      "exit_code": 0,
-      "references_resolved": 267
-    },
-    "diff_check": {
-      "command": "git diff --check",
-      "exit_code": 0
-    },
-    "private_ci": "Not run; no PR created by this task.",
-    "prepush_linkcheck": {
-      "command": "python tools/prepush_linkcheck.py --files src/game/player/Player.cpp --json build/player-readable/linkcheck.json",
-      "verdicts": {
-        "VERIFIED": 612
+    "statics": [
+      {
+        "name": "declarations",
+        "command": [
+          "python",
+          "tools/check_decl_agreement.py",
+          "--changed",
+          "ea91964403017ecbc9482492397b11bc90d7d785"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 13.39100000000326,
+        "log_sha256": "cc410a2cbc966fc5afe903b4a560579c4f62cfdc8e33d99b8f75625090fc9e43"
       },
-      "blind": 0,
+      {
+        "name": "port",
+        "command": [
+          "python",
+          "tools/port_refcheck.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.7650000000139698,
+        "log_sha256": "b010cd028d86799a0ca3fef6d8a50d00786d7610b9d12dc8e7eee993a7c1b86e"
+      },
+      {
+        "name": "whitespace",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "ea91964403017ecbc9482492397b11bc90d7d785..HEAD"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.061999999976251274,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "prepush_linkcheck": {
+      "command": "python tools/prepush_linkcheck.py --range 40dfd83ba134be0600730b58f3261f04441632d8..HEAD --json build/player-current-producer1015/prepush-linkcheck.json",
+      "actual_frozen_head": "6a7d8d8b13ba1d44d871e3974d8e165da1a7b3b5",
+      "actual_frozen_base": "40dfd83ba134be0600730b58f3261f04441632d8",
       "exit_code": 0,
-      "local_report": "build/player-readable/linkcheck.json"
-    }
+      "verified": 612,
+      "blind": 0,
+      "differing": 0,
+      "elapsed_seconds": 980.5939999999828,
+      "report_sha256": "229077b3a9e257dcdda26bc80d9db947443691da417c6167eb0514d6e6d8399b",
+      "scope_transfer": "Scoped Player result only, not a current full-ROM run. Gate ran to completion in its frozen predecessor worktree. Its Player Source blob, all headers/tools/port and symbol/relocation/pin configuration are literal here; the sole config delta is Snowman MF explanatory notes/reason strings with all executable/ownership fields identical. Fresh current612 strict checks plus raw/prepared complete identity independently corroborate the scoped result. Current full-ROM evidence is the separate new run above.",
+      "config_functional_identity": true
+    },
+    "private_ci": "PR3867 was externally merged at50bfcd2d6af2ad888194b52153b9d757ac7b3fbf with the original ded8 candidate. Its published check result is not acceptance of this newer evidence report; no new private CI or independent acceptance is claimed here.",
+    "independent_verification": "Pending exact immutable current offer; comprehensive Source-only preflight below is not current formal acceptance."
   },
   "measured_retained_forms": [
     {
@@ -516,7 +596,8 @@
     "The script actor slot at +0x72c is inside pad_729 in Player.h. Its Spawn producer and angle/position accesses establish dActor_c use here; the slot retains its raw offset and has no invented semantic member name.",
     "Numeric animation IDs, address-named state objects, unknown fields and unknown helpers are unchanged semantically. Reusing an existing field name is not a new claim to have recovered its historical spelling.",
     "Scalar Fix12 SetAnim/particle/music bridges, opaque resource/actor views, raw vector-pointer boundaries and compiler-sensitive copy/reload forms remain. Not every remaining cast has been proven necessary.",
-    "Lifecycle methods, vtable/RTTI definitions and static initializer ownership remain outside Player.cpp. The source-file boundary is not claimed as a recovered historical filename boundary."
+    "Lifecycle methods, vtable/RTTI definitions and static initializer ownership remain outside Player.cpp. The source-file boundary is not claimed as a recovered historical filename boundary.",
+    "PLAYER-READABLE-TEXSEQ-INDEX-BOUND-1015: four actual texture-sequence objects are constructed, but the complete valid-runtime param1 index population has not been range-proved. No known valid out-of-range caller or demonstrated introduced byte/ABI defect; investigate under issue3785."
   ],
   "validation_limits": [
     "Byte identity proves the generated program for the pinned compiler; it does not by itself prove source completeness or historical spelling.",
@@ -524,5 +605,108 @@
     "Whole-tree data inventory still reports one differing _ZTV10dCcAcPos_c symbol from two unchanged destructor sources, 1519 partial symbols and 21 unnamed symbols. Player emits no non-text allocated data; this task does not claim to resolve those unrelated inventory results.",
     "The production command used --no-rom: it compared all linked modules but did not package a candidate NDS image or run gameplay tests.",
     "The two source passes were performed by the producer. Independent verifier acceptance and current-main integration remain separate gates."
-  ]
+  ],
+  "historical_producer_epoch": {
+    "candidate": "ded8ac7ebd974a0512164a35580aaf808a4723bc",
+    "base": "132347a5a8d617de18c0de31b0b598788fa08329",
+    "report_git_blob": "61caad99c709439d263fd4f70b2e9aeb9b64b939",
+    "report_git_lf_sha256": "e233705a5b71befce24ac8996053402534292e2bbb7cade90e8648555661efb5",
+    "original_source_author": "codex-player-readable1014",
+    "preservation": "All original scope, changed ordinals, passes, state records, measured retained forms and remaining limitations remain in this record; the complete original report is immutable at the cited commit."
+  },
+  "external_publication": {
+    "pr": 3867,
+    "candidate": "ded8ac7ebd974a0512164a35580aaf808a4723bc",
+    "merge_commit": "50bfcd2d6af2ad888194b52153b9d757ac7b3fbf",
+    "merged_by": "andrewboudreau",
+    "merged_at": "2026-10-15T06:54:25Z",
+    "not_merged_by_this_producer": true,
+    "whole_tracked_tree_literal_to_tested_source_checkpoint": true,
+    "followup": "This report/handoff follow-up adds no Source change and still requires independent review."
+  },
+  "current_composition": {
+    "source_checkpoint": "ae7a3725efbaad95e90d5f7b35555991321f323e",
+    "tested_base": "ea91964403017ecbc9482492397b11bc90d7d785",
+    "source_anchor": "bf93062f25a1be2679890e559667b85ba4973649",
+    "producer_session": "codex-player-readable-current-root-producer1015",
+    "continuation_input": "ded8ac7ebd974a0512164a35580aaf808a4723bc",
+    "source_literal_to_original_candidate": true,
+    "source_git_blob": "05810f9c4e729e79f3d576f5297910ce8fcf5fec",
+    "scope": "All612 enrolled functions and257 changed bodies; no Source/header/layout/manifest/policy/symbol/enrollment/credit edit during this restack.",
+    "original_branch_preserved": true,
+    "rework_reason": "The earlier candidate omitted Source-bearing main. Normal merge compositions retain original work and the actual Snowman main; current full proof below is a new actual run, not unchanged-input substitution."
+  },
+  "independent_source_preflight": {
+    "source_candidate": "ded8ac7ebd974a0512164a35580aaf808a4723bc",
+    "source_baseline": "132347a5a8d617de18c0de31b0b598788fa08329",
+    "handoff_sha256": "a3da520e5c5e6f5c11bf9e67370aa60dfb8e6f048945c5ce8284777b85f3ddb9",
+    "coverage257_sha256": "d23e8a58aa34ccfaf39cc07fe2e84552cc438aee2bd765e70cfd8503485f4d9b",
+    "all612_census": true,
+    "all257_changed_blocks": true,
+    "structural_normalizations": 217,
+    "manual_residual_reviews": 40,
+    "state_objects": 71,
+    "PMF_slots": 213,
+    "retail_nonnull_descriptors": 170,
+    "canonical_null_cleanup_slots": 43,
+    "null_descriptor": "arm9:0x02086b58",
+    "state_provenance_sha256": "c6e06d85d21a8ab61f63f41b69976b64907914f9a243c8927f230a72881426b9",
+    "qualification": "Read-only Source plausibility and ROM-reading corroboration; no Source edits or compilation, not final current Source acceptance. Player Source remains literal to the reviewed original candidate; exact current report/composition review is still required."
+  },
+  "findings": [
+    {
+      "id": "PLAYER-READABLE-TEXSEQ-INDEX-BOUND-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3785",
+      "owner": "codex-player-readable-current-root-producer1015",
+      "location": "Player_AdvanceAnims, ordinal50/020bedd4; Player.h:mTexSeqBody[4]; Player::InitResources/SetNewHatCharacter",
+      "summary": "The actual four-element texture-sequence array is proved; the entire runtime param1 index population is not range-proved.",
+      "reason": "C1 constructs4elements at1dc withstride14hex and sizeofTextureSequence14hex. New native accesses retain rawparam1 value. InitResources masks startupsub with&7, while character transition writes u8inputs, so these local sources alone do not prove<4 for every legitimate caller/configuration. No actual valid out-of-range caller or contradictory ABI is demonstrated; this is not a proven introduced bug or bytefailure. Retain explicit partial index-population qualification, avoid arraywidening/boundschange or blanket safe-all-input claim, and investigate actual spawn/character writer contracts under issue3785."
+    },
+    {
+      "id": "PLAYER-READABLE-LAYOUT-ABI-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3785",
+      "owner": "codex-player-readable-current-root-producer1015",
+      "location": "include/Player.h; Player.cpp animation selection and actor slot0x72c",
+      "summary": "Existing metal-model index4 and undeclared actor-slot layout remain unresolved.",
+      "reason": "The current header has four mBodyModels entries then byte/padding0x0ec, while GetBodyModelID can return4. New animation rewrites retain explicit slot loads; no fifth array entry or changed shared layout is invented. Actor slot0x72c stays raw and its dActor use follows the actual Spawn producer. This record does not claim complete valid-input bounds or native field recovery."
+    },
+    {
+      "id": "PLAYER-READABLE-INTERFACE-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3785",
+      "owner": "codex-player-readable-current-root-producer1015",
+      "location": "src/game/player/Player.cpp and separate state initializer",
+      "summary": "Fixed-point scalar bridges, vector/matrix/resource views and startup state storage retain partial target ABI forms.",
+      "reason": "Native calls and typed state records reuse existing declarations; exact PMF targets/shape are corroborated, not unique original source spellings or complete C++ startup ownership. Measured cast/copy constraints stay recorded; other remaining casts are not declared universally necessary."
+    },
+    {
+      "id": "PLAYER-READABLE-LIFECYCLE-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3785",
+      "owner": "codex-player-readable-current-root-producer1015",
+      "location": "src/_ZN6PlayerC1Ev.cpp; include/Player.h; src/game/player/d_a_ply.cpp",
+      "summary": "Real compiler-spelled Player constructor/factory and separate lifecycle/metadata ownership remain outside this612-function source.",
+      "reason": "Separate196B C1 is still an extern-C pointer ABI body; the header has no explicit Player constructor, and the factory calls the explicit bridge after allocation. No Player::Player()/return new Player recovery, lifecycle enrollment, vtable/RTTI or initializer ownership is asserted."
+    }
+  ],
+  "current_proof_limits": {
+    "completion": "partial",
+    "no_new_matches": true,
+    "no_new_original_identifier_claim": true,
+    "no_private_CI_or_independent_current_acceptance": true,
+    "no_NDS_packaging_or_gameplay_test": true,
+    "global_rom_data_advisory": {
+      "verified": 970,
+      "partial": 1519,
+      "differs": 1,
+      "unnamed": 21
+    },
+    "old_harness_diagnostic": "The first predecessor focused runner completed3uncached compiles/612strict, then wrongly supplied onlyPlayer to the global intact cohort inventory. The refusal is preserved; correction uses the complete ordinary inventory, without any Source/policy edit. Current runner uses that correct inventory and passes from start to finish."
+  }
 }

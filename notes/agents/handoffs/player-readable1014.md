@@ -1,103 +1,80 @@
-# Handoff: player-readable1014
+# Handoff: player-readable1014 current composition
 
-This commit improves readability in the production Player translation unit while
-preserving its entire pinned-compiler object. It completes two producer passes;
-it does not complete Player's class reconstruction or independent source review.
+This commit preserves the complete two-pass Player readability candidate and
+records the current production proof. PR #3867 was merged externally by
+`andrewboudreau` at `50bfcd2d6af2ad888194b52153b9d757ac7b3fbf`. That entire
+tracked tree is literally the tested source checkpoint below. This evidence-only
+follow-up awaits fresh independent verification; Player class reconstruction
+remains partial under issue #3785.
 
-## Identity and resumption
+## Identity and scope
 
-- Issue: <https://github.com/tangosdev/sm64ds-decomp/issues/3785>.
-- Task/stage: `player-readable1014` / `readability`; producer session
-  `codex-player-readable1014`, Codex harness.
-- Branch: `cpp/player-readable1014`.
-- Source base, accepted input and installed workflow tools:
-  `132347a5a8d617de18c0de31b0b598788fa08329`.
-- Status: locally byte-verified candidate, awaiting independent verification.
-- Next action: verifier reviews this immutable commit against its base, including
-  source quality, retained limitations and production enrollment, then repeats
-  the relevant compiler/link checks in a separate wired worktree.
-- Local experiments, objects, per-function results and private receipts remain
-  under `C:/tmp/sm64ds-player-readable1014/build/player-readable/`. They are not
-  committed. The primary checkout was not used for source edits.
+The original producer is `codex-player-readable1014`, candidate `ded8ac7ebd974a0512164a35580aaf808a4723bc`,
+base `132347a5a8d617de18c0de31b0b598788fa08329`. The current producer is
+`codex-player-readable-current-root-producer1015`; the original branch and all
+historical evidence are preserved. The supported stale-composition rework keeps
+the full 612-function scope and continues from that original candidate.
 
-## Changes and evidence
+The actual current source checkpoint is `ae7a3725efbaad95e90d5f7b35555991321f323e` and tested base is
+`ea91964403017ecbc9482492397b11bc90d7d785`. Player.cpp is literally the original candidate's Source blob
+`05810f9c4e729e79f3d576f5297910ce8fcf5fec`. Headers, layouts, manifests, symbols, enrollment,
+helper policies and attribution are unchanged. The normal complete delink owns
+ov002 `[0x020bccfc, 0x020e67a8)`:612 functions and 257 changed bodies.
 
-The source scope is `src/game/player/Player.cpp`, ov002
-`[0x020bccfc, 0x020e67a8)`: 612 enrolled functions, 257 changed bodies.
-Headers, layouts, manifests, symbol names and attribution are unchanged.
+The original 676 scalar replacements,581 removed mangled call sites,71 typed state
+records, measured failed simplifications and remaining constraints are preserved
+in [the experiment record](../../experiments/player-readability-1014.json).
+No constructor, factory or class-completion claim is added by the restack.
 
-Pass one replaced 676 scalar offset accesses in 125 functions with existing
-members of the same width and signedness. Pass two replaced 581 mangled call
-sites, used typed state objects and animation interfaces, simplified repeated
-Player casts and integer pointer arithmetic where matching allowed, and removed
-obsolete declarations. The local stand-in Player/fBase classes in
-`func_ov002_020c8b78` are gone. The introductory comment now describes the current
-scope instead of repeating superseded migration counts.
+## Current byte and production evidence
 
-No new semantic state, animation or field names are asserted. All 71 typed
-address-named state objects have the three PMF records populated by
-`src/unnamed/ov002/__sinit_ov002_021019d0.c`. The script actor's type follows its
-Spawn producer and dActor position/angle accesses; its slot stays unnamed.
-The original physical Player file boundary remains an inference.
+Four fresh focused compilations cover baseline GitLF, candidate GitLF, physical
+CRLF and ordinary production preparation. The three complete RAW objects are
+literally identical:364400 B, SHA256
+`8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132`. They include 1180 sections,
+2287 symbols and 4974 typed relocation records. The618 nonzero functions are the
+612 enrolled entries plus six unchanged existing compiler-only helpers.
+Ordinary preparation is literally the original result, SHA256
+`285238d9b2627e66076e7f73d947bb9346188968fb7d3c5d0c87e42152da23d6`, and the exact object consumed by the current full run.
+No allocated nontext output or new helper policy is introduced.
 
-[The experiment record](../../experiments/player-readability-1014.json) contains
-the changed ordinals, source blob, object hashes, measured failed simplifications
-and outstanding reconstruction work. It distinguishes compiler barriers from
-unresolved declarations; a remaining cast is not automatically necessary.
+All 612 functions from the fresh current object independently report VERIFIED,
+zero differing bytes and zero blind relocations with exact module/name/address/
+size/destination checks. The actual current full stock run exited0 in
+356.625s:106/106 modules, 11334/11334 functions, 331 data claims and
+239 BSS claims. It reused 2752 cached objects; the four fresh focused compilations
+are separate. The nine baseline symbol diagnostics and existing global data
+advisory remain; no new symbol errors or code mismatches are reported.
 
-## Byte and production proof
+Current-base declaration agreement, port references and whitespace checks pass.
+The generic prepush command also completed 612 VERIFIED/zero blind in
+980.594s in the frozen predecessor worktree. Its exact old head/base and
+scoped transfer are explicit in the experiment record: unchanged Player Source,
+headers, tools, symbol/relocation/pin inputs, and only unrelated Snowman manifest
+prose differs. That scoped result is corroborated by the fresh current 612 checks;
+it is not mislabeled as a current full-ROM run. The full-ROM run above is new.
 
-- Pinned compiler: `2004/b56`, stock `rombuild.CFLAGS` with `-lang c++`.
-  The base and final raw objects are identical, all 364,400 bytes, SHA-256
-  `8578494b097f2690c70bd21119d794a87a1ecd73f115dba65edadb3255190132`.
-  This includes all emitted code, relocation records, symbol metadata and order.
-- The raw object defines 618 functions: the 612 enrolled functions plus six
-  existing compiler-only empty destructors. Applying the unchanged manifest
-  policy produces SHA-256
-  `285238d9b2627e66076e7f73d947bb9346188968fb7d3c5d0c87e42152da23d6`,
-  exactly the Player object consumed by the production build. Player emits no
-  non-text allocated data.
-- `config/arm9/overlays/ov002/delinks.txt` and the generated stock configuration
-  both enroll this source as `complete` over the range above. This is a `src/`
-  change, not a shadow translation unit.
-- `python tools/rombuild.py -j16 --no-rom`: exit 0; 106/106 modules exact,
-  11,334/11,334 source-built functions reproduce, zero new symbol errors.
-  Cache use: 2,751 objects reused, one compiled. The final source was compiled
-  again after the last readability refinements; its prepared object was checked
-  against the object that this build consumed and is identical.
-- All 612 enrolled functions from that final fresh raw object were checked with
-  `linkcheck.linkcheck`, using each exact symbol, module, address and size:
-  612 `VERIFIED`, zero differing bytes, zero blind relocations. The local JSON
-  report is `build/player-readable/final-object-linkcheck.json`.
-- `python tools/check_decl_agreement.py --changed 132347a5a8d617de18c0de31b0b598788fa08329`:
-  exit 0, no new disagreements or local redeclarations of header interfaces.
-  This is the repository ratchet, not a claim that every legacy declaration agrees.
-- `python tools/port_refcheck.py`: exit 0, 267 references resolve.
-- `git diff --check`: exit 0.
+## Source review and remaining work
 
-The ordinary pre-push gate command is
-`python tools/prepush_linkcheck.py --files src/game/player/Player.cpp --json build/player-readable/linkcheck.json`.
-Its result is recorded in the experiment JSON alongside the fresh-object check.
+Independent Source-only preflight covers every 257 changed block: 217 explicit
+structural correspondences plus 40 manual residual reviews. All 71 state records /
+213 PMF slots were traced: 170 retail targets resolve to genuine Player int/s32
+methods with zero adjustment and virtual bit; 43 cleanup slots use the canonical
+null descriptor at arm9:0x02086b58. This is Source/ROM-reading corroboration,
+not final current-candidate acceptance or recovered original English names.
 
-## Limits and remaining work
+Retain `PLAYER-READABLE-TEXSEQ-INDEX-BOUND-1015`: four actual texture-sequence
+objects and their stride are measured, but the entire legitimate runtime
+param1 index population is not range-proved. No valid bad caller is demonstrated.
+Metal-model index 4 versus the four-entry header array, undeclared actor slot 0x72c,
+raw scalar/vector/matrix/PMF and Fix12 interfaces remain partial. The separate 196 B
+C1 is still an extern-C pointer bridge; Player.h lacks an explicit constructor,
+and the factory does not yet spell `new Player`. Lifecycle methods, vtables/RTTI
+and startup ownership remain outside this 612-function span. Issue #3785 stays open.
 
-The most concrete layout concern found during the second pass is
-`GetBodyModelID()` returning 4 for metal while `Player.h` declares
-`mBodyModels[4]` and a byte plus padding at `0x0ec`. New animation rewrites retain
-explicit slot loads instead of extending the existing out-of-bounds array idiom.
-Resolve this shared layout with allocation/lifecycle evidence and consumer
-verification before propagating it. The actor slot at `0x72c` likewise remains
-inside an undeclared portion of the layout.
-
-Scalar Fix12 animation/particle/music boundaries, opaque object and vector views,
-some raw offsets, and measured copy/reload forms remain. Constructor/destructor,
-vtable/RTTI and initializer ownership are still separate. Issue #3785 is open
-reconstruction scope; this readability sweep does not close it.
-
-The stock control and candidate both report the same nine pre-existing symbol
-check errors. The whole-tree data inventory still reports one differing
-`_ZTV10dCcAcPos_c` from two unchanged destructor sources, 1,519 partial symbols
-and 21 unnamed symbols. These are not resolved by the Player byte pass.
-The production run used `--no-rom`; no candidate NDS packaging, gameplay test,
-private PR CI, independent verifier acceptance or current-main composition is
-claimed here.
+Next: claim the exact current immutable report offer in an independent wired worktree,
+review all four report findings and the updated handoff, recheck current Source/
+object/link/full-build evidence and production enrollment, then publish the
+supported verifier output. This task has two stages; task completion alone is
+not PR private validation or merge. Publish the reviewed evidence as a separate
+follow-up PR; PR #3867 is already merged. No merge is authorized by this handoff.
