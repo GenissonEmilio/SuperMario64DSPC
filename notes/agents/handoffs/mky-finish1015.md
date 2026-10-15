@@ -1,3 +1,29 @@
+# Monkey and cage grouped Actor caller checkpoint
+
+Issue #2410 remains **open**. This is a partial source checkpoint; it does not complete the class or accept the shared-header migration.
+
+Task: `issue2410-finish1015-cont2`. Producer: `codex-mky-finish-producer1015`. Saved input: `a67bb58e8bee6fb75224a3ca8fce4cbe3585f75f`.
+
+Fresh remote main: `53dc648eaf7d24847f461a193a3f81203cf4d098`. Frozen Actor dependency: `3196cd8addbf7ef7bdae61fa9c887df1baa76e92`. Both were merged normally; the composition before these caller edits is `880bc75e48fbe1a6a865f6422b92fc5395f9f72d`. The current worktree is `C:/tmp/sm64ds-mky-groups2410`, branch `cpp/mky2410-actor-groups`. Actor header, Actor lifecycle and Yegg changes are inherited from their legitimate owner; this producer edits only its reserved Monkey and cage consumers, the Monkey header comments, their two manifests and these two records.
+
+## Source changes and scoped evidence
+
+The two callers use genuine inherited position, previous-position, angle and velocity groups. Monkey now uses actual vector references/addresses in place of 27 position casts and eight scalar-address query operands. Two position copies use ordinary vector assignment. Two state functions retain their measured component-store order through typed references; an unconditional aggregate-copy experiment changed their bodies and was not adopted. EnterState7 no longer launders a position pointer, and the raycast receives the actual position member. Cage retains its existing explicit star-position stores because the aggregate trial changed its complete object.
+
+Pinned `2004/b56` checks verify all 46 Monkey and eight cage text functions. Generic strict checking reports 54 VERIFIED rows plus BLIND-6 on the cage initializer; that same helper limitation is reproduced on the untouched saved control. The actual production-prepared cage initializer separately returns VERIFIED, blind 0, diffs empty. Production preparation accepts its 108-byte initializer, four-byte constructor entry, 40-byte BSS and all 11 nontext relocations with exact policies, bindings, destinations and order.
+
+Complete raw ELF comparison against saved controls includes every section, symbol attribute, initializer, metadata, BSS and typed relocation. Both objects are equal after exactly three compiler-local name correspondences: Monkey Bundle$949 to Bundle$945, and cage @505/@506 to @501/@502. The manifest changes license only those exact measured names; canonical @54/@55 homes remain unchanged. Subsequent native caller improvements and pinned formatting are literally raw-object identical to the first candidate objects. Declaration agreement has no new disagreements or local header copies; changed-line style has zero findings and zero deferrals across three files.
+
+The tracked experiment record contains input/report SHA-256 values and the exact bounds. Ignored proof artifacts are under `build/grouped-actor-followup/` in this worktree. The historical full-ROM proof below belongs to the earlier flat-field checkpoint and **does not accept this grouped-header composition**. No full-ROM check or private CI has run on this composition. The Actor owner must validate its actual complete consumer closure after composing the independent outputs.
+
+## Remaining work and next action
+
+The seven shared scalar API names, genuine shared asset handles/lifecycles, semantic helper names, Monkey native initializer/global/profile enrollment and metadata ownership still need completion. Cage's volatile stack reservation, char-pointer helper and asset ABI wrappers remain partial source. The incompatible shared Matrix4x3 definitions remain explicitly recorded. None is a proven compiler impossibility.
+
+Freeze this owned caller delta for bounded independent Astra review, then hand its immutable output to the legitimate Actor owner for full composition verification. Four shared bookkeeping reservations still await the explicit user decision on the prepared evidence-preserving recovery plan in the previous worktree; no foreign reservation has been cleared. Keep #2410 open and leave #2412 untouched.
+
+## Preserved earlier checkpoint history
+
 # daMky_c finishing checkpoint
 
 WIP continuation of issue2410 and merged PR3882; this checkpoint does not complete the issue or accept production integration.

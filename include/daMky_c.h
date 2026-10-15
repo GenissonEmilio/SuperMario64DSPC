@@ -25,7 +25,7 @@
  * func_ov030_02111bc4 when the mouth-state flag is set. Consumers that used the old duplicated names
  * were repointed to the inherited dActor_c/fBase_c names: mActorID ->
  * actorID, unk_09c -> mVertAccel, unk_0a0 -> mTerminalVelocity, unk_0b0 ->
- * mFlags (mPosX/Y/Z, mScaleX/Y/Z, mAreaId already share dActor_c's names).
+ * mFlags (mPosition, mScaleX/Y/Z and mAreaId are inherited).
  *
  * mWithMeshClsn was mistyped `u8` at 0x194 in the generated header --
  * daMky_c_classInit_MONKEY_THIEF/_MONKEY_STAR call _ZN10dBgCh_ActrC1Ev at that
@@ -75,7 +75,7 @@ struct daMky_c : dActor_c {
     s32 mPerchPosX;         /* 0x380 */
     s32 mPerchPosY;         /* 0x384 */
     s32 mPerchPosZ;         /* 0x388 */
-    /* Copy of mPosX/Y/Z seeded in InitResources. func_ov030_02111dd0 updates
+    /* Copy of mPosition seeded in InitResources. func_ov030_02111dd0 updates
        it after a ground check; func_ov030_02111734 also resets it.
        [src/game/actors/d_a_mky.cpp: InitResources, func_ov030_02111dd0,
         func_ov030_02111734] */

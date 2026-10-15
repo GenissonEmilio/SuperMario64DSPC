@@ -22,7 +22,8 @@
  *   include/decl_common.h already declares this exact spelling.
  * Leftover: dBgActor_c::IsClsnInRangeOnScreen, dBgW_KcMbg::SetFile and
  *   dBgCh_Actr::Init stay mangled -- each takes Fix12<int> by value, the
- *   known mwccarm language-mode wall, and a typed call homes the argument.
+ *   current reconstructed shared ABI. Scalar-interface migration is a
+ *   separate dependency; these retained calls are not a compiler-impossibility claim.
  * Leftover: Behavior needs the four-word volatile stack reservation to
  *   reproduce the cartridge's frame; without it the body is 17 words short.
  * Leftover: data_ov030_02115c80 / 02115c88 are this overlay's KCL and BMD
@@ -108,13 +109,12 @@ s32 daObjHmBskt_c::InitResources()
 
     KCL_File *clsnFile = (KCL_File *)dBgW_Kc::LoadFile(data_ov030_02115c80);
     _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-        &mMeshCollider, clsnFile, &mClsnMat, 0x199, mAngleY,
-        &data_ov030_02114ee4);
+        &mMeshCollider, clsnFile, &mClsnMat, 0x199, mAngles.y, &data_ov030_02114ee4);
 
     Vector3 starPos;
-    starPos.x = mPosX;
-    starPos.y = mPosY;
-    starPos.z = mPosZ;
+    starPos.x = mPosition.x;
+    starPos.y = mPosition.y;
+    starPos.z = mPosition.z;
     starPos.y += 0x3c000;
     mStarActor = dActor_c::Spawn(
         0xb2, (u8)(param1 & 0xf) | 0x50, starPos, 0, mAreaId, -1);
@@ -129,20 +129,20 @@ s32 daObjHmBskt_c::Behavior()
     (void)&dummy;
 
     _ZN10dBgActor_c21IsClsnInRangeOnScreenE5Fix12IiES1_(this, 0, 0);
-    mAngleY = mAngleY + mHorzSpeed;
+    mAngles.y = mAngles.y + mHorzSpeed;
 
     if (mVertAccel != 0) {
         mFlags &= ~1;
         UpdatePos(0);
         func_ov030_0211124c((char *)this, (char *)&mWithMeshClsn);
 
-        s32 y = mPosY;
-        s32 z = mPosZ;
+        s32 y = mPosition.y;
+        s32 z = mPosition.z;
         dActor_c *star = mStarActor;
-        s32 x = mPosX;
-        star->mPosX = x;
-        star->mPosY = y + 0x3c000;
-        star->mPosZ = z;
+        s32 x = mPosition.x;
+        star->mPosition.x = x;
+        star->mPosition.y = y + 0x3c000;
+        star->mPosition.z = z;
     }
 
     return 1;

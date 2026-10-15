@@ -1,53 +1,141 @@
 {
-  "schema": 1,
-  "task_id": "issue2410-finish1015",
+  "schema": 2,
+  "task_id": "issue2410-finish1015-cont2",
   "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/2410",
-  "completion": "partial - shared source dependencies and ownership recovery pending",
-  "original_input": "df618e80271212106c9f1e225756f691abaa498b",
-  "tested_base": "e209dacfaaa95cb5490637ff053d62182689bebe",
+  "completion": "partial; conditional grouped Actor caller adaptation only",
+  "formal_acceptance": false,
+  "original_input": "a67bb58e8bee6fb75224a3ca8fce4cbe3585f75f",
+  "tested_main": "53dc648eaf7d24847f461a193a3f81203cf4d098",
+  "frozen_actor_dependency": "3196cd8addbf7ef7bdae61fa9c887df1baa76e92",
+  "pre_edit_composition": "880bc75e48fbe1a6a865f6422b92fc5395f9f72d",
   "compiler": "2004/b56",
+  "source_ownership": [
+    "daMky_c",
+    "daObjHmBskt_c"
+  ],
   "production_inputs": {
-    "src/game/actors/d_a_mky.cpp": "45685a522262b5743e0ccf8345fe6bff5eb2e78198925b1333c9f8c408991f39",
-    "include/daMky_c.h": "a0aec09dcd810e0621dcdacc6f2bade833460fe804cedf1a2e239c3f23ccd301",
-    "include/dActor_c.h": "81356503076794ba1796732848f6d9713798bd5e6713a17079b7f0cc02dd5584",
-    "config/tu_manifest.d/ov030/daMky_c.json": "1465ddb0395e5fd8127ffdf9707dcc719489c07f29674ce59a6e949b62774752"
+    "src/game/actors/d_a_mky.cpp": "eafda39ebfd37a9978ceb1411cdaa80c91d4c95e166b60805cee3e6fcb466e03",
+    "src/game/actors/d_a_obj_hm_bskt.cpp": "f3158e02728569976455e0f7e461229a508f4955eb38d8a5ec0333fc99aa6f32",
+    "include/daMky_c.h": "1b64783a180eaf531cb07b2b4162872f43990b696fab32c94fc7502d886bcf04",
+    "include/dActor_c.h": "6fd643741a244bed3a6b4d87424b396bc82a8249e52e5be52a23acfe5ab1fdc8",
+    "config/tu_manifest.d/ov030/daMky_c.json": "d47f2b8d119e577b9af6f1e47491239f4366ab4d677799a69f06401043b00b85",
+    "config/tu_manifest.d/ov030/daObjHmBskt_c.json": "bd55bde9d1f5a50eb56c14e887958708585eaab31ea9a0fc6fb41563dea41d88"
   },
   "reports": {
-    "build/native-final-tu-verify.log": "fe7dbcb05d00f7627e05fd4f307e6cbdd0f4bd1e4755f4b71d277a76d9eaf196",
-    "build/native-checkpoint-full-rom.json": "630c443d28cb390ccc2c68bb6a7e8eedc286708be0cfcceb3ac0b19bd7148c97",
-    "build/native-checkpoint-declarations.log": "c05d916e729aed68430e46cc4a7c4ef3e7f1dd40520e24ee677a84da8338b15e",
-    "build/native-checkpoint-style.json": "07d120cc0d2789c380df075da71f0b96f65800a6c17b09f0eacb77abcfda49fb",
-    "build/actor-header-equivalence.json": "0c3796c069b9023148e96e171112ebbe785219a6713f50c5f1dd9567488a9233",
-    "build/format-proof/equivalence.json": "3bb177e626a0e6b9c0dc48d2bdc3ee6e209fbefd3544d7c38180e20953a2d553"
+    "build/grouped-actor-followup/whole-object-equivalence.json": "d7378cc00a4abd36276ed0e66111896dbb896851deba742e5b9f960719a27998",
+    "build/grouped-actor-followup/mky-final-verify.log": "a4b1b85a7318827b961d3115b3e1e28a307b08a627d5b6a89800c7c6d217e598",
+    "build/grouped-actor-followup/basket-production-proof.json": "0ced4c2db72a899f7c2739f668b6ec0ba33ee0f2a73697a22133c2ed7050bff6",
+    "build/grouped-actor-followup/basket-initializer-strict.json": "2a739a61c46161ddeb8eece56de7d7087a388f19640d15f06508b7b22fb2d6a6",
+    "build/grouped-actor-followup/strict-callers.json": "d6d6847d843888ae4214c96f552b27466fddc7d7fca57ebe2120f7ffb1facaa0",
+    "build/grouped-actor-followup/baseline-helper-limits.json": "a63ed299c5540e5fb9ac45f5909838c78beb9f0fa6a483ba8b0765c7a0ed5ebd",
+    "build/grouped-actor-followup/declarations.log": "dc65a69aff482036f0264944abc4dc9dadaf70a57509c70bad8fff56e06c73e0",
+    "build/grouped-actor-followup/style-final.json": "03734fa5bbfb14784af8f4c213e9a948eb3c7bb0c6dc2dc45820b05ceb2bc058",
+    "build/grouped-actor-followup/format-proof.json": "addfa5a97660492fbfa1aaa06f9d16486113ff3f57fca9325a348b32a964bb15",
+    "build/grouped-actor-followup/native-refs/proof.json": "9d5ad54d0e5eda9309de3e2c86745df99682844b0d7d067a269261c5d7083cab",
+    "build/grouped-actor-followup/native-components/proof.json": "ed2bf62678e26dad8100126c8f19beeffa6aae807964f8e72a8381d8f0829797",
+    "build/grouped-actor-followup/native-direct-position/proof.json": "6d3d153807db2d4c7290bb2109c7843312a0217219c99f108f221d59e666a488"
   },
   "actual_checks": {
-    "monkey_functions": 46,
-    "strict_isolation_destinations_order": "PASS",
-    "other_shared_actor_consumers_raw_identical": 306,
-    "full_rom_modules_exact": 106,
-    "source_functions_reproduced": 11334,
-    "source_functions_mismatched": 0,
-    "source_data_claims_reproduced": 332,
-    "declaration_ratchet": "no new disagreements or local redeclarations",
-    "style_findings": 0,
-    "style_deferrals": 0,
-    "formatting": "same lexical tokens; complete Monkey raw object identical"
+    "monkey_text_functions": 46,
+    "cage_text_functions": 8,
+    "plain_strict_verified": 54,
+    "plain_strict_warning": "Cage native initializer is BLIND-6 through the generic helper, also reproduced on the untouched control.",
+    "actual_prepared_initializer": {
+      "verdict": "VERIFIED",
+      "blind": 0,
+      "diffs": []
+    },
+    "cage_nontext_relocations": 11,
+    "cage_nontext_sections": {
+      ".init": 108,
+      ".ctor": 4,
+      ".bss": 40
+    },
+    "complete_raw_object_equivalence": "Both complete ELF objects equal saved controls after only the three compiler-local name correspondences below. Later native caller improvements and formatting are literally raw-object identical to these candidates.",
+    "exact_name_correspondences": {
+      "_ZN7daMky_c21Bundle$949d_a_mky_cppD1Ev": "_ZN7daMky_c21Bundle$945d_a_mky_cppD1Ev",
+      "@505": "@501",
+      "@506": "@502"
+    },
+    "declaration_ratchet": "no new disagreements or local header redeclarations",
+    "style": {
+      "files": 3,
+      "findings": 0,
+      "deferrals": 0
+    },
+    "full_rom_on_this_composition": "NOT RUN; shared-header closure remains with the legitimate Actor owner"
   },
+  "source_changes": [
+    "Adapt inherited position, previous-position, angle and velocity members to the frozen genuine Actor groups in two owned consumers.",
+    "Remove 27 scalar-to-position-vector casts and use eight genuine vector addresses in query calls.",
+    "Use ordinary whole-vector assignment for two exact position copies; retain measured component-store order in two state functions using actual const Vector3 references.",
+    "Remove dead EnterState7 pointer laundering and use the native position reference in DetectRaycastClsn.",
+    "Retain exact compiler-only helper admission and canonical Cage registration-node homes; no new ROM alias or storage."
+  ],
+  "negative_trials": [
+    "Unconditionally replacing all six position copies with Vector3 assignment changes two function bodies. The adopted version uses typed component access where required.",
+    "Cage aggregate star-position initialization changes the complete object and was not adopted. The original explicit component stores remain."
+  ],
   "limits": [
-    "No private CI or final independent exact-commit Source acceptance of this checkpoint.",
-    "Current class metadata remains externalized. Global ROM-data advisory verdicts include974verified/1521partial/1differ/15unnamed and are separate from exact module/source gates.",
-    "Native globals/initializer and genuine shared lifecycle/API bodies remain scratch-only conditional experiments; do not treat them as production enrollment.",
-    "Four-file queue recovery explicitly awaits user authorization; all other current owners retain their resources.",
-    "Shared Matrix4x3 definitions remain incompatible C++ types selected byincludeorder."
+    "Actor header, Actor TU/C1/C2 and Yegg are inherited merge dependencies authored and owned elsewhere. This is not acceptance of their full 307-consumer closure.",
+    "No current full-ROM, private CI, independent terminal Source acceptance, class completion or source integration claim.",
+    "Existing Cage volatile stack reservation, char-pointer collision helper and asset lifecycle wrappers remain explicit partial reconstruction.",
+    "Seven scalar API canonical migrations, shared handle/lifecycle reconstruction, semantic helper names, genuine Monkey globals/initializer/profiles and metadata ownership remain unfinished.",
+    "The shared Matrix4x3 definitions remain incompatible C++ types selected by include order.",
+    "Four shared bookkeeping resource recoveries await explicit user authorization. No foreign reservations have been changed."
   ],
-  "remaining": [
-    "production shared handle layout/lifecycle plus264-source closure (391 duplicated local storage declarations in199 affected sources)",
-    "seven scalar API canonical migrations plus360-source header closure and preservation of declaration debt/attribution",
-    "semantic method helper names and desired collision accessors",
-    "native initializer/global/profile/data ownership with exact metadata extents and genuine interior array labels",
-    "separate explicit-size terminal BSS tooling change",
-    "independent Source acceptance and private exact-head/base validation"
-  ],
-  "full_rom_tested_source_commit": "a24cdcbf48348bd1ce9bca8f8ffea4a9ef1d462f",
-  "full_rom_bridge_to_this_commit": "Subsequent changes are pinned formatting with identical lexical tokens and complete raw Monkey object, scoped generated verification metadata, and documentation. The production policy, addresses, enrolled source set and all other consumer tokens are unchanged."
+  "historical_checkpoint": {
+    "schema": 1,
+    "task_id": "issue2410-finish1015",
+    "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/2410",
+    "completion": "partial - shared source dependencies and ownership recovery pending",
+    "original_input": "df618e80271212106c9f1e225756f691abaa498b",
+    "tested_base": "e209dacfaaa95cb5490637ff053d62182689bebe",
+    "compiler": "2004/b56",
+    "production_inputs": {
+      "src/game/actors/d_a_mky.cpp": "45685a522262b5743e0ccf8345fe6bff5eb2e78198925b1333c9f8c408991f39",
+      "include/daMky_c.h": "a0aec09dcd810e0621dcdacc6f2bade833460fe804cedf1a2e239c3f23ccd301",
+      "include/dActor_c.h": "81356503076794ba1796732848f6d9713798bd5e6713a17079b7f0cc02dd5584",
+      "config/tu_manifest.d/ov030/daMky_c.json": "1465ddb0395e5fd8127ffdf9707dcc719489c07f29674ce59a6e949b62774752"
+    },
+    "reports": {
+      "build/native-final-tu-verify.log": "fe7dbcb05d00f7627e05fd4f307e6cbdd0f4bd1e4755f4b71d277a76d9eaf196",
+      "build/native-checkpoint-full-rom.json": "630c443d28cb390ccc2c68bb6a7e8eedc286708be0cfcceb3ac0b19bd7148c97",
+      "build/native-checkpoint-declarations.log": "c05d916e729aed68430e46cc4a7c4ef3e7f1dd40520e24ee677a84da8338b15e",
+      "build/native-checkpoint-style.json": "07d120cc0d2789c380df075da71f0b96f65800a6c17b09f0eacb77abcfda49fb",
+      "build/actor-header-equivalence.json": "0c3796c069b9023148e96e171112ebbe785219a6713f50c5f1dd9567488a9233",
+      "build/format-proof/equivalence.json": "3bb177e626a0e6b9c0dc48d2bdc3ee6e209fbefd3544d7c38180e20953a2d553"
+    },
+    "actual_checks": {
+      "monkey_functions": 46,
+      "strict_isolation_destinations_order": "PASS",
+      "other_shared_actor_consumers_raw_identical": 306,
+      "full_rom_modules_exact": 106,
+      "source_functions_reproduced": 11334,
+      "source_functions_mismatched": 0,
+      "source_data_claims_reproduced": 332,
+      "declaration_ratchet": "no new disagreements or local redeclarations",
+      "style_findings": 0,
+      "style_deferrals": 0,
+      "formatting": "same lexical tokens; complete Monkey raw object identical"
+    },
+    "limits": [
+      "No private CI or final independent exact-commit Source acceptance of this checkpoint.",
+      "Current class metadata remains externalized. Global ROM-data advisory verdicts include974verified/1521partial/1differ/15unnamed and are separate from exact module/source gates.",
+      "Native globals/initializer and genuine shared lifecycle/API bodies remain scratch-only conditional experiments; do not treat them as production enrollment.",
+      "Four-file queue recovery explicitly awaits user authorization; all other current owners retain their resources.",
+      "Shared Matrix4x3 definitions remain incompatible C++ types selected byincludeorder."
+    ],
+    "remaining": [
+      "production shared handle layout/lifecycle plus264-source closure (391 duplicated local storage declarations in199 affected sources)",
+      "seven scalar API canonical migrations plus360-source header closure and preservation of declaration debt/attribution",
+      "semantic method helper names and desired collision accessors",
+      "native initializer/global/profile/data ownership with exact metadata extents and genuine interior array labels",
+      "separate explicit-size terminal BSS tooling change",
+      "independent Source acceptance and private exact-head/base validation"
+    ],
+    "full_rom_tested_source_commit": "a24cdcbf48348bd1ce9bca8f8ffea4a9ef1d462f",
+    "full_rom_bridge_to_this_commit": "Subsequent changes are pinned formatting with identical lexical tokens and complete raw Monkey object, scoped generated verification metadata, and documentation. The production policy, addresses, enrolled source set and all other consumer tokens are unchanged."
+  },
+  "next_action": "Obtain bounded independent review of this immutable owned delta, then offer it to the Actor owner for full composition verification. Preserve checkpoint while awaiting the explicit four-file recovery decision. Keep issue 2410 open and leave 2412 untouched."
 }
