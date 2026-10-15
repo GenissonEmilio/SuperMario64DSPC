@@ -35,7 +35,7 @@
  *   inline is 0x34 against 0x40. The int temporary stays on all five
  *   callbacks.
  * - data_ov021_* handles, data_02092768, data_020a0e68 and data_02082214
- *   stay address names (__sinit_ov021_02113500 owns the handles).
+ *   stay address names; this TU now owns their native static initialization.
  *   dActor_c has no Pos(), so callers cast &mPosX.
  */
 
@@ -51,16 +51,36 @@ struct Quaternion;
 /* A SharedFilePtr seen from outside: SharedFilePtr.h deliberately declares
  * no fields, and these reads need the loaded buffer. The fields follow the
  * layout that _ZN13SharedFilePtr4LoadEv's definition uses. */
-struct NewsLiftFile {
+struct NewsLiftFile : SharedFilePtr {
     u16 fileID;
     u8 numRefs;
     void *filePtr;
 };
 
-extern NewsLiftFile data_ov021_021149a0;
-extern NewsLiftFile data_ov021_021149a8;
-extern NewsLiftFile data_ov021_021149b0;
-extern NewsLiftFile data_ov021_021149b8;
+/* Inferred resource-family ABI views, not recovered original type names.
+ * The ROM uses distinct model/collision constructors and destructors on the
+ * same eight-byte file layout. The manifest binds each import to that family. */
+struct NewsLiftModelFile : NewsLiftFile {
+    NewsLiftModelFile(u32 fileID);
+    ~NewsLiftModelFile();
+};
+
+struct NewsLiftCollisionFile : NewsLiftFile {
+    NewsLiftCollisionFile(u32 fileID);
+    ~NewsLiftCollisionFile();
+};
+
+NewsLiftModelFile data_ov021_021149a0(0x05d7); // CV_NEWS_LIFT_BMD
+NewsLiftCollisionFile data_ov021_021149a8(0x05d8); // CV_NEWS_LIFT_KCL
+NewsLiftModelFile data_ov021_021149b0(0x05d5); // CV_LIFT_BTN_BMD
+NewsLiftCollisionFile data_ov021_021149b8(0x05d6); // CV_LIFT_BTN_KCL
+
+/* Four separately registered Vector3 objects in contiguous ROM BSS. The
+ * existing transform loops walk this layout from the first object's address. */
+Vector3 data_ov021_02114a20(0, 0x32000, 0xc8000);
+Vector3 data_ov021_02114a2c(0, 0x32000, -0xc8000);
+Vector3 data_ov021_02114a38(0xc8000, 0x32000, 0);
+Vector3 data_ov021_02114a44(-0xc8000, 0x32000, 0);
 extern CLPS_Block data_ov021_02113a60;
 extern CLPS_Block data_ov021_02113a80;
 
@@ -93,7 +113,6 @@ void func_020393c4(dBgW *collider, void *callback);
 extern struct Matrix4x3 data_020a0e68;
 extern s32 data_02092768[];
 extern s16 data_02082214[];
-extern const Vector3 data_ov021_02114a20[4];
 extern const u16 data_ov021_02114740[];
 }
 
@@ -461,7 +480,7 @@ void daObjCvNewsLift_c::UpdateModelTransforms()
     Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, mAngleY);
     mModel.mat4x3 = data_020a0e68;
     mainMat = &mModel.mat4x3;
-    offset = data_ov021_02114a20;
+    offset = &data_ov021_02114a20;
     for (i = 0; i < 4; i++) {
         hang = *offset;
         if (mLoweredPlatform == i && !mBumped)
@@ -502,7 +521,7 @@ void daObjCvNewsLift_c::UpdateClsnTransforms()
     mClsnMat = data_020a0e68;
     mMeshCollider.Transform(mClsnMat, mAngleY);
 
-    offset = data_ov021_02114a20;
+    offset = &data_ov021_02114a20;
     i = 0;
     cursor = this;
     platformMat = mPlatformMats;
