@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "task_id": "yegg-native-three-method-continuation1014",
+  "completion": "unfinished shared-header migration; local three-method checkpoint only",
+  "formal_acceptance": false,
+  "publication_ready": false,
+  "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+  "current_report_producer": {
+    "session": "codex-yegg-native-three-method-astra-producer1014",
+    "actual_agent_uuid": "01a13996-b2f1-7d93-8bdd-510e5c78a79e"
+  },
+  "inherited_source_and_report_authorship": "Retained historical reports and address-keyed credits; this producer authors current grouped header/Yegg implementation and this report, not prior Root composition.",
+  "baseline_commit": "dc6f82f817b4417035119bb8cfa048be6786524c",
+  "main_source_base": "e209dacfaaa95cb5490637ff053d62182689bebe",
+  "original_task_input": "313a760cabe232c0128e0945724c64f74ea59ccf",
+  "source_header_manifest_sha256": {
+    "src/game/actors/d_a_yegg.cpp": "e9d6a964e29abc09a9ab1bd4fe1cc76e39fbc7fd3ab6fce82d223fe56f6e3eb1",
+    "include/dActor_c.h": "d1791f40a0175097269acc0956c76cef4752dbd20031414e36058ce2b23c116a",
+    "config/tu_manifest.d/ov002/daYegg_c.json": "b9a339b618d658261c369dfc1a6aa0700c8c105d9ae5b4634223c65de10a6b10"
+  },
+  "change": "Use genuine dActor position, previous-position, rotation and velocity member objects, and actual member references/component access in all three intended Yegg methods plus required Yegg component paths. Preserve the independently handed-off Matrix4x3* carry-matrix field layer in both language views.",
+  "groups": [
+    {
+      "name": "mPosition",
+      "type": "Vector3",
+      "offset": "0x5c",
+      "evidence": "Spawn coordinates and world-position consumers."
+    },
+    {
+      "name": "mPreviousPosition",
+      "type": "Vector3",
+      "offset": "0x68",
+      "evidence": "BeforeBehavior snapshots current position components."
+    },
+    {
+      "name": "mAngles",
+      "type": "Vector3s",
+      "offset": "0x8c",
+      "evidence": "Spawn rotation and angle consumers."
+    },
+    {
+      "name": "mVelocity",
+      "type": "Vector3",
+      "offset": "0xa4",
+      "evidence": "UpdatePosWithOnlySpeed adds these three components to position; vertical component includes acceleration and terminal-speed clamp."
+    }
+  ],
+  "grouping_qualification": "Names and original grouped types are inferred; bytes alone do not uniquely recover original C++ type. Existing Vector3/Vector3s types provide actual member objects, not overlays or macro aliases. They introduce real C++ subobject lifetimes even when emitted lifecycle code stays identical. C view uses existing POD typedef spellings and has no C++ lifetime semantics.",
+  "local_proof": {
+    "all_emitted_function_bodies_literal": 36,
+    "ordinary_code_and_initializer_strict": 34,
+    "blind": 0,
+    "diffs": 0,
+    "raw_literal": false,
+    "raw_baseline_sha256": "40d90615941852d4b5c2483a82fb06b3f718c46c0055cfe215e3c059d2279d22",
+    "raw_candidate_sha256": "979261420eee5ea0961551394d6ec1efd0e916aeb2ec6403e830b95d80d3e122",
+    "ordinary_prepared_literal": true,
+    "ordinary_sha256": "b5358c2475f7bd8f4e76b92a3479ef64d57fc80d687a3e12830ff820f62a87da",
+    "raw_bytes": 26808,
+    "temporary_bijection": {
+      "@1563": "@1559",
+      "@1565": "@1561",
+      "@1567": "@1563",
+      "@1569": "@1565",
+      "@1571": "@1567",
+      "@1573": "@1569",
+      "@1575": "@1571",
+      "@1577": "@1573"
+    },
+    "symbols": 236,
+    "allocated_sections": 57,
+    "raw_typed_edges": 292,
+    "prepared_typed_edges": 240,
+    "canonical_metadata_records": 11,
+    "canonical_metadata_full_bytes": 241,
+    "canonical_metadata_refs": 46,
+    "owned_data_bytes": 64,
+    "owned_ctor_bytes": 4,
+    "owned_BSS_bytes": 64,
+    "canonical_Vector3_D1_address": "arm9:0x020072c0",
+    "new_or_removed_functions": [],
+    "manifest_changes": "Exactly eight measured compiler-input from names plus their evidence. All canonical to names, owned addresses, section extents, binding rules and helper policies unchanged.",
+    "initial_failure": "Ordinary preparation rejected stale @1561. Retained before the proved eight-name correspondence and owned manifest update.",
+    "full_graph": "Complete ordered allocated section attributes/payload/BSS, all symbol attributes/multiplicities and typed edge incidence equal under the exact temporary-name bijection. Entire raw literal after that proved name substitution is supplemental, not a replacement for graph proof.",
+    "final_prose_binding": "Fresh final Yegg compile raw literal to first successful grouped candidate; prepared result therefore retains exact same input manifest and bytes."
+  },
+  "layout_proof": {
+    "C_and_Cplusplus_views": "Both compiled with appropriate official language flags;17 actual constant-return witnesses each prove all selected and trailing offsets, dActor size208, Vector3 size12/alignment4 and Vector3s size6/alignment2.",
+    "diagnostics": "Unsupported offset-builtin fixture, overly strict two-instruction evaluator and initially C++-flagged C fixture preserved and superseded; none counted as C layout evidence."
+  },
+  "remaining_full_scope": {
+    "consumers": 307,
+    "actual_source_edit_files": 257,
+    "initial_proof_only_consumers": 50,
+    "conditional_manifest_files": 254,
+    "required_headers": [
+      "include/dActor_c.h",
+      "include/daSCre_c.h",
+      "include/daObjKm2_Ami_Bou_c.h",
+      "include/daObjYajirusi_c.h"
+    ],
+    "not_done": "Other consumer Source paths still use old field names. This checkpoint is deliberately not a buildable complete307 migration and must not be offered as whole-task completion or published.",
+    "foreign_scope": "15 foreign write-holder tasks remain necessary; two other own-team consumer tasks and six proof-only holder tasks require coordinated input composition. pr2488 still owns daSCre inline header and cannot currently transfer its Source credentials.",
+    "exclusions": "Holhei derived previous-position fields at0x3d8 remain separate. Camera yaw, Sound::Player and independent flat C views require the per-occurrence classification; no global token substitution.",
+    "seven_APIs": "Not accepted or applied. Frozen C8 header layer is separate.",
+    "Koopa": "Actual mPosition can provide a real input object, but Vec3_Asr still has a distinct private C Vec3 interface; its full family and real output-object boundary remain separately unresolved."
+  },
+  "gates_not_run": "No foreign consumer/lifecycle compile, full307 gate, global full ROM build, queue publication or independent acceptance. Current whole-tree declaration/build checks require the remaining Source migration first.",
+  "inherited_findings": {
+    "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01": {
+      "disposition": "unresolved",
+      "id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "notes/experiments/yegg-current9893-1014.json:13",
+      "reason": "actual_composition_report_producer reads Codex /root, claude-producer-0930d; the actual new task producer is Codex /root, codex-yegg-current9893-root-producer1014. Root confirmed the generator incorrectly selected first inherited session. Producer inheritance is not authorship of this report.",
+      "summary": "New composition report attributes its producer session to an unrelated inherited historical Claude label."
+    },
+    "YEGG-GROUND-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-GROUND-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "src/actors/daYegg_c.cpp:57",
+      "reason": "Independent preflight flagged the stale clause before immutable Source checkpoint. Exact294789d/b934 Source removes that clause and explicitly describes real ground lifetime/clsnY and reconstructed actor-interface identifiers. Current Source/report preserve remaining raw offsets rather than presenting entire class complete.",
+      "summary": "Private combined candidate still described the replaced ground clsnY field access as a raw+0x44 read."
+    },
+    "YEGG-RECONSTRUCTION-01": {
+      "disposition": "deferred",
+      "id": "YEGG-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "kind": "reconstruction",
+      "location": "src/actors/daYegg_c.cpp and include/daYegg_c.h",
+      "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
+      "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
+      "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    }
+  },
+  "effective_inherited_findings": {
+    "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "notes/experiments/yegg-current9893-1014.json:13",
+      "reason": "Accepted ancestor09ffcc9873 already corrected actual_composition_report_producer to Codex /root, codex-yegg-current9893-root-producer1014. Current dc6f82 composition preserves that exact report and field; no redundant rewrite. Original inherited unresolved dictionary remains verbatim in inherited_findings.",
+      "summary": "New composition report attributes its producer session to an unrelated inherited historical Claude label."
+    },
+    "YEGG-GROUND-PROVENANCE-01": {
+      "disposition": "fixed",
+      "id": "YEGG-GROUND-PROVENANCE-01",
+      "kind": "provenance",
+      "location": "src/actors/daYegg_c.cpp:57",
+      "reason": "Independent preflight flagged the stale clause before immutable Source checkpoint. Exact294789d/b934 Source removes that clause and explicitly describes real ground lifetime/clsnY and reconstructed actor-interface identifiers. Current Source/report preserve remaining raw offsets rather than presenting entire class complete.",
+      "summary": "Private combined candidate still described the replaced ground clsnY field access as a raw+0x44 read."
+    },
+    "YEGG-RECONSTRUCTION-01": {
+      "disposition": "deferred",
+      "id": "YEGG-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "kind": "reconstruction",
+      "location": "src/actors/daYegg_c.cpp and include/daYegg_c.h",
+      "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
+      "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
+      "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    }
+  },
+  "current_findings": [
+    {
+      "id": "YEGG-GROUPED-FANOUT-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "summary": "Local full-three-method proof passes, but the real grouped header still requires257 consumer Source edits and all307 whole-object proofs.",
+      "reason": "Foreign Source/header ownership is not transferred; checkpoint cannot be published or called complete.",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "owner": "codex-yegg-native-three-method-astra-producer1014"
+    },
+    {
+      "id": "YEGG-GROUPED-TYPE-PROVENANCE-1015",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "summary": "Grouped member names/types are evidenced reconstructions, not uniquely established original source declarations.",
+      "reason": "Actual member objects and local byte/layout proof do not establish original spelling, full lifecycle equivalence across consumers, or native agreement of retained C/opaque vector and Fix12 interfaces.",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "owner": "codex-yegg-native-three-method-astra-producer1014"
+    }
+  ],
+  "evidence": {
+    "complete-proof.json": "5f933024f3e3c88f4de0cafda76d0b51ad3ec1573d5e9ffe72a26b60c40c38ce",
+    "layout-proof-v4.json": "a72cfd99066f4d3aa4b01db49ba2a77a1f43991c75a05d394f530094b9ab80b1",
+    "independent_binding_classification": "54b69cbb77839f11195e8694fb8d0dd48a44f20d4073ba1b47c20747f9e07ef9",
+    "inherited_attribution_correction_commit": "09ffcc9873",
+    "frozen_C8_patch_sha256": "aa9a6f830b742dae5decaf2a44d8997f1a850ae68c5ccbced0915945f0cc384a"
+  }
+}
