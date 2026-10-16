@@ -1749,6 +1749,7 @@ src/_ZN10dScStage_c14GraphCallback1Ev.cpp:
 src/UpdateMinimap.c:
     complete
     .text start:0x02029854 end:0x020298a0
+    .bss start:0x0209f3c8 end:0x0209f3e8
 
 src/runtime/graphics/fader/StartEntranceFaderWipe.cpp:
     complete
