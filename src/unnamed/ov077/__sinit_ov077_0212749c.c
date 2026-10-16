@@ -56,3 +56,5 @@ void __sinit_ov077_0212749c(void)
     data_ov077_02127c28.p10 = data_ov077_02127900;
     data_ov077_02127c28.p11 = data_ov077_02127920;
 }
+
+char data_ov077_02127c1c[12];
