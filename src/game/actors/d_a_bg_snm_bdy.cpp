@@ -77,7 +77,6 @@
 /* The model handle's constructor is the ROM file-id entry. Its destructor is
  * registered by the static initializer; this TU does not emit either body. */
 struct SnmBdyModelFilePtr : SharedFilePtr {
-    u32 words[2];
     SnmBdyModelFilePtr(u32 fileID);
     ~SnmBdyModelFilePtr();
 };

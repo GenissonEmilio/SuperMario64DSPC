@@ -25,7 +25,7 @@ enum d_a_obj_ks_water_AssetId {
  *   passes Fix12<int> by value; the header method form size-DIFFs.
  * - Sound::PlayLong: Behavior's long water sound; Sound.h has no PlayLong.
  * - SharedFilePtr +4: InitResources' TextureTransformer::Prepare reads the
- *   BMD at data_ov017_02111c88 +4; SharedFilePtr.h has no fields.
+ *   BMD at data_ov017_02111c88 +4; SharedFilePtr is the 8-byte handle.
  * - BTA_File in the header is only the leading numFrames halfword. The
  *   object at data_ov017_02111a60 is the 0x18 bytes func_020469e8 reads.
  * - data_ov017_02111b74 and data_ov017_02111b88 stay the ROM copy. Nothing
@@ -105,14 +105,12 @@ typedef char BtaDesc_size_must_be_0x18[sizeof(BtaDesc) == 0x18 ? 1 : -1];
  * destroy through SharedFilePtr_Destruct_Clsn. The manifest aliases those
  * undefined members onto the ROM symbols. */
 struct KsWaterModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     KsWaterModelFilePtr(u32 fileID);
     ~KsWaterModelFilePtr();
 };
 
 struct KsWaterClsnFileHandle : SharedFilePtr {
-    u32 words[2];
 
     KsWaterClsnFileHandle(u32 fileID);
     ~KsWaterClsnFileHandle();
@@ -155,8 +153,8 @@ extern "C" daObjKsWater_c *daObjKsWater_c_classInit()
 int daObjKsWater_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov017_02111c88), 1, -1);
-    /* SharedFilePtr.h has no fields; +4 is the loaded BMD pointer. */
-    TextureTransformer::Prepare(**(BMD_File **)((char *)&data_ov017_02111c88 + 4),
+    /* SharedFilePtr is the 8-byte handle; +4 is the loaded BMD pointer. */
+    TextureTransformer::Prepare(*(BMD_File *)data_ov017_02111c88.filePtr,
                                 *(BTA_File *)&data_ov017_02111a60);
     /* 6az: header SetFile takes Fix12<int> by value. */
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(

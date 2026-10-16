@@ -63,14 +63,12 @@ typedef char CtMecha05SpawnInfo_size_must_be_0x1c[
  * shard's data_ov065_* labels for the same addresses are dropped from
  * symbols.txt, and their stale decl_common.h lines with them (S42). */
 struct Mecha05ModelFile : SharedFilePtr {
-    u32 words[2];
 
     Mecha05ModelFile(u32 fileID);
     ~Mecha05ModelFile();
 };
 
 struct Mecha05CollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     Mecha05CollisionFilePtr(u32 fileID);
     ~Mecha05CollisionFilePtr();

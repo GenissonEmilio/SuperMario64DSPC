@@ -8,7 +8,7 @@
  *   retain their ABI declarations. opt_common_subs remains file-global.
  * - Actor position and scale triples are scalar members in dActor_c;
  *   vector views retain their established layout and load grouping.
- * - SharedFilePtr has no shared field layout; LOADED reads its file word.
+ * - SharedFilePtr is the 8-byte handle; LOADED reads its file word.
  * - Helpers keep their address names. The initializer owns the PMF table;
  *   data_ov019_* and g_profile_PENGUIN_RACER are outside this TU.
  */
@@ -28,11 +28,10 @@ void UpdateAngle(short &angle, short target, int divisor, short maxStep);
 /* Word 1 of a SharedFilePtr is the loaded file. SharedFilePtr itself has no
  * fields; the sinit constructs these and this TU's LoadFile / SetAnim / SetFile
  * read that word. */
-#define LOADED(handle) (((void **)&(handle))[1])
+#define LOADED(handle) ((handle).filePtr)
 
-/* SharedFilePtr has no fields. The two words are the 8-byte handle. */
+/* SharedFilePtr is the 8-byte handle. The two words are the 8-byte handle. */
 struct PgRcerFile : SharedFilePtr {
-    u32 words[2];
 };
 
 extern "C" {

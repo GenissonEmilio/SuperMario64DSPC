@@ -34,7 +34,7 @@ enum d_a_obj_wc_mizu_AssetId {
  *   passes Fix12<int> by value; the header method form size-DIFFs.
  * - Sound::PlayLong: Behavior's long water sound; Sound.h has no PlayLong.
  * - SharedFilePtr +4: InitResources' TextureTransformer::Prepare reads the
- *   BMD at daObjWc_Obj07_c_ModelFile +4 (words[1]); SharedFilePtr.h has no fields.
+ *   BMD at daObjWc_Obj07_c_ModelFile +4 (words[1]); SharedFilePtr is the 8-byte handle.
  *   The daObjWc_Obj07_c_* names are a stale symbols.txt attribution: this TU
  *   is the only consumer and defines both handles (obj07's own handles live
  *   at 0x021142d4/0x021142dc).
@@ -77,14 +77,12 @@ struct CLPS_Block;
  * their destructors. The wrapper names are local; the ctor/dtor
  * addresses are the ROM resource-family functions. */
 struct WcMizuModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     WcMizuModelFilePtr(u32 fileID);
     ~WcMizuModelFilePtr();
 };
 
 struct WcMizuCollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     WcMizuCollisionFilePtr(u32 fileID);
     ~WcMizuCollisionFilePtr();
@@ -238,7 +236,7 @@ int daObjWc_Mizu_c::InitResources()
 
     m = Model::LoadFile(daObjWc_Obj07_c_ModelFile);
     mModel.SetFile((BMD_File *)m, 1, -1);
-    TextureTransformer::Prepare(*(BMD_File *)daObjWc_Obj07_c_ModelFile.words[1], data_ov029_02112fb8.file);
+    TextureTransformer::Prepare(*(BMD_File *)daObjWc_Obj07_c_ModelFile.filePtr, data_ov029_02112fb8.file);
     /* 6az: header SetFile takes Fix12<int> by value. */
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(
         &mTextureTransformer, &data_ov029_02112fb8, 0, 0x1000, 0);

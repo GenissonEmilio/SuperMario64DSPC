@@ -59,7 +59,6 @@ bool ApproachLinear(short &value, short target, short step);
 /* Lakitu's model-file handles, owned and constructed by d_a_jgm.cpp's static
  * init. Same TU-local wrapper spelling as the owning TU. */
 struct DaJgmModelFile : SharedFilePtr {
-    u32 words[2];
 
     DaJgmModelFile(u32 fileID);
     ~DaJgmModelFile();

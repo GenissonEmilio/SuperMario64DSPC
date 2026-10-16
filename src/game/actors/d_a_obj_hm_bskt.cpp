@@ -52,17 +52,15 @@ struct CLPS_Block {
     u32 rest[4];
 };
 
-/* SharedFilePtr has no fields; the two words are the handle's 8 bytes. The
+/* SharedFilePtr is the 8-byte handle; the two words are the handle's 8 bytes. The
  * cartridge's ctor/dtor imports are the functions the wrappers' aliases name. */
 struct HmBsktModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     HmBsktModelFilePtr(u32 fileID);
     ~HmBsktModelFilePtr();
 };
 
 struct HmBsktCollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     HmBsktCollisionFilePtr(u32 fileID);
     ~HmBsktCollisionFilePtr();

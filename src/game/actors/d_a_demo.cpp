@@ -457,7 +457,6 @@ struct Obj {
 /* Lakitu's model-file handle, owned and constructed by d_a_c_jugem.cpp's
  * static init. Same TU-local wrapper spelling as the owning TU. */
 struct JugemModelFile : SharedFilePtr {
-    u32 words[2];
 
     JugemModelFile(u32 fileID);
     ~JugemModelFile();
@@ -4828,7 +4827,7 @@ int daDemo_c::InitResources()
         }
         this->mModelAnim = (ModelAnim *)p;
         if (this->mModelAnim == 0) return 0;
-        if (((anmModel_c*)this->mModelAnim)->func_ov002_020f6618((SharedFilePtr*)&data_ov085_0213074c, 1, (SharedFilePtr**)&data_ov002_0210b60c, 1, 1, (SharedFilePtr**)&data_ov002_0210b608, -1) == 0) return 0;
+        if (((anmModel_c*)this->mModelAnim)->func_ov002_020f6618(&data_ov085_0213074c, 1, (SharedFilePtr**)&data_ov002_0210b60c, 1, 1, (SharedFilePtr**)&data_ov002_0210b608, -1) == 0) return 0;
     } else if (param1 == 0x13) {
         p = _Znwj(0x84);
         if (p) {

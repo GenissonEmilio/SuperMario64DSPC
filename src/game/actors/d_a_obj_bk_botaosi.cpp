@@ -67,18 +67,16 @@ enum daObjBk_Botaosi_c_AssetId {
 #include "dBgW.h"
 #include "dBgCh_Gnd.h"
 
-/* SharedFilePtr has no fields; the two words are the handle's 8 bytes. The
+/* SharedFilePtr is the 8-byte handle; the two words are the handle's 8 bytes. The
  * constructors and destructors are the ROM resource-family veneers, aliased
  * in the manifest. */
 struct BkBotaosiModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     BkBotaosiModelFilePtr(u32 fileID);
     ~BkBotaosiModelFilePtr();
 };
 
 struct BkBotaosiCollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     BkBotaosiCollisionFilePtr(u32 fileID);
     ~BkBotaosiCollisionFilePtr();

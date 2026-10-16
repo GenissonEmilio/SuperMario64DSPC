@@ -94,7 +94,7 @@ struct CLPS_Block;
 struct MatrixWords { s32 w[12]; };
 
 /* The shared model/animation handle table entries: word 1 is the file. */
-struct BtnFileRef { int unk0; void *file; };
+struct BtnFileRef : SharedFilePtr {};
 
 extern "C" {
 /* ---- this TU ---- */
@@ -182,22 +182,18 @@ extern int data_ov079_02127cfc[];
    declared-only subclasses so the static initializer names the real
    entry points. */
 struct BtnModelFilePtr : SharedFilePtr {
-    int unk0; void *file;
     BtnModelFilePtr(u32 fileID);
     ~BtnModelFilePtr();
 };
 struct BtnTextureSeqFileHandle : SharedFilePtr {
-    int unk0; void *file;
     BtnTextureSeqFileHandle(u32 fileID);
     ~BtnTextureSeqFileHandle();
 };
 struct BtnAnimationFileHandle : SharedFilePtr {
-    int unk0; void *file;
     BtnAnimationFileHandle(u32 fileID);
     ~BtnAnimationFileHandle();
 };
 struct BtnCollisionFilePtr : SharedFilePtr {
-    int unk0; void *file;
     BtnCollisionFilePtr(u32 fileID);
     ~BtnCollisionFilePtr();
 };
@@ -312,10 +308,10 @@ int daBtn_c::InitResources()
 
     if (mIsKing != 0) {
         mHitPoints = 3;
-        TextureSequence::Prepare(*(BMD_File *)data_ov079_02128168.file,
-                                 *(BTP_File *)data_ov079_02128178.file);
+        TextureSequence::Prepare(*(BMD_File *)data_ov079_02128168.filePtr,
+                                 *(BTP_File *)data_ov079_02128178.filePtr);
         _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
-            &mTextureSequence, data_ov079_02128178.file, 0, 0x1000, 0);
+            &mTextureSequence, data_ov079_02128178.filePtr, 0, 0x1000, 0);
         mTextureSequence.SetFlags(0x40000000);
         mTextureSequence.speed = 0x1000;
         mTextureSequence.currFrame = 0;
@@ -331,11 +327,11 @@ int daBtn_c::InitResources()
     idx = mIsKing;
     if (idx == 0) {
         _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-            &mMovingMeshCollider, ((BtnFileRef *)data_ov079_02127bf0[idx])->file, mMeshMatrix,
+            &mMovingMeshCollider, ((BtnFileRef *)data_ov079_02127bf0[idx])->filePtr, mMeshMatrix,
             0x199, mAngleY, &data_ov079_02127ba0);
     } else {
         _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-            &mMovingMeshCollider, ((BtnFileRef *)data_ov079_02127bf0[idx])->file, mMeshMatrix,
+            &mMovingMeshCollider, ((BtnFileRef *)data_ov079_02127bf0[idx])->filePtr, mMeshMatrix,
             0x1000, mAngleY, &data_ov015_021135d4);
     }
 
@@ -360,7 +356,7 @@ int daBtn_c::InitResources()
     mSubTimer = 0;
 
     idx = mIsKing;
-    anim = ((BtnFileRef *)data_ov079_021275ec[idx * 5 + 3])->file;
+    anim = ((BtnFileRef *)data_ov079_021275ec[idx * 5 + 3])->filePtr;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, anim, 0, 0x1000, 0);
 
     mSpawnPosX = mPosX;
@@ -509,12 +505,12 @@ int daBtn_c::CleanupResources()
     mMovingMeshCollider.Disable();
   ((SharedFilePtr *)(data_ov079_02127bf0[mIsKing]))->Release();
   if(mIsKing){
-    ((SharedFilePtr *)&data_ov079_02128168)->Release();
+    data_ov079_02128168.Release();
     for(i=0;i<6;i++)
       ((SharedFilePtr *)(data_ov079_02127600[i]))->Release();
-    ((SharedFilePtr *)&data_ov079_02128178)->Release();
+    data_ov079_02128178.Release();
   } else {
-    ((SharedFilePtr *)&data_ov079_02128170)->Release();
+    data_ov079_02128170.Release();
     for(i=0;i<5;i++)
       ((SharedFilePtr *)(data_ov079_021275ec[i]))->Release();
   }
@@ -534,7 +530,7 @@ void daBtn_c::func_ov079_02125b44()
     if (mModelAnim.Finished() != 0) {
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
             &mModelAnim,
-            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
             0, 0x1000, 0);
     }
 
@@ -609,7 +605,7 @@ void daBtn_c::func_ov079_02125b44()
             mState = 2;
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
                 0, 0x1000, 0);
             break;
         }
@@ -619,7 +615,7 @@ void daBtn_c::func_ov079_02125b44()
             mState = 1;
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
                 0, 0x1000, 0);
         }
         mModelAnim.Advance();
@@ -647,7 +643,7 @@ void daBtn_c::func_ov079_021258fc()
     q = mModelAnim.currFrame;
     walk = data_ov079_021275ec[((int)idx * 5) + 3];
     cur = mModelAnim.file;
-    want = ((BtnFileRef *)walk)->file;
+    want = ((BtnFileRef *)walk)->filePtr;
     frame = (unsigned short)(q >> 12);
 
     if (cur != want) {
@@ -660,7 +656,7 @@ void daBtn_c::func_ov079_021258fc()
         if (mModelAnim.Finished() != 0) {
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
                 0, 0x1000, 0);
         }
     } else {
@@ -677,7 +673,7 @@ void daBtn_c::func_ov079_021258fc()
         mState = 7;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
             &mModelAnim,
-            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
             0, 0x1000, 0);
         mFlags &= ~0x2000000;
     } else {
@@ -685,18 +681,18 @@ void daBtn_c::func_ov079_021258fc()
             mHorzSpeed = 0x9000;
             mModelAnim.speed = data_ov079_021275dc[mIsKing];
         }
-        if (mModelAnim.file == ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file) {
+        if (mModelAnim.file == ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr) {
             if (mFrontDist < 0xc8000) {
                 mState = 3;
                 _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                     &mModelAnim,
-                    ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->file,
+                    ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->filePtr,
                     0x40000000, 0x1000, 0);
             }
         }
     }
 
-    if (mModelAnim.file == ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file) {
+    if (mModelAnim.file == ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr) {
         if (frame <= 7 || (frame >= 0x1e && frame <= 0x26)) {
             mHorzSpeed = 0;
             if (mStepPlayed == 0) {
@@ -721,11 +717,11 @@ void daBtn_c::func_ov079_021256d4()
 {
     Player *r;
 
-    if (mModelAnim.file != ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file) {
+    if (mModelAnim.file != ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr) {
         if (mModelAnim.Finished() != 0) {
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
                 0, 0x1000, 0);
         }
     }
@@ -747,7 +743,7 @@ void daBtn_c::func_ov079_021256d4()
             if (mFrontDist < 0x190000) {
                 _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                     &mModelAnim,
-                    ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->file,
+                    ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->filePtr,
                     0x40000000, 0x1000, 0);
                 mState = 3;
             }
@@ -793,7 +789,7 @@ void daBtn_c::func_ov079_021256d4()
         mPrevAngleZ = t;
         mTextureSequence.currFrame = 0;
         mHorzSpeed = 0;
-        anim = ((BtnFileRef *)tab[mIsKing * five + 3])->file;
+        anim = ((BtnFileRef *)tab[mIsKing * five + 3])->filePtr;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(ma, anim, 0, 0x1000, 0);
     }
 }
@@ -820,7 +816,7 @@ void daBtn_c::func_ov079_02125504()
         q = mModelAnim.currFrame;
         e = (BtnFileRef *)data_ov079_021275ec[(int)i * 5 + 3];
         cur = mModelAnim.file;
-        want = e->file;
+        want = e->filePtr;
         frame = (unsigned short)(q >> 12);
         if (cur != want)
             return;
@@ -938,7 +934,7 @@ void daBtn_c::func_ov079_02125240(){
   func_01ffb098(&mMovingMeshCollider);
   func_01ffb0bc(&mMovingMeshCollider);
   mSubState++;
-  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, ((BtnFileRef *)data_ov079_021275ec[mIsKing*5+1])->file, 0x40000000, 0x1000, 0);
+  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, ((BtnFileRef *)data_ov079_021275ec[mIsKing*5+1])->filePtr, 0x40000000, 0x1000, 0);
   v.x = mPosX;
   v.y = mPosY;
   v.z = mPosZ;
@@ -1043,10 +1039,10 @@ void daBtn_c::func_ov079_02124ed4()
                 _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(3, p[0], p[1], p[2]);
             }
             if (mHitPoints == 0) {
-                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov079_021281b0.file, 0x40000000, 0x1000, 0);
+                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov079_021281b0.filePtr, 0x40000000, 0x1000, 0);
                 mState = 8;
             } else {
-                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov079_021281b0.file, 0x40000000, 0x1000, 0);
+                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov079_021281b0.filePtr, 0x40000000, 0x1000, 0);
                 mPounder = 0;
                 mTextureSequence.Advance();
                 mSubState++;
@@ -1147,7 +1143,7 @@ void daBtn_c::func_ov079_02124b08()
             mSubState = 0xb;
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 2])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 2])->filePtr,
                 0x40000000, 0x1000, 0);
             mSubTimer = 0;
             return;
@@ -1164,7 +1160,7 @@ void daBtn_c::func_ov079_02124b08()
         mSubState++;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
             &mModelAnim,
-            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 2])->file,
+            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 2])->filePtr,
             0x40000000, 0x1000, 0);
         mSubTimer = 0;
         return;
@@ -1182,7 +1178,7 @@ void daBtn_c::func_ov079_02124b08()
         if (mModelAnim.Finished() != 0) {
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 4])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 4])->filePtr,
                 0x40000000, 0x1000, 0);
 
             if (mIsKing == 0) {
@@ -1243,7 +1239,7 @@ void daBtn_c::func_ov079_021249f0()
             mState = 1;
             _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
                 &mModelAnim,
-                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->file,
+                ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5 + 3])->filePtr,
                 0, 0x1000, 0);
         }
     }
@@ -1815,7 +1811,7 @@ void daBtn_c::func_ov079_02123804(dActor_c *other)
         mHorzSpeed = 0;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
             &mModelAnim,
-            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->file,
+            ((BtnFileRef *)data_ov079_021275ec[mIsKing * 5])->filePtr,
             0x40000000, 0x1000, 0);
         mModelAnim.speed = 0x4000;
         mState = 0xb;

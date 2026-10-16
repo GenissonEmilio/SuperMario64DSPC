@@ -69,14 +69,10 @@ typedef char daObjEwbIce_State_must_be_0x10[sizeof(daObjEwbIce_State) == 0x10 ? 
  * collisions' func_02017b4c / SharedFilePtr_Destruct_Clsn; the manifest
  * aliases these. */
 struct EwbIceModelFileHandle : SharedFilePtr {
-    s32 fileId;
-    struct BMD_File *file;
     EwbIceModelFileHandle(u32 fileID);
     ~EwbIceModelFileHandle();
 };
 struct EwbIceCollisionFileHandle : SharedFilePtr {
-    s32 fileId;
-    struct KCL_File *file;
     EwbIceCollisionFileHandle(u32 fileID);
     ~EwbIceCollisionFileHandle();
 };

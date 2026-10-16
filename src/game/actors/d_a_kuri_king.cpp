@@ -100,13 +100,9 @@ enum daKuriKing_c_AssetId {
 
 #define FX(a, b) (int)(((long long)(a) * (long long)(b) + 0x800) >> 12)
 
-/* include/SharedFilePtr.h has no fields; filePtr is the word LoadFile stashes
+/* include/SharedFilePtr is the 8-byte handle; filePtr is the word LoadFile stashes
  * and what SetFile/Prepare consume. daLuigi_c spells the same view. */
-struct LoadedSharedFile {
-    u16 fileID;    /* 0x00 */
-    u8  numRefs;   /* 0x02 */
-    u8  pad;       /* 0x03 */
-    void *filePtr; /* 0x04 */
+struct LoadedSharedFile : SharedFilePtr {
 };
 #define FileOf(handle) ((LoadedSharedFile *)&(handle))->filePtr
 
@@ -114,21 +110,18 @@ struct LoadedSharedFile {
  * spellings are reconstructed; constructor and destructor addresses, file
  * IDs, widths, and BSS order are the ROM's. */
 struct KuriKingModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     KuriKingModelFilePtr(u32 fileID);
     ~KuriKingModelFilePtr();
 };
 
 struct KuriKingTexSeqFilePtr : SharedFilePtr {
-    u32 words[2];
 
     KuriKingTexSeqFilePtr(u32 fileID);
     ~KuriKingTexSeqFilePtr();
 };
 
 struct KuriKingAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     KuriKingAnimationFilePtr(u32 fileID);
     ~KuriKingAnimationFilePtr();
@@ -1558,7 +1551,7 @@ void daKuriKing_c::func_ov074_0212199c()
 /* The animation table behind data_ov074_02122f34: one record per clip --
  * the SharedFilePtr that holds the BCA_File, the matching BTA_File for the
  * texture transformer, and SetAnim's animation index. */
-struct KuriKingAnimFile { u16 fileID; u8 numRefs; void *filePtr; };
+struct KuriKingAnimFile : SharedFilePtr {};
 struct KuriKingAnimEntry { KuriKingAnimFile *anim; void *btaFile; int animArg; };
 extern KuriKingAnimEntry data_ov074_02122f34[];
 
@@ -2033,7 +2026,6 @@ KuriKingStateTable data_ov074_021230f8;
    keeps them below every compiler-temp emission, so the TU's @NNN uniquifier
    matches the cartridge's numbering. */
 struct KrbAnimationFileHandle : SharedFilePtr {
-    u32 id; void *ptr;
     KrbAnimationFileHandle(u32 fileID);
     ~KrbAnimationFileHandle();
 };

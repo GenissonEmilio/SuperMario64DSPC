@@ -75,14 +75,12 @@ struct KabeFiles {
  * word names the breakable model handle; the rest of each row stays in
  * the gap. */
 struct BkKabeModelFile : SharedFilePtr {
-    u32 words[2];
 
     BkKabeModelFile(u32 fileID);
     ~BkKabeModelFile();
 };
 
 struct BkKabeCollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     BkKabeCollisionFilePtr(u32 fileID);
     ~BkKabeCollisionFilePtr();

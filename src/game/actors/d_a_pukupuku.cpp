@@ -71,14 +71,12 @@ struct AnimFilePtr { int a; struct BCA_File *file; };
  * local; the handle constructors and destructors are the ROM resource-family
  * functions, aliased in the manifest. */
 struct PukupukuModelFile : SharedFilePtr {
-    u32 words[2];
 
     PukupukuModelFile(u32 fileID);
     ~PukupukuModelFile();
 };
 
 struct PukupukuAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     PukupukuAnimationFilePtr(u32 fileID);
     ~PukupukuAnimationFilePtr();
@@ -141,10 +139,10 @@ int daPukupuku_c::InitResources()
     struct BMD_File *bmd;
     struct Vector3 v;
 
-    bmd = (struct BMD_File *)Model::LoadFile(*(SharedFilePtr *)&data_ov090_02134564);
+    bmd = (struct BMD_File *)Model::LoadFile(data_ov090_02134564);
     mModelAnim.SetFile(bmd, 1, -1);
 
-    dExtFrameCtrl_c::LoadFile(*(struct SharedFilePtr *)&data_ov090_0213455c);
+    dExtFrameCtrl_c::LoadFile(data_ov090_0213455c);
 
     v = *(Vector3 *)&data_ov090_021342d8;
     _ZN10dCcAcPos_c4InitEP8dActor_cRK7Vector35Fix12IiES6_jj(
@@ -218,7 +216,7 @@ void daPukupuku_c::OnPendingDestroy()
 int daPukupuku_c::CleanupResources()
 {
     data_ov090_02134564.Release();
-    ((SharedFilePtr *)&data_ov090_0213455c)->Release();
+    data_ov090_0213455c.Release();
     return 1;
 }
 

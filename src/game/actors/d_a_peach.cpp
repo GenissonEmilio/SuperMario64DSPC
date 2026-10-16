@@ -79,14 +79,12 @@ extern int data_ov085_0212f280[];
  * Eight bytes: the empty base plus the file pointer the loads below read
  * at +4. */
 struct DaPeachModelFile : SharedFilePtr {
-    u32 words[2];
 
     DaPeachModelFile(u32 fileID);
     ~DaPeachModelFile();
 };
 
 struct DaPeachAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     DaPeachAnimationFilePtr(u32 fileID);
     ~DaPeachAnimationFilePtr();

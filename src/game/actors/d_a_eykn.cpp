@@ -42,7 +42,7 @@
  * - data_ov071_02123038 / 02123040 are BTP files 0x2f8 / 0x2fb,
  *   02123048 is BCA 0x2f9, 02123050 is BMD 0x2f7. 021226a4 points at
  *   the two BTPs and 021226a0 at the BCA. data_ov002_0210da38 is the
- *   shared blue-coin model. SharedFilePtr has no fields, so the loaded
+ *   shared blue-coin model. SharedFilePtr is the 8-byte handle, so the loaded
  *   word is read as LoadedFile.
  * - data_0209f2f8 is the current sublevel. 0x2e maps through
  *   SUBLEVEL_LEVEL_TABLE to course 19, which is not BBH's entrance
@@ -81,9 +81,7 @@ struct MatrixWords {
 };
 
 /* A loaded SharedFilePtr: the second word is the file it loaded. */
-struct LoadedFile {
-    u32 fileID;
-    void *file;
+struct LoadedFile : SharedFilePtr {
 };
 
 int ApproachLinear(int &value, int target, int step);
@@ -222,7 +220,7 @@ int daEykn_c::UpdateEyeAnim()
         return 0;
     case 1:
     case 4:
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.file, 0, 0x1000, 0);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
         mTextureSequence.SetFlags(0x40000000);
         mTextureSequence.speed = 0x1000;
         mTextureSequence.currFrame = 0;
@@ -231,7 +229,7 @@ int daEykn_c::UpdateEyeAnim()
     case 2:
     case 5:
         if (mTextureSequence.Finished() != 0) {
-            _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123040.file, 0, 0x1000, 0);
+            _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123040.filePtr, 0, 0x1000, 0);
             mTextureSequence.SetFlags(0x40000000);
             mTextureSequence.speed = 0x1000;
             mTextureSequence.currFrame = 0;
@@ -257,7 +255,7 @@ int daEykn_c::UpdateEyeAnim()
 // @symbol _ZN8daEykn_c12ResetEyeAnimEv
 void daEykn_c::ResetEyeAnim()
 {
-    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.file, 0, 0x1000, 0);
+    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
     mTextureSequence.SetFlags(0x40000000);
     mTextureSequence.speed = 0x1000;
     mTextureSequence.currFrame = 0;
@@ -489,7 +487,7 @@ int daEykn_c::St_Die_Init()
         mDeathSpinSpeed = 0x2500;
     else
         mDeathSpinSpeed = -0x2500;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.file, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000, 0);
     mModelAnim.SetFlags(0x40000000);
     mModelAnim.speed = 0x2800;
     mModelAnim.currFrame = 0;
@@ -710,7 +708,7 @@ s32 daEykn_c::CleanupResources()
 {
     UnloadBlueCoinModel(this);
     data_ov002_0210da38.Release();
-    ((SharedFilePtr *)&data_ov071_02123050)->Release();
+    data_ov071_02123050.Release();
     for (s32 i = 0; i < 2; ++i) {
         data_ov071_021226a4[i]->Release();
     }
@@ -757,15 +755,15 @@ s32 daEykn_c::InitResources()
     LoadBlueCoinModel(this);
 
     Model::LoadFile(data_ov002_0210da38);
-    bmd = (BMD_File *)Model::LoadFile(*(SharedFilePtr *)&data_ov071_02123050);
+    bmd = (BMD_File *)Model::LoadFile(data_ov071_02123050);
     ((ModelBase *)&mModelAnim)->SetFile(bmd, 1, 1);
 
     int i;
     for (i = 0; i < 2; i++) {
         SharedFilePtr *seq = data_ov071_021226a4[i];
         TextureSequence::LoadFile(*seq);
-        BMD_File *bmd2 = (BMD_File *)data_ov071_02123050.file;
-        BTP_File *btp = (BTP_File *)((LoadedFile *)seq)->file;
+        BMD_File *bmd2 = (BMD_File *)data_ov071_02123050.filePtr;
+        BTP_File *btp = (BTP_File *)((LoadedFile *)seq)->filePtr;
         TextureSequence::Prepare(*bmd2, *btp);
     }
 
@@ -809,10 +807,10 @@ s32 daEykn_c::InitResources()
     mTerminalVelocity = 0;
     SetState(0);
 
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.file, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000, 0);
 
     mModelAnim.speed = 0x1000;
-    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.file, 0, 0x1000, 0);
+    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
 
     mTextureSequence.speed = 0x1000;
     mTarget = 0;
@@ -859,9 +857,9 @@ char data_ov071_0212306c[0x4];
 char data_ov071_02123070[0xc];
 char data_ov071_0212307c[0xc];
 char data_ov071_02123088[0x30];
-SharedFilePtr *const data_ov071_021226a0 = (SharedFilePtr *)&data_ov071_02123048;
+SharedFilePtr *const data_ov071_021226a0 = &data_ov071_02123048;
 SharedFilePtr *const data_ov071_021226a4[2] = {
-    (SharedFilePtr *)&data_ov071_02123038,
-    (SharedFilePtr *)&data_ov071_02123040,
+    &data_ov071_02123038,
+    &data_ov071_02123040,
 };
 }

@@ -51,12 +51,10 @@ enum daObjHmMaruta_c_AssetId {
  * destroys through SharedFilePtr_Destruct_Clsn. The descriptor's CLPS
  * block stays ROM data. */
 struct MarutaModelFilePtr : SharedFilePtr {
-    unsigned int words[2];
     MarutaModelFilePtr(unsigned int fileId);
     ~MarutaModelFilePtr();
 };
 struct MarutaClsnFileHandle : SharedFilePtr {
-    unsigned int words[2];
     MarutaClsnFileHandle(unsigned int fileId);
     ~MarutaClsnFileHandle();
 };

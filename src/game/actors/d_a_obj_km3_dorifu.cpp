@@ -43,12 +43,10 @@ enum d_a_obj_km3_dorifu_AssetId {
  * func_02017ab4. Five collision handles construct through func_02017b4c and
  * destroy through SharedFilePtr_Destruct_Clsn. */
 struct DorifuModelFilePtr : SharedFilePtr {
-    unsigned int words[2];
     DorifuModelFilePtr(unsigned int fileId);
     ~DorifuModelFilePtr();
 };
 struct DorifuClsnFileHandle : SharedFilePtr {
-    unsigned int words[2];
     DorifuClsnFileHandle(unsigned int fileId);
     ~DorifuClsnFileHandle();
 };

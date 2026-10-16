@@ -39,12 +39,10 @@ enum daObjFl_KomaU_c_AssetId {
  * data_ov064_0211adbc is the file table. Its CLPS slot is
  * data_ov064_0211bdac. */
 struct KomaUModelFilePtr : SharedFilePtr {
-    unsigned int words[2];
     KomaUModelFilePtr(unsigned int fileId);
     ~KomaUModelFilePtr();
 };
 struct KomaUClsnFileHandle : SharedFilePtr {
-    unsigned int words[2];
     KomaUClsnFileHandle(unsigned int fileId);
     ~KomaUClsnFileHandle();
 };

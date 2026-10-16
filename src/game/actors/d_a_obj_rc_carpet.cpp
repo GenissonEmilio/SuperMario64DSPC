@@ -70,21 +70,18 @@ typedef char FlyingCarpetSpawnInfo_size_must_be_0x1c[
  * their destructors. The wrapper names are local; the ctor/dtor
  * addresses are the ROM resource-family functions. */
 struct CarpetModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     CarpetModelFilePtr(u32 fileID);
     ~CarpetModelFilePtr();
 };
 
 struct CarpetAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     CarpetAnimationFilePtr(u32 fileID);
     ~CarpetAnimationFilePtr();
 };
 
 struct CarpetCollisionFilePtr : SharedFilePtr {
-    u32 words[2];
 
     CarpetCollisionFilePtr(u32 fileID);
     ~CarpetCollisionFilePtr();

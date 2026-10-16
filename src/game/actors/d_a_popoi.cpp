@@ -69,14 +69,12 @@ enum daPopoi_c_AssetId {
 typedef int (daPopoi_c::*PopoiPMF)();
 
 struct PopoiModelFile : SharedFilePtr {
-    u32 words[2];
 
     PopoiModelFile(u32 fileID);
     ~PopoiModelFile();
 };
 
 struct PopoiAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     PopoiAnimationFilePtr(u32 fileID);
     ~PopoiAnimationFilePtr();

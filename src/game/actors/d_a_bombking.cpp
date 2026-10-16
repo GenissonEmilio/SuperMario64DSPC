@@ -77,17 +77,9 @@ extern "C" int _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(void *self, vo
  * fileID at +0, a u8 reference count at +2, and a loaded pointer at +4.
  * Byte +3 is padding. The BSS image is zero; __sinit_ov078_02126660 constructs
  * the model (id 0x2c7) and twelve animations (ids 0x2bb..0x2c6). */
-struct BombkingAnimFile {
-    u16 fileID;
-    u8 numRefs;
-    u8 pad;
-    BCA_File *file;
+struct BombkingAnimFile : SharedFilePtr {
 };
-struct BombkingModelFile {
-    u16 fileID;
-    u8 numRefs;
-    u8 pad;
-    BMD_File *file;
+struct BombkingModelFile : SharedFilePtr {
 };
 
 extern "C" {
@@ -256,7 +248,7 @@ int daBombking_c::func_ov078_02123a3c()
     this->mHorzSpeed = 0;
     this->mStateTimer = 0x32;
     func_ov078_02123864();
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f20.file, 0, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f20.filePtr, 0, 0, 0x1000, 0);
     return 1;
 }
 
@@ -301,7 +293,7 @@ int daBombking_c::func_ov078_02123bc4()
   this->mVertAccel = -0x2000;
   this->mAnimSpeed = 2;
   this->mHorzSpeed = 0xa000;
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ee8.file, 4, 0, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ee8.filePtr, 4, 0, 0x1000, 0);
   return 1;
 }
 
@@ -343,7 +335,7 @@ struct BCA_File;
 
 int daBombking_c::func_ov078_02123cf0()
 {
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ef0.file, 0, 0x40000000, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ef0.filePtr, 0, 0x40000000, 0x1000, 0);
   this->mHorzSpeed = 0;
   return 1;
 }
@@ -405,7 +397,7 @@ int daBombking_c::func_ov078_02123d3c()
 int daBombking_c::func_ov078_02123eb8()
 {
     mVertAccel = -0x2000;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, data_ov078_02126f28.file, 0, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, (BCA_File *)data_ov078_02126f28.filePtr, 0, 0, 0x1000, 0);
     mStateTimer = 0x32;
     mHorzSpeed = 0xa000;
     return 1;
@@ -440,7 +432,7 @@ L6c:
 int daBombking_c::func_ov078_02123fb4()
 {
   this->mVertAccel = -0x2000;
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f18.file, 0, 0x40000000, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f18.filePtr, 0, 0x40000000, 0x1000, 0);
   return 1;
 }
 
@@ -465,7 +457,7 @@ int daBombking_c::func_ov078_02124000()
 
 int daBombking_c::func_ov078_02124060()
 {
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f00.file, 0, 0x40000000, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f00.filePtr, 0, 0x40000000, 0x1000, 0);
   return 1;
 }
 
@@ -574,7 +566,7 @@ int func_ov078_021240a0(char* c)
 
 int daBombking_c::func_ov078_021243c0()
 {
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f20.file, 0, 0, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f20.filePtr, 0, 0, 0x1000, 0);
   this->mStateTimer = 0xc8;
   this->mTargetAngY = Vec3_HorzAngle(&this->mPosX, &this->mArenaPosX);
   *(int*)(((long long)(int)((char *)this + 0x500))) =
@@ -607,7 +599,7 @@ int daBombking_c::func_ov078_02124470()
 
 int daBombking_c::func_ov078_021244d0()
 {
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f20.file, 0, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f20.filePtr, 0, 0, 0x1000, 0);
     this->mStateTimer = 0x32;
     return 1;
 }
@@ -697,7 +689,7 @@ int daBombking_c::func_ov078_02124520()
 
 int daBombking_c::func_ov078_02124778()
 {
-  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ef8.file, 8, 0x40000000, 0x1000, 0);
+  _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ef8.filePtr, 8, 0x40000000, 0x1000, 0);
   return 1;
 }
 
@@ -771,7 +763,7 @@ int daBombking_c::func_ov078_021247bc()
         }
 
         if (this->mActionStep == 1) {
-            _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f08.file, 0, 0x40000000, 0x1000, 0);
+            _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f08.filePtr, 0, 0x40000000, 0x1000, 0);
             this->mVertAccel = -0x2000;
             this->mFlags = 0x10000002;
             func_02012694(0x12c, &this->mCamSpacePosX);
@@ -811,7 +803,7 @@ int daBombking_c::func_ov078_021247bc()
 
 int daBombking_c::func_ov078_02124b40()
 {
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f10.file, 0, 0x40000000, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f10.filePtr, 0, 0x40000000, 0x1000, 0);
     func_02012694(0x129, &this->mCamSpacePosX);
     this->mWithMeshClsn.ClearGroundFlag();
     this->mPrevAngleX = 0;
@@ -917,7 +909,7 @@ done:
 
 int daBombking_c::func_ov078_02124e9c()
 {
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f20.file, 0, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f20.filePtr, 0, 0, 0x1000, 0);
     if (this->mHealth <= 0)
         this->mFlags = 0x10000000;
     this->mWithMeshClsn.ClearGroundFlag();
@@ -940,7 +932,7 @@ int daBombking_c::func_ov078_02124f28()
     if (this->mActionStep == 0) {
         int b = (this->mFlags & 0x4000) != 0;
         if (b != 0) {
-            _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ee0.file, 0, 0, 0x1000, 0);
+            _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ee0.filePtr, 0, 0, 0x1000, 0);
             this->mActionStep = 1;
         }
     }
@@ -1103,7 +1095,7 @@ int daBombking_c::func_ov078_02125350()
 
     this->mAnimSpeed = 1;
     this->mVertAccel = -0x2000;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ef0.file, 0, 0x40000000, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ef0.filePtr, 0, 0x40000000, 0x1000, 0);
 
     this->mHorzSpeed = 0;
 
@@ -1238,7 +1230,7 @@ int daBombking_c::func_ov078_02125734()
     this->mAnimSpeed = 1;
     this->mHorzSpeed = 0x5000;
     this->mVertAccel = -0x2000;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ee8.file, 8, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ee8.filePtr, 8, 0, 0x1000, 0);
     return 1;
 }
 
@@ -1285,7 +1277,7 @@ int daBombking_c::func_ov078_02125790()
 int daBombking_c::func_ov078_021258e4()
 {
     this->mVertAccel = -0x2000;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126ef8.file, 8, 0x40000000, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126ef8.filePtr, 8, 0x40000000, 0x1000, 0);
     if (this->mMusicLayer3 == 0) {
         this->mMusicLayer3 = 1;
         this->mFlags = 0x10000002;
@@ -1402,7 +1394,7 @@ int daBombking_c::func_ov078_02125bc8() {
     this->mAnimSpeed = 1;
     this->mVertAccel = -0x2000;
     this->unk_50a = 0;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov078_02126f30.file, 8, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, (BCA_File *)data_ov078_02126f30.filePtr, 8, 0, 0x1000, 0);
     return 1;
 }
 
@@ -1516,19 +1508,19 @@ void daBombking_c::func_ov078_02125f8c(){
 // @symbol _ZN12daBombking_c16CleanupResourcesEv
 int daBombking_c::CleanupResources()
 {
-    ((SharedFilePtr *)&data_ov078_02126f38)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f00)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f20)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f10)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f08)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f18)->Release();
-    ((SharedFilePtr *)&data_ov078_02126ee0)->Release();
-    ((SharedFilePtr *)&data_ov078_02126ef0)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f40)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f30)->Release();
-    ((SharedFilePtr *)&data_ov078_02126ee8)->Release();
-    ((SharedFilePtr *)&data_ov078_02126f28)->Release();
-    ((SharedFilePtr *)&data_ov078_02126ef8)->Release();
+    data_ov078_02126f38.Release();
+    data_ov078_02126f00.Release();
+    data_ov078_02126f20.Release();
+    data_ov078_02126f10.Release();
+    data_ov078_02126f08.Release();
+    data_ov078_02126f18.Release();
+    data_ov078_02126ee0.Release();
+    data_ov078_02126ef0.Release();
+    data_ov078_02126f40.Release();
+    data_ov078_02126f30.Release();
+    data_ov078_02126ee8.Release();
+    data_ov078_02126f28.Release();
+    data_ov078_02126ef8.Release();
     return 1;
 }
 
@@ -1653,21 +1645,21 @@ int daBombking_c::InitResources()
     Vector3 v0;
     Vector3 v1;
     int i;
-    f = (BMD_File *)Model::LoadFile(*(SharedFilePtr *)&data_ov078_02126f38);
+    f = (BMD_File *)Model::LoadFile(data_ov078_02126f38);
     mBlendModelAnim.SetFile(f, 1, 1);
     mShadowModel.InitCylinder();
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f00);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f20);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f10);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f08);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f18);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126ee0);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126ef0);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f40);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f30);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126ee8);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126f28);
-    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov078_02126ef8);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f00);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f20);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f10);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f08);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f18);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126ee0);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126ef0);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f40);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f30);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126ee8);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126f28);
+    dExtFrameCtrl_c::LoadFile(data_ov078_02126ef8);
     mVertAccel = -0x2000;
     mTerminalVelocity = -0x3c000;
     v0.x = data_ov078_02126e00.x;

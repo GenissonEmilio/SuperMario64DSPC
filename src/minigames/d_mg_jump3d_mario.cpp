@@ -132,12 +132,10 @@ extern BCA_File *data_ov006_02140430;
 /* Six anim handles call SharedFilePtr::Construct. The model handle calls
    func_02017a24. The second word is the loaded file. */
 struct Jump3DMarioAnimFilePtr : SharedFilePtr {
-    unsigned words[2];
     Jump3DMarioAnimFilePtr(unsigned fileId);
     ~Jump3DMarioAnimFilePtr();
 };
 struct Jump3DModelFilePtr : SharedFilePtr {
-    unsigned words[2];
     Jump3DModelFilePtr(unsigned fileId);
     ~Jump3DModelFilePtr();
 };

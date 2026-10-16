@@ -86,14 +86,12 @@ struct MenboState { char pad[0x370]; MenboStateFn *mState; };
  * with func_02017ab4; the anims use SharedFilePtr::Construct and
  * SharedFilePtr_Destruct_Anim. Manifest aliases carry the spellings. */
 struct MenboModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     MenboModelFilePtr(u32 fileID);
     ~MenboModelFilePtr();
 };
 
 struct MenboAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
 
     MenboAnimationFilePtr(u32 fileID);
     ~MenboAnimationFilePtr();
@@ -187,9 +185,9 @@ void func_ov090_02131e50(daMenbo_c *c);
 
 }
 
-/* SharedFilePtr.h has no fields. The BCA pointer SetAnim takes is the
+/* SharedFilePtr is the 8-byte handle. The BCA pointer SetAnim takes is the
  * second word of each anim handle. */
-#define MENBO_BCA(handle) (((BCA_File **)&(handle))[1])
+#define MENBO_BCA(handle) ((BCA_File *)(handle).filePtr)
 #define MENBO_RIPPLES(c) ((MenboRipples *)(c)->pad_380)
 #define MENBO_LATCH(c)   ((MenboLatches *)(c)->pad_39d)
 

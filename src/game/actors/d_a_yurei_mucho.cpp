@@ -110,12 +110,8 @@ extern void func_ov002_020aea30(void *self, void *actor, void *collision);
    ROM-supplied storage. */
 struct YureiAnimationFileHandle : SharedFilePtr {
     /* SharedFilePtr::Load and func_02017e0c use this local eight-byte layout. */
-    u16 fileID;
-    u8 numRefs;
-    void *filePtr;
 };
 struct YureiModelFilePtr : SharedFilePtr {
-    u32 words[2];
 };
 /* Definition order is not address order: mwccarm emits each plain global's
    `.bss` section in a fixed permuted order, and this spelling emits the four

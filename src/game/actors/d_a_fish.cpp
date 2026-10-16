@@ -68,14 +68,12 @@ struct daFishState {
  * constructors and destructors are the ROM resource-family functions,
  * aliased in the manifest. */
 struct FishModelFilePtr : SharedFilePtr {
-    u32 words[2];
 
     FishModelFilePtr(u32 fileID);
     ~FishModelFilePtr();
 };
 
 struct FishAnimationFileHandle : SharedFilePtr {
-    u32 words[2];
 
     FishAnimationFileHandle(u32 fileID);
     ~FishAnimationFileHandle();

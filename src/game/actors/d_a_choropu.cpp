@@ -67,7 +67,6 @@ struct ChoropuStateRow { ChoropuStateFn fn[1]; };
  * 0x2d4, 0x2d5) and fill the six one-entry state rows. mwcc emits
  * __sinit_d_a_choropu.cpp from those definitions. */
 struct ChoropuModelFile : SharedFilePtr {
-    u32 words[2];
 
     ChoropuModelFile(u32 fileID);
     ~ChoropuModelFile();
@@ -75,9 +74,6 @@ struct ChoropuModelFile : SharedFilePtr {
 
 struct ChoropuAnimationFilePtr : SharedFilePtr {
     /* SharedFilePtr::Load and func_02017e0c use this local eight-byte layout. */
-    u16 fileID;
-    u8 numRefs;
-    void *filePtr;
 
     ChoropuAnimationFilePtr(u32 fileID);
     ~ChoropuAnimationFilePtr();

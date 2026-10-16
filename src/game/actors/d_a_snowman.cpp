@@ -135,12 +135,10 @@ extern void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
  * The wrapper names are long enough that their mangled constructor
  * symbols can be aliased onto those retail functions. */
 struct daSnowmanModelFilePtr : SharedFilePtr {
-    u32 words[2];
     daSnowmanModelFilePtr(u32 fileID);
     ~daSnowmanModelFilePtr();
 };
 struct daSnowmanAnimationFilePtr : SharedFilePtr {
-    u32 words[2];
     daSnowmanAnimationFilePtr(u32 fileID);
     ~daSnowmanAnimationFilePtr();
 };

@@ -66,11 +66,9 @@ struct BMD_File;
    eight-byte records below. */
 extern u32 data_ov085_0212fe88[];
 
-/* SharedFilePtr has no fields. The sinit constructs these eight-byte handles
+/* SharedFilePtr is the 8-byte handle. The sinit constructs these eight-byte handles
    (files 0x35c, 0x35d, 0x35e). */
 struct KinopioFile : SharedFilePtr {
-    int id;
-    void *file;
 };
 
 extern "C" {

@@ -14,7 +14,7 @@
  *   UpdateSegments' NormalizeVec3IfNonZero relocation moves with them.
  * - data_0209f318 + 0x154 and the camera words func_020092c4 takes at
  *   +0x80 / +0x8c are not this class's fields.
- * - SharedFilePtr has no fields, so the loaded BCA/BTP stays the word at +4.
+ * - SharedFilePtr is the 8-byte handle, so the loaded BCA/BTP stays the word at +4.
  * - func_ov002_020c51d0 is ov002's. ModelAnim::SetAnim, TextureSequence::SetFile,
  *   dCcAcPos_c::Init, dBgCh_Actr::Init, Player::Hurt and Particle::System::New
  *   stay mangled (Fix12<int> by value).
@@ -80,17 +80,14 @@ bool ApproachLinear(short &value, short target, short step);
  * sequence five use SharedFilePtr_Construct_TexSeq /
  * SharedFilePtr_Destruct_TexSeq. */
 struct HanachanModelFilePtr : SharedFilePtr {
-    u32 words[2];
     HanachanModelFilePtr(u32 fileID);
     ~HanachanModelFilePtr();
 };
 struct HanachanAnimationFileHandle : SharedFilePtr {
-    u32 words[2];
     HanachanAnimationFileHandle(u32 fileID);
     ~HanachanAnimationFileHandle();
 };
 struct HanachanTextureSeqFileHandle : SharedFilePtr {
-    u32 words[2];
     HanachanTextureSeqFileHandle(u32 fileID);
     ~HanachanTextureSeqFileHandle();
 };
