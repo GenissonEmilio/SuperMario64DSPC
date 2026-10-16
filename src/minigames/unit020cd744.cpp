@@ -30,6 +30,19 @@ extern int ApproachLinear(int &, int, int);
 #include "Model.h"
 #include "TextureTransformer.h"
 
+// Partial callback interface only. ROM vtables at 0x0213b2c4/0x0213b2e0
+// implement these five slots through dMgTrmpObjAdapter_c and its children.
+// No destructor slots or complete actor layout are implied by this view.
+namespace {
+struct TrampolineObjectCallbacks {
+    virtual Vector3 *GetPos();
+    virtual Vector3 *GetPrevPos();
+    virtual Vector3 *GetVelocity();
+    virtual int IsActive();
+    virtual void Clear();
+};
+}
+
 namespace s020cd744 {
 extern "C" extern void _Z14ApproachLinearRiii(int* a, int b, int c);
 extern "C" extern int _Z15ApproachLinear2Riii(int* a, int b, int c);
@@ -432,11 +445,7 @@ extern void Vec3_MulScalarInPlace(Vector3 *v, int s);
 extern "C" {extern Vector3 data_020a0ebc;}
 }
 
-struct Obj {
-    virtual Vector3 *m00();
-    virtual void m04();
-    virtual Vector3 *m08();
-};
+typedef TrampolineObjectCallbacks Obj;
 
 extern "C" void TrmpItem_ReflectOffLine(char *a, Obj *o)
 {
@@ -468,8 +477,8 @@ extern "C" void TrmpItem_ReflectOffLine(char *a, Obj *o)
         }
     }
 
-    p1 = o->m00();
-    p2 = o->m08();
+    p1 = o->GetPos();
+    p2 = o->GetVelocity();
 
     acc = data_020a0ebc;
     Vec3_Sub(&diff, p1, (Vector3 *)(a + 8));
@@ -689,18 +698,15 @@ namespace s020ce8a0 {
 extern "C" void Vec3_Sub(struct Vector3* out, struct Vector3* a, struct Vector3* b);
 extern "C" int DotVec3(struct Vector3* a, struct Vector3* b);
 
-struct Obj {
-  virtual struct Vector3* GetA();
-  virtual struct Vector3* GetB();
-};
+typedef TrampolineObjectCallbacks Obj;
 
-extern "C" void TrmpItem_ProjectOnLine(char* self, struct Obj* o, int* outR5, int* outR4){
+extern "C" void TrmpItem_ProjectOnLine(char* self, Obj* o, int* outR5, int* outR4){
   struct Vector3 a, b, sa, sb;
   struct Vector3* p;
   int t;
-  p=o->GetA();
+  p=o->GetPos();
   a.x=p->x; a.y=p->y; a.z=p->z;
-  p=o->GetB();
+  p=o->GetPrevPos();
   b.x=p->x; b.y=p->y; b.z=p->z;
   Vec3_Sub(&sa,&a,(struct Vector3*)(self+8));
   Vec3_Sub(&sb,&b,(struct Vector3*)(self+0x14));
@@ -1494,18 +1500,12 @@ namespace s020cfc74 {
 
 struct V2 { int x, y; };
 
-struct VT {
-    Vector3 *(*GetPos)(void *);
-    Vector3 *(*GetTargetPos)(void *);
-    void (*Pad08)(void *);
-    int (*IsActive)(void *);
-};
-struct Cannon {
-    struct VT *vt;
-    Vector3 v4;
-    int f10;
-    int f14;
-    u16 f18;
+// Consumed prefix only; no complete jumper-object size is implied.
+struct TrampolineContactView : TrampolineObjectCallbacks {
+    Vector3 lineNormal;        // +0x04
+    int alongLine;             // +0x10: dot with the line direction
+    int lineHalfLength;        // +0x14
+    u16 contactState;          // +0x18: cleared by callback slot 4
 };
 
 extern "C" extern void Vec3_Sub(Vector3 *out, Vector3 *a, Vector3 *b);
@@ -1520,7 +1520,7 @@ extern "C" extern void TrmpLine_SetStateSettle(char *p);
 extern "C" extern void Vec3_MulScalar(Vector3 *out, Vector3 *in, int scale);
 extern "C" extern void Vec3_Add(Vector3 *out, Vector3 *a, Vector3 *b);
 
-extern "C" {extern struct Cannon *data_ov006_0214097c[];}
+extern "C" {extern struct TrampolineContactView *data_ov006_0214097c[];}
 extern "C" {extern int data_ov006_0213b30c;}
 extern "C" {extern int data_ov006_0213b310;}
 extern "C" {extern int data_ov006_0213b2f4;}
@@ -1534,7 +1534,7 @@ extern "C" int TrmpLine_PushJumper(char *c)
 {
     int i;
     int a;
-    struct Cannon **arr;
+    struct TrampolineContactView **arr;
 
     i = 0;
     do {
@@ -1550,16 +1550,16 @@ extern "C" int TrmpLine_PushJumper(char *c)
 
         if (data_ov006_0214097c[i] == 0)
             continue;
-        if (data_ov006_0214097c[i]->vt->IsActive(data_ov006_0214097c[i]) == 0)
+        if (data_ov006_0214097c[i]->IsActive() == 0)
             continue;
         arr = data_ov006_0214097c;
 
-        p0 = arr[i]->vt->GetPos(arr[i]);
+        p0 = arr[i]->GetPos();
         pos0.x = p0->x;
         pos0.y = p0->y;
         pos0.z = p0->z;
 
-        p1 = arr[i]->vt->GetTargetPos(arr[i]);
+        p1 = arr[i]->GetPrevPos();
         pos1.x = p1->x;
         pos1.y = p1->y;
         pos1.z = p1->z;
@@ -1629,22 +1629,22 @@ extern "C" int TrmpLine_PushJumper(char *c)
             }
 
             if (mag < 0x400000) {
-                arr[i]->f18 = 2;
+                arr[i]->contactState = 2;
                 D3D_PlaySePannedLoop(0x1b1, *(int *)(c + 8),
                     (data_ov006_0213b310 * t + data_ov006_0213b30c * (0x1000 - t)) >> 12);
             } else {
-                arr[i]->f18 = 1;
+                arr[i]->contactState = 1;
                 D3D_PlaySePannedLoop(0x1ae, *(int *)(c + 8),
                     (data_ov006_0213b308 * t + data_ov006_0213b2f4 * (0x1000 - t)) >> 12);
             }
 
             {
-                int *dst = (int *)((char *)arr[i] + 4);
+                int *dst = (int *)&arr[i]->lineNormal;
                 dst[0] = *(int *)(c + 0x14);
                 dst[1] = *(int *)(c + 0x18);
                 dst[2] = *(int *)(c + 0x1c);
-                arr[i]->f10 = a;
-                arr[i]->f14 = *(int *)(c + 0x58);
+                arr[i]->alongLine = a;
+                arr[i]->lineHalfLength = *(int *)(c + 0x58);
                 *(u16 *)(c + 0x320) = 0;
                 TrmpLine_PointDistance(c, (void *)(c + 0x38), (Vector3 *)(c + 0x44));
 
@@ -1665,12 +1665,12 @@ extern "C" int TrmpLine_PushJumper(char *c)
             if (sumPt.y < 0 && sumPt.y > -0x30000) {
                 if (sumPt.x > -0x8000 && sumPt.x < 0) {
                     if (diff.x > 0) {
-                        arr[i]->f18 = 3;
+                        arr[i]->contactState = 3;
                     }
                 }
             } else {
                 if (diffPt.y < 0 && diffPt.y > -0x30000 && diffPt.x > 0 && diffPt.x < 0x8000 && diff.x < 0) {
-                    arr[i]->f18 = 3;
+                    arr[i]->contactState = 3;
                 }
             }
         }
@@ -1732,8 +1732,6 @@ extern s32 data_ov006_0213b304;
 }
 
 struct Spare4 { s32 v; ~Spare4() {} };
-typedef s32 (*IsActiveFn)(void *);
-typedef Vector3 *(*GetVecFn)(void *);
 
 // @symbol TrmpLine_Build
 extern "C" void TrmpLine_Build(char *c, short *p1, short *p2)
@@ -1906,14 +1904,14 @@ extern "C" void TrmpLine_Build(char *c, short *p1, short *p2)
     do {
         obj = data_ov006_0214097c[k];
         if (obj != 0) {
-            if (((IsActiveFn)((*(void ***)obj))[3])(obj) != 0) {
+            if (((TrampolineObjectCallbacks *)obj)->IsActive() != 0) {
                 obj = data_ov006_0214097c[k];
-                pos = ((GetVecFn)((*(void ***)obj))[0])(obj);
+                pos = ((TrampolineObjectCallbacks *)obj)->GetPos();
                 relPos.x = pos->x;
                 relPos.y = pos->y;
                 relPos.z = pos->z;
                 obj = data_ov006_0214097c[k];
-                dir = ((GetVecFn)((*(void ***)obj))[2])(obj);
+                dir = ((TrampolineObjectCallbacks *)obj)->GetVelocity();
                 rawDir.x = dir->x;
                 rawDir.y = dir->y;
                 rawDir.z = dir->z;

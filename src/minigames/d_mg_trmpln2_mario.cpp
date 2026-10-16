@@ -26,9 +26,10 @@
 // neither class has a header and no key function is defined as a real method
 // here, so this TU emits no vtable/typeinfo (cartridge copies stay in the
 // module's .data; only Vector3's trivial D1 is compiler-only output). The
-// per-shard namespaces stay (independent decl shapes would collide). r5v/r4v
-// hold the +0x10/+0x14 words the vector helpers consume; their class slots
-// are unnamed without a header. Shared resource, model, frame-controller and
+// per-shard namespaces stay (independent decl shapes would collide). The
+// +0x10/+0x14 bounce inputs are the along-line projection and line half-length
+// written by TrmpLine_PushJumper; the actor layouts remain partial.
+// Shared resource, model, frame-controller and
 // sound calls use their genuine API headers. The embedded ModelAnim members
 // stay at the constructor-proven +0x78/+0x6c offsets until the owners have layouts.
 #pragma defer_codegen off
@@ -40,6 +41,19 @@
 #include "ModelAnim.h"
 #include "dExtFrameCtrl_c.h"
 #include "Sound.h"
+// Partial callback interface only. ROM vtables at 0x0213b2c4/0x0213b2e0
+// implement these five slots through dMgTrmpObjAdapter_c and its children.
+// No destructor slots or complete actor layout are implied by this view.
+namespace {
+struct TrampolineObjectCallbacks {
+    virtual Vector3 *GetPos();
+    virtual Vector3 *GetPrevPos();
+    virtual Vector3 *GetVelocity();
+    virtual int IsActive();
+    virtual void Clear();
+};
+}
+
 struct W2 { int w[2]; };
 bool ApproachLinear(short &value, short target, short step);
 int ApproachLinear(int &r, int b, int c);
@@ -311,13 +325,6 @@ extern "C" int data_ov006_021405a8;
 extern "C" void *data_ov006_0213b22c[];
 extern "C" int data_ov006_021405b4;
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp2Mario_State1
 extern "C" void Trmp2Mario_State1(char *c)
@@ -412,7 +419,7 @@ L1a4:
 
 L230:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x3c)) *= -1;
     }
 
@@ -452,24 +459,17 @@ extern "C" int pmf_Trmp2Mario_State6_2[2];
 extern "C" void *data_ov006_0214059c;
 extern "C" int pmf_Trmp2Mario_State1_2[2];
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 
 // @symbol Trmp2Mario_BounceOffLineA
 extern "C" void Trmp2Mario_BounceOffLineA(char *c)
 {
     Vector3 tmp, tmp2, tmp3;
-    int r5v, r4v, dot, scale, fdivr, v, fx, cur;
+    int alongLine, lineHalfLength, dot, scale, fdivr, v, fx, cur;
 
-    r5v = *(int *)(c + 0x10);
-    r4v = *(int *)(c + 0x14);
-    if (r5v < 0) r5v = -r5v;
+    alongLine = *(int *)(c + 0x10);
+    lineHalfLength = *(int *)(c + 0x14);
+    if (alongLine < 0) alongLine = -alongLine;
     {
         int *src = (int *)(c + 4);
         tmp.x = src[0]; tmp.y = src[1]; tmp.z = src[2];
@@ -480,7 +480,7 @@ extern "C" void Trmp2Mario_BounceOffLineA(char *c)
     Vec3_MulScalar(&tmp2, &tmp, scale);
     SubVec3((Vector3 *)(c + 0x3c), &tmp2, (Vector3 *)(c + 0x3c));
 
-    fdivr = _ZN4cstd4fdivEii(r4v, r4v + r5v);
+    fdivr = _ZN4cstd4fdivEii(lineHalfLength, lineHalfLength + alongLine);
     scale = (int)(((long long)data_ov006_021405a8 * fdivr + 0x800) >> 12);
     Vec3_MulScalar(&tmp3, &tmp, scale);
     AddVec3((Vector3 *)(c + 0x3c), &tmp3, (Vector3 *)(c + 0x3c));
@@ -526,7 +526,7 @@ extern "C" void Trmp2Mario_BounceOffLineA(char *c)
     }
 
     *(int *)(c + 0x4c) = *(int *)(c + 0x40);
-    ((VtObj *)c)->m4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
     *(int *)(c + 0x64) = 0;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((void *)(c + 0x78), data_ov006_0214059c, 0x40000000, 0x800, 0);
     *(int *)(c + 0xd0) = 0;
@@ -560,13 +560,6 @@ extern "C" int data_ov006_021405a8;
 extern "C" void *data_ov006_0213b22c[];
 extern "C" int data_ov006_021405b4;
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp2Mario_State2
 extern "C" void Trmp2Mario_State2(char *c)
@@ -653,7 +646,7 @@ L1a4:
 
 L230:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x3c)) *= -1;
     }
 
@@ -688,13 +681,6 @@ void Trmp2Mario_State2(char *c);
 }
 
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp2Mario_BounceOffLineB
 extern "C" void Trmp2Mario_BounceOffLineB(char *c)
@@ -702,16 +688,16 @@ extern "C" void Trmp2Mario_BounceOffLineB(char *c)
     Vector3 tmp;
     Vector3 tmp2;
     Vector3 tmp3;
-    int r5v;
-    int r4v;
+    int alongLine;
+    int lineHalfLength;
     int dot;
     int scale;
     int fdivr;
     int vx;
 
-    r5v = *(int *)(c + 0x10);
-    r4v = *(int *)(c + 0x14);
-    if (r5v < 0) r5v = -r5v;
+    alongLine = *(int *)(c + 0x10);
+    lineHalfLength = *(int *)(c + 0x14);
+    if (alongLine < 0) alongLine = -alongLine;
     {
         int *src = (int *)(c + 4);
         tmp.x = src[0];
@@ -724,7 +710,7 @@ extern "C" void Trmp2Mario_BounceOffLineB(char *c)
     Vec3_MulScalar(&tmp2, &tmp, scale);
     SubVec3((Vector3 *)(c + 0x3c), &tmp2, (Vector3 *)(c + 0x3c));
 
-    fdivr = _ZN4cstd4fdivEii(r4v, r4v + r5v);
+    fdivr = _ZN4cstd4fdivEii(lineHalfLength, lineHalfLength + alongLine);
     scale = (int)(((long long)data_ov006_02140574 * fdivr + 0x800) >> 12);
     Vec3_MulScalar(&tmp3, &tmp, scale);
     AddVec3((Vector3 *)(c + 0x3c), &tmp3, (Vector3 *)(c + 0x3c));
@@ -742,7 +728,7 @@ extern "C" void Trmp2Mario_BounceOffLineB(char *c)
     }
 
     *(int *)(c + 0x48) = data_ov006_021405b0;
-    ((VtObj *)c)->m4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
 
     *(int *)(c + 0x64) = 0;
     if (*(int *)(c + 0x60) != 0) {
@@ -782,13 +768,6 @@ extern "C" void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(void *, BCA_File *f,
 
 struct Pair { int a, b; };
 
-struct Obj {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void slot4();
-};
 
 extern "C" {
 extern int data_ov006_021405b0;
@@ -802,12 +781,12 @@ extern void Trmp2Mario_State1(char *c);
 // @symbol Trmp2Mario_EnterState1
 extern "C" void Trmp2Mario_EnterState1(char *c)
 {
-    Obj *o = (Obj *)c;
+    TrampolineObjectCallbacks *callbacks = (TrampolineObjectCallbacks *)c;
     int a, b;
     *(int *)(c + 0x48) = data_ov006_021405b0;
     *(int *)(c + 0x40) = (int)(((long long)data_ov006_02140574 * 0xc00 + 0x800) >> 12);
     *(int *)(c + 0x4c) = *(int *)(c + 0x40);
-    o->slot4();
+    callbacks->Clear();
     *(int *)(c + 0x64) = 0;
     *(int *)(c + 0x60) = 0;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((ModelAnim *)(c + 0x78), data_ov006_0214059c, 0x40000000, 0x800, 0);
@@ -893,13 +872,6 @@ extern void Trmp2Mario_EnterState3(void* p);
 extern "C" int data_ov006_02140598;
 extern "C" int data_ov006_0213b0f0;
 
-struct Obj {
-  virtual void v0();
-  virtual void v1();
-  virtual void v2();
-  virtual void v3();
-  virtual void v4();
-};
 
 // @symbol Trmp2Mario_State4
 extern "C" void Trmp2Mario_State4(char* c){
@@ -909,7 +881,7 @@ extern "C" void Trmp2Mario_State4(char* c){
     data_ov006_02140598=data_ov006_02140598-1;
     ApproachLinear(data_ov006_0213b0f0,0,1);
     Sound::PlayBank2_2D(0x130);
-    ((Obj*)c)->v4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
     *(int*)(c+0x64)=0;
     Trmp2Mario_EnterState3(c);
   } else {
@@ -962,13 +934,6 @@ extern "C" void *data_ov006_0213b22c[];
 struct S8 { int a, b; };
 extern "C" S8 pmf_Trmp2Mario_State2;
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp2Mario_State5
 extern "C" void Trmp2Mario_State5(char *c)
@@ -1042,7 +1007,7 @@ L1a4:
 
 L230:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x3c)) *= -1;
     }
 
@@ -2140,13 +2105,6 @@ extern "C" void *data_ov006_0213b22c[];
 extern "C" int data_ov006_0214059c;
 
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp3DMario_State4
 extern "C" void Trmp3DMario_State4(char *c)
@@ -2231,7 +2189,7 @@ L134:
 
 L1ac:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x34)) *= -1;
     }
 
@@ -2257,13 +2215,6 @@ typedef short s16;
 
 
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 extern "C" {
 int DotVec3(const Vector3 *a, const Vector3 *b);
@@ -2286,15 +2237,15 @@ extern "C" void Trmp3DMario_BounceOffLineA(char *c)
     Vector3 tmp;
     Vector3 tmp2;
     Vector3 tmp4;
-    int r5v;
-    int r4v;
+    int alongLine;
+    int lineHalfLength;
     int dot;
     int scale;
     int fdivr;
 
-    r5v = *(int *)(c + 0x10);
-    r4v = *(int *)(c + 0x14);
-    if (r5v < 0) r5v = -r5v;
+    alongLine = *(int *)(c + 0x10);
+    lineHalfLength = *(int *)(c + 0x14);
+    if (alongLine < 0) alongLine = -alongLine;
     {
         int *src = (int *)(c + 4);
         tmp.x = src[0];
@@ -2307,7 +2258,7 @@ extern "C" void Trmp3DMario_BounceOffLineA(char *c)
     Vec3_MulScalar(&tmp2, &tmp, scale);
     SubVec3((Vector3 *)(c + 0x34), &tmp2, (Vector3 *)(c + 0x34));
 
-    fdivr = _ZN4cstd4fdivEii(r4v, r4v + r5v);
+    fdivr = _ZN4cstd4fdivEii(lineHalfLength, lineHalfLength + alongLine);
 
     *(int *)(c + 0x40) = data_ov006_02140544;
 
@@ -2345,7 +2296,7 @@ extern "C" void Trmp3DMario_BounceOffLineA(char *c)
     }
 
     *(int *)(c + 0x44) = *(int *)(c + 0x38);
-    ((VtObj *)c)->m4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
 
     if (*(int *)(c + 0x58) != 0) {
         *(int *)(c + 0x58) = 0;
@@ -2388,13 +2339,6 @@ extern "C" void *data_ov006_02141a40;
 extern "C" int data_ov006_021405c8[2];
 extern "C" void *data_ov006_0213b22c[];
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp3DMario_State5
 extern "C" void Trmp3DMario_State5(char *c)
@@ -2472,7 +2416,7 @@ L134:
 
 L1ac:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x34)) *= -1;
     }
 
@@ -2508,13 +2452,6 @@ void Trmp3DMario_State5(char *c);
 }
 
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp3DMario_BounceOffLineB
 extern "C" void Trmp3DMario_BounceOffLineB(char *c)
@@ -2522,16 +2459,16 @@ extern "C" void Trmp3DMario_BounceOffLineB(char *c)
     Vector3 tmp;
     Vector3 tmp2;
     Vector3 tmp3;
-    int r5v;
-    int r4v;
+    int alongLine;
+    int lineHalfLength;
     int dot;
     int scale;
     int fdivr;
     int vx;
 
-    r5v = *(int *)(c + 0x10);
-    r4v = *(int *)(c + 0x14);
-    if (r5v < 0) r5v = -r5v;
+    alongLine = *(int *)(c + 0x10);
+    lineHalfLength = *(int *)(c + 0x14);
+    if (alongLine < 0) alongLine = -alongLine;
 
     {
         int *src = (int *)(c + 4);
@@ -2545,7 +2482,7 @@ extern "C" void Trmp3DMario_BounceOffLineB(char *c)
     Vec3_MulScalar(&tmp2, &tmp, scale);
     SubVec3((Vector3 *)(c + 0x34), &tmp2, (Vector3 *)(c + 0x34));
 
-    fdivr = _ZN4cstd4fdivEii(r4v, r4v + r5v);
+    fdivr = _ZN4cstd4fdivEii(lineHalfLength, lineHalfLength + alongLine);
     *(int *)(c + 0x40) = data_ov006_02140544;
 
     scale = (int)(((long long)data_ov006_02140578 * fdivr + 0x800) >> 12);
@@ -2564,7 +2501,7 @@ extern "C" void Trmp3DMario_BounceOffLineB(char *c)
         *(int *)(c + 0x38) = half;
     }
 
-    ((VtObj *)c)->m4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
 
     if (*(int *)(c + 0x58) != 0) {
         *(int *)(c + 0x58) = 0;
@@ -2609,13 +2546,6 @@ extern "C" int data_ov006_02140578;
 extern "C" void *data_ov006_0213b22c[];
 extern "C" int pmf_Trmp3DMario_State5_2[2];
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp3DMario_PickIdleAnim
 extern "C" void Trmp3DMario_PickIdleAnim(char *c)
@@ -2634,7 +2564,7 @@ extern "C" void Trmp3DMario_PickIdleAnim(char *c)
     p38 = (int *)(c + 0x38);
     *p38 += (int)((((long long)data_ov006_02140578 << 11) + 0x800) >> 12);
 
-    ((VtObj *)c)->m4();
+    ((TrampolineObjectCallbacks *)c)->Clear();
 
     *(int *)(c + 0x58) = 0;
 
@@ -2732,13 +2662,6 @@ void Trmp3DMario_EnterState6(void *c);
 extern "C" void *data_ov006_02141a40;
 extern "C" int data_ov006_021405c8[2];
 
-struct VtObj {
-    virtual void d0();
-    virtual void d1();
-    virtual void d2();
-    virtual void d3();
-    virtual void m4();
-};
 
 // @symbol Trmp3DMario_State7
 extern "C" void Trmp3DMario_State7(char *c)
@@ -2812,7 +2735,7 @@ L130:
 
 L150:
     if (*(u16 *)(c + 0x18) == 3) {
-        ((VtObj *)c)->m4();
+        ((TrampolineObjectCallbacks *)c)->Clear();
         *(int *)(((int)c + 0x34)) *= -1;
     }
 
