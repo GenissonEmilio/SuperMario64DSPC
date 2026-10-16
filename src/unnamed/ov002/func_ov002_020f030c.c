@@ -14,3 +14,5 @@ int func_ov002_020f030c(int x)
         return 0xeb8;
     }
 }
+
+unsigned char data_ov002_0210d9a8[8];

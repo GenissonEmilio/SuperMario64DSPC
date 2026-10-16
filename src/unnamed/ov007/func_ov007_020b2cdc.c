@@ -1,2 +1,6 @@
 extern int *data_ov007_02103360;
 int func_ov007_020b2cdc(void) { return data_ov007_02103360[0]; }
+
+const unsigned char data_ov007_020d7a5c[12] = {
+    0x00, 0x60, 0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00
+};

@@ -3838,3 +3838,7 @@ extern "C" dScMgBase_c *_ZN11dScMgBase_cD0Ev(dScMgBase_c *thiz)
 #endif
 
 #pragma pop
+
+extern "C" {
+char sMgBannerGfxSlotUsed[4];
+}

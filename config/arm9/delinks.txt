@@ -1412,6 +1412,7 @@ src/Message2.cpp:
 src/ui/messages/func_0201cb2c.c:
     complete
     .text start:0x0201cb2c end:0x0201cb7c
+    .bss start:0x0209d6f0 end:0x0209d6f4
 
 src/_ZN10dScStage_c13UpdateMessageEv.cpp:
     complete
@@ -1425,6 +1426,7 @@ src/Message.cpp:
     complete
     .text start:0x0201ce10 end:0x0201fcd4
     .bss start:0x0209d64c end:0x0209d6d4
+    .data start:0x0208eeee end:0x0208f021
 
 src/LoadFont.cpp:
     complete
@@ -1567,10 +1569,12 @@ src/GetActorDebugName.c:
 src/unnamed/arm9/0202/func_020233f0.c:
     complete
     .text start:0x020233f0 end:0x020233f4
+    .data start:0x02092118 end:0x0209211c
 
 src/unnamed/arm9/0202/func_020233f4.c:
     complete
     .text start:0x020233f4 end:0x02023408
+    .data start:0x02092130 end:0x02092134
 
 src/unnamed/arm9/0202/func_02023408.c:
     complete
@@ -1606,10 +1610,12 @@ src/game/stages/d_s_stage_methods.cpp:
 src/unnamed/arm9/0202/func_0202e118.c:
     complete
     .text start:0x0202e118 end:0x0202e140
+    .bss start:0x0209f228 end:0x0209f22c
 
 src/game/stages/d_scene.cpp:
     complete
     .text start:0x0202e140 end:0x0202ec9c
+    .bss start:0x0209f248 end:0x0209f24c
 
 src/runtime/graphics/fader/d_wipe.cpp:
     complete
@@ -2143,6 +2149,7 @@ src/Vec3_Add.c:
 src/unnamed/arm9/0203/func_0203d384.c:
     complete
     .text start:0x0203d384 end:0x0203d388
+    .data start:0x02099e20 end:0x02099e24
 
 src/unnamed/arm9/0203/func_0203d388.c:
     complete
@@ -2362,6 +2369,7 @@ src/unnamed/arm9/0203/func_0203e20c.c:
 src/unnamed/arm9/0203/func_0203e978.c:
     complete
     .text start:0x0203e978 end:0x0203e9a8
+    .bss start:0x020a1164 end:0x020a1166
 
 src/unnamed/arm9/0203/func_0203e9a8.c:
     complete
@@ -2488,6 +2496,7 @@ src/unnamed/arm9/0204/func_020402a0.c:
 src/unnamed/arm9/0204/func_02040384.c:
     complete
     .text start:0x02040384 end:0x02040388
+    .bss start:0x020a0fa0 end:0x020a0fa6
 
 src/unnamed/arm9/0204/func_02040388.c:
     complete
@@ -2868,6 +2877,7 @@ src/unnamed/arm9/0204/func_02048908.c:
 src/unnamed/arm9/0204/func_02048a18.c:
     complete
     .text start:0x02048a18 end:0x02048a1c
+    .bss start:0x020a4b6c end:0x020a4b78
 
 src/unnamed/arm9/0204/func_02048a1c.c:
     complete
@@ -3008,6 +3018,7 @@ src/unnamed/arm9/0204/func_0204ae2c.c:
 src/unnamed/arm9/0204/func_0204af38.c:
     complete
     .text start:0x0204af38 end:0x0204af3c
+    .data start:0x0209a03c end:0x0209a040
 
 src/unnamed/arm9/0204/func_0204af3c.c:
     complete
@@ -4164,6 +4175,7 @@ src/unnamed/arm9/0205/func_0205bad8.c:
 src/unnamed/arm9/0205/func_0205bbdc.c:
     complete
     .text start:0x0205bbdc end:0x0205bbe4
+    .bss start:0x020a6760 end:0x020a7760
 
 src/unnamed/arm9/0205/func_0205bbe4.c:
     complete
@@ -4377,6 +4389,7 @@ src/unnamed/arm9/0205/func_0205da94.c:
 src/unnamed/arm9/0205/func_0205db24.c:
     complete
     .text start:0x0205db24 end:0x0205db2c
+    .bss start:0x020a80cc end:0x020a80e4
 
 src/unnamed/arm9/0205/func_0205db2c.c:
     complete
@@ -4792,6 +4805,7 @@ src/unnamed/arm9/0206/func_0206152c.c:
 src/WM_GetSystemWork.c:
     complete
     .text start:0x02061548 end:0x02061558
+    .bss start:0x020a8180 end:0x020a81bc
 
 src/WM_SendCommand.c:
     complete
@@ -5474,6 +5488,7 @@ src/unnamed/arm9/0206/func_02068dc8.c:
 src/unnamed/arm9/0206/func_02068e44.c:
     complete
     .text start:0x02068e44 end:0x02068e4c
+    .bss start:0x020a9db8 end:0x020a9dc0
 
 src/unnamed/arm9/0206/func_02068e4c.c:
     complete
@@ -5630,6 +5645,7 @@ src/unnamed/arm9/0206/func_0206cf98.c:
 src/unnamed/arm9/0206/func_0206d32c.c:
     complete
     .text start:0x0206d32c end:0x0206d868
+    .rodata start:0x0208690c end:0x0208692c
 
 src/unnamed/arm9/0206/func_0206d868.c:
     complete
@@ -5929,6 +5945,7 @@ src/unnamed/arm9/0207/__sinit_02074da8.c:
 src/unnamed/arm9/0207/__sinit_02074dbc.c:
     complete
     .init start:0x02074dbc end:0x02074dc0
+    .bss start:0x020a9ffc end:0x020aa020
 
 src/unnamed/arm9/0207/__sinit_02074dc0.c:
     complete

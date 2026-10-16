@@ -419,3 +419,7 @@ void dScene_c::SetAndStopColorFader()
     SetFaders(&data_0209f5e8);
     data_0209f5e8.speed = 0;
 }
+
+extern "C" {
+unsigned char data_0209f248[4];
+}

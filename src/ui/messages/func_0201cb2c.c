@@ -16,3 +16,5 @@ void ParseMessageBankSections(void)
     gMessageDataSection = dataSection;
     gMessageEntries = bankBase + 0x30;
 }
+
+unsigned char data_0209d6f0[4];

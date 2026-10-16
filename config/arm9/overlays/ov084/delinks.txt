@@ -31,6 +31,7 @@ src/game/actors/d_a_pkn.cpp:
 src/unnamed/ov084/__sinit_ov084_02130558.c:
     complete
     .init start:0x02130558 end:0x02130654
+    .rodata start:0x021302f4 end:0x0213030c
 
 src/unnamed/ov084/__sinit_ov084_02130654.c:
     complete
