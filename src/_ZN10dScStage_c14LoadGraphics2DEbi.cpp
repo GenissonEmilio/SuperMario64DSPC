@@ -13,6 +13,7 @@ enum ZN10dScStage_c14LoadGraphics2DEbi_AssetId {
 };
 
 #include "types.h"
+#include "dScStage_c.h"
 extern "C" {
 void SetBg0Offset(int a, int b);
 void LoadFont(u8 arg);
@@ -40,21 +41,16 @@ extern u8 data_0209d454;
 extern int data_0209fc68;
 }
 
-class dScStage_c {
-public:
-    static void LoadGraphics2D(bool b, int i);
-};
-
-#define BG2CNT     (*(volatile u16 *)0x400000c)
-#define BG3CNT     (*(volatile u16 *)0x400000e)
+#define BG2CNT (*(volatile u16 *)0x400000c)
+#define BG3CNT (*(volatile u16 *)0x400000e)
 #define BG0CNT_SUB (*(volatile u16 *)0x4001008)
 #define BG1CNT_SUB (*(volatile u16 *)0x400100a)
 #define BG2CNT_SUB (*(volatile u16 *)0x400100c)
 
-void dScStage_c::LoadGraphics2D(bool b, int i)
+void dScStage_c::LoadGraphics2D(bool vsMode, int sublevel)
 {
-    char *r4;
-    char *r7;
+    char *screenMap;
+    char *subBg2Screen;
 
     BG3CNT &= ~3;
     BG3CNT = (BG3CNT & 0x43) | 0x1100;
@@ -65,7 +61,7 @@ void dScStage_c::LoadGraphics2D(bool b, int i)
     BG2CNT &= ~0x40;
     BG2CNT = (BG2CNT & 0x43) | 0xd10;
 
-    if (b == 0) {
+    if (vsMode == 0) {
         LoadFont(0);
         if (GetOwnerLanguage() == 5) {
             LoadCompressedFileAt(0xb00f, _ZN2G213GetBG2CharPtrEv());
@@ -79,18 +75,17 @@ void dScStage_c::LoadGraphics2D(bool b, int i)
             LoadCompressedFileAt(0xa00f, _ZN2G213GetBG2CharPtrEv());
         }
         LoadFileAt(0x980b, 0x5000000);
-        r4 = _ZN2G212GetBG2ScrPtrEv();
-        LoadCompressedFileAt(0x9808, r4);
-        LoadCompressedFileAt(0x9809, r4 + 0x800);
-        LoadCompressedFileAt(0x980a, r4 + 0x1000);
+        screenMap = _ZN2G212GetBG2ScrPtrEv();
+        LoadCompressedFileAt(0x9808, screenMap);
+        LoadCompressedFileAt(0x9809, screenMap + 0x800);
+        LoadCompressedFileAt(0x980a, screenMap + 0x1000);
         LoadControllerModeText(0x280);
     } else {
         LoadFont3D();
     }
 
-    if ((int)(data_0209f2d8 == 0) != 0
-        && (data_0209caa0[2] & 0x80) == 0
-        && (int)(data_0209fc48 != 0) == 0) {
+    if ((int)(data_0209f2d8 == 0) != 0 && (data_0209caa0[2] & 0x80) == 0 &&
+        (int)(data_0209fc48 != 0) == 0) {
         BG0CNT_SUB &= ~3;
         BG0CNT_SUB &= ~0x40;
         BG0CNT_SUB = (BG0CNT_SUB & 0x43) | 0xd000;
@@ -108,9 +103,9 @@ void dScStage_c::LoadGraphics2D(bool b, int i)
         LoadCompressedFileAt(ASSET_D_2D_OP_OBJ_CL_NCG_BIN, (void *)0x6600000);
         LoadFileAt(ASSET_D_2D_OP_OBJ_CL_NCL_BIN, 0x5000600);
         {
-            char *scr2 = _ZN3G2S12GetBG2ScrPtrEv();
-            volatile u16 sp0 = 0x10d0;
-            MultiStore16(sp0, scr2, 0x800);
+            char *clearScreenMap = _ZN3G2S12GetBG2ScrPtrEv();
+            volatile u16 fillTile = 0x10d0;
+            MultiStore16(fillTile, clearScreenMap, 0x800);
         }
         data_0209d454 = 0x17;
         SetSubBg0Offset(0, 0);
@@ -142,32 +137,32 @@ void dScStage_c::LoadGraphics2D(bool b, int i)
     }
 
     LoadFileAt(0x9807, 0x5000400);
-    r4 = _ZN3G2S12GetBG1ScrPtrEv();
-    LoadCompressedFileAt(0x9804, r4 + 0x800);
-    LoadCompressedFileAt(0x9803, r4 + 0x1000);
+    screenMap = _ZN3G2S12GetBG1ScrPtrEv();
+    LoadCompressedFileAt(0x9804, screenMap + 0x800);
+    LoadCompressedFileAt(0x9803, screenMap + 0x1000);
 
     if (GetOwnerLanguage() == 5) {
-        LoadCompressedFileAt(0xb009, r4 + 0x1800);
-        LoadCompressedFileAt(0xb00b, r4 + 0x2000);
+        LoadCompressedFileAt(0xb009, screenMap + 0x1800);
+        LoadCompressedFileAt(0xb00b, screenMap + 0x2000);
     } else if (GetOwnerLanguage() == 4) {
-        LoadCompressedFileAt(0xac09, r4 + 0x1800);
-        LoadCompressedFileAt(0xac0b, r4 + 0x2000);
+        LoadCompressedFileAt(0xac09, screenMap + 0x1800);
+        LoadCompressedFileAt(0xac0b, screenMap + 0x2000);
     } else if (GetOwnerLanguage() == 3) {
-        LoadCompressedFileAt(0xa809, r4 + 0x1800);
-        LoadCompressedFileAt(0xa80b, r4 + 0x2000);
+        LoadCompressedFileAt(0xa809, screenMap + 0x1800);
+        LoadCompressedFileAt(0xa80b, screenMap + 0x2000);
     } else if (GetOwnerLanguage() == 2) {
-        LoadCompressedFileAt(0xa409, r4 + 0x1800);
-        LoadCompressedFileAt(0xa40b, r4 + 0x2000);
+        LoadCompressedFileAt(0xa409, screenMap + 0x1800);
+        LoadCompressedFileAt(0xa40b, screenMap + 0x2000);
     } else {
-        LoadCompressedFileAt(0xa009, r4 + 0x1800);
-        LoadCompressedFileAt(0xa00b, r4 + 0x2000);
+        LoadCompressedFileAt(0xa009, screenMap + 0x1800);
+        LoadCompressedFileAt(0xa00b, screenMap + 0x2000);
     }
 
-    r7 = _ZN3G2S12GetBG2ScrPtrEv();
-    LoadCompressedFileAt(0x9805, r7);
-    LoadCompressedFileAt(0x9806, r7 + 0x1000);
+    subBg2Screen = _ZN3G2S12GetBG2ScrPtrEv();
+    LoadCompressedFileAt(0x9805, subBg2Screen);
+    LoadCompressedFileAt(0x9806, subBg2Screen + 0x1000);
 
-    if (b != 0) {
+    if (vsMode != 0) {
         if (data_0209fc68 != 0) {
             return;
         }
@@ -183,21 +178,23 @@ void dScStage_c::LoadGraphics2D(bool b, int i)
             LoadCompressedFileAt(0xa00f, _ZN2G213GetBG2CharPtrEv());
         }
         LoadFileAt(0x980b, 0x5000000);
-        LoadCompressedFileAt(ASSET_D_2D_UPR_TOUCH_TO_SELECT_NSC_BIN, _ZN2G212GetBG2ScrPtrEv() + 0x1800);
-        LoadCompressedFileAt(0x9801, r4 + 0x2800);
+        LoadCompressedFileAt(ASSET_D_2D_UPR_TOUCH_TO_SELECT_NSC_BIN,
+                             _ZN2G212GetBG2ScrPtrEv() + 0x1800);
+        LoadCompressedFileAt(0x9801, screenMap + 0x2800);
         return;
     }
 
-    if (SublevelToLevel(i) == 0x1d) {
-        volatile u16 sp2 = 0;
-        MultiStore16(sp2, r4, 0x40);
-        LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_SELECT_PAUSE_NSC_BIN, r4 + 0x40);
+    if (SublevelToLevel(sublevel) == 0x1d) {
+        volatile u16 blankTile = 0;
+        MultiStore16(blankTile, screenMap, 0x40);
+        LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_SELECT_PAUSE_NSC_BIN, screenMap + 0x40);
         LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_PAGE_NSC_BIN, _ZN2G212GetBG2ScrPtrEv() + 0x1800);
-        LoadCompressedFileAt(ASSET_D_2D_UPR_TOUCH_TO_SELECT_NSC_BIN, _ZN2G212GetBG2ScrPtrEv() + 0x2800);
-        LoadCompressedFileAt(0x9802, r4 + 0x2800);
+        LoadCompressedFileAt(ASSET_D_2D_UPR_TOUCH_TO_SELECT_NSC_BIN,
+                             _ZN2G212GetBG2ScrPtrEv() + 0x2800);
+        LoadCompressedFileAt(0x9802, screenMap + 0x2800);
         return;
     }
 
     LoadCompressedFileAt(ASSET_D_2D_UPR_TOUCH_TO_SELECT_NSC_BIN, _ZN2G212GetBG2ScrPtrEv() + 0x1800);
-    LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_SELECT_PAUSE_NSC_BIN, r4);
+    LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_SELECT_PAUSE_NSC_BIN, screenMap);
 }

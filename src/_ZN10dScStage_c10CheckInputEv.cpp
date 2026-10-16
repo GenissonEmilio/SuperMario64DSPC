@@ -2,32 +2,40 @@
 #include "dScStage_c.h"
 #include "types.h"
 #include "PlayerInput.h"
-struct TouchData { u8 held; u8 edge; u8 x; u8 y; };
+struct TouchData {
+    u8 held;
+    u8 edge;
+    u8 x;
+    u8 y;
+};
 // The ROM reads this record table through one base pointer (gTouchHeld) plus
 // field offsets, not through the per-lane gTouchX/gTouchY/gTouchEdge symbols.
 #define TOUCH_DATA ((struct TouchData *)gTouchHeld)
-struct PadData { u16 held; u16 pressed; };
+struct PadData {
+    u16 held;
+    u16 pressed;
+};
 struct Ctrl {
-    s16 dx;      /* 0x00 */
-    s16 dy;      /* 0x02 */
-    u16 held;    /* 0x04 */
-    u16 pressed; /* 0x06 */
-    s16 mag;     /* 0x08 */
-    s16 nx;      /* 0x0a */
-    s16 ny;      /* 0x0c */
-    s16 ang;     /* 0x0e */
-    u8 tx;       /* 0x10 */
-    u8 ty;       /* 0x11 */
-    u8 delay;    /* 0x12 */
-    u8 cnt;      /* 0x13 */
-    u8 touching; /* 0x14 */
-    u8 pad15;    /* 0x15 */
-    u8 mode;     /* 0x16 */
-    u8 pad17;    /* 0x17 */
+    s16 touchDeltaX;    /* 0x00 */
+    s16 touchDeltaY;    /* 0x02 */
+    u16 held;           /* 0x04 */
+    u16 pressed;        /* 0x06 */
+    s16 magnitude;      /* 0x08 */
+    s16 scaledX;        /* 0x0a */
+    s16 scaledY;        /* 0x0c */
+    s16 angle;          /* 0x0e */
+    u8 touchOriginX;    /* 0x10 */
+    u8 touchOriginY;    /* 0x11 */
+    u8 touchStartDelay; /* 0x12 */
+    u8 recontactTimer;  /* 0x13 */
+    u8 touching;        /* 0x14 */
+    u8 pad15;           /* 0x15 */
+    u8 controlMode;     /* 0x16 */
+    u8 pad17;           /* 0x17 */
 };
 
 extern "C" {
-u8 DecIfAbove0_Byte(u8* p);
+u8 DecIfAbove0_Byte(u8 *p);
 int _ZN4cstd4sqrtEy(unsigned long long v);
 int _ZN4cstd4fdivEii(int a, int b);
 s16 _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
@@ -42,160 +50,172 @@ extern struct Ctrl data_0209f498[];
 extern struct PadData data_020a0e58[];
 extern s16 data_020756b0[];
 extern s16 data_02082214[];
-extern u16* data_0209214c[];
-
+extern u16 *data_0209214c[];
 }
 
 void dScStage_c::CheckInput()
 {
-    u8 m = data_0209f2d8;
-    int b1 = (m == 1);
-    if (b1 == false) {
-        int b2 = (m == 2);
-        if (b2 == false && (data_0209caa0[2] & 0x80)) {
+    u8 mode = data_0209f2d8;
+    int isVsMode = (mode == 1);
+    if (isVsMode == false) {
+        int modeIsTwo = (mode == 2);
+        if (modeIsTwo == false && (data_0209caa0[2] & 0x80)) {
             if (data_0209d660 == 0) {
-                int b3 = (data_0209fc48 != 0);
-                if (b3 == false) goto main_part;
+                int suppressInput = (data_0209fc48 != 0);
+                if (suppressInput == false)
+                    goto main_part;
             } else {
                 goto main_part;
             }
         }
         {
-            Ctrl* q = data_0209f498;
-            int k;
-            for (k = 0; k < 4; k++) {
-                q->touching = 0;
-                q->delay = 0;
-                q->cnt = 0;
-                q->mag = 0;
-                q->nx = 0;
-                q->ny = 0;
-                q->ang = 0;
-                q->held = 0;
-                q->pressed = 0;
-                q++;
+            Ctrl *control = data_0209f498;
+            int playerIndex;
+            for (playerIndex = 0; playerIndex < 4; playerIndex++) {
+                control->touching = 0;
+                control->touchStartDelay = 0;
+                control->recontactTimer = 0;
+                control->magnitude = 0;
+                control->scaledX = 0;
+                control->scaledY = 0;
+                control->angle = 0;
+                control->held = 0;
+                control->pressed = 0;
+                control++;
             }
         }
         return;
     }
-main_part:
-    {
-        Ctrl* p = data_0209f498;
-        int i = 0;
-        int cnt = data_0209f21c;
-        int newx;
-        int newy;
-        u8* st;
-        if (cnt <= 0) return;
-        st = data_0209f350;
-        do {
-            u32 held = data_020a0e58[i].held;
-            u32 pressed = data_020a0e58[i].pressed;
-            u8 touched = TOUCH_DATA[i].held;
-            if ((touched != 0 && data_0209d660 != 0) || (*st != 1 && touched != 0)) {
-                p->touching = 1;
-                DecIfAbove0_Byte(&p->cnt);
-                {
-                    int b = (TOUCH_DATA[i].held != 0 && TOUCH_DATA[i].edge != 0);
-                    if (b != false) {
-                        if (p->cnt != 0) {
-                            int ty2 = TOUCH_DATA[i].y - p->dy;
-                            int tx2 = TOUCH_DATA[i].x - p->dx;
-                            if (tx2 < 0) tx2 = 0;
-                            else if (tx2 > 0xff) tx2 = 0xff;
-                            if (ty2 < 0) ty2 = 0;
-                            else if (ty2 > 0xbf) ty2 = 0xbf;
-                            p->tx = tx2;
-                            p->ty = ty2;
-                        } else {
-                            p->delay = 5;
-                        }
-                    }
-                }
-                if (DecIfAbove0_Byte(&p->delay) != 0) {
-                    p->tx = TOUCH_DATA[i].x;
-                    p->ty = TOUCH_DATA[i].y;
-                    p->mag = 0;
-                    p->nx = 0;
-                    p->ny = 0;
-                    p->ang = 0;
-                } else {
-                    int dx;
-                    int dy;
-                    int len;
-                    int max;
-                    newx = TOUCH_DATA[i].x;
-                    newy = TOUCH_DATA[i].y;
-                    dx = newx - p->tx;
-                    dy = newy - p->ty;
-                    p->dx = dx;
-                    p->dy = dy;
-                    {
-                        s64 sq = (s64)dx * dx;
-                        sq += (s64)dy * dy;
-                        len = _ZN4cstd4sqrtEy(sq);
-                    }
-                    if (p->mode == 2) max = 0x30;
-                    else max = 0x24;
-                    if (len > max) {
-                        int quot = _ZN4cstd4fdivEii(max, len);
-                        dx = (int)(((s64)dx * quot + 0x800) >> 12);
-                        p->tx = newx - dx;
-                        dy = (int)(((s64)dy * quot + 0x800) >> 12);
-                        p->ty = newy - dy;
-                        len = max;
-                    } else if (len < 4) {
-                        len = 0;
-                    }
-                    p->mag = (len << 12) / max;
-                    p->nx = (dx << 12) / max;
-                    p->ny = (dy << 12) / max;
-                    p->ang = _ZN4cstd5atan2E5Fix12IiES1_(dx, dy);
-                }
-            } else {
-                int b2;
-                int dirs;
-                b2 = (touched == 0 && TOUCH_DATA[i].edge != 0);
-                if (b2 != false) p->cnt = 5;
-                DecIfAbove0_Byte(&p->cnt);
-                p->touching = 0;
-                dirs = 0;
-                if (p->mode == 0) dirs = data_020a0e58[i].held & 0xf0;
-                p->ang = data_020756b0[dirs >> 4];
-                if (dirs != 0) {
-                    p->mag = 0x1000;
-                    p->nx = data_02082214[((u16)p->ang >> 4) * 2];
-                    p->ny = data_02082214[((u16)p->ang >> 4) * 2 + 1];
-                } else {
-                    p->mag = 0;
-                    p->nx = 0;
-                    p->ny = 0;
-                }
-            }
+main_part: {
+    Ctrl *control = data_0209f498;
+    int playerIndex = 0;
+    int playerCount = data_0209f21c;
+    int touchX;
+    int touchY;
+    u8 *playerInputState;
+    if (playerCount <= 0)
+        return;
+    playerInputState = data_0209f350;
+    do {
+        u32 held = data_020a0e58[playerIndex].held;
+        u32 pressed = data_020a0e58[playerIndex].pressed;
+        u8 touched = TOUCH_DATA[playerIndex].held;
+        if ((touched != 0 && data_0209d660 != 0) || (*playerInputState != 1 && touched != 0)) {
+            control->touching = 1;
+            DecIfAbove0_Byte(&control->recontactTimer);
             {
-                int b3 = (data_0209fc48 != 0);
-                if (b3 == false) {
-                    u16* map = data_0209214c[p->mode];
-                    u32 j = 0;
-                    do {
-                        if (held & 1) p->held |= *map;
-                        held >>= 1;
-                        if (pressed & 1) p->pressed |= *map;
-                        pressed >>= 1;
-                        map++;
-                        j++;
-                    } while (j < 0x10);
-                    if (p->mode != 2 && (p->held & 0x300) == 0x300) {
-                        *(u16*)((int)p + 4) |= 0x4000;
-                        if (p->pressed & 0x300) {
-                            *(u16*)((int)p + 6) |= 0x4000;
-                        }
+                int touchBegan =
+                    (TOUCH_DATA[playerIndex].held != 0 && TOUCH_DATA[playerIndex].edge != 0);
+                if (touchBegan != false) {
+                    if (control->recontactTimer != 0) {
+                        int originY = TOUCH_DATA[playerIndex].y - control->touchDeltaY;
+                        int originX = TOUCH_DATA[playerIndex].x - control->touchDeltaX;
+                        if (originX < 0)
+                            originX = 0;
+                        else if (originX > 0xff)
+                            originX = 0xff;
+                        if (originY < 0)
+                            originY = 0;
+                        else if (originY > 0xbf)
+                            originY = 0xbf;
+                        control->touchOriginX = originX;
+                        control->touchOriginY = originY;
+                    } else {
+                        control->touchStartDelay = 5;
                     }
                 }
             }
-            st++;
-            i++;
-            p++;
-        } while (i < data_0209f21c);
-    }
+            if (DecIfAbove0_Byte(&control->touchStartDelay) != 0) {
+                control->touchOriginX = TOUCH_DATA[playerIndex].x;
+                control->touchOriginY = TOUCH_DATA[playerIndex].y;
+                control->magnitude = 0;
+                control->scaledX = 0;
+                control->scaledY = 0;
+                control->angle = 0;
+            } else {
+                int deltaX;
+                int deltaY;
+                int distance;
+                int maxDistance;
+                touchX = TOUCH_DATA[playerIndex].x;
+                touchY = TOUCH_DATA[playerIndex].y;
+                deltaX = touchX - control->touchOriginX;
+                deltaY = touchY - control->touchOriginY;
+                // Keep the unclamped displacement for a quick stylus recontact.
+                control->touchDeltaX = deltaX;
+                control->touchDeltaY = deltaY;
+                {
+                    s64 distanceSquared = (s64)deltaX * deltaX;
+                    distanceSquared += (s64)deltaY * deltaY;
+                    distance = _ZN4cstd4sqrtEy(distanceSquared);
+                }
+                if (control->controlMode == 2)
+                    maxDistance = 0x30;
+                else
+                    maxDistance = 0x24;
+                if (distance > maxDistance) {
+                    int clampScale = _ZN4cstd4fdivEii(maxDistance, distance);
+                    deltaX = (int)(((s64)deltaX * clampScale + 0x800) >> 12);
+                    control->touchOriginX = touchX - deltaX;
+                    deltaY = (int)(((s64)deltaY * clampScale + 0x800) >> 12);
+                    control->touchOriginY = touchY - deltaY;
+                    distance = maxDistance;
+                } else if (distance < 4) {
+                    distance = 0;
+                }
+                control->magnitude = (distance << 12) / maxDistance;
+                control->scaledX = (deltaX << 12) / maxDistance;
+                control->scaledY = (deltaY << 12) / maxDistance;
+                control->angle = _ZN4cstd5atan2E5Fix12IiES1_(deltaX, deltaY);
+            }
+        } else {
+            int touchEnded;
+            int directionButtons;
+            touchEnded = (touched == 0 && TOUCH_DATA[playerIndex].edge != 0);
+            if (touchEnded != false)
+                control->recontactTimer = 5;
+            DecIfAbove0_Byte(&control->recontactTimer);
+            control->touching = 0;
+            directionButtons = 0;
+            if (control->controlMode == 0)
+                directionButtons = data_020a0e58[playerIndex].held & 0xf0;
+            control->angle = data_020756b0[directionButtons >> 4];
+            if (directionButtons != 0) {
+                control->magnitude = 0x1000;
+                control->scaledX = data_02082214[((u16)control->angle >> 4) * 2];
+                control->scaledY = data_02082214[((u16)control->angle >> 4) * 2 + 1];
+            } else {
+                control->magnitude = 0;
+                control->scaledX = 0;
+                control->scaledY = 0;
+            }
+        }
+        {
+            int skipButtonMapping = (data_0209fc48 != 0);
+            if (skipButtonMapping == false) {
+                u16 *buttonMap = data_0209214c[control->controlMode];
+                u32 buttonIndex = 0;
+                do {
+                    if (held & 1)
+                        control->held |= *buttonMap;
+                    held >>= 1;
+                    if (pressed & 1)
+                        control->pressed |= *buttonMap;
+                    pressed >>= 1;
+                    buttonMap++;
+                    buttonIndex++;
+                } while (buttonIndex < 0x10);
+                if (control->controlMode != 2 && (control->held & 0x300) == 0x300) {
+                    control->held |= 0x4000;
+                    if (control->pressed & 0x300) {
+                        control->pressed |= 0x4000;
+                    }
+                }
+            }
+        }
+        playerInputState++;
+        playerIndex++;
+        control++;
+    } while (playerIndex < data_0209f21c);
+}
 }
