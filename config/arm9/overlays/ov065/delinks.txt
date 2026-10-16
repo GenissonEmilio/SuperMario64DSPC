@@ -19,6 +19,7 @@ src/game/actors/d_a_basabasa.cpp:
 src/game/actors/d_a_dossy.cpp:
     complete
     .text start:0x02117f40 end:0x021196d8
+    .rodata start:0x0211c080 end:0x0211c0a8
     .init start:0x0211c440 end:0x0211c660
     .ctor start:0x0211cae8 end:0x0211caec
     .data start:0x0211cd1c end:0x0211cd34

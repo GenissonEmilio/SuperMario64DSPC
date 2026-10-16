@@ -109,8 +109,8 @@ extern Matrix4x3 data_020a0e68;
 extern u8 data_ov065_0211c078[];
 extern void *data_ov065_0211cd68[];
 extern SharedFilePtr data_ov002_0210d9c0;
-extern SharedFilePtr *data_ov065_0211c080[];
-extern SharedFilePtr *data_ov065_0211c08c[];
+extern SharedFilePtr *const data_ov065_0211c080[];
+extern SharedFilePtr *const data_ov065_0211c08c[];
 
 extern void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(void* self, void* bca, int n, int fix, u32 flags);
 extern void func_0201267c(u32 id, char* p);
@@ -810,6 +810,23 @@ DossyCollisionFileHandle gDossyLegRCollisionFile(ASSET_DOSSY_LEG_R_KCL);
 DossyCollisionFileHandle gDossyNeckCollisionFile(ASSET_DOSSY_NECK_KCL);
 DossyCollisionFileHandle gDossyBodyCollisionFile(ASSET_DOSSY_BODY_KCL);
 DossyCollisionFileHandle gDossyHeadCollisionFile(ASSET_DOSSY_HEAD_KCL);
+
+/* Animation files, then collision files, in the order InitResources loads them. */
+extern "C" SharedFilePtr *const data_ov065_0211c080[3] = {
+    &data_ov065_0211d768,
+    &data_ov065_0211d748,
+    &data_ov065_0211d770,
+};
+
+extern "C" SharedFilePtr *const data_ov065_0211c08c[7] = {
+    &data_ov065_0211d740,
+    &data_ov065_0211d758,
+    &data_ov065_0211d730,
+    &data_ov065_0211d738,
+    &data_ov065_0211d750,
+    &data_ov065_0211d728,
+    &data_ov065_0211d760,
+};
 
 /* The state table Behavior dispatches through: three pointer-to-member
    records. Retail stores the records as compiler temporaries in .data
