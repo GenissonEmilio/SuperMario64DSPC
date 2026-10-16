@@ -1,5 +1,5 @@
 //cpp
-/* dMg3DHeyhoObjAdapter_c translation unit, ov006 0x020c4048..0x020c6f8c, text only: the class's
+/* dMg3DHeyhoObjAdapter_c translation unit, ov006 0x020c4048..0x020c6f8c: the class's
    base constructor (its vtable and RTTI stay at their ROM homes in the module's unowned .data)
    plus 49 Heyho-minigame helper functions (see config/tu_manifest.d/ov006/dMg3DHeyhoObjAdapter_c.json).
    Function order is the reverse of the ROM: mwccarm 2004/b56 emits .text in reverse source order.
@@ -2170,3 +2170,26 @@ dMg3DHeyhoObjAdapter_c::dMg3DHeyhoObjAdapter_c() : mCommand(0)
  * the model handle, then the animation handle. */
 HeyhoAdapterModelFilePtr data_ov006_02140330(0x217);
 HeyhoAdapterAnimationFileHandle data_ov006_02140338(0x218);
+
+/* Each record is a function address, then zero. 0x0213af70 is the next
+ * symbol. mwcc emits these eight in a permutation of source order; this
+ * order is the one that places them at 0x0213af30 upward. */
+typedef struct { int w[2]; } Pair;
+extern "C" {
+void func_ov006_020c5530(char *c);
+void func_ov006_020c6a9c(char *c);
+void func_ov006_020c5928(char *c);
+void func_ov006_020c53f8(char *c);
+void func_ov006_020c5658(char *c);
+void func_ov006_020c5bf8(char *c);
+void func_ov006_020c66bc(char *c);
+void func_ov006_020c5d28(char *c);
+Pair data_ov006_0213af60 = { (int)&func_ov006_020c66bc, 0 };
+Pair data_ov006_0213af58 = { (int)&func_ov006_020c5bf8, 0 };
+Pair data_ov006_0213af38 = { (int)&func_ov006_020c6a9c, 0 };
+Pair data_ov006_0213af68 = { (int)&func_ov006_020c5d28, 0 };
+Pair data_ov006_0213af40 = { (int)&func_ov006_020c5928, 0 };
+Pair data_ov006_0213af50 = { (int)&func_ov006_020c5658, 0 };
+Pair data_ov006_0213af48 = { (int)&func_ov006_020c53f8, 0 };
+Pair data_ov006_0213af30 = { (int)&func_ov006_020c5530, 0 };
+}
