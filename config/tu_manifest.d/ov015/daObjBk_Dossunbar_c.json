@@ -4,6 +4,7 @@
   "source": "src/game/actors/d_a_obj_bk_dossunbar.cpp",
   "promoted_source": "src/game/actors/d_a_obj_bk_dossunbar.cpp",
   "status": "promoted",
+  "production_mode": "intact-object",
   "boundary_confidence": "medium",
   "boundary_evidence": [
     "contiguous linker run: 0x2111ba0..0x2112290, 25 function(s). tools/tu_map.py splits this into 0x2111ba0..0x2112230 (23) plus a separate 0x2112230..0x2112290 two-function unit holding the factories; the split is the known unhandled-_classInit segmentation defect and the two are folded back together here.",
@@ -16,6 +17,16 @@
       "name": ".text",
       "start": "0x02111ba0",
       "end": "0x02112290"
+    },
+    {
+      "name": ".data",
+      "start": "0x02114534",
+      "end": "0x0211454c"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0211499c",
+      "end": "0x02114a5c"
     }
   ],
   "functions": [
@@ -195,15 +206,192 @@
       "ordinal": 24
     }
   ],
-  "data": [],
-  "bss": [],
+  "data": [
+    {
+      "symbol": "data_ov015_02114534",
+      "address": "0x02114534",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "model-column base; word is the file handle at 0x021149a4"
+    },
+    {
+      "symbol": "data_ov015_02114538",
+      "address": "0x02114538",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "collision-column base; word is the file handle at 0x021149ac"
+    },
+    {
+      "symbol": "data_ov015_0211453c",
+      "address": "0x0211453c",
+      "size": "0x10",
+      "binding": "STB_GLOBAL",
+      "evidence": "first-row clps pointer plus the second resource row; ends before g_profile_BK_DOSSUNBAR_S"
+    }
+  ],
+  "bss": [
+    {
+      "symbol": "data_ov015_0211499c",
+      "address": "0x0211499c",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled file handle; __sinit_ov015_02113048 constructs it with file id 0x58c"
+    },
+    {
+      "symbol": "data_ov015_021149a4",
+      "address": "0x021149a4",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled file handle; the static initializer constructs it with file id 0x58d"
+    },
+    {
+      "symbol": "data_ov015_021149ac",
+      "address": "0x021149ac",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled file handle; the static initializer constructs it with file id 0x58e"
+    },
+    {
+      "symbol": "data_ov015_021149b4",
+      "address": "0x021149b4",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled file handle; the static initializer constructs it with file id 0x58b"
+    },
+    {
+      "symbol": "data_ov015_021149bc",
+      "address": "0x021149bc",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled registration node for the 0x58c handle"
+    },
+    {
+      "symbol": "data_ov015_021149c8",
+      "address": "0x021149c8",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled registration node for the 0x58d handle"
+    },
+    {
+      "symbol": "data_ov015_021149d4",
+      "address": "0x021149d4",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled registration node for the 0x58e handle"
+    },
+    {
+      "symbol": "data_ov015_021149e0",
+      "address": "0x021149e0",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "zero-filled registration node for the 0x58b handle"
+    },
+    {
+      "symbol": "data_ov015_021149ec",
+      "address": "0x021149ec",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "base of the seven state records; the static initializer copies them"
+    },
+    {
+      "symbol": "data_ov015_021149f0",
+      "address": "0x021149f0",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "continuation of the state records"
+    },
+    {
+      "symbol": "data_ov015_021149fc",
+      "address": "0x021149fc",
+      "size": "0x1c",
+      "binding": "STB_GLOBAL",
+      "evidence": "continuation of the state records"
+    },
+    {
+      "symbol": "data_ov015_02114a18",
+      "address": "0x02114a18",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "continuation of the state records"
+    },
+    {
+      "symbol": "data_ov015_02114a24",
+      "address": "0x02114a24",
+      "size": "0x38",
+      "binding": "STB_GLOBAL",
+      "evidence": "seven enter records; the static initializer copies them"
+    }
+  ],
+  "relocations": [
+    {
+      "section": ".data",
+      "source": "0x02114534",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_021149a4",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x021149a4"
+    },
+    {
+      "section": ".data",
+      "source": "0x02114538",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_021149ac",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x021149ac"
+    },
+    {
+      "section": ".data",
+      "source": "0x0211453c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_021135b4",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x021135b4"
+    },
+    {
+      "section": ".data",
+      "source": "0x02114540",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_021149b4",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x021149b4"
+    },
+    {
+      "section": ".data",
+      "source": "0x02114544",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_0211499c",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x0211499c"
+    },
+    {
+      "section": ".data",
+      "source": "0x02114548",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov015_02113634",
+      "addend": 0,
+      "target_module": "ov015",
+      "target_address": "0x02113634"
+    }
+  ],
   "notes": [
     "Hand-curated from a tools/tubuild.py create starting point. The generator's five review items were all resolved here: func_ov015_02111ce0's own extern \"C\" block is kept as written; the func_ov015_02111fb8, dBgActor_c::UpdateModelPosAndRotY and dBgActor_c::UpdateClsnPosAndRot declarations were reconciled to one spelling each (the void return, which is what include/dBgActor_c.h declares); and the pointer-to-member typedef was restored to the Behavior file's spelling, which is the one the state dispatch needs.",
     "NAME. The cartridge's own _ZTS at ov015:0x0211451c spells 19daObjBk_Dossunbar_c, and the _ZTI/_ZTV chain at 0x02114510/0x0211458c binds it to this vtable. The tree's previous name MovingBar was COINED -- it occurs nowhere in the 9.0 MiB extracted cartridge, case-sensitive or case-folded, while Dossunbar occurs in both the RTTI string and the arm9 profile ids BK_DOSSUNBAR_L / BK_DOSSUNBAR_S. The rename was applied with tools/class_rename.py and the _ZTV row in config/arm9/overlays/ov015/symbols.txt was renamed in place at its unchanged address 0x0211458c; no alias row was added anywhere.",
     "TEXT ONLY. No delink entry in ov015 owns a .data or .bss section, so this entry claims .text and nothing else. The fourteen pointer-to-member constants at 0x021144a0, the two .bss dispatch tables at 0x021149ec and 0x02114a24 and the four SharedFilePtr objects are declared extern in the TU and defined nowhere; they are built by __sinit_ov015_02113048, which is a separate .init shard and not part of this TU.",
     "THE FOURTEEN STATE FUNCTIONS KEEP THEIR ADDRESS-DERIVED NAMES ON PURPOSE. Nothing in the cartridge names them, so renaming them would be a name-recovery act rather than a codegen one, and each of the thirteen state bodies is the target of a pointer-to-member record in UNOWNED .data that dsd resolves by symbol NAME: a rename that does not reach config/arm9/overlays/ov015/symbols.txt in the same commit links that record as zero and no byte gate at any stage reports it. Converting them to real members is the next concrete improvement for this class, not part of this promotion.",
     "DESTRUCTOR. include/daObjBk_Dossunbar_c.h gives the destructor an INLINE empty body and declares it ahead of the out-of-line virtuals, which is what makes mwcc emit D1 at 0x02111ba0 then D0 at 0x02111be4 and no D2 -- exactly what the cartridge carries. That inline body is also why this TU emits the eleven vague-linkage RTTI records licensed in compiler_only_output. Writing the destructor out of line instead flips the pair to D0-before-D1 and adds a homeless D2. The two legacy destructor shards had to leave the build in this same change, because an inline body in the header redefines what an enrolled out-of-line shard defines and that is a COMPILE error, not a link one.",
-    "tools/tubuild.py verify reports 23/25 and criterion relocation_destinations_verified FAIL. Both DIFF lines are the single message `_ZTV19daObjBk_Dossunbar_c: unexpected reloc type=2 addend=0` on the two factories, and criterion every_declared_function_bytes_match is PASS -- no byte differs. That message comes from tools/objisolate.py's one-function isolation route, whose externalise branch accepts only addend >= 8 while its consolidated route accepts addend 0 as the ROM-symbol convention. Measured at this revision, the already-promoted ov015 siblings daObjBkBillboard_c (6/7) and daObjBk_Rotebar_c (6/7) report the identical message on their own factories, so it is a property of that route and not of this class. What settles it is the production route: tools/tubuild.py linkcheck links all 25 functions into the real ov015 range with 0 differing bytes, 106/106 modules exact, 0 new dsd check symbols errors against the baseline control, and a linked ROM byte-identical to the stock control."
+    "tools/tubuild.py verify reports 23/25 and criterion relocation_destinations_verified FAIL. Both DIFF lines are the single message `_ZTV19daObjBk_Dossunbar_c: unexpected reloc type=2 addend=0` on the two factories, and criterion every_declared_function_bytes_match is PASS -- no byte differs. That message comes from tools/objisolate.py's one-function isolation route, whose externalise branch accepts only addend >= 8 while its consolidated route accepts addend 0 as the ROM-symbol convention. Measured at this revision, the already-promoted ov015 siblings daObjBkBillboard_c (6/7) and daObjBk_Rotebar_c (6/7) report the identical message on their own factories, so it is a property of that route and not of this class. What settles it is the production route: tools/tubuild.py linkcheck links all 25 functions into the real ov015 range with 0 differing bytes, 106/106 modules exact, 0 new dsd check symbols errors against the baseline control, and a linked ROM byte-identical to the stock control.",
+    "The column table at 0x02114534..0x0211454c and the zero-filled handles, registration nodes, and state tables at 0x0211499c..0x02114a5c are defined in this file. __sinit_ov015_02113048 still constructs the handles and copies the state records. g_profile_BK_DOSSUNBAR_S and g_profile_BK_DOSSUNBAR_L at 0x0211454c stay the ROM copy. production_mode is intact-object so the repeated .data and .bss sections can be placed at those addresses."
   ],
   "verification": {
     "round": "tools/tubuild.py verify -- text-only, whole shadow TU compiled once",
@@ -276,7 +464,7 @@
     },
     "linkcheck": {
       "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
-      "result": "scratch-link-verified",
+      "result": "scratch-data-verified",
       "scratch": "build/tu/ov015-daObjBk_Dossunbar_c/link (gitignored)",
       "phases": {
         "delink": true,
@@ -300,19 +488,134 @@
           "end": "0x02112290",
           "differingBytes": 0,
           "firstDiff": null
+        },
+        {
+          "section": ".data",
+          "start": "0x02114534",
+          "end": "0x0211454c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".bss",
+          "start": "0x0211499c",
+          "end": "0x02114a5c",
+          "comparison": "NOBITS -- symbol/module gates"
         }
       ],
       "objectAudit": {
         "counts": {
-          "LICENSED": 25
+          "LICENSED": 41
         },
         "emittedTextOrderIsRomAscending": true,
         "nonLicensedSymbols": [],
         "unlicensedSections": []
       },
       "nontextSectionOrder": {
-        "groups": [],
-        "objisolate": null,
+        "groups": [
+          {
+            "section": ".data",
+            "original": [
+              5,
+              8,
+              34
+            ],
+            "desired": [
+              5,
+              8,
+              34
+            ]
+          },
+          {
+            "section": ".bss",
+            "original": [
+              7,
+              10,
+              11,
+              12,
+              13,
+              25,
+              26,
+              27,
+              30,
+              31,
+              32,
+              37,
+              38
+            ],
+            "desired": [
+              10,
+              11,
+              12,
+              13,
+              31,
+              32,
+              25,
+              26,
+              7,
+              27,
+              37,
+              30,
+              38
+            ]
+          }
+        ],
+        "objisolate": {
+          "reordered": [
+            {
+              "section": ".bss",
+              "original": [
+                7,
+                10,
+                11,
+                12,
+                13,
+                25,
+                26,
+                27,
+                30,
+                31,
+                32,
+                37,
+                38
+              ],
+              "desired": [
+                10,
+                11,
+                12,
+                13,
+                31,
+                32,
+                25,
+                26,
+                7,
+                27,
+                37,
+                30,
+                38
+              ],
+              "slots": [
+                7,
+                10,
+                11,
+                12,
+                13,
+                25,
+                26,
+                27,
+                30,
+                31,
+                32,
+                37,
+                38
+              ]
+            }
+          ],
+          "symbolIndices": 13,
+          "sectionLinks": 0,
+          "sectionInfos": 0,
+          "error": null
+        },
         "errors": null
       },
       "linkedStorageAliases": null,

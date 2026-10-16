@@ -59,12 +59,34 @@ enum { kMovingBarBigActorId = 0x35 };
 
 extern "C" {
 /* Three column symbols of one two-row {model, KCL, CLPS} table.
-   A typed ResourceDescriptor[2] changes Init reloc destinations. */
-extern SharedFilePtr *data_ov015_02114534;
-extern SharedFilePtr *data_ov015_02114538;
-extern CLPS_Block *data_ov015_0211453c;
-extern StateEntry data_ov015_021149ec[];
-extern VtEntry data_ov015_02114a24[];
+   A typed ResourceDescriptor[2] changes Init reloc destinations.
+   The second row is the tail of data_ov015_0211453c; the profiles
+   at 0x0211454c stay the ROM copy. */
+extern int data_ov015_021135b4[];
+extern int data_ov015_02113634[];
+
+int gBkDossunbarLCollisionFile[2];
+int gBkDossunbarSModelFile[2];
+int gBkDossunbarSCollisionFile[2];
+int gBkDossunbarLModelFile[2];
+int data_ov015_021149bc[3];
+int data_ov015_021149c8[3];
+int data_ov015_021149d4[3];
+int data_ov015_021149e0[3];
+int data_ov015_021149ec[1];
+int data_ov015_021149f0[3];
+int data_ov015_021149fc[7];
+int data_ov015_02114a18[3];
+int data_ov015_02114a24[14];
+
+SharedFilePtr *data_ov015_02114534 = (SharedFilePtr *)gBkDossunbarSModelFile;
+SharedFilePtr *data_ov015_02114538 = (SharedFilePtr *)gBkDossunbarSCollisionFile;
+void *data_ov015_0211453c[4] = {
+    data_ov015_021135b4,
+    gBkDossunbarLModelFile,
+    gBkDossunbarLCollisionFile,
+    data_ov015_02113634,
+};
 
 void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(u32 id, Fix12i x, Fix12i y, Fix12i z);
 int _ZN10dBgActor_c13IsClsnInRangeE5Fix12IiES1_(void *, int, int);
@@ -138,7 +160,7 @@ s32 daObjBk_Dossunbar_c::InitResources()
 // @symbol _ZN19daObjBk_Dossunbar_c8BehaviorEv
 s32 daObjBk_Dossunbar_c::Behavior()
 {
-    (this->*(data_ov015_021149ec[mState].handler))();
+    (this->*(((StateEntry *)data_ov015_021149ec)[mState].handler))();
     UpdateModelPosAndRotY();
     if (_ZN10dBgActor_c13IsClsnInRangeE5Fix12IiES1_(this, 0, 0))
         UpdateClsnPosAndRot();

@@ -14,8 +14,8 @@ extern void SharedFilePtr_Destruct_Clsn();
 
 typedef struct { int a, b; } S8;
 
-extern S8 gBkDossunbarSModelFile, gBkDossunbarSCollisionFile, gBkDossunbarLModelFile, gBkDossunbarLCollisionFile;
-extern S8 data_ov015_021149c8, data_ov015_021149d4, data_ov015_021149e0, data_ov015_021149bc;
+extern int gBkDossunbarSModelFile[2], gBkDossunbarSCollisionFile[2], gBkDossunbarLModelFile[2], gBkDossunbarLCollisionFile[2];
+extern int data_ov015_021149c8[3], data_ov015_021149d4[3], data_ov015_021149e0[3], data_ov015_021149bc[3];
 
 extern S8 data_ov015_02114a24[7];
 extern S8 data_ov015_021144b0, data_ov015_021144f8, data_ov015_021144c8, data_ov015_021144c0, data_ov015_021144a8, data_ov015_021144b8, data_ov015_021144a0;
