@@ -3701,6 +3701,7 @@ src/unnamed/arm9/0204/func_0204dcc0.c:
 src/engine/heap/NestedHeapIterator.cpp:
     complete
     .text start:0x0204dcfc end:0x0204e084
+    .bss start:0x020a4d38 end:0x020a4d44
 
 src/engine/heap/ExpandingHeapAllocator.cpp:
     complete
