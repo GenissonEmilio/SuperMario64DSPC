@@ -44,3 +44,5 @@ void __sinit_ov085_0212f2a8(void) {
     data_ov085_0212fe88.p2 = data_ov085_0212fe30;
     data_ov085_0212fe88.p3 = data_ov085_0212fe38;
 }
+
+char data_ov085_02130498[12];

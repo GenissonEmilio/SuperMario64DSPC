@@ -50,3 +50,4 @@ src/unnamed/ov085/__sinit_ov085_0212f2a8.c:
     complete
     .init start:0x0212f2a8 end:0x0212f3a0
 
+    .bss start:0x02130498 end:0x021304a4
