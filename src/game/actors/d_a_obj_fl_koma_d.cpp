@@ -28,7 +28,7 @@ enum daObjFl_Koma_D_c_AssetId {
 //   data_ov022_02113da8; the +0 cell stays a ROM copy and the CLPS_Block
 //   is ov064's data_ov064_0211bb4c, kept extern. The two handles it
 //   points at are defined at the bottom of this file and
-//   __sinit_daObjFl_Koma_D_c.cpp constructs them.
+//   __sinit_d_a_obj_fl_koma_d.cpp constructs them.
 // - g_profile_FL_KOMA_D lives outside this TU.
 // - #pragma defer_codegen off stays on line 2. Dropping it still matches
 //   each body, but the four functions emit in reverse ROM order.
@@ -127,7 +127,7 @@ KomaDCollisionFilePtr gFlKomaDCollisionFile(ASSET_FL_KOMA_D_KCL);
  * CleanupResources hand to the shared ov002 helpers. Its CLPS_Block is
  * ov064's record, not this file's. */
 extern "C" ResourceTail data_ov022_02113da8 = {
-    &data_ov022_02114528, &data_ov064_0211bb4c,
+    &gFlKomaDCollisionFile, &data_ov064_0211bb4c,
 };
 
 #ifdef _MSC_VER

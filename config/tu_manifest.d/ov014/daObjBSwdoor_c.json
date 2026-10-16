@@ -607,7 +607,7 @@
       "source": "0x021145c4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov014_02114948",
+      "symbol": "gBAnaShutterModelFile",
       "addend": 0,
       "target_module": "ov014",
       "target_address": "0x02114948"
@@ -617,7 +617,7 @@
       "source": "0x021145c8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov014_02114940",
+      "symbol": "gBAnaShutterCollisionFile",
       "addend": 0,
       "target_module": "ov014",
       "target_address": "0x02114940"

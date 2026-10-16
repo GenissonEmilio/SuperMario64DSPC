@@ -91,21 +91,21 @@ union Jump3DRec {
     unsigned w[2];
     Jump3DState pmf;
 };
-extern unsigned data_ov006_0213b020[2];
-extern unsigned data_ov006_0213b028[2];
-extern unsigned data_ov006_0213b030[2];
-extern unsigned data_ov006_0213b038[2];
-extern unsigned data_ov006_0213b040[2];
-extern unsigned data_ov006_0213b048[2];
-extern unsigned data_ov006_0213b050[2];
-extern Jump3DRec data_ov006_0213b058;
-extern unsigned data_ov006_0213b060[2];
-extern Jump3DRec data_ov006_0213b068;
-extern Jump3DRec data_ov006_0213b070;
-extern Jump3DRec data_ov006_0213b078;
-extern unsigned data_ov006_0213b080[2];
-extern Jump3DRec data_ov006_0213b088;
-extern Jump3DRec data_ov006_0213b090;
+extern unsigned pmf_dMgJump3DMario_c_StateMove[2];
+extern unsigned pmf_dMgJump3DMario_c_StateHold[2];
+extern unsigned pmf_dMgJump3DMario_c_StateDamp[2];
+extern unsigned pmf_dMgJump3DMario_c_StateRespawn[2];
+extern unsigned pmf_dMgJump3DMario_c_StateIdle[2];
+extern unsigned pmf_dMgJump3DMario_c_StateIdle_2[2];
+extern unsigned pmf_dMgJump3DMario_c_StateWindUp[2];
+extern Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3;
+extern unsigned pmf_dMgJump3DMario_c_StateBounce[2];
+extern Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2;
+extern Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3;
+extern Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2;
+extern unsigned pmf_dMgJump3DMario_c_StateRiseOut[2];
+extern Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2;
+extern Jump3DRec pmf_dMgJump3DMario_c_StateFallOut;
 
 /* Slots the current mAnimIdx (0/1/2) picks the anim file from. */
 extern BCA_File **data_ov006_0213b098[];
@@ -278,8 +278,8 @@ extern "C" int Jump3D_AllIdle(void)
     int i;
     for (i = 0; i < data_ov006_02140418; i++) {
         int *v = (int *)(&((Jump3DEnt *)data_ov006_02140420)[i].x);
-        int *p = (int *)&data_ov006_0213b040;
-        volatile int *q = (volatile int *)&data_ov006_0213b040;
+        int *p = (int *)&pmf_dMgJump3DMario_c_StateIdle;
+        volatile int *q = (volatile int *)&pmf_dMgJump3DMario_c_StateIdle;
         if (v[0] != p[0]
             || (v[1] != q[1] && ((Jump3DEnt *)data_ov006_02140420)[i].x != 0))
             return 0;
@@ -394,11 +394,11 @@ int dMgJump3DMario_c::Unk_020c762c()
     int r = 0;
     int m = 1;
 
-    if (mState == data_ov006_0213b058.pmf)
+    if (mState == pmf_dMgJump3DMario_c_StateIdle_3.pmf)
         m = 0;
     if (m != 0) {
         m = 1;
-        if (mState == data_ov006_0213b070.pmf)
+        if (mState == pmf_dMgJump3DMario_c_StateWindUp_3.pmf)
             m = 0;
         if (m != 0)
             r = 1;
@@ -511,7 +511,7 @@ void dMgJump3DMario_c::EnterDamp()
         Sound::PlayBank2_2D(0x1c9);
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov006_0214042c, 0, kAnimSpeed, 0);
     mTimer = 0x28;
-    mState = *(Jump3DState *)&data_ov006_0213b030;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateDamp;
 }
 
 
@@ -598,7 +598,7 @@ void dMgJump3DMario_c::EnterHold()
     mModelAnim.dExtFrameCtrl_c::currFrame = 0;
     Sound_PlayBank1Panned(0, 6, mPos.x);
     mTimer = 0x20;
-    mState = *(Jump3DState *)&data_ov006_0213b028;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateHold;
 }
 
 
@@ -707,7 +707,7 @@ void dMgJump3DMario_c::StateMove()
 // @symbol _ZN16dMgJump3DMario_c9EnterMoveEv
 void dMgJump3DMario_c::EnterMove()
 {
-    mState = *(Jump3DState *)&data_ov006_0213b020;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateMove;
 }
 
 
@@ -724,7 +724,7 @@ void dMgJump3DMario_c::StateFallOut()
 // @symbol _ZN16dMgJump3DMario_c12StartFallOutEv
 void dMgJump3DMario_c::StartFallOut()
 {
-    if (mState == data_ov006_0213b088.pmf) {
+    if (mState == pmf_dMgJump3DMario_c_StateRespawn_2.pmf) {
         mVel.y = 0;
         HideAndIdle();
     } else {
@@ -733,7 +733,7 @@ void dMgJump3DMario_c::StartFallOut()
         Sound::PlayBank2_2D(0x1c9);
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov006_0214042c, 0, kAnimSpeed, 0);
         mModelAnim.dExtFrameCtrl_c::currFrame = 0;
-        mState = data_ov006_0213b090.pmf;
+        mState = pmf_dMgJump3DMario_c_StateFallOut.pmf;
     }
 }
 
@@ -763,7 +763,7 @@ void dMgJump3DMario_c::StartRiseOut()
     mModelAnim.dExtFrameCtrl_c::currFrame = 0;
     Sound::PlayBank2_2D(0x10f);
     func_02012718(0x1b5, mScreenX << 12);
-    mState = *(Jump3DState *)&data_ov006_0213b080;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateRiseOut;
 }
 
 // @symbol _ZN16dMgJump3DMario_c8EnterHitEv
@@ -771,13 +771,13 @@ void dMgJump3DMario_c::EnterHit()
 {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov006_0214041c, 0x40000000, kAnimSpeed, 0);
     mModelAnim.dExtFrameCtrl_c::currFrame = 0;
-    if (mState == data_ov006_0213b068.pmf) {
+    if (mState == pmf_dMgJump3DMario_c_StateWindUp_2.pmf) {
         func_02012718(0x110, mScreenX << 12);
     } else {
         Sound_PlayBank1Panned(0, 4, mPos.x);
     }
     func_02012718(0x1b5, mScreenX << 12);
-    mState = data_ov006_0213b078.pmf;
+    mState = pmf_dMgJump3DMario_c_StateBounce_2.pmf;
 }
 
 
@@ -837,7 +837,7 @@ void dMgJump3DMario_c::StateBounce()
 // @symbol _ZN16dMgJump3DMario_c11EnterBounceEv
 void dMgJump3DMario_c::EnterBounce()
 {
-    mState = *(Jump3DState *)&data_ov006_0213b060;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateBounce;
 }
 
 
@@ -861,7 +861,7 @@ void dMgJump3DMario_c::StateWindUp()
 void dMgJump3DMario_c::StartWindUp(int timer)
 {
     mTimer = (s16)timer;
-    mState = *(Jump3DState *)&data_ov006_0213b050;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateWindUp;
 }
 
 // @symbol _ZN16dMgJump3DMario_c9StateIdleEv
@@ -876,7 +876,7 @@ void dMgJump3DMario_c::HideAndIdle()
 {
     mVisible = 0;
     mPos.y = 0;
-    mState = *(Jump3DState *)&data_ov006_0213b048;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateIdle_2;
 }
 
 // @symbol _ZN16dMgJump3DMario_c12StateRespawnEv
@@ -910,7 +910,7 @@ void dMgJump3DMario_c::EnterRespawn()
     mPos.y = 0x100000;
     mVel.y = 0;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov006_02140424, 0x40000000, kAnimSpeed, 0);
-    mState = *(Jump3DState *)&data_ov006_0213b038;
+    mState = *(Jump3DState *)&pmf_dMgJump3DMario_c_StateRespawn;
 }
 
 
@@ -985,21 +985,21 @@ extern "C" void _ZN16dMgJump3DMario_c11StateWindUpEv(dMgJump3DMario_c *);
 extern "C" void _ZN16dMgJump3DMario_c11StateBounceEv(dMgJump3DMario_c *);
 extern "C" void _ZN16dMgJump3DMario_c12StateRiseOutEv(dMgJump3DMario_c *);
 extern "C" void _ZN16dMgJump3DMario_c12StateFallOutEv(dMgJump3DMario_c *);
-extern "C" unsigned data_ov006_0213b020[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateMoveEv, 0 };
-extern "C" unsigned data_ov006_0213b028[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateHoldEv, 0 };
-extern "C" unsigned data_ov006_0213b030[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateDampEv, 0 };
-extern "C" unsigned data_ov006_0213b038[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 };
-extern "C" unsigned data_ov006_0213b040[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
-extern "C" unsigned data_ov006_0213b048[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
-extern "C" unsigned data_ov006_0213b050[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 };
-extern "C" Jump3DRec data_ov006_0213b058 = {{ (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 }};
-extern "C" unsigned data_ov006_0213b060[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 };
-extern "C" Jump3DRec data_ov006_0213b068 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
-extern "C" Jump3DRec data_ov006_0213b070 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
-extern "C" Jump3DRec data_ov006_0213b078 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 }};
-extern "C" unsigned data_ov006_0213b080[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRiseOutEv, 0 };
-extern "C" Jump3DRec data_ov006_0213b088 = {{ (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 }};
-extern "C" Jump3DRec data_ov006_0213b090 = {{ (unsigned)_ZN16dMgJump3DMario_c12StateFallOutEv, 0 }};
+extern "C" unsigned pmf_dMgJump3DMario_c_StateMove[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateMoveEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateHold[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateHoldEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateDamp[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateDampEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateRespawn[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateIdle[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateIdle_2[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
+extern "C" unsigned pmf_dMgJump3DMario_c_StateWindUp[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 };
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3 = {{ (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 }};
+extern "C" unsigned pmf_dMgJump3DMario_c_StateBounce[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 };
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 }};
+extern "C" unsigned pmf_dMgJump3DMario_c_StateRiseOut[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRiseOutEv, 0 };
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2 = {{ (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 }};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateFallOut = {{ (unsigned)_ZN16dMgJump3DMario_c12StateFallOutEv, 0 }};
 extern "C" BCA_File **data_ov006_0213b098[3] = {
     &data_ov006_02140430,
     &data_ov006_0214040c,

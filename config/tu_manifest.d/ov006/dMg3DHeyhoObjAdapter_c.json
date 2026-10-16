@@ -393,49 +393,49 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213af30",
+      "symbol": "pmf_Heyho_Motion2",
       "address": "0x0213af30",
       "size": "0x8",
       "evidence": "function address func_ov006_020c5530, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af38",
+      "symbol": "pmf_Heyho_Motion3",
       "address": "0x0213af38",
       "size": "0x8",
       "evidence": "function address func_ov006_020c6a9c, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af40",
+      "symbol": "pmf_Heyho_Motion4",
       "address": "0x0213af40",
       "size": "0x8",
       "evidence": "function address func_ov006_020c5928, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af48",
+      "symbol": "pmf_Heyho_Motion5",
       "address": "0x0213af48",
       "size": "0x8",
       "evidence": "function address func_ov006_020c53f8, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af50",
+      "symbol": "pmf_Heyho_Motion6",
       "address": "0x0213af50",
       "size": "0x8",
       "evidence": "function address func_ov006_020c5658, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af58",
+      "symbol": "pmf_Heyho_Motion7",
       "address": "0x0213af58",
       "size": "0x8",
       "evidence": "function address func_ov006_020c5bf8, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af60",
+      "symbol": "pmf_Heyho_Motion8",
       "address": "0x0213af60",
       "size": "0x8",
       "evidence": "function address func_ov006_020c66bc, then a zero word"
     },
     {
-      "symbol": "data_ov006_0213af68",
+      "symbol": "pmf_Heyho_Motion9",
       "address": "0x0213af68",
       "size": "0x8",
       "evidence": "function address func_ov006_020c5d28, then a zero word"
@@ -936,7 +936,7 @@
       "source": "0x0213af30",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c5530",
+      "symbol": "Heyho_Motion2",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c5530"
@@ -946,7 +946,7 @@
       "source": "0x0213af38",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c6a9c",
+      "symbol": "Heyho_Motion3",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c6a9c"
@@ -956,7 +956,7 @@
       "source": "0x0213af40",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c5928",
+      "symbol": "Heyho_Motion4",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c5928"
@@ -966,7 +966,7 @@
       "source": "0x0213af48",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c53f8",
+      "symbol": "Heyho_Motion5",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c53f8"
@@ -976,7 +976,7 @@
       "source": "0x0213af50",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c5658",
+      "symbol": "Heyho_Motion6",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c5658"
@@ -986,7 +986,7 @@
       "source": "0x0213af58",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c5bf8",
+      "symbol": "Heyho_Motion7",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c5bf8"
@@ -996,7 +996,7 @@
       "source": "0x0213af60",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c66bc",
+      "symbol": "Heyho_Motion8",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c66bc"
@@ -1006,7 +1006,7 @@
       "source": "0x0213af68",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020c5d28",
+      "symbol": "Heyho_Motion9",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020c5d28"

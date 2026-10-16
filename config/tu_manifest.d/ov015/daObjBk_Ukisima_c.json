@@ -81,7 +81,7 @@
       "address": "0x021147a4",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "ResourceDescriptor {model, collision, clps}: three ABS32 words relocating to data_ov015_02114aac (model SharedFilePtr), data_ov015_02114ab4 (collision SharedFilePtr) and data_ov015_02113614 (CLPS_Block in the shared .data run owned elsewhere)"
+      "evidence": "ResourceDescriptor {model, collision, clps}: three ABS32 words relocating to gBkUkisimaModelFile (model SharedFilePtr), gBkUkisimaCollisionFile (collision SharedFilePtr) and data_ov015_02113614 (CLPS_Block in the shared .data run owned elsewhere)"
     }
   ],
   "bss": [
@@ -687,7 +687,7 @@
       "source": "0x021147a4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_02114aac",
+      "symbol": "gBkUkisimaModelFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x02114aac"
@@ -697,7 +697,7 @@
       "source": "0x021147a8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_02114ab4",
+      "symbol": "gBkUkisimaCollisionFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x02114ab4"

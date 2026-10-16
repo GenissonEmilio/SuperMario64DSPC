@@ -385,12 +385,12 @@ StateFunc data_ov091_021354e0[3] = {
  * are const so they land in .rodata. The CLPS table is not const: retail
  * stores it in .data. */
 extern "C" SharedFilePtr *const data_ov091_021344f4[2] = {
-    &data_ov091_021354a0,
-    &data_ov091_02135490,
+    &gKm3RiftCollisionFile,
+    &gKm2SusumuCollisionFile,
 };
 extern "C" SharedFilePtr *const data_ov091_021344fc[2] = {
-    &data_ov091_02135498,
-    &data_ov091_021354a8,
+    &gKm3RiftModelFile,
+    &gKm2SusumuModelFile,
 };
 
 extern "C" CLPS_Block data_ov008_02111af4;

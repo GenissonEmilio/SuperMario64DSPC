@@ -2176,7 +2176,7 @@ const SharedFilePtr* const data_ov084_02130278[7] = {
     &data_ov084_02130ce0,
     &data_ov084_02130cd0,
     &data_ov084_02130cc0,
-    &data_ov084_02130cd8,
+    &gKuriboRecoverAnimationFile,
     &data_ov084_02130cc8,
     &data_ov084_02130cf0,
 };

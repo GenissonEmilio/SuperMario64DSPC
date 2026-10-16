@@ -1334,14 +1334,14 @@ extern "C" void _ZN14dScMgMemory2_c12ResultRewardEv(); /* local extern: code add
 extern "C" void _ZN14dScMgMemory2_c15ResultTurnCardsEv(); /* local extern: code address, not the member pointer */
 extern "C" void _ZN14dScMgMemory2_c10PlayerMoveEi(int); /* local extern: code address, not the member pointer */
 
-dScMgMemory2StateWords data_ov006_0213d248 = { _ZN14dScMgMemory2_c10ResultWaitEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d250 = { _ZN14dScMgMemory2_c9StatePlayEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d258 = { (void (*)())_ZN14dScMgMemory2_c10PlayerDropEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d260 = { _ZN14dScMgMemory2_c13RoundDealHardEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d268 = { _ZN14dScMgMemory2_c10StateSetupEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d270 = { (void (*)())_ZN14dScMgMemory2_c8CardIdleEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d278 = { _ZN14dScMgMemory2_c9StateExitEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d280 = { _ZN14dScMgMemory2_c15RoundDealFourthEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_ResultWait = { _ZN14dScMgMemory2_c10ResultWaitEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_StatePlay = { _ZN14dScMgMemory2_c9StatePlayEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_PlayerDrop = { (void (*)())_ZN14dScMgMemory2_c10PlayerDropEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundDealHard = { _ZN14dScMgMemory2_c13RoundDealHardEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_StateSetup = { _ZN14dScMgMemory2_c10StateSetupEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardIdle = { (void (*)())_ZN14dScMgMemory2_c8CardIdleEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_StateExit = { _ZN14dScMgMemory2_c9StateExitEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundDealFourth = { _ZN14dScMgMemory2_c15RoundDealFourthEv, 0 };
 
 struct dScMgMemory2Profile {
     void *(*spawn)();
@@ -1350,27 +1350,27 @@ struct dScMgMemory2Profile {
 };
 dScMgMemory2Profile g_profile_MG_MEMORY_J = { dScMgMemory2_c_classInit, 0x16b, 0x16b };
 
-dScMgMemory2StateWords data_ov006_0213d290 = { _ZN14dScMgMemory2_c15RoundDealNormalEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d298 = { _ZN14dScMgMemory2_c14RoundShowCardsEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2a0 = { _ZN14dScMgMemory2_c15RoundReadyCardsEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2a8 = { _ZN14dScMgMemory2_c11RoundRevealEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2b0 = { (void (*)())_ZN14dScMgMemory2_c10CardSelectEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2b8 = { (void (*)())_ZN14dScMgMemory2_c10PlayerWaitEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2c0 = { _ZN14dScMgMemory2_c10StateJudgeEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2c8 = { _ZN14dScMgMemory2_c10RoundStartEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2d0 = { _ZN14dScMgMemory2_c13RoundDealEasyEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d2d8 = { (void (*)())_ZN14dScMgMemory2_c11CardFlyAwayEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2e0 = { (void (*)())_ZN14dScMgMemory2_c12CardFlipDownEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2e8 = { (void (*)())_ZN14dScMgMemory2_c8CardWaitEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2f0 = { (void (*)())_ZN14dScMgMemory2_c10CardFlipUpEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d2f8 = { _ZN14dScMgMemory2_c12ResultFinishEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d300 = { _ZN14dScMgMemory2_c11StateResultEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d308 = { (void (*)())_ZN14dScMgMemory2_c8CardMoveEi, 0 };
-dScMgMemory2StateWords data_ov006_0213d310 = { _ZN14dScMgMemory2_c14RoundHideCardsEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d318 = { _ZN14dScMgMemory2_c13RoundWaitDealEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d320 = { _ZN14dScMgMemory2_c12ResultRewardEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d328 = { _ZN14dScMgMemory2_c15ResultTurnCardsEv, 0 };
-dScMgMemory2StateWords data_ov006_0213d330 = { (void (*)())_ZN14dScMgMemory2_c10PlayerMoveEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundDealNormal = { _ZN14dScMgMemory2_c15RoundDealNormalEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundShowCards = { _ZN14dScMgMemory2_c14RoundShowCardsEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundReadyCards = { _ZN14dScMgMemory2_c15RoundReadyCardsEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundReveal = { _ZN14dScMgMemory2_c11RoundRevealEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardSelect = { (void (*)())_ZN14dScMgMemory2_c10CardSelectEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_PlayerWait = { (void (*)())_ZN14dScMgMemory2_c10PlayerWaitEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_StateJudge = { _ZN14dScMgMemory2_c10StateJudgeEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundStart = { _ZN14dScMgMemory2_c10RoundStartEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundDealEasy = { _ZN14dScMgMemory2_c13RoundDealEasyEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardFlyAway = { (void (*)())_ZN14dScMgMemory2_c11CardFlyAwayEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardFlipDown = { (void (*)())_ZN14dScMgMemory2_c12CardFlipDownEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardWait = { (void (*)())_ZN14dScMgMemory2_c8CardWaitEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardFlipUp = { (void (*)())_ZN14dScMgMemory2_c10CardFlipUpEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_ResultFinish = { _ZN14dScMgMemory2_c12ResultFinishEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_StateResult = { _ZN14dScMgMemory2_c11StateResultEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_CardMove = { (void (*)())_ZN14dScMgMemory2_c8CardMoveEi, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundHideCards = { _ZN14dScMgMemory2_c14RoundHideCardsEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_RoundWaitDeal = { _ZN14dScMgMemory2_c13RoundWaitDealEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_ResultReward = { _ZN14dScMgMemory2_c12ResultRewardEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_ResultTurnCards = { _ZN14dScMgMemory2_c15ResultTurnCardsEv, 0 };
+dScMgMemory2StateWords pmf_dScMgMemory2_c_PlayerMove = { (void (*)())_ZN14dScMgMemory2_c10PlayerMoveEi, 0 };
 
 void *data_ov006_02142490[23] = {
     (void *)data_ov006_02133810[0],
@@ -1398,41 +1398,41 @@ void *data_ov006_02142490[23] = {
     (void *)data_ov006_02133810[22],
 };
 dScMgMemory2_cState data_ov006_021423e0[5] = {
-    *(dScMgMemory2_cState *)&data_ov006_0213d268,
-    *(dScMgMemory2_cState *)&data_ov006_0213d250,
-    *(dScMgMemory2_cState *)&data_ov006_0213d2c0,
-    *(dScMgMemory2_cState *)&data_ov006_0213d300,
-    *(dScMgMemory2_cState *)&data_ov006_0213d278,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_StateSetup,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_StatePlay,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_StateJudge,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_StateResult,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_StateExit,
 };
 dScMgMemory2_cState data_ov006_02142440[10] = {
-    *(dScMgMemory2_cState *)&data_ov006_0213d2c8,
-    *(dScMgMemory2_cState *)&data_ov006_0213d2d0,
-    *(dScMgMemory2_cState *)&data_ov006_0213d290,
-    *(dScMgMemory2_cState *)&data_ov006_0213d260,
-    *(dScMgMemory2_cState *)&data_ov006_0213d280,
-    *(dScMgMemory2_cState *)&data_ov006_0213d298,
-    *(dScMgMemory2_cState *)&data_ov006_0213d310,
-    *(dScMgMemory2_cState *)&data_ov006_0213d2a0,
-    *(dScMgMemory2_cState *)&data_ov006_0213d318,
-    *(dScMgMemory2_cState *)&data_ov006_0213d2a8,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundStart,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundDealEasy,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundDealNormal,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundDealHard,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundDealFourth,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundShowCards,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundHideCards,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundReadyCards,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundWaitDeal,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_RoundReveal,
 };
 dScMgMemory2_cState data_ov006_021423c0[4] = {
-    *(dScMgMemory2_cState *)&data_ov006_0213d248,
-    *(dScMgMemory2_cState *)&data_ov006_0213d320,
-    *(dScMgMemory2_cState *)&data_ov006_0213d328,
-    *(dScMgMemory2_cState *)&data_ov006_0213d2f8,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_ResultWait,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_ResultReward,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_ResultTurnCards,
+    *(dScMgMemory2_cState *)&pmf_dScMgMemory2_c_ResultFinish,
 };
 dScMgMemory2_cCardState data_ov006_02142408[7] = {
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d308,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d270,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2b0,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2f0,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2e8,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2e0,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2d8,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardMove,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardIdle,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardSelect,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardFlipUp,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardWait,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardFlipDown,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_CardFlyAway,
 };
 dScMgMemory2_cCardState data_ov006_021423a8[3] = {
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d258,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d330,
-    *(dScMgMemory2_cCardState *)&data_ov006_0213d2b8,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_PlayerDrop,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_PlayerMove,
+    *(dScMgMemory2_cCardState *)&pmf_dScMgMemory2_c_PlayerWait,
 };

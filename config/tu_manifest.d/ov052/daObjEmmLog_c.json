@@ -95,7 +95,7 @@
       "address": "0x021124d4",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "resource table of three pointers. model data_ov052_02112680, collision data_ov052_02112688, CLPS data_ov064_0211ba2c. InitResources loads the first two and passes the third to SetFile."
+      "evidence": "resource table of three pointers. model gEmmLogModelFile, collision gEmmLogCollisionFile, CLPS data_ov064_0211ba2c. InitResources loads the first two and passes the third to SetFile."
     }
   ],
   "bss": [
@@ -668,7 +668,7 @@
       "source": "0x021124d4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov052_02112680",
+      "symbol": "gEmmLogModelFile",
       "addend": 0,
       "target_module": "ov052",
       "target_address": "0x02112680"
@@ -678,7 +678,7 @@
       "source": "0x021124d8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov052_02112688",
+      "symbol": "gEmmLogCollisionFile",
       "addend": 0,
       "target_module": "ov052",
       "target_address": "0x02112688"

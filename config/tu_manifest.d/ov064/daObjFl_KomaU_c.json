@@ -101,7 +101,7 @@
       "address": "0x0211adbc",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "file table of three pointers. model data_ov064_0211c790, collision data_ov064_0211c798, CLPS data_ov064_0211bdac."
+      "evidence": "file table of three pointers. model gFlKomaUModelFile, collision gFlKomaUCollisionFile, CLPS data_ov064_0211bdac."
     }
   ],
   "data": [
@@ -722,7 +722,7 @@
       "source": "0x0211adbc",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov064_0211c790",
+      "symbol": "gFlKomaUModelFile",
       "addend": 0,
       "target_module": "ov064",
       "target_address": "0x0211c790"
@@ -732,7 +732,7 @@
       "source": "0x0211adc0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov064_0211c798",
+      "symbol": "gFlKomaUCollisionFile",
       "addend": 0,
       "target_module": "ov064",
       "target_address": "0x0211c798"

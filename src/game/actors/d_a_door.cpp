@@ -355,12 +355,12 @@ DoorAnimationFileHandle  data_ov100_02148744(0x9c08);
  * does not use. */
 extern "C" DoorEntry data_ov100_02148204[19] = {
     { &data_ov100_0214875c, 0,                      -1, -1, -1, 0, -1, 0 },
-    { &data_ov100_0214875c, &data_ov100_0214873c,   -1, -1, -1, 0, -1, 0 },
-    { &data_ov100_0214875c, &data_ov100_02148724,    1, -1,  0, 0, 25, 0 },
-    { &data_ov100_0214875c, &data_ov100_02148724,    1, -1,  1, 0, 25, 0 },
-    { &data_ov100_0214875c, &data_ov100_0214872c,    3, -1,  2, 0, 26, 0 },
-    { &data_ov100_0214875c, &data_ov100_0214872c,    3, -1,  3, 0, 26, 0 },
-    { &data_ov100_0214875c, &data_ov100_02148764,    8, -1,  4, 0, 27, 0 },
+    { &data_ov100_0214875c, &gObjDoor0StarModelFile,   -1, -1, -1, 0, -1, 0 },
+    { &data_ov100_0214875c, &gObjDoor0Star1ModelFile,    1, -1,  0, 0, 25, 0 },
+    { &data_ov100_0214875c, &gObjDoor0Star1ModelFile,    1, -1,  1, 0, 25, 0 },
+    { &data_ov100_0214875c, &gObjDoor0Star3ModelFile,    3, -1,  2, 0, 26, 0 },
+    { &data_ov100_0214875c, &gObjDoor0Star3ModelFile,    3, -1,  3, 0, 26, 0 },
+    { &data_ov100_0214875c, &gObjDoor0Star10ModelFile,    8, -1,  4, 0, 27, 0 },
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  0,  0, 0, 24, 0 },
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  1,  1, 0, 24, 0 },
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  2,  2, 0, 32, 0 },
@@ -368,11 +368,11 @@ extern "C" DoorEntry data_ov100_02148204[19] = {
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  4,  4, 0, 34, 0 },
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  5,  5, 0, 24, 0 },
     { &data_ov100_0214875c, &data_ov100_0214877c,   -1,  6,  6, 0, 24, 0 },
-    { &data_ov100_02148774, 0,                      -1, -1, -1, 0, -1, 0 },
-    { &data_ov100_0214876c, 0,                      -1, -1, -1, 0, -1, 0 },
+    { &gObjDoor1ModelFile, 0,                      -1, -1, -1, 0, -1, 0 },
+    { &gObjDoor2BoroModelFile, 0,                      -1, -1, -1, 0, -1, 0 },
     { &data_ov100_0214874c, 0,                      -1, -1, -1, 0, -1, 0 },
-    { &data_ov100_02148754, 0,                      -1, -1, -1, 0, -1, 0 },
-    { &data_ov100_02148734, 0,                      -1, -1, -1, 0, -1, 0 },
+    { &gObjDoor4YamiModelFile, 0,                      -1, -1, -1, 0, -1, 0 },
+    { &gObjDoor5HorrorModelFile, 0,                      -1, -1, -1, 0, -1, 0 },
 };
 
 /* The function-local statics of the helpers above, spelled out against the

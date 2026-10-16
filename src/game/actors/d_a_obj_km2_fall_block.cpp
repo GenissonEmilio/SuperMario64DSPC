@@ -57,14 +57,14 @@ struct ResourceDescriptor {
 typedef char ResourceDescriptor_size_must_be_0x0c[
     sizeof(ResourceDescriptor) == 0x0c ? 1 : -1];
 
-extern Km2FallModelFilePtr data_ov045_02113250;
-extern Km2FallClsnFileHandle data_ov045_02113248;
+extern Km2FallModelFilePtr gKm2KuzureModelFile;
+extern Km2FallClsnFileHandle gKm2KuzureCollisionFile;
 extern "C" CLPS_Block data_ov045_021125f0;
 
 /* Retail words: model handle, collision handle, CLPS block. */
 extern "C" ResourceDescriptor data_ov045_021130ac = {
-    &data_ov045_02113250,
-    &data_ov045_02113248,
+    &gKm2KuzureModelFile,
+    &gKm2KuzureCollisionFile,
     &data_ov045_021125f0,
 };
 

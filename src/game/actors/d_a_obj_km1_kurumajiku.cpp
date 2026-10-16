@@ -65,13 +65,13 @@ int func_ov002_020b6c54(daObjKm1_Kurumajiku_c *self,
 int func_ov002_020b6ac8(daObjKm1_Kurumajiku_c *self,
                         ResourceDescriptor *descriptor);
 extern CLPS_Block data_ov043_02111bc0;
-extern Km1KurumajikuModelFilePtr data_ov043_02112610;
-extern Km1KurumajikuCollisionFilePtr data_ov043_02112608;
+extern Km1KurumajikuModelFilePtr gKm1KurumajikuModelFile;
+extern Km1KurumajikuCollisionFilePtr gKm1KurumajikuCollisionFile;
 extern ResourceDescriptor data_ov043_02112344;
 }
 
 ResourceDescriptor data_ov043_02112344 = {
-    &data_ov043_02112610, &data_ov043_02112608, &data_ov043_02111bc0
+    &gKm1KurumajikuModelFile, &gKm1KurumajikuCollisionFile, &data_ov043_02111bc0
 };
 
 struct KurumajikuSpawnInfo {

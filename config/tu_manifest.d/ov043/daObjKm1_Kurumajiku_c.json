@@ -82,7 +82,7 @@
       "symbol": "data_ov043_02112344",
       "address": "0x02112344",
       "size": "0xc",
-      "evidence": "ResourceDescriptor {model, kcl, clps}: model and kcl relocate to this TU's own bss file handles data_ov043_02112610 (file ID 1621) and data_ov043_02112608 (1622); clps relocates to the module-shared data_ov043_02111bc0, which remains ROM-owned"
+      "evidence": "ResourceDescriptor {model, kcl, clps}: model and kcl relocate to this TU's own bss file handles gKm1KurumajikuModelFile (file ID 1621) and gKm1KurumajikuCollisionFile (1622); clps relocates to the module-shared data_ov043_02111bc0, which remains ROM-owned"
     }
   ],
   "bss": [
@@ -119,7 +119,7 @@
     "Hand-assembled rather than generated: src/d_a_obj_km1_kurumajiku.c wraps its body in an extern \"C\" block, which tubuild create refuses to split.",
     "FOLD 2026-09-07. daObjKm1_Kurumajiku_c_classInit at 0x021114dc (historical alias RickshawBdw_Spawn) was folded in from src/d_a_obj_km1_kurumajiku.c. Folding it is also what frees the d_a_obj_km1_kurumajiku stem that tools/layout_check.py L2 checks tree-wide.",
     "RENAME. The four class members and the vtable carried the coined spelling RickshawBdw in config/arm9/overlays/ov043/symbols.txt; they were renamed in place to the ROM's own daObjKm1_Kurumajiku_c, which _ZTS at 0x02112350 spells out. No alias or bounding row was added. src/_ZN17daObjKurumajiku_cD1Ev.cpp is a DIFFERENT class: daObjKurumajiku_c is this class's BASE, it lives in ov002 at 0x020b6a3c, and it is not part of this fold.",
-    "DD200. The ResourceDescriptor at 0x02112344 is now defined in this TU ({&data_ov043_02112610, &data_ov043_02112608, &data_ov043_02111bc0}); the claim covers exactly that 12-byte record. The model and kcl words resolve to this TU's own bss SharedFilePtr wrappers; the clps word targets data_ov043_02111bc0 in the module-shared .data band, which stays ROM-owned.",
+    "DD200. The ResourceDescriptor at 0x02112344 is now defined in this TU ({&gKm1KurumajikuModelFile, &gKm1KurumajikuCollisionFile, &data_ov043_02111bc0}); the claim covers exactly that 12-byte record. The model and kcl words resolve to this TU's own bss SharedFilePtr wrappers; the clps word targets data_ov043_02111bc0 in the module-shared .data band, which stays ROM-owned.",
     "No static initializer is claimed: ov043's four sinits are module-wide and do not narrow an owner to this class TU.",
     "Route is text-plus-descriptor. ov043's .data band 0x02112338..0x0211240c otherwise stays ROM copy -- this class's RTTI, profile and vtable remain deadstripped compiler_only_output -- so the three vtable-interior phantom rows (data_ov043_021123e4/021123f4/02112404) and the string-interior data_ov043_02112358 are untouched.",
     "The two-level inline constructor and destructor chain emits homeless _ZN17daObjKurumajiku_cD2Ev and _ZN10dBgActor_cD2Ev helpers. Exact compiler-only policy removes them before linking, the same disposition the adjacent ov043/daObjKm1_Kuruma_c entry records for its own pair.",
@@ -563,7 +563,7 @@
       "source": "0x02112344",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov043_02112610",
+      "symbol": "gKm1KurumajikuModelFile",
       "addend": 0,
       "target_module": "ov043",
       "target_address": "0x02112610"
@@ -573,7 +573,7 @@
       "source": "0x02112348",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov043_02112608",
+      "symbol": "gKm1KurumajikuCollisionFile",
       "addend": 0,
       "target_module": "ov043",
       "target_address": "0x02112608"

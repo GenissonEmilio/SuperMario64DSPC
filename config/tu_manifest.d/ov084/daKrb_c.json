@@ -1261,7 +1261,7 @@
       "source": "0x02130288",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov084_02130cd8",
+      "symbol": "gKuriboRecoverAnimationFile",
       "addend": 0,
       "target_module": "ov084",
       "target_address": "0x02130cd8"

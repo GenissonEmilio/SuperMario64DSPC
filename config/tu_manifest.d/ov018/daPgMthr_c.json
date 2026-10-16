@@ -211,14 +211,14 @@
       "address": "0x02112c04",
       "size": "0x4",
       "binding": "STB_GLOBAL",
-      "evidence": "pointer to the walk texseq handle data_ov018_02113bf8"
+      "evidence": "pointer to the walk texseq handle gPenguinAngryTextureSequenceFile"
     },
     {
       "symbol": "data_ov018_02112c08",
       "address": "0x02112c08",
       "size": "0x4",
       "binding": "STB_GLOBAL",
-      "evidence": "pointer to the stand/talk texseq handle data_ov018_02113be8; symbols.txt names this address"
+      "evidence": "pointer to the stand/talk texseq handle gPenguinWait1TextureSequenceFile; symbols.txt names this address"
     }
   ],
   "data": [
@@ -793,7 +793,7 @@
       "source": "0x02112c04",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov018_02113bf8",
+      "symbol": "gPenguinAngryTextureSequenceFile",
       "addend": 0,
       "target_module": "ov018",
       "target_address": "0x02113bf8"
@@ -803,7 +803,7 @@
       "source": "0x02112c08",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov018_02113be8",
+      "symbol": "gPenguinWait1TextureSequenceFile",
       "addend": 0,
       "target_module": "ov018",
       "target_address": "0x02113be8"

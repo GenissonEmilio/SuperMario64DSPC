@@ -82,14 +82,14 @@
       "address": "0x02112418",
       "size": "0x4",
       "binding": "STB_GLOBAL",
-      "evidence": "model pointer of the resource row, to data_ov043_02112638. symbols.txt names the next word"
+      "evidence": "model pointer of the resource row, to gKm1KurumaModelFile. symbols.txt names the next word"
     },
     {
       "symbol": "data_ov043_0211241c",
       "address": "0x0211241c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
-      "evidence": "collision pointer to data_ov043_02112630, then the CLPS pointer to data_ov043_02111b80"
+      "evidence": "collision pointer to gKm1KurumaCollisionFile, then the CLPS pointer to data_ov043_02111b80"
     }
   ],
   "bss": [
@@ -708,7 +708,7 @@
       "source": "0x02112418",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov043_02112638",
+      "symbol": "gKm1KurumaModelFile",
       "addend": 0,
       "target_module": "ov043",
       "target_address": "0x02112638"
@@ -718,7 +718,7 @@
       "source": "0x0211241c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov043_02112630",
+      "symbol": "gKm1KurumaCollisionFile",
       "addend": 0,
       "target_module": "ov043",
       "target_address": "0x02112630"

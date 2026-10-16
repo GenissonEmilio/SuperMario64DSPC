@@ -307,14 +307,14 @@
       "address": "0x02113838",
       "size": "0x14",
       "binding": "STB_GLOBAL",
-      "evidence": "five model-handle pointers, one per segment, to data_ov034_02114660, 02114688, 02114670, 021146f0 and 02114700"
+      "evidence": "five model-handle pointers, one per segment, to gHanachanHeadModelFile, 02114688, 02114670, 021146f0 and 02114700"
     },
     {
       "symbol": "data_ov034_0211384c",
       "address": "0x0211384c",
       "size": "0x14",
       "binding": "STB_GLOBAL",
-      "evidence": "five texture-sequence handle pointers, one per segment, to data_ov034_02114730, 02114708, 02114690, 021146c0 and 02114720"
+      "evidence": "five texture-sequence handle pointers, one per segment, to gHanachanHeadTextureSequenceFile, 02114708, 02114690, 021146c0 and 02114720"
     }
   ],
   "bss": [
@@ -1878,7 +1878,7 @@
       "source": "0x2113838",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114660",
+      "symbol": "gHanachanHeadModelFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114660"
@@ -1888,7 +1888,7 @@
       "source": "0x211383c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114688",
+      "symbol": "gHanachanBody01ModelFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114688"
@@ -1898,7 +1898,7 @@
       "source": "0x2113840",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114670",
+      "symbol": "gHanachanBody02ModelFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114670"
@@ -1908,7 +1908,7 @@
       "source": "0x2113844",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_021146f0",
+      "symbol": "gHanachanBody03ModelFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x21146f0"
@@ -1918,7 +1918,7 @@
       "source": "0x2113848",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114700",
+      "symbol": "gHanachanBody04ModelFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114700"
@@ -1928,7 +1928,7 @@
       "source": "0x211384c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114730",
+      "symbol": "gHanachanHeadTextureSequenceFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114730"
@@ -1938,7 +1938,7 @@
       "source": "0x2113850",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114708",
+      "symbol": "gHanachanBody01TextureSequenceFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114708"
@@ -1948,7 +1948,7 @@
       "source": "0x2113854",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114690",
+      "symbol": "gHanachanBody02TextureSequenceFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114690"
@@ -1958,7 +1958,7 @@
       "source": "0x2113858",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_021146c0",
+      "symbol": "gHanachanBody03TextureSequenceFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x21146c0"
@@ -1968,7 +1968,7 @@
       "source": "0x211385c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov034_02114720",
+      "symbol": "gHanachanBody04TextureSequenceFile",
       "addend": 0,
       "target_module": "ov034",
       "target_address": "0x2114720"

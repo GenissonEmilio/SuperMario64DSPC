@@ -61,13 +61,13 @@ struct RcKaitendaiCollisionFilePtr : SharedFilePtr {
 };
 
 extern "C" {
-extern RcKaitendaiModelFile data_ov036_02114050;
-extern RcKaitendaiCollisionFilePtr data_ov036_02114048;
+extern RcKaitendaiModelFile gRcKaitenModelFile;
+extern RcKaitendaiCollisionFilePtr gRcKaitenCollisionFile;
 extern CLPS_Block data_ov036_02112bc8;
 
 ResourceDescriptor data_ov036_02113b2c = {
-    &data_ov036_02114050,
-    &data_ov036_02114048,
+    &gRcKaitenModelFile,
+    &gRcKaitenCollisionFile,
     &data_ov036_02112bc8
 };
 

@@ -87,7 +87,7 @@
       "address": "0x021148d0",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "ResourceDescriptor: model data_ov021_02114a6c, collision data_ov021_02114a64, CLPS data_ov021_02113a00"
+      "evidence": "ResourceDescriptor: model gCvShutterModelFile, collision gCvShutterCollisionFile, CLPS data_ov021_02113a00"
     }
   ],
   "bss": [
@@ -651,7 +651,7 @@
       "source": "0x021148d0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov021_02114a6c",
+      "symbol": "gCvShutterModelFile",
       "addend": 0,
       "target_module": "ov021",
       "target_address": "0x02114a6c"
@@ -661,7 +661,7 @@
       "source": "0x021148d4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov021_02114a64",
+      "symbol": "gCvShutterCollisionFile",
       "addend": 0,
       "target_module": "ov021",
       "target_address": "0x02114a64"

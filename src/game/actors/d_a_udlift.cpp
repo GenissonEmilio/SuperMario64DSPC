@@ -452,14 +452,14 @@ State data_ov095_02137910[6] = {
 /* Three model pointers, then three collision pointers. symbols.txt names
  * each run, and the next row starts at its end. */
 extern "C" SharedFilePtr *const data_ov095_02136f68[3] = {
-    &data_ov095_02137898,
-    &data_ov095_021378a8,
-    &data_ov095_021378c0,
+    &gThLiftModelFile,
+    &gCvUdLiftModelFile,
+    &gRcRift02ModelFile,
 };
 extern "C" SharedFilePtr *const data_ov095_02136f74[3] = {
-    &data_ov095_021378b0,
-    &data_ov095_021378b8,
-    &data_ov095_021378a0,
+    &gThLiftCollisionFile,
+    &gCvUdLiftCollisionFile,
+    &gRcRift02CollisionFile,
 };
 
 /* Three CLPS blocks, one per variant. The blocks live in other overlays. */

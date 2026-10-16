@@ -615,16 +615,16 @@ TrsTrapCollisionFilePtr gThMeryGoCollisionFile(ASSET_TH_MERY_GO_KCL);
 TrsTrapCollisionFilePtr gThTrapCollisionFile(ASSET_TH_TRAP_KCL);
 
 extern "C" SharedFilePtr *const data_ov063_0211e27c[4] = {
-    &data_ov063_0211eeb0,
-    &data_ov063_0211eea8,
-    &data_ov063_0211eeb8,
-    &data_ov063_0211ee98,
+    &gThKaidanModelFile,
+    &gThTrapModelFile,
+    &gThHondanaModelFile,
+    &gThMeryGoModelFile,
 };
 extern "C" SharedFilePtr *const data_ov063_0211e28c[4] = {
-    &data_ov063_0211eea0,
-    &data_ov063_0211eed0,
-    &data_ov063_0211eec0,
-    &data_ov063_0211eec8,
+    &gThKaidanCollisionFile,
+    &gThTrapCollisionFile,
+    &gThHondanaCollisionFile,
+    &gThMeryGoCollisionFile,
 };
 
 PMF data_ov063_0211ef38[] = {

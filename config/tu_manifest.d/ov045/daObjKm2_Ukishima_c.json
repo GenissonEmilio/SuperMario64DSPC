@@ -83,7 +83,7 @@
       "address": "0x02112f08",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "resource row: model data_ov045_02113200, collision data_ov045_021131f8, CLPS data_ov045_02112550"
+      "evidence": "resource row: model gKm2UkishimaModelFile, collision gKm2UkishimaCollisionFile, CLPS data_ov045_02112550"
     }
   ],
   "bss": [
@@ -674,7 +674,7 @@
       "source": "0x02112f08",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov045_02113200",
+      "symbol": "gKm2UkishimaModelFile",
       "addend": 0,
       "target_module": "ov045",
       "target_address": "0x02113200"
@@ -684,7 +684,7 @@
       "source": "0x02112f0c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov045_021131f8",
+      "symbol": "gKm2UkishimaCollisionFile",
       "addend": 0,
       "target_module": "ov045",
       "target_address": "0x021131f8"

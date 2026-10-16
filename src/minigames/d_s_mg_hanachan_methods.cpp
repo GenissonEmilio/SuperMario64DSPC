@@ -258,9 +258,9 @@ extern void* data_ov006_021375c0[];
 extern int pmf_Wiggler_StateWait_2[];
 extern void* data_ov006_021375a0[];
 extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int b, void* attr, int x, int y, int a, int c, int f, int g);
-extern int data_ov006_0213c984[];
-extern int data_ov006_0213ca44[];
-extern int data_ov006_0213ca1c[];
+extern int pmf_Wiggler_TurnTowardAim_2[];
+extern int pmf_Wiggler_TurnTowardAim_8[];
+extern int pmf_Wiggler_TurnTowardAim_7[];
 extern int func_02012468(int a, int b, int c, int d, int e, int f, int g, int h);
 extern P pmf_Wiggler_TurnTowardAim_3;
 extern P pmf_Wiggler_StateWait_3;
@@ -605,7 +605,7 @@ extern "C" void HanaPopup_UpdateAll(void)
    The matched schedule addresses every field as data_ov006_02142044 plus
    its offset. The pool is that base, then +0xe, +0xf, +0xc, +0x4, +0x8
    and +0x10. */
-extern "C" asm void func_ov006_020ea81c(int, int)
+extern "C" asm void HanaPopup_Spawn(int, int)
 {
     dcd 0xe92d4000
     dcd 0xe24dd004
@@ -1058,7 +1058,7 @@ extern "C" /* char* parameter to agree with include/decl_common.h -- see Wiggler
 void Wiggler_UpdateSway(char *raw)
 {
     int *thiz = (int *)raw;
-    int *g = data_ov006_0213ca1c;
+    int *g = pmf_Wiggler_TurnTowardAim_7;
     int v0 = thiz[0];
     if (v0 == g[0] && (thiz[1] == g[1] || v0 == 0) && thiz[0x70/4] == 0) {
         short h = *(short*)((char*)thiz + 0x84);
@@ -2494,45 +2494,45 @@ int data_ov006_02142044;
    address and a zero word, except g_profile_MG_HANACHAN's second word.
    The holes between the job's symbols are the same shape and have to
    sit in this one .data run. */
-void _ZN15dScMgHanachan_c19func_ov006_020ed274Ev(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c19func_ov006_020ed34cEv(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c19func_ov006_020ed494Ev(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c19func_ov006_020ed844Ev(dScMgHanachan_c *);
+void _ZN15dScMgHanachan_c15Phase_WaitTouchEv(dScMgHanachan_c *);
+void _ZN15dScMgHanachan_c12Phase_ResultEv(dScMgHanachan_c *);
+void _ZN15dScMgHanachan_c10Phase_PlayEv(dScMgHanachan_c *);
+void _ZN15dScMgHanachan_c15Phase_WaitIntroEv(dScMgHanachan_c *);
 void *dScMgHanachan_c_classInit(void);
 
-P2 data_ov006_0213c95c = {{(int)func_ov006_020eb31c, 0}};
-Pair data_ov006_0213c964 = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed844Ev, 0}};
-Pair data_ov006_0213c96c = {{(int)func_ov006_020ecb80, 0}};
-P2 data_ov006_0213c974 = {{(int)func_ov006_020eb3e4, 0}};
-int data_ov006_0213c97c[2] = {(int)func_ov006_020eb31c, 0};
-int data_ov006_0213c984[2] = {(int)func_ov006_020ecb80, 0};
+P2 pmf_Wiggler_StateWait = {{(int)Wiggler_StateWait, 0}};
+Pair pmf_dScMgHanachan_c_Phase_WaitIntro = {{(int)_ZN15dScMgHanachan_c15Phase_WaitIntroEv, 0}};
+Pair pmf_Wiggler_TurnTowardAim = {{(int)Wiggler_TurnTowardAim, 0}};
+P2 pmf_Wiggler_StateMoveB = {{(int)Wiggler_StateMoveB, 0}};
+int pmf_Wiggler_StateWait_2[2] = {(int)Wiggler_StateWait, 0};
+int pmf_Wiggler_TurnTowardAim_2[2] = {(int)Wiggler_TurnTowardAim, 0};
 int g_profile_MG_HANACHAN[2] = {(int)dScMgHanachan_c_classInit, 0x01820182};
-Pair data_ov006_0213c994 = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed34cEv, 0}};
-P data_ov006_0213c99c = {{(int)func_ov006_020eb1e0, 0}};
-P data_ov006_0213c9a4 = {{(int)func_ov006_020eb31c, 0}};
-Pair data_ov006_0213c9ac = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed494Ev, 0}};
-P data_ov006_0213c9b4 = {{(int)func_ov006_020ecb80, 0}};
-Pair data_ov006_0213c9bc = {{(int)func_ov006_020eb018, 0}};
-Pair data_ov006_0213c9c4 = {{(int)func_ov006_020eb1e0, 0}};
-Pair data_ov006_0213c9cc = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed494Ev, 0}};
-int data_ov006_0213c9d4[2] = {(int)func_ov006_020eb0c8, 0};
-V2 data_ov006_0213c9dc = {(int)func_ov006_020ecb80, 0};
-P2 data_ov006_0213c9e4 = {{(int)func_ov006_020ec6e8, 0}};
-P2 data_ov006_0213c9ec = {{(int)func_ov006_020ecb80, 0}};
-P2 data_ov006_0213c9f4 = {{(int)func_ov006_020ecb80, 0}};
-P data_ov006_0213c9fc = {{(int)func_ov006_020eb0c8, 0}};
-int data_ov006_0213ca04[2] = {(int)func_ov006_020eb31c, 0};
-int data_ov006_0213ca0c[2] = {(int)func_ov006_020ec93c, 0};
-Words2 data_ov006_0213ca14 = {{(int)func_ov006_020ec6e8, 0}};
-int data_ov006_0213ca1c[2] = {(int)func_ov006_020ecb80, 0};
-Vec2i data_ov006_0213ca24 = {(int)func_ov006_020ec458, 0};
-Pair data_ov006_0213ca2c = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed844Ev, 0}};
-Pair data_ov006_0213ca34 = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed274Ev, 0}};
-Pair data_ov006_0213ca3c = {{(int)func_ov006_020ed328, 0}};
-int data_ov006_0213ca44[2] = {(int)func_ov006_020ecb80, 0};
-int data_ov006_0213ca4c[2] = {(int)func_ov006_020ecb80, 0};
-int data_ov006_0213ca54[2] = {(int)func_ov006_020ed270, 0};
-Pair data_ov006_0213ca5c = {{(int)_ZN15dScMgHanachan_c19func_ov006_020ed274Ev, 0}};
-Pair data_ov006_0213ca64 = {{(int)func_ov006_020ed328, 0}};
+Pair pmf_dScMgHanachan_c_Phase_Result = {{(int)_ZN15dScMgHanachan_c12Phase_ResultEv, 0}};
+P pmf_Wiggler_StateMoveA = {{(int)Wiggler_StateMoveA, 0}};
+P pmf_Wiggler_StateWait_3 = {{(int)Wiggler_StateWait, 0}};
+Pair pmf_dScMgHanachan_c_Phase_Play = {{(int)_ZN15dScMgHanachan_c10Phase_PlayEv, 0}};
+P pmf_Wiggler_TurnTowardAim_3 = {{(int)Wiggler_TurnTowardAim, 0}};
+Pair pmf_Wiggler_Update = {{(int)Wiggler_Update, 0}};
+Pair pmf_Wiggler_StateMoveA_2 = {{(int)Wiggler_StateMoveA, 0}};
+Pair pmf_dScMgHanachan_c_Phase_Play_2 = {{(int)_ZN15dScMgHanachan_c10Phase_PlayEv, 0}};
+int pmf_Wiggler_StateHold[2] = {(int)Wiggler_StateHold, 0};
+V2 pmf_Wiggler_TurnTowardAim_4 = {(int)Wiggler_TurnTowardAim, 0};
+P2 pmf_Wiggler_MoveBounce = {{(int)Wiggler_MoveBounce, 0}};
+P2 pmf_Wiggler_TurnTowardAim_5 = {{(int)Wiggler_TurnTowardAim, 0}};
+P2 pmf_Wiggler_TurnTowardAim_6 = {{(int)Wiggler_TurnTowardAim, 0}};
+P pmf_Wiggler_StateHold_2 = {{(int)Wiggler_StateHold, 0}};
+int pmf_Wiggler_StateWait_4[2] = {(int)Wiggler_StateWait, 0};
+int pmf_Wiggler_CheckOffLeftB[2] = {(int)Wiggler_CheckOffLeftB, 0};
+Words2 pmf_Wiggler_MoveBounce_2 = {{(int)Wiggler_MoveBounce, 0}};
+int pmf_Wiggler_TurnTowardAim_7[2] = {(int)Wiggler_TurnTowardAim, 0};
+Vec2i pmf_Wiggler_CheckOffLeftA = {(int)Wiggler_CheckOffLeftA, 0};
+Pair pmf_dScMgHanachan_c_Phase_WaitIntro_2 = {{(int)_ZN15dScMgHanachan_c15Phase_WaitIntroEv, 0}};
+Pair pmf_dScMgHanachan_c_Phase_WaitTouch = {{(int)_ZN15dScMgHanachan_c15Phase_WaitTouchEv, 0}};
+Pair pmf_Hana_StateNoneB = {{(int)Hana_StateNoneB, 0}};
+int pmf_Wiggler_TurnTowardAim_8[2] = {(int)Wiggler_TurnTowardAim, 0};
+int pmf_Wiggler_TurnTowardAim_9[2] = {(int)Wiggler_TurnTowardAim, 0};
+int pmf_Hana_StateNoneA[2] = {(int)Hana_StateNoneA, 0};
+Pair pmf_dScMgHanachan_c_Phase_WaitTouch_2 = {{(int)_ZN15dScMgHanachan_c15Phase_WaitTouchEv, 0}};
+Pair pmf_Hana_StateNoneB_2 = {{(int)Hana_StateNoneB, 0}};
 }
 

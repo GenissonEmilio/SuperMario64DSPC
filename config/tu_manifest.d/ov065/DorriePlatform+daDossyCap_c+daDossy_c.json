@@ -603,7 +603,7 @@
       "source": "0x0211c08c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d740",
+      "symbol": "gDossyBodyCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d740"
@@ -613,7 +613,7 @@
       "source": "0x0211c090",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d758",
+      "symbol": "gDossyNeckCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d758"
@@ -623,7 +623,7 @@
       "source": "0x0211c094",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d730",
+      "symbol": "gDossyHeadCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d730"
@@ -633,7 +633,7 @@
       "source": "0x0211c098",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d738",
+      "symbol": "gDossyArmLCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d738"
@@ -643,7 +643,7 @@
       "source": "0x0211c09c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d750",
+      "symbol": "gDossyArmRCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d750"
@@ -653,7 +653,7 @@
       "source": "0x0211c0a0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d728",
+      "symbol": "gDossyLegLCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d728"
@@ -663,7 +663,7 @@
       "source": "0x0211c0a4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov065_0211d760",
+      "symbol": "gDossyLegRCollisionFile",
       "addend": 0,
       "target_module": "ov065",
       "target_address": "0x0211d760"

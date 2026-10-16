@@ -406,56 +406,56 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213d248",
+      "symbol": "pmf_dScMgMemory2_c_ResultWait",
       "address": "0x0213d248",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d250",
+      "symbol": "pmf_dScMgMemory2_c_StatePlay",
       "address": "0x0213d250",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d258",
+      "symbol": "pmf_dScMgMemory2_c_PlayerDrop",
       "address": "0x0213d258",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d260",
+      "symbol": "pmf_dScMgMemory2_c_RoundDealHard",
       "address": "0x0213d260",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d268",
+      "symbol": "pmf_dScMgMemory2_c_StateSetup",
       "address": "0x0213d268",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d270",
+      "symbol": "pmf_dScMgMemory2_c_CardIdle",
       "address": "0x0213d270",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d278",
+      "symbol": "pmf_dScMgMemory2_c_StateExit",
       "address": "0x0213d278",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d280",
+      "symbol": "pmf_dScMgMemory2_c_RoundDealFourth",
       "address": "0x0213d280",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -469,147 +469,147 @@
       "evidence": "factory pointer and priorities 0x16b, 0x16b"
     },
     {
-      "symbol": "data_ov006_0213d290",
+      "symbol": "pmf_dScMgMemory2_c_RoundDealNormal",
       "address": "0x0213d290",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d298",
+      "symbol": "pmf_dScMgMemory2_c_RoundShowCards",
       "address": "0x0213d298",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2a0",
+      "symbol": "pmf_dScMgMemory2_c_RoundReadyCards",
       "address": "0x0213d2a0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2a8",
+      "symbol": "pmf_dScMgMemory2_c_RoundReveal",
       "address": "0x0213d2a8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2b0",
+      "symbol": "pmf_dScMgMemory2_c_CardSelect",
       "address": "0x0213d2b0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2b8",
+      "symbol": "pmf_dScMgMemory2_c_PlayerWait",
       "address": "0x0213d2b8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2c0",
+      "symbol": "pmf_dScMgMemory2_c_StateJudge",
       "address": "0x0213d2c0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2c8",
+      "symbol": "pmf_dScMgMemory2_c_RoundStart",
       "address": "0x0213d2c8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2d0",
+      "symbol": "pmf_dScMgMemory2_c_RoundDealEasy",
       "address": "0x0213d2d0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2d8",
+      "symbol": "pmf_dScMgMemory2_c_CardFlyAway",
       "address": "0x0213d2d8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2e0",
+      "symbol": "pmf_dScMgMemory2_c_CardFlipDown",
       "address": "0x0213d2e0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2e8",
+      "symbol": "pmf_dScMgMemory2_c_CardWait",
       "address": "0x0213d2e8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2f0",
+      "symbol": "pmf_dScMgMemory2_c_CardFlipUp",
       "address": "0x0213d2f0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d2f8",
+      "symbol": "pmf_dScMgMemory2_c_ResultFinish",
       "address": "0x0213d2f8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d300",
+      "symbol": "pmf_dScMgMemory2_c_StateResult",
       "address": "0x0213d300",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d308",
+      "symbol": "pmf_dScMgMemory2_c_CardMove",
       "address": "0x0213d308",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d310",
+      "symbol": "pmf_dScMgMemory2_c_RoundHideCards",
       "address": "0x0213d310",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d318",
+      "symbol": "pmf_dScMgMemory2_c_RoundWaitDeal",
       "address": "0x0213d318",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d320",
+      "symbol": "pmf_dScMgMemory2_c_ResultReward",
       "address": "0x0213d320",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d328",
+      "symbol": "pmf_dScMgMemory2_c_ResultTurnCards",
       "address": "0x0213d328",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "code address and a zero adjustment"
     },
     {
-      "symbol": "data_ov006_0213d330",
+      "symbol": "pmf_dScMgMemory2_c_PlayerMove",
       "address": "0x0213d330",
       "size": "0x8",
       "binding": "STB_GLOBAL",

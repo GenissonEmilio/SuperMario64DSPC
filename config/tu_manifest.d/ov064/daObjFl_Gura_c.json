@@ -120,7 +120,7 @@
       "address": "0x0211adb0",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "resource row: model data_ov064_0211c768, collision data_ov064_0211c770, CLPS data_ov064_0211bb8c"
+      "evidence": "resource row: model gFlGuraModelFile, collision gFlGuraCollisionFile, CLPS data_ov064_0211bb8c"
     }
   ],
   "bss": [
@@ -702,7 +702,7 @@
       "source": "0x0211adb0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov064_0211c768",
+      "symbol": "gFlGuraModelFile",
       "addend": 0,
       "target_module": "ov064",
       "target_address": "0x0211c768"
@@ -712,7 +712,7 @@
       "source": "0x0211adb4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov064_0211c770",
+      "symbol": "gFlGuraCollisionFile",
       "addend": 0,
       "target_module": "ov064",
       "target_address": "0x0211c770"

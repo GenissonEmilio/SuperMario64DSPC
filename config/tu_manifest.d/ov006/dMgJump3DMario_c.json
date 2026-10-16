@@ -335,105 +335,105 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213b020",
+      "symbol": "pmf_dMgJump3DMario_c_StateMove",
       "address": "0x0213b020",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b028",
+      "symbol": "pmf_dMgJump3DMario_c_StateHold",
       "address": "0x0213b028",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b030",
+      "symbol": "pmf_dMgJump3DMario_c_StateDamp",
       "address": "0x0213b030",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b038",
+      "symbol": "pmf_dMgJump3DMario_c_StateRespawn",
       "address": "0x0213b038",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b040",
+      "symbol": "pmf_dMgJump3DMario_c_StateIdle",
       "address": "0x0213b040",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b048",
+      "symbol": "pmf_dMgJump3DMario_c_StateIdle_2",
       "address": "0x0213b048",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b050",
+      "symbol": "pmf_dMgJump3DMario_c_StateWindUp",
       "address": "0x0213b050",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b058",
+      "symbol": "pmf_dMgJump3DMario_c_StateIdle_3",
       "address": "0x0213b058",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b060",
+      "symbol": "pmf_dMgJump3DMario_c_StateBounce",
       "address": "0x0213b060",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b068",
+      "symbol": "pmf_dMgJump3DMario_c_StateWindUp_2",
       "address": "0x0213b068",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b070",
+      "symbol": "pmf_dMgJump3DMario_c_StateWindUp_3",
       "address": "0x0213b070",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b078",
+      "symbol": "pmf_dMgJump3DMario_c_StateBounce_2",
       "address": "0x0213b078",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b080",
+      "symbol": "pmf_dMgJump3DMario_c_StateRiseOut",
       "address": "0x0213b080",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b088",
+      "symbol": "pmf_dMgJump3DMario_c_StateRespawn_2",
       "address": "0x0213b088",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "8-byte state record: member address, then a zero adjustment word"
     },
     {
-      "symbol": "data_ov006_0213b090",
+      "symbol": "pmf_dMgJump3DMario_c_StateFallOut",
       "address": "0x0213b090",
       "size": "0x8",
       "binding": "STB_GLOBAL",

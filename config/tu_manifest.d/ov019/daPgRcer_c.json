@@ -259,49 +259,49 @@
   ],
   "bss": [
     {
-      "symbol": "data_ov019_02113460",
+      "symbol": "gPenguinJumpEdAnimationFile",
       "address": "0x02113460",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113468",
+      "symbol": "gOV019PenguinWait1TextureSequenceFile",
       "address": "0x02113468",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113470",
+      "symbol": "gOV019PenguinWait1AnimationFile",
       "address": "0x02113470",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113478",
+      "symbol": "gPenguinJumpStAnimationFile",
       "address": "0x02113478",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113480",
+      "symbol": "gPenguinDiveAnimationFile",
       "address": "0x02113480",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113488",
+      "symbol": "gPenguinSliderAnimationFile",
       "address": "0x02113488",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_02113490",
+      "symbol": "gPenguinStandUpAnimationFile",
       "address": "0x02113490",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -315,21 +315,21 @@
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_021134a0",
+      "symbol": "gOV019PenguinWalkAnimationFile",
       "address": "0x021134a0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_021134a8",
+      "symbol": "gOV019PenguinAngryTextureSequenceFile",
       "address": "0x021134a8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zeroed file handle; __sinit_ov019_021127a4 writes the file id"
     },
     {
-      "symbol": "data_ov019_021134b0",
+      "symbol": "gPenguinSliderTextureSequenceFile",
       "address": "0x021134b0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -461,7 +461,7 @@
       "source": "0x0211277c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_021134a8",
+      "symbol": "gOV019PenguinAngryTextureSequenceFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x021134a8"
@@ -471,7 +471,7 @@
       "source": "0x02112780",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_021134b0",
+      "symbol": "gPenguinSliderTextureSequenceFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x021134b0"
@@ -481,7 +481,7 @@
       "source": "0x02112784",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113468",
+      "symbol": "gOV019PenguinWait1TextureSequenceFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113468"
@@ -491,7 +491,7 @@
       "source": "0x02112788",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113470",
+      "symbol": "gOV019PenguinWait1AnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113470"
@@ -501,7 +501,7 @@
       "source": "0x0211278c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_021134a0",
+      "symbol": "gOV019PenguinWalkAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x021134a0"
@@ -511,7 +511,7 @@
       "source": "0x02112790",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113478",
+      "symbol": "gPenguinJumpStAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113478"
@@ -521,7 +521,7 @@
       "source": "0x02112794",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113460",
+      "symbol": "gPenguinJumpEdAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113460"
@@ -531,7 +531,7 @@
       "source": "0x02112798",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113480",
+      "symbol": "gPenguinDiveAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113480"
@@ -541,7 +541,7 @@
       "source": "0x0211279c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113488",
+      "symbol": "gPenguinSliderAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113488"
@@ -551,7 +551,7 @@
       "source": "0x021127a0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov019_02113490",
+      "symbol": "gPenguinStandUpAnimationFile",
       "addend": 0,
       "target_module": "ov019",
       "target_address": "0x02113490"

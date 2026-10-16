@@ -231,28 +231,28 @@
   ],
   "bss": [
     {
-      "symbol": "data_ov015_0211499c",
+      "symbol": "gBkDossunbarLCollisionFile",
       "address": "0x0211499c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zero-filled file handle; __sinit_ov015_02113048 constructs it with file id 0x58c"
     },
     {
-      "symbol": "data_ov015_021149a4",
+      "symbol": "gBkDossunbarSModelFile",
       "address": "0x021149a4",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zero-filled file handle; the static initializer constructs it with file id 0x58d"
     },
     {
-      "symbol": "data_ov015_021149ac",
+      "symbol": "gBkDossunbarSCollisionFile",
       "address": "0x021149ac",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "zero-filled file handle; the static initializer constructs it with file id 0x58e"
     },
     {
-      "symbol": "data_ov015_021149b4",
+      "symbol": "gBkDossunbarLModelFile",
       "address": "0x021149b4",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -328,7 +328,7 @@
       "source": "0x02114534",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_021149a4",
+      "symbol": "gBkDossunbarSModelFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x021149a4"
@@ -338,7 +338,7 @@
       "source": "0x02114538",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_021149ac",
+      "symbol": "gBkDossunbarSCollisionFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x021149ac"
@@ -358,7 +358,7 @@
       "source": "0x02114540",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_021149b4",
+      "symbol": "gBkDossunbarLModelFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x021149b4"
@@ -368,7 +368,7 @@
       "source": "0x02114544",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov015_0211499c",
+      "symbol": "gBkDossunbarLCollisionFile",
       "addend": 0,
       "target_module": "ov015",
       "target_address": "0x0211499c"

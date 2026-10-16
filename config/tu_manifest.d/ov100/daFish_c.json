@@ -776,7 +776,7 @@
       "source": "0x021473a4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489a4",
+      "symbol": "gFishModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489a4"
@@ -786,7 +786,7 @@
       "source": "0x021473a8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489bc",
+      "symbol": "gFishAModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489bc"
@@ -796,7 +796,7 @@
       "source": "0x021473ac",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489b4",
+      "symbol": "gFishBModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489b4"
@@ -806,7 +806,7 @@
       "source": "0x021473b0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489c4",
+      "symbol": "gFishSwimAnimationFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489c4"
@@ -816,7 +816,7 @@
       "source": "0x021473b4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489ac",
+      "symbol": "gFishAbSwimAnimationFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489ac"
@@ -826,7 +826,7 @@
       "source": "0x021473b8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_021489ac",
+      "symbol": "gFishAbSwimAnimationFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x021489ac"

@@ -1307,7 +1307,7 @@
       "source": "0x02112508",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_021126a0",
+      "symbol": "gKm3Dan0ModelFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x021126a0"
@@ -1317,7 +1317,7 @@
       "source": "0x0211250c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112678",
+      "symbol": "gKm3Dan0CollisionFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112678"
@@ -1337,7 +1337,7 @@
       "source": "0x02112514",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112680",
+      "symbol": "gKm3Dan1ModelFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112680"
@@ -1347,7 +1347,7 @@
       "source": "0x02112518",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112658",
+      "symbol": "gKm3Dan1CollisionFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112658"
@@ -1367,7 +1367,7 @@
       "source": "0x02112520",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112668",
+      "symbol": "gKm3Dan2ModelFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112668"
@@ -1377,7 +1377,7 @@
       "source": "0x02112524",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112670",
+      "symbol": "gKm3Dan2CollisionFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112670"
@@ -1397,7 +1397,7 @@
       "source": "0x0211252c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112688",
+      "symbol": "gKm3Dan3ModelFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112688"
@@ -1407,7 +1407,7 @@
       "source": "0x02112530",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112698",
+      "symbol": "gKm3Dan3CollisionFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112698"
@@ -1427,7 +1427,7 @@
       "source": "0x02112538",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112690",
+      "symbol": "gKm3Dan4ModelFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112690"
@@ -1437,7 +1437,7 @@
       "source": "0x0211253c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov047_02112660",
+      "symbol": "gKm3Dan4CollisionFile",
       "addend": 0,
       "target_module": "ov047",
       "target_address": "0x02112660"

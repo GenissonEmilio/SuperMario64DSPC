@@ -819,13 +819,13 @@ extern "C" SharedFilePtr *const data_ov065_0211c080[3] = {
 };
 
 extern "C" SharedFilePtr *const data_ov065_0211c08c[7] = {
-    &data_ov065_0211d740,
-    &data_ov065_0211d758,
-    &data_ov065_0211d730,
-    &data_ov065_0211d738,
-    &data_ov065_0211d750,
-    &data_ov065_0211d728,
-    &data_ov065_0211d760,
+    &gDossyBodyCollisionFile,
+    &gDossyNeckCollisionFile,
+    &gDossyHeadCollisionFile,
+    &gDossyArmLCollisionFile,
+    &gDossyArmRCollisionFile,
+    &gDossyLegLCollisionFile,
+    &gDossyLegRCollisionFile,
 };
 
 /* The state table Behavior dispatches through: three pointer-to-member

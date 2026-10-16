@@ -173,21 +173,21 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213cb4c",
+      "symbol": "pmf_dScMgJump_c_State_Result",
       "address": "0x0213cb4c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "state row {func_ov006_020ee3ec, 0}; Behavior copies it into mState"
     },
     {
-      "symbol": "data_ov006_0213cb54",
+      "symbol": "pmf_dScMgJump_c_State_Intro",
       "address": "0x0213cb54",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "state row {func_ov006_020ee5b8, 0}; Behavior copies it into mState"
     },
     {
-      "symbol": "data_ov006_0213cb5c",
+      "symbol": "pmf_dScMgJump_c_State_End",
       "address": "0x0213cb5c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -201,28 +201,28 @@
       "evidence": "MG_JUMP registry profile; the first word relocates to dScMgJump_c_classInit (0x020eeafc) and the halfword pair 0x0174, 0x0174 matches retail"
     },
     {
-      "symbol": "data_ov006_0213cb6c",
+      "symbol": "pmf_dScMgJump_c_State_Final",
       "address": "0x0213cb6c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "state row {func_ov006_020ee2c4, 0}; Behavior copies it into mState"
     },
     {
-      "symbol": "data_ov006_0213cb74",
+      "symbol": "pmf_dScMgJump_c_State_Idle",
       "address": "0x0213cb74",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "state row {func_ov006_020ee2c0, 0}; Behavior copies it into mState"
     },
     {
-      "symbol": "data_ov006_0213cb7c",
+      "symbol": "pmf_dScMgJump_c_State_Idle_2",
       "address": "0x0213cb7c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "state row {func_ov006_020ee2c0, 0}; Behavior copies it into mState"
     },
     {
-      "symbol": "data_ov006_0213cb84",
+      "symbol": "pmf_dScMgJump_c_State_Play",
       "address": "0x0213cb84",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -269,7 +269,7 @@
     "tubuild create warning (RESOLVED): CONFLICT: local declaration ('struct', 'Pair') differs between the legacy file that used to hold BeginFinal and the one that held BeginPlay; kept the first at create time. The second half of the same warning, recorded separately because the reconciliation key is (kind, key, losing function). Settled on the ARRAY-member form here too, for the reason on the note above.",
     "Also reconciled by hand, not flagged by the generator: _Z15ApproachLinear2Rsss appeared with two spellings, int(short*,short,short) and short(short&,short,short). The mangled Rs proves a reference, so the reference form is kept and the 0x020ee44c call site dereferences at the call. gMgScene is already declared void * by include/dScMgBase_c.h, so this TU does not redeclare it and casts at the use site.",
     "LOCAL WORKER NOTE: this machine's EU stock dump builds sha256 ddab9300b24aeae254192c2a30d812b07ece3adff83230e75c865ed915c9de40 (per #3691); the recorded rom.sha256 is the fleet-canonical d1506e90...c478e8 that every intact entry shares.",
-    "data_ov006_0213cb4c..0213cb84 and g_profile_MG_JUMP are this entry's .data (0x0213cb4c..0x0213cb8c). Each state row is the function address and a zero word. The profile is the eight bytes between 0213cb5c and 0213cb6c. data_ov006_0213cb48 and data_ov006_0213cb8c stay the ROM copy."
+    "pmf_dScMgJump_c_State_Result..0213cb84 and g_profile_MG_JUMP are this entry's .data (0x0213cb4c..0x0213cb8c). Each state row is the function address and a zero word. The profile is the eight bytes between 0213cb5c and 0213cb6c. data_ov006_0213cb48 and data_ov006_0213cb8c stay the ROM copy."
   ],
   "verification": {
     "round": "tools/tubuild.py verify -- text-only, whole shadow TU compiled once",
@@ -839,7 +839,7 @@
       "source": "0x0213cb4c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee3ecEv",
+      "symbol": "_ZN11dScMgJump_c12State_ResultEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee3ec"
@@ -849,7 +849,7 @@
       "source": "0x0213cb54",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee5b8Ev",
+      "symbol": "_ZN11dScMgJump_c11State_IntroEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee5b8"
@@ -859,7 +859,7 @@
       "source": "0x0213cb5c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee44cEv",
+      "symbol": "_ZN11dScMgJump_c9State_EndEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee44c"
@@ -879,7 +879,7 @@
       "source": "0x0213cb6c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee2c4Ev",
+      "symbol": "_ZN11dScMgJump_c11State_FinalEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee2c4"
@@ -889,7 +889,7 @@
       "source": "0x0213cb74",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee2c0Ev",
+      "symbol": "_ZN11dScMgJump_c10State_IdleEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee2c0"
@@ -899,7 +899,7 @@
       "source": "0x0213cb7c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee2c0Ev",
+      "symbol": "_ZN11dScMgJump_c10State_IdleEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee2c0"
@@ -909,7 +909,7 @@
       "source": "0x0213cb84",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "_ZN11dScMgJump_c19func_ov006_020ee508Ev",
+      "symbol": "_ZN11dScMgJump_c10State_PlayEv",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ee508"

@@ -764,7 +764,7 @@
       "source": "0x0211e27c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eeb0",
+      "symbol": "gThKaidanModelFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eeb0"
@@ -774,7 +774,7 @@
       "source": "0x0211e280",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eea8",
+      "symbol": "gThTrapModelFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eea8"
@@ -784,7 +784,7 @@
       "source": "0x0211e284",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eeb8",
+      "symbol": "gThHondanaModelFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eeb8"
@@ -794,7 +794,7 @@
       "source": "0x0211e288",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211ee98",
+      "symbol": "gThMeryGoModelFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211ee98"
@@ -804,7 +804,7 @@
       "source": "0x0211e28c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eea0",
+      "symbol": "gThKaidanCollisionFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eea0"
@@ -814,7 +814,7 @@
       "source": "0x0211e290",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eed0",
+      "symbol": "gThTrapCollisionFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eed0"
@@ -824,7 +824,7 @@
       "source": "0x0211e294",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eec0",
+      "symbol": "gThHondanaCollisionFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eec0"
@@ -834,7 +834,7 @@
       "source": "0x0211e298",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211eec8",
+      "symbol": "gThMeryGoCollisionFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211eec8"

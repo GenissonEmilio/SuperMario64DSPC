@@ -113,14 +113,14 @@
       "address": "0x02113cc8",
       "size": "0x4",
       "binding": "STB_GLOBAL",
-      "evidence": "pointer to the model handle data_ov022_02114500"
+      "evidence": "pointer to the model handle gFlRingModelFile"
     },
     {
       "symbol": "data_ov022_02113ccc",
       "address": "0x02113ccc",
       "size": "0x8",
       "binding": "STB_GLOBAL",
-      "evidence": "collision-handle pointer data_ov022_02114508, then the ov064 CLPS pointer data_ov064_0211bbac; symbols.txt names this address"
+      "evidence": "collision-handle pointer gFlRingCollisionFile, then the ov064 CLPS pointer data_ov064_0211bbac; symbols.txt names this address"
     }
   ],
   "bss": [
@@ -577,7 +577,7 @@
       "source": "0x02113cc8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_02114500",
+      "symbol": "gFlRingModelFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x02114500"
@@ -587,7 +587,7 @@
       "source": "0x02113ccc",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_02114508",
+      "symbol": "gFlRingCollisionFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x02114508"

@@ -81,7 +81,7 @@
       "address": "0x0211eb10",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "ResourceDescriptor: model data_ov063_0211ef60, collision data_ov063_0211ef58, CLPS data_ov063_0211ec98"
+      "evidence": "ResourceDescriptor: model gThDownBModelFile, collision gThDownBCollisionFile, CLPS data_ov063_0211ec98"
     }
   ],
   "bss": [
@@ -658,7 +658,7 @@
       "source": "0x0211eb10",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211ef60",
+      "symbol": "gThDownBModelFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211ef60"
@@ -668,7 +668,7 @@
       "source": "0x0211eb14",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov063_0211ef58",
+      "symbol": "gThDownBCollisionFile",
       "addend": 0,
       "target_module": "ov063",
       "target_address": "0x0211ef58"

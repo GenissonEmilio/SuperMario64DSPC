@@ -2038,7 +2038,7 @@
       "source": "0x02148218",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_0214873c",
+      "symbol": "gObjDoor0StarModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x0214873c"
@@ -2058,7 +2058,7 @@
       "source": "0x02148228",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148724",
+      "symbol": "gObjDoor0Star1ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148724"
@@ -2078,7 +2078,7 @@
       "source": "0x02148238",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148724",
+      "symbol": "gObjDoor0Star1ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148724"
@@ -2098,7 +2098,7 @@
       "source": "0x02148248",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_0214872c",
+      "symbol": "gObjDoor0Star3ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x0214872c"
@@ -2118,7 +2118,7 @@
       "source": "0x02148258",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_0214872c",
+      "symbol": "gObjDoor0Star3ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x0214872c"
@@ -2138,7 +2138,7 @@
       "source": "0x02148268",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148764",
+      "symbol": "gObjDoor0Star10ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148764"
@@ -2288,7 +2288,7 @@
       "source": "0x021482e4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148774",
+      "symbol": "gObjDoor1ModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148774"
@@ -2298,7 +2298,7 @@
       "source": "0x021482f4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_0214876c",
+      "symbol": "gObjDoor2BoroModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x0214876c"
@@ -2318,7 +2318,7 @@
       "source": "0x02148314",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148754",
+      "symbol": "gObjDoor4YamiModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148754"
@@ -2328,7 +2328,7 @@
       "source": "0x02148324",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov100_02148734",
+      "symbol": "gObjDoor5HorrorModelFile",
       "addend": 0,
       "target_module": "ov100",
       "target_address": "0x02148734"

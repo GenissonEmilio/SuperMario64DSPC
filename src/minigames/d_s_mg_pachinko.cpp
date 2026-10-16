@@ -234,31 +234,31 @@ extern Ent7d0 data_ov006_02142694[];
    is defined below. g_profile_MG_PACHINKO at 0x0213d910 splits the rest
    (0x0213d918, 0x0213d920, 0x0213d928, and 0x0213d930..0x0213d948) off that
    run, so those stay the ROM copy. */
-extern Ent7d0 data_ov006_0213d8a8;
-extern Ent7d0 data_ov006_0213d8f0;
-extern Ent7d0 data_ov006_0213d8f8;
-extern Ent7d0 data_ov006_0213d8b8;
-extern Ent7d0 data_ov006_0213d908;
-extern Ent7d0 data_ov006_0213d8c0;
-extern Ent7d0 data_ov006_0213d8c8;
-extern Ent7d0 data_ov006_0213d898;
-extern Ent7d0 data_ov006_0213d920;
-extern Ent7d0 data_ov006_0213d8b0;
-extern Ent7d0 data_ov006_0213d880;
-extern Ent7d0 data_ov006_0213d8d8;
-extern Ent7d0 data_ov006_0213d930;
-extern Ent7d0 data_ov006_0213d940;
-extern Ent7d0 data_ov006_0213d938;
-extern Ent7d0 data_ov006_0213d8d0;
-extern Ent7d0 data_ov006_0213d878;
-extern Ent7d0 data_ov006_0213d8e8;
-extern Ent7d0 data_ov006_0213d8e0;
-extern Ent7d0 data_ov006_0213d890;
-extern Ent7d0 data_ov006_0213d888;
-extern PMF    data_ov006_0213d928;
-extern PMF    data_ov006_0213d918;
-extern Ent7d0 data_ov006_0213d8a0;
-extern Ent7d0 data_ov006_0213d900;
+extern Ent7d0 pmf_PachinkoBobOmb_State0;
+extern Ent7d0 pmf_PachinkoBobOmb_State1;
+extern Ent7d0 pmf_PachinkoBobOmb_State2;
+extern Ent7d0 pmf_PachinkoBobOmb_State3;
+extern Ent7d0 pmf_PachinkoBobOmb_State4;
+extern Ent7d0 pmf_PachinkoBall_State0;
+extern Ent7d0 pmf_PachinkoBall_State1;
+extern Ent7d0 pmf_PachinkoBall_State2;
+extern Ent7d0 pmf_PachinkoBall_State3;
+extern Ent7d0 pmf_PachinkoBall_State4;
+extern Ent7d0 pmf_PachinkoBall_State5;
+extern Ent7d0 pmf_PachinkoBall_State6;
+extern Ent7d0 pmf_PachinkoPipe_State0;
+extern Ent7d0 pmf_PachinkoPipe_State1;
+extern Ent7d0 pmf_PachinkoPipe_State2;
+extern Ent7d0 pmf_PachinkoPipe_State3;
+extern Ent7d0 pmf_PachinkoFlyer_State0;
+extern Ent7d0 pmf_PachinkoFlyer_State1;
+extern Ent7d0 pmf_PachinkoFlyer_State2;
+extern Ent7d0 pmf_PachinkoFlyer_State3;
+extern Ent7d0 pmf_PachinkoFlyer_State4;
+extern PMF    pmf_PachinkoBg_State0;
+extern PMF    pmf_PachinkoBg_State1;
+extern Ent7d0 pmf_PachinkoBg_State2;
+extern Ent7d0 pmf_PachinkoBg_State3;
 
 /* This TU's own members, forward-declared for the callers below them. */
 extern void PachinkoDeco_DrawAll(char *thiz);
@@ -2898,37 +2898,37 @@ Ent7d0 data_ov006_02142624[4] = {
     pmf_PachinkoPipe_State3,
 };
 PMF2 data_ov006_0214266c[5] = {
-    *(PMF2 *)&data_ov006_0213d878,
-    *(PMF2 *)&data_ov006_0213d8e8,
-    *(PMF2 *)&data_ov006_0213d8e0,
-    *(PMF2 *)&data_ov006_0213d890,
-    *(PMF2 *)&data_ov006_0213d888,
+    *(PMF2 *)&pmf_PachinkoFlyer_State0,
+    *(PMF2 *)&pmf_PachinkoFlyer_State1,
+    *(PMF2 *)&pmf_PachinkoFlyer_State2,
+    *(PMF2 *)&pmf_PachinkoFlyer_State3,
+    *(PMF2 *)&pmf_PachinkoFlyer_State4,
 };
 Entry data_ov006_02142604[4] = {
-    {data_ov006_0213d928},
-    {data_ov006_0213d918},
-    {*(PMF *)&data_ov006_0213d8a0},
-    {*(PMF *)&data_ov006_0213d900},
+    {pmf_PachinkoBg_State0},
+    {pmf_PachinkoBg_State1},
+    {*(PMF *)&pmf_PachinkoBg_State2},
+    {*(PMF *)&pmf_PachinkoBg_State3},
 };
 
 /* {code pointer, 0} records at 0x0213d878..0x0213d910. The profile at
    0x0213d910 splits the rest of the table off this range. */
-Ent7d0 data_ov006_0213d878 = { (int)func_ov006_020fb4e0, 0 };
-Ent7d0 data_ov006_0213d880 = { (int)func_ov006_020fcec4, 0 };
-Ent7d0 data_ov006_0213d888 = { (int)func_ov006_020fb0fc, 0 };
-Ent7d0 data_ov006_0213d890 = { (int)func_ov006_020fb1c4, 0 };
-Ent7d0 data_ov006_0213d898 = { (int)func_ov006_020fd2d8, 0 };
-Ent7d0 data_ov006_0213d8a0 = { (int)func_ov006_020faac8, 0 };
-Ent7d0 data_ov006_0213d8a8 = { (int)func_ov006_020fe2e4, 0 };
-Ent7d0 data_ov006_0213d8b0 = { (int)func_ov006_020fd088, 0 };
-Ent7d0 data_ov006_0213d8b8 = { (int)func_ov006_020fe90c, 0 };
-Ent7d0 data_ov006_0213d8c0 = { (int)func_ov006_020fd9cc, 0 };
-Ent7d0 data_ov006_0213d8c8 = { (int)func_ov006_020fd894, 0 };
-Ent7d0 data_ov006_0213d8d0 = { (int)func_ov006_020fc1f8, 0 };
-Ent7d0 data_ov006_0213d8d8 = { (int)func_ov006_020fce04, 0 };
-Ent7d0 data_ov006_0213d8e0 = { (int)func_ov006_020fb230, 0 };
-Ent7d0 data_ov006_0213d8e8 = { (int)func_ov006_020fb45c, 0 };
-Ent7d0 data_ov006_0213d8f0 = { (int)func_ov006_020fe394, 0 };
-Ent7d0 data_ov006_0213d8f8 = { (int)func_ov006_020fe750, 0 };
-Ent7d0 data_ov006_0213d900 = { (int)func_ov006_020fa9c8, 0 };
-Ent7d0 data_ov006_0213d908 = { (int)func_ov006_020fea54, 0 };
+Ent7d0 pmf_PachinkoFlyer_State0 = { (int)PachinkoFlyer_State0, 0 };
+Ent7d0 pmf_PachinkoBall_State5 = { (int)PachinkoBall_State5, 0 };
+Ent7d0 pmf_PachinkoFlyer_State4 = { (int)PachinkoFlyer_State4, 0 };
+Ent7d0 pmf_PachinkoFlyer_State3 = { (int)PachinkoFlyer_State3, 0 };
+Ent7d0 pmf_PachinkoBall_State2 = { (int)PachinkoBall_State2, 0 };
+Ent7d0 pmf_PachinkoBg_State2 = { (int)PachinkoBg_State2, 0 };
+Ent7d0 pmf_PachinkoBobOmb_State0 = { (int)PachinkoBobOmb_State0, 0 };
+Ent7d0 pmf_PachinkoBall_State4 = { (int)PachinkoBall_State4, 0 };
+Ent7d0 pmf_PachinkoBobOmb_State3 = { (int)PachinkoBobOmb_State3, 0 };
+Ent7d0 pmf_PachinkoBall_State0 = { (int)PachinkoBall_State0, 0 };
+Ent7d0 pmf_PachinkoBall_State1 = { (int)PachinkoBall_State1, 0 };
+Ent7d0 pmf_PachinkoPipe_State3 = { (int)PachinkoPipe_State3, 0 };
+Ent7d0 pmf_PachinkoBall_State6 = { (int)PachinkoBall_State6, 0 };
+Ent7d0 pmf_PachinkoFlyer_State2 = { (int)PachinkoFlyer_State2, 0 };
+Ent7d0 pmf_PachinkoFlyer_State1 = { (int)PachinkoFlyer_State1, 0 };
+Ent7d0 pmf_PachinkoBobOmb_State1 = { (int)PachinkoBobOmb_State1, 0 };
+Ent7d0 pmf_PachinkoBobOmb_State2 = { (int)PachinkoBobOmb_State2, 0 };
+Ent7d0 pmf_PachinkoBg_State3 = { (int)PachinkoBg_State3, 0 };
+Ent7d0 pmf_PachinkoBobOmb_State4 = { (int)PachinkoBobOmb_State4, 0 };

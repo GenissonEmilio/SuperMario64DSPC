@@ -8,7 +8,7 @@
  * - The other functions keep their address names.
  * - Each function keeps its own namespace. The local layouts and
  *   externs disagree, and one shared view changes codegen.
- * - data_ov006_0213ac48..0213acb8 are this file's .data. data_ov006_0213acc0
+ * - pmf_Dealer_StateCollect..0213acb8 are this file's .data. data_ov006_0213acc0
  *   and everything after it stay the ROM copy: that row points at symbols
  *   this file does not declare, and one entry cannot claim .data twice.
  *   The two Vector3 rows stay the ROM copy for the same reason on .rodata.
@@ -2729,19 +2729,19 @@ void Camera_ProjectToScreen16(char* r4, void* r1, short* r5) {
  * this source order is the one that links them in address order.
  * data_ov006_0213acc0 points at further rows and stays the ROM copy. */
 extern "C" {
-int data_ov006_0213acb0[2] = { (int)func_ov006_020c11c0, 0 };
-int data_ov006_0213aca8[2] = { (int)func_ov006_020c0f9c, 0 };
-int data_ov006_0213aca0[2] = { (int)func_ov006_020c0df0, 0 };
-int data_ov006_0213ac98[2] = { (int)func_ov006_020c0ce8, 0 };
-int data_ov006_0213ac90[2] = { (int)func_ov006_020c1760, 0 };
-int data_ov006_0213ac88[2] = { (int)func_ov006_020c0364, 0 };
-int data_ov006_0213ac80[2] = { (int)func_ov006_020c0b74, 0 };
-int data_ov006_0213ac78[2] = { (int)func_ov006_020c0364, 0 };
-int data_ov006_0213ac70[2] = { (int)func_ov006_020c0264, 0 };
-int data_ov006_0213ac68[2] = { (int)func_ov006_020c0364, 0 };
-int data_ov006_0213ac60[2] = { (int)func_ov006_020c14bc, 0 };
-int data_ov006_0213ac58[2] = { (int)func_ov006_020c1760, 0 };
-int data_ov006_0213ac50[2] = { (int)func_ov006_020c1760, 0 };
-int data_ov006_0213ac48[2] = { (int)func_ov006_020c11c0, 0 };
-int data_ov006_0213acb8[2] = { (int)func_ov006_020c0f9c, 0 };
+int pmf_Dealer_StateCollect_2[2] = { (int)Dealer_StateCollect, 0 };
+int pmf_Dealer_StateReveal[2] = { (int)Dealer_StateReveal, 0 };
+int pmf_Dealer_StateSwap[2] = { (int)Dealer_StateSwap, 0 };
+int pmf_Dealer_StateLose[2] = { (int)Dealer_StateLose, 0 };
+int pmf_Dealer_StateIdle_3[2] = { (int)Dealer_StateIdle, 0 };
+int pmf_MascotWalker_StateWalk_3[2] = { (int)MascotWalker_StateWalk, 0 };
+int pmf_Dealer_StateWin[2] = { (int)Dealer_StateWin, 0 };
+int pmf_MascotWalker_StateWalk_2[2] = { (int)MascotWalker_StateWalk, 0 };
+int pmf_MascotWalker_StatePause[2] = { (int)MascotWalker_StatePause, 0 };
+int pmf_MascotWalker_StateWalk[2] = { (int)MascotWalker_StateWalk, 0 };
+int pmf_Dealer_StateDeal[2] = { (int)Dealer_StateDeal, 0 };
+int pmf_Dealer_StateIdle_2[2] = { (int)Dealer_StateIdle, 0 };
+int pmf_Dealer_StateIdle[2] = { (int)Dealer_StateIdle, 0 };
+int pmf_Dealer_StateCollect[2] = { (int)Dealer_StateCollect, 0 };
+int pmf_Dealer_StateReveal_2[2] = { (int)Dealer_StateReveal, 0 };
 }

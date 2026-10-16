@@ -558,7 +558,7 @@
       "source": "0x021125a0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov052_021126a8",
+      "symbol": "gEmmYukaModelFile",
       "addend": 0,
       "target_module": "ov052",
       "target_address": "0x021126a8"
@@ -568,7 +568,7 @@
       "source": "0x021125a4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov052_021126b0",
+      "symbol": "gEmmYukaCollisionFile",
       "addend": 0,
       "target_module": "ov052",
       "target_address": "0x021126b0"

@@ -96,7 +96,7 @@
       "address": "0x02113314",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "three pointers: model data_ov056_02113400, collision data_ov056_02113408, ov064 data_ov064_0211bbec"
+      "evidence": "three pointers: model gEwmIceBrockModelFile, collision gEwmIceBrockCollisionFile, ov064 data_ov064_0211bbec"
     }
   ],
   "bss": [
@@ -570,7 +570,7 @@
       "source": "0x02113314",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov056_02113400",
+      "symbol": "gEwmIceBrockModelFile",
       "addend": 0,
       "target_module": "ov056",
       "target_address": "0x02113400"
@@ -580,7 +580,7 @@
       "source": "0x02113318",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov056_02113408",
+      "symbol": "gEwmIceBrockCollisionFile",
       "addend": 0,
       "target_module": "ov056",
       "target_address": "0x02113408"

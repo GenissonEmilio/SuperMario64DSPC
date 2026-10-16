@@ -88,7 +88,7 @@
       "address": "0x021140d4",
       "size": "0x18",
       "binding": "STB_GLOBAL",
-      "evidence": "two ResourceDescriptor rows, indexed by mVariant. Row 0 points at data_ov022_021145e0, data_ov022_021145d0, and data_ov064_0211baec. Row 1 points at data_ov022_021145d8, data_ov022_021145c8, and data_ov064_0211bacc. The CLPS blocks stay in overlay 64."
+      "evidence": "two ResourceDescriptor rows, indexed by mVariant. Row 0 points at gFlUkiYukaModelFile, gFlUkiYukaCollisionFile, and data_ov064_0211baec. Row 1 points at gdaObjFl_UkiyukaFlShisoModelFile, gdaObjFl_UkiyukaFlShisoCollisionFile, and data_ov064_0211bacc. The CLPS blocks stay in overlay 64."
     }
   ],
   "bss": [
@@ -639,7 +639,7 @@
       "source": "0x021140d4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_021145e0",
+      "symbol": "gFlUkiYukaModelFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x021145e0"
@@ -649,7 +649,7 @@
       "source": "0x021140d8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_021145d0",
+      "symbol": "gFlUkiYukaCollisionFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x021145d0"
@@ -669,7 +669,7 @@
       "source": "0x021140e0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_021145d8",
+      "symbol": "gdaObjFl_UkiyukaFlShisoModelFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x021145d8"
@@ -679,7 +679,7 @@
       "source": "0x021140e4",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov022_021145c8",
+      "symbol": "gdaObjFl_UkiyukaFlShisoCollisionFile",
       "addend": 0,
       "target_module": "ov022",
       "target_address": "0x021145c8"

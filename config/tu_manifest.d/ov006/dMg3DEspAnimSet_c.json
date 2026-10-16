@@ -519,21 +519,21 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213c764",
+      "symbol": "pmf_dMg3DEspModel_c_Intro",
       "address": "0x0213c764",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "Intro state: function pointer to dMg3DEspModel_c::Intro and a zero this-adjustment"
     },
     {
-      "symbol": "data_ov006_0213c76c",
+      "symbol": "pmf_dMg3DEspModel_c_Wait",
       "address": "0x0213c76c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "Wait state: function pointer to dMg3DEspModel_c::Wait and a zero this-adjustment"
     },
     {
-      "symbol": "data_ov006_0213c774",
+      "symbol": "pmf_dMg3DEspModel_c_Idle_3",
       "address": "0x0213c774",
       "size": "0x8",
       "binding": "STB_GLOBAL",

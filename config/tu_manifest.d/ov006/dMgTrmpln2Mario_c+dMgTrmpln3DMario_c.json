@@ -647,28 +647,28 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213b11c",
+      "symbol": "pmf_Trmp2Mario_State7_3",
       "address": "0x0213b11c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020ca39c, second word 0"
     },
     {
-      "symbol": "data_ov006_0213b124",
+      "symbol": "pmf_Trmp2Mario_State6",
       "address": "0x0213b124",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020ca310, second word 0"
     },
     {
-      "symbol": "data_ov006_0213b12c",
+      "symbol": "pmf_Trmp3DMario_State10",
       "address": "0x0213b12c",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020cc9b8, second word 0"
     },
     {
-      "symbol": "data_ov006_0213b134",
+      "symbol": "pmf_Trmp2Mario_State5",
       "address": "0x0213b134",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -923,7 +923,7 @@
       "source": "0x0213b11c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020ca39c",
+      "symbol": "Trmp2Mario_State7",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ca39c"
@@ -933,7 +933,7 @@
       "source": "0x0213b124",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020ca310",
+      "symbol": "Trmp2Mario_State6",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ca310"
@@ -943,7 +943,7 @@
       "source": "0x0213b12c",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020cc9b8",
+      "symbol": "Trmp3DMario_State10",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020cc9b8"
@@ -953,7 +953,7 @@
       "source": "0x0213b134",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020ca070",
+      "symbol": "Trmp2Mario_State5",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020ca070"

@@ -81,7 +81,7 @@
       "address": "0x021130ac",
       "size": "0xc",
       "binding": "STB_GLOBAL",
-      "evidence": "model handle data_ov045_02113250, collision handle data_ov045_02113248, CLPS block data_ov045_021125f0"
+      "evidence": "model handle gKm2KuzureModelFile, collision handle gKm2KuzureCollisionFile, CLPS block data_ov045_021125f0"
     }
   ],
   "bss": [
@@ -687,7 +687,7 @@
       "source": "0x021130ac",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov045_02113250",
+      "symbol": "gKm2KuzureModelFile",
       "addend": 0,
       "target_module": "ov045",
       "target_address": "0x02113250"
@@ -697,7 +697,7 @@
       "source": "0x021130b0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "data_ov045_02113248",
+      "symbol": "gKm2KuzureCollisionFile",
       "addend": 0,
       "target_module": "ov045",
       "target_address": "0x02113248"

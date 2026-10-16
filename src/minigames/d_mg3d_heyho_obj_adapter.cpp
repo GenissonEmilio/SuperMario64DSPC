@@ -2176,20 +2176,20 @@ HeyhoAdapterAnimationFileHandle data_ov006_02140338(0x218);
  * order is the one that places them at 0x0213af30 upward. */
 typedef struct { int w[2]; } Pair;
 extern "C" {
-void func_ov006_020c5530(char *c);
-void func_ov006_020c6a9c(char *c);
-void func_ov006_020c5928(char *c);
-void func_ov006_020c53f8(char *c);
-void func_ov006_020c5658(char *c);
-void func_ov006_020c5bf8(char *c);
-void func_ov006_020c66bc(char *c);
-void func_ov006_020c5d28(char *c);
-Pair data_ov006_0213af60 = { (int)&func_ov006_020c66bc, 0 };
-Pair data_ov006_0213af58 = { (int)&func_ov006_020c5bf8, 0 };
-Pair data_ov006_0213af38 = { (int)&func_ov006_020c6a9c, 0 };
-Pair data_ov006_0213af68 = { (int)&func_ov006_020c5d28, 0 };
-Pair data_ov006_0213af40 = { (int)&func_ov006_020c5928, 0 };
-Pair data_ov006_0213af50 = { (int)&func_ov006_020c5658, 0 };
-Pair data_ov006_0213af48 = { (int)&func_ov006_020c53f8, 0 };
-Pair data_ov006_0213af30 = { (int)&func_ov006_020c5530, 0 };
+void Heyho_Motion2(char *c);
+void Heyho_Motion3(char *c);
+void Heyho_Motion4(char *c);
+void Heyho_Motion5(char *c);
+void Heyho_Motion6(char *c);
+void Heyho_Motion7(char *c);
+void Heyho_Motion8(char *c);
+void Heyho_Motion9(char *c);
+Pair pmf_Heyho_Motion8 = { (int)&Heyho_Motion8, 0 };
+Pair pmf_Heyho_Motion7 = { (int)&Heyho_Motion7, 0 };
+Pair pmf_Heyho_Motion3 = { (int)&Heyho_Motion3, 0 };
+Pair pmf_Heyho_Motion9 = { (int)&Heyho_Motion9, 0 };
+Pair pmf_Heyho_Motion4 = { (int)&Heyho_Motion4, 0 };
+Pair pmf_Heyho_Motion6 = { (int)&Heyho_Motion6, 0 };
+Pair pmf_Heyho_Motion5 = { (int)&Heyho_Motion5, 0 };
+Pair pmf_Heyho_Motion2 = { (int)&Heyho_Motion2, 0 };
 }

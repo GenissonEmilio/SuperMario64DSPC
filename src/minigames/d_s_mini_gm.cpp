@@ -29,13 +29,13 @@
  *   TU's UpdateGameSelect hands it data_0209f61c.
  * Leftover: func_02019028 / func_020233f4 are arm9 graphics-setup
  *   tails. This TU's InitResources calls them.
- * Leftover: data_ov005_020c2250 group-base table,
- *   data_ov005_020c2260 / data_ov005_020c2310 / data_ov005_020c23a0
- *   file-id tables, data_ov005_020c24d8 minigame entries,
- *   data_ov005_020c2c28 /
- *   data_ov005_020c2ea4 / data_ov005_020c2e88 / data_ov005_020c2efc /
- *   data_ov005_020c2f4c / data_ov005_020c2f60 / data_ov005_020c2f88 /
- *   data_ov005_020c2fcc OAM. Overlay .rodata/.data this TU does not
+ * Leftover: sMiniGmGroupBases group-base table,
+ *   sMiniGmBgFiles / sMiniGmIconPalettes / sMiniGmIconChars
+ *   file-id tables, sMiniGmRows minigame entries,
+ *   sMiniGmGroupTabs /
+ *   sMiniGmPageArrows / sMiniGmExitButton / sMiniGmDigits /
+ *   sMiniGmRecordLabels / sMiniGmNewBadge / sMiniGmSavingCaption /
+ *   sMiniGmCaption OAM. Overlay .rodata/.data this TU does not
  *   own.
  * Leftover: g_profile_MINIGAME lives outside this TU (S14).
  * Leftover: OAM::Render Fix12-by-value stays mangled (OAM.h, wall 6az).
@@ -129,25 +129,25 @@ extern u8 gActivePlayerSlot;
 extern unsigned short data_020a0e5a[];
 
 /* ---- ov005 statics ---- */
-extern int data_ov005_020c2260[];
+extern int sMiniGmBgFiles[];
 /* Nine icon positions on the top screen. The next nine are the second page. */
-const Pair data_ov005_020c2280[9] = {
+const Pair sMiniGmRecordPos[9] = {
     {0x58, 0x10}, {0x88, 0x10}, {0xb8, 0x10},
     {0x58, 0xb0}, {0x88, 0xb0}, {0xb8, 0xb0},
     {0x78, 0x30}, {0xa8, 0x30}, {0xd8, 0x30},
 };
-const Pair data_ov005_020c22c8[9] = {
+const Pair sMiniGmBadgePos[9] = {
     {0x58, 0x28}, {0x88, 0x28}, {0xb8, 0x28},
     {0x58, 0x70}, {0x88, 0x70}, {0xb8, 0x70},
     {0x78, 0x48}, {0xa8, 0x48}, {0xd8, 0x48},
 };
-extern u32 data_ov005_020c2310[];
-extern int data_ov005_020c23a0[];
+extern u32 sMiniGmIconPalettes[];
+extern int sMiniGmIconChars[];
 /* Nine screen offsets. The next object in this section is the vtable. */
-Off9 data_ov005_020c2464 = {
+Off9 sMiniGmIconScreenOffsets = {
     {0x68, 0x6e, 0x74, 0x188, 0x18e, 0x194, 0x4e2, 0x4e8, 0x4ee}
 };
-extern const MgEntry data_ov005_020c24d8[];
+extern const MgEntry sMiniGmRows[];
 extern int data_ov005_020c24dc[];
 extern int sMiniGmDigits[];
 extern void *sMiniGmRecordLabels[];

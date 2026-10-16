@@ -580,133 +580,133 @@
   ],
   "data": [
     {
-      "symbol": "data_ov006_0213d878",
+      "symbol": "pmf_PachinkoFlyer_State0",
       "address": "0x0213d878",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fb4e0, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d880",
+      "symbol": "pmf_PachinkoBall_State5",
       "address": "0x0213d880",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fcec4, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d888",
+      "symbol": "pmf_PachinkoFlyer_State4",
       "address": "0x0213d888",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fb0fc, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d890",
+      "symbol": "pmf_PachinkoFlyer_State3",
       "address": "0x0213d890",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fb1c4, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d898",
+      "symbol": "pmf_PachinkoBall_State2",
       "address": "0x0213d898",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fd2d8, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8a0",
+      "symbol": "pmf_PachinkoBg_State2",
       "address": "0x0213d8a0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020faac8, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8a8",
+      "symbol": "pmf_PachinkoBobOmb_State0",
       "address": "0x0213d8a8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fe2e4, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8b0",
+      "symbol": "pmf_PachinkoBall_State4",
       "address": "0x0213d8b0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fd088, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8b8",
+      "symbol": "pmf_PachinkoBobOmb_State3",
       "address": "0x0213d8b8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fe90c, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8c0",
+      "symbol": "pmf_PachinkoBall_State0",
       "address": "0x0213d8c0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fd9cc, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8c8",
+      "symbol": "pmf_PachinkoBall_State1",
       "address": "0x0213d8c8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fd894, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8d0",
+      "symbol": "pmf_PachinkoPipe_State3",
       "address": "0x0213d8d0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fc1f8, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8d8",
+      "symbol": "pmf_PachinkoBall_State6",
       "address": "0x0213d8d8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fce04, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8e0",
+      "symbol": "pmf_PachinkoFlyer_State2",
       "address": "0x0213d8e0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fb230, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8e8",
+      "symbol": "pmf_PachinkoFlyer_State1",
       "address": "0x0213d8e8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fb45c, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8f0",
+      "symbol": "pmf_PachinkoBobOmb_State1",
       "address": "0x0213d8f0",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fe394, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d8f8",
+      "symbol": "pmf_PachinkoBobOmb_State2",
       "address": "0x0213d8f8",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fe750, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d900",
+      "symbol": "pmf_PachinkoBg_State3",
       "address": "0x0213d900",
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "pointer to func_ov006_020fa9c8, second word 0"
     },
     {
-      "symbol": "data_ov006_0213d908",
+      "symbol": "pmf_PachinkoBobOmb_State4",
       "address": "0x0213d908",
       "size": "0x8",
       "binding": "STB_GLOBAL",
@@ -1472,7 +1472,7 @@
       "source": "0x0213d878",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fb4e0",
+      "symbol": "PachinkoFlyer_State0",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fb4e0"
@@ -1482,7 +1482,7 @@
       "source": "0x0213d880",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fcec4",
+      "symbol": "PachinkoBall_State5",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fcec4"
@@ -1492,7 +1492,7 @@
       "source": "0x0213d888",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fb0fc",
+      "symbol": "PachinkoFlyer_State4",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fb0fc"
@@ -1502,7 +1502,7 @@
       "source": "0x0213d890",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fb1c4",
+      "symbol": "PachinkoFlyer_State3",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fb1c4"
@@ -1512,7 +1512,7 @@
       "source": "0x0213d898",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fd2d8",
+      "symbol": "PachinkoBall_State2",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fd2d8"
@@ -1522,7 +1522,7 @@
       "source": "0x0213d8a0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020faac8",
+      "symbol": "PachinkoBg_State2",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020faac8"
@@ -1532,7 +1532,7 @@
       "source": "0x0213d8a8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fe2e4",
+      "symbol": "PachinkoBobOmb_State0",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fe2e4"
@@ -1542,7 +1542,7 @@
       "source": "0x0213d8b0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fd088",
+      "symbol": "PachinkoBall_State4",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fd088"
@@ -1552,7 +1552,7 @@
       "source": "0x0213d8b8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fe90c",
+      "symbol": "PachinkoBobOmb_State3",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fe90c"
@@ -1562,7 +1562,7 @@
       "source": "0x0213d8c0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fd9cc",
+      "symbol": "PachinkoBall_State0",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fd9cc"
@@ -1572,7 +1572,7 @@
       "source": "0x0213d8c8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fd894",
+      "symbol": "PachinkoBall_State1",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fd894"
@@ -1582,7 +1582,7 @@
       "source": "0x0213d8d0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fc1f8",
+      "symbol": "PachinkoPipe_State3",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fc1f8"
@@ -1592,7 +1592,7 @@
       "source": "0x0213d8d8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fce04",
+      "symbol": "PachinkoBall_State6",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fce04"
@@ -1602,7 +1602,7 @@
       "source": "0x0213d8e0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fb230",
+      "symbol": "PachinkoFlyer_State2",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fb230"
@@ -1612,7 +1612,7 @@
       "source": "0x0213d8e8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fb45c",
+      "symbol": "PachinkoFlyer_State1",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fb45c"
@@ -1622,7 +1622,7 @@
       "source": "0x0213d8f0",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fe394",
+      "symbol": "PachinkoBobOmb_State1",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fe394"
@@ -1632,7 +1632,7 @@
       "source": "0x0213d8f8",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fe750",
+      "symbol": "PachinkoBobOmb_State2",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fe750"
@@ -1642,7 +1642,7 @@
       "source": "0x0213d900",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fa9c8",
+      "symbol": "PachinkoBg_State3",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fa9c8"
@@ -1652,7 +1652,7 @@
       "source": "0x0213d908",
       "type": "R_ARM_ABS32",
       "kind": "load",
-      "symbol": "func_ov006_020fea54",
+      "symbol": "PachinkoBobOmb_State4",
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x020fea54"

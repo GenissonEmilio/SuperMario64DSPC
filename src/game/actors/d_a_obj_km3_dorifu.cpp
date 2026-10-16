@@ -60,16 +60,16 @@ typedef char DorifuClsnFileHandle_size_must_be_8[
 struct CLPS_Block;
 
 extern "C" {
-extern DorifuModelFilePtr data_ov047_021126a0;
-extern DorifuModelFilePtr data_ov047_02112680;
-extern DorifuModelFilePtr data_ov047_02112668;
-extern DorifuModelFilePtr data_ov047_02112688;
-extern DorifuModelFilePtr data_ov047_02112690;
-extern DorifuClsnFileHandle data_ov047_02112678;
-extern DorifuClsnFileHandle data_ov047_02112658;
-extern DorifuClsnFileHandle data_ov047_02112670;
-extern DorifuClsnFileHandle data_ov047_02112698;
-extern DorifuClsnFileHandle data_ov047_02112660;
+extern DorifuModelFilePtr gKm3Dan0ModelFile;
+extern DorifuModelFilePtr gKm3Dan1ModelFile;
+extern DorifuModelFilePtr gKm3Dan2ModelFile;
+extern DorifuModelFilePtr gKm3Dan3ModelFile;
+extern DorifuModelFilePtr gKm3Dan4ModelFile;
+extern DorifuClsnFileHandle gKm3Dan0CollisionFile;
+extern DorifuClsnFileHandle gKm3Dan1CollisionFile;
+extern DorifuClsnFileHandle gKm3Dan2CollisionFile;
+extern DorifuClsnFileHandle gKm3Dan3CollisionFile;
+extern DorifuClsnFileHandle gKm3Dan4CollisionFile;
 extern CLPS_Block data_ov047_02111a74;
 extern CLPS_Block data_ov047_02111a94;
 extern CLPS_Block data_ov047_02111b94;
@@ -84,14 +84,14 @@ extern CLPS_Block data_ov047_02111bd4;
  * row, so the emit splits into two word runs there and the methods below
  * read the table through a daObjDorifuResources view. */
 extern "C" void *data_ov047_02112508[10] = {
-    &data_ov047_021126a0, &data_ov047_02112678, &data_ov047_02111bb4,
-    &data_ov047_02112680, &data_ov047_02112658, &data_ov047_02111a74,
-    &data_ov047_02112668, &data_ov047_02112670, &data_ov047_02111a94,
-    &data_ov047_02112688,
+    &gKm3Dan0ModelFile, &gKm3Dan0CollisionFile, &data_ov047_02111bb4,
+    &gKm3Dan1ModelFile, &gKm3Dan1CollisionFile, &data_ov047_02111a74,
+    &gKm3Dan2ModelFile, &gKm3Dan2CollisionFile, &data_ov047_02111a94,
+    &gKm3Dan3ModelFile,
 };
 extern "C" void *data_ov047_02112530[5] = {
-    &data_ov047_02112698, &data_ov047_02111b94,
-    &data_ov047_02112690, &data_ov047_02112660, &data_ov047_02111bd4,
+    &gKm3Dan3CollisionFile, &data_ov047_02111b94,
+    &gKm3Dan4ModelFile, &gKm3Dan4CollisionFile, &data_ov047_02111bd4,
 };
 
 // @symbol daObjKm3_Dorifu_c_classInit
