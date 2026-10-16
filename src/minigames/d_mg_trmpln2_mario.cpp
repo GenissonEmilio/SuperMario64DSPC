@@ -145,7 +145,7 @@ int Trmp2Mario_GetPos(int p)
 // ---- Trmp2Mario_Render
 namespace ns_020c8e90 {
 extern "C" {
-extern int data_ov006_0212e02c[];
+extern const unsigned int data_ov006_0212e02c[];
 struct C { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void f(void*); };
 // @symbol Trmp2Mario_Render
 void Trmp2Mario_Render(char *o) {
@@ -1689,7 +1689,7 @@ int Trmp3DMario_GetPos(int p)
 // ---- Trmp3DMario_Render
 namespace ns_020cafb4 {
 extern "C" {
-extern int data_ov006_0212e038[];
+extern const unsigned int data_ov006_0212e038[];
 struct C { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void f(void*); };
 // @symbol Trmp3DMario_Render
 void Trmp3DMario_Render(char *o) {
@@ -3520,7 +3520,7 @@ void Trmp3DMario_SetTuning(int a)
 // ---- Trmp3DMario_SetSpawnHeight
 namespace ns_020cd62c {
 extern "C" {
-extern "C" int data_ov006_0212e024[];
+extern const unsigned int data_ov006_0212e024[];
 extern "C" int data_ov006_021405c8[];
 // @symbol Trmp3DMario_SetSpawnHeight
 void Trmp3DMario_SetSpawnHeight(int n){
@@ -3603,3 +3603,102 @@ void TrmpObjAdapter_Construct(int *c){
 }
 }
 }
+
+/* .rodata 0x0212dddc..0x0212e044 */
+#pragma force_active on
+extern "C" {
+extern const unsigned int data_ov006_0212dddc[];
+extern const unsigned int data_ov006_0212dff8[];
+extern const unsigned int data_ov006_0212dffc[];
+extern const unsigned int data_ov006_0212e000[];
+extern const unsigned int data_ov006_0212e004[];
+extern const unsigned int data_ov006_0212e008[];
+extern const unsigned int data_ov006_0212e00c[];
+extern const unsigned int data_ov006_0212e010[];
+extern const unsigned int data_ov006_0212e014[];
+extern const unsigned int data_ov006_0212e018[];
+extern const unsigned int data_ov006_0212e01c[];
+extern const unsigned int data_ov006_0212e020[];
+extern const unsigned int data_ov006_0212e024[];
+extern const unsigned int data_ov006_0212e02c[];
+extern const unsigned int data_ov006_0212e038[];
+const unsigned int data_ov006_0212dddc[135] = {
+    0x00000000u, 0x00000000u, 0x00000000u, 0x00000080u,
+    0xfffe0000u, 0xfffff000u, 0x00000100u, 0x00020000u,
+    0x00001000u, 0x00000000u, 0x00000000u, 0x00001000u,
+    0x00000040u, 0x00018000u, 0x00000000u, 0x00000080u,
+    0x00030000u, 0xfffff000u, 0x00000000u, 0xfffe0000u,
+    0x00001000u, 0x00000020u, 0xffff0000u, 0x00000800u,
+    0x00000040u, 0x00000000u, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0xffff4000u,
+    0xfffff000u, 0x00000000u, 0xfffe8000u, 0xffffe000u,
+    0x00000000u, 0xffff0000u, 0xfffff800u, 0x00000000u,
+    0x00010000u, 0x00000800u, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0xfffc0000u, 0xfffff800u,
+    0x00000000u, 0x00000000u, 0xfffff800u, 0x00000000u,
+    0x00040000u, 0x00000800u, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000020u, 0xfffe0000u, 0x00000800u,
+    0x00000040u, 0xfffc0000u, 0x00001000u, 0x00000000u,
+    0xfffe0000u, 0x00001000u, 0x00000020u, 0xffff0000u,
+    0x00000800u, 0x00000040u, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    0xffff4000u, 0xfffff000u, 0x00000000u, 0xfffe8000u,
+    0xffffe000u, 0x00000000u, 0xffff0000u, 0xfffff800u,
+    0x00000000u, 0x00010000u, 0x00000800u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0xfffe0000u, 0xfffff000u,
+    0x00000000u, 0x00020000u, 0x00001000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0xfffe8000u,
+    0x00000000u, 0x00000000u, 0xfffd0000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0x00000060u,
+    0xfffe0000u, 0xfffff800u, 0x00000060u, 0x00020000u,
+    0x00000800u, 0x00000000u, 0xfffa4000u, 0x00000000u,
+    0x00000040u, 0x0005c000u, 0x00000000u, 0x00000080u,
+    0xfffa4000u, 0x00000000u, 0x00000000u, 0xfffe0000u,
+    0xfffff000u, 0x00000000u, 0x00020000u, 0x00001000u,
+    0x00000030u, 0x00000000u, 0x00000000u,
+};
+const unsigned int data_ov006_0212dff8[1] = {
+    0x00006000u,
+};
+const unsigned int data_ov006_0212dffc[1] = {
+    0x00000c00u,
+};
+const unsigned int data_ov006_0212e000[1] = {
+    0xffffdc00u,
+};
+const unsigned int data_ov006_0212e004[1] = {
+    0x00005400u,
+};
+const unsigned int data_ov006_0212e008[1] = {
+    0x00004800u,
+};
+const unsigned int data_ov006_0212e00c[1] = {
+    0x000000c0u,
+};
+const unsigned int data_ov006_0212e010[1] = {
+    0xffffe400u,
+};
+const unsigned int data_ov006_0212e014[1] = {
+    0x00005800u,
+};
+const unsigned int data_ov006_0212e018[1] = {
+    0x00000e00u,
+};
+const unsigned int data_ov006_0212e01c[1] = {
+    0x00000180u,
+};
+const unsigned int data_ov006_0212e020[1] = {
+    0x000000e0u,
+};
+const unsigned int data_ov006_0212e024[2] = {
+    0x00028000u, 0xfff68000u,
+};
+const unsigned int data_ov006_0212e02c[3] = {
+    0x00002000u, 0x00002000u, 0x00002000u,
+};
+const unsigned int data_ov006_0212e038[3] = {
+    0x00002000u, 0x00002000u, 0x00002000u,
+};
+}
+#pragma force_active off
