@@ -1,11 +1,10 @@
 //cpp
-/* leftovers:
- * The constructor and destructor come first (D0 then D1, then C1). C2
- * and D2 have no cartridge home. func_0203aa10, func_0203aa74 and
- * func_0203aad0 stay free functions; DetectClsn and GetNormal call them
+/* The constructor precedes the destructor definition. C2 and D2 have no
+ * cartridge home. func_0203aa10, func_0203aa74 and func_0203aad0 retain
+ * their address names and C linkage; DetectClsn and GetNormal call them
  * by address, and daObjKm2_Nobiru_c reads scaleY through func_0203aad0.
  * SetFile and SetScaleY stay mangled: the scale arguments are Fix12 by
- * value. func_0203aa74 divides y by invScaleY after the parent's inverse
+ * value. func_0203aa74 multiplies y by invScaleY after the parent's inverse
  * matrix; func_0203aa10 applies scaleY before the parent's scaled matrix.
  */
 /* dBgW_KcMbgSclY: mesh collider stretched in y (Snowman's body, lift
@@ -57,9 +56,9 @@ dBgW_KcMbgSclY::~dBgW_KcMbgSclY()
 
 // @symbol _ZN14dBgW_KcMbgSclY7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block
 extern "C" void _ZN14dBgW_KcMbgSclY7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-    dBgW_KcMbgSclY *self, KCL_File *f, const Matrix4x3 *m, Fix12i fix, s16 s, CLPS_Block *b)
+    dBgW_KcMbgSclY *self, KCL_File *file, const Matrix4x3 *transform, Fix12i uniformScale, s16 angle, CLPS_Block *clps)
 {
-    _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(self, f, m, fix, s, b);
+    _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(self, file, transform, uniformScale, angle, clps);
     self->scaleY = 0x1000;
     self->invScaleY = 0x1000;
 }
@@ -81,29 +80,29 @@ extern "C" s32 func_0203aad0(dBgW_KcMbgSclY *self)
 /* World -> collider space: the parent's inverse-scale matrix, then a divide
  * out of the y stretch. */
 // @symbol func_0203aa74
-extern "C" void func_0203aa74(dBgW_KcMbgSclY *self, Vector3 *v, Vector3 *res)
+extern "C" void func_0203aa74(dBgW_KcMbgSclY *self, Vector3 *worldPos, Vector3 *localPos)
 {
-    MulVec3Mat4x3(v, &self->invScaledMat, res);
-    Fix12i isy = self->invScaleY;
-    if (isy == 0x1000)
+    MulVec3Mat4x3(worldPos, &self->invScaledMat, localPos);
+    Fix12i inverseVerticalScale = self->invScaleY;
+    if (inverseVerticalScale == 0x1000)
         return;
-    res->y = (Fix12i)(((s64)res->y * isy + 0x800) >> 12);
+    localPos->y = (Fix12i)(((s64)localPos->y * inverseVerticalScale + 0x800) >> 12);
 }
 
 /* Collider -> world space: fold the y stretch in first, then the parent's
  * scaled matrix. */
 // @symbol func_0203aa10
-extern "C" void func_0203aa10(dBgW_KcMbgSclY *self, Vector3 *v, Vector3 *res)
+extern "C" void func_0203aa10(dBgW_KcMbgSclY *self, Vector3 *localPos, Vector3 *worldPos)
 {
-    Vector3 tmp;
-    tmp.x = v->x;
-    tmp.y = v->y;
-    tmp.z = v->z;
+    Vector3 scaledPos;
+    scaledPos.x = localPos->x;
+    scaledPos.y = localPos->y;
+    scaledPos.z = localPos->z;
     if (self->scaleY != 0x1000) {
-        Fix12i sy = self->scaleY;
-        tmp.y = (Fix12i)(((s64)tmp.y * sy + 0x800) >> 12);
+        Fix12i verticalScale = self->scaleY;
+        scaledPos.y = (Fix12i)(((s64)scaledPos.y * verticalScale + 0x800) >> 12);
     }
-    MulVec3Mat4x3(&tmp, &self->newScaledMat, res);
+    MulVec3Mat4x3(&scaledPos, &self->newScaledMat, worldPos);
 }
 
 // @symbol _ZN14dBgW_KcMbgSclY9Virtual08Ev
@@ -158,57 +157,63 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
 {
     Vector3 centre;
     Vector3 localCentre;
-    int d[12];
+    /* Keep the bounds in one plain workspace; Vector3 adds object lifetimes. */
+    struct CorrectionBounds {
+        s32 localMin[3], localMax[3];
+        s32 scaledMin[3], scaledMax[3];
+    } bounds;
     int inverseScale;
-    int radius1;
-    int radius2;
-    int r;
+    int localRadius;
+    int localExtraExtent;
+    int hit;
 
     sphere.GetCentre(centre);
     func_0203aa74(this, &centre, &localCentre);
 
     inverseScale = invScale;
-    radius1 = FMUL(sphere.radius, inverseScale);
-    radius2 = FMUL(sphere.unk_0ec, inverseScale);
+    localRadius = FMUL(sphere.radius, inverseScale);
+    localExtraExtent = FMUL(sphere.unk_0ec, inverseScale);
 
-    dBgCh_SphCrr loc;
-    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&loc, &localCentre, radius1, 0);
-    loc.unk_0ec = radius2;
-    loc.func_02037940(sphere.flags);
-    func_02035394(&loc, &sphere);
-    r = dBgW_Kc::DetectClsn(loc);
-    if (r) {
-        loc.func_02037a04((Vector3 *)d, (Vector3 *)(d + 3));
-        d[6] = FMUL(d[0], scale);
-        d[7] = FMUL(d[1], scale);
-        d[8] = FMUL(d[2], scale);
-        d[9] = FMUL(d[3], scale);
-        d[10] = FMUL(d[4], scale);
-        d[11] = FMUL(d[5], scale);
-        sphere.func_02037a6c(d[6], d[7], d[8], d[9], d[10], d[11]);
-        (dBgPi &)sphere = (dBgPi &)loc;
+    dBgCh_SphCrr localSphere;
+    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre, localRadius, 0);
+    localSphere.unk_0ec = localExtraExtent;
+    localSphere.func_02037940(sphere.flags);
+    func_02035394(&localSphere, &sphere);
+    hit = dBgW_Kc::DetectClsn(localSphere);
+    if (hit) {
+        /* Convert the local correction bounds back to the uniform scale. */
+        localSphere.func_02037a04((Vector3 *)bounds.localMin, (Vector3 *)bounds.localMax);
+        bounds.scaledMin[0] = FMUL(bounds.localMin[0], scale);
+        bounds.scaledMin[1] = FMUL(bounds.localMin[1], scale);
+        bounds.scaledMin[2] = FMUL(bounds.localMin[2], scale);
+        bounds.scaledMax[0] = FMUL(bounds.localMax[0], scale);
+        bounds.scaledMax[1] = FMUL(bounds.localMax[1], scale);
+        bounds.scaledMax[2] = FMUL(bounds.localMax[2], scale);
+        sphere.func_02037a6c(bounds.scaledMin[0], bounds.scaledMin[1], bounds.scaledMin[2],
+            bounds.scaledMax[0], bounds.scaledMax[1], bounds.scaledMax[2]);
+        (dBgPi &)sphere = (dBgPi &)localSphere;
         sphere.flags |= 1;
-        if (loc.flags & 4) {
+        if (localSphere.flags & 4) {
             if (sphere.flags & 4) {
-                r &= ~1;
+                hit &= ~1;
             } else {
-                sphere.SetFloorResult(*loc.GetFloorResult());
+                sphere.SetFloorResult(*localSphere.GetFloorResult());
             }
             sphere.flags |= 4;
-            if (sphere.mFloorNormalY < loc.mFloorNormalY) {
-                sphere.func_0203794c(&loc.mFloorNormalX);
+            if (sphere.mFloorNormalY < localSphere.mFloorNormalY) {
+                sphere.func_0203794c(&localSphere.mFloorNormalX);
             }
         }
-        if (loc.flags & 8) {
-            sphere.SetWallResult(*loc.GetWallResult());
+        if (localSphere.flags & 8) {
+            sphere.SetWallResult(*localSphere.GetWallResult());
             sphere.flags |= 8;
         }
-        if (loc.flags & 0x10) {
-            sphere.SetUnderResult(*loc.GetUnderResult());
+        if (localSphere.flags & 0x10) {
+            sphere.SetUnderResult(*localSphere.GetUnderResult());
             sphere.flags |= 0x10;
         }
     }
-    return r;
+    return hit;
 }
 
 #pragma opt_common_subs on
@@ -250,18 +255,18 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_Lin &ray)
 // @symbol _ZN14dBgW_KcMbgSclY9GetNormalEsR7Vector3
 void dBgW_KcMbgSclY::GetNormal(s16 triID, Vector3 &res)
 {
-    KCL_File *p = kclFile;
-    u16 n = p->tris[triID].normalIdx;
-    s16 *v = p->normals[n];
-    Vector3 tmp;
-    Fix12i sy;
-    tmp.x = v[0] << 2;
-    tmp.y = v[1] << 2;
-    tmp.z = v[2] << 2;
-    sy = scaleY;
-    tmp.x = (Fix12i)(((s64)tmp.x * sy + 0x800) >> 12);
-    sy = scaleY;
-    tmp.z = (Fix12i)(((s64)tmp.z * sy + 0x800) >> 12);
-    NormalizeVec3(&tmp, &tmp);
-    func_02039db8(this, &tmp, &res);
+    KCL_File *mesh = kclFile;
+    u16 normalIndex = mesh->tris[triID].normalIdx;
+    s16 *packedNormal = mesh->normals[normalIndex];
+    Vector3 normal;
+    Fix12i verticalScale;
+    normal.x = packedNormal[0] << 2;
+    normal.y = packedNormal[1] << 2;
+    normal.z = packedNormal[2] << 2;
+    verticalScale = scaleY;
+    normal.x = (Fix12i)(((s64)normal.x * verticalScale + 0x800) >> 12);
+    verticalScale = scaleY;
+    normal.z = (Fix12i)(((s64)normal.z * verticalScale + 0x800) >> 12);
+    NormalizeVec3(&normal, &normal);
+    func_02039db8(this, &normal, &res);
 }

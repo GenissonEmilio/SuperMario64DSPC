@@ -1,0 +1,108 @@
+{
+  "base_commit": "1cd42c54c3929102ad419cba14c074b1ca4fbef3",
+  "scope": "Moving-mesh collision transforms and correction bounds in dBgW_KcMbg and dBgW_KcMbgSclY.",
+  "changes": [
+    "Replace the anonymous twelve-word correction workspace with four named three-component bounds, preserving its plain storage and layout.",
+    "Name the local query sphere, collision result, local centre and radii/extents.",
+    "Name packed mesh normals and positions, horizontal velocity, local direction and transform parameters.",
+    "Correct the inverse-Y-scale multiplication comment and remove the unsupported claim that an address name proves original free-function identity."
+  ],
+  "naming_evidence": [
+    "dBgCh_SphCrr::func_02037a04 copies aabbMin and aabbMax to its two output vectors; func_02037a6c merges all six supplied components.",
+    "Both moving-mesh sphere queries multiply those local bounds by the uniform scale before merging them into the outer query.",
+    "Transform zeroes velocity.y, normalizes it, then applies invRotMat before supplying the local direction to the ITCM worker.",
+    "KCL_Tri normalIdx and posIdx select the packed normal and origin arrays.",
+    "d_bg_w_kc_itcm.cpp uses unk_0ec with radius in slab rejection bounds. localExtraExtent describes this use; the shared field remains unnamed.",
+    "SetScaleY computes invScaleY, and func_0203aa74 multiplies the transformed Y by that reciprocal."
+  ],
+  "runtime_validation": "Not needed or used for these names: each follows directly from the matching producer and consumer code. No melonDS observations are claimed.",
+  "verification": {
+    "complete_allocated_sections_and_relocations": {
+      "base": "1cd42c54c3929102ad419cba14c074b1ca4fbef3",
+      "compiler": "2004/b56",
+      "files": [
+        {
+          "file": "src/engine/collision/d_bg_w_kc_mbg.cpp",
+          "source_sha256": "c76df8cda7ef258d977b657db15a2cd7038eb019cb2abfd4dc33d7c4994b8352",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 30,
+          "after_sections": 30,
+          "before_sha256": "afa1cfe05ca841b1e92061f932f8e98361c630f6a28fb9581c7649ee3a7fc04d",
+          "after_sha256": "afa1cfe05ca841b1e92061f932f8e98361c630f6a28fb9581c7649ee3a7fc04d"
+        },
+        {
+          "file": "src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp",
+          "source_sha256": "87702d2c62c7a0e5d6f3261807ff04d88fd2083763f5c0bd3a9a0c27627014df",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 25,
+          "after_sections": 25,
+          "before_sha256": "fceb6ef00a23f3be9baa1a715f5a8599ccb7e9e59f7e4b119d26708ac010d054",
+          "after_sha256": "fceb6ef00a23f3be9baa1a715f5a8599ccb7e9e59f7e4b119d26708ac010d054"
+        }
+      ]
+    },
+    "method": "All allocated section bytes and metadata plus named relocation offsets, types and targets compare exactly; no masking or normalization.",
+    "native_vector_experiment": [
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg.cpp",
+        "native_Vector3_aggregate_identical": false,
+        "before_hash": "afa1cfe05ca841b1e92061f932f8e98361c630f6a28fb9581c7649ee3a7fc04d",
+        "native_hash": "d96bce20f8eb68ff844c1d86eeca880aed64daff2d49a9c7644b91ec48ba09ed"
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp",
+        "native_Vector3_aggregate_identical": false,
+        "before_hash": "fceb6ef00a23f3be9baa1a715f5a8599ccb7e9e59f7e4b119d26708ac010d054",
+        "native_hash": "f6c7da23e3722b27d731dac0aaa65f684146b1f2997aff0735305ac9bad93057"
+      }
+    ],
+    "native_vector_disposition": "Four Vector3 members change the emitted output in both files. Retain the named scalar-array aggregate and the existing ABI casts.",
+    "focused_linkcheck": {
+      "checked": 34,
+      "verified": 34,
+      "blind": 0,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "declaration_agreement": {
+      "files_in_scope": 1641,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "exit_code": 0
+    },
+    "rombuild": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "source_bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log": "build/scene-physics6-rombuild.log",
+      "log_sha256": "d943520715ab1737d36a1dcc60df891ddf4226818eddc42485b660c9e79d0d3b"
+    },
+    "comparison_script": {
+      "path": "build/scene-physics6-control.py",
+      "sha256": "86448f788d7b00172c03a11197154081e19643963130e8781d61db3dad72a2da"
+    },
+    "focused_report": {
+      "path": "build/scene-physics6-linkcheck.json",
+      "sha256": "8ea6c88699b9862e4f6fa032453e07639c5e5b8ed4458fa5ed6f6618207f95d0"
+    },
+    "declaration_log": {
+      "path": "build/scene-physics6-declarations.log",
+      "sha256": "5507a6445dc937e82c871b209a54ca31fcca848b010b904270520820b018c288"
+    },
+    "diff_check": "PASS"
+  },
+  "review_status": "Producer checkpoint; independent source review and publication pending. Wider scene/physics work remains active."
+}
