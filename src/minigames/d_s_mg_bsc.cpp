@@ -7,9 +7,7 @@
  * Functions run in REVERSE of ROM order; do not reorder.
  *
  * leftovers:
- *   - the func_ov004 and func_ov006 helpers and most data_ globals are
- *     unnamed in symbols.txt; mCredits and mBestHudScore are unnamed in the
- *     header.
+ *   - most data_ globals still have address-based names.
  *   - the factory builds the object by hand because the class has no
  *     constructor declared yet.
  */
@@ -105,18 +103,17 @@ void LoadOBJPltt(const void *plt, u32 base, u32 size);
 int ApproachLinear(int& value, int target, int step);
 
 // @symbol dScMgBSC_c_classInit
-extern "C" void* dScMgBSC_c_classInit()
+extern "C" void *dScMgBSC_c_classInit()
 {
-    char* scene = (char*)_ZN7fBase_cnwEj(sizeof(dScMgBSC_c));
+    char *scene = (char *)_ZN7fBase_cnwEj(sizeof(dScMgBSC_c));
     if (scene) {
         _ZN11dScMgBase_cC2Ev(scene);
-        *(int*)scene = (int)&_ZTV19dScMgSingle3DBase_c;
+        *(int *)scene = (int)&_ZTV19dScMgSingle3DBase_c;
         _ZN8Particle10SysTrackerC1Ev(scene + 0x471c);
-        *(int*)scene = (int)&_ZTV10dScMgBSC_c[2];
+        *(int *)scene = (int)&_ZTV10dScMgBSC_c[2];
         Dealer_Construct(scene + 0x4f38);
-        __cxa_vec_ctor(scene + 0x51a8, 2, 8,
-                     (void*)func_0203d738,
-                     (void*)NullDestructor_0203d47c);
+        __cxa_vec_ctor(scene + 0x51a8, 2, 8, (void *)func_0203d738,
+                       (void *)NullDestructor_0203d47c);
     }
     return scene;
 }
@@ -129,13 +126,13 @@ extern "C" void* dScMgBSC_c_classInit()
  * block, untyped in the header. */
 s32 dScMgBSC_c::InitResources()
 {
-    int fh;
+    int paletteData;
     data_0209d45c[0] = 0x11;
     LoadCard2SubBg3();
     LoadCompressedFileAt(data_ov006_0213fe78[GetGameLanguage()], (void *)0x6600000);
-    fh = LoadFile(ASSET_D_2D_MG_BIG_SMALL_NCL_BIN);
-    GXS::LoadOBJPltt((void *)fh, 0, 0x100);
-    Deallocate((void *)fh);
+    paletteData = LoadFile(ASSET_D_2D_MG_BIG_SMALL_NCL_BIN);
+    GXS::LoadOBJPltt((void *)paletteData, 0, 0x100);
+    Deallocate((void *)paletteData);
     Camera_InitDealerView(pad_4660);
     if (Dealer_Load((char *)&mShared) == 0)
         return 0;
@@ -163,20 +160,18 @@ s32 dScMgBSC_c::Behavior()
  * the flip; from frame 3 the card's value picks the face. */
 s32 dScMgBSC_c::Render()
 {
-    int i;
+    int cardIndex;
 
     Camera_InitDealerView(pad_4660);
-    if (mState >= 1) {
-        for (i = 0; i < 2; i++) {
-            if (mCardFrame[i] < 3) {
-                Hud_RenderSprite(data_ov006_0213fe8c[mCardFrame[i]],
-                                    mCardPos[i].x >> 12,
-                                    mCardPos[i].y >> 12, -1, -1);
+    if (mState >= STATE_WAIT_DEAL) {
+        for (cardIndex = 0; cardIndex < 2; cardIndex++) {
+            if (mCardFrame[cardIndex] < 3) {
+                Hud_RenderSprite(data_ov006_0213fe8c[mCardFrame[cardIndex]],
+                                 mCardPos[cardIndex].x >> 12, mCardPos[cardIndex].y >> 12, -1, -1);
             } else {
                 Hud_RenderSprite(
-                    data_ov006_0213fe8c[mCardFrame[i] + mCardValue[i] * 2],
-                    mCardPos[i].x >> 12,
-                    mCardPos[i].y >> 12, -1, -1);
+                    data_ov006_0213fe8c[mCardFrame[cardIndex] + mCardValue[cardIndex] * 2],
+                    mCardPos[cardIndex].x >> 12, mCardPos[cardIndex].y >> 12, -1, -1);
             }
         }
     }
@@ -199,7 +194,7 @@ void dScMgBSC_c::StartRound(int mode)
     }
     MgCoins_Reset();
     gMgCoinsShowDelta = 1;
-    mState = 0;
+    mState = STATE_DEAL_CARDS;
 }
 
 // @symbol _ZN10dScMgBSC_c11CanEndStateEi
@@ -210,36 +205,37 @@ void dScMgBSC_c::StartRound(int mode)
 s32 dScMgBSC_c::CanEndState(int mode)
 {
     int state;
-    short gate;
-    if (mState == 0xd) {
+    short coinStatus;
+    if (mState == STATE_WAIT_RESULT) {
         if (Dealer_IsIdle((int *)&mShared) != 0) {
             if (mode == 4) {
                 FreeGfxSlotsById(0x1d);
-                mState = 9;
+                mState = STATE_WAIT_WIN;
             } else if (mode == 5) {
                 FreeGfxSlotsById(0x1d);
-                mState = 0xa;
+                mState = STATE_WAIT_LOSE;
             }
         } else {
             return 0;
         }
     }
     state = mState;
-    if (state >= 0xc) {
-        gate = gMgCoinsStatus;
-        if (gate == 1) goto settle;
+    if (state >= STATE_WAIT_COINS) {
+        coinStatus = gMgCoinsStatus;
+        if (coinStatus == 1)
+            goto settle;
     }
     return 0;
 settle:
-    if (state == 0xc && gate == 1) {
+    if (state == STATE_WAIT_COINS && coinStatus == 1) {
         Mg_SaveRecordPair(mCredits, mHudScore);
     }
     return 1;
 }
 
 // @symbol _ZN10dScMgBSC_c10OnDealDoneEv
-/* Slot 21: picks one of four reactions from the score, mHudScore / 5
-   capped at 3. */
+/* Slot 21: raises the bet to one of four tiers from mHudScore / 5,
+   capped at tier 3. */
 void dScMgBSC_c::OnDealDone()
 {
     int score = mHudScore;
@@ -252,40 +248,40 @@ void dScMgBSC_c::OnDealDone()
 
 // @symbol _ZN10dScMgBSC_c14StateDealCardsEv
 /* State 0: deals two cards with distinct random values out of five
- * (flags marks the values taken), starts the deal animation and the
+ * (valueUsed marks the values taken), starts the deal animation and the
  * prompt, and moves to StateWaitDeal. */
 void dScMgBSC_c::StateDealCards()
 {
-    unsigned char flags[5];
-    unsigned char* p;
-    int j;
-    int i;
-    unsigned char idx;
+    unsigned char valueUsed[5];
+    unsigned char *usedEntry;
+    int valueIndex;
+    int cardIndex;
+    unsigned char cardValue;
 
-    p = flags;
-    for (j = 0; j < 5; j++)
-        *p++ = 0;
+    usedEntry = valueUsed;
+    for (valueIndex = 0; valueIndex < 5; valueIndex++)
+        *usedEntry++ = 0;
 
-    for (i = 0; i < 2; i++) {
-        mCardPos[i].x = 0x80000;
-        mCardPos[i].y = -0x40000;
-        idx = ((unsigned int)RandomIntInternal(&data_0209e650) >> 16) % 5u;
+    for (cardIndex = 0; cardIndex < 2; cardIndex++) {
+        mCardPos[cardIndex].x = 0x80000;
+        mCardPos[cardIndex].y = -0x40000;
+        cardValue = ((unsigned int)RandomIntInternal(&data_0209e650) >> 16) % 5u;
         for (;;) {
-            if (flags[idx] == 0) {
-                mCardValue[i] = idx;
-                flags[idx] = 1;
+            if (valueUsed[cardValue] == 0) {
+                mCardValue[cardIndex] = cardValue;
+                valueUsed[cardValue] = 1;
                 break;
             }
-            idx++;
-            idx %= 5;
+            cardValue++;
+            cardValue %= 5;
         }
-        mCardFrame[i] = 0;
+        mCardFrame[cardIndex] = 0;
     }
 
     mOtherCard = 0;
     mChosenCard = 1;
-    mDealCount = 0;
-    Dealer_StartDeal((char *)&mShared, 3, 2, (int)&mDealCount);
+    mCardsDealt = 0;
+    Dealer_StartDeal((char *)&mShared, 3, 2, (int)&mCardsDealt);
 
     if (mPromptBlinkCount == 0) {
         mPromptEnabled = 1;
@@ -298,47 +294,47 @@ void dScMgBSC_c::StateDealCards()
 
 // @symbol _ZN10dScMgBSC_c13StateWaitDealEv
 /* State 1: slides each card to its lane (x toward
- * data_ov006_0213fd44, y toward 0x60000). mDealCount is re-read every pass
- * because the animation helper counts it down. Moves on once both cards
- * are in place. */
+ * data_ov006_0213fd44, y toward 0x60000). The dealer animation increments
+ * mCardsDealt as cards are dealt; the loop reloads that count each pass.
+ * Moves on once both cards are in place. */
 void dScMgBSC_c::StateWaitDeal()
 {
-  int i;
-  int arrived;
-  int xArrived;
-  char *xp;
-  char *yp;
-  short count;
+    int cardIndex;
+    int cardsArrived;
+    int xReached;
+    char *cardX;
+    char *cardY;
+    short cardsDealt;
 
-  arrived = 0;
-  i = 0;
-  count = mDealCount;
-  if (count <= 0)
-    goto after_loop;
+    cardsArrived = 0;
+    cardIndex = 0;
+    cardsDealt = mCardsDealt;
+    if (cardsDealt <= 0)
+        goto after_loop;
 
-  xp = (char *)&mCardPos[0].x;
-  yp = (char *)&mCardPos[0].y;
-  do {
-    if (Math_Function_0203b14c((int *)xp, data_ov006_0213fd44[i], 0x800, 0x10000, 0x200) == 0)
-      xArrived = 1;
-    else
-      xArrived = 0;
+    cardX = (char *)&mCardPos[0].x;
+    cardY = (char *)&mCardPos[0].y;
+    do {
+        if (Math_Function_0203b14c((int *)cardX, data_ov006_0213fd44[cardIndex], 0x800, 0x10000,
+                                   0x200) == 0)
+            xReached = 1;
+        else
+            xReached = 0;
 
-    if (Math_Function_0203b14c((int *)yp, 0x60000, 0x800, 0x10000, 0x200) == 0)
-    {
-      if (xArrived != 0)
-        arrived++;
-    }
-    xp += 8;
-    yp += 8;
-    i++;
-    count = mDealCount;
-  } while (i < count);
+        if (Math_Function_0203b14c((int *)cardY, 0x60000, 0x800, 0x10000, 0x200) == 0) {
+            if (xReached != 0)
+                cardsArrived++;
+        }
+        cardX += 8;
+        cardY += 8;
+        cardIndex++;
+        cardsDealt = mCardsDealt;
+    } while (cardIndex < cardsDealt);
 
 after_loop:
-  if (arrived < 2)
-    return;
-  mState++;
+    if (cardsArrived < 2)
+        return;
+    mState++;
 }
 
 // @symbol _ZN10dScMgBSC_c15StateChooseCardEv
@@ -346,25 +342,31 @@ after_loop:
  * 0x60. The touched card becomes mChosenCard and the machine moves on. */
 void dScMgBSC_c::StateChooseCard()
 {
-    unsigned int sample = gActivePlayerSlot;
-    int touched = 0;
+    unsigned int playerSlot = gActivePlayerSlot;
+    int touchPressed = 0;
     int lane;
-    if (gTouchHeld[sample * 4] != 0) {
-        if (gTouchEdge[sample * 4] != 0) touched = 1;
+    if (gTouchHeld[playerSlot * 4] != 0) {
+        if (gTouchEdge[playerSlot * 4] != 0)
+            touchPressed = 1;
     }
-    if (touched == 0) return;
+    if (touchPressed == 0)
+        return;
     for (lane = 0; lane < 2; lane++) {
-        unsigned char idx = *(volatile unsigned char *)&gActivePlayerSlot;
-        unsigned char *touch = &gTouchHeld[(unsigned int)idx * 4];
+        unsigned char currentPlayerSlot = *(volatile unsigned char *)&gActivePlayerSlot;
+        unsigned char *touch = &gTouchHeld[(unsigned int)currentPlayerSlot * 4];
         int dx = (int)touch[2] - (data_ov006_0213fd44[lane] >> 12);
         int dy = (int)touch[3] - 0x60;
-        if (dx < -0x10) continue;
-        if (dx > 0x10) continue;
-        if (dy < -0x18) continue;
-        if (dy > 0x18) continue;
+        if (dx < -0x10)
+            continue;
+        if (dx > 0x10)
+            continue;
+        if (dy < -0x18)
+            continue;
+        if (dy > 0x18)
+            continue;
         mChosenCard = lane;
         mOtherCard = lane ^ 1;
-        mRevealStep = 0;
+        mRevealTick = 0;
         mState += 1;
         sMgCoinsBetPlaced = 1;
         Sound::PlayBank2_2D(0x153);
@@ -379,8 +381,10 @@ void dScMgBSC_c::StateMoveCards()
     int chosenArrived = ApproachLinear(mCardPos[mChosenCard].y, 0x90000, 0x4000) & 1;
     int otherArrived = ApproachLinear(mCardPos[mOtherCard].y, 0x30000, 0x4000) & 1;
 
-    if (chosenArrived == 0) return;
-    if (otherArrived == 0) return;
+    if (chosenArrived == 0)
+        return;
+    if (otherArrived == 0)
+        return;
 
     mStateTimer = 0x1e;
     mState += 1;
@@ -404,30 +408,30 @@ void dScMgBSC_c::StateWaitMove()
  * takes one away. */
 void dScMgBSC_c::StateRevealCards()
 {
-    int i;
-    mRevealStep += 1;
-    if (mRevealStep < 4)
+    int cardIndex;
+    mRevealTick += 1;
+    if (mRevealTick < 4)
         return;
-    mRevealStep = 0;
-    for (i = 0; i < 2; i++)
-        mCardFrame[i] += 1;
+    mRevealTick = 0;
+    for (cardIndex = 0; cardIndex < 2; cardIndex++)
+        mCardFrame[cardIndex] += 1;
     if (mCardFrame[mOtherCard] < 4)
         return;
     mStateTimer = 0x1e;
     mState += 1;
     mPromptEnabled = 0;
     {
-        u8 chosen = mCardValue[mChosenCard];
-        u8 other = mCardValue[mOtherCard];
-        int base = mCredits;
+        u8 chosenValue = mCardValue[mChosenCard];
+        u8 otherValue = mCardValue[mOtherCard];
+        int credits = mCredits;
         int score = mHudScore;
-        if (chosen > other) {
-            base += gMgCoinsInPlay * 2;
+        if (chosenValue > otherValue) {
+            credits += gMgCoinsInPlay * 2;
             score = score + 1;
         } else {
             score = score - 1;
         }
-        Mg_SaveRecordPair(base, score);
+        Mg_SaveRecordPair(credits, score);
     }
 }
 
@@ -444,10 +448,8 @@ void dScMgBSC_c::StateJudgeCards()
     if (mStateTimer > 0)
         return;
 
-    if (mCardValue[mChosenCard] > mCardValue[mOtherCard])
-    {
-        if (mHudScore < 0x270f)
-        {
+    if (mCardValue[mChosenCard] > mCardValue[mOtherCard]) {
+        if (mHudScore < 0x270f) {
             score = &mHudScore;
             *score = *score + 1;
         }
@@ -456,18 +458,15 @@ void dScMgBSC_c::StateJudgeCards()
         Mg_SubmitScore(mHudScore);
         Mg_SetSharedState(MG_STATE_WIN);
         Dealer_PlayWin(&mShared);
-        mState = 0xd;
-    }
-    else
-    {
-        if (mHudScore > 0)
-        {
+        mState = STATE_WAIT_RESULT;
+    } else {
+        if (mHudScore > 0) {
             score = &mHudScore;
             *score = *score - 1;
         }
         Mg_SetSharedState(MG_STATE_LOSE);
         Dealer_PlayLose(&mShared);
-        mState = 0xd;
+        mState = STATE_WAIT_RESULT;
     }
 }
 
@@ -476,12 +475,12 @@ void dScMgBSC_c::StateJudgeCards()
  * file sets state 7 or 8; StateJudgeCards does the same work inline. */
 void dScMgBSC_c::StateTableReaction()
 {
-    if (mState == 7) {
+    if (mState == STATE_WIN_REACTION) {
         Dealer_PlayWin(&mShared);
-        mState = 9;
+        mState = STATE_WAIT_WIN;
     } else {
         Dealer_PlayLose(&mShared);
-        mState = 0xa;
+        mState = STATE_WAIT_LOSE;
     }
 }
 
@@ -492,60 +491,52 @@ void dScMgBSC_c::StateWaitTable()
 {
     if (Dealer_IsIdle((int *)&mShared) == 0)
         return;
-    if (mState == 9) {
+    if (mState == STATE_WAIT_WIN) {
         MgCoins_StartPayout(gMgCoinsInPlay << 1);
-        mState = 0xc;
+        mState = STATE_WAIT_COINS;
     } else {
         MgCoins_StartLose();
-        mState = 0xb;
+        mState = STATE_RETURN_CARDS;
     }
 }
 
 // @symbol _ZN10dScMgBSC_c16StateReturnCardsEv
-/* State 11, while gMgCoinsStatus is set: if the base score is spent,
- * first walks both cards back to the deck (mDealCount re-read every pass,
+/* State 11, while gMgCoinsStatus is set: if the credits are spent,
+ * first walks both cards back to the deck (mCardsDealt re-read every pass,
  * as in StateWaitDeal). Then refreshes the meter and settles in state 12. */
 void dScMgBSC_c::StateReturnCards()
 {
-    int done;
-    int i;
-    CardPos *pos;
+    int cardsReturned;
+    int cardIndex;
+    CardPos *cardPos;
 
-    if (gMgCoinsStatus != 1)
-    {
+    if (gMgCoinsStatus != 1) {
         return;
     }
-    if (mCredits <= 0)
-    {
-        done = 0;
-        i = 0;
-        if (mDealCount > 0)
-        {
-            pos = &mCardPos[0];
-            do
-            {
-                if (Math_Function_0203b14c((int *)pos, -0x40000, 0x800, 0xc000, 0x200) == 0)
-                {
-                    done++;
+    if (mCredits <= 0) {
+        cardsReturned = 0;
+        cardIndex = 0;
+        if (mCardsDealt > 0) {
+            cardPos = &mCardPos[0];
+            do {
+                if (Math_Function_0203b14c((int *)cardPos, -0x40000, 0x800, 0xc000, 0x200) == 0) {
+                    cardsReturned++;
                 }
-                i++;
-                pos++;
-            } while (i < mDealCount);
+                cardIndex++;
+                cardPos++;
+            } while (cardIndex < mCardsDealt);
         }
-        if (done < 2)
-        {
+        if (cardsReturned < 2) {
             return;
         }
     }
     Mg_ResumeSharedState();
-    mState = 0xc;
+    mState = STATE_WAIT_COINS;
 }
 
 // @symbol _ZN10dScMgBSC_c9StateDoneEv
 /* States 12 and 13: at rest. */
-void dScMgBSC_c::StateDone()
-{
-}
+void dScMgBSC_c::StateDone() {}
 
 /* D1 and D0 are not written out: the vtable InitResources emits pulls them
  * in, in ROM order. Written out of line, D0 would come out first. */

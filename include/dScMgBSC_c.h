@@ -14,8 +14,9 @@
  * THE CARD TABLE at 0x51a8, 2 elements of 8 bytes, spelled as two s32
  * positions per card now that this class's own state handlers name the
  * shape: StateDealCards starts each card at x = 0x80000, y = -0x40000
- * (0x021250e4), StateMoveCards approaches x toward 0x90000 and y toward
- * 0x30000 (0x02124e1c), StateWaitDeal runs both halves through
+ * (0x021250e4). StateMoveCards approaches the chosen card's y toward
+ * 0x90000 and the other card's y toward 0x30000 (0x02124e1c).
+ * StateWaitDeal runs both halves through
  * Math_Function_0203b14c as coordinates (0x02124fd8), and Render reads
  * them back with `>> 12` for the dMeter_c -- 1:4096 fixed-point screen
  * positions, spelled s32 like the camera fields in
@@ -29,8 +30,8 @@
  * indexes the member-pointer state table data_ov006_02142f94 (filled at
  * startup by __sinit_ov006_0213326c from the fourteen pair globals at
  * 0x0213fd0c..0x0213fd84); the state handlers below are that table's
- * entries. mStateTimer, mChosenCard, mOtherCard, mDealCount, mCardValue,
- * mCardFrame and mRevealStep are the deal/reveal/judge working state
+ * entries. mStateTimer, mChosenCard, mOtherCard, mCardsDealt, mCardValue,
+ * mCardFrame and mRevealTick are the deal/reveal/judge working state
  * those handlers read and write.
  *
  * THE DESTRUCTOR IS DEFINED INLINE, in the class body, and the ROM's own
@@ -104,6 +105,23 @@ struct dScMgBSC_c : dScMgSingle3DBase_c {
     virtual s32 CanEndState(int mode);  /* slot 19 -- ov006 0x0212527c */
     virtual void OnDealDone(); /* slot 21 -- ov006 0x02125248 */
 
+    enum State {
+        STATE_DEAL_CARDS = 0,
+        STATE_WAIT_DEAL,
+        STATE_CHOOSE_CARD,
+        STATE_MOVE_CARDS,
+        STATE_WAIT_MOVE,
+        STATE_REVEAL_CARDS,
+        STATE_JUDGE_CARDS,
+        STATE_WIN_REACTION,
+        STATE_LOSE_REACTION,
+        STATE_WAIT_WIN,
+        STATE_WAIT_LOSE,
+        STATE_RETURN_CARDS,
+        STATE_WAIT_COINS,
+        STATE_WAIT_RESULT
+    };
+
     /* --- the state machine ---
        Fourteen entries of the member-pointer table data_ov006_02142f94,
        indexed by mState and dispatched from Behavior. The names are
@@ -138,10 +156,10 @@ struct dScMgBSC_c : dScMgSingle3DBase_c {
     s32 mStateTimer;     /* 0x51bc */
     s32 mChosenCard;     /* 0x51c0 */
     s32 mOtherCard;      /* 0x51c4 */
-    s16 mDealCount;      /* 0x51c8 */
+    s16 mCardsDealt;     /* 0x51c8 -- counter incremented by the dealer animation */
     u8  mCardValue[2];   /* 0x51ca */
     u8  mCardFrame[2];   /* 0x51cc */
-    u8  mRevealStep;     /* 0x51ce */
+    u8  mRevealTick;     /* 0x51ce -- advances the card frame every four ticks */
     u8  pad_51cf[1];      /* 0x51cf */
 };
 
