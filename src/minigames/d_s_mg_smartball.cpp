@@ -6656,3 +6656,8 @@ extern "C" void *dScMgSmartball_c_classInit(void) {
 extern "C" void SmartballObj_ElemCtor(void)
 {
 }
+
+extern "C" {
+int data_ov006_02142c1c[9];
+int data_ov006_02142c40[32];
+}

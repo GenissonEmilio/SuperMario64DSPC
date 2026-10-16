@@ -3603,3 +3603,11 @@ void TrmpObjAdapter_Construct(int *c){
 }
 }
 }
+
+extern "C" const int data_ov006_0212e02c[3] = {
+    0x2000, 0x2000, 0x2000
+};
+
+extern "C" const int data_ov006_0212e038[3] = {
+    0x2000, 0x2000, 0x2000
+};

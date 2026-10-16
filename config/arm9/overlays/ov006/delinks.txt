@@ -30,16 +30,21 @@ src/minigames/unit020c8a30.cpp:
     complete
     .text start:0x020c8a30 end:0x020c8dd4
 
+    .bss start:0x02140518 end:0x02140538
 src/minigames/d_mg_trmpln2_mario.cpp:
     complete
     .text start:0x020c8dd4 end:0x020cd744
     .data start:0x0213b11c end:0x0213b13c
     .bss start:0x021405d0 end:0x02140620
 
+    .rodata start:0x0212e02c end:0x0212e044
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018
 
+    .rodata start:0x0212e0b0 end:0x0212e0f0
+    .data start:0x0213b2f4 end:0x0213b3c4
+    .bss start:0x02141314 end:0x02141402
 src/minigames/d_s_mg_amida.cpp:
     complete
     .text start:0x020d1018 end:0x020d5a54
@@ -123,6 +128,7 @@ src/minigames/d_s_mg_jump.cpp:
     complete
     .text start:0x020eeafc end:0x020eebe8
 
+    .data start:0x0213cbe4 end:0x0213cc74
 src/minigames/d_s_mg_jump2.cpp:
     complete
     .text start:0x020eebe8 end:0x020efc0c
@@ -199,6 +205,7 @@ src/minigames/d_s_mg_roulette.cpp:
     complete
     .text start:0x0210a400 end:0x0210a4b0
 
+    .data start:0x0213e39c end:0x0213e42c
 src/minigames/d_s_mg_single3d_base.cpp:
     complete
     .text start:0x0210a4b0 end:0x0210a8c0
@@ -214,6 +221,7 @@ src/minigames/d_s_mg_smartball.cpp:
     complete
     .text start:0x0210d740 end:0x02119904
 
+    .bss start:0x02142c1c end:0x02142cc0
 src/minigames/d_s_mg_sound.cpp:
     complete
     .text start:0x02119904 end:0x0211cbd0
@@ -270,10 +278,12 @@ src/unnamed/ov006/__sinit_ov006_0212f6b4.c:
     complete
     .init start:0x0212f6b4 end:0x0212fc7c
 
+    .bss start:0x02140640 end:0x0214064c
 src/unnamed/ov006/__sinit_ov006_0212fc7c.c:
     complete
     .init start:0x0212fc7c end:0x0212fd48
 
+    .bss start:0x021408cc end:0x021408d8
 src/unnamed/ov006/__sinit_ov006_0212fd48.c:
     complete
     .init start:0x0212fd48 end:0x021300b0

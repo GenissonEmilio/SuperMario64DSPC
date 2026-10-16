@@ -2323,3 +2323,120 @@ extern "C" void TrmpLine_Reset(char *p)
     p[808] = 0;
 }
 }
+
+extern "C" const int data_ov006_0212e0b0[16] = {
+    0, 341, 682, 0x3ff, 0x1550000, 0x1550155, 0x15502aa, 0x15503ff,
+    0x2aa0000, 0x2aa0155, 0x2aa02aa, 0x2aa03ff, 0x3ff0000, 0x3ff0155, 0x3ff02aa, 0x3ff03ff
+};
+
+extern "C" int data_ov006_0213b2f4[1] = {
+    280
+};
+
+extern "C" int data_ov006_0213b2f8[1] = {
+    -310
+};
+
+extern "C" int data_ov006_0213b2fc[1] = {
+    -310
+};
+
+extern "C" int data_ov006_0213b300[1] = {
+    280
+};
+
+extern "C" int data_ov006_0213b304[1] = {
+    280
+};
+
+extern "C" int data_ov006_0213b308[1] = {
+    -310
+};
+
+extern "C" int data_ov006_0213b30c[1] = {
+    280
+};
+
+extern "C" int data_ov006_0213b310[1] = {
+    -310
+};
+
+extern "C" int data_ov006_0213b314[2] = {
+    0x676e6972, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion8[2] = {
+    0x20cd9b0, 0
+};
+
+extern "C" int pmf_TrmpItem_StateAppear[2] = {
+    0x20cdf3c, 0
+};
+
+extern "C" int pmf_TrmpItem_GrowScale[2] = {
+    0x20cd744, 0
+};
+
+extern "C" int pmf_TrmpItem_GrowScale_2[2] = {
+    0x20cd744, 0
+};
+
+extern "C" int pmf_TrmpItem_GrowScale_3[2] = {
+    0x20cd744, 0
+};
+
+extern "C" int pmf_TrmpItem_StateAppear_2[2] = {
+    0x20cdf3c, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion0[2] = {
+    0x20cdf1c, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion1[2] = {
+    0x20cdea0, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion2[2] = {
+    0x20cde4c, 0
+};
+
+extern "C" int pmf_TrmpLine_StateFlex[2] = {
+    0x20cfa44, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion7[2] = {
+    0x20cd864, 0
+};
+
+extern "C" int pmf_TrmpLine_StateSettle[2] = {
+    0x20cf820, 0
+};
+
+extern "C" int pmf_TrmpLine_StateFade[2] = {
+    0x20cf790, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion4[2] = {
+    0x20cdc8c, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion6[2] = {
+    0x20cdc38, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion5[2] = {
+    0x20cdaec, 0
+};
+
+extern "C" int pmf_TrmpItem_Motion3[2] = {
+    0x20cdd08, 0
+};
+
+extern "C" int data_ov006_0213b3a4[8] = {
+    30, 0x212e05c, 0x212e054, 0x212e130, 1, 0x212e094, 0, 0x213b19c
+};
+
+extern "C" {
+unsigned char data_ov006_02141314[238];
+}
