@@ -135,7 +135,7 @@ extern signed char data_0209b470;
 extern unsigned char data_0209b474;
 extern unsigned char data_0209b478;
 extern unsigned char data_0209b47c;
-extern unsigned char data_0209b480;
+unsigned char data_0209b480;
 extern int data_0209b484;
 extern int data_0209b488;
 extern int data_0209b48c;

@@ -19,7 +19,7 @@
 #include "decl_common.h"
 
 extern "C" {
-extern void *data_020a0c80[];
+void *data_020a0c80[24];
 extern int SurfaceInfo_TestFlag0x20(int *p);
 extern int func_02037e38(unsigned int *p);
 }

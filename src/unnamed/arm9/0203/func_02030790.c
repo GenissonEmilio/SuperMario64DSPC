@@ -6,7 +6,7 @@ extern void _ZN5Sound22StopLoadedMusic_Layer1Ej(unsigned int v);
 extern void func_020132d8(void);
 extern void func_0201ffcc(void);
 extern void func_020199a4(void);
-extern unsigned char data_02092778;
+unsigned char data_02092778 = 0x01;
 extern int data_0209fc68;
 extern int data_0209277c;
 extern unsigned char data_0209e64c;

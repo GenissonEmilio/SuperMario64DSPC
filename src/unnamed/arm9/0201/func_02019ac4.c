@@ -19,7 +19,7 @@ extern unsigned char data_0209d4ec;
 extern unsigned char data_0209b480;
 extern unsigned char data_0209b474;
 extern short data_0209d504;
-extern unsigned char data_0209d4f4;
+unsigned char data_0209d4f4;
 
 void func_02019ac4(void)
 {

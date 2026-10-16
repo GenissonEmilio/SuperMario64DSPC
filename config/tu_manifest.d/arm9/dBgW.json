@@ -21,6 +21,11 @@
       "name": ".data",
       "start": "0x02099370",
       "end": "0x020993bc"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020a0c80",
+      "end": "0x020a0ce0"
     }
   ],
   "functions": [

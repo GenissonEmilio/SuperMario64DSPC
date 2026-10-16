@@ -75,7 +75,7 @@ extern int data_0209d6f8;
 extern int data_0209d700;
 extern int data_0209d704;
 extern u8 data_0209d710[];
-extern int data_0209d74c[];
+int data_0209d74c[960];
 extern s32 data_0208ee44;
 extern u16 data_0208ee64[];
 extern u8 data_0208ee6c[];

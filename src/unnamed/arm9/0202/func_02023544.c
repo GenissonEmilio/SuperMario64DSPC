@@ -1,5 +1,5 @@
 extern unsigned char data_0209f1e0;
-extern unsigned char data_0209b2fc;
+unsigned char data_0209b2fc;
 extern unsigned char gMgSaveDirty;
 extern void func_0202fd2c(void);
 extern void func_0202ed48(void);

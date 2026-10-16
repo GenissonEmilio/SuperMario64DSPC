@@ -15,6 +15,11 @@
       "name": ".text",
       "start": "0x0201a4e4",
       "end": "0x0201a5cc"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209d514",
+      "end": "0x0209d518"
     }
   ],
   "functions": [

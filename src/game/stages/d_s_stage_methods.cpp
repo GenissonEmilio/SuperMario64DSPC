@@ -117,6 +117,67 @@ struct TouchInfo {
 };
 
 extern "C" {
+/* Level-select flags 0x0209f1f0..0x0209f228. Each symbol is one
+   byte; the three bytes before the next symbol are unnamed. The
+   array at data_0209f228 is the next object and is not this run.
+   C++ emits .bss with the last definition last and the earlier
+   ones reversed. */
+static unsigned char stg_pad_0209f226;
+static unsigned char stg_pad_0209f225;
+unsigned char data_0209f224;
+static unsigned char stg_pad_0209f223;
+static unsigned char stg_pad_0209f222;
+static unsigned char stg_pad_0209f221;
+unsigned char data_0209f220;
+static unsigned char stg_pad_0209f21f;
+static unsigned char stg_pad_0209f21e;
+static unsigned char stg_pad_0209f21d;
+unsigned char data_0209f21c;
+static unsigned char stg_pad_0209f21b;
+static unsigned char stg_pad_0209f21a;
+static unsigned char stg_pad_0209f219;
+unsigned char data_0209f218;
+static unsigned char stg_pad_0209f217;
+static unsigned char stg_pad_0209f216;
+static unsigned char stg_pad_0209f215;
+unsigned char data_0209f214;
+static unsigned char stg_pad_0209f213;
+static unsigned char stg_pad_0209f212;
+static unsigned char stg_pad_0209f211;
+unsigned char data_0209f210;
+static unsigned char stg_pad_0209f20f;
+static unsigned char stg_pad_0209f20e;
+static unsigned char stg_pad_0209f20d;
+unsigned char data_0209f20c;
+static unsigned char stg_pad_0209f20b;
+static unsigned char stg_pad_0209f20a;
+static unsigned char stg_pad_0209f209;
+unsigned char data_0209f208;
+static unsigned char stg_pad_0209f207;
+static unsigned char stg_pad_0209f206;
+static unsigned char stg_pad_0209f205;
+unsigned char data_0209f204;
+static unsigned char stg_pad_0209f203;
+static unsigned char stg_pad_0209f202;
+static unsigned char stg_pad_0209f201;
+unsigned char data_0209f200;
+static unsigned char stg_pad_0209f1ff;
+static unsigned char stg_pad_0209f1fe;
+static unsigned char stg_pad_0209f1fd;
+unsigned char data_0209f1fc;
+static unsigned char stg_pad_0209f1fb;
+static unsigned char stg_pad_0209f1fa;
+static unsigned char stg_pad_0209f1f9;
+unsigned char data_0209f1f8;
+static unsigned char stg_pad_0209f1f7;
+static unsigned char stg_pad_0209f1f6;
+static unsigned char stg_pad_0209f1f5;
+unsigned char data_0209f1f4;
+static unsigned char stg_pad_0209f1f3;
+static unsigned char stg_pad_0209f1f2;
+static unsigned char stg_pad_0209f1f1;
+unsigned char data_0209f1f0;
+static unsigned char stg_pad_0209f227;
 int IsButtonInputValid(void);
 int SublevelToLevel(int lv);
 int GetOwnerLanguage(void);

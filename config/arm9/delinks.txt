@@ -604,6 +604,7 @@ src/_ZN8dActor_cC2Ev.cpp:
 src/engine/sound/Sound.cpp:
     complete
     .text start:0x02011654 end:0x02013548
+    .bss start:0x0209b480 end:0x0209b481
 
 src/GetLevelPart.c:
     complete
@@ -1244,6 +1245,7 @@ src/unnamed/arm9/0201/func_02019a58.c:
 src/unnamed/arm9/0201/func_02019ac4.c:
     complete
     .text start:0x02019ac4 end:0x02019dfc
+    .bss start:0x0209d4f4 end:0x0209d4f5
 
 src/unnamed/arm9/0201/func_02019dfc.c:
     complete
@@ -1405,6 +1407,7 @@ src/unnamed/arm9/0201/func_0201aaec.c:
 src/Message2.cpp:
     complete
     .text start:0x0201ab04 end:0x0201cb2c
+    .bss start:0x0209d74c end:0x0209e64c
 
 src/ui/messages/func_0201cb2c.c:
     complete
@@ -1421,6 +1424,7 @@ src/unnamed/arm9/0201/func_0201cd08.cpp:
 src/Message.cpp:
     complete
     .text start:0x0201ce10 end:0x0201fcd4
+    .bss start:0x0209d64c end:0x0209d6d4
 
 src/LoadFont.cpp:
     complete
@@ -1554,6 +1558,7 @@ src/engine/particle/d_pa.cpp:
 src/engine/particle/Particle.cpp:
     complete
     .text start:0x020226d4 end:0x020233d4
+    .bss start:0x0209ee74 end:0x0209ee78
 
 src/GetActorDebugName.c:
     complete
@@ -1587,6 +1592,7 @@ src/unnamed/arm9/0202/func_02023498.c:
 src/unnamed/arm9/0202/func_02023544.c:
     complete
     .text start:0x02023544 end:0x02023598
+    .bss start:0x0209b2fc end:0x0209b2fd
 
 src/game/stages/d_s_boot.cpp:
     complete
@@ -1595,6 +1601,7 @@ src/game/stages/d_s_boot.cpp:
 src/game/stages/d_s_stage_methods.cpp:
     complete
     .text start:0x02023688 end:0x0202e118
+    .bss start:0x0209f1f0 end:0x0209f228
 
 src/unnamed/arm9/0202/func_0202e118.c:
     complete
@@ -1608,6 +1615,7 @@ src/runtime/graphics/fader/d_wipe.cpp:
     complete
     .text start:0x0202ec9c end:0x0202fc98
     .data start:0x020926d0 end:0x02092718
+    .bss start:0x0209f5f8 end:0x0209f5f9
 
 src/engine/view/d_view.cpp:
     complete
@@ -1647,6 +1655,7 @@ src/unnamed/arm9/0203/func_02030500.c:
 src/unnamed/arm9/0203/func_02030790.c:
     complete
     .text start:0x02030790 end:0x02030838
+    .data start:0x02092778 end:0x02092779
 
 src/unnamed/arm9/0203/func_02030838.c:
     complete
@@ -1750,10 +1759,12 @@ src/unnamed/arm9/0203/func_020318a4.c:
 src/unnamed/arm9/0203/func_020319fc.c:
     complete
     .text start:0x020319fc end:0x02031b84
+    .bss start:0x0209fcb0 end:0x0209fcb1
 
 src/Message3.cpp:
     complete
     .text start:0x02031b84 end:0x02034a78
+    .bss start:0x0209fc84 end:0x0209fc85
 
 src/game/stages/d_s_mb.cpp:
     complete
@@ -1831,6 +1842,7 @@ src/engine/collision/d_bg_w.cpp:
     complete
     .text start:0x02039140 end:0x020396d8
     .data start:0x02099370 end:0x020993bc
+    .bss start:0x020a0c80 end:0x020a0ce0
 
 src/engine/collision/d_bg_w_kc.cpp:
     complete
@@ -2332,6 +2344,7 @@ src/GetPlayerFlagByte.c:
 src/unnamed/arm9/0203/func_0203db64.c:
     complete
     .text start:0x0203db64 end:0x0203df40
+    .bss start:0x020a0f00 end:0x020a0f01
 
 src/unnamed/arm9/0203/func_0203df40.c:
     complete
@@ -2394,6 +2407,7 @@ src/unnamed/arm9/0203/func_0203f818.c:
 src/unnamed/arm9/0203/func_0203f8a4.c:
     complete
     .text start:0x0203f8a4 end:0x0203f920
+    .bss start:0x020a0f18 end:0x020a0f1a
 
 src/unnamed/arm9/0203/func_0203f920.c:
     complete
@@ -3229,6 +3243,7 @@ src/unnamed/arm9/0205/func_02053d9c.c:
 src/engine/gx/GX_VramCnt.cpp:
     complete
     .text start:0x02053e1c end:0x02054d38
+    .bss start:0x020a6088 end:0x020a60a2
 
 src/engine/gx/G2.cpp:
     complete
