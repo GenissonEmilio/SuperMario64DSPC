@@ -47,7 +47,7 @@ void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(
     dBgCh_SphCrr *sphere, const Vector3 *pos, Fix12i radius, dActor_c *actor);
 
 extern dBgCh_Lin data_020a0d0c;
-unsigned int data_020a0d60[3];
+extern Vector3 data_020a0d60;
 extern dBgPi data_020a0d1c;
 extern Matrix4x3 data_020a0e68;
 }
@@ -356,7 +356,7 @@ int dBgW_KcMbg::DetectClsn(dBgCh_Lin &ray)
     int hit = dBgW_Kc::DetectClsn(data_020a0d0c);
     if (hit != 0) {
         Fix12i distance = data_020a0d0c.clsnDist;
-        func_02039e30(this, (Vector3 *)data_020a0d60, &worldPos);
+        func_02039e30(this, &data_020a0d60, &worldPos);
         ray.SetClsnPos(worldPos);
         ray.clsnDist = distance;
         (dBgPi &)ray = data_020a0d1c;

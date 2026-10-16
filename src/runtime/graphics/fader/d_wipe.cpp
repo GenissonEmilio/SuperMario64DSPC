@@ -44,17 +44,7 @@ void MultiStore_Int(int val, int *dst, int len);
 void func_0202f2c4(void);
 }
 
-/* A dWipe_c global emits a constructor. The ROM singleton is BSS.
-   needsCleanup is the byte at 0x0f. */
-#pragma cplusplus off
-struct WipeBytes {
-    unsigned int head[3];
-    unsigned char raw_0c[3];
-    unsigned char needsCleanup;
-    unsigned int tail[7];
-};
-struct WipeBytes data_0209f61c;
-#pragma cplusplus on
+extern dWipe_c      data_0209f61c;   /* the wipe singleton */
 extern u8           data_0209f5f8;   /* which display engine the wipe covers */
 extern volatile u8  data_0209f5fc;   /* the next HBlank has a fresh line */
 extern volatile u32 data_0209f608;   /* table index the IRQ reads */
@@ -577,8 +567,8 @@ int dWipe_c::IsBetweenStartAndEnd()
 extern "C" void func_0202ed48(void)
 {
     if (data_0209f61c.needsCleanup == 1)
-        ((dWipe_c *)&data_0209f61c)->func_0202fb30();
-    ((dWipe_c *)&data_0209f61c)->func_0202ed14();
+        data_0209f61c.func_0202fb30();
+    data_0209f61c.func_0202ed14();
 }
 
 // @symbol _ZN7dWipe_c13func_0202ed14Ev
