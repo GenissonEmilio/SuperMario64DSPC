@@ -20,9 +20,11 @@ src/minigames/d_mg3d_heyho_obj_adapter.cpp:
 src/minigames/d_mg_jump3d_mario.cpp:
     complete
     .text start:0x020c6f8c end:0x020c8a30
+    .rodata start:0x0212ddd0 end:0x0212dddc
     .init start:0x0212f52c end:0x0212f660
     .ctor start:0x02133570 end:0x02133574
-    .bss start:0x02140438 end:0x021404c4
+    .data start:0x0213b020 end:0x0213b0a4
+    .bss start:0x02140408 end:0x021404c4
 
 src/minigames/unit020c8a30.cpp:
     complete
