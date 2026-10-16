@@ -219,7 +219,7 @@ extern ObjKeyModelFile data_ov089_02132c50;
 extern ObjKeyModelFile gLuigiKeyModelFile;
 extern ObjKeyModelFile gMarioKeyModelFile;
 extern ObjKeyModelFile gWarioKeyModelFile;
-extern Vector3 data_ov089_02132b40;
+extern ObjKeyVec3 data_ov089_02132b40;
 extern ObjKeyVec3 data_ov089_02132ca4;
 extern Matrix4x3 data_020a0e68;
 extern void Matrix4x3_FromTranslation(void *m, int x, int y, int z);
@@ -238,8 +238,8 @@ extern char data_ov002_0211094c;
 extern int data_0209cef0;
 extern int Vec3_HorzDist(const Vector3 *a, const Vector3 *b);
 extern short Vec3_HorzAngle(const Vector3 *a, const Vector3 *b);
-/* The collect animations, by mAnimID. */
-extern ObjKeyFile *data_ov089_02132880[];
+/* The collect animations, by mAnimID. Word 0 is null. */
+extern ObjKeyFile *const data_ov089_02132880[5];
 /* Fix12<int> by value: called by symbol. */
 extern int _ZN5Sound17ChangeMusicVolumeEj5Fix12IiE(unsigned int id, int vol);
 extern int _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(Vector3 &value, const Vector3 &target, int step);
@@ -1003,3 +1003,16 @@ ObjKeyAnimationFilePtr data_ov089_02132c48(ASSET_KOOPA_KEY_W_GET_BCA);
 ObjKeyVec3 data_ov089_02132ca4;
 
 ObjKeyStateTable data_ov089_02132cec;
+
+/* Carry offset stored in the image: x = 0, y = 0xfff92000, z = 0.
+ * ObjKeyVec3, not Vector3: a Vector3 global would register ~Vector3 in
+ * __sinit_d_a_obj_key.cpp, and that initializer does not. */
+ObjKeyVec3 data_ov089_02132b40 = {0, (int)0xfff92000, 0};
+
+extern "C" ObjKeyFile *const data_ov089_02132880[5] = {
+    0,
+    &data_ov089_02132c60,
+    &data_ov089_02132c70,
+    &data_ov089_02132c40,
+    &data_ov089_02132c48,
+};
