@@ -124,14 +124,14 @@ void _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES
 extern s16 data_02082214[];
 extern s8 data_0209f2f8; /* current sublevel id */
 extern Matrix4x3 IDENTITY_MATRIX4X3;
-extern daEykn_c::State data_ov071_02123088[];
+extern char data_ov071_02123088[0x30];
 extern LoadedFile data_ov071_02123038; /* BTP 0x2f8 */
 extern LoadedFile data_ov071_02123040; /* BTP 0x2fb */
 extern LoadedFile data_ov071_02123048; /* BCA 0x2f9 */
 extern SharedFilePtr data_ov002_0210da38; /* blue-coin model */
-extern SharedFilePtr data_ov071_02123050; /* BMD 0x2f7 */
-extern SharedFilePtr *data_ov071_021226a4[2]; /* the two BTPs */
-extern SharedFilePtr *data_ov071_021226a0; /* the BCA */
+extern LoadedFile data_ov071_02123050; /* BMD 0x2f7 */
+extern SharedFilePtr *const data_ov071_021226a4[2]; /* the two BTPs */
+extern SharedFilePtr *const data_ov071_021226a0; /* the BCA */
 }
 
 /* Debug-table actor ids, and the thresholds this file compares against. */
@@ -700,7 +700,7 @@ void daEykn_c::RunStateInit()
 // @symbol _ZN8daEykn_c8SetStateEi
 void daEykn_c::SetState(int state)
 {
-    mState = &data_ov071_02123088[state];
+    mState = &((daEykn_c::State *)data_ov071_02123088)[state];
     RunStateInit();
 }
 
@@ -710,7 +710,7 @@ s32 daEykn_c::CleanupResources()
 {
     UnloadBlueCoinModel(this);
     data_ov002_0210da38.Release();
-    data_ov071_02123050.Release();
+    ((SharedFilePtr *)&data_ov071_02123050)->Release();
     for (s32 i = 0; i < 2; ++i) {
         data_ov071_021226a4[i]->Release();
     }
@@ -757,14 +757,14 @@ s32 daEykn_c::InitResources()
     LoadBlueCoinModel(this);
 
     Model::LoadFile(data_ov002_0210da38);
-    bmd = (BMD_File *)Model::LoadFile(data_ov071_02123050);
+    bmd = (BMD_File *)Model::LoadFile(*(SharedFilePtr *)&data_ov071_02123050);
     ((ModelBase *)&mModelAnim)->SetFile(bmd, 1, 1);
 
     int i;
     for (i = 0; i < 2; i++) {
         SharedFilePtr *seq = data_ov071_021226a4[i];
         TextureSequence::LoadFile(*seq);
-        BMD_File *bmd2 = (BMD_File *)((LoadedFile *)&data_ov071_02123050)->file;
+        BMD_File *bmd2 = (BMD_File *)data_ov071_02123050.file;
         BTP_File *btp = (BTP_File *)((LoadedFile *)seq)->file;
         TextureSequence::Prepare(*bmd2, *btp);
     }
@@ -844,4 +844,24 @@ extern "C" daEykn_c *daEykn_c_classInit_EYEKUN_BOSS()
 extern "C" daEykn_c *daEykn_c_classInit_EYEKUN()
 {
     return new daEykn_c();
+}
+
+/* Zero in the image. __sinit_ov071_021228c8 writes the file ids, the
+   destructor nodes, and the six state rows. Address order. */
+extern "C" {
+LoadedFile data_ov071_02123038;
+LoadedFile data_ov071_02123040;
+LoadedFile data_ov071_02123048;
+LoadedFile data_ov071_02123050;
+char data_ov071_02123058[0xc];
+char data_ov071_02123064[0x8];
+char data_ov071_0212306c[0x4];
+char data_ov071_02123070[0xc];
+char data_ov071_0212307c[0xc];
+char data_ov071_02123088[0x30];
+SharedFilePtr *const data_ov071_021226a0 = (SharedFilePtr *)&data_ov071_02123048;
+SharedFilePtr *const data_ov071_021226a4[2] = {
+    (SharedFilePtr *)&data_ov071_02123038,
+    (SharedFilePtr *)&data_ov071_02123040,
+};
 }

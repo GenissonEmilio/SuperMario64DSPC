@@ -17,6 +17,16 @@
       "name": ".text",
       "start": "0x02120668",
       "end": "0x02121a6c"
+    },
+    {
+      "name": ".rodata",
+      "start": "0x021226a0",
+      "end": "0x021226ac"
+    },
+    {
+      "name": ".bss",
+      "start": "0x02123038",
+      "end": "0x021230b8"
     }
   ],
   "functions": [
@@ -197,7 +207,126 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "rodata": [
+    {
+      "symbol": "data_ov071_021226a0",
+      "address": "0x021226a0",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "pointer to the BCA handle data_ov071_02123048 (file 0x2f9)"
+    },
+    {
+      "symbol": "data_ov071_021226a4",
+      "address": "0x021226a4",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "two pointers, to the BTP handles data_ov071_02123038 (file 0x2f8) and data_ov071_02123040 (file 0x2fb)"
+    }
+  ],
+  "bss": [
+    {
+      "symbol": "data_ov071_02123038",
+      "address": "0x02123038",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "BTP file 0x2f8. Zero in the image; __sinit_ov071_021228c8 writes the file id"
+    },
+    {
+      "symbol": "data_ov071_02123040",
+      "address": "0x02123040",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "BTP file 0x2fb. Zero in the image; __sinit_ov071_021228c8 writes the file id"
+    },
+    {
+      "symbol": "data_ov071_02123048",
+      "address": "0x02123048",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "BCA file 0x2f9. Zero in the image; __sinit_ov071_021228c8 writes the file id"
+    },
+    {
+      "symbol": "data_ov071_02123050",
+      "address": "0x02123050",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "BMD file 0x2f7. Zero in the image; __sinit_ov071_021228c8 writes the file id"
+    },
+    {
+      "symbol": "data_ov071_02123058",
+      "address": "0x02123058",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor node for the BMD handle. Zero in the image; __sinit_ov071_021228c8 registers it"
+    },
+    {
+      "symbol": "data_ov071_02123064",
+      "address": "0x02123064",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor node for BTP file 0x2f8. Zero in the image; __sinit_ov071_021228c8 registers it"
+    },
+    {
+      "symbol": "data_ov071_0212306c",
+      "address": "0x0212306c",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "four zero bytes between the 0x2f8 destructor node and the next. symbols.txt marks this boundary ambiguous"
+    },
+    {
+      "symbol": "data_ov071_02123070",
+      "address": "0x02123070",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor node for BTP file 0x2fb. Zero in the image; __sinit_ov071_021228c8 registers it"
+    },
+    {
+      "symbol": "data_ov071_0212307c",
+      "address": "0x0212307c",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor node for the BCA handle. Zero in the image; __sinit_ov071_021228c8 registers it"
+    },
+    {
+      "symbol": "data_ov071_02123088",
+      "address": "0x02123088",
+      "size": "0x30",
+      "binding": "STB_GLOBAL",
+      "evidence": "three State rows. Zero in the image; __sinit_ov071_021228c8 copies the six handler pairs into them"
+    }
+  ],
+  "relocations": [
+    {
+      "section": ".rodata",
+      "source": "0x021226a0",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov071_02123048",
+      "addend": 0,
+      "target_module": "ov071",
+      "target_address": "0x02123048"
+    },
+    {
+      "section": ".rodata",
+      "source": "0x021226a4",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov071_02123038",
+      "addend": 0,
+      "target_module": "ov071",
+      "target_address": "0x02123038"
+    },
+    {
+      "section": ".rodata",
+      "source": "0x021226a8",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov071_02123040",
+      "addend": 0,
+      "target_module": "ov071",
+      "target_address": "0x02123040"
+    }
+  ],
   "notes": [
     "_ZN8daEykn_c13InitResourcesEv (0x02121734) was absorbed after promotion, extending the delinks.txt range to 0x021219cc.",
     "The destructor is defined once, out of line, first in the file. Under #pragma defer_codegen off that emits D1 then D0 in ROM order, plus a homeless D2.",
@@ -269,6 +398,131 @@
       "declared_function_set_equals_defined_function_set": "PASS",
       "functions_occur_in_expected_order": "PASS",
       "relocation_destinations_verified": "PASS"
+    },
+    "linkcheck": {
+      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
+      "result": "scratch-data-verified",
+      "scratch": "build/tu/ov071-daEykn_c/link (gitignored)",
+      "phases": {
+        "delink": true,
+        "lcf": true,
+        "compile": true,
+        "link": true,
+        "checkModules": true,
+        "checkSymbols": false,
+        "rom": true
+      },
+      "tuRange": {
+        "start": "0x02120668",
+        "end": "0x02121a6c",
+        "differingBytes": 0,
+        "firstDiff": null
+      },
+      "tuRanges": [
+        {
+          "section": ".text",
+          "start": "0x02120668",
+          "end": "0x02121a6c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata",
+          "start": "0x021226a0",
+          "end": "0x021226ac",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".bss",
+          "start": "0x02123038",
+          "end": "0x021230b8",
+          "comparison": "NOBITS -- symbol/module gates"
+        }
+      ],
+      "objectAudit": {
+        "counts": {
+          "LICENSED": 37
+        },
+        "emittedTextOrderIsRomAscending": true,
+        "nonLicensedSymbols": [],
+        "unlicensedSections": []
+      },
+      "nontextSectionOrder": {
+        "groups": [
+          {
+            "section": ".rodata",
+            "original": [
+              64,
+              66
+            ],
+            "desired": [
+              64,
+              66
+            ]
+          },
+          {
+            "section": ".bss",
+            "original": [
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63
+            ],
+            "desired": [
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63
+            ]
+          }
+        ],
+        "objisolate": null,
+        "errors": null
+      },
+      "linkedStorageAliases": null,
+      "symbolCheckNewVsBaseline": [],
+      "symbolCheckErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "symbolCheckBaselineErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
+      "rom": {
+        "bytes": 16777216,
+        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+        "matchesStockRom": true
+      },
+      "linkerOutput": null
     }
   },
   "compiler_only_output": [
