@@ -311,15 +311,15 @@ s32 dScMgJump2_c::InitResources()
 /* The state functions: five are the exec targets the PMF records at
  * pmf_dScMgJump2_c_State_Idle..9c point into (see the header's state-machine note);
  * the other three are the transitions that install a record and arm
- * mStateTimer. mScrollPhase accumulates mScrollRate >> 12 each tick and wraps at
+ * mStateTimer. mTextureOffsetT accumulates mTextureScrollRate >> 12 each tick and wraps at
  * 0x1000.
  *
  * This one arms the countdown and installs the next state. */
 // @symbol _ZN12dScMgJump2_c10BeginIntroEv
 void dScMgJump2_c::BeginIntro(){
   mStateTimer = 0x78;
-  mScrollPhase = 0;
-  mScrollRate = 0x4000;
+  mTextureOffsetT = 0;
+  mTextureScrollRate = 0x4000;
   *(struct G2*)pad_5004 = pmf_dScMgJump2_c_State_Intro;
 }
 
@@ -352,11 +352,11 @@ void dScMgJump2_c::State_Play()
 {
     s16 done;
     int prevScore = data_ov006_02140308;
-    int *acc = &mScrollPhase;
+    int *acc = &mTextureOffsetT;
     int mode;
 
-    *acc += mScrollRate >> 12;
-    if (mScrollPhase > 0x1000)
+    *acc += mTextureScrollRate >> 12;
+    if (mTextureOffsetT > 0x1000)
         *acc -= 0x1000;
 
     done = 0;
@@ -430,9 +430,9 @@ void dScMgJump2_c::BeginEnd()
 // @symbol _ZN12dScMgJump2_c9State_EndEv
 void dScMgJump2_c::State_End()
 {
-  int *acc = &mScrollPhase;
-  *acc += mScrollRate >> 12;
-  if (mScrollPhase > 0x1000)
+  int *acc = &mTextureOffsetT;
+  *acc += mTextureScrollRate >> 12;
+  if (mTextureOffsetT > 0x1000)
   {
     *acc -= 0x1000;
   }
@@ -527,10 +527,13 @@ void Jump2_SetLights(void) {
  * it before the arrays), so it is cast to Model here. The component block
  * at mModel + 8 is reached by offset: naming it through Model changes the
  * code. */
+// Consumed runtime-material prefix; this is not the BMD file record.
+struct MaterialScrollView { u8 prefix[0x18]; s32 textureOffsetT; };
+
 s32 dScMgJump2_c::Render()
 {
     struct S3 scale;
-    void *anim;
+    MaterialScrollView *material;
     int count;
     int x;
     int i;
@@ -544,11 +547,11 @@ s32 dScMgJump2_c::Render()
     scale = *(struct S3 *)&data_ov006_0213ccb0;
 
     {
-        int *obj = (int *)(mModel + 8);
-        anim = (void *)obj[1];
-        func_02045e44((void *)obj, 1, 0);
+        ModelComponents *components = (ModelComponents *)(mModel + 8);
+        material = (MaterialScrollView *)components->materials;
+        func_02045e44(components, 1, 0);
     }
-    *(int *)((char *)anim + 0x18) = mScrollPhase;
+    material->textureOffsetT = mTextureOffsetT;
     {
         Model *model = (Model *)mModel;
         model->Render((Vector3 *)&scale);
