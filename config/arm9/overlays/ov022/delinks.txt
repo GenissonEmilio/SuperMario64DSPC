@@ -9,6 +9,7 @@ src/game/actors/d_a_obj_fl_ring.cpp:
     .text start:0x021111a0 end:0x021115a8
     .init start:0x02112ca8 end:0x02112d14
     .ctor start:0x021130f8 end:0x021130fc
+    .data start:0x02113cc8 end:0x02113cd4
     .bss start:0x02114500 end:0x02114528
 
 src/game/actors/d_a_obj_fl_koma_d.cpp:
