@@ -55,8 +55,8 @@
  * - func_0201267c (State3): Sound::Play(3, id, pos) at 0x0201267c.
  *   Sound::PlayBank3 is the twin at 0x02012664, a different function.
  * - data_ov072_02122b20 / 02122b40 / 02122b58 / 02122b64: model file,
- *   reach point, landing point, twelve-PMF table. __sinit_ov072_02122018
- *   owns that bss, so the names stay.
+ *   reach point, landing point, twelve-PMF table, defined at the bottom
+ *   of this file. The twelve member pointers they copy stay ROM .data.
  * - State1 mSubstate = mSubstate + 1 is 0xe8 -> 0xcc (7 words). State3,
  *   both increments, is 0x1a8 -> 0x194 (5 words). The switch already
  *   reads the field; only the increment is this+0x3a2 via a pool word.
@@ -73,6 +73,14 @@
 #include "dBgCh_Gnd.h"
 #include "Player.h"
 #include "dBgPi.h"
+
+/* The model handle's constructor is the ROM file-id entry. Its destructor is
+ * registered by the static initializer; this TU does not emit either body. */
+struct SnmBdyModelFilePtr : SharedFilePtr {
+    u32 words[2];
+    SnmBdyModelFilePtr(u32 fileID);
+    ~SnmBdyModelFilePtr();
+};
 
 /* Real C++ names. Declared here, not via decl_common.h: that header's
  * other spellings of these symbols collide with this TU. */
@@ -128,11 +136,25 @@ void _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(int x, int y, int z);
 int  _ZN8dClipper13Func_02015560ER9Matrix4x3R7Vector35Fix12IiES3_(
          void *clipper, void *matrix, void *pos, int radius, void *result);
 
-/* ov072 and arm9 statics this TU reads but does not own. */
-extern SharedFilePtr data_ov072_02122b20;
-extern Vector3       data_ov072_02122b40;
-extern Vector3       data_ov072_02122b58;
+/* ov072 and arm9 statics this TU reads. The four objects below are defined
+ * at the bottom of this file; the twelve member pointers they copy from
+ * stay the ROM .data constants. */
+extern SnmBdyModelFilePtr data_ov072_02122b20;
+extern Vector3            data_ov072_02122b40;
+extern Vector3            data_ov072_02122b58;
 extern daBgSnmBdy_c::StateFunc data_ov072_02122b64[];
+extern daBgSnmBdy_c::StateFunc data_ov072_02122750;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122728;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122720;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122730;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122748;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122738;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122740;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122778;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122770;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122758;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122768;
+extern daBgSnmBdy_c::StateFunc data_ov072_02122760;
 extern int           data_0209f43c[];
 extern int           data_0209b3ec[];
 }
@@ -638,3 +660,24 @@ ret1:
 ret0:
     return 0;
 }
+
+/* Static-init order is the retail initializer's order: the model handle,
+ * then the twelve-entry state table copied from the ROM member pointers,
+ * then the reach point, then the landing point. */
+SnmBdyModelFilePtr data_ov072_02122b20(0x2ad);
+daBgSnmBdy_c::StateFunc data_ov072_02122b64[12] = {
+    data_ov072_02122750,
+    data_ov072_02122728,
+    data_ov072_02122720,
+    data_ov072_02122730,
+    data_ov072_02122748,
+    data_ov072_02122738,
+    data_ov072_02122740,
+    data_ov072_02122778,
+    data_ov072_02122770,
+    data_ov072_02122758,
+    data_ov072_02122768,
+    data_ov072_02122760,
+};
+Vector3 data_ov072_02122b40(-0xad0000, 0x290000, -0x9d0000);
+Vector3 data_ov072_02122b58(0xfeffc000, 0xffa6f000, 0x6fe000);
