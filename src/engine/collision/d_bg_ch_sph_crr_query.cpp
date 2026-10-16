@@ -11,8 +11,8 @@
  *
  * The query scans keep the spellings that match: an integer centre
  * address, the zero/one locals, and data_020a0c80 by its address name.
- * func_02037de8 copies the five-word surface with a u64 so the loads and
- * stores interleave.
+ * func_02037de8 copies both CLPS words before storing either, then copies
+ * the three normal components in order.
  */
 
 #include "dBgCh_Lin.h"
@@ -164,8 +164,8 @@ int dBgCh_SphCrr::DetectClsn()
         dActor_c *owner = (dActor_c *)func_020393b4(collider);
         if (func_02035354(this, owner) != 0) continue;
         if (owner != 0) {
-            int active = (owner->mFlags & 2) ? 1 : 0;
-            if (active != 0) {
+            int useClipTest = (owner->mFlags & 2) ? 1 : 0;
+            if (useClipTest != 0) {
                 Vector3 clipCentre;
                 Vector3 *ownerPosPtr = (Vector3 *)&owner->mPosX;
                 clipCentre.x = ownerPosPtr->x;
@@ -303,8 +303,8 @@ bool dBgCh_Lin::DetectClsn()
         owner = (dActor_c *)func_020393b4(collider);
         if (func_02035354(this, owner) != 0) continue;
         if (owner != 0) {
-            int active = (owner->mFlags & 2) ? 1 : 0;
-            if (active != 0) {
+            int useClipTest = (owner->mFlags & 2) ? 1 : 0;
+            if (useClipTest != 0) {
                 Vec3 clipCentre;
                 const char *position = (const char *)owner + 0x5c;
                 clipCentre.x = *(const s32 *)(position + 0);
@@ -376,8 +376,8 @@ extern "C" int func_0203842c(char *self)
         owner = (dActor_c *)func_020393b4(collider);
         if (func_02035354(self, owner) != 0) continue;
         if (owner != 0) {
-            int active = (owner->mFlags & 2) ? 1 : 0;
-            if (active != 0) {
+            int useClipTest = (owner->mFlags & 2) ? 1 : 0;
+            if (useClipTest != 0) {
                 Vector3 clipCentre;
                 const char *position = (const char *)owner + 0x5c;
                 clipCentre.x = *(const s32 *)(position + 0);
@@ -782,10 +782,8 @@ int func_02037e14(int *entry)
 }
 
 // @symbol func_02037de8
-/* Five-word surface copy: one 64-bit record plus three words. Spelled with
-   the u64 unit (not the C struct-assign the shard used): C++ schedules the
-   struct form load/load/store while the cartridge is load/store
-   interleaved, and the u64 spelling recovers it byte-identically. */
+/* Five-word surface copy: read both CLPS words before either store, then
+   copy each normal component. The u64 CLPS copy preserves that order. */
 extern "C" {
 void func_02037de8(int *dst, int *src)
 {

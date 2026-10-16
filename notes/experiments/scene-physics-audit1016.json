@@ -1,0 +1,347 @@
+{
+  "base_commit": "dc151cf26e15f9887cf85e6c3c5b8bdded186e7e",
+  "scope": "Scene/physics audit corrections: collision clipping names and minigame state fader declaration.",
+  "changes": [
+    "Name the owner bit-2 gate useClipTest in three collision scans.",
+    "Correct the surface-copy comments to describe two CLPS loads before either store, then component copies.",
+    "Declare data_0209f5bc as dFdBrightness_c* in d_mg_state.cpp. Use the named FaderCallView only at timing calls carrying the extra zero argument; all fade-status calls use the actual class.",
+    "Preserve a verified, unapplied six-call menu fader patch for the existing class owner."
+  ],
+  "evidence": {
+    "clip_flag": "include/dActor_c.h bit table identifies 0x2 as enabling clip tests; each changed gate wraps the collider clip-volume distance check.",
+    "surface_copy": "Retail instructions recorded in scene-physics-query-scans1016.json at 0x02037de8 load CLPS +0/+4 before storing either; then copy +8/+0xc/+0x10.",
+    "fader_contract": "dScene_c::SetFaders installs the dFdBrightness_c pointer; slots 3/4 are timing methods and 5/6/7 query fade status. The original purpose of the extra r2=0 timing argument is unknown.",
+    "runtime_validation": "No new emulator run needed: changes follow verified virtual slots, explicit clip tests and previously recorded retail instructions."
+  },
+  "audit": {
+    "goal_achieved": false,
+    "changed_source_and_header_hash_coverage": [
+      {
+        "file": "include/dBgCh_SphCrr.h",
+        "sha256": "dcd629f1f4eb1f97cb7397faed6f2d79a4810e7988bd4cdc9551f096fc7c49f2",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "include/dScBoot_c.h",
+        "sha256": "12495166937d069bfdc9db9d52308cc81bd030cbccf11f58ea57ac042b2e4b68",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgPachinko2_c.h",
+        "sha256": "a6fcb9a76ba36f13c2da6c5bd7f74e4ac79b4d4e92178c6349fdf8549ed2b995",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-effects1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScEntry_c8BehaviorEv.cpp",
+        "sha256": "ce553be2c10a740072a450fbcd3e34eaa027fb44929d699ecf4f2d5636f4b839",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c21RenderVsModeCountdownEv.cpp",
+        "sha256": "db888bdab07120362010bd6acd1be6a50d70b4dac278c35458b013ec0e0c3227",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c8BehaviorEv.cpp",
+        "sha256": "3e7e9afd43b138dd726e7367b9f42ae60c8bb866167386b18e8a2a2345264d66",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch.cpp",
+        "sha256": "b9bbb68d6c45cc538029e92efc769bc3638bb60306a79603c97d30b1bea9bf75",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_actr.cpp",
+        "sha256": "170688f9901bb8aeec7584be6e4768e543a7447d0c23dd5210a8b3780cac87ce",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "sha256": "c7dc2c1dee6f5f7a190bc1ef85eb3dfc30198f3720b2bf1bcdbbe764f4747ce5",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr.cpp",
+        "sha256": "eb0c360dd3824d14ef631c0912fb3682dba3e0e881aaf8e1982bbddd84b92b6c",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr_query.cpp",
+        "sha256": "1202975f8e11e71cd4dd5087249e4ee249f47c778167040fbacfda69dbb7172f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w.cpp",
+        "sha256": "10b3d807297ca1c2ac84018e48d4e4737d7d203cc454e65ee8d3ccb8fa25a4e1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc.cpp",
+        "sha256": "9bac6d2ec41046af3e5ce8f1df89ab25307c5f4bf511be7f07532f935e8ba69e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_itcm.cpp",
+        "sha256": "90e1684394ce8901fb556c9bb5c0efd89790908546dfa535bfa495d81515fd7b",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg.cpp",
+        "sha256": "ac47f9d824f83c2fa8c73aea6441b8c5e29c76a325c3f828599adba4d739c8c9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp",
+        "sha256": "b2dab76c0ce95807d92d8cbbc7db500fa893f4e89cbbfebe4b641eaa6a278f20",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "sha256": "1382fe7f2376eeec6fabec966b7afcd998f0846d278405afb1e72641e24a22b9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "sha256": "ba82b0f95f4ff1ca25cce54032e1270a346ac083c2e6373fb22f2dd152e6c1bd",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_boot_methods.cpp",
+        "sha256": "18542a61d9f8fcb8bab409a4ca2aaa3b733ab71021bcc1f5a9e1f55c8df440ac",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "sha256": "1447e5e54539ad405174f8f065e66fc217c00b50279513c81963389066fc9b60",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "sha256": "5fb0e64a5e9e6c6e19012de7b88ca04f91c55e65e6991994fe71783d6be315c1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "sha256": "074ecf96f9507cac20dc4b451bd3babc50602c24fe3e77f784a9194b3672cbb7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-title1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_mg_state.cpp",
+        "sha256": "7c87606029a99ccb0755943af92f8e23edec1f0bc91af75698fb8534f99468be",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_pachinko2.cpp",
+        "sha256": "ed99b7d03063d10b52952bc33c96a0bc18326fe8d357c6215446884a4cb93e01",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-collision1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline.cpp",
+        "sha256": "6c40d0a0788934c4601073ac8987222b3a42ffe36172f2bcd2775fe6d6d6397f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline2.cpp",
+        "sha256": "e744739139ed2a6ad4489dad7eb109e54fca942acf009c7931f495d9a4d7ac9f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-query-scans1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/unit020bfec0.cpp",
+        "sha256": "8a1154934a8abb2c532691783e7cd277a089c48727c934087a94614e28310c00",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "sha256": "c99ceef9e3b4da973faaeef2269d0ce2ff73a97cb6be348936ce325f42ef1473",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json",
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      }
+    ],
+    "resolved_prior_items": [
+      "Floor-normal naming has current source and retail dataflow evidence in later commits.",
+      "Actor movement and remaining unreserved scene fade-call work progressed after the first report."
+    ],
+    "retained_limits": [
+      "110 isolated header-consumer relocation checks remain BLIND; complete allocated-output comparisons were exact.",
+      "The trampoline initializer retains three baseline-reproduced unresolved relocation slots.",
+      "Wall-rejection runtime samples prove entry parameters, not execution of the rejection branch.",
+      "Independent source review/publication are still pending."
+    ],
+    "pending_owned_scope": [
+      {
+        "task": "minigame-menu-readable-0922",
+        "class": "dScMiniGm_c",
+        "recorded_file": "src/actors/dscminigm_c.cpp",
+        "current_file": "src/minigames/d_s_mini_gm.cpp",
+        "finding": "Six fader checks can use IsAtStart instead of TouchOwner or manual vtable indexing.",
+        "candidate_patch": "notes/experiments/scene-physics-menu-fader-candidate1016.patch",
+        "patch_sha256": "1e4b699e479ce56f8c740531f3aa6a223d79937b16bd78e4a78219d26cc7cd51",
+        "applied": false,
+        "patch_check": "PASS",
+        "complete_output_comparison": {
+          "base": "dc151cf26e15f9887cf85e6c3c5b8bdded186e7e",
+          "compiler": "2004/b56",
+          "files": [
+            {
+              "file": "src/minigames/d_s_mini_gm.cpp",
+              "source_sha256": "50f161f7df06dfc72fa1c5ddb026ac4a94536a90d324e79d2d55ddab862cee3e",
+              "all_allocated_sections_and_relocations_equal": true,
+              "before_sections": 37,
+              "after_sections": 37,
+              "before_sha256": "594e5c39a899dc6ab9de14ef142c638902a2106838fbefbae1131f44b9ce6246",
+              "after_sha256": "594e5c39a899dc6ab9de14ef142c638902a2106838fbefbae1131f44b9ce6246"
+            }
+          ]
+        },
+        "source_before_sha256": "623943a9de96d16880e24aa240443e81aefb04a87e620aee63784191f53700e3"
+      },
+      {
+        "task": "yegg-native-three-method-continuation1014",
+        "file": "src/engine/collision/d_bg_ch_actr.cpp",
+        "finding": "func_020371fc comment says once per landing/floor hit, but its gates require any hit, wall-contact bit 8, cached-normal flag 0x100, cached normal Y < 0xf20 and !Player::IsInAir. Recommend describing these prerequisites and nearby-floor snapping without a once-per-landing claim.",
+        "applied": false
+      }
+    ],
+    "queue_state": "b36dce6254ed7393e802c8922235cf56ee596e4a",
+    "runtime_trace_recheck": {
+      "path": "build/melonds-readability/collision-entry-trace.json",
+      "sha256": "755c4f9de4928e18aa40756f870b48f97a6b0416ad91be8900d94bf9038fff2e",
+      "samples": 12,
+      "all_saved_canaries_equal": true,
+      "new_emulator_run": false
+    }
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base": "dc151cf26e15f9887cf85e6c3c5b8bdded186e7e",
+      "compiler": "2004/b56",
+      "files": [
+        {
+          "file": "src/engine/collision/d_bg_ch_sph_crr_query.cpp",
+          "source_sha256": "1202975f8e11e71cd4dd5087249e4ee249f47c778167040fbacfda69dbb7172f",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 66,
+          "after_sections": 66,
+          "before_sha256": "4edc021a882a8e86ec59c05976e4ba81598c3926673ec48c86034f69224a2039",
+          "after_sha256": "4edc021a882a8e86ec59c05976e4ba81598c3926673ec48c86034f69224a2039"
+        },
+        {
+          "file": "src/minigames/d_mg_state.cpp",
+          "source_sha256": "7c87606029a99ccb0755943af92f8e23edec1f0bc91af75698fb8534f99468be",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 55,
+          "after_sections": 55,
+          "before_sha256": "4bc6a93e886b1dc09474de3dd0373c8b5a4ba763235967a78c3f940510166eee",
+          "after_sha256": "4bc6a93e886b1dc09474de3dd0373c8b5a4ba763235967a78c3f940510166eee"
+        }
+      ]
+    },
+    "comparison_method": "All allocated section metadata/bytes and named relocation records compare exactly; no masking/canonicalization. Shared headers unchanged.",
+    "declaration_agreement": {
+      "files_in_scope": 1649,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "existing_disagreements_removed": 1,
+      "baseline_updated": false,
+      "exit_code": 0
+    },
+    "diff_check": "PASS",
+    "focused_linkcheck": {
+      "checked": 109,
+      "verified": 109,
+      "blind": 0,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "comparison_script": {
+      "path": "build/scene-physics12-control.py",
+      "sha256": "2e5d67b372c0fd05c0e9e78ee5ebf287ee3b76452c0fef2764851fb294c6c5a3"
+    },
+    "focused_report": {
+      "path": "build/scene-physics12-linkcheck-final.json",
+      "sha256": "73b4f07e2ca0ac05b8317ea48e16fc398f85503f8b8defb19c226fc4c47ec860"
+    },
+    "declaration_log": {
+      "path": "build/scene-physics12-declarations-final.log",
+      "sha256": "40ced2ffe8441870cb48803a614ef6dc9dfd5cbd32136348026f2ad394790349"
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "cb777e15e4715f34380b5534e6e73def458db117fc997a6e83c34f35900d5bfb",
+      "log_path": "build/scene-physics12-rombuild-final.log"
+    }
+  },
+  "review_status": "Producer checkpoint; broader source-quality audit remains open, including owned scopes. No publication or independent review claim."
+}

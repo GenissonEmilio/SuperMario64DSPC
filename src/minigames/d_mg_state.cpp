@@ -50,10 +50,9 @@
  *   - The .data member-pointer records keep their data_ov004_* names and
  *     are declared as dMgState_c::Callback; the comment on each extern names
  *     the member it points at.
- *   - Base (the scene) and Obj (the fader) are TU-local views; each says
- *     why it is not the shared header's class. Their names, and the W2 type
- *     of data_02086b58, are the spellings config/decl-agreement-baseline.json
- *     records for those externs.
+ *   - Base (the scene) and FaderCallView (the fader) are TU-local views; each says
+ *     why it retains a separate call shape. W2 preserves the two-word
+ *     storage view of data_02086b58.
  *   - mState doubles as the id passed to the scene's CanEndState and,
  *     through Mg_CallStartRound, to its StartRound. The `(void *)mState`
  *     spelling follows that helper's declaration.
@@ -136,11 +135,11 @@ struct Base {
     char pad[0xa4];
     s32 mCredits;                          /* 0x0a8 */
 };
-/* The installed screen fader at data_0209f5bc (a dFader_c), under
-   dFader_c.h's slot names. The ROM sets r2 = 0 at every SetBackwardTime and
-   SetForwardTime call here, which the header's one-argument spelling does
-   not do, so this view declares the second argument. */
-struct Obj {
+/* Call view of the installed dFdBrightness_c at data_0209f5bc.
+   The ROM sets r2 = 0 at each timing call here; the shared declarations take
+   only frames. Keep the extra-argument call shape without changing the
+   shared fader interface. The original purpose of r2 is unknown. */
+struct FaderCallView {
     virtual void v0(); virtual void v1();
     virtual void AdvanceFade();                        /* slot 2 */
     virtual int SetBackwardTime(u32 frames, int arg);  /* slot 3 */
@@ -174,7 +173,7 @@ extern void Mg_SetNextBanner(int);
 
 struct W2 { int w[2]; };
 extern W2 data_02086b58;  /* __ptmf_null's address: the null member pointer */
-extern Obj* data_0209f5bc;
+extern dFdBrightness_c* data_0209f5bc;
 extern dWipe_c data_0209f61c;
 extern Base* gMgScene;  /* local extern: seen through the TU-local Base view (see Base above) */
 extern int sMgTopScreenYOffset;
@@ -375,7 +374,7 @@ void dMgState_c::State00_Enter() {
 void dMgState_c::State00_Update() {
   Base* scene = gMgScene;
   if (data_0209f5bc->IsAtEnd()) {
-    data_0209f5bc->SetBackwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
     FreeGfxSlotsById(0x1d);
     Mg_RestoreMusic();
     Mg_StartMusic();
@@ -393,7 +392,7 @@ void dMgState_c::State00_Update() {
       return;
     if (scene->CanEndState(mState) == 0)
       return;
-    data_0209f5bc->SetForwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
   }
 }
 
@@ -406,7 +405,7 @@ void dMgState_c::State01_Update() {
     Base* scene = gMgScene;
     if (scene == 0) return;
     if (scene->CanEndState(mState) == 0) return;
-    data_0209f5bc->SetBackwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
     FreeGfxSlotsById(0x1d);
     Mg_CallStartRound(scene, (void *)mState);
     mTimer = 0;
@@ -416,7 +415,7 @@ void dMgState_c::State01_Update() {
   } else {
     if (mTimer != 0) return;
     if (data_0209f5bc->IsBetweenStartAndEnd() != 0) return;
-    data_0209f5bc->SetForwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
   }
 }
 
@@ -436,7 +435,7 @@ void dMgState_c::State02_Update() {
       return;
     if (scene->CanEndState(mState) == 0)
       return;
-    data_0209f5bc->SetBackwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
     FreeGfxSlotsById(0x1d);
     Mg_RestoreMusic();
     Mg_StartMusic();
@@ -449,7 +448,7 @@ void dMgState_c::State02_Update() {
     if (mTimer != 0)
       return;
     if (data_0209f5bc->IsBetweenStartAndEnd() == 0)
-      data_0209f5bc->SetForwardTime(0x1e, 0);
+      ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
   }
 }
 
@@ -467,16 +466,16 @@ void dMgState_c::State03_Enter() {
 
 // @symbol _ZN10dMgState_c14State03_UpdateEv
 void dMgState_c::State03_Update() {
-  Obj* obj;
+  dFdBrightness_c* fader;
   if (Mg_CheckBannerButton(0)) {
-    obj = data_0209f5bc;
-    obj->SetForwardTime(0x1e, 0);
+    fader = data_0209f5bc;
+    ((FaderCallView *)fader)->SetForwardTime(0x1e, 0);
     mBehavior = pmf_dMgState_c_UpdateRetryFadeOut;
     return;
   }
   if (Mg_CheckBannerButton(2) || Mg_CheckBannerButton(1)) {
-    obj = data_0209f5bc;
-    if (obj->IsBetweenStartAndEnd())
+    fader = data_0209f5bc;
+    if (fader->IsBetweenStartAndEnd())
       return;
     dScene_c::SetFaders(&data_0209f61c);
     data_0209f61c.func_0202ec9c(2);
@@ -497,7 +496,7 @@ void dMgState_c::UpdateRetryFadeOut() {
   void* scene = gMgScene;
   if (scene == 0)
     return;
-  data_0209f5bc->SetBackwardTime(0x1e, 0);
+  ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
   FreeGfxSlotsById(0x1d);
   Mg_RestoreMusic();
   Mg_StartMusic();
@@ -591,7 +590,7 @@ void dMgState_c::State05_Update() {
 
 // @symbol _ZN10dMgState_c20UpdateGameOverToMenuEv
 void dMgState_c::UpdateGameOverToMenu() {
-    Obj* obj;
+    dFdBrightness_c* fader;
     int v = mTimer;
     if (v == 0xb3) {
         Mg_ShowBanner(8, data_ov004_020bc8b8, data_ov004_020bc8b4, -1, -1, 0xd);
@@ -599,8 +598,8 @@ void dMgState_c::UpdateGameOverToMenu() {
         return;
     }
     if (v != 0) return;
-    obj = data_0209f5bc;
-    if (obj->IsBetweenStartAndEnd() != 0) return;
+    fader = data_0209f5bc;
+    if (fader->IsBetweenStartAndEnd() != 0) return;
     dScene_c::SetFaders(&data_0209f61c);
     data_0209f61c.func_0202ec9c(2);
     dScene_c::StartSceneFade(5, 0, 0);
@@ -717,16 +716,16 @@ void dMgState_c::State10_Enter() {
 
 // @symbol _ZN10dMgState_c14State10_UpdateEv
 void dMgState_c::State10_Update() {
-  Obj* obj;
+  dFdBrightness_c* fader;
   if (Mg_CheckBannerButton(0)) {
-    obj = data_0209f5bc;
-    obj->SetForwardTime(0x1e, 0);
+    fader = data_0209f5bc;
+    ((FaderCallView *)fader)->SetForwardTime(0x1e, 0);
     mBehavior = pmf_dMgState_c_UpdateRetryFadeOut_3;
     return;
   }
   if (Mg_CheckBannerButton(2) || Mg_CheckBannerButton(1)) {
-    obj = data_0209f5bc;
-    if (obj->IsBetweenStartAndEnd())
+    fader = data_0209f5bc;
+    if (fader->IsBetweenStartAndEnd())
       return;
     dScene_c::SetFaders(&data_0209f61c);
     data_0209f61c.func_0202ec9c(2);
@@ -756,7 +755,7 @@ void dMgState_c::State11_Update() {
       return;
     if (scene->CanEndState(mState) == 0)
       return;
-    data_0209f5bc->SetBackwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
     FreeGfxSlotsById(0x1d);
     Mg_RestoreMusic();
     Mg_StartMusic();
@@ -769,7 +768,7 @@ void dMgState_c::State11_Update() {
     if (mTimer != 0)
       return;
     if (data_0209f5bc->IsBetweenStartAndEnd() == 0)
-      data_0209f5bc->SetForwardTime(0x1e, 0);
+      ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
   }
 }
 
@@ -785,7 +784,7 @@ void dMgState_c::State13_Enter() { mTimer = 10; mBehavior = pmf_dMgState_c_Updat
 void dMgState_c::UpdateRetryPrompt() {
   if (mTimer == 0) {
     if (Mg_CheckBannerButton(0) != 0) {
-      data_0209f5bc->SetForwardTime(0x1e, 0);
+      ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
       mBehavior = pmf_dMgState_c_UpdateRetryFadeOut_2;
       return;
     }
@@ -823,7 +822,7 @@ void dMgState_c::UpdateFadeThenResume() {
       return;
     if (scene->CanEndState(mState) == 0)
       return;
-    data_0209f5bc->SetBackwardTime(0x1e, 0);
+    ((FaderCallView *)data_0209f5bc)->SetBackwardTime(0x1e, 0);
     Mg_RestoreMusic();
     Mg_StartMusic();
     Mg_CallStartRound(scene, (void *)mState);
@@ -836,7 +835,7 @@ void dMgState_c::UpdateFadeThenResume() {
     if (mTimer != 0)
       return;
     if (data_0209f5bc->IsBetweenStartAndEnd() == 0)
-      data_0209f5bc->SetForwardTime(0x1e, 0);
+      ((FaderCallView *)data_0209f5bc)->SetForwardTime(0x1e, 0);
   }
 }
 
