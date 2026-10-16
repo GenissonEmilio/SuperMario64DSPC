@@ -24,7 +24,13 @@
 struct BMD_File;
 struct BTP_File;
 
-extern "C" daBgSnmHed_c::StateFunc data_ov072_02122c00[];
+/* First state-function slot. __sinit_ov072_021221f8 copies eight PMF
+ * descriptors into the table that starts here. symbols.txt also names
+ * data_ov072_02122c08, so this object is the first slot and the rest
+ * of the table stays in the gap. */
+extern "C" {
+daBgSnmHed_c::StateFunc data_ov072_02122c00[1];
+}
 extern int gBigSnowmanSmileTextureSequenceFile[];
 extern int gBigSnowmanCryTextureSequenceFile[];
 

@@ -15,6 +15,7 @@ src/game/actors/d_a_bg_snm_bdy.cpp:
 src/game/actors/d_a_bg_snm_hed.cpp:
     complete
     .text start:0x0211ff34 end:0x02120824
+    .bss start:0x02122c00 end:0x02122c08
 
 src/game/actors/d_a_bg_snwmn.cpp:
     complete
