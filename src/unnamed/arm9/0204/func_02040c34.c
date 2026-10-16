@@ -1,3 +1,5 @@
+int data_020a0f84;
+
 #include "types.h"
 typedef struct InitArrays {
     int ptrs[0x10];
@@ -25,7 +27,6 @@ extern void func_020417d0(void);
 extern void func_020412f0(void);
 extern void func_02040f30(void);
 
-extern int data_020a0f84;
 extern int data_020a0f88;
 extern char data_020a1fc0[];
 extern char data_02082158[];

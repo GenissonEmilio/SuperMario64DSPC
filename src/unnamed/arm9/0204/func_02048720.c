@@ -10,7 +10,7 @@ typedef struct {
 } SoundSlot;
 
 extern SoundSlot data_020a4bf8[2];
-extern SoundSlot data_020a4c18[];
+SoundSlot data_020a4c18[6];
 
 
 void *func_02048720(struct Vector3 *v, int kind, int id)

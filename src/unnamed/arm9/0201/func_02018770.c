@@ -5,7 +5,7 @@
 
 typedef signed char s8;
 
-extern s8 data_0208eb54; /* archive a read mounted, -1 when none */
+s8 data_0208eb54 = -1; /* archive a read mounted, -1 when none */
 extern void UnloadArchive(int i);
 
 void func_02018770(void) {

@@ -17,7 +17,9 @@ struct GX  { static void LoadBGPltt(void const *p, unsigned a, unsigned b); };
 struct GXS { static void LoadBGPltt(void const *p, unsigned a, unsigned b); };
 
 extern unsigned char data_0209d698;
-extern int data_0209d6f8;
+extern "C" {
+int data_0209d6f8;
+}
 extern unsigned char data_0209d660;
 extern short data_0209d6d4;
 

@@ -18,7 +18,7 @@ extern int data_0209d514;
 extern int data_0208ee44;
 extern u8 data_0209d4f0;
 extern u16 data_0209d500;
-extern u16 data_0209d4fc;
+u16 data_0209d4fc;
 extern char data_023c0000[];
 extern void OS_WakeupThread(int *p);
 extern void func_02019144(void);

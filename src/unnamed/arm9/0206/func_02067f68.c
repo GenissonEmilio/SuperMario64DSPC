@@ -1,6 +1,6 @@
 #include "types.h"
+u8 data_020a9d40[8];
 extern u8 data_020a9d2c[];
-extern u8 data_020a9d40[];
 extern u16 data_020a9d48[];
 extern u8 data_020a9d50[];
 

@@ -142,7 +142,9 @@ extern int data_0209b48c;
 extern int data_0209b490;
 extern int data_0209b494;
 extern int data_0209b498;
-extern int data_0209b49c;
+extern "C" {
+int data_0209b49c;
+}
 extern int data_0209b4a0[];
 extern int data_0209b4a4[];
 extern int data_0209b4a8;

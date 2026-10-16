@@ -42,7 +42,7 @@ extern double func_020707cc(double x);                       /* fabs */
 extern char *func_020706b0(char *dst, const char *src);      /* strcpy */
 extern char *func_0206fb08(long num, char *buff_end, print_format format);
 
-extern char data_0209a5ec[]; /* "-INF" */
+char data_0209a5ec[8] = { 0x2d, 0x49, 0x4e, 0x46, 0x00, 0x00, 0x00, 0x00 }; /* "-INF" */
 extern char data_0209a5f4[]; /* "-inf" */
 extern char data_0209a5fc[]; /* "INF" */
 extern char data_0209a600[]; /* "inf" */

@@ -305,9 +305,9 @@ dActor_c *dActor_c::Next(const dActor_c *after)
 /* ROM ordinal 79 -- func_02010e78
  * 0x02010e78  size 0x54 */
 extern "C" {
-extern s16 *data_0209b460;          /* spawn position, or null to leave it at 0 */
+s16 *data_0209b460;                 /* spawn position, or null to leave it at 0 */
 extern s16 *data_0209b45c;          /* spawn rotation, or null */
-extern s16 data_0208e378;           /* spawn death-table id */
+s16 data_0208e378 = -1;             /* spawn death-table id */
 }
 extern "C" void func_02010e78(const Vector3 *a, const Vector3_16 *b, s8 c, s16 d)
 {

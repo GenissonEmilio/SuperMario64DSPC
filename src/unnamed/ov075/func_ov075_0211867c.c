@@ -1,3 +1,6 @@
+int data_ov075_0211d810;
+static unsigned char data_ov075_0211d810_pad[20];
+
 #include "types.h"
 #include "PlayerInput.h"
 
@@ -13,7 +16,6 @@ extern void func_02020124(void);
 extern void func_02020334(void);
 extern void func_02020768(char *thiz);
 
-extern int data_ov075_0211d810;
 extern u8 data_0209fc5c[];
 extern u8 data_020a0e58[];
 extern int data_0208ee44;

@@ -1,6 +1,6 @@
 #include "types.h"
 extern u8 data_020a0f04;
-extern u8 data_020a0f08;
+u8 data_020a0f08;
 extern u8 data_020a0f0c;
 extern volatile u16 data_020a0f1c;
 extern u16 data_020a0f20;
