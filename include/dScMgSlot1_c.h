@@ -37,7 +37,7 @@
  * slot 6 where the cartridge holds 0x0210c9e0, and the whole table scored
  * DIFFERS. Declaring it, and naming the ROM body in ov006/symbols.txt so the
  * slot has a symbol to point at, fixes that word without touching a byte of
- * code: the 0x81c unmatched bytes are still the cartridge's.
+ * code: the matching 0x81c-byte Behavior body is now enrolled.
  *
  * THE EMBEDDED SUBOBJECT AT 0x4660. build/rtti.json proves the distinct
  * nested class `dScMgSlot1_c::betIcon_c` (N12dScMgSlot1_c9betIcon_cE,
@@ -144,7 +144,7 @@ struct dScMgSlot1_c : dScMgBase_c {
 
     virtual ~dScMgSlot1_c();
     virtual s32 InitResources();                       /* slot  0 */
-    virtual s32 Behavior();     /* slot  6 -- ov006 0x0210c9e0, nonmatching draft */
+    virtual s32 Behavior();     /* slot  6 -- ov006 0x0210c9e0, byte-exact */
     virtual s32 Render();                               /* slot  9 */
     /* All three override dScMgBase_c -- slots 18, 27 and 28 -- so the base
        fixes every index below and declaration order no longer decides any of
@@ -158,22 +158,21 @@ struct dScMgSlot1_c : dScMgBase_c {
     u8  pad_4684[0xc];      /* 0x4684 -- embedded object, own type unknown */
     u8  pad_4690[0xc];      /* 0x4690 -- embedded object, own type unknown */
     u8  pad_469c[0x8];      /* 0x469c -- embedded object, own type unknown */
-    u32 unk_46a4[3];         /* 0x46a4 */
-    s32 unk_46b0;            /* 0x46b0 -- reel-spin sound handle (Behavior) */
-    s32 unk_46b4;            /* 0x46b4 */
-    s32 unk_46b8;            /* 0x46b8 -- payout multiplier (Behavior) */
-    s32 unk_46bc;            /* 0x46bc */
-    u8  unk_46c0[0x15];      /* 0x46c0 */
-    u8  pad_46d5[0x2a];
-    u8  unk_46ff[3];         /* 0x46ff */
-    u8  unk_4702[3];         /* 0x4702 */
-    u8  unk_4705;            /* 0x4705 -- reels stopped by touch this spin (Behavior) */
-    u8  pad_4706[0x2];       /* 0x4706 used by StartRound */
-    u8  unk_4708;            /* 0x4708 -- reel speed table row (Behavior) */
-    u8  unk_4709;            /* 0x4709 */
-    u8  unk_470a;            /* 0x470a */
-    u8  unk_470b;            /* 0x470b */
-    u8  unk_470c;            /* 0x470c -- state timer, DecIfAbove0_Byte (Behavior) */
+    u32 mReelScroll[3];     /* 0x46a4 -- Fix12 distance to the next symbol */
+    s32 mSpinSoundHandle;   /* 0x46b0 -- returned by Sound_PlayIfNotActive */
+    s32 mState;             /* 0x46b4 -- Behavior's state-machine index */
+    s32 mPayoutMultiplier;  /* 0x46b8 -- matched-symbol and wild awards per bet */
+    s32 unk_46bc;           /* 0x46bc */
+    u8  mReelStrip[3][21];   /* 0x46c0 -- symbol strips, one 21-byte row per reel */
+    u8  mSymbolIndex[3];    /* 0x46ff -- current strip index, modulo 21 */
+    u8  mReelSpinning[3];   /* 0x4702 -- cleared by a touch on that reel */
+    u8  mStoppedReelCount;  /* 0x4705 -- reels stopped by touch this spin */
+    u8  pad_4706[0x2];      /* 0x4706 used by StartRound */
+    u8  mSpeedTableOffset;  /* 0x4708 -- added to reel index in the speed table */
+    u8  mMatchedSymbol;     /* 0x4709 -- common non-wild symbol, or 5 if all wild */
+    u8  mHasMatch;          /* 0x470a -- all three symbols agree, allowing wilds */
+    u8  mWildCount;         /* 0x470b -- number of symbol-5 wilds */
+    u8  mStateTimer;        /* 0x470c -- countdown via DecIfAbove0_Byte */
     u8  pad_470d[0x3];
 };
 

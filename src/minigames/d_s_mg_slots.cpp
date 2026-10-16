@@ -17,11 +17,7 @@
 // leftovers:
 // - Slot1 InitResources fills the reel strips through a raw char* cursor
 //   over 0x46c0..0x46ff: the member-indexed form DIFFs (measured), so only
-//   the scalar stores use the unk_46ff/unk_46a4/unk_4702 members.
-// - The SlotReels view (reel strips, stops, matchSymbol, wilds) is local:
-//   the strip lengths and win state on dScMgSlot1_c.h/dScMgSlot3_c.h are
-//   still pads, so the reel helpers index through it (callers: the Slot3
-//   state-table handlers dispatching through data_ov006_02142bdc).
+//   the scalar stores use the mSymbolIndex/mReelScroll/mReelSpinning members.
 // - The ROM PMF constants the Slot3 state table copies (data_ov006_0213e5xx)
 //   come from unlicensed .data, in retail copy order.
 // - SaveScreenForMenu/RestoreScreenFromMenu keep slot-identity names from
@@ -58,7 +54,6 @@ enum dScMgSlots_AssetId {
 #include "OAM.h"
 #include "dScMgBase_c.h"
 #include "decl_common.h"
-#include "private/ov006_slotgrid.h"
 #include "types.h"
 #include "PlayerInput.h"
 #include "dWipe_c.h"
@@ -79,16 +74,6 @@ typedef void (dScMgSlot3_c::*SlotState)();
  * x/y through this view so the compiler, not the source, hoists them. */
 struct TouchRec { u8 held; u8 edge; u8 x; u8 y; };
 
-struct SlotReels {
-    u8 pad[0x46c0];
-    u8 reels[3][0x15];  /* symbol strip per reel */
-    u8 stops[3];        /* where each reel stopped */
-    u8 pad2[6];
-    u8 unk_4708;
-    u8 matchSymbol;
-    u8 pad3;
-    u8 wilds;           /* count of symbol 5, which matches anything */
-};
 
 extern "C" {
 extern int data_ov004_020bc8b4;
@@ -271,16 +256,18 @@ void dScMgSlot3_c::InitMainScreenBg()
 
 // @symbol Slot3_ReelDigits
 extern "C" {  /* .c-derived member: C linkage for the whole block */
-void Slot3_ReelDigits(char *c, int idx);
-void Slot3_ReelDigits(char *c, int idx){
-    int d = (*(int*)(c + idx*4 + 0x4fe4) >> 12) / 80;
-    int i;
-    char *dst = c + idx*3;
-    char *src = c + idx*5;
-    for (i = 0; i < 3; i++) {
-        *(unsigned char*)(dst + 0x5031) = *(unsigned char*)(src + d + 0x501c);
-        d = (d + 1) % *(unsigned char*)(c + 0x503a);
-        dst += 1;
+void Slot3_ReelDigits(char *sceneBytes, int reelIndex);
+// Keep the strided byte cursors: a native mStripLength read grows this body by 8 bytes.
+void Slot3_ReelDigits(char *sceneBytes, int reelIndex)
+{
+    int symbolIndex = (*(int*)(sceneBytes + reelIndex*4 + 0x4fe4) >> 12) / 80;
+    int column;
+    char *resultBytes = sceneBytes + reelIndex*3;
+    char *stripBytes = sceneBytes + reelIndex*5;
+    for (column = 0; column < 3; column++) {
+        *(unsigned char*)(resultBytes + 0x5031) = *(unsigned char*)(stripBytes + symbolIndex + 0x501c);
+        symbolIndex = (symbolIndex + 1) % *(unsigned char *)(sceneBytes + 0x503a);
+        resultBytes += 1;
     }
 }
 }
@@ -295,14 +282,15 @@ void Slot3_State7(void)
 // @symbol Slot3_State6
 extern "C" {  /* .c-derived member: C linkage for the whole block */
 
-void Slot3_State6(char* c){
+void Slot3_State6(char *c)
+{
     dScMgSlot3_c *self = (dScMgSlot3_c *)c;
-    if (DecIfAbove0_Byte((unsigned char*)(c + 0x503e)) == 0) {
+    if (DecIfAbove0_Byte(&self->mStateTimer) == 0) {
         self->mState = 7;
         Mg_SetSharedState(MG_STATE_GAME_OVER);
-        self->unk_5004 = 0;
+        self->mReelDifficulty = 0;
     }
-    if (self->unk_503e >= 0x3c) return;
+    if (self->mStateTimer >= 0x3c) return;
     {
         int* a = &self->mReelWinPos[0];
         int* b = &self->mReelWinPos[1];
@@ -322,42 +310,43 @@ void Slot3_State5(void)
 }
 
 // @symbol Slot3_State3and4
-extern "C" void Slot3_State3and4(char* c)
+extern "C" void Slot3_State3and4(char *c)
 {
-    if (DecIfAbove0_Byte((unsigned char*)(c + 0x503e)) == 0) {
-        if (*(int*)(c + 0x5000) == 3) {
-            if (*(int*)(c + 0xb4) < 0x270f)
-                *(int*)(((int)c + 0xb4)) += 1;
-            if (*(int*)(c + 0xb4) > *(int*)(c + 0xb8))
-                *(int*)(c + 0xb8) = *(int*)(c + 0xb4);
-            ((dScMgSlot3_c*)c)->StartRound(4);
+    dScMgSlot3_c *self = (dScMgSlot3_c *)c;
+    if (DecIfAbove0_Byte(&self->mStateTimer) == 0) {
+        if (self->mState == 3) {
+            if (self->mHudScore < 0x270f)
+                self->mHudScore += 1;
+            if (self->mHudScore > self->mBestHudScore)
+                self->mBestHudScore = self->mHudScore;
+            self->StartRound(4);
         } else {
-            if (*(int*)(c + 0xa8) <= 0) {
-                *(unsigned char*)(c + 0x503e) = 0x78;
-                *(int*)(c + 0x5000) = 6;
+            if (self->mCredits <= 0) {
+                self->mStateTimer = 0x78;
+                self->mState = 6;
             } else {
-                ((dScMgSlot3_c*)c)->StartRound(5);
+                self->StartRound(5);
             }
         }
     }
 
-    if (*(int*)(c + 0x5000) == 3) {
-        if (*(unsigned char*)(c + 0x503e) != 0x14)
+    if (self->mState == 3) {
+        if (self->mStateTimer != 0x14)
             return;
-        if (*(int*)(c + 0x5014) <= 0)
+        if (self->mPayoutRemaining <= 0)
             return;
-        *(int*)(((int)c + 0x5014)) -= 1;
+        self->mPayoutRemaining -= 1;
         Mg_AddCredits(c, 1);
         Sound::PlayBank2_2D(0x149);
-        *(unsigned char*)(((int)c + 0x503e)) += 5;
+        self->mStateTimer += 5;
         return;
     }
 
-    if (*(int*)(c + 0x5000) != 4)
+    if (self->mState != 4)
         return;
 
     {
-        unsigned char b = *(unsigned char*)(c + 0x503e);
+        unsigned char b = self->mStateTimer;
         if (b != 0x14 && b != 0x28 && b != 0x3c)
             return;
     }
@@ -370,63 +359,67 @@ extern "C" void Slot3_State3and4(char* c)
 extern "C" {  /* .c-derived member: C linkage for the whole block */
 void Slot3_State2(char *c)
 {
-    unsigned char buf[3];
-    int i;
-    int total;
-    int arg;
+    unsigned char columnSymbols[3];
+    int column;
+    int payout;
+    int score;
     char *self;
+    dScMgSlot3_c *scene = (dScMgSlot3_c *)c;
 
-    if (DecIfAbove0_Byte((unsigned char *)(c + 0x503e)) != 0)
+    if (DecIfAbove0_Byte(&scene->mStateTimer) != 0)
         return;
 
     self = c;
-    for (i = 0; i < 3; i++) {
-        int j;
-        buf[i] = *(unsigned char *)(self + 0x5031 + i);
-        j = 1;
+    for (column = 0; column < 3; column++) {
+        int reelIndex;
+        columnSymbols[column] = ((dScMgSlot3_c *)self)->mResultSymbols[0][column];
+        reelIndex = 1;
         do {
-            int rem = (i + (((int *)(self + 0x4fe4))[j] >> 12) / 80) % *(unsigned char *)(self + 0x503a);
-            if (buf[i] != ((SlotGrid *)self)->sym[j][rem]) {
-                buf[i] = 5;
+            int symbolIndex =
+                (column + (((dScMgSlot3_c *)self)->mReelPos[reelIndex] >> 12) / 80) %
+                ((dScMgSlot3_c *)self)->mStripLength;
+            if (columnSymbols[column] != ((dScMgSlot3_c *)self)->mReelStrip[reelIndex][symbolIndex]) {
+                columnSymbols[column] = 5;
                 break;
             }
-        } while (++j < 3);
-        self = (char *)((unsigned)self | (unsigned)(i - i));
+        } while (++reelIndex < 3);
+        // Retain the compiler address barrier; deleting it grows this body by 32 bytes.
+        self = (char *)((unsigned)self | (unsigned)(column - column));
     }
 
-    *(int *)(c + 0x5010) = -1;
-    total = 0;
+    scene->mWinColumn = -1;
+    payout = 0;
     {
-        int k;
-        for (k = 0; k < 3; k++) {
-            if (buf[k] == *(unsigned char *)(c + 0x503b)) {
-                if (k == 1) {
-                    *(int *)(c + 0x5010) = k;
-                    total += 6;
-                } else if (k == 0 || k == 2) {
-                    *(int *)(c + 0x5010) = k;
-                    total += 3;
+        int columnIndex;
+        for (columnIndex = 0; columnIndex < 3; columnIndex++) {
+            if (columnSymbols[columnIndex] == scene->mWinSymbol) {
+                if (columnIndex == 1) {
+                    scene->mWinColumn = columnIndex;
+                    payout += 6;
+                } else if (columnIndex == 0 || columnIndex == 2) {
+                    scene->mWinColumn = columnIndex;
+                    payout += 3;
                 }
                 break;
             }
         }
     }
 
-    arg = *(int *)(c + 0xb4);
-    if (total > 0) {
-        *(int *)(c + 0x5014) = total;
-        *(int *)(c + 0x5000) = 3;
+    score = scene->mHudScore;
+    if (payout > 0) {
+        scene->mPayoutRemaining = payout;
+        scene->mState = 3;
         func_02012790(0x26);
-        *(unsigned char *)(c + 0x503e) = 0x28;
-        arg += 1;
+        scene->mStateTimer = 0x28;
+        score += 1;
     } else {
-        *(int *)(c + 0x5000) = 4;
+        scene->mState = 4;
         func_02012790(0xe);
-        *(unsigned char *)(c + 0x503e) = 0x50;
+        scene->mStateTimer = 0x50;
     }
-    Mg_SubmitScore(arg);
+    Mg_SubmitScore(score);
 
-    *(unsigned char *)(c + 0xc3) = 0;
+    scene->mPromptEnabled = 0;
 }
 }
 
@@ -437,112 +430,80 @@ void Slot3_State2(char *c)
 #pragma opt_loop_invariants off
 // @symbol Slot3_State1
 extern "C" {  /* .c-derived member: C linkage for the whole block */
+/* Indexed address construction is byte-sensitive: direct member indexing of
+ * the stopped flags, scroll and direction adds 8 bytes. Scalar fields are native. */
 void Slot3_State1(char *c)
 {
-  u8 idx;
-  int ok;
-  int off;
-  int i;
-  int new_var;
-  int *tab;
-  idx = gActivePlayerSlot;
-  ok = 0;
-  off = idx * 4;
-  new_var = 1;
-  if (gTouchHeld[idx * 4])
-  {
-    if (gTouchEdge[off])
-    {
-      ok = 1;
-    }
-  }
-  if (ok != 0)
-  {
-    unsigned int v = gTouchY[idx * 4];
-    if ((v >= 0x40) && (v < 0x58))
-    {
-      if ((*((u8 *) (c + 0x502b))) == new_var)
-      {
-        *((u8 *) (c + 0x502b)) = 0;
-      }
-    }
-    else
-      if ((v >= 0x58) && (v < 0x70))
-    {
-      if ((*((u8 *) (c + 0x502c))) == 1)
-      {
-        *((u8 *) (c + 0x502c)) = 0;
-      }
-    }
-    else
-      if ((v >= 0x70) && (v < 0x88))
-    {
-      if ((*((u8 *) (c + 0x502d))) == new_var)
-      {
-        *((u8 *) (c + 0x502d)) = 0;
-      }
-    }
-  }
-  i = 0;
-  for (; i < 3; i++)
-  {
-    if ((*((u8 *) ((int) (((long long) ((int) ((c + i) + 0x502e))))))) == 0)
-    {
-      int *p = (int *) (c + (i * 4));
-      int val;
-      int q;
-      int q2;
-      u8 *dir;
-      tab = data_ov006_0213e948;
-      p = (int *) ((int) (((long long) ((int) (((int) p) + 0x4fe4)))));
-      val = *p;
-      ;
-      q = (val >> 12) / 0x50;
-      if ((*((u8 *) ((int) (((long long) ((int) ((c + i) + 0x5040))))))) == 1)
-      {
-        *p = val - tab[((*((u8 *) (c + 0x503d))) * 3) + i];
-        if ((*p) < 0)
-        {
-          *p += *((int *) (c + 0x4ff0));
+    dScMgSlot3_c *scene = (dScMgSlot3_c *)c;
+    u8 playerSlot;
+    int touchPressed;
+    int touchOffset;
+    int reelIndex;
+    int one;
+    int *speedTable;
+    playerSlot = gActivePlayerSlot;
+    touchPressed = 0;
+    touchOffset = playerSlot * 4;
+    one = 1;
+    if (gTouchHeld[playerSlot * 4]) {
+        if (gTouchEdge[touchOffset]) {
+            touchPressed = 1;
         }
-      }
-      else
-      {
-        *p = val + tab[((*((u8 *) (c + 0x503d))) * 3) + i];
-        if ((*p) >= (*((int *) (c + 0x4ff0))))
-        {
-          *p -= *((int *) (c + 0x4ff0));
-        }
-      }
-      if ((*((u8 *) ((c + i) + 0x502b))) == 0)
-      {
-        q2 = ((*p) >> 12) / 0x50;
-        if (q2 != q)
-        {
-          if ((*((u8 *) ((int) (((long long) ((int) ((c + i) + 0x5040))))))) == new_var)
-          {
-            *p = (q * 0x50) << 12;
-          }
-          else
-          {
-            *p = (q2 * 0x50) << 12;
-          }
-          Slot3_ReelDigits(c, i);
-          *((u8 *) ((int) (((long long) ((int) ((c + i) + 0x502e)))))) = 1;
-          *((u8 *) ((int) (((long long) ((int) (c + 0x503d)))))) += new_var;
-          *((u8 *) (c + 0x503f)) = 0;
-          _ZN5Sound12PlayBank2_2DEj(0x1a9);
-        }
-      }
     }
-  }
-
-  *((int *) (c + 0x5008)) = Sound_PlayIfNotActive(*((int *) (c + 0x5008)), 2, 0x1a8, 0);
-  if ((*((u8 *) (c + 0x503d))) >= 3u)
-  {
-    *((u8 *) (c + 0x503e)) = 0x1e;
-    *((int *) (c + 0x5000)) = 2;
-  }
+    if (touchPressed != 0) {
+        unsigned int touchY = gTouchY[playerSlot * 4];
+        if (touchY >= 0x40 && touchY < 0x58) {
+            if (scene->mReelSpinning[0] == one)
+                scene->mReelSpinning[0] = 0;
+        } else if (touchY >= 0x58 && touchY < 0x70) {
+            if (scene->mReelSpinning[1] == 1)
+                scene->mReelSpinning[1] = 0;
+        } else if (touchY >= 0x70 && touchY < 0x88) {
+            if (scene->mReelSpinning[2] == one)
+                scene->mReelSpinning[2] = 0;
+        }
+    }
+    reelIndex = 0;
+    for (; reelIndex < 3; reelIndex++) {
+        if (*(u8 *)(int)(c + reelIndex + 0x502e) == 0) {
+            int *scroll = (int *)(c + reelIndex * 4);
+            int oldScroll;
+            int oldSymbol;
+            int newSymbol;
+            speedTable = data_ov006_0213e948;
+            scroll = (int *)(int)((int)scroll + 0x4fe4);
+            oldScroll = *scroll;
+            oldSymbol = (oldScroll >> 12) / 0x50;
+            if (*(u8 *)(int)(c + reelIndex + 0x5040) == 1) {
+                *scroll = oldScroll - speedTable[scene->mStoppedReelCount * 3 + reelIndex];
+                if (*scroll < 0)
+                    *scroll += scene->mReelPeriod;
+            } else {
+                *scroll = oldScroll + speedTable[scene->mStoppedReelCount * 3 + reelIndex];
+                if (*scroll >= scene->mReelPeriod)
+                    *scroll -= scene->mReelPeriod;
+            }
+            if (*(u8 *)(c + reelIndex + 0x502b) == 0) {
+                newSymbol = (*scroll >> 12) / 0x50;
+                if (newSymbol != oldSymbol) {
+                    if (*(u8 *)(int)(c + reelIndex + 0x5040) == one)
+                        *scroll = (oldSymbol * 0x50) << 12;
+                    else
+                        *scroll = (newSymbol * 0x50) << 12;
+                    Slot3_ReelDigits(c, reelIndex);
+                    *(u8 *)(int)(c + reelIndex + 0x502e) = 1;
+                    scene->mStoppedReelCount += one;
+                    scene->mFrameCounter = 0;
+                    _ZN5Sound12PlayBank2_2DEj(0x1a9);
+                }
+            }
+        }
+    }
+    scene->mSpinSoundHandle = Sound_PlayIfNotActive(scene->mSpinSoundHandle, 2, 0x1a8, 0);
+    if (scene->mStoppedReelCount >= 3u) {
+        scene->mStateTimer = 0x1e;
+        scene->mState = 2;
+    }
 }
 }
 
@@ -558,34 +519,35 @@ void FreeGfxSlotsById(int arg);
 
 void Slot3_State0(char *p)
 {
-    if (*(int *)(p + 0x500c) == 0x50) {
+    dScMgSlot3_c *scene = (dScMgSlot3_c *)p;
+    if (scene->mReelDrawY == 0x50) {
         Mascot_LookAt(p + 0x4f38, 0);
         Mg_ShowBanner(0xd, 0x80, 0xa8, 1, -1, 0xd);
     }
 
-    if (*(int *)(p + 0x500c) > 0) {
-        *(int *)(((int)p + 0x500c)) -= 1;
-        if (*(int *)(p + 0x500c) != 0)
+    if (scene->mReelDrawY > 0) {
+        scene->mReelDrawY -= 1;
+        if (scene->mReelDrawY != 0)
             return;
-        *(unsigned char *)(p + 0x503b) = *(unsigned char *)(p + 0x503c);
+        scene->mWinSymbol = scene->mNextWinSymbol;
         Mascot_StopLooking((int *)(p + 0x4f38));
         return;
     }
 
-    *(unsigned char *)(((int)p + 0x503e)) -= 1;
-    if (*(unsigned char *)(p + 0x503e) != 0)
+    scene->mStateTimer -= 1;
+    if (scene->mStateTimer != 0)
         return;
 
     FreeGfxSlotsById(0x1d);
 
     {
-        int *q = (int *)(p + 0x5000);
-        if (*(unsigned char *)(p + 0xc4) == 0) {
-            *(unsigned char *)(p + 0xc3) = 1;
-            *(unsigned char *)(p + 0xc4) = 1;
-            *(short *)(p + 0xc0) = 0;
+        int *state = &scene->mState;
+        if (scene->mPromptBlinkCount == 0) {
+            scene->mPromptEnabled = 1;
+            scene->mPromptBlinkCount = 1;
+            scene->mPromptBlinkTimer = 0;
         }
-        *q += 1;
+        *state += 1;
     }
 }
 }
@@ -602,7 +564,7 @@ void dScMgSlot3_c::StartRound(int mode)
     if (mode == 3 || mode == 0x12) {
         mCredits = 0xc;
         mCreditsShown = mCredits;
-        mLevel = unk_5004;
+        mLevel = mReelDifficulty;
         if (mLevel > 0x270e) {
             mLevel = 0x270e;
         }
@@ -610,7 +572,7 @@ void dScMgSlot3_c::StartRound(int mode)
         Mg_SubmitScore(mHudScore);
         Mg_ShowBanner(0xd, 0x80, 0xa8, 1, -1, 0xd);
     } else if (mode == 4) {
-        if (unk_5004 < 5) {
+        if (mReelDifficulty < 5) {
             *(int *)(int)(c + 0x5004) += 1;
         }
         *(int *)(int)(c + 0xbc) += 1;
@@ -627,7 +589,7 @@ void dScMgSlot3_c::StartRound(int mode)
         u8 k;
         int m;
 
-        v = unk_5004;
+        v = mReelDifficulty;
         if (v <= 0) {
             mStripLength = 3;
         } else if (v <= 2) {
@@ -636,15 +598,15 @@ void dScMgSlot3_c::StartRound(int mode)
             mStripLength = 5;
         }
 
-        v2 = unk_5004;
+        v2 = mReelDifficulty;
         if (v2 <= 0 || v2 == 1 || v2 == 3) {
-            unk_5040 = 0;
-            unk_5041 = 1;
-            unk_5042 = 0;
+            mReelReverse[0] = 0;
+            mReelReverse[1] = 1;
+            mReelReverse[2] = 0;
         } else if (v2 == 2 || v2 == 4) {
-            unk_5040 = 1;
-            unk_5041 = 0;
-            unk_5042 = 1;
+            mReelReverse[0] = 1;
+            mReelReverse[1] = 0;
+            mReelReverse[2] = 1;
         } else {
             for (i = 0; i < 3; i++) {
                 if ((u8)(((u32)RandomIntInternal(&data_0209e650) >> 16) & 1)) {
@@ -655,10 +617,10 @@ void dScMgSlot3_c::StartRound(int mode)
             }
         }
 
-        unk_503c = ((u32)RandomIntInternal(&data_0209e650) >> 16) % mStripLength;
+        mNextWinSymbol = ((u32)RandomIntInternal(&data_0209e650) >> 16) % mStripLength;
         if (mode != 4) {
             mReelDrawY = 0;
-            mWinSymbol = unk_503c;
+            mWinSymbol = mNextWinSymbol;
         } else {
             mReelDrawY = 0x50;
             func_02012790(0x1aa);
@@ -676,7 +638,7 @@ void dScMgSlot3_c::StartRound(int mode)
                 }
             }
         }
-        unk_4ff0 = (mStripLength * 0x50) << 12;
+        mReelPeriod = (mStripLength * 0x50) << 12;
     }
 
     {
@@ -694,11 +656,11 @@ void dScMgSlot3_c::StartRound(int mode)
         for (m2 = 0; m2 < 3; m2++) {
             mReelWinPos[m2] = 0;
         }
-        unk_503d = 0;
-        unk_503e = 0x3c;
+        mStoppedReelCount = 0;
+        mStateTimer = 0x3c;
         mState = 0;
         mWinColumn = -1;
-        unk_5014 = 0;
+        mPayoutRemaining = 0;
     }
 }
 
@@ -736,7 +698,7 @@ s32 dScMgSlot3_c::Render()
             _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov006_0213e9a4[self->mWinSymbol * 3 + i], 0x80, self->mReelDrawY + 0x10, -1, 2, 0x1000, 0x1000, 0, 1);
         }
         for (i = 0; i < 3; i++) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov006_0213e9a4[self->unk_503c * 3 + i], 0x80, self->mReelDrawY + 0x60, -1, 2, 0x1000, 0x1000, 0, 1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov006_0213e9a4[self->mNextWinSymbol * 3 + i], 0x80, self->mReelDrawY + 0x60, -1, 2, 0x1000, 0x1000, 0, 1);
         }
     } else {
         for (i = 0; i < 3; i++) {
@@ -777,7 +739,7 @@ s32 dScMgSlot3_c::Render()
         }
     }
 
-    if (self->unk_503d < 3 && (self->mFrameCounter & 0x20)) {
+    if (self->mStoppedReelCount < 3 && (self->mFrameCounter & 0x20)) {
         int slot = 3;
         int ok = 1;
         int i3, j3;
@@ -955,11 +917,11 @@ s32 dScMgSlot3_c::InitResources()
     Mascot_Load(c + 0x4f38);
     Camera_InitSlotsView(c + 0x4660);
 
-    unk_5004 = (int)mLevel;
+    mReelDifficulty = (int)mLevel;
 
     ((dScMgSlot3_c *)c)->StartRound(3);
 
-    mWinSymbol = unk_503c;
+    mWinSymbol = mNextWinSymbol;
     mReelDrawY = 0;
 
     for (int i = 0; i < 3; i++) {
@@ -1206,41 +1168,40 @@ void dScMgSlot1_c::OpenMenu()
 extern "C" {  /* .c-derived member: C linkage for the whole block */
 int SlotReels_CheckStopped(void *self)
 {
-    struct SlotReels *p = (struct SlotReels *)self;
-    int ok;
-    int lead;
-    int i;
+    dScMgSlot1_c *scene = (dScMgSlot1_c *)self;
+    int matches;
+    int matchedSymbol;
+    int reelIndex;
 
-    p->wilds = 0;
-    ok = 1;
-    for (i = 0; i < 3; i++) {
-        if (p->reels[i][p->stops[i]] == 5) {
-            p->wilds++;
+    scene->mWildCount = 0;
+    matches = 1;
+    for (reelIndex = 0; reelIndex < 3; reelIndex++) {
+        if (scene->mReelStrip[reelIndex][scene->mSymbolIndex[reelIndex]] == 5) {
+            scene->mWildCount++;
         } else {
-            lead = p->reels[i][p->stops[i]];
+            matchedSymbol = scene->mReelStrip[reelIndex][scene->mSymbolIndex[reelIndex]];
             break;
         }
     }
-    if (p->wilds >= 3) {
-        lead = 5;
-    } else if (i < 2) {
-        for (i = i + 1; i < 3; i++) {
-            u8 sym = p->reels[i][p->stops[i]];
-            if (sym == 5) {
-                p->wilds++;
-            } else if (lead != sym) {
-                ok = 0;
+    if (scene->mWildCount >= 3) {
+        matchedSymbol = 5;
+    } else if (reelIndex < 2) {
+        for (reelIndex = reelIndex + 1; reelIndex < 3; reelIndex++) {
+            u8 symbol = scene->mReelStrip[reelIndex][scene->mSymbolIndex[reelIndex]];
+            if (symbol == 5) {
+                scene->mWildCount++;
+            } else if (matchedSymbol != symbol) {
+                matches = 0;
             }
         }
     }
-    if (ok) {
-        if (p->unk_4708 < 2) {
-            u8 *q = (u8 *)p + 0x4708;
-            *q += 1;
+    if (matches) {
+        if (scene->mSpeedTableOffset < 2) {
+            scene->mSpeedTableOffset += 1;
         }
-        p->matchSymbol = lead;
+        scene->mMatchedSymbol = matchedSymbol;
     }
-    return ok;
+    return matches;
 }
 }
 
@@ -1251,8 +1212,8 @@ void Slot1_InitHud(void *self)
     char *raw = (char *)self;
     *(s8 *)(raw + 0x4706) = -1;
     *(u8 *)(raw + 0x4707) = 1;
-    *(u8 *)(raw + 0x4708) = 0;
     dScMgSlot1_c *scene = (dScMgSlot1_c *)self;
+    scene->mSpeedTableOffset = 0;
     scene->mCredits = Mg_GetSavedRecord0();
     scene->mCreditsShown = scene->mCredits;
 }
@@ -1265,12 +1226,12 @@ void dScMgSlot1_c::StartRound(int i)
     char *raw = (char *)this;
 
     if (i == 4) {
-        *(u8 *)(raw + 0x4706) = unk_4709;
+        *(u8 *)(raw + 0x4706) = mMatchedSymbol;
     } else if (i == 3) {
         Slot1_InitHud(raw);
     }
     SlotBet_Reset(&mBetIcon);
-    unk_46b4 = 0;
+    mState = 0;
 }
 
 #pragma opt_strength_reduction off
@@ -1284,53 +1245,53 @@ void dScMgSlot1_c::StartRound(int i)
    so it stays a raw offset on an unsigned char* cast. */
 s32 dScMgSlot1_c::Render()
 {
-    unsigned char* t = (unsigned char*)this;
-    int i, pos, x, j;
-    unsigned char* cur = t;
-    unsigned char b;
+    unsigned char* sceneBytes = (unsigned char*)this;
+    int i, pos, drawY, j;
+    unsigned char* reelBytes = sceneBytes;
+    unsigned char wildCount;
     for (i = 0; i < 3; i++) {
-        pos = *(t + i + 0x46ff);
-        x = data_ov006_0213e63c[i][1] - (*(int*)(t + (i << 2) + 0x46a4) >> 12);
+        pos = mSymbolIndex[i];
+        drawY = data_ov006_0213e63c[i][1] - ((s32)mReelScroll[i] >> 12);
         for (j = 0; j < 2; j++) {
-            Hud_RenderSprite(data_ov006_0213e96c[*(cur + pos + 0x46c0)],
-                                data_ov006_0213e63c[i][0], x, -1, 3);
+            Hud_RenderSprite(data_ov006_0213e96c[*(reelBytes + pos + 0x46c0)],
+                                data_ov006_0213e63c[i][0], drawY, -1, 3);
             pos--;
-            x += 0x40;
+            drawY += 0x40;
             if (pos < 0)
                 pos += 0x15;
         }
-        cur += 0x15;
+        reelBytes += 0x15;
     }
     mBetIcon.Render();
     Mg_DrawBigNumber(0x70, 0xb0, mCredits, 0, 1, 1, 0x14);
-    if (unk_46b4 >= 5 && (*(t + 0x470a) != 0 || (*(t + 0x470b) != 0 && *(t + 0x470b) < 3))) {
-        b = *(t + 0x470b);
-        if (b != 0 && b < 3) {
+    if (mState >= 5 && (mHasMatch != 0 || (mWildCount != 0 && mWildCount < 3))) {
+        wildCount = mWildCount;
+        if (wildCount != 0 && wildCount < 3) {
             i = 0;
-            if ((int)b > 0) {
+            if ((int)wildCount > 0) {
                 pos = 0x18;
                 do {
                     Mg_RenderSubSpriteScaled(data_ov006_0213e96c[0xb], pos, 0x30, -1, 2, 0x1000, 0);
                     pos += 0x10;
                     i++;
-                } while (i < *(t + 0x470b));
+                } while (i < mWildCount);
             }
             Mg_RenderSubSpritePalMtx(data_ov006_0213e5ec[GetGameLanguage()][1], 0x50, 0x30, -1, 2, 0);
-            Mg_DrawBigNumber(0x60, 0x30, *(t + 0x470b) * 2, 0, 2, 2, 0x14);
+            Mg_DrawBigNumber(0x60, 0x30, mWildCount * 2, 0, 2, 2, 0x14);
         }
-        if (*(t + 0x470a) != 0) {
+        if (mHasMatch != 0) {
             i = 0;
             pos = 0x18;
             for (; i < 3; i++) {
-                Mg_RenderSubSpriteScaled(data_ov006_0213e96c[*(t + 0x4709) + 6], pos, 0x40, -1, 2, 0x1000, 0);
+                Mg_RenderSubSpriteScaled(data_ov006_0213e96c[mMatchedSymbol + 6], pos, 0x40, -1, 2, 0x1000, 0);
                 pos += 0x10;
             }
             Mg_RenderSubSpritePalMtx(data_ov006_0213e5ec[GetGameLanguage()][1], 0x50, 0x40, -1, 2, 0);
-            Mg_DrawBigNumber(0x60, 0x40, data_ov006_0213e4d8[*(t + 0x4709)], 0, 2, 2, 0x14);
+            Mg_DrawBigNumber(0x60, 0x40, data_ov006_0213e4d8[mMatchedSymbol], 0, 2, 2, 0x14);
         }
     }
-    SlotBlink_Draw(t + 0x4684);
-    SlotBlink_Draw(t + 0x4690);
+    SlotBlink_Draw(sceneBytes + 0x4684);
+    SlotBlink_Draw(sceneBytes + 0x4690);
     return 1;
 }
 
@@ -1352,56 +1313,56 @@ s32 dScMgSlot1_c::Behavior()
 {
     int i;
 
-    switch (unk_46b4) {
+    switch (mState) {
     case 0:
         for (i = 0; i < 3; i++) {
-            unk_4702[i] = 1;
+            mReelSpinning[i] = 1;
         }
-        unk_4705 = 0;
-        unk_470a = 0;
-        unk_470b = 0;
-        unk_46b4 = 1;
+        mStoppedReelCount = 0;
+        mHasMatch = 0;
+        mWildCount = 0;
+        mState = 1;
         SlotBet_OnTouch(&mBetIcon);
         if (mPromptBlinkCount == 0) {
             mPromptEnabled = 1;
             mPromptBlinkCount = 1;
             mPromptBlinkTimer = 0;
         }
-        unk_470c = 0x3c;
+        mStateTimer = 0x3c;
         break;
     case 1:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
             Sound::PlayBank2_2D(0x160);
-            unk_470c = 0x1e;
-            unk_46b4 = 2;
+            mStateTimer = 0x1e;
+            mState = 2;
         }
         break;
     case 2:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
-            unk_46b4 = 3;
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
+            mState = 3;
         }
         break;
     case 3: {
         int moving = 0;
         for (i = 0; i < 3; i++) {
-            if (unk_4702[i] == 1 || unk_46a4[i] != 0) {
+            if (mReelSpinning[i] == 1 || mReelScroll[i] != 0) {
                 moving++;
-                unk_46a4[i] -= data_ov006_0213e600[unk_4708 + i];
-                if ((int)unk_46a4[i] < 0) {
-                    if (unk_4702[i] == 1) {
-                        unk_46ff[i]++;
-                        unk_46ff[i] %= 21;
-                        unk_46a4[i] += 0x40000;
+                mReelScroll[i] -= data_ov006_0213e600[mSpeedTableOffset + i];
+                if ((int)mReelScroll[i] < 0) {
+                    if (mReelSpinning[i] == 1) {
+                        mSymbolIndex[i]++;
+                        mSymbolIndex[i] %= 21;
+                        mReelScroll[i] += 0x40000;
                     } else {
-                        unk_46a4[i] = 0;
+                        mReelScroll[i] = 0;
                     }
                 }
             }
         }
         if (moving != 0) {
-            unk_46b0 = Sound_PlayIfNotActive(unk_46b0, 2, 0x161, 0);
+            mSpinSoundHandle = Sound_PlayIfNotActive(mSpinSoundHandle, 2, 0x161, 0);
         }
-        if (unk_4705 < 3) {
+        if (mStoppedReelCount < 3) {
             int hit = 0;
             u8 idx = gActivePlayerSlot;
             if (gTouchHeld[idx * 4] != 0) {
@@ -1411,12 +1372,12 @@ s32 dScMgSlot1_c::Behavior()
             }
             if (hit != 0) {
                 for (i = 0; i < 3; i++) {
-                    if (unk_4702[i] == 1) {
+                    if (mReelSpinning[i] == 1) {
                         int dx = ((TouchRec *)gTouchHeld)[idx].x - data_ov006_0213e63c[i][0];
                         int dy = ((TouchRec *)gTouchHeld)[idx].y - data_ov006_0213e63c[i][1];
                         if (dx <= 0x20 && dx >= -0x20 && dy <= 0x20 && dy >= -0x20) {
-                            unk_4702[i] = 0;
-                            unk_4705++;
+                            mReelSpinning[i] = 0;
+                            mStoppedReelCount++;
                             if (mBetIcon.unk_011 != 0) {
                                 mBetIcon.unk_011 = 0;
                                 Mg_SaveRecordPair(mCredits, mHudScore);
@@ -1431,90 +1392,90 @@ s32 dScMgSlot1_c::Behavior()
         } else {
             int stopped = 1;
             for (i = 0; i < 3; i++) {
-                if (unk_46a4[i] != 0) {
+                if (mReelScroll[i] != 0) {
                     stopped = 0;
                 }
             }
             if (stopped == 1) {
-                unk_470a = SlotReels_CheckStopped(this);
-                unk_46b8 = 0;
-                if (unk_470a != 0) {
-                    unk_46b8 += data_ov006_0213e4d8[unk_4709];
+                mHasMatch = SlotReels_CheckStopped(this);
+                mPayoutMultiplier = 0;
+                if (mHasMatch != 0) {
+                    mPayoutMultiplier += data_ov006_0213e4d8[mMatchedSymbol];
                 }
-                if (unk_470b != 0 && unk_470b < 3) {
-                    unk_46b8 += unk_470b << 1;
+                if (mWildCount != 0 && mWildCount < 3) {
+                    mPayoutMultiplier += mWildCount << 1;
                 }
-                Mg_SaveRecordPair(mCredits + unk_46b8 * mBetIcon.unk_01c, mHudScore);
-                unk_46b4 = 4;
-                unk_470c = 0x3c;
+                Mg_SaveRecordPair(mCredits + mPayoutMultiplier * mBetIcon.unk_01c, mHudScore);
+                mState = 4;
+                mStateTimer = 0x3c;
             }
         }
         break;
     }
     case 4:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
-            if (unk_470a != 0) {
-                SlotBlink_Start(pad_4684, data_ov006_0213e654[unk_4709][0], data_ov006_0213e656[unk_4709][0]);
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
+            if (mHasMatch != 0) {
+                SlotBlink_Start(pad_4684, data_ov006_0213e654[mMatchedSymbol][0], data_ov006_0213e656[mMatchedSymbol][0]);
             }
-            if (unk_470b != 0 && unk_470b < 3) {
-                SlotBlink_Start(pad_4690, data_ov006_0213e4f8[unk_470b - 1][0], data_ov006_0213e4fa[unk_470b - 1][0]);
+            if (mWildCount != 0 && mWildCount < 3) {
+                SlotBlink_Start(pad_4690, data_ov006_0213e4f8[mWildCount - 1][0], data_ov006_0213e4fa[mWildCount - 1][0]);
             }
-            if (unk_46b8 != 0) {
-                unk_46b4 = 5;
-                unk_470c = 0x64;
+            if (mPayoutMultiplier != 0) {
+                mState = 5;
+                mStateTimer = 0x64;
                 SlotLamp_Start(pad_469c);
                 func_02012790(0x26);
             } else {
-                unk_46b4 = 7;
-                unk_470c = 0x3c;
+                mState = 7;
+                mStateTimer = 0x3c;
                 func_02012790(0xe);
             }
             mPromptEnabled = 0;
         }
         break;
     case 5:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
-            SlotReel_SetSpeed(&mBetIcon, unk_46b8);
-            unk_470c = 0x3c;
-            unk_46b4 = 6;
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
+            SlotReel_SetSpeed(&mBetIcon, mPayoutMultiplier);
+            mStateTimer = 0x3c;
+            mState = 6;
         }
         break;
     case 6: {
         int done = (mBetIcon.unk_020 == 0) ? 1 : 0;
         if (done != 0) {
             Mg_SubmitScore(mCredits);
-            if (DecIfAbove0_Byte(&unk_470c) == 0) {
+            if (DecIfAbove0_Byte(&mStateTimer) == 0) {
                 StartRound(4);
             }
         }
         break;
     }
     case 7:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
             if (mCredits > 0) {
                 StartRound(5);
             } else {
                 int j;
                 char *p = (char *)this;
                 for (j = 0; j < 3; j++) {
-                    unk_46a4[j] += 0x40000;
-                    unk_46ff[j]++;
-                    unk_46ff[j] %= 21;
-                    *(u8 *)(p + unk_46ff[j] + 0x46c0) = 0xd;
+                    mReelScroll[j] += 0x40000;
+                    mSymbolIndex[j]++;
+                    mSymbolIndex[j] %= 21;
+                    *(u8 *)(p + mSymbolIndex[j] + 0x46c0) = 0xd;
                     p += 0x15;
                 }
-                unk_46b4 = 9;
+                mState = 9;
             }
         }
         break;
     case 9:
     case 11: {
-        int idx = (unk_46b4 - 9) >> 1;
-        unk_46a4[idx] -= 0x2000;
-        if ((int)unk_46a4[idx] < 0) {
-            unk_46a4[idx] = 0;
-            unk_470c = 0xa;
-            unk_46b4++;
+        int idx = (mState - 9) >> 1;
+        mReelScroll[idx] -= 0x2000;
+        if ((int)mReelScroll[idx] < 0) {
+            mReelScroll[idx] = 0;
+            mStateTimer = 0xa;
+            mState++;
             func_02012718(0x164, data_ov006_0213e63c[idx][0] << 12);
             if (idx == 0) {
                 Mg_PlayJingle((void *) 2);
@@ -1523,16 +1484,16 @@ s32 dScMgSlot1_c::Behavior()
         break;
     }
     case 13:
-        unk_46a4[2] -= 0x2000;
-        if ((int)unk_46a4[2] < 0) {
-            unk_46a4[2] = 0;
-            unk_470c = 0x3c;
-            unk_46b4 = 8;
+        mReelScroll[2] -= 0x2000;
+        if ((int)mReelScroll[2] < 0) {
+            mReelScroll[2] = 0;
+            mStateTimer = 0x3c;
+            mState = 8;
             func_02012718(0x164, data_ov006_0213e63c[2][0] << 12);
         }
         break;
     case 8:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
             dScene_c::SetFaders(&data_0209f61c);
             data_0209f61c.func_0202ec9c(2);
             dScene_c::StartSceneFade(5, 0, 0);
@@ -1540,8 +1501,8 @@ s32 dScMgSlot1_c::Behavior()
         break;
     case 10:
     case 12:
-        if (DecIfAbove0_Byte(&unk_470c) == 0) {
-            unk_46b4++;
+        if (DecIfAbove0_Byte(&mStateTimer) == 0) {
+            mState++;
         }
         break;
     }
@@ -1641,9 +1602,9 @@ s32 dScMgSlot1_c::InitResources()
             for (i = 0; i < 0x15; i++) {
                 *(u8 *)(p + 0x46c0 + i) = tbl[i];
             }
-            unk_46ff[j] = 0;
-            unk_46a4[j] = 0x40000;
-            unk_4702[j] = 1;
+            mSymbolIndex[j] = 0;
+            mReelScroll[j] = 0x40000;
+            mReelSpinning[j] = 1;
             tbl += 0x15;
             p += 0x15;
         }
@@ -1655,15 +1616,15 @@ s32 dScMgSlot1_c::InitResources()
             for (i = 0; i < 0x15; i++) {
                 *(u8 *)(p + 0x46c0 + i) = tbl[i];
             }
-            unk_46ff[k] = 0;
-            unk_46a4[k] = 0x40000;
-            unk_4702[k] = 1;
+            mSymbolIndex[k] = 0;
+            mReelScroll[k] = 0x40000;
+            mReelSpinning[k] = 1;
             tbl += 0x15;
             p += 0x15;
         }
     }
 
-    unk_4709 = 5;
+    mMatchedSymbol = 5;
     unk_46bc = 0xa;
     Mg_SubmitScore(unk_46bc);
     SlotBet_Place((char *)&mBetIcon);
