@@ -9,7 +9,7 @@
   "boundary_evidence": [
     "contiguous class linker run: 0x2120570..0x2121118, 19 function(s) including daBrq_c_classInit (historical alias Amp_Spawn) folded as return new daBrq_c()",
     "ROM class identity: _ZTS7daBrq_c at 0x0212323c, _ZTI7daBrq_c at 0x02123248, and _ZTV7daBrq_c public address point at 0x02123278",
-    "the adjacent deferred initializer at 0x02122d80 constructs daBrq_c resource globals and its PMF state table, but the initializer, .ctor word, read-only input tables, and resource BSS remain separately enrolled until their source types are reconstructed"
+    "the deferred initializer at 0x02122d80 still writes the file ids, registration nodes, cylinder offset and state table; this file defines that storage, the rodata pointer pair, the BTA words and the six PMF constants"
   ],
   "sections": [
     {
@@ -18,9 +18,19 @@
       "end": "0x02121118"
     },
     {
+      "name": ".rodata",
+      "start": "0x02122244",
+      "end": "0x021222e8"
+    },
+    {
       "name": ".data",
-      "start": "0x0212323c",
+      "start": "0x021231e4",
       "end": "0x021232f4"
+    },
+    {
+      "name": ".bss",
+      "start": "0x021235ec",
+      "end": "0x02123698"
     }
   ],
   "functions": [
@@ -160,6 +170,54 @@
   ],
   "data": [
     {
+      "symbol": "data_ov070_021231e4",
+      "address": "0x021231e4",
+      "size": "0x10",
+      "evidence": "material name mat_bilikyu2, 16 bytes, no relocations"
+    },
+    {
+      "symbol": "data_ov070_021231f4",
+      "address": "0x021231f4",
+      "size": "0x18",
+      "evidence": "BTA words: 0x3c, pointers to the rodata runs defined in this file, 1, pointer to 0x0212224c"
+    },
+    {
+      "symbol": "data_ov070_0212320c",
+      "address": "0x0212320c",
+      "size": "0x8",
+      "evidence": "PMF constant for EnterCooldownState plus a zero adjustment"
+    },
+    {
+      "symbol": "data_ov070_02123214",
+      "address": "0x02123214",
+      "size": "0x8",
+      "evidence": "PMF constant for EnterActiveState plus a zero adjustment"
+    },
+    {
+      "symbol": "data_ov070_0212321c",
+      "address": "0x0212321c",
+      "size": "0x8",
+      "evidence": "PMF constant for EnterDefeatedState plus a zero adjustment"
+    },
+    {
+      "symbol": "data_ov070_02123224",
+      "address": "0x02123224",
+      "size": "0x8",
+      "evidence": "PMF constant for UpdateCooldownState plus a zero adjustment"
+    },
+    {
+      "symbol": "data_ov070_0212322c",
+      "address": "0x0212322c",
+      "size": "0x8",
+      "evidence": "PMF constant for UpdateDefeatedState plus a zero adjustment"
+    },
+    {
+      "symbol": "data_ov070_02123234",
+      "address": "0x02123234",
+      "size": "0x8",
+      "evidence": "PMF constant for UpdateActiveState plus a zero adjustment"
+    },
+    {
       "symbol": "_ZTS7daBrq_c",
       "address": "0x0212323c",
       "size": "0x9",
@@ -186,9 +244,252 @@
       "evidence": "compiler storage includes the two-word vtable preamble at 0x02123270; the configured public address point is eight bytes later and all 31 slot relocations match"
     }
   ],
-  "rodata": [],
-  "bss": [],
+  "rodata": [
+    {
+      "symbol": "data_ov070_02122244",
+      "address": "0x02122244",
+      "size": "0x4",
+      "evidence": "one 0x1000 unit the BTA record points at"
+    },
+    {
+      "symbol": "data_ov070_02122248",
+      "address": "0x02122248",
+      "size": "0x4",
+      "evidence": "zero word the BTA record points at"
+    },
+    {
+      "symbol": "data_ov070_0212224c",
+      "address": "0x0212224c",
+      "size": "0x1c",
+      "evidence": "seven words: 0x0000ffff, pointer to mat_bilikyu2, then 1, 1, 0x3c, 1, 1"
+    },
+    {
+      "symbol": "data_ov070_02122268",
+      "address": "0x02122268",
+      "size": "0x78",
+      "evidence": "60 frame values, 30 words, no relocations"
+    },
+    {
+      "symbol": "data_ov070_021222e0",
+      "address": "0x021222e0",
+      "size": "0x8",
+      "evidence": "two SharedFilePtr pointers: data_ov070_021235f4 and data_ov070_0212360c"
+    }
+  ],
+  "bss": [
+    {
+      "symbol": "data_ov070_021235ec",
+      "address": "0x021235ec",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "texture-sequence handle; __sinit_ov070_02122d80 constructs file 692"
+    },
+    {
+      "symbol": "data_ov070_021235f4",
+      "address": "0x021235f4",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "animation handle; __sinit_ov070_02122d80 constructs file 690"
+    },
+    {
+      "symbol": "data_ov070_021235fc",
+      "address": "0x021235fc",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "model handle; __sinit_ov070_02122d80 constructs file 689"
+    },
+    {
+      "symbol": "data_ov070_02123604",
+      "address": "0x02123604",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "model handle; __sinit_ov070_02122d80 constructs file 691"
+    },
+    {
+      "symbol": "data_ov070_0212360c",
+      "address": "0x0212360c",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "animation handle; __sinit_ov070_02122d80 constructs file 693"
+    },
+    {
+      "symbol": "data_ov070_02123614",
+      "address": "0x02123614",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_021235fc"
+    },
+    {
+      "symbol": "data_ov070_02123620",
+      "address": "0x02123620",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_02123604"
+    },
+    {
+      "symbol": "data_ov070_0212362c",
+      "address": "0x0212362c",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_021235f4"
+    },
+    {
+      "symbol": "data_ov070_02123638",
+      "address": "0x02123638",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_0212360c"
+    },
+    {
+      "symbol": "data_ov070_02123644",
+      "address": "0x02123644",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_0212365c"
+    },
+    {
+      "symbol": "data_ov070_02123650",
+      "address": "0x02123650",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "destructor-registration node for data_ov070_021235ec"
+    },
+    {
+      "symbol": "data_ov070_0212365c",
+      "address": "0x0212365c",
+      "size": "0xc",
+      "binding": "STB_GLOBAL",
+      "evidence": "cylinder offset; __sinit_ov070_02122d80 stores 0, -0x28000, 0"
+    },
+    {
+      "symbol": "data_ov070_02123668",
+      "address": "0x02123668",
+      "size": "0x30",
+      "binding": "STB_GLOBAL",
+      "evidence": "three state records; __sinit_ov070_02122d80 copies the six PMF constants into them"
+    }
+  ],
   "relocations": [
+    {
+      "section": ".rodata",
+      "source": "0x021222e0",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_021235f4",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x021235f4"
+    },
+    {
+      "section": ".rodata",
+      "source": "0x021222e4",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_0212360c",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x0212360c"
+    },
+    {
+      "section": ".data",
+      "source": "0x021231f8",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_02122244",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02122244"
+    },
+    {
+      "section": ".data",
+      "source": "0x021231fc",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_02122268",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02122268"
+    },
+    {
+      "section": ".data",
+      "source": "0x02123200",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_02122248",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02122248"
+    },
+    {
+      "section": ".data",
+      "source": "0x02123208",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_0212224c",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x0212224c"
+    },
+    {
+      "section": ".data",
+      "source": "0x0212320c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c18EnterCooldownStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02120ce4"
+    },
+    {
+      "section": ".data",
+      "source": "0x02123214",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c16EnterActiveStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02120bf8"
+    },
+    {
+      "section": ".data",
+      "source": "0x0212321c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c18EnterDefeatedStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02120910"
+    },
+    {
+      "section": ".data",
+      "source": "0x02123224",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c19UpdateCooldownStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x02120cac"
+    },
+    {
+      "section": ".data",
+      "source": "0x0212322c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c19UpdateDefeatedStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x021208a4"
+    },
+    {
+      "section": ".data",
+      "source": "0x02123234",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7daBrq_c17UpdateActiveStateEv",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x021209e4"
+    },
     {
       "section": ".data",
       "source": "0x02123248",
@@ -548,6 +849,16 @@
       "addend": 0,
       "target_module": "arm9",
       "target_address": "0x020100dc"
+    },
+    {
+      "section": ".rodata",
+      "source": "0x02122250",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "data_ov070_021231e4",
+      "addend": 0,
+      "target_module": "ov070",
+      "target_address": "0x021231e4"
     }
   ],
   "externalized_output": [
@@ -788,16 +1099,29 @@
           "firstDiff": null
         },
         {
+          "section": ".rodata",
+          "start": "0x02122244",
+          "end": "0x021222e8",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
           "section": ".data",
-          "start": "0x0212323c",
+          "start": "0x021231e4",
           "end": "0x021232f4",
           "differingBytes": 0,
           "firstDiff": null
+        },
+        {
+          "section": ".bss",
+          "start": "0x021235ec",
+          "end": "0x02123698",
+          "comparison": "NOBITS -- symbol/module gates"
         }
       ],
       "objectAudit": {
         "counts": {
-          "LICENSED": 23
+          "LICENSED": 49
         },
         "emittedTextOrderIsRomAscending": true,
         "nonLicensedSymbols": [],
@@ -806,22 +1130,212 @@
       "nontextSectionOrder": {
         "groups": [
           {
-            "section": ".data",
+            "section": ".rodata",
             "original": [
+              5,
+              6,
               7,
-              11,
-              17,
-              19
+              48,
+              53
             ],
             "desired": [
-              7,
-              11,
+              5,
+              6,
+              48,
+              53,
+              7
+            ]
+          },
+          {
+            "section": ".data",
+            "original": [
+              10,
+              12,
+              14,
+              21,
+              23,
+              26,
+              30,
+              34,
+              45,
+              46,
+              50,
+              54
+            ],
+            "desired": [
+              45,
+              46,
+              23,
+              26,
+              14,
+              10,
+              21,
+              12,
+              30,
+              34,
+              50,
+              54
+            ]
+          },
+          {
+            "section": ".bss",
+            "original": [
+              9,
+              16,
               17,
-              19
+              18,
+              25,
+              32,
+              33,
+              36,
+              37,
+              38,
+              39,
+              42,
+              52
+            ],
+            "desired": [
+              9,
+              16,
+              17,
+              25,
+              18,
+              32,
+              42,
+              33,
+              39,
+              36,
+              37,
+              38,
+              52
             ]
           }
         ],
-        "objisolate": null,
+        "objisolate": {
+          "reordered": [
+            {
+              "section": ".rodata",
+              "original": [
+                5,
+                6,
+                7,
+                48,
+                53
+              ],
+              "desired": [
+                5,
+                6,
+                48,
+                53,
+                7
+              ],
+              "slots": [
+                5,
+                6,
+                7,
+                48,
+                53
+              ]
+            },
+            {
+              "section": ".data",
+              "original": [
+                10,
+                12,
+                14,
+                21,
+                23,
+                26,
+                30,
+                34,
+                45,
+                46,
+                50,
+                54
+              ],
+              "desired": [
+                45,
+                46,
+                23,
+                26,
+                14,
+                10,
+                21,
+                12,
+                30,
+                34,
+                50,
+                54
+              ],
+              "slots": [
+                10,
+                12,
+                14,
+                21,
+                23,
+                26,
+                30,
+                34,
+                45,
+                46,
+                50,
+                54
+              ]
+            },
+            {
+              "section": ".bss",
+              "original": [
+                9,
+                16,
+                17,
+                18,
+                25,
+                32,
+                33,
+                36,
+                37,
+                38,
+                39,
+                42,
+                52
+              ],
+              "desired": [
+                9,
+                16,
+                17,
+                25,
+                18,
+                32,
+                42,
+                33,
+                39,
+                36,
+                37,
+                38,
+                52
+              ],
+              "slots": [
+                9,
+                16,
+                17,
+                18,
+                25,
+                32,
+                33,
+                36,
+                37,
+                38,
+                39,
+                42,
+                52
+              ]
+            }
+          ],
+          "symbolIndices": 30,
+          "sectionLinks": 0,
+          "sectionInfos": 12,
+          "error": null
+        },
         "errors": null
       },
       "linkedStorageAliases": null,
