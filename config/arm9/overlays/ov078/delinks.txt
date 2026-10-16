@@ -12,3 +12,4 @@ src/game/actors/d_a_bombking.cpp:
 src/unnamed/ov078/__sinit_ov078_02126660.c:
     complete
     .init start:0x02126660 end:0x02126cd4
+    .bss start:0x02126f48 end:0x02126ffc
