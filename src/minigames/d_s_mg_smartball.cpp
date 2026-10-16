@@ -394,7 +394,14 @@ int Mg_DrawTopLeftCounter(void *self);
 void Mg_DrawBlinkSprite(void *c, int a1, int a2);
 extern OamAttr *data_ov006_02138ae0[];
 extern char *data_ov006_0213ecb8[];
-extern int data_ov006_0212edfc[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_ov006_0212edfc[4] = {
+    500, 0x7d0, 0xfa0, 0x1f40
+};
+#pragma section forcerodata end
+}
 extern OamAttr *data_ov006_02137a78[];
 extern OamAttr *data_ov006_02137a6c[];
 extern OamAttr *data_ov006_02138bd0[];

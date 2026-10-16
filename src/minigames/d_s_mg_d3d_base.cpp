@@ -35,7 +35,14 @@ extern void *data_ov006_02141a50;
 #pragma cplusplus off
 Oam data_ov006_02141a54[128];
 #pragma cplusplus on
-extern unsigned char data_ov006_0212e574[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned char data_ov006_0212e574[8] = {
+    0, 64, 128, 192, 192, 0, 0, 0
+};
+#pragma section forcerodata end
+}
 
 /* arm9 / ov004 globals with no project header. */
 extern unsigned char data_0209d454;

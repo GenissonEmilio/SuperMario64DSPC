@@ -130,7 +130,22 @@ extern int data_ov006_0212e430[];
 extern u16 data_ov006_0212e334[];
 extern s16 data_02082214[];
 extern int data_ov006_021341ec;
-extern int data_ov006_0212e364[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned int data_ov006_0212e364[3] = {
+    0xffffff58U, 0xffffff94U, 0xffffffd0U
+};
+
+unsigned int data_ov006_0212e358[3] = {
+    48, 112, 176
+};
+
+unsigned int data_ov006_0212e34c[3] = {
+    0, 0xc00, 0xfffff400U
+};
+#pragma section forcerodata end
+}
 extern int *data_ov006_0213bf34[];
 extern int GetGameLanguage(void);
 extern void Mg_DrawCreditsIcon(int r0, int r1, int r2, int r3);
@@ -141,7 +156,6 @@ extern void *data_ov006_02136e24[];
 extern void *data_ov006_02134b4c[];
 extern void Mg_RenderSpriteBothPalMtx(void *obj, int x, int y, int w, int *vec);
 extern void func_020127a4(int a, int b, int c, int d);
-extern int data_ov006_0212e358[];
 extern void RenderOamBothScreens(void *a0, int a1, int a2, int a3, int a4, void *a5);
 extern void RenderOamMainScreen(int a, int b, int c, int d, int e);
 extern u16 data_ov006_0212e314[];
@@ -152,7 +166,6 @@ extern int data_ov006_0212e3d0[];
 extern int data_ov006_0212e3e8[];
 extern int data_ov006_0212e3a0[];
 extern int data_ov006_0212e3b8[];
-extern int data_ov006_0212e34c[];
 extern u16 data_ov006_0212e32c[];
 extern void FreeGfxSlotsById(int n);
 extern void Mg_PlayJingle(void *c);
