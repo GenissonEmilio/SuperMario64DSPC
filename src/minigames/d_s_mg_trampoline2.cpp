@@ -1,4 +1,5 @@
 //cpp
+#include "dFdBrightness_c.h"
 /* Runtime asset handles resolved through the overlay 0 file table. */
 enum d_s_mg_trampoline2_AssetId {
     ASSET_D_2D_MG_BG_TRAMPOLINE_HARD_NCG_BIN = 0x00a2,
@@ -151,7 +152,7 @@ extern char *_ZN2G212GetBG2ScrPtrEv(void);
 extern char *_ZN2G212GetBG3ScrPtrEv(void);
 extern void MultiStore16(unsigned short val, char *dst, int nbytes);
 extern const unsigned char data_ov006_0212f1ac[];
-extern char* data_0209f5bc;
+extern dFdBrightness_c* data_0209f5bc;
 extern int data_ov006_0213fbc4;
 unsigned int func_02012790(unsigned int a);
 int TrmpLine_Create(u16* a, u16* b);
@@ -1063,17 +1064,10 @@ int dScMgTrampoline2_c::OnGraphCallback0()
     if (!dScMgBase_c::OnGraphCallback0())
         return 0;
 
-    {
-        char* obj = data_0209f5bc;
-        int (*vf)(char*) = *(int (**)(char*))(*(char**)obj + 0x14);
-        if (vf(obj)) {
-            data_ov006_0213fbc4 = 0;
-        } else {
-            char* obj2 = data_0209f5bc;
-            int (*vf2)(char*) = *(int (**)(char*))(*(char**)obj2 + 0x1c);
-            if (vf2(obj2))
-                data_ov006_0213fbc4 = 1;
-        }
+    if (data_0209f5bc->IsAtStart()) {
+        data_ov006_0213fbc4 = 0;
+    } else if (data_0209f5bc->IsBetweenStartAndEnd()) {
+        data_ov006_0213fbc4 = 1;
     }
 
     if (data_ov006_0213fbc4 != 0)

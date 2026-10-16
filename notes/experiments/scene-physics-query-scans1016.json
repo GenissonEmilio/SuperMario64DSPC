@@ -1,0 +1,181 @@
+{
+  "base_commit": "5571487fe02558997dce98d5a30ecf8d8ea72bce",
+  "scope": "Continue scene and physics readability: collision query scans, collision-property helpers and the Trampoline Terror fader callback.",
+  "changes": [
+    "Name collider slots, owners, clipping centres/distances, sphere bounds and hit masks throughout the ground, line and sphere scans.",
+    "Replace line-query bounds and result-base offsets with the established mBoundSphere member and dBgPi base calls; simplify the collider-slot range check to ordinary early returns.",
+    "Use CLPS and SurfaceInfo members in property accessors, default-property initialization and the surface copy while retaining external signatures and the proven 64-bit copy ordering.",
+    "Use dBgPi::owner for the word-at-0x20 helper and explain its legacy integer-address return type.",
+    "Clarify the by-value surface-init record fields and callback locals; remove four obsolete local declarations and stale RecordHit notes.",
+    "Replace Trampoline Terror callback fader vtable-offset calls with dFdBrightness_c::IsAtStart and IsBetweenStartAndEnd.",
+    "Update only the scene manifest compiler input @1100 to @1111, preserving its existing canonical @1086 destination."
+  ],
+  "evidence": {
+    "layouts": [
+      "include/dBgCh_Lin.h: mBoundSphere at 0x64, centre at 0x68, radius at 0x74; dBgPi base at 0x10.",
+      "include/dBgPi.h: owner at 0x20; src/game/actors/d_a_mky.cpp passes a native dBgPi result to func_02037f44.",
+      "include/CLPS.h and include/SurfaceInfo.h: eight-byte CLPS followed by the three-word normal.",
+      "include/dBgW.h and src/engine/collision/d_bg_w.cpp: owner and ownerUniqueID accessors.",
+      "include/dFdBrightness_c.h: fader virtual slots 5 and 7; the established SetFaders contract is documented in prior scene-physics checkpoints."
+    ],
+    "retail_instructions": [
+      "0x02037f44: ldr r0, [r0, #0x20]; bx lr.",
+      "0x02037dc4: add r0, r0, #8; bx lr.",
+      "0x02037de8: loads CLPS words at +0/+4 before either store, then copies the normal words at +8/+0xc/+0x10."
+    ],
+    "sphere_local_lifetime_experiment": {
+      "function": "_ZN12dBgCh_SphCrr10DetectClsnEv",
+      "original_size": 812,
+      "split_locals_size": 812,
+      "split_locals_match": false,
+      "shared_integer_only_match": false,
+      "retained_original_lifetimes_match": true,
+      "disposition": "Preserve the shared pointer lifetime and document its collider-to-centre reuse; retain the result local reused for the clipping distance."
+    },
+    "compiler_label_mapping": {
+      "old_input": "@1100",
+      "new_input": "@1111",
+      "canonical_destination": "@1086",
+      "module": "ov006",
+      "canonical_rom_address": "0x02142f88",
+      "binding": "STB_LOCAL",
+      "type": "STT_OBJECT",
+      "section": ".bss",
+      "section_offset": 0,
+      "size": 12,
+      "proof": "Apply the established old mapping to the baseline object and the new mapping to the candidate. All allocated bytes and named relocation records are then exactly identical; no relocated words are masked."
+    },
+    "runtime_validation": "melonDS was not needed or used for this pass. Names follow established layouts, direct retail instructions and the matching call sites."
+  },
+  "verification": {
+    "complete_allocated_sections_and_relocations": {
+      "base": "5571487fe02558997dce98d5a30ecf8d8ea72bce",
+      "compiler": "2004/b56",
+      "files": [
+        {
+          "file": "src/engine/collision/d_bg_ch_sph_crr_query.cpp",
+          "source_sha256": "2474df4e0146aca68cf89faac2b356ed4c391115b3a25ee126dcfdc64dfd516c",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 66,
+          "after_sections": 66,
+          "before_sha256": "4edc021a882a8e86ec59c05976e4ba81598c3926673ec48c86034f69224a2039",
+          "after_sha256": "4edc021a882a8e86ec59c05976e4ba81598c3926673ec48c86034f69224a2039"
+        },
+        {
+          "file": "src/minigames/d_s_mg_trampoline2.cpp",
+          "source_sha256": "e744739139ed2a6ad4489dad7eb109e54fca942acf009c7931f495d9a4d7ac9f",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 71,
+          "after_sections": 71,
+          "before_sha256": "a98740a64c39822f13f7a86df527bb9f8f1bb8fc881525af4baa23480a3d09e2",
+          "after_sha256": "a98740a64c39822f13f7a86df527bb9f8f1bb8fc881525af4baa23480a3d09e2"
+        }
+      ]
+    },
+    "comparison_script": "build/scene-physics4-canonical-control.py",
+    "comparison_script_sha256": "596cf9e9877b3855b82a7bcc099df34f965fdf95e6ec6500c7ac4bc669d99d04",
+    "initial_label_mapping_failure": {
+      "focused_check_exit_code": 1,
+      "report_sha256": "41eb0e3f6f599f99e0ef716050b3262e6196c263a0dcaadfbc092b89f7031616",
+      "finding": {
+        "file": "src/minigames/d_s_mg_trampoline2.cpp",
+        "name": "__sinit_d_s_mg_trampoline2.cpp",
+        "module": "ov006",
+        "addr": "0x213322c",
+        "verdict": "WRONG",
+        "blind": 3,
+        "diffs": [
+          {
+            "off": "+0x3c",
+            "sym": "@1111",
+            "target": "0x02114898"
+          }
+        ]
+      },
+      "initial_rombuild_exit_code": 1,
+      "initial_rombuild_log_sha256": "99d8e90a65978dd76de34bcda221572dc1ca59c1e896bfca59bb7b1accaa8cad",
+      "disposition": "The added header renumbered the compiler-local object. The stale @1100 source mapping was replaced by the proven @1111 source mapping, keeping canonical @1086; both gates were rerun."
+    },
+    "focused_linkcheck": {
+      "command": "python tools/prepush_linkcheck.py --files src/engine/collision/d_bg_ch_sph_crr_query.cpp src/minigames/d_s_mg_trampoline2.cpp --json build/scene-physics4-linkcheck-final.json",
+      "exit_code": 0,
+      "functions": 100,
+      "verified": 99,
+      "blocking": 0,
+      "unresolved_functions": 1,
+      "unresolved_relocations": 3,
+      "unresolved_result": [
+        {
+          "file": "src/minigames/d_s_mg_trampoline2.cpp",
+          "name": "__sinit_d_s_mg_trampoline2.cpp",
+          "module": "ov006",
+          "addr": "0x213322c",
+          "verdict": "BLIND-3",
+          "blind": 3,
+          "diffs": []
+        }
+      ],
+      "baseline_control": [
+        {
+          "side": "before",
+          "isolation_plan_error": null,
+          "result": {
+            "name": "__sinit_d_s_mg_trampoline2.cpp",
+            "module": "ov006",
+            "addr": "0x0213322c",
+            "verdict": "BLIND-3",
+            "diffs": [],
+            "blind": 3
+          }
+        },
+        {
+          "side": "after",
+          "isolation_plan_error": null,
+          "result": {
+            "name": "__sinit_d_s_mg_trampoline2.cpp",
+            "module": "ov006",
+            "addr": "0x0213322c",
+            "verdict": "BLIND-3",
+            "diffs": [],
+            "blind": 3
+          }
+        }
+      ],
+      "report_sha256": "b6a5c98c6b346b628ae7bf1b41e32a9fa6c32d057a9420dfb7798656b4e17296"
+    },
+    "declaration_agreement": {
+      "command": "python tools/check_decl_agreement.py --changed 723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+      "exit_code": 0,
+      "scoped_files": 1423,
+      "new_disagreements": 0,
+      "new_local_redeclarations": 0
+    },
+    "rombuild": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "module_fidelity": "106/106 exact",
+      "source_functions_reproducing": 11334,
+      "source_functions_mismatching": 0,
+      "source_owned_data_reproducing": 338,
+      "source_owned_data_mismatching": 0,
+      "source_owned_bss_claims": 245,
+      "intact_tu_gates": "dsd modules PASS; zero new symbol errors; storage aliases exact",
+      "log_sha256": "cb777e15e4715f34380b5534e6e73def458db117fc997a6e83c34f35900d5bfb",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15,
+        "note": "Unchanged from the previous checkpoint; separate from exact linked-module and source-owned-data gates."
+      }
+    },
+    "diff_check": {
+      "exit_code": 0
+    }
+  },
+  "remaining_work": [
+    "The broader scene and physics readability goal remains active.",
+    "Retain the initializer isolated-relocation coverage limitation; its three unresolved slots are not VERIFIED.",
+    "Independent source review and publication have not been performed."
+  ]
+}
