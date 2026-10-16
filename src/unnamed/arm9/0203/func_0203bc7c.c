@@ -39,3 +39,5 @@ void func_0203bc7c(void)
         p++;
     }
 }
+
+u16 data_020a0e48[4];

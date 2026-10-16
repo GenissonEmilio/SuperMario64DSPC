@@ -107,3 +107,7 @@ int func_02009aa8(char *self)
 
     return 1;
 }
+
+s32 data_02086e90[3] = {
+    0, 0x80000, 0
+};

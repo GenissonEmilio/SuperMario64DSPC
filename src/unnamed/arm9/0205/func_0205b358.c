@@ -59,3 +59,5 @@ void func_0205b358(void)
     func_0205b1a4((struct Node5b1a4 *)p);
     func_0205b070(1);
 }
+
+unsigned char data_020a7760[2024];

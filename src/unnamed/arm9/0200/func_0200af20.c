@@ -81,3 +81,11 @@ void func_0200af20(char *c, struct Vector3 *v1, struct Vector3 *v2, short *out)
     _ZN8dClipper13Func_020156DCEitii(data_0209f43c, *(int *)(c + 0xf8), *out, *(int *)(c + 0xfc), *(int *)(c + 0x100));
     *(int *)(int)(c + 0x154) &= ~1;
 }
+
+int data_02086f38[4] = {
+    0x1f40000, -0x1f40000, 0x1b8a000, -0x1f40000
+};
+
+int data_02086f48[4] = {
+    0x119c000, -0xe9b000, 0x119c000, -0xe9b000
+};

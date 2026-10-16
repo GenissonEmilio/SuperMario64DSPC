@@ -1254,3 +1254,7 @@ extern "C" void func_020134c8(void)
     /* arity split (banked): caller passes 0, def is (void) */
     ((void (*)(int))func_020133bc)(0);
 }
+
+extern "C" {
+int data_0209b4a0[1];
+}

@@ -23,3 +23,7 @@ int func_0200762c(struct dCamera_c *self)
     *(int *)((char *)self + 0xb4) = 0x1c9000;
     return 1;
 }
+
+int data_02086ec0[3] = {
+    0, 0x96000, -0x258000
+};

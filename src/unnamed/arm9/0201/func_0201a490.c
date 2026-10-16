@@ -5,3 +5,7 @@ void func_0201a490(void)
 {
     data_0209a03c(data_0208ee60);
 }
+
+char data_0208ee60[4] = {
+    10, 10, 0, 0
+};

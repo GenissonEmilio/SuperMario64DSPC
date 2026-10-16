@@ -80,3 +80,5 @@ void func_02067f68(void)
     c = func_020688b4();
     func_02063648(0, (int *)data_020a9d40, 0x70, a, b, c, func_02068844() | 2);
 }
+
+u8 data_020a9d50[96];

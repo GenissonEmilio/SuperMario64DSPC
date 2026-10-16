@@ -844,3 +844,8 @@ u32 OAM::EnableSubOAM()
     data_0209e660 = (long)0;
 }
 
+
+extern "C" {
+int data_0209e67c[6];
+int data_0209e694[248];
+}

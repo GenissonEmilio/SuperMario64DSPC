@@ -15,3 +15,5 @@ void func_02059e48(void)
         ;
     func_0205ba64(0xc, (void *)func_02059e04);
 }
+
+char data_020a6458[4];

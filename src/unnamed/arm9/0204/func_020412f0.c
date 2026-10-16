@@ -234,3 +234,7 @@ void func_020412f0(char *thiz)
     }
     }
 }
+
+u8 data_020a2408[1];
+
+u8 data_020a2409[7095];

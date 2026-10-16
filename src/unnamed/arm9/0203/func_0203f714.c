@@ -40,3 +40,5 @@ void func_0203f714(struct S* s)
         func_0203f6e8(-3);
     }
 }
+
+u16 data_020a0fd0[14];

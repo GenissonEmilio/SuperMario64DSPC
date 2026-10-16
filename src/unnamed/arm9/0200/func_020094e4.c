@@ -13,3 +13,7 @@ int func_020094e4(void *cam)
     Vec3_RotateYAndTranslate((char *)cam + 0x8c, (char *)cam + 0x98, angle, buf);
     return 1;
 }
+
+int data_02086eb4[3] = {
+    0, 0x32000, 0x300000
+};
