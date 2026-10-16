@@ -24,3 +24,14 @@ int *daStarBase_c_classInit(void)
     }
     return p;
 }
+
+/* .data 0x0210abc4..0x0210abdc */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int _ZTS8daTree_c[3] = {
+    0x54616438, 0x5f656572, 0x00000063,
+};
+int _ZTI8daTree_c[3] = {
+    0x0209a764, 0x0210abc4, 0x0208e390,
+};
+#pragma section forcedata end

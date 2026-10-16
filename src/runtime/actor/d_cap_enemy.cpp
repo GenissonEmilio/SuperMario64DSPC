@@ -59,3 +59,16 @@ extern "C" dCapEnemy_c *_ZN11dCapEnemy_cD2Ev(dCapEnemy_c *self)
     _ZN12dEnemyBase_cD2Ev(self);
     return self;
 }
+
+/* .data 0x02108260..0x02108284 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int _ZTI11dCapEnemy_c[3] = {
+    0x0209a764, 0x0210826c, 0x021081c0,
+};
+int _ZTS11dCapEnemy_c[6] = {
+    0x43643131, 0x6e457061, 0x5f796d65, 0x00000063, 0x00000000, 0x02108260,
+};
+}
+#pragma section forcedata end

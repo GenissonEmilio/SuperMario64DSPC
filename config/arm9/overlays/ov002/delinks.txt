@@ -15,6 +15,7 @@ src/runtime/actor/d_enemy_base.cpp:
 src/runtime/actor/d_cap_enemy.cpp:
     complete
     .text start:0x020aedbc end:0x020aee40
+    .data start:0x02108260 end:0x02108284
 
 src/game/actors/d_a_1up.cpp:
     complete
@@ -204,14 +205,17 @@ src/game/player/Player.cpp:
 src/_ZN6PlayerD0Ev.cpp:
     complete
     .text start:0x020e67a8 end:0x020e6858
+    .bss start:0x0210ffbf end:0x0210ffc8
 
 src/_ZN6PlayerD1Ev.cpp:
     complete
     .text start:0x020e6858 end:0x020e68f4
+    .bss start:0x02110101 end:0x0211010c
 
 src/_ZN6PlayerC1Ev.cpp:
     complete
     .text start:0x020e68f4 end:0x020e69b8
+    .bss start:0x02110210 end:0x02110214
 
 src/_ZN6Player13OnYoshiTryEatEv.cpp:
     complete
@@ -260,14 +264,17 @@ src/game/actors/d_a_star.cpp:
 src/game/actors/StarCamera_Spawn.cpp:
     complete
     .text start:0x020ebe5c end:0x020ebe8c
+    .data start:0x0210aa40 end:0x0210aab8
 
 src/game/actors/d_a_star_base.c:
     complete
     .text start:0x020ebe8c end:0x020ebed4
+    .data start:0x0210abc4 end:0x0210abdc
 
 src/game/actors/d_a_star_silver_star.c:
     complete
     .text start:0x020ebed4 end:0x020ebf30
+    .data start:0x0210ac00 end:0x0210ac7c
 
 src/game/actors/d_a_star_star.c:
     complete
