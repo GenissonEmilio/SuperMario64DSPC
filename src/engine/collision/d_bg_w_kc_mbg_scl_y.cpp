@@ -195,8 +195,8 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
                 sphere.SetFloorResult(*loc.GetFloorResult());
             }
             sphere.flags |= 4;
-            if (sphere.unk_100 < loc.unk_100) {
-                sphere.func_0203794c(&loc.unk_0fc);
+            if (sphere.mFloorNormalY < loc.mFloorNormalY) {
+                sphere.func_0203794c(&loc.mFloorNormalX);
             }
         }
         if (loc.flags & 8) {

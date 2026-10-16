@@ -125,7 +125,7 @@ extern "C" void func_02037318(char *self)
     if (((Player *)clsn->mActor)->IsInAir())
         return;
     clsn->mFlags |= 0x100;
-    src = &clsn->mSphereClsn.unk_0fc;
+    src = &clsn->mSphereClsn.mFloorNormalX;
     *(int *)(self + 0x1ac) = src[0];
     *(int *)(self + 0x1b0) = src[1];
     *(int *)(self + 0x1b4) = src[2];

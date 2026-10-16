@@ -927,7 +927,7 @@ s32 dBgW_Kc::DetectClsn(dBgCh_SphCrr &sphere)
                             sphere.flags |= 4;
                             v = (s32)(((s64)depth * sn.y) >> 14) >> 2;
                             if (v > hiPY) hiPY = v; else if (v < loPY) loPY = v;
-                            if (sn.y > sphere.unk_100) sphere.func_0203794c((const s32 *)&sn);
+                            if (sn.y > sphere.mFloorNormalY) sphere.func_0203794c((const s32 *)&sn);
                         } else if (cls == 1) {
                             sphere.flags |= 8;
                             sphere.func_020379c0(triID, &data_020a0cec);

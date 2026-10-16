@@ -53,16 +53,15 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
     dBgPi mClsnResult3;     /* 0x0c4 */
     s32 unk_0ec;            /* 0x0ec */
     u8  pad_0f0[0xc];
-    /* An adjacent pair, kept unnamed. All that is evidenced is the shape of
-       their use in dBgW_KcMbg::DetectClsn(dBgCh_SphCrr&): 0x100 is
-       compared `<` against the local query's own 0x100, and on winning, 0x0fc
-       is handed BY ADDRESS to func_0203794c -- i.e. a score at 0x100 selecting
-       a payload that starts at 0x0fc. What the payload is is not settled here. */
-    s32 unk_0fc;            /* 0x0fc */
-    s32 unk_100;            /* 0x100 */
-    s32 unk_104;            /* 0x104 - third payload word: func_0203794c writes
-                               0x0fc..0x104 as one three-word copy and
-                               func_02037b5c clears it */
+    /* Normal of the floor contact with the greatest Y component. The retail
+       KCL query copies SurfaceInfo's normal at 0x01ffbe6c, then compares its
+       Y against +0x100 before saving all three words at 0x01ffd094..0x01ffd0a8.
+       Reset uses (0, -0x1000, 0), so the first accepted floor replaces it.
+       These component names describe that observed role; original names are
+       unknown. Keep scalar storage and the existing construction sequence. */
+    s32 mFloorNormalX;      /* 0x0fc */
+    s32 mFloorNormalY;      /* 0x100 */
+    s32 mFloorNormalZ;      /* 0x104 */
     s32 mScale;            /* 0x108 - dBgCh_Actr's Update* copy its tail word
                                (Actr +0x128) here each update */
     s32 unk_10c;            /* 0x10c - named 2026-08-24 when the size pin
@@ -114,7 +113,7 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
        first argument in the cartridge call graph and drives the evidenced
        fields above. */
     void func_02037940(u8 flags_);
-    void func_0203794c(const s32 *payload);
+    void func_0203794c(const s32 *normal);
     void func_02037968(int i, int clsnID, dActor_c *owner, dBgW *collider);
     void func_0203798c(int triID, void *src);
     void func_0203799c(int i, int clsnID, dActor_c *owner, dBgW *collider);
@@ -162,9 +161,9 @@ struct dBgCh_SphCrr {
     struct dBgPi mClsnResult3; /* 0x0c4 */
     s32 unk_0ec;            /* 0x0ec */
     u8  pad_0f0[0xc];
-    s32 unk_0fc;            /* 0x0fc */
-    s32 unk_100;            /* 0x100 */
-    s32 unk_104;            /* 0x104 */
+    s32 mFloorNormalX;      /* 0x0fc */
+    s32 mFloorNormalY;      /* 0x100 */
+    s32 mFloorNormalZ;      /* 0x104 */
     s32 mScale;            /* 0x108 */
     s32 unk_10c;            /* 0x10c - see the C++ branch: Init's Vector3_16 * */
 };

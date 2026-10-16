@@ -10,9 +10,6 @@
 //     2004/b56. The header declaration is the real one; callers use it.
 //   - func_020353b0 stays a free extern: the shared dBgCh-side bind helper is
 //     owned by its own shard and called by the Gnd/Lin query TUs as well.
-//   - unk_0fc/unk_100/unk_104 stay unnamed: all that is evidenced is a score
-//     at +0x100 selecting a three-word payload starting at +0xfc (see the
-//     class header).
 #include "dBgCh_SphCrr.h"
 
 extern "C" {
@@ -48,7 +45,7 @@ extern "C" void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c
 }
 
 /* Reset the whole query state: bounds, every flag bit, the base record and
-   all three result slots, then the +0xfc payload (score back to -0x1000). */
+   all three result slots, then the floor normal (Y back to -0x1000). */
 // @symbol _ZN12dBgCh_SphCrr13func_02037b5cEv
 void dBgCh_SphCrr::func_02037b5c()
 {
@@ -64,9 +61,9 @@ void dBgCh_SphCrr::func_02037b5c()
     mClsnResult1.Reset();
     mClsnResult2.Reset();
     mClsnResult3.Reset();
-    unk_0fc = 0;
-    unk_100 = -0x1000;
-    unk_104 = 0;
+    mFloorNormalX = 0;
+    mFloorNormalY = -0x1000;
+    mFloorNormalZ = 0;
 }
 
 /* Clear the displacement and the broad-phase box the scan accumulates. */
@@ -155,13 +152,13 @@ void dBgCh_SphCrr::func_02037968(int i, int clsnID, dActor_c *owner, dBgW *colli
     mClsnResult3.SetCollider(i, clsnID, owner, collider);
 }
 
-/* Copy the three-word payload the winning scan selected at +0xfc. */
+/* Save the selected floor normal; the collision scan compares Y first. */
 // @symbol _ZN12dBgCh_SphCrr13func_0203794cEPKi
-void dBgCh_SphCrr::func_0203794c(const s32 *payload)
+void dBgCh_SphCrr::func_0203794c(const s32 *normal)
 {
-    unk_0fc = payload[0];
-    unk_100 = payload[1];
-    unk_104 = payload[2];
+    mFloorNormalX = normal[0];
+    mFloorNormalY = normal[1];
+    mFloorNormalZ = normal[2];
 }
 
 /* Merge another query's flag byte, dropping its hit-result bits (0x1c). */
