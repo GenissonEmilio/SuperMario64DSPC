@@ -13,6 +13,7 @@
  */
 
 #include "types.h"
+#include "dFdBrightness_c.h"
 #include "common.h"
 #include "SharedFilePtr.h"
 #include "PlayerInput.h"
@@ -1010,12 +1011,10 @@ int Presenter_IsAnimDone(void* a) {
 
 namespace s020c2924 {
 extern "C" {
-extern "C" { extern void* data_0209f5bc; }
+extern "C" { extern dFdBrightness_c* data_0209f5bc; }
 void Presenter_ResetPose(char* c){
   Presenter_PlayIdle(c);
-  void* obj=data_0209f5bc;
-  int (**vt)(void*)=*(int(***)(void*))obj;
-  if(vt[6](obj)==0) return;
+  if (data_0209f5bc->IsAtEnd() == 0) return;
   *(int*)(c+0x190)=0;
   *(int*)(c+0x18c)=*(int*)(c+0x190);
   *(int*)(c+0x198)=0;
@@ -1030,31 +1029,21 @@ void Presenter_ResetPose(char* c){
 namespace s020c2848 {
 extern "C" {
 extern "C" { extern void* data_ov006_0213ae48; }
-extern "C" { extern void* data_0209f5bc; }
+extern "C" { extern dFdBrightness_c* data_0209f5bc; }
 struct P2 { void* a; void* b; };
 extern "C" { extern P2 pmf_Presenter_StateIdle_2; }
 }
 
-struct VObj {
-    virtual int v0();
-    virtual int v1();
-    virtual int v2();
-    virtual int v3();
-    virtual int v4();
-    virtual int v5();
-    virtual int v6();
-};
-
 extern "C" void Presenter_PlayIdle(char* c)
 {
     if (*(int*)(c + 0x68) != *(int*)(c + 0x104)) {
-        int r5 = 0;
-        if (((VObj*)data_0209f5bc)->v6() == 0) {
+        int blendFrames = 0;
+        if (data_0209f5bc->IsAtEnd() == 0) {
             if (_ZN15dExtFrameCtrl_c8FinishedEv(c + 0x58) == 0 || *(int*)(c + 0x68) == *(int*)(c + 0x13c)) {
-                r5 = 8;
+                blendFrames = 8;
             }
         }
-        _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(c + 8, *(void**)(c + 0x104), r5, 0, 0x800, 0);
+        _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(c + 8, *(void**)(c + 0x104), blendFrames, 0, 0x800, 0);
         _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(c + 0xc8, *(void**)(c + 0x144), 0, 0x800, 0);
         _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(c + 0xdc, (void*)&data_ov006_0213ae48, 0, 0x800, 0);
     }

@@ -1,9 +1,9 @@
 //cpp
 /* leftovers:
  * The func_0203938c..020393d4 accessors and func_020396c0 / func_020396d0
- * stay free functions. The query TUs and the derived colliders call them
- * by address; they are not dBgW methods. Definitions stay in reverse
- * source order, so the setters and the constructor come first.
+ * retain their existing free-function interfaces for the query TUs and
+ * derived colliders. Their original member/free-function form is not
+ * established by the address names. Definitions retain their source order.
  * ShouldPassThroughImpl keeps the int* view of CLPS and the unsigned char*
  * view of the query. data_020a0c80 is the 0x18-entry enabled-collider
  * table Enable fills and dScStage_c::ResetMeshColliders clears.
@@ -13,29 +13,34 @@
  * dScStage_c::ResetMeshColliders and dBgCh::ShouldPassThroughImpl.
  */
 #include "dBgW.h"
+#include "dBgW_Kc.h"
 #include "dBgCh.h"
 #include "dScStage_c.h"
 #include "dActor_c.h"
 #include "decl_common.h"
 
 extern "C" {
-extern void *data_020a0c80[];
+extern dBgW *data_020a0c80[];
 extern int SurfaceInfo_TestFlag0x20(int *p);
 extern int func_02037e38(unsigned int *p);
 }
 
+/* Preserve the address-based helper ABI while using the declared callback type. */
+typedef void (*BeforeClsnCallback)(dBgW *, dActor_c *, dBgPi *, Vector3 *,
+                                   Vector3_16 *, Vector3_16 *);
+
 // @symbol func_020396d0
-extern "C" void func_020396d0(int *p, int v)
+extern "C" void func_020396d0(int *collider, int faceDotThreshold)
 {
-    p[17] = v;
+    reinterpret_cast<dBgW_Kc *>(collider)->unk_44 = faceDotThreshold;
 }
 
 // @symbol func_020396c0
-extern "C" void func_020396c0(void *p, int v)
+extern "C" void func_020396c0(void *collider, int edgeToleranceShift)
 {
-    int *pi = (int *)p;
-    if (v < 0) v = 0;
-    pi[0x12] = v;
+    dBgW_Kc *mesh = static_cast<dBgW_Kc *>(collider);
+    if (edgeToleranceShift < 0) edgeToleranceShift = 0;
+    mesh->unk_48 = edgeToleranceShift;
 }
 
 // @symbol _ZN4dBgWC2Ev
@@ -52,16 +57,16 @@ dBgW::~dBgW()
 }
 
 // @symbol func_02039624
-extern "C" void func_02039624(char *o)
+extern "C" void func_02039624(char *object)
 {
-    dBgW *w = (dBgW *)o;
-    w->owner = 0;
-    w->ownerUniqueID = -1;
-    w->slotIdx = 0x18;
-    w->beforeClsnCallback = 0;
-    w->unk_1c = 0;
-    w->unk_0c = -0x1000;
-    w->unk_10 = 0;
+    dBgW *collider = (dBgW *)object;
+    collider->owner = 0;
+    collider->ownerUniqueID = -1;
+    collider->slotIdx = 0x18;
+    collider->beforeClsnCallback = 0;
+    collider->unk_1c = 0;
+    collider->unk_0c = -0x1000;
+    collider->unk_10 = 0;
 }
 
 // @symbol _ZN4dBgW9Virtual08Ev
@@ -70,50 +75,53 @@ void dBgW::Virtual08()
 }
 
 // @symbol func_020395fc
-extern "C" void func_020395fc(dBgW *c, dActor_c *p)
+extern "C" void func_020395fc(dBgW *collider, dActor_c *actor)
 {
-    if (p == 0) {
-        c->owner = 0;
-        c->ownerUniqueID = -1;
+    if (actor == 0) {
+        collider->owner = 0;
+        collider->ownerUniqueID = -1;
     } else {
-        c->owner = p;
-        c->ownerUniqueID = p->uniqueID;
+        collider->owner = actor;
+        collider->ownerUniqueID = actor->uniqueID;
     }
 }
 
 // @symbol _ZN5dBgCh21ShouldPassThroughImplEPvRK4CLPSRKS_b
-bool dBgCh::ShouldPassThroughImpl(void *p, const CLPS &clps_, const dBgCh &bg_, bool flag)
+/* Special surface rules use their own query flags. If no rule applies,
+   the ordinary-surface flag decides whether the query ignores this surface. */
+bool dBgCh::ShouldPassThroughImpl(void *unused, const CLPS &surfaceProperties,
+                                  const dBgCh &query, bool checkType14)
 {
-    int *clps = (int *)&clps_;
-    unsigned char *bg = (unsigned char *)&bg_;
-    int r4 = 0;
+    int *clpsWords = (int *)&surfaceProperties;
+    unsigned char *queryBytes = (unsigned char *)&query;
+    int hasSurfaceRule = 0;
 
-    if (SurfaceInfo_TestFlag0x20(clps)) {
-        r4 = 1;
-        if (func_0203547c(bg) == 0) return r4;
+    if (SurfaceInfo_TestFlag0x20(clpsWords)) {
+        hasSurfaceRule = 1;
+        if (func_0203547c(queryBytes) == 0) return hasSurfaceRule;
     }
-    if (func_02037e20(clps)) {
-        r4 = 1;
-        if (func_0203543c(bg) == 0) return r4;
+    if (func_02037e20(clpsWords)) {
+        hasSurfaceRule = 1;
+        if (func_0203543c(queryBytes) == 0) return hasSurfaceRule;
     }
-    if (func_02037e2c(clps)) {
-        r4 = 1;
-        if (func_0203545c(bg) != 0) return r4;
+    if (func_02037e2c(clpsWords)) {
+        hasSurfaceRule = 1;
+        if (func_0203545c(queryBytes) != 0) return hasSurfaceRule;
     }
-    if (func_02037e14(clps)) {
-        r4 = 1;
-        if (func_0203545c(bg) == 0) return r4;
+    if (func_02037e14(clpsWords)) {
+        hasSurfaceRule = 1;
+        if (func_0203545c(queryBytes) == 0) return hasSurfaceRule;
     }
-    if (func_02037e38((unsigned int *)clps) == 0x11) {
-        r4 = 1;
-        if (func_02035408(bg) != 0) return r4;
+    if (func_02037e38((unsigned int *)clpsWords) == 0x11) {
+        hasSurfaceRule = 1;
+        if (func_02035408(queryBytes) != 0) return hasSurfaceRule;
     }
-    if (flag != 0 && func_02037e38((unsigned int *)clps) == 0x14) {
-        r4 = 1;
-        if (func_020353d4(bg) != 0) return r4;
+    if (checkType14 != 0 && func_02037e38((unsigned int *)clpsWords) == 0x14) {
+        hasSurfaceRule = 1;
+        if (func_020353d4(queryBytes) != 0) return hasSurfaceRule;
     }
-    if (r4 == 0) {
-        if (func_020354b0(bg) == 0) return 1;
+    if (hasSurfaceRule == 0) {
+        if (func_020354b0(queryBytes) == 0) return 1;
     }
     return 0;
 }
@@ -164,21 +172,21 @@ void dBgW::GetVelocity(Vector3 &res)
 }
 
 // @symbol func_02039404
-extern "C" int func_02039404(dBgW *c)
+extern "C" int func_02039404(dBgW *collider)
 {
-    return c->slotIdx;
+    return collider->slotIdx;
 }
 
 // @symbol func_020393fc
-extern "C" void func_020393fc(dBgW *c, int v)
+extern "C" void func_020393fc(dBgW *collider, int slot)
 {
-    c->slotIdx = v;
+    collider->slotIdx = slot;
 }
 
 // @symbol func_020393f0
-extern "C" void func_020393f0(dBgW *c)
+extern "C" void func_020393f0(dBgW *collider)
 {
-    c->slotIdx = 0x18;
+    collider->slotIdx = 0x18;
 }
 
 // @symbol _ZN4dBgW9IsEnabledEv
@@ -191,63 +199,64 @@ int dBgW::IsEnabled()
 }
 
 // @symbol func_020393d4
-extern "C" void func_020393d4(int *p, int v)
+extern "C" void func_020393d4(int *collider, int callbackAddress)
 {
-    p[6] = v;
+    reinterpret_cast<dBgW *>(collider)->beforeClsnCallback =
+        reinterpret_cast<BeforeClsnCallback>(callbackAddress);
 }
 
 // @symbol func_020393cc
-extern "C" int func_020393cc(int *p)
+extern "C" int func_020393cc(int *collider)
 {
-    return p[6];
+    return reinterpret_cast<int>(reinterpret_cast<dBgW *>(collider)->beforeClsnCallback);
 }
 
 // @symbol func_020393c4
-extern "C" void func_020393c4(int *p, int v)
+extern "C" void func_020393c4(int *collider, int callbackAddress)
 {
-    p[7] = v;
+    reinterpret_cast<dBgW *>(collider)->unk_1c = callbackAddress;
 }
 
 // @symbol func_020393bc
-extern "C" int func_020393bc(int *p)
+extern "C" int func_020393bc(int *collider)
 {
-    return p[7];
+    return reinterpret_cast<dBgW *>(collider)->unk_1c;
 }
 
 // @symbol func_020393b4
-extern "C" int func_020393b4(int *p)
+extern "C" int func_020393b4(int *collider)
 {
-    return p[1];
+    return reinterpret_cast<int>(reinterpret_cast<dBgW *>(collider)->owner);
 }
 
 // @symbol func_020393ac
-extern "C" int func_020393ac(int *p)
+extern "C" int func_020393ac(int *collider)
 {
-    return p[2];
+    return reinterpret_cast<dBgW *>(collider)->ownerUniqueID;
 }
 
 // @symbol func_020393a4
-extern "C" void func_020393a4(int *p, int v)
+extern "C" void func_020393a4(int *collider, int clipDistance)
 {
-    p[3] = v;
+    reinterpret_cast<dBgW *>(collider)->unk_0c = clipDistance;
 }
 
 // @symbol func_0203939c
-extern "C" int func_0203939c(int *p)
+extern "C" int func_0203939c(int *collider)
 {
-    return p[3];
+    return reinterpret_cast<dBgW *>(collider)->unk_0c;
 }
 
 // @symbol func_02039394
-extern "C" void func_02039394(int *p, int v)
+extern "C" void func_02039394(int *collider, int clipOffsetY)
 {
-    p[4] = v;
+    reinterpret_cast<dBgW *>(collider)->unk_10 = clipOffsetY;
 }
 
 // @symbol func_0203938c
-extern "C" int func_0203938c(int *p)
+extern "C" int func_0203938c(int *collider)
 {
-    return p[4];
+    return reinterpret_cast<dBgW *>(collider)->unk_10;
 }
 
 // @symbol _ZN4dBgW22UpdatePosWithTransformERS_P8dActor_cR5dBgPiR7Vector3P10Vector3_16S8_
@@ -269,14 +278,14 @@ void dBgW::UpdateAngsWithAngularVelY(dBgW &clsn, dActor_c *clsnActor,
                                                  dBgPi &res, Vector3 &pos,
                                                  Vector3_16 *motionAng, Vector3_16 *ang)
 {
-    int angY = clsn.GetAngularVelY();
+    int angularVelocityY = clsn.GetAngularVelY();
     if (ang) {
-        short *py = (short *)(&ang->y);
-        *py = *py + angY;
+        short *angleY = (short *)(&ang->y);
+        *angleY = *angleY + angularVelocityY;
     }
     if (motionAng) {
-        short *py = (short *)(&motionAng->y);
-        *py = *py + angY;
+        short *angleY = (short *)(&motionAng->y);
+        *angleY = *angleY + angularVelocityY;
     }
 }
 
@@ -294,32 +303,32 @@ void dBgW::UpdatePosWithVelocity(dBgW &clsn, dActor_c *clsnActor,
                                              dBgPi &res, Vector3 &pos,
                                              Vector3_16 *motionAng, Vector3_16 *ang)
 {
-    Vector3 vel;
-    clsn.GetVelocity(vel);
-    pos.x = pos.x + vel.x;
+    Vector3 velocity;
+    clsn.GetVelocity(velocity);
+    pos.x = pos.x + velocity.x;
     {
-        /* launder: the ROM re-reads through the materialized addresses */
-        int *py = (int *)(&pos.y);
-        *py = *py + vel.y;
+        /* Preserve the separate component address used for this read/write. */
+        int *positionY = (int *)(&pos.y);
+        *positionY = *positionY + velocity.y;
     }
     {
-        int *pz = (int *)(&pos.z);
-        *pz = *pz + vel.z;
+        int *positionZ = (int *)(&pos.z);
+        *positionZ = *positionZ + velocity.z;
     }
 }
 
 // @symbol func_02039218
 extern "C" void func_02039218(void)
 {
-    int i;
-    for (i = 0; i < 0x18; i++) data_020a0c80[i] = 0;
+    int slot;
+    for (slot = 0; slot < 0x18; slot++) data_020a0c80[slot] = 0;
 }
 
 // @symbol _ZN10dScStage_c18ResetMeshCollidersEv
 void dScStage_c::ResetMeshColliders()
 {
-    int i;
-    for (i = 0; i < 0x18; i++) data_020a0c80[i] = 0;
+    int slot;
+    for (slot = 0; slot < 0x18; slot++) data_020a0c80[slot] = 0;
 }
 
 // @symbol func_020391f0
@@ -330,16 +339,16 @@ extern "C" void func_020391f0(void)
 // @symbol _ZN4dBgW6EnableEP8dActor_c
 int dBgW::Enable(dActor_c *actor)
 {
-    s32 i = 0;
+    s32 slot = 0;
     for (;;) {
-        if (data_020a0c80[i] == 0) {
+        if (data_020a0c80[slot] == 0) {
             func_020395fc(this, actor);
-            func_020393fc(this, i);
-            data_020a0c80[i] = this;
+            func_020393fc(this, slot);
+            data_020a0c80[slot] = this;
             return 1;
         }
-        i++;
-        if (i >= 0x18)
+        slot++;
+        if (slot >= 0x18)
             break;
     }
     return 0;
@@ -348,10 +357,10 @@ int dBgW::Enable(dActor_c *actor)
 // @symbol _ZN4dBgW7DisableEv
 int dBgW::Disable()
 {
-    int i = func_02039404(this);
-    if (i != 0x18) {
+    int slot = func_02039404(this);
+    if (slot != 0x18) {
         func_020393f0(this);
-        data_020a0c80[i] = 0;
+        data_020a0c80[slot] = 0;
     }
     return 1;
 }

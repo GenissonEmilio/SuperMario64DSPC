@@ -33,9 +33,9 @@ void dBgCh::StopDetectingOrdinary()
 }
 
 // @symbol func_020354b0
-extern "C" int func_020354b0(unsigned char *p)
+extern "C" int func_020354b0(unsigned char *query)
 {
-    return p[4] & 1;
+    return reinterpret_cast<dBgCh *>(query)->mDetectFlags & 1;
 }
 
 // @symbol _ZN5dBgCh19StartDetectingWaterEv
@@ -51,21 +51,21 @@ void dBgCh::StopDetectingWater()
 }
 
 // @symbol func_0203547c
-extern "C" int func_0203547c(unsigned char *p)
+extern "C" int func_0203547c(unsigned char *query)
 {
-    return p[4] & 2;
+    return reinterpret_cast<dBgCh *>(query)->mDetectFlags & 2;
 }
 
 // @symbol func_02035468
 extern "C" void func_02035468(char *self)
 {
-    *(unsigned char *)(self + 4) |= 4;
+    reinterpret_cast<dBgCh *>(self)->mDetectFlags |= 4;
 }
 
 // @symbol func_0203545c
-extern "C" int func_0203545c(unsigned char *p)
+extern "C" int func_0203545c(unsigned char *query)
 {
-    return p[4] & 4;
+    return reinterpret_cast<dBgCh *>(query)->mDetectFlags & 4;
 }
 
 // @symbol _ZN5dBgCh19StartDetectingToxicEv

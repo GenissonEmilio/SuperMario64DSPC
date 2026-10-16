@@ -4,9 +4,10 @@
  * functions. The ITCM DetectClsn overrides call them by address.
  * func_020396dc turns a prism pointer into a triangle index,
  * func_02039794 classifies the slope band, func_020397b8 tests wall facing,
- * func_020397dc guards a near-zero divisor. The destructor is defined
- * first (D2, then D0, then D1) and the constructor after it. The
- * DetectClsn triple and the geometry slots live in d_bg_w_kc_itcm.cpp.
+ * func_020397dc guards a near-zero divisor. The constructor is defined
+ * before the destructor; their source order preserves the compiler's
+ * lifecycle emission. The DetectClsn triple and the geometry slots live
+ * in d_bg_w_kc_itcm.cpp.
  */
 /* dBgW_Kc: static-mesh collider, the base KcMbg and KcMbgSclY share.
  * Type name 0x020993bc, typeinfo 0x020993c8, vtable 0x020993dc.
@@ -32,26 +33,26 @@ dBgW_Kc::dBgW_Kc()
 dBgW_Kc::~dBgW_Kc() {}
 
 // @symbol func_020397dc
-extern "C" int func_020397dc(int x)
+extern "C" int func_020397dc(int divisor)
 {
-    if (x <= 8 && x >= -8) return 1;
+    if (divisor <= 8 && divisor >= -8) return 1;
     return 0;
 }
 
 // @symbol func_020397b8
-extern "C" int func_020397b8(int x)
+extern "C" int func_020397b8(int normalY)
 {
-    if (x < 0x600) {
-        if (x > -0xccc) return 1;
+    if (normalY < 0x600) {
+        if (normalY > -0xccc) return 1;
     }
     return 0;
 }
 
 // @symbol func_02039794
-extern "C" int func_02039794(int x)
+extern "C" int func_02039794(int normalY)
 {
-    if (x > 0x600) return 0;
-    if (x > -0xccc) return 1;
+    if (normalY > 0x600) return 0;
+    if (normalY > -0xccc) return 1;
     return 2;
 }
 
@@ -87,9 +88,11 @@ void dBgW_Kc::SetFile(KCL_File *file, CLPS_Block &clpsBlock)
 }
 
 // @symbol func_020396dc
-extern "C" unsigned func_020396dc(int **p, unsigned x)
+extern "C" unsigned func_020396dc(int **collider, unsigned triangleAddress)
 {
-    return (x - (unsigned)p[8][2]) >> 4;
+    dBgW_Kc *mesh = reinterpret_cast<dBgW_Kc *>(collider);
+    unsigned triangleTable = reinterpret_cast<unsigned>(mesh->kclFile->tris);
+    return (triangleAddress - triangleTable) / sizeof(KCL_Tri);
 }
 
 // @symbol _ZN7dBgW_Kc9Virtual08Ev
