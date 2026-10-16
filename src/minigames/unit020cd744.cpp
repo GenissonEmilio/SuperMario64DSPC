@@ -1481,20 +1481,21 @@ extern "C" void TrmpLine_SetStateFlex(char *p) { *(struct S *)(p + 0x0) = pmf_Tr
 namespace s020cfc74 {
 /*
  * Per-frame gate-crossing check over the five tracked objects
- * (data_ov006_0214097c). For each live object, project its position and
- * target onto the gate frame (c+0x14 / c+0x20 basis, c+0x58 half-width). A
- * segment that crosses the gate records the hit (c+0x38 position, c+0x44
+ * (data_ov006_0214097c). For each live object, project its current and
+ * previous positions onto the gate frame (line+0x14 / line+0x20 basis,
+ * line+0x58 half-width). A segment that crosses the gate records the hit
+ * (line+0x38 position, line+0x44
  * direction, state 1 or 2 with a sound whose pitch is lerped from the
- * crossing point), decrements the remaining count at c+0x324 and returns 1
+ * crossing point), decrements the remaining count at line+0x324 and returns 1
  * when it reaches zero. Segments that miss just outside the gate edges are
  * marked state 3.
  *
  * Shape notes: the +-1 clamps are a ternary macro so the constants rank
- * above a/i in the callee-saved band and still hoist in the compiler's
- * own order; arr is assigned after the null/active checks so its pool
+ * above the coordinate/index locals in the callee-saved band and still
+ * hoist in the compiler's own order; jumpers is assigned after the null/active checks so its pool
  * load sits in the hoisted-constant sequence; the +0x320/+0x324 halfword
- * accesses go through c directly, which yields the ROM's shared
- * c+0x300 base and the copied read.
+ * accesses go through line directly, which yields the ROM's shared
+ * line+0x300 base and the copied read.
  */
 #define CLAMP(v, lo, hi) ((v) < (lo) ? (lo) : (v) > (hi) ? (hi) : (v))
 
@@ -1530,151 +1531,154 @@ extern "C" {extern int data_ov006_0213b308;}
 #pragma opt_common_subs off
 #pragma opt_propagation off
 // @symbol TrmpLine_PushJumper
-extern "C" int TrmpLine_PushJumper(char *c)
+extern "C" int TrmpLine_PushJumper(char *line)
 {
-    int i;
-    int a;
-    struct TrampolineContactView **arr;
+    int jumperIndex;
+    int currentAlong;
+    struct TrampolineContactView **jumpers;
 
-    i = 0;
+    jumperIndex = 0;
     do {
-        int b, cc, dd;
-        Vector3 pos0, pos1, diff;
-        struct V2 p1proj, p0proj;
-        struct V2 negW, posW;
-        struct V2 gateDir, aTest, bTest;
-        int flag, s1, s2;
-        Vector3 sumPt, diffPt, farFwd, farBack;
-        Vector3 *p0;
-        Vector3 *p1;
+        int currentAcross, previousAlong, previousAcross;
+        Vector3 currentPos, previousPos, movementDelta;
+        struct V2 previousProjection, currentProjection;
+        struct V2 lineStart, lineEnd;
+        struct V2 edgeDirection, firstOffset, secondOffset;
+        int crossedLine, previousSide, currentSide;
+        Vector3 fromStart, fromEnd, halfLineForStart, halfLineForEnd;
+        Vector3 *currentPositionPtr;
+        Vector3 *previousPositionPtr;
 
-        if (data_ov006_0214097c[i] == 0)
+        if (data_ov006_0214097c[jumperIndex] == 0)
             continue;
-        if (data_ov006_0214097c[i]->IsActive() == 0)
+        if (data_ov006_0214097c[jumperIndex]->IsActive() == 0)
             continue;
-        arr = data_ov006_0214097c;
+        jumpers = data_ov006_0214097c;
 
-        p0 = arr[i]->GetPos();
-        pos0.x = p0->x;
-        pos0.y = p0->y;
-        pos0.z = p0->z;
+        currentPositionPtr = jumpers[jumperIndex]->GetPos();
+        currentPos.x = currentPositionPtr->x;
+        currentPos.y = currentPositionPtr->y;
+        currentPos.z = currentPositionPtr->z;
 
-        p1 = arr[i]->GetPrevPos();
-        pos1.x = p1->x;
-        pos1.y = p1->y;
-        pos1.z = p1->z;
+        previousPositionPtr = jumpers[jumperIndex]->GetPrevPos();
+        previousPos.x = previousPositionPtr->x;
+        previousPos.y = previousPositionPtr->y;
+        previousPos.z = previousPositionPtr->z;
 
-        Vec3_Sub(&diff, &pos0, &pos1);
-        SubVec3(&pos0, (Vector3 *)(c + 8), &pos0);
-        SubVec3(&pos1, (Vector3 *)(c + 8), &pos1);
+        Vec3_Sub(&movementDelta, &currentPos, &previousPos);
+        SubVec3(&currentPos, (Vector3 *)(line + 8), &currentPos);
+        SubVec3(&previousPos, (Vector3 *)(line + 8), &previousPos);
 
-        a = DotVec3((Vector3 *)(c + 0x20), &pos0);
-        b = DotVec3((Vector3 *)(c + 0x14), &pos0);
-        cc = DotVec3((Vector3 *)(c + 0x20), &pos1);
-        dd = DotVec3((Vector3 *)(c + 0x14), &pos1);
-        DotVec3((Vector3 *)(c + 0x14), &diff);
-        DotVec3((Vector3 *)(c + 0x20), &diff);
+        // Test the previous-to-current segment against the line in its own frame.
+        currentAlong = DotVec3((Vector3 *)(line + 0x20), &currentPos);
+        currentAcross = DotVec3((Vector3 *)(line + 0x14), &currentPos);
+        previousAlong = DotVec3((Vector3 *)(line + 0x20), &previousPos);
+        previousAcross = DotVec3((Vector3 *)(line + 0x14), &previousPos);
+        DotVec3((Vector3 *)(line + 0x14), &movementDelta);
+        DotVec3((Vector3 *)(line + 0x20), &movementDelta);
 
-        p0proj.y = b;
-        p1proj.x = cc;
-        p0proj.x = a;
-        p1proj.y = dd;
+        currentProjection.y = currentAcross;
+        previousProjection.x = previousAlong;
+        currentProjection.x = currentAlong;
+        previousProjection.y = previousAcross;
 
-        negW.x = -(*(int *)(c + 0x58));
-        negW.y = 0;
-        posW.x = *(int *)(c + 0x58);
-        posW.y = 0;
+        lineStart.x = -(*(int *)(line + 0x58));
+        lineStart.y = 0;
+        lineEnd.x = *(int *)(line + 0x58);
+        lineEnd.y = 0;
 
-        Vec2_Sub((int *)&gateDir, (int *)&negW, (int *)&posW);
-        Vec2_Sub((int *)&aTest, (int *)&negW, (int *)&p1proj);
-        Vec2_Sub((int *)&bTest, (int *)&negW, (int *)&p0proj);
+        Vec2_Sub((int *)&edgeDirection, (int *)&lineStart, (int *)&lineEnd);
+        Vec2_Sub((int *)&firstOffset, (int *)&lineStart, (int *)&previousProjection);
+        Vec2_Sub((int *)&secondOffset, (int *)&lineStart, (int *)&currentProjection);
 
-        flag = 0;
-        s1 = func_0203d524((int *)&gateDir, (int *)&aTest);
-        s2 = func_0203d524((int *)&gateDir, (int *)&bTest);
-        s1 = CLAMP(s1, -1, 1);
-        s2 = CLAMP(s2, -1, 1);
+        crossedLine = 0;
+        previousSide = func_0203d524((int *)&edgeDirection, (int *)&firstOffset);
+        currentSide = func_0203d524((int *)&edgeDirection, (int *)&secondOffset);
+        previousSide = CLAMP(previousSide, -1, 1);
+        currentSide = CLAMP(currentSide, -1, 1);
 
-        if (s1 * s2 <= 0 && s1 > s2) {
+        if (previousSide * currentSide <= 0 && previousSide > currentSide) {
             struct V2 edge, e1, e2;
-            int t1, t2;
-            Vec2_Sub((int *)&edge, (int *)&p1proj, (int *)&p0proj);
-            gateDir = edge;
-            Vec2_Sub((int *)&e1, (int *)&p1proj, (int *)&negW);
-            aTest = e1;
-            Vec2_Sub((int *)&e2, (int *)&p1proj, (int *)&posW);
-            bTest = e2;
+            int startSide, endSide;
+            Vec2_Sub((int *)&edge, (int *)&previousProjection, (int *)&currentProjection);
+            edgeDirection = edge;
+            Vec2_Sub((int *)&e1, (int *)&previousProjection, (int *)&lineStart);
+            firstOffset = e1;
+            Vec2_Sub((int *)&e2, (int *)&previousProjection, (int *)&lineEnd);
+            secondOffset = e2;
 
-            t1 = func_0203d524((int *)&gateDir, (int *)&aTest);
-            t2 = func_0203d524((int *)&gateDir, (int *)&bTest);
-            t1 = CLAMP(t1, -1, 1);
-            t2 = CLAMP(t2, -1, 1);
-            if (t1 * t2 <= 0) flag = 1;
+            startSide = func_0203d524((int *)&edgeDirection, (int *)&firstOffset);
+            endSide = func_0203d524((int *)&edgeDirection, (int *)&secondOffset);
+            startSide = CLAMP(startSide, -1, 1);
+            endSide = CLAMP(endSide, -1, 1);
+            if (startSide * endSide <= 0) crossedLine = 1;
         }
 
-        if (flag != 0) {
-            int mag, t;
-            *(int *)(c + 0x38) = pos0.x;
-            *(int *)(c + 0x3c) = pos0.y;
-            *(int *)(c + 0x40) = pos0.z;
-            *(int *)(c + 0x44) = diff.x;
-            *(int *)(c + 0x48) = diff.y;
-            *(int *)(c + 0x4c) = diff.z;
+        if (crossedLine != 0) {
+            int offsetTimesHalfLength, edgeRatio;
+            *(int *)(line + 0x38) = currentPos.x;
+            *(int *)(line + 0x3c) = currentPos.y;
+            *(int *)(line + 0x40) = currentPos.z;
+            *(int *)(line + 0x44) = movementDelta.x;
+            *(int *)(line + 0x48) = movementDelta.y;
+            *(int *)(line + 0x4c) = movementDelta.z;
 
-            t = _ZN4cstd4fdivEii((a < 0) ? -a : a, *(int *)(c + 0x58));
+            edgeRatio = _ZN4cstd4fdivEii((currentAlong < 0) ? -currentAlong : currentAlong,
+                *(int *)(line + 0x58));
             {
-                int w = *(int *)(c + 0x58);
-                int av = (a < 0) ? -a : a;
-                mag = (int)(((long long)av * w + 0x800) >> 12);
+                int halfLength = *(int *)(line + 0x58);
+                int absoluteAlong = (currentAlong < 0) ? -currentAlong : currentAlong;
+                offsetTimesHalfLength = (int)(((long long)absoluteAlong * halfLength + 0x800) >> 12);
             }
 
-            if (mag < 0x400000) {
-                arr[i]->contactState = 2;
-                D3D_PlaySePannedLoop(0x1b1, *(int *)(c + 8),
-                    (data_ov006_0213b310 * t + data_ov006_0213b30c * (0x1000 - t)) >> 12);
+            if (offsetTimesHalfLength < 0x400000) {
+                jumpers[jumperIndex]->contactState = 2;
+                D3D_PlaySePannedLoop(0x1b1, *(int *)(line + 8),
+                    (data_ov006_0213b310 * edgeRatio + data_ov006_0213b30c * (0x1000 - edgeRatio)) >> 12);
             } else {
-                arr[i]->contactState = 1;
-                D3D_PlaySePannedLoop(0x1ae, *(int *)(c + 8),
-                    (data_ov006_0213b308 * t + data_ov006_0213b2f4 * (0x1000 - t)) >> 12);
+                jumpers[jumperIndex]->contactState = 1;
+                D3D_PlaySePannedLoop(0x1ae, *(int *)(line + 8),
+                    (data_ov006_0213b308 * edgeRatio + data_ov006_0213b2f4 * (0x1000 - edgeRatio)) >> 12);
             }
 
             {
-                int *dst = (int *)&arr[i]->lineNormal;
-                dst[0] = *(int *)(c + 0x14);
-                dst[1] = *(int *)(c + 0x18);
-                dst[2] = *(int *)(c + 0x1c);
-                arr[i]->alongLine = a;
-                arr[i]->lineHalfLength = *(int *)(c + 0x58);
-                *(u16 *)(c + 0x320) = 0;
-                TrmpLine_PointDistance(c, (void *)(c + 0x38), (Vector3 *)(c + 0x44));
+                int *normalComponents = (int *)&jumpers[jumperIndex]->lineNormal;
+                normalComponents[0] = *(int *)(line + 0x14);
+                normalComponents[1] = *(int *)(line + 0x18);
+                normalComponents[2] = *(int *)(line + 0x1c);
+                jumpers[jumperIndex]->alongLine = currentAlong;
+                jumpers[jumperIndex]->lineHalfLength = *(int *)(line + 0x58);
+                *(u16 *)(line + 0x320) = 0;
+                TrmpLine_PointDistance(line, (void *)(line + 0x38), (Vector3 *)(line + 0x44));
 
-                *(u16 *)(c + 0x324) -= 1;
-                if (*(u16 *)(c + 0x324) == 0) {
-                    *(u8 *)(c + 0x328) = 3;
-                    TrmpLine_SetStateSettle(c);
+                *(u16 *)(line + 0x324) -= 1;
+                if (*(u16 *)(line + 0x324) == 0) {
+                    *(u8 *)(line + 0x328) = 3;
+                    TrmpLine_SetStateSettle(line);
                     return 1;
                 }
-                *(u16 *)(c + 0x326) += 1;
+                *(u16 *)(line + 0x326) += 1;
             }
         } else {
-            Vec3_MulScalar(&farFwd, (Vector3 *)(c + 0x20), *(int *)(c + 0x58));
-            Vec3_Add(&sumPt, &pos0, &farFwd);
-            Vec3_MulScalar(&farBack, (Vector3 *)(c + 0x20), *(int *)(c + 0x58));
-            Vec3_Sub(&diffPt, &pos0, &farBack);
+            Vec3_MulScalar(&halfLineForStart, (Vector3 *)(line + 0x20), *(int *)(line + 0x58));
+            Vec3_Add(&fromStart, &currentPos, &halfLineForStart);
+            Vec3_MulScalar(&halfLineForEnd, (Vector3 *)(line + 0x20), *(int *)(line + 0x58));
+            Vec3_Sub(&fromEnd, &currentPos, &halfLineForEnd);
 
-            if (sumPt.y < 0 && sumPt.y > -0x30000) {
-                if (sumPt.x > -0x8000 && sumPt.x < 0) {
-                    if (diff.x > 0) {
-                        arr[i]->contactState = 3;
+            if (fromStart.y < 0 && fromStart.y > -0x30000) {
+                if (fromStart.x > -0x8000 && fromStart.x < 0) {
+                    if (movementDelta.x > 0) {
+                        jumpers[jumperIndex]->contactState = 3;
                     }
                 }
             } else {
-                if (diffPt.y < 0 && diffPt.y > -0x30000 && diffPt.x > 0 && diffPt.x < 0x8000 && diff.x < 0) {
-                    arr[i]->contactState = 3;
+                if (fromEnd.y < 0 && fromEnd.y > -0x30000
+                    && fromEnd.x > 0 && fromEnd.x < 0x8000 && movementDelta.x < 0) {
+                    jumpers[jumperIndex]->contactState = 3;
                 }
             }
         }
-    } while (++i < 5);
+    } while (++jumperIndex < 5);
     return 0;
 }
 #pragma pop
