@@ -721,6 +721,7 @@ src/engine/animation/d_ext_frame_ctrl.cpp:
 src/engine/model/d_ext_shadow_model.cpp:
     complete
     .text start:0x02015d38 end:0x0201609c
+    .bss start:0x0209cef4 end:0x0209cef8
 
 src/engine/model/d_ext_common_model.cpp:
     complete
