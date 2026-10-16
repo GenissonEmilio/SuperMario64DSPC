@@ -19,8 +19,7 @@
  * - UpdatePose still walks the PknMtx43/PknVec3 views: spelling the copies
  *   as Vector3/Matrix4x3 is emitted differently.
  * - The shared files keep their address names and the PknSharedFile
- *   two-word view, because include/SharedFilePtr.h deliberately leaves the
- *   layout unrecovered. This file defines the state table at 0x02130e80;
+ *   handle. The loaded file is filePtr. This file defines the state table at 0x02130e80;
  *   __sinit_ov084_02130654 still fills nine of its slots. The recoil handle
  *   stays the ROM copy.
  * - unk_108 on the dEnemyBase_c base is the drop-a-blue-coin-on-death flag

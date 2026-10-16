@@ -30,7 +30,7 @@ void UpdateAngle(short &angle, short target, int divisor, short maxStep);
  * read that word. */
 #define LOADED(handle) ((handle).filePtr)
 
-/* SharedFilePtr is the 8-byte handle. The two words are the 8-byte handle. */
+/* File handle. The loaded file is filePtr. */
 struct PgRcerFile : SharedFilePtr {
 };
 

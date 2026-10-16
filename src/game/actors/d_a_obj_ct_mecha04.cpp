@@ -16,7 +16,7 @@
 // InitResources/Behavior/UpdateShadow calls). func_020393c4 / func_020393bc
 // store/load dBgW+0x1c -- the ROM's own call, not an inlineable assignment
 // (no setter). Sound::PlayLong stays TU-local mangled (Sound.h has PlayBank3
-// only). SharedFilePtr's file data sits at +4; the header declares no fields.
+// only). The loaded file is filePtr.
 // common.h first: UpdateShadow writes mShadowMat.m[9..11] on the flat 12-word
 // spelling. InitResources keeps its two-store animationFiles[2] stack array,
 // the variant reloads, MoveActorOnBelt's &mPosX-derived pointer chain and flat

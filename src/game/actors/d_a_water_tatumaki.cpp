@@ -83,8 +83,7 @@ enum {
 
 /* File handles this TU's static initializer constructs, and the two state
    records it copies pointer-to-member descriptors into. Definitions are at
-   the end of the file. SharedFilePtr is the 8-byte handle, so the 8-byte handle
-   is read through SharedFileBytes: fileID at +0, refCount at +2, file at +4. */
+   the end of the file. SharedFileBytes is that handle: fileID, refCount, filePtr. */
 struct SharedFileBytes : SharedFilePtr {
 };
 

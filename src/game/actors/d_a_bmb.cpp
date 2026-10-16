@@ -25,7 +25,7 @@
  *   extern inside a member gets C++ linkage and the module stops linking.
  * - func_ov102_0214ad14, 0214ae1c and 0214b384 are called from other overlays,
  *   so those labels stay. data_ov102_* are the file handles; SharedFilePtr
- *   has no fields, so the loaded BCA is still the word at +4.
+ *   filePtr is the loaded BCA.
  * - func_0203568c / func_02035684 are the out-of-line stores of
  *   mWithMeshClsn.mRadius / mHeight. Inlining them drops the call.
  * - func_ov102_0214b53c keeps the volatile stack pins, and the carrier's
@@ -45,7 +45,7 @@
 bool ApproachLinear(short &value, short target, short step);
 
 /* A loaded SharedFilePtr: the second word is the file it loaded.
-   SharedFilePtr is the 8-byte handle, so a global of that type is one byte. */
+   The loaded file is filePtr. */
 struct LoadedFile : SharedFilePtr {
 };
 

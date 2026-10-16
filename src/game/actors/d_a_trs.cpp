@@ -108,13 +108,12 @@ extern int data_ov063_0211e1ec[];
 extern Matrix4x3 data_020a0e68;
 }
 
-/* The seven file handles __sinit_ov063_0211e29c constructs. SharedFilePtr
- * declares no fields and no constructor of its own, so the model handles get
+/* The seven file handles __sinit_ov063_0211e29c constructs. The model handles get
  * the model-file pair func_02017acc/func_02017ab4 and the animation handles
  * get SharedFilePtr::Construct plus the anim destructor through thin
  * declaration-only wrappers; the manifest aliases those mangled spellings to
  * the arm9 destinations the retail initializer calls. The measured layout is
- * u16 fileID at +0, u8 numRefs at +2, and the loaded file pointer at +4.
+ * u16 fileID at +0, u8 refCount at +2, and filePtr at +4.
  * The destructor chain records the file ID; actor cleanup releases handles
  * separately. These local wrappers retain the existing lifecycle aliases. */
 struct TrsModelFileResHandle : SharedFilePtr {

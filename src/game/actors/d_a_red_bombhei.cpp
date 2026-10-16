@@ -88,7 +88,7 @@ struct RedBombheiState {
 bool ApproachLinear(short &value, short target, short step);
 
 /* A loaded SharedFilePtr: the second word is the file it loaded.
-   SharedFilePtr is the 8-byte handle, so a global of that type is one byte. */
+   The loaded file is filePtr. */
 struct LoadedFile : SharedFilePtr {
 };
 

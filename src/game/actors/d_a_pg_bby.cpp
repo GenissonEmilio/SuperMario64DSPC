@@ -4,7 +4,7 @@
  *   dCcAc_c::Init and dBgCh_Actr::Init stay
  *   mangled. Each takes Fix12<int> by value.
  * - The model handle data_ov072_02122cb4 stays a ROM word.
- *   SharedFilePtr.h has no fields. The carry offsets and the state
+ *   The loaded model is filePtr. The carry offsets and the state
  *   table are zero here; __sinit_ov072_02122414 writes them. The
  *   state object stops at data_ov072_02122dc4.
  * - func_ov072_021210c4 reads the carrier at Player +0xc8. dActor_c.h

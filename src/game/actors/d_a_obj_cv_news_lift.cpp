@@ -51,9 +51,7 @@
 
 struct Quaternion;
 
-/* A SharedFilePtr seen from outside: SharedFilePtr.h deliberately declares
- * no fields, and these reads need the loaded buffer. The fields follow the
- * layout that _ZN13SharedFilePtr4LoadEv's definition uses. */
+/* The loaded buffer is filePtr, the same word Load stores. */
 struct NewsLiftFile : SharedFilePtr {
 };
 

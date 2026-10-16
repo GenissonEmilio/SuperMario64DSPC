@@ -29,8 +29,7 @@
  * leftovers:
  * - ModelAnim::SetAnim stays mangled: it takes Fix12<int> by value
  *   (notes/mwccarm-codegen.md 6az).
- * - SharedFilePtr carries no fields yet, so the loaded file pointer in a
- *   handle's second word is read through a cast.
+ * - The loaded file is filePtr. A few call sites still cast the handle.
  * - (Vector3 *)&mPosX: dActor_c stores the position as three scalars.
  * - data_0209caa0 / data_0209f32c are the arm9 level-state words that
  *   carry the "has water" flag and the water height; neither is named yet.

@@ -184,10 +184,9 @@ struct CLPS_Block;
 /* The static initializer's own types. __sinit_ov066_0211a418 constructs 22
  * resource handles with per-kind constructors and destructors, and copies
  * 38 pointer-to-member pairs into 19 state descriptors. The constructors the
- * ROM runs for each handle kind are not classes the compiler could have
- * recovered fields for (SharedFilePtr's layout is not recovered), so each
- * kind is a subclass of SharedFilePtr that adds two words and defines its
- * constructor/destructor out of line; the manifest aliases those symbols onto
+ * ROM runs for each handle kind are declaration-only subclasses of
+ * SharedFilePtr. Each defines its constructor and destructor out of line;
+ * the manifest aliases those symbols onto
  * the ROM's per-kind constructor/destructor entry points.
  *
  * A state descriptor is an EyerokState: two of the 8-byte pointer-to-member

@@ -107,8 +107,8 @@
  *   fields unk_403 and unk_408, which are written and never read in this file.
  *   mStateEntry stays an s32 because the member-pointer record is spelled by
  *   the file-local CapStateRec / CapEnterSelf stand-ins.
- *   The SharedFilePtr header has no fields; CleanupResources still casts the
- *   AnimRec tables.
+ *   AnimRec is not a SharedFilePtr (its first word is not a file id).
+ *   CleanupResources still casts those tables.
  *   dBgCh_Gnd stays a 0x50 stack blob: its C1/D1 only run on the airborne
  *   path (UpdateMatrix).
  *   The +0xc8 override-matrix pointer lives in dActor_c's pad_0c5, a header
@@ -148,8 +148,8 @@ enum daObjMarioCap_c_AssetId {
 /* The animation descriptor pairs these tables hold: a header word and the
  * BCA file pointer read at +4. Spelled as a struct because three members
  * reach the second word by name and two more take the address of the whole
- * record. SharedFilePtr.h commits to no fields, so CleanupResources still
- * casts these to SharedFilePtr*. */
+ * record. AnimRec is not a SharedFilePtr, so CleanupResources still
+ * casts these tables. */
 struct AnimRec { void *f0; void *file; };
 
 /* The static initializer's own types. __sinit_ov002_02101064 constructs the 13

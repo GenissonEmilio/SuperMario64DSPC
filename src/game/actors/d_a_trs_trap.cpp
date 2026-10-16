@@ -42,8 +42,7 @@
  *   carries Fix12<int> by value (wall 6az), so the method form size-DIFFs.
  * - func_020393d4/func_020393c4 install the BeforeClsn/unk_1c callback words;
  *   dBgW carries no setter, and dBgW.h itself blesses this spelling.
- * - SharedFilePtr+4 is the loaded KCL file: the handle's layout is still
- *   unrecovered (SharedFilePtr.h), and the ROM re-reads the word rather than
+ * - filePtr is the loaded KCL. The ROM re-reads that word rather than
  *   keeping dBgW_Kc::LoadFile's return.
  * - The dispatch table is a pointer-to-member of daTrsTrap_c itself. An
  *   earlier draft bound it to an opaque forward-declared class on the theory

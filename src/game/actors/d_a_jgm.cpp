@@ -44,8 +44,7 @@
  *   `frame` in UpdateThrowState, the `offset` references in the hover and
  *   throw collision updates, and the parameter names on the cstd::fdiv and
  *   IsTooFarAwayFromPlayer prototypes.
- * - The handle wrappers declare `id` / `file` locally; SharedFilePtr.h has
- *   no fields.
+ * - The handle wrappers used to redeclare the layout. filePtr is the loaded file.
  * - OnTurnIntoEgg's R6Player and UpdateWallAndWater's R10dBgCh_Actr take
  *   reference spelling; a pointer emits identical ARM. SetState's `int`
  *   signedness is indistinguishable.

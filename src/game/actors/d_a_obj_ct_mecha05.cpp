@@ -13,7 +13,7 @@
  * - data_ov065_0211c0c8 / data_ov065_0211d26c; TTC_MovingBar_ModelFile /
  *   TTC_MovingBar_ClsnFile are symbols.txt BSS labels shared with the
  *   neighbouring class
- * - SharedFilePtr +4 BMD (LoadFile/Release; header has no fields)
+ * - BMD handle filePtr (LoadFile/Release)
  * - common.h first (func_ov065_0211ac0c mShadowMatrix.m[9..11])
  * - return new emits homeless _ZN10dBgActor_cD2Ev; compiler-only policy
  *   deadstrips it

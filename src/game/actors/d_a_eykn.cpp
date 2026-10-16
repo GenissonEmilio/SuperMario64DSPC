@@ -42,8 +42,7 @@
  * - data_ov071_02123038 / 02123040 are BTP files 0x2f8 / 0x2fb,
  *   02123048 is BCA 0x2f9, 02123050 is BMD 0x2f7. 021226a4 points at
  *   the two BTPs and 021226a0 at the BCA. data_ov002_0210da38 is the
- *   shared blue-coin model. SharedFilePtr has no fields, so the loaded
- *   word is read as LoadedFile.
+ *   shared blue-coin model. The loaded file is filePtr.
  * - data_0209f2f8 is the current sublevel. 0x2e maps through
  *   SUBLEVEL_LEVEL_TABLE to course 19, which is not BBH's entrance
  *   (that is sublevel 0xc). On 0x2e the kill is entered in the death

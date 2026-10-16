@@ -41,8 +41,7 @@
 
 #pragma defer_codegen off
 
-/* SharedFilePtr declares no fields; the loaded BCA is the second word.
-   Same two-word view as daPkn_c's PknSharedFile. */
+/* The loaded BCA is filePtr. Same handle as daPkn_c's PknSharedFile. */
 struct PknSharedFile : SharedFilePtr {
 };
 typedef char PknSharedFile_size_must_be_0x8[sizeof(PknSharedFile) == 0x8 ? 1 : -1];
