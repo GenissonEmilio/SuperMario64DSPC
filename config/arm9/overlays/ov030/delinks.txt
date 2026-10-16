@@ -23,6 +23,8 @@ src/game/actors/d_a_obj_hm_maruta.cpp:
 src/game/actors/d_a_mky.cpp:
     complete
     .text start:0x02111688 end:0x02114690
+    .rodata start:0x02114824 end:0x0211484c
+    .bss start:0x02115cd0 end:0x02115ec0
 
 src/unnamed/ov030/__sinit_ov030_02114924.c:
     complete
