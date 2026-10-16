@@ -73,12 +73,10 @@ struct BCA_File;
 typedef daBombking_c::StateFunction PMF;
 extern "C" int _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(void *self, void *bca, int a, int b, int fix, unsigned short t);
 
-/* Borrowed views of external shared-file handles, not storage owned by this TU.
- * Construct/Load/Release use a u16 fileID at +0, a u8 reference count at +2,
- * and a loaded pointer at +4. Byte +3 is padding, not a recovered field.
- * __sinit_ov078_02126660 constructs the model (id 0x2c7) and twelve animations
- * (ids 0x2bb..0x2c6), with their respective destructor registrations.
- * The shared header intentionally retains an opaque layout. */
+/* Shared-file handles this file defines. Construct/Load/Release use a u16
+ * fileID at +0, a u8 reference count at +2, and a loaded pointer at +4.
+ * Byte +3 is padding. The BSS image is zero; __sinit_ov078_02126660 constructs
+ * the model (id 0x2c7) and twelve animations (ids 0x2bb..0x2c6). */
 struct BombkingAnimFile {
     u16 fileID;
     u8 numRefs;
@@ -93,19 +91,19 @@ struct BombkingModelFile {
 };
 
 extern "C" {
-    extern BombkingAnimFile data_ov078_02126ee0;
-    extern BombkingAnimFile data_ov078_02126ee8;
-    extern BombkingAnimFile data_ov078_02126ef0;
-    extern BombkingAnimFile data_ov078_02126ef8;
-    extern BombkingAnimFile data_ov078_02126f00;
-    extern BombkingAnimFile data_ov078_02126f08;
-    extern BombkingAnimFile data_ov078_02126f10;
-    extern BombkingAnimFile data_ov078_02126f18;
-    extern BombkingAnimFile data_ov078_02126f20;
-    extern BombkingAnimFile data_ov078_02126f28;
-    extern BombkingAnimFile data_ov078_02126f30;
-    extern BombkingModelFile data_ov078_02126f38;
-    extern BombkingAnimFile data_ov078_02126f40;
+    BombkingAnimFile data_ov078_02126ee0;
+    BombkingAnimFile data_ov078_02126ee8;
+    BombkingAnimFile data_ov078_02126ef0;
+    BombkingAnimFile data_ov078_02126ef8;
+    BombkingAnimFile data_ov078_02126f00;
+    BombkingAnimFile data_ov078_02126f08;
+    BombkingAnimFile data_ov078_02126f10;
+    BombkingAnimFile data_ov078_02126f18;
+    BombkingAnimFile data_ov078_02126f20;
+    BombkingAnimFile data_ov078_02126f28;
+    BombkingAnimFile data_ov078_02126f30;
+    BombkingModelFile data_ov078_02126f38;
+    BombkingAnimFile data_ov078_02126f40;
     /* Canonical single declaration per ROM data symbol -- the generated
      * preamble carried up to three contradictory spellings of each. */
     extern unsigned char data_0209f220[];
