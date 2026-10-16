@@ -3483,6 +3483,7 @@ src/engine/sound/Sound2.cpp:
 src/unnamed/arm9/0204/func_02048f34.c:
     complete
     .text start:0x02048f34 end:0x02048fd4
+    .bss start:0x020a4bf0 end:0x020a4c18
 
 src/unnamed/arm9/0204/func_02048fd4.c:
     complete
