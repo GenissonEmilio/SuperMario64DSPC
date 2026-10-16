@@ -6,8 +6,8 @@
  * SIZE 0x88, from _Znwj(0x88) in dScMgSmartball_c::SpawnObjects. Base ends at 0x34, so
  * this class adds 0x54 bytes.
  *
- * FIVE FIELDS, TWO OF THEM NAMED. All five are zeroed by RestoreInitial, but
- * only two are ever READ, and neither reader is in this class:
+ * FIVE CONTROL FIELDS, TWO OF THEM NAMED. All five are zeroed by RestoreInitial, but
+ * only two of these five control fields are read:
  *
  *   - 0x40 mTriggerCount is incremented by Trigger, which
  *     cMgSmartball_pakkun_c::SaveSnapshot calls on this object (reached as
@@ -42,15 +42,10 @@
  * exactly that reason: it states this reader's view without asserting it is
  * the region's type.
  *
- * THE TAIL FROM 0x45 TO 0x87 IS AN EXPLICIT PAD, and it is UNMODELLED, NOT
- * UNREAD. RebuildVerts -- a free helper called from both
- * SaveSnapshot and RestoreInitial -- reinterprets `this` through its own
- * local struct and read-modify-writes eight (int x, int y) pairs at
- * 0x48..0x87 (its `v[8]`), plus reads mCurrent0/mCurrent1 and the 0x32
- * angle. That evidence lives in the helper's own file, not in this class's
- * methods, so this header does not assert field names for it -- the range
- * is a real gap in what THIS file models, not a gap in the ROM's use of the
- * bytes. */
+ * RebuildVerts stores eight collision vertices at 0x48..0x87. The first
+ * four form one wing and the last four its mirror; HitTest splits each
+ * four-vertex rectangle into two triangles. The three bytes before the
+ * vertices are alignment padding. */
 #ifndef CMGSMARTBALL_WING_C_H
 #define CMGSMARTBALL_WING_C_H
 #include "types.h"
@@ -82,7 +77,9 @@ struct cMgSmartball_wing_c : cMgSmartball_object_c {
     u8  mAngleSettled; /* 0x044 -- the angle has finished easing. Raised by
                            IsTableAtRest; while set, SaveSnapshot leaves
                            the angle alone */
-    u8  pad_045[0x43]; /* 0x45..0x87 -- unmodelled, not unread; see above */
+    u8  pad_045[3];    /* align the collision vertices */
+    struct CollisionVertex { s32 x, y; };
+    CollisionVertex mVertices[8]; /* 0x048..0x087, rebuilt from the wing angle */
 };
 
 #ifndef SM64DS_PLATFORM_PC

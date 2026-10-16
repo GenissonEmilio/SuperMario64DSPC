@@ -33,7 +33,7 @@ enum dScMgSmartball_c_AssetId {
 //   construct objects they do not own. SmartballObj_ElemDtor and
 //   SmartballObj_ElemCtor are the manager array element destructor and the
 //   empty final hook.
-// - The shadow structs below (Obj, Mgr, State2, S, A, Owl, C, SBoard,
+// - The shadow structs below (Obj, Mgr, State2, S, A, Owl, SBoard,
 //   SArrays, ...) remain TU-local reconstructions; none has a proven
 //   field-to-member mapping against the class headers yet.
 // - The meter/score display offsets (0x4660-0x4770 pointer arrays,
@@ -84,19 +84,7 @@ typedef struct V2xz {
     int z;
 } V2xz;
 
-/* shadow 'C' -- 1 member(s). */
-struct C {
-    char pad0[0x8];
-    int dx;             /* 0x8 */
-    int dy;             /* 0xc */
-    char pad10[0x22];   /* 0x10 */
-    s16 angle;          /* 0x32 */
-    char pad34[0x14];   /* 0x34 */
-    V2 v[8];            /* 0x48 */
-};
-
-/* shadow 'C2' (was 'C') -- 1 member(s).
-   func_ov006_02110e28.c -- pad34 is 0x4 here and 0x14 in C, so these are different objects. */
+/* Propeller collision vertices start at +0x38; wing vertices start at +0x48. */
 struct C2 {
     char pad0[0x8];
     int dx;             /* 0x8 */
@@ -106,16 +94,6 @@ struct C2 {
     char pad34[0x4];    /* 0x34 */
     V2 v[8];            /* 0x38 */
 };
-
-/* shadow 'State' -- 1 member(s). */
-typedef struct {
-    char _0[8];
-    int x, y;        /* 0x8, 0xc */
-    char _10[0x30];  /* 0x10..0x3f */
-    int f40;         /* 0x40 */
-    char _44[4];     /* 0x44 */
-    int verts[16];   /* 0x48 */
-} State;
 
 /* shadow 'Vec2' -- 1 member(s). */
 typedef struct { int x, y; } Vec2;
@@ -557,119 +535,118 @@ void SmartballObj_ElemDtor(void)
 }
 
 // @symbol _ZN19cMgSmartball_wing_c9IsSettledEv
-int cMgSmartball_wing_c::IsSettled() {
-    char *c = (char *)this;
-    if (*(int*)(c+0x40) == 0) return 1;
-    return *(short*)(c+0x32) == 0x3000;
+int cMgSmartball_wing_c::IsSettled()
+{
+    if (mTriggerCount == 0)
+        return 1;
+    return *(s16 *)((char *)this + 0x32) == 0x3000;
 }
 
 // @symbol _ZN19cMgSmartball_wing_c7TriggerEv
 void cMgSmartball_wing_c::Trigger()
 {
-    char *c = (char *)this;
-    (*(int *)(((int)c + 0x40))) += 1;
-    if (*(int *)(c + 0x40) == 1) {
-        *(int *)(c + 0x34) = 0x14;
-        *(unsigned char *)(c + 0x3c) = 1;
-        *(int *)(c + 0x38) = 0;
+    mTriggerCount += 1;
+    if (mTriggerCount == 1) {
+        unk_034 = 0x14;
+        unk_03c = 1;
+        unk_038 = 0;
         _ZN5Sound12PlayBank2_2DEj(0x1a1);
         return;
     }
-    *(int *)(c + 0x34) = 0;
-    *(unsigned char *)(c + 0x3c) = 1;
-    *(int *)(c + 0x38) = 0;
+    unk_034 = 0;
+    unk_03c = 1;
+    unk_038 = 0;
     _ZN5Sound12PlayBank2_2DEj(0x1a2);
 }
 
 // @symbol _ZN19cMgSmartball_wing_c12RebuildVertsEv
 void cMgSmartball_wing_c::RebuildVerts()
 {
-    struct C *c = (struct C *)this;
-    c->v[0].x = -0x4000;
-    c->v[0].y = 0;
-    c->v[1].x = 0x4000;
-    c->v[1].y = 0;
-    c->v[2].x = -0x4000;
-    c->v[2].y = -0x18000;
-    c->v[3].x = 0x4000;
-    c->v[3].y = -0x18000;
-    c->v[4].x = -0x4000;
-    c->v[4].y = 0;
-    c->v[5].x = 0x4000;
-    c->v[5].y = 0;
-    c->v[6].x = -0x4000;
-    c->v[6].y = -0x18000;
-    c->v[7].x = 0x4000;
-    c->v[7].y = -0x18000;
+    mVertices[0].x = -0x4000;
+    mVertices[0].y = 0;
+    mVertices[1].x = 0x4000;
+    mVertices[1].y = 0;
+    mVertices[2].x = -0x4000;
+    mVertices[2].y = -0x18000;
+    mVertices[3].x = 0x4000;
+    mVertices[3].y = -0x18000;
+    mVertices[4].x = -0x4000;
+    mVertices[4].y = 0;
+    mVertices[5].x = 0x4000;
+    mVertices[5].y = 0;
+    mVertices[6].x = -0x4000;
+    mVertices[6].y = -0x18000;
+    mVertices[7].x = 0x4000;
+    mVertices[7].y = -0x18000;
 
-    func_0203d388(&c->v[0], (s16)-c->angle);
-    func_0203d388(&c->v[1], (s16)-c->angle);
-    func_0203d388(&c->v[2], (s16)-c->angle);
-    func_0203d388(&c->v[3], (s16)-c->angle);
-    func_0203d388(&c->v[4], c->angle);
-    func_0203d388(&c->v[5], c->angle);
-    func_0203d388(&c->v[6], c->angle);
-    func_0203d388(&c->v[7], c->angle);
+    func_0203d388((V2 *)&mVertices[0], (s16)-*(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[1], (s16)-*(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[2], (s16)-*(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[3], (s16)-*(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[4], *(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[5], *(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[6], *(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[7], *(s16 *)((char *)this + 0x32));
 
-    *(int*)(((int)c + 0x48)) += c->dx - 0x10000;
-    *(int*)(((int)c + 0x4c)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x50)) += c->dx - 0x10000;
-    *(int*)(((int)c + 0x54)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x58)) += c->dx - 0x10000;
-    *(int*)(((int)c + 0x5c)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x60)) += c->dx - 0x10000;
-    *(int*)(((int)c + 0x64)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x68)) += c->dx + 0x10000;
-    *(int*)(((int)c + 0x6c)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x70)) += c->dx + 0x10000;
-    *(int*)(((int)c + 0x74)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x78)) += c->dx + 0x10000;
-    *(int*)(((int)c + 0x7c)) += c->dy + 0x28000;
-    *(int*)(((int)c + 0x80)) += c->dx + 0x10000;
-    *(int*)(((int)c + 0x84)) += c->dy + 0x28000;
+    mVertices[0].x += mCurrent0 - 0x10000;
+    mVertices[0].y += mCurrent1 + 0x28000;
+    mVertices[1].x += mCurrent0 - 0x10000;
+    mVertices[1].y += mCurrent1 + 0x28000;
+    mVertices[2].x += mCurrent0 - 0x10000;
+    mVertices[2].y += mCurrent1 + 0x28000;
+    mVertices[3].x += mCurrent0 - 0x10000;
+    mVertices[3].y += mCurrent1 + 0x28000;
+    mVertices[4].x += mCurrent0 + 0x10000;
+    mVertices[4].y += mCurrent1 + 0x28000;
+    mVertices[5].x += mCurrent0 + 0x10000;
+    mVertices[5].y += mCurrent1 + 0x28000;
+    mVertices[6].x += mCurrent0 + 0x10000;
+    mVertices[6].y += mCurrent1 + 0x28000;
+    mVertices[7].x += mCurrent0 + 0x10000;
+    mVertices[7].y += mCurrent1 + 0x28000;
 }
 
 // @symbol _ZN19cMgSmartball_wing_c7HitTestEPi
-int cMgSmartball_wing_c::HitTest(int *p) {
-    State *s = (State *)this;
-    int v[2];
-    int b2p[2], b2q0[2], b2q1[2], b2q2[2];
-    int b3p[2], b3q0[2], b3q1[2], b3q2[2];
-    int b4p[2], b4q0[2], b4q1[2], b4q2[2];
-    int b5p[2], b5q0[2], b5q1[2], b5q2[2];
+int cMgSmartball_wing_c::HitTest(int *point)
+{
+    int bodyOffset[2];
+    int triangle0Point[2], triangle0A[2], triangle0B[2], triangle0C[2];
+    int triangle1Point[2], triangle1A[2], triangle1B[2], triangle1C[2];
+    int triangle2Point[2], triangle2A[2], triangle2B[2], triangle2C[2];
+    int triangle3Point[2], triangle3A[2], triangle3B[2], triangle3C[2];
 
-    if (s->f40 <= 1 && p[1] < s->y + 0x8000) {
-        v[0] = p[0];
-        v[1] = p[1];
-        v[0] -= s->x;
-        v[1] -= s->y;
-        v[1] -= 0x8000;
-        if (func_0203d5bc(v) < 0x100000) return 1;
+    if (mTriggerCount <= 1 && point[1] < mCurrent1 + 0x8000) {
+        bodyOffset[0] = point[0];
+        bodyOffset[1] = point[1];
+        bodyOffset[0] -= mCurrent0;
+        bodyOffset[1] -= mCurrent1;
+        bodyOffset[1] -= 0x8000;
+        if (func_0203d5bc(bodyOffset) < 0x100000) return 1;
     }
 
-    b2p[0] = p[0]; b2p[1] = p[1];
-    b2q0[0] = s->verts[0]; b2q0[1] = s->verts[1];
-    b2q1[0] = s->verts[2]; b2q1[1] = s->verts[3];
-    b2q2[0] = s->verts[4]; b2q2[1] = s->verts[5];
-    if (PointInTriangle(b2p,  b2q0,  b2q1,  b2q2)) return 1;
+    triangle0Point[0] = point[0]; triangle0Point[1] = point[1];
+    triangle0A[0] = mVertices[0].x; triangle0A[1] = mVertices[0].y;
+    triangle0B[0] = mVertices[1].x; triangle0B[1] = mVertices[1].y;
+    triangle0C[0] = mVertices[2].x; triangle0C[1] = mVertices[2].y;
+    if (PointInTriangle(triangle0Point, triangle0A, triangle0B, triangle0C)) return 1;
 
-    b3p[0] = p[0]; b3p[1] = p[1];
-    b3q0[0] = s->verts[2]; b3q0[1] = s->verts[3];
-    b3q1[0] = s->verts[4]; b3q1[1] = s->verts[5];
-    b3q2[0] = s->verts[6]; b3q2[1] = s->verts[7];
-    if (PointInTriangle(b3p,  b3q0,  b3q1,  b3q2)) return 1;
+    triangle1Point[0] = point[0]; triangle1Point[1] = point[1];
+    triangle1A[0] = mVertices[1].x; triangle1A[1] = mVertices[1].y;
+    triangle1B[0] = mVertices[2].x; triangle1B[1] = mVertices[2].y;
+    triangle1C[0] = mVertices[3].x; triangle1C[1] = mVertices[3].y;
+    if (PointInTriangle(triangle1Point, triangle1A, triangle1B, triangle1C)) return 1;
 
-    b4p[0] = p[0]; b4p[1] = p[1];
-    b4q0[0] = s->verts[8];  b4q0[1] = s->verts[9];
-    b4q1[0] = s->verts[10]; b4q1[1] = s->verts[11];
-    b4q2[0] = s->verts[12]; b4q2[1] = s->verts[13];
-    if (PointInTriangle(b4p,  b4q0,  b4q1,  b4q2)) return 1;
+    triangle2Point[0] = point[0]; triangle2Point[1] = point[1];
+    triangle2A[0] = mVertices[4].x; triangle2A[1] = mVertices[4].y;
+    triangle2B[0] = mVertices[5].x; triangle2B[1] = mVertices[5].y;
+    triangle2C[0] = mVertices[6].x; triangle2C[1] = mVertices[6].y;
+    if (PointInTriangle(triangle2Point, triangle2A, triangle2B, triangle2C)) return 1;
 
-    b5p[0] = p[0]; b5p[1] = p[1];
-    b5q0[0] = s->verts[10]; b5q0[1] = s->verts[11];
-    b5q1[0] = s->verts[12]; b5q1[1] = s->verts[13];
-    b5q2[0] = s->verts[14]; b5q2[1] = s->verts[15];
-    return PointInTriangle(b5p,  b5q0,  b5q1,  b5q2);
+    triangle3Point[0] = point[0]; triangle3Point[1] = point[1];
+    triangle3A[0] = mVertices[5].x; triangle3A[1] = mVertices[5].y;
+    triangle3B[0] = mVertices[6].x; triangle3B[1] = mVertices[6].y;
+    triangle3C[0] = mVertices[7].x; triangle3C[1] = mVertices[7].y;
+    return PointInTriangle(triangle3Point, triangle3A, triangle3B, triangle3C);
 }
 
 // @symbol _ZN19cMgSmartball_wing_c6UpdateEv
@@ -715,7 +692,7 @@ void cMgSmartball_wing_c::Update()
  * header -- it belongs to the BASE, not this class) toward
  * 0x3000 by steps of 0x200, clamping on overshoot in either direction.
  * Always tail-calls the shared helper RebuildVerts, which touches
- * the unmodelled 0x48..0x87 tail (see the header). */
+ * the eight collision vertices at 0x48..0x87. */
 void cMgSmartball_wing_c::SaveSnapshot()
 {
     mSnapshot0 = mCurrent0;
@@ -2766,7 +2743,7 @@ int cMgSmartball_ball_c::HitWing(int *src){
   struct V2 v;
   v.x = src[0];
   v.y = src[1];
-  return ((cMgSmartball_wing_c *)((State *)(*(int*)((char*)*(int*)(c+4)+0x4780))))->HitTest((int *)&v);
+  return ((cMgSmartball_wing_c *)(*(int*)((char*)*(int*)(c+4)+0x4780)))->HitTest((int *)&v);
 }
 
 // @symbol _ZN19cMgSmartball_ball_c11HitSwitchesEPi
@@ -3991,15 +3968,14 @@ int cMgSmartball_object_c::PointInTriangle(int* p, int* q0, int* q1, int* q2){
 
 // @symbol _ZN21cMgSmartball_kinoko_c11HitRadiusSqEv
 int cMgSmartball_kinoko_c::HitRadiusSq() {
-    struct S28 *p = (struct S28 *)this;
-    return (int)(((long long)p->field_0x28 * p->field_0x28 + 0x800) >> 12);
+    return (int)(((long long)mRadius * mRadius + 0x800) >> 12);
 }
 
 // @symbol _ZN21cMgSmartball_object_c6SetVelEPi
-void cMgSmartball_object_c::SetVel(int *b)
+void cMgSmartball_object_c::SetVel(int *velocity)
 {
-    int *a = (int *)this;
-    a[8] = b[0]; a[9] = b[1];
+    mVel0 = velocity[0];
+    mVel1 = velocity[1];
 }
 
 // @symbol CopyObjectVel
@@ -4635,7 +4611,7 @@ int dScMgSmartball_c::IsTableAtRest()
     if (q != 0) {
         if (((cMgSmartball_wing_c *)(q))->IsSettled() == 0)
             return 0;
-        *(u8 *)(*(char **)(p + 0x4780) + 0x44) = 1;
+        (*(cMgSmartball_wing_c **)(p + 0x4780))->mAngleSettled = 1;
     }
     if (((dScMgSmartball_c *)(p))->SparksActive() != 0)
         return 0;
@@ -4645,87 +4621,93 @@ int dScMgSmartball_c::IsTableAtRest()
 // @symbol _ZN16dScMgSmartball_c15ResolveBallPairEiiPhS0_
 #pragma push
 #pragma opt_common_subs off
-void dScMgSmartball_c::ResolveBallPair(int b, int c, u8 *d, u8 *e)
+void dScMgSmartball_c::ResolveBallPair(int firstIndex, int secondIndex,
+                                     u8 *firstObject, u8 *secondObject)
 {
     // Keep the intermediate pair materialized across the angle calculation.
+    // Named ball-pointer locals change register allocation; use direct casts.
     TVec2 delta;
-    V2 A;
-    V2 B;
-    V2 vec1;
-    V2 vec2;
-    V2 z1;
-    V2 z2;
-    V2 tmp;
-    V2 t1;
-    V2 t2;
-    V2 c1;
-    V2 c2;
-    s16 ang;
-    int neg;
+    V2 firstPos;
+    V2 secondPos;
+    V2 firstVelocity;
+    V2 secondVelocity;
+    V2 firstZeroVelocity;
+    V2 secondZeroVelocity;
+    V2 positionDelta;
+    V2 firstSavedVelocity;
+    V2 secondSavedVelocity;
+    V2 firstResult;
+    V2 secondResult;
+    s16 collisionAngle;
+    int inverseAngle;
 
-    if (b == c) {
+    if (firstIndex == secondIndex) {
         return;
     }
-    if (*(int *)(d + 0xf8) != c) {
+    if (((cMgSmartball_ball_c *)firstObject)->targetIndex != secondIndex) {
         return;
     }
-    if (b > c) {
-        if (*(int *)(e + 0xf8) == b) {
+    if (firstIndex > secondIndex) {
+        if (((cMgSmartball_ball_c *)secondObject)->targetIndex == firstIndex) {
             return;
         }
     }
-    if (*(u8 *)(d + 0x110) == 1 || *(u8 *)(e + 0x110) == 1) {
-        z1.x = 0;
-        z1.y = 0;
-        ((cMgSmartball_object_c *)((int *)d))->SetVel(&z1.x);
-        z2.x = 0;
-        z2.y = 0;
-        ((cMgSmartball_object_c *)((int *)e))->SetVel(&z2.x);
-        *(u8 *)(d + 0x3b) = 1;
-        *(u8 *)(e + 0x3b) = 1;
+    if (((cMgSmartball_ball_c *)firstObject)->mIsFrozen == 1 ||
+        ((cMgSmartball_ball_c *)secondObject)->mIsFrozen == 1) {
+        firstZeroVelocity.x = 0;
+        firstZeroVelocity.y = 0;
+        ((cMgSmartball_ball_c *)firstObject)->SetVel(&firstZeroVelocity.x);
+        secondZeroVelocity.x = 0;
+        secondZeroVelocity.y = 0;
+        ((cMgSmartball_ball_c *)secondObject)->SetVel(&secondZeroVelocity.x);
+        ((cMgSmartball_ball_c *)firstObject)->state3b = 1;
+        ((cMgSmartball_ball_c *)secondObject)->state3b = 1;
         return;
     }
-    if (*(int *)(d + 0xfc) > 0 || *(int *)(e + 0xfc) > 0) {
-        *(int *)(d + 0xfc) = 3;
-        *(int *)(e + 0xfc) = 3;
+    if (((cMgSmartball_ball_c *)firstObject)->mCollisionCooldown > 0 ||
+        ((cMgSmartball_ball_c *)secondObject)->mCollisionCooldown > 0) {
+        ((cMgSmartball_ball_c *)firstObject)->mCollisionCooldown = 3;
+        ((cMgSmartball_ball_c *)secondObject)->mCollisionCooldown = 3;
         return;
     }
-    *(int *)(d + 0xfc) = 3;
-    *(int *)(e + 0xfc) = 3;
-    CopyObjectPos(&A.x, (int *)d);
-    CopyObjectPos(&B.x, (int *)e);
-    Vec2_Sub((int *)&tmp, (int *)&A, (int *)&B);
-    delta.x = tmp.x;
-    delta.y = tmp.y;
-    ang = _ZN4cstd5atan2E5Fix12IiES1_(delta.y, delta.x);
-    if (((cMgSmartball_ball_c *)(d))->HasHit() != 0) {
-        vec1.x = 0;
-        vec1.y = 0;
+    ((cMgSmartball_ball_c *)firstObject)->mCollisionCooldown = 3;
+    ((cMgSmartball_ball_c *)secondObject)->mCollisionCooldown = 3;
+    CopyObjectPos(&firstPos.x, (int *)firstObject);
+    CopyObjectPos(&secondPos.x, (int *)secondObject);
+    Vec2_Sub((int *)&positionDelta, (int *)&firstPos, (int *)&secondPos);
+    delta.x = positionDelta.x;
+    delta.y = positionDelta.y;
+    collisionAngle = _ZN4cstd5atan2E5Fix12IiES1_(delta.y, delta.x);
+    if (((cMgSmartball_ball_c *)firstObject)->HasHit() != 0) {
+        firstVelocity.x = 0;
+        firstVelocity.y = 0;
     } else {
-        CopyObjectVel((int *)&t1, (int *)d);
-        vec1 = t1;
+        CopyObjectVel((int *)&firstSavedVelocity, (int *)firstObject);
+        firstVelocity = firstSavedVelocity;
     }
-    if (((cMgSmartball_ball_c *)(e))->HasHit() != 0) {
-        vec2.x = 0;
-        vec2.y = 0;
+    if (((cMgSmartball_ball_c *)secondObject)->HasHit() != 0) {
+        secondVelocity.x = 0;
+        secondVelocity.y = 0;
     } else {
-        CopyObjectVel((int *)&t2, (int *)e);
-        vec2 = t2;
+        CopyObjectVel((int *)&secondSavedVelocity, (int *)secondObject);
+        secondVelocity = secondSavedVelocity;
     }
-    neg = -ang;
-    func_0203d388(&vec1, (s16)neg);
-    func_0203d388(&vec2, (s16)neg);
+    // Rotate into the line between the balls, exchange its velocity component,
+    // then rotate back. The perpendicular components stay with their balls.
+    inverseAngle = -collisionAngle;
+    func_0203d388(&firstVelocity, (s16)inverseAngle);
+    func_0203d388(&secondVelocity, (s16)inverseAngle);
     {
-        int t = vec1.x;
-        vec1.x = vec2.x;
-        vec2.x = t;
+        int normalVelocity = firstVelocity.x;
+        firstVelocity.x = secondVelocity.x;
+        secondVelocity.x = normalVelocity;
     }
-    func_0203d388(&vec1, ang);
-    func_0203d388(&vec2, ang);
-    c1 = vec1;
-    ((cMgSmartball_object_c *)((int *)d))->SetVel(&c1.x);
-    c2 = vec2;
-    ((cMgSmartball_object_c *)((int *)e))->SetVel(&c2.x);
+    func_0203d388(&firstVelocity, collisionAngle);
+    func_0203d388(&secondVelocity, collisionAngle);
+    firstResult = firstVelocity;
+    ((cMgSmartball_ball_c *)firstObject)->SetVel(&firstResult.x);
+    secondResult = secondVelocity;
+    ((cMgSmartball_ball_c *)secondObject)->SetVel(&secondResult.x);
 }
 
 #pragma pop
@@ -4735,15 +4717,15 @@ void dScMgSmartball_c::ResolveBallPair(int b, int c, u8 *d, u8 *e)
 #pragma opt_common_subs off
 void dScMgSmartball_c::CollideBalls()
 {
-    char *p = (char *)this;
-    int n = *(int *)(p + 0x4668);
-    int i, j;
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            int a = (i >= 13) ? 0 : *(int *)(int)(p + i * 4 + 0x4688);
-            int b = (j >= 13) ? 0 : *(int *)(p + j * 4 + 0x4688);
-            ((dScMgSmartball_c *)((int)p))->ResolveBallPair((int)i,  (int)j,  (u8 *)a,  (u8 *)b);
-            n = *(int *)(p + 0x4668);
+    char *scene = (char *)this;
+    int ballCount = *(int *)(scene + 0x4668);
+    int firstIndex, secondIndex;
+    for (firstIndex = 0; firstIndex < ballCount; firstIndex++) {
+        for (secondIndex = 0; secondIndex < ballCount; secondIndex++) {
+            int firstBall = (firstIndex >= 13) ? 0 : *(int *)(int)(scene + firstIndex * 4 + 0x4688);
+            int secondBall = (secondIndex >= 13) ? 0 : *(int *)(scene + secondIndex * 4 + 0x4688);
+            ResolveBallPair(firstIndex, secondIndex, (u8 *)firstBall, (u8 *)secondBall);
+            ballCount = *(int *)(scene + 0x4668);
         }
     }
 }
