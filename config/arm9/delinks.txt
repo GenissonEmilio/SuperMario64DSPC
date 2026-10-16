@@ -1669,6 +1669,7 @@ src/unnamed/arm9/0202/func_02020768.c:
 src/engine/oam/OAM.cpp:
     complete
     .text start:0x02020820 end:0x02021a04
+    .bss start:0x0209ea74 end:0x0209ee74
 
 src/engine/particle/Particle_SysTracker_Contents.cpp:
     complete
