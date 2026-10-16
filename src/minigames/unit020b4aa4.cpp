@@ -1056,3 +1056,7 @@ extern "C" void Coin_FlyToCounter(Sprite* s) {
     ApproachLinear(sMgCoinsPayoutLeft, 0, 1);
     Coin_Reset(s);
 }
+
+extern "C" {
+unsigned char sMgCoinsVisible[686];
+}

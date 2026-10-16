@@ -24,6 +24,7 @@ src/minigames/unit020b4aa4.cpp:
     complete
     .text start:0x020b4aa4 end:0x020b67e8
 
+    .bss start:0x020bfa56 end:0x020bfd04
 src/minigames/d_mg_state.cpp:
     complete
     .text start:0x020b67e8 end:0x020b8c18
@@ -41,3 +42,4 @@ src/unnamed/ov004/__sinit_ov004_020b9ad0.c:
 src/unnamed/ov004/__sinit_ov004_020b9b24.c:
     complete
     .init start:0x020b9b24 end:0x020b9de4
+    .bss start:0x020bfda8 end:0x020bfdb4
