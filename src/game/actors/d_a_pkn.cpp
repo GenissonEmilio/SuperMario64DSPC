@@ -20,8 +20,9 @@
  *   as Vector3/Matrix4x3 is emitted differently.
  * - The shared files keep their address names and the PknSharedFile
  *   two-word view, because include/SharedFilePtr.h deliberately leaves the
- *   layout unrecovered; the state table at 0x02130e80 also keeps its
- *   address name (text-only TU; the static initializer owns the .bss).
+ *   layout unrecovered. This file defines the state table at 0x02130e80;
+ *   __sinit_ov084_02130654 still fills nine of its slots. The recoil handle
+ *   stays the ROM copy.
  * - unk_108 on the dEnemyBase_c base is the drop-a-blue-coin-on-death flag
  *   shared by ~10 subclasses (see daBook_c/daBmb_c usage); renaming it is
  *   base-header work, left to a shared-header pass.
@@ -70,8 +71,11 @@ bool ApproachLinear(short &value, short target, short step);
 /* C-linkage declarations for the remaining raw entry points and shared data. */
 extern "C" {
 
-/* -- the state table __sinit_ov084_02130654 fills in -- */
-extern PknStatePMF data_ov084_02130e80[];
+/* State table. BSS image is zero. __sinit_ov084_02130654 copies nine
+ * pointer-to-member descriptors in; the other three slots stay zero.
+ * The recoil handle at 0x02130e0c stays the ROM copy: it is not adjacent,
+ * and one .bss section cannot cover both. */
+PknStatePMF data_ov084_02130e80[12];
 
 /* -- other modules -- */
 void  LoadBlueCoinModel(void *c);

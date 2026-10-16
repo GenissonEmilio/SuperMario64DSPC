@@ -25,6 +25,7 @@ src/game/actors/d_a_f_pkn.cpp:
 src/game/actors/d_a_pkn.cpp:
     complete
     .text start:0x0212eaf0 end:0x02130174
+    .bss start:0x02130e80 end:0x02130ee0
 
 src/unnamed/ov084/__sinit_ov084_02130558.c:
     complete
