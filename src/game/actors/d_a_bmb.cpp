@@ -43,12 +43,16 @@
 
 bool ApproachLinear(short &value, short target, short step);
 
-/* The three shared files this actor claims.  InitResources loads them and
-   CleanupResources releases them, so both C++-named members need one agreed
-   spelling; the members below that read the loaded handle out of the same bytes
-   take their own view with a cast rather than a second declaration. */
-extern SharedFilePtr data_ov102_0214e9c0;
-extern SharedFilePtr data_ov102_0214e9c8;
+/* A loaded SharedFilePtr: the second word is the file it loaded.
+   SharedFilePtr itself has no fields, so a global of that type is one byte. */
+struct LoadedFile {
+    u32 fileID;
+    void *file;
+};
+
+/* Zero in the image. __sinit_ov102_0214de70 writes the file ids. */
+LoadedFile data_ov102_0214e9c0;
+LoadedFile data_ov102_0214e9c8;
 extern SharedFilePtr data_ov002_0210d9e0;
 
 extern Matrix4x3 IDENTITY_MATRIX4X3;
@@ -183,8 +187,8 @@ int daBmb_c::InitResources()
 {
     BMD_File* bmd;
 
-    dExtFrameCtrl_c::LoadFile(data_ov102_0214e9c0);
-    dExtFrameCtrl_c::LoadFile(data_ov102_0214e9c8);
+    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov102_0214e9c0);
+    dExtFrameCtrl_c::LoadFile(*(SharedFilePtr *)&data_ov102_0214e9c8);
     bmd = (BMD_File*)Model::LoadFile(data_ov002_0210d9e0);
     if (mModelAnim.SetFile(bmd, 1, -1) == 0)
         return 0;
@@ -375,8 +379,8 @@ int daBmb_c::Render()
 int daBmb_c::CleanupResources()
 {
     data_ov002_0210d9e0.Release();
-    data_ov102_0214e9c0.Release();
-    data_ov102_0214e9c8.Release();
+    ((SharedFilePtr *)&data_ov102_0214e9c0)->Release();
+    ((SharedFilePtr *)&data_ov102_0214e9c8)->Release();
     return 1;
 }
 
