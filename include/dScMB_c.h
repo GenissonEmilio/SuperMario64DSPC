@@ -40,8 +40,8 @@
  * InitResources (func_0203506c) separately registers a GLOBAL
  * dScMB_c::graphCallback_c object (data_020a0c68, constructed by
  * func_02034b1c(&data_020a0c68, this)) with `this` as its context --
- * NOT an embedded member of dScMB_c. Recovering that nested class's own
- * layout is a separate, later pass; it occupies no space in this header.
+ * NOT an embedded member of dScMB_c. That callback's layout is declared
+ * below; it occupies no space in the scene.
  *
  * MEMBERS. dFdColor_c's own dsize is 0x10 (0x50..0x60); InitResources writes
  * its own u16 at 0x5c (dFdColor_c's own field, via
@@ -76,7 +76,7 @@ struct dScMB_c : dScene_c {
 
     /* Not virtual. The global graph callback calls this on mOwner.
        The address stays the name. */
-    int func_02034d34();
+    void func_02034d34();
 };
 
 /* The GLOBAL callback object InitResources registers (data_020a0c68), not a

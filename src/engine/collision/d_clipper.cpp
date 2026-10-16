@@ -36,7 +36,8 @@ int _ZN4cstd4fdivEii(int a, int b);
 /* Stays a mangled call: the real signature carries Fix12<int> and wall 6az
    (notes/mwccarm-codegen.md) homes class-typed by-value parameters. The
    declaration in dClipper.h is the real one and non-6az callers may use it. */
-int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(dClipper *thiz, Vector3 *v, int clip, u8 *hint);
+int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(
+    dClipper *self, Vector3 *viewPos, int clipMargin, u8 *cachedPlane);
 }
 extern short data_02082214[];
 
@@ -45,83 +46,92 @@ extern short data_02082214[];
 /* Stays a mangled free definition: the real signature carries Fix12<int> and
    wall 6az (notes/mwccarm-codegen.md) homes class-typed by-value parameters.
    The declaration in dClipper.h is the real one and callers may use it. */
-extern "C" int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(dClipper *thiz, Vector3 *v, int clip, u8 *hint)
+extern "C" int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(
+    dClipper *self, Vector3 *viewPos, int clipMargin, u8 *cachedPlane)
 {
-    if (hint != 0)
+    // Test the previously rejecting side plane first when the caller supplies a cache.
+    if (cachedPlane != 0)
     {
-        unsigned int first;
+        unsigned int firstPlane;
         long long y;
         long long x;
         long long z;
-        long long c;
-        int negZ;
+        long long wideMargin;
+        int depth;
         int one;
         int zero;
-        long long dot;
+        long long firstPlaneDistance;
         int outside;
-        unsigned int i;
-        int ok;
-        long long d;
+        unsigned int planeIndex;
+        int insidePlane;
+        long long planeDistance;
 
-        negZ = -v->z;
-        if (negZ < thiz->mNearZ - clip) goto fail1;
-        if (negZ > thiz->mFarZ + clip) goto fail1;
+        depth = -viewPos->z;
+        if (depth < self->mNearZ - clipMargin) goto outsideCached;
+        if (depth > self->mFarZ + clipMargin) goto outsideCached;
 
-        first = *hint & 3;
-        x = v->x;
-        c = clip;
-        dot = ((long long)v->x * thiz->mPlaneNormals[first].x + (long long)v->y * thiz->mPlaneNormals[first].y + (long long)v->z * thiz->mPlaneNormals[first].z + 0x800) >> 12;
+        firstPlane = *cachedPlane & 3;
+        x = viewPos->x;
+        wideMargin = clipMargin;
+        firstPlaneDistance =
+            ((long long)viewPos->x * self->mPlaneNormals[firstPlane].x +
+             (long long)viewPos->y * self->mPlaneNormals[firstPlane].y +
+             (long long)viewPos->z * self->mPlaneNormals[firstPlane].z + 0x800) >> 12;
         outside = 0;
-        if (c < dot) outside = 1;
+        if (wideMargin < firstPlaneDistance) outside = 1;
         if (outside == 0)
         {
-            i = (first + 1) & 3;
-            y = (int)*(unsigned int *)&v->y;
-            z = (int)*(unsigned int *)&v->z;
+            planeIndex = (firstPlane + 1) & 3;
+            y = (int)*(unsigned int *)&viewPos->y;
+            z = (int)*(unsigned int *)&viewPos->z;
             zero = 0;
             one = 1;
             do {
-                d = (z * thiz->mPlaneNormals[i].z + (x * thiz->mPlaneNormals[i].x + y * thiz->mPlaneNormals[i].y) + 0x800) >> 12;
-                ok = d <= c ? one : zero;
-                if (ok == 0) goto failstore;
-                i = (i + 1) & 3;
-            } while (i != first);
-            return negZ;
-        failstore:
-            *hint = (u8)i;
+                planeDistance =
+                    (z * self->mPlaneNormals[planeIndex].z +
+                     (x * self->mPlaneNormals[planeIndex].x +
+                      y * self->mPlaneNormals[planeIndex].y) + 0x800) >> 12;
+                insidePlane = planeDistance <= wideMargin ? one : zero;
+                if (insidePlane == 0) goto cacheRejectingPlane;
+                planeIndex = (planeIndex + 1) & 3;
+            } while (planeIndex != firstPlane);
+            return depth;
+        cacheRejectingPlane:
+            *cachedPlane = (u8)planeIndex;
         }
-    fail1:
+    outsideCached:
         return 0x7FFFFFFF;
     }
     else
     {
-        int negZ;
+        // This path rounds each product separately; the cached path rounds the sum.
+        int depth;
 
-        negZ = -v->z;
-        if (negZ < thiz->mNearZ - clip) goto fail2;
-        if (negZ > thiz->mFarZ + clip) goto fail2;
+        depth = -viewPos->z;
+        if (depth < self->mNearZ - clipMargin) goto outsideUncached;
+        if (depth > self->mFarZ + clipMargin) goto outsideUncached;
 
-        if ((int)(((long long)v->z * thiz->mPlaneNormals[0].z + 0x800) >> 12)
-            + ((int)(((long long)v->x * thiz->mPlaneNormals[0].x + 0x800) >> 12)
-             + (int)(((long long)v->y * thiz->mPlaneNormals[0].y + 0x800) >> 12)) > clip)
-            goto fail2;
+        if ((int)(((long long)viewPos->z * self->mPlaneNormals[0].z + 0x800) >> 12)
+            + ((int)(((long long)viewPos->x * self->mPlaneNormals[0].x + 0x800) >> 12)
+             + (int)(((long long)viewPos->y * self->mPlaneNormals[0].y + 0x800) >> 12)) > clipMargin)
+            goto outsideUncached;
 
         {
-            long long x = v->x, y = v->y, z = v->z;
-            if ((int)((z * thiz->mPlaneNormals[1].z + 0x800) >> 12)
-                + ((int)((x * thiz->mPlaneNormals[1].x + 0x800) >> 12)
-                 + (int)((y * thiz->mPlaneNormals[1].y + 0x800) >> 12)) > clip)
-                goto fail2;
-            if ((int)((z * thiz->mPlaneNormals[2].z + 0x800) >> 12)
-                + ((int)((x * thiz->mPlaneNormals[2].x + 0x800) >> 12)
-                 + (int)((y * thiz->mPlaneNormals[2].y + 0x800) >> 12)) > clip)
-                goto fail2;
-            if ((int)((z * thiz->mPlaneNormals[3].z + 0x800) >> 12)
-                + ((int)((x * thiz->mPlaneNormals[3].x + 0x800) >> 12)
-                 + (int)((y * thiz->mPlaneNormals[3].y + 0x800) >> 12)) <= clip)
-                return negZ;
+            long long x = viewPos->x, y = viewPos->y, z = viewPos->z;
+            if ((int)((z * self->mPlaneNormals[1].z + 0x800) >> 12)
+                + ((int)((x * self->mPlaneNormals[1].x + 0x800) >> 12)
+                 + (int)((y * self->mPlaneNormals[1].y + 0x800) >> 12)) > clipMargin)
+                goto outsideUncached;
+            if ((int)((z * self->mPlaneNormals[2].z + 0x800) >> 12)
+                + ((int)((x * self->mPlaneNormals[2].x + 0x800) >> 12)
+                 + (int)((y * self->mPlaneNormals[2].y + 0x800) >> 12)) > clipMargin)
+                goto outsideUncached;
+            if ((int)((z * self->mPlaneNormals[3].z + 0x800) >> 12)
+                + ((int)((x * self->mPlaneNormals[3].x + 0x800) >> 12)
+                 + (int)((y * self->mPlaneNormals[3].y + 0x800) >> 12)) <= clipMargin)
+                return depth;
         }
-    fail2:
+    outsideUncached:
         return 0x7FFFFFFF;
     }
 }
@@ -132,11 +142,11 @@ extern "C" int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(dClipper *thiz, 
    wall 6az (notes/mwccarm-codegen.md) homes class-typed by-value parameters.
    The declaration in dClipper.h is the real one and callers may use it. */
 extern "C" int _ZN8dClipper13Func_02015560ER9Matrix4x3R7Vector35Fix12IiES3_(
-    dClipper *thiz, Matrix4x3 *mat, Vector3 *srcVec, int scale, Vector3 *dstVec)
+    dClipper *self, Matrix4x3 *worldToView, Vector3 *worldPos, int clipMargin, Vector3 *viewPos)
 {
-    MulVec3Mat4x3(srcVec, mat, dstVec);
+    MulVec3Mat4x3(worldPos, worldToView, viewPos);
     return _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(
-        thiz, dstVec, scale, (u8 *)0);
+        self, viewPos, clipMargin, (u8 *)0);
 }
 
 // @symbol _ZN8dClipper13Func_0201559CEv
@@ -145,26 +155,26 @@ extern "C" int _ZN8dClipper13Func_02015560ER9Matrix4x3R7Vector35Fix12IiES3_(
  *
  * mFovAngle is an angle; its top 12 bits index a sine/cosine pair table at
  * data_02082214, and fdiv of that pair gives the tangent. Scaling by mNearZ
- * (the plane distance) gives the half-height b, and by mAspectRatio (the
- * aspect ratio) the half-width c. The four corner vectors at z = -mNearZ
+ * (the plane distance) gives the half-height, and by mAspectRatio (the
+ * aspect ratio) the half-width. The four corner vectors at z = -mNearZ
  * follow, and each adjacent pair crossed and normalised is one side plane's
  * normal.
  */
 void dClipper::Func_0201559C()
 {
-    int idx = (int)mFovAngle >> 4;
-    int q = _ZN4cstd4fdivEii(data_02082214[2 * idx], data_02082214[2 * idx + 1]);
-    Fix12i b = (Fix12i)(((long long)mNearZ * q + 0x800) >> 12);
-    Fix12i c = (Fix12i)(((long long)mAspectRatio * b + 0x800) >> 12);
-    Vector3 v0, v1, v2, v3;
-    v0.x = -c; v0.y = -b; v0.z = -mNearZ;
-    v1.x = -c; v1.y = b;  v1.z = -mNearZ;
-    v2.x = c;  v2.y = b;  v2.z = -mNearZ;
-    v3.x = c;  v3.y = -b; v3.z = -mNearZ;
-    CrossVec3(&v1, &v0, (Vector3 *)&mPlaneNormals[0]);
-    CrossVec3(&v2, &v1, (Vector3 *)&mPlaneNormals[1]);
-    CrossVec3(&v3, &v2, (Vector3 *)&mPlaneNormals[2]);
-    CrossVec3(&v0, &v3, (Vector3 *)&mPlaneNormals[3]);
+    int angleIndex = (int)mFovAngle >> 4;
+    int tanHalfFov = _ZN4cstd4fdivEii(data_02082214[2 * angleIndex], data_02082214[2 * angleIndex + 1]);
+    Fix12i halfHeight = (Fix12i)(((long long)mNearZ * tanHalfFov + 0x800) >> 12);
+    Fix12i halfWidth = (Fix12i)(((long long)mAspectRatio * halfHeight + 0x800) >> 12);
+    Vector3 corner0, corner1, corner2, corner3;
+    corner0.x = -halfWidth; corner0.y = -halfHeight; corner0.z = -mNearZ;
+    corner1.x = -halfWidth; corner1.y = halfHeight;  corner1.z = -mNearZ;
+    corner2.x = halfWidth;  corner2.y = halfHeight;  corner2.z = -mNearZ;
+    corner3.x = halfWidth;  corner3.y = -halfHeight; corner3.z = -mNearZ;
+    CrossVec3(&corner1, &corner0, (Vector3 *)&mPlaneNormals[0]);
+    CrossVec3(&corner2, &corner1, (Vector3 *)&mPlaneNormals[1]);
+    CrossVec3(&corner3, &corner2, (Vector3 *)&mPlaneNormals[2]);
+    CrossVec3(&corner0, &corner3, (Vector3 *)&mPlaneNormals[3]);
     NormalizeVec3((Vector3 *)&mPlaneNormals[0], (Vector3 *)&mPlaneNormals[0]);
     NormalizeVec3((Vector3 *)&mPlaneNormals[1], (Vector3 *)&mPlaneNormals[1]);
     NormalizeVec3((Vector3 *)&mPlaneNormals[2], (Vector3 *)&mPlaneNormals[2]);

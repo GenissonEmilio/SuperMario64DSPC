@@ -1,0 +1,615 @@
+{
+  "base_commit": "abbb8a179e0f4629def5d39ca399e87fdec7ccce",
+  "scope": "Multi-boot native fader/callback access, DS multiplayer save-command names and view-clipper calculation names.",
+  "changes": [
+    "Multi-boot: remove ScMbFader shadow and call fader.IsAtStart/AdvanceFade directly. Change func_02034d34 to void in declaration/definition; its sole caller ignores the old result and AdvanceFade returns void.",
+    "Multi-boot: initialise declared callback owner, angle, timer and enable flags through the nested class; retain the unmodelled +0x0f byte store. Name sprite/angle/language/render-state variables and correct the stale callback-layout comment.",
+    "View clipper: name the cached plane, clipping margin, view-space depth, signed plane distances, transformed positions and frustum half-width/half-height. Explain the distinct rounding paths without changing arithmetic grouping, casts or control flow.",
+    "DS multiplayer: name command/failure state, save-slot buffers, per-course summary cursor, highest-unlocked-index-plus-one, deferred music ID/delay and archive/default heap variables. Keep shared helper symbols unchanged."
+  ],
+  "evidence": {
+    "fader_interface": "dFdColor_c inherits IsAtStart at virtual slot 5 and overrides AdvanceFade at slot 2. The old ScMbFader declared both as int. GraphCallback3 is the sole source caller of func_02034d34 and discards its result. Ordinary member calls in the corrected void helper reproduce the complete 60-byte body and all relocation identities.",
+    "callback_layout": "dScMB_c::graphCallback_c already declares mOwner +4, mSpinAngle +8, mStillTimer +0xc, mEnabled +0xd and mAdvancing +0xe. The initializer writes those exact widths/offsets; the byte at +0xf remains unmodelled.",
+    "clipper_arithmetic": "The return depth is -viewPos.z; the margin expands the near/far tests and bounds the side-plane dot products. The cached branch tests *cachedPlane&3 first and stores a later rejecting plane. It rounds a sum of products, while the uncached branch rounds each product separately. The transform helper callers include particle worldPos in d_pa.cpp and actor mPosition in d_ent_obj.cpp.",
+    "dsmt_names": "SaveData::ReadFileData/ReadMinigameData and SaveFile return zero on failure, supporting the dispatcher failure flag. The summary loop scans character indices 2..0 and stores the first unlocked index plus one (zero if none); it is not assumed to count arbitrary unlocked characters. The deferred-music helper stores the music ID and countdown later consumed by Behavior.",
+    "ownership": "Queue18 state 630fe3c1bcb91e1d3e26ad2a74d85e4d1e5c4492: no active matching class/file reservations or overlapping ranges for MB arm9 0x02034a78..0x02035354, Clipper arm9 0x020150e8..0x0201577c, or DSMT ov007 0x020cc028..0x020ccb54.",
+    "runtime_validation": "No new emulator run: names follow explicit arithmetic, existing virtual slots, declared fields and save API results. No new multiplayer protocol behavior or unknown field meaning is asserted.",
+    "retained_constraints": [
+      "A local pointer to the embedded fader kept the member address live instead of the scene address, changing three instructions in the 60-byte helper. Ordinary direct member calls reproduce the ROM.",
+      "Collapsing the callback angle conversion from u16 to s16 to u16 into one u16 shortened GraphCallback3 from 484 to 468 bytes. Preserve the original narrowing sequence and document it.",
+      "Keep the clipper Fix12 scalar ABI, opt_propagation off, goto-shaped paths, coordinate casts, arithmetic association and distinct rounding points.",
+      "Keep factory construction sequences, the callback unmodelled byte, raw DSMT packed-array accesses and linker-defined overlay operands."
+    ]
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base_commit": "abbb8a179e0f4629def5d39ca399e87fdec7ccce",
+      "header": "include/dScMB_c.h",
+      "header_before_sha256": "10208bc009b4d82815983986b74c11e111379507635b4d2dda176e5d6afb9678",
+      "header_after_sha256": "d6038c04d0466fcb70f15160d4d7416e37cbb83f94787883d396dc4be7ee8460",
+      "consumers": [
+        {
+          "file": "src/game/stages/d_s_mb.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "6f3e0520b7133b206e7013be9ee4047d1626459b90e65e1bb93c0a69d0316019",
+          "source_after_sha256": "4705f16b4c8ee8d3e1e598ffa21fb63e77dd2cf0e8ed3c9e70161818303260c6",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 28,
+          "sections_after": 28,
+          "before_output_sha256": "4013c0cb5904128dcad0c2433c3c3c1c8bdf5505d6ac32b827f25fe9750929a9",
+          "after_output_sha256": "4013c0cb5904128dcad0c2433c3c3c1c8bdf5505d6ac32b827f25fe9750929a9"
+        },
+        {
+          "file": "src/engine/collision/d_clipper.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "05555e47580353a58932a8f43c26565276323e4c8eac3e0b5b4f5ce96907c89d",
+          "source_after_sha256": "88ca50630eb477df5c9b5c80af27d9d9e076ebb62583629d6bc3fd598e5ed0b2",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 14,
+          "sections_after": 14,
+          "before_output_sha256": "bee3ab966055a6cd67569a39c5194a643c25fb4b9400132ab9284f4e53af4197",
+          "after_output_sha256": "bee3ab966055a6cd67569a39c5194a643c25fb4b9400132ab9284f4e53af4197"
+        },
+        {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "4e0df1b5996462a00637ceecb81bdade508b786421ec155bab79b23efb0ff0dd",
+          "source_after_sha256": "264555ad72120fea58b028eee58efff38e34b0890882e684f937d9e21c366517",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 34,
+          "sections_after": 34,
+          "before_output_sha256": "feec8b1dcc4926cb23662d8eeb225ec9db6da12c82aa9686efab2e4b886ceca3",
+          "after_output_sha256": "feec8b1dcc4926cb23662d8eeb225ec9db6da12c82aa9686efab2e4b886ceca3"
+        }
+      ]
+    },
+    "header_consumers": [
+      "src/game/stages/d_s_mb.cpp"
+    ],
+    "comparison_method": "Pinned 2004/b56 baseline/current complete TU builds with all baseline headers snapshotted separately. MB 28, Clipper 14 and DSMT 34 allocated sections match in index order, including metadata, alignment, entry size, bytes and named relocation offset/type/target/addend. No masking, label canonicalization or manifest changes.",
+    "focused_linkcheck": {
+      "checked": 40,
+      "verified": 37,
+      "warnings": [
+        {
+          "file": "src/game/stages/d_s_mb.cpp",
+          "name": "func_02034fbc",
+          "module": "arm9",
+          "addr": "0x2034fbc",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        },
+        {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c8BehaviorEv",
+          "module": "ov007",
+          "addr": "0x20cc2cc",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        },
+        {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c13InitResourcesEv",
+          "module": "ov007",
+          "addr": "0x20cc4c0",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        }
+      ],
+      "unresolved_slots": 6,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "baseline_warning_control": [
+      {
+        "name": "func_02034fbc",
+        "file": "src/game/stages/d_s_mb.cpp",
+        "baseline": {
+          "name": "func_02034fbc",
+          "module": "arm9",
+          "addr": "0x02034fbc",
+          "verdict": "BLIND-2",
+          "diffs": [],
+          "blind": 2
+        },
+        "current": {
+          "file": "src/game/stages/d_s_mb.cpp",
+          "name": "func_02034fbc",
+          "module": "arm9",
+          "addr": "0x2034fbc",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        },
+        "overlay_constants": [
+          "OVERLAY_100_ID",
+          "OVERLAY_102_ID"
+        ]
+      },
+      {
+        "name": "_ZN9dScDSMT_c8BehaviorEv",
+        "file": "src/game/stages/d_s_dsmt.cpp",
+        "baseline": {
+          "name": "_ZN9dScDSMT_c8BehaviorEv",
+          "module": "ov007",
+          "addr": "0x020cc2cc",
+          "verdict": "BLIND-2",
+          "diffs": [],
+          "blind": 2
+        },
+        "current": {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c8BehaviorEv",
+          "module": "ov007",
+          "addr": "0x20cc2cc",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        },
+        "overlay_constants": [
+          "OVERLAY_100_ID",
+          "OVERLAY_102_ID"
+        ]
+      },
+      {
+        "name": "_ZN9dScDSMT_c13InitResourcesEv",
+        "file": "src/game/stages/d_s_dsmt.cpp",
+        "baseline": {
+          "name": "_ZN9dScDSMT_c13InitResourcesEv",
+          "module": "ov007",
+          "addr": "0x020cc4c0",
+          "verdict": "BLIND-2",
+          "diffs": [],
+          "blind": 2
+        },
+        "current": {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c13InitResourcesEv",
+          "module": "ov007",
+          "addr": "0x20cc4c0",
+          "verdict": "BLIND-2",
+          "blind": 2,
+          "diffs": []
+        },
+        "overlay_constants": [
+          "OVERLAY_100_ID",
+          "OVERLAY_102_ID"
+        ]
+      }
+    ],
+    "supplemental_overlay_constant_linkcheck": {
+      "method": "Supplement the unchanged standard linkcheck name index with only the two absolute definitions parsed from the production linker command file. No relocation masking or hardcoded destination addresses. Both baseline and current functions are checked against the ROM. The stock prepush warnings remain recorded separately.",
+      "definition_source": "build\\arm9.lcf",
+      "definition_source_sha256": "c17668bfdd81ae2dd0ef162b02751ff5c49cebb99419b3708859c17c44332acc",
+      "absolute_definitions": {
+        "OVERLAY_100_ID": 100,
+        "OVERLAY_102_ID": 102
+      },
+      "checks": [
+        {
+          "file": "src/game/stages/d_s_mb.cpp",
+          "name": "func_02034fbc",
+          "baseline": {
+            "name": "func_02034fbc",
+            "module": "arm9",
+            "addr": "0x02034fbc",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          },
+          "current": {
+            "name": "func_02034fbc",
+            "module": "arm9",
+            "addr": "0x02034fbc",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          }
+        },
+        {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c8BehaviorEv",
+          "baseline": {
+            "name": "_ZN9dScDSMT_c8BehaviorEv",
+            "module": "ov007",
+            "addr": "0x020cc2cc",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          },
+          "current": {
+            "name": "_ZN9dScDSMT_c8BehaviorEv",
+            "module": "ov007",
+            "addr": "0x020cc2cc",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          }
+        },
+        {
+          "file": "src/game/stages/d_s_dsmt.cpp",
+          "name": "_ZN9dScDSMT_c13InitResourcesEv",
+          "baseline": {
+            "name": "_ZN9dScDSMT_c13InitResourcesEv",
+            "module": "ov007",
+            "addr": "0x020cc4c0",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          },
+          "current": {
+            "name": "_ZN9dScDSMT_c13InitResourcesEv",
+            "module": "ov007",
+            "addr": "0x020cc4c0",
+            "verdict": "VERIFIED",
+            "diffs": [],
+            "blind": 0
+          }
+        }
+      ]
+    },
+    "validation_scope_note": "The unchanged stock prepush checker retains three BLIND-2 warnings because its symbol index omits linker-defined overlay IDs. The separate supplementary check parses those two absolute definitions from production build/arm9.lcf and verifies all three functions, both baseline and current, against ROM with zero blind slots. This does not change the stock gate or conflate its result with the supplementary proof.",
+    "declaration_agreement": {
+      "files_in_scope": 1673,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "exit_code": 0
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "6b1cf942203a7756ccff27f2ff1a45eab2451eb46542b145d2be8ac079379e57"
+    },
+    "artifacts": {
+      "build/scene-physics18-consumer-control.py": "d68fe6a7ebeedce577c575c104fc13df0d7bfda46a10003c362b636071c8f3a6",
+      "build/sp18-proof/consumers.json": "eb0f53ea5ae1462d6805b21b0b0013c085105f841f3405c2de34d0a996e343eb",
+      "build/scene-physics18-linkcheck.json": "e525df9651aeae3c20497857d91e8092cb527b986f57227cd6d9c9be2127db72",
+      "build/scene-physics18-declarations.log": "4174ca3c2111aadc10ffcee96816e2655a153b1451444e9c8f927c0e63eb4854",
+      "build/scene-physics18-baseline-blind.json": "9743a8883fcae4bc09bd16994cd5f41b563491f2c50487cb42101a15e3b9a2e7",
+      "build/scene-physics18-overlay-linkcheck.py": "84b2a917cd7fdbf39b5f6d1b03632ed4780d9137dad7d1ef02136fd7bb4bac3f",
+      "build/scene-physics18-overlay-linkcheck.json": "590d5c1ea07b6f77a4bd6b896e2247ef155b99803e4a2793d0455f50327db26d"
+    },
+    "diff_check": "PASS"
+  },
+  "branch_evidence_coverage": {
+    "base_commit": "723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+    "changed_source_and_header_count": 44,
+    "all_current_hashes_match_evidence": true,
+    "files": [
+      {
+        "file": "include/cMgSmartball_wing_c.h",
+        "sha256": "558cd467bb0bc874cf7f36d485c42497fde75f8ee15064c1b3a5c8cb0d6f5d4e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-smartball1016.json"
+        ]
+      },
+      {
+        "file": "include/dBgCh_SphCrr.h",
+        "sha256": "dcd629f1f4eb1f97cb7397faed6f2d79a4810e7988bd4cdc9551f096fc7c49f2",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "include/dScBoot_c.h",
+        "sha256": "12495166937d069bfdc9db9d52308cc81bd030cbccf11f58ea57ac042b2e4b68",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMB_c.h",
+        "sha256": "d6038c04d0466fcb70f15160d4d7416e37cbb83f94787883d396dc4be7ee8460",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgCoin_c.h",
+        "sha256": "153dd025abd40f3d76f156260b9fc6ea55349ccc7cc99e7952b334d367d9c085",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgPachinko2_c.h",
+        "sha256": "a6fcb9a76ba36f13c2da6c5bd7f74e4ac79b4d4e92178c6349fdf8549ed2b995",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-effects1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgPanel_c.h",
+        "sha256": "da710063bd0aaf9e89763456737501baf98b8a1a90d7dd96270fb8a4670cd361",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-panel1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgSlot1_c.h",
+        "sha256": "9d4e0fe018194becc55b3f4d0ecf903bba5adb1cfef83f766b8757873cc8832e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgSlot3_c.h",
+        "sha256": "9db713bf0d5c2254e73a62e2c4612d8bb1b27b6e510cb2e033cb4f96795fd573",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScEntry_c8BehaviorEv.cpp",
+        "sha256": "ce553be2c10a740072a450fbcd3e34eaa027fb44929d699ecf4f2d5636f4b839",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c21RenderVsModeCountdownEv.cpp",
+        "sha256": "db888bdab07120362010bd6acd1be6a50d70b4dac278c35458b013ec0e0c3227",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c8BehaviorEv.cpp",
+        "sha256": "3e7e9afd43b138dd726e7367b9f42ae60c8bb866167386b18e8a2a2345264d66",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch.cpp",
+        "sha256": "b9bbb68d6c45cc538029e92efc769bc3638bb60306a79603c97d30b1bea9bf75",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_actr.cpp",
+        "sha256": "170688f9901bb8aeec7584be6e4768e543a7447d0c23dd5210a8b3780cac87ce",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "sha256": "c7dc2c1dee6f5f7a190bc1ef85eb3dfc30198f3720b2bf1bcdbbe764f4747ce5",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr.cpp",
+        "sha256": "eb0c360dd3824d14ef631c0912fb3682dba3e0e881aaf8e1982bbddd84b92b6c",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr_query.cpp",
+        "sha256": "1202975f8e11e71cd4dd5087249e4ee249f47c778167040fbacfda69dbb7172f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w.cpp",
+        "sha256": "10b3d807297ca1c2ac84018e48d4e4737d7d203cc454e65ee8d3ccb8fa25a4e1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc.cpp",
+        "sha256": "9bac6d2ec41046af3e5ce8f1df89ab25307c5f4bf511be7f07532f935e8ba69e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_itcm.cpp",
+        "sha256": "90e1684394ce8901fb556c9bb5c0efd89790908546dfa535bfa495d81515fd7b",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg.cpp",
+        "sha256": "ac47f9d824f83c2fa8c73aea6441b8c5e29c76a325c3f828599adba4d739c8c9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp",
+        "sha256": "b2dab76c0ce95807d92d8cbbc7db500fa893f4e89cbbfebe4b641eaa6a278f20",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "sha256": "1382fe7f2376eeec6fabec966b7afcd998f0846d278405afb1e72641e24a22b9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_clipper.cpp",
+        "sha256": "88ca50630eb477df5c9b5c80af27d9d9e076ebb62583629d6bc3fd598e5ed0b2",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "sha256": "ba82b0f95f4ff1ca25cce54032e1270a346ac083c2e6373fb22f2dd152e6c1bd",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_boot_methods.cpp",
+        "sha256": "18542a61d9f8fcb8bab409a4ca2aaa3b733ab71021bcc1f5a9e1f55c8df440ac",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_dsmt.cpp",
+        "sha256": "264555ad72120fea58b028eee58efff38e34b0890882e684f937d9e21c366517",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "sha256": "1447e5e54539ad405174f8f065e66fc217c00b50279513c81963389066fc9b60",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_mb.cpp",
+        "sha256": "4705f16b4c8ee8d3e1e598ffa21fb63e77dd2cf0e8ed3c9e70161818303260c6",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "sha256": "5fb0e64a5e9e6c6e19012de7b88ca04f91c55e65e6991994fe71783d6be315c1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "sha256": "074ecf96f9507cac20dc4b451bd3babc50602c24fe3e77f784a9194b3672cbb7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-title1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_mg_state.cpp",
+        "sha256": "7c87606029a99ccb0755943af92f8e23edec1f0bc91af75698fb8534f99468be",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_amida.cpp",
+        "sha256": "95f537f0f62689126f7f9ee2501d32058bd7a07ded4b0904a6796adaa40d427d",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-amida1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_coin.cpp",
+        "sha256": "1689977e4e9b0d0d43ae2d65413349a89b8c3021076925968b88dc3890e84fc7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_pachinko2.cpp",
+        "sha256": "ed99b7d03063d10b52952bc33c96a0bc18326fe8d357c6215446884a4cb93e01",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-collision1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_panel.cpp",
+        "sha256": "7096c5c3080dbeb61c3c1079d8097549e6c02a2a8432b870eae5d637eb575362",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-panel1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_roulette_methods.cpp",
+        "sha256": "7e0312971e0db9ae9426d0416184c9743165b3ef42c3b423297a67a7031d16ec",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_slots.cpp",
+        "sha256": "33179b1332ed99433fd28572e504a97004895b8b8f3f46a583deecbb82eb0152",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_smartball.cpp",
+        "sha256": "78cea37c1269d6b6a7154c7a9058b93be05c8cb4992f8476c9349ac1bcfe8940",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-smartball1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_snowball.cpp",
+        "sha256": "0aa9a844be6f47f1d3a744af0accdeb29bf2fdfc61e91976eb072e79a79d61ef",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline.cpp",
+        "sha256": "6c40d0a0788934c4601073ac8987222b3a42ffe36172f2bcd2775fe6d6d6397f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline2.cpp",
+        "sha256": "e744739139ed2a6ad4489dad7eb109e54fca942acf009c7931f495d9a4d7ac9f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-query-scans1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/unit020bfec0.cpp",
+        "sha256": "8a1154934a8abb2c532691783e7cd277a089c48727c934087a94614e28310c00",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "sha256": "c99ceef9e3b4da973faaeef2269d0ce2ff73a97cb6be348936ce325f42ef1473",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json",
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      }
+    ],
+    "scope_note": "Current-file evidence coverage, not completion of the broader readability objective. Historical coverage limits remain explicit in referenced reports."
+  },
+  "review_status": "Producer checkpoint; independent source review and publication pending. Broader scene/physics goal remains active."
+}
