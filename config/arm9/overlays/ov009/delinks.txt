@@ -42,3 +42,4 @@ src/unnamed/ov009/__sinit_ov009_02112524.c:
     complete
     .init start:0x02112524 end:0x02112a5c
 
+    .bss start:0x02113c78 end:0x02113c84

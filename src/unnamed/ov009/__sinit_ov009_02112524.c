@@ -206,3 +206,5 @@ void __sinit_ov009_02112524(void)
         func_020731dc(p, _ZN7Vector3D1Ev, data_ov009_02113c9c);
     }
 }
+
+int data_ov009_02113c78[3];
