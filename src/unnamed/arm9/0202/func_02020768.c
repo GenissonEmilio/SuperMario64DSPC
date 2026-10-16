@@ -36,3 +36,5 @@ void func_02020768(char *thiz)
     *cnt -= 1;
     func_0202043c(thiz);
 }
+
+unsigned int data_0209d6e4[1];

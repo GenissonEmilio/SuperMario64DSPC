@@ -9,3 +9,5 @@ void __sinit_02074e44(void) {
     func_0203b9b4(&data_0209e650, 1);
     func_020731dc(&data_0209e650, (void *)&func_0201973c, (void **)&data_0209e654);
 }
+
+unsigned int data_0209f300[1];

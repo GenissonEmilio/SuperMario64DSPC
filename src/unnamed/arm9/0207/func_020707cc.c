@@ -5,3 +5,5 @@ double func_020707cc(double x)
     *p &= 0x7fffffff;
     return x;
 }
+
+unsigned int data_020a9fd8[9];

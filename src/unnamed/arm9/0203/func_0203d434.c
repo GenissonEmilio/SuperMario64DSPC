@@ -6,3 +6,5 @@ int func_0203d434(Fix12i* in){
   func_0203d480(out, in);
   return 1;
 }
+
+unsigned int data_020a0f14[1];

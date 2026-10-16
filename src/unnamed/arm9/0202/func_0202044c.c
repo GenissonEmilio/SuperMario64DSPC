@@ -9,3 +9,5 @@ int func_0202044c(char* this, int idx)
     *(int*)(this + 0x1c) = 0;
     return 1;
 }
+
+unsigned int data_0209d6c4[1];

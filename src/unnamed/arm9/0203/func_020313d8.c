@@ -24,3 +24,5 @@ void func_020313d8(void) {
     func_02031b84(data_02092810[idx]);
     func_02031b84((data_02092810[idx] + 1) & 0xff);
 }
+
+unsigned int data_0209fca4[1];

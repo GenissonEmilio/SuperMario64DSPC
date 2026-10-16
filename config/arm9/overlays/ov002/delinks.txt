@@ -220,6 +220,7 @@ src/_ZN6Player13OnYoshiTryEatEv.cpp:
 src/unnamed/ov002/func_ov002_020e69c0.c:
     complete
     .text start:0x020e69c0 end:0x020e6a08
+    .bss start:0x0210eb20 end:0x0210eb28
 
 src/Color_Interp.c:
     complete
@@ -392,6 +393,7 @@ src/game/stages/LevelObjects.cpp:
 src/engine/collision/d_m3d_g_lin.cpp:
     complete
     .text start:0x020fea4c end:0x020feabc
+    .bss start:0x02111178 end:0x0211117c
 
 src/game/actors/d_a_propeller_heyho_fire.cpp:
     complete

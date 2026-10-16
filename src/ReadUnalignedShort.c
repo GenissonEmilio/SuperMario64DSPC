@@ -1,3 +1,5 @@
 short ReadUnalignedShort(unsigned char *p){
 return (short)(p[0] | (p[1]<<8));
 }
+
+unsigned int data_0208715c[10] = {0, 0xaec00, 0xfffff800, 0x800, 0x94780, 0x1b4e0, 0, 0xdfe60, 0x131d00, 0x1a105b};

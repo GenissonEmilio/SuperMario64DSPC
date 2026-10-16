@@ -1,3 +1,7 @@
 void func_0200f46c(void)
 {
 }
+
+unsigned int data_0209b44c[1];
+
+unsigned int data_0208a0f8[5] = {0x2098b58, 0x2098d20, 0x2098e60, 0x2098fa0, 0x2099068};

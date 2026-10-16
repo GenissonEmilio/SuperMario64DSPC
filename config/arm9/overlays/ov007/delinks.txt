@@ -323,6 +323,7 @@ src/unnamed/ov007/func_ov007_020b2bd4.c:
 src/unnamed/ov007/func_ov007_020b2cdc.c:
     complete
     .text start:0x020b2cdc end:0x020b2cf0
+    .rodata start:0x020d77dc end:0x020d77e0
 
 src/unnamed/ov007/func_ov007_020b2cf0.c:
     complete
@@ -400,6 +401,7 @@ src/unnamed/ov007/func_ov007_020b43dc.c:
 src/unnamed/ov007/func_ov007_020b4438.c:
     complete
     .text start:0x020b4438 end:0x020b4464
+    .bss start:0x02103434 end:0x02103438
 
 src/unnamed/ov007/func_ov007_020b4464.c:
     complete
