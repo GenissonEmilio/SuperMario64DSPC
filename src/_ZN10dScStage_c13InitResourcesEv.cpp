@@ -23,25 +23,12 @@
 // Swapping either pair is byte-identical -- the literal-pool words are relocations and
 // therefore wildcards to the byte gate -- but sends each address to the wrong pool slot.
 // match.py --strict-relocs is what distinguishes them; keep this order.
-typedef unsigned char u8;
-typedef signed char s8;
-typedef unsigned short u16;
-typedef short s16;
-typedef unsigned int u32;
-typedef int s32;
-
-struct LVL_Overlay;
-struct dBgW_Kc;
-
-struct dScStage_c {
-    int InitResources();
-    void LoadModel();
-    void LoadFog();
-    void LoadTextureTransformers();
-    void LoadSkybox();
-    static void SetVramBanks();
-    static void LoadClsnAndObjects(LVL_Overlay &ovl, u32 param, dBgW_Kc &mc);
-};
+#include "dScStage_c.h"
+#include "Sound.h"
+#include "Heap.h"
+#include "dExtShadowModel_c.h"
+#include "dFdWipe_c.h"
+#include "SharedFilePtr.h"
 
 extern "C" {
 extern u8 data_0209f2d8;
@@ -137,12 +124,11 @@ u32 func_0203dad4(void);
 void func_0203b9b4(int *p, int v);
 void *func_02073470(int a, int b, int c, void *ctor, void *dtor);
 void func_ov001_020ab2e4(void);
+// local extern: constructor address passed to the array-construction helper.
 void *_ZN9dFdWipe_cC1Ev(void *thiz);
+// local extern: destructor address passed to the array-construction helper.
 void _ZN9dFdWipe_cD1Ev(void *thiz);
 
-void _ZN5Sound6Player19SetPlayableSeqCountEii(int a, int b);
-void _ZN8dScene_c20Initialise3dGraphicsEv(void);
-void *_ZN5mHeap6Heap_t10SetDefaultEv(void *self);
 void _ZN2GX15DisableAllBanksEv(void);
 // local extern: member form converts the e3d argument to bool; the ROM call passes the raw int
 void _ZN10dScStage_c14LoadGraphics2DEbi(int e3d, int level);
@@ -151,74 +137,69 @@ void _ZN3GXS15SetGraphicsModeEi(int a);
 void _ZN2GX6DispOnEv(void);
 void _Z17LoadLevelOverlaysi(int level);
 void _ZN5Sound19LoadGroupAndSetBankEii(int a, int b);
-void *_ZN5Model8LoadFileER13SharedFilePtr(void *sfp);
-// local extern: this file also passes &_ZN9dFdWipe_cC1Ev / &_ZN9dFdWipe_cD1Ev to func_02073470's ctor/dtor pair, which member syntax cannot express
-void _ZN9dFdWipe_c14LoadAndSetFileEt(int thiz, u16 fileID);
-void _ZN5Sound22LoadAndSetMusic_Layer1Ei(int x);
 int _ZN5Sound8SetMusicEjj(u32 a, u32 b);
-void _ZN8Particle10SysTracker10InitialiseEv(void *thiz);
-void _ZN17dExtShadowModel_c8CleanAllEv(void); // local extern: include-free shard; every callee is declared locally by design
 }
 
 int dScStage_c::InitResources()
 {
-    dScStage_c *thiz = this;
+    dScStage_c *scene = this;
 
-    if (*(s32*)((char*)thiz + 0x9c4) == 0) {
-        u8 modeByte = data_0209f2d8;
-        int v0 = (modeByte == 1) ? 1 : 0;
-        if (v0) {
-            _ZN5Sound6Player19SetPlayableSeqCountEii(2, 5);
-            int n = 3;
-            _ZN5Sound6Player19SetPlayableSeqCountEii(n, n);
+    if (scene->mWaitingForLoad == 0) {
+        u8 mode = data_0209f2d8;
+        int isVsMode = (mode == 1) ? 1 : 0;
+        if (isVsMode) {
+            Sound::Player::SetPlayableSeqCount(2, 5);
+            int sequenceCount = 3;
+            Sound::Player::SetPlayableSeqCount(sequenceCount, sequenceCount);
         }
-        _ZN8dScene_c20Initialise3dGraphicsEv();
+        dScene_c::Initialise3dGraphics();
         Enable3dEngines();
         data_0209f21c = data_0208a0e0;
         data_0209f250 = (u8)func_0203da9c();
         ResetInput();
         data_0209f2c4 = 0;
 
-        int temp_r4 = SublevelToLevel(data_02092110);
-        int temp_r0 = SublevelToLevel(data_0209f2f8);
-        u32 bits = ((u8)data_02092110 + 0xDC) & 0xFF;
-        int v1 = 0;
-        if (bits <= 0xD) {
-            if ((1 << bits) & 0x2A15)
-                v1 = 1;
+        int nextLevel = SublevelToLevel(data_02092110);
+        int previousLevel = SublevelToLevel(data_0209f2f8);
+        u32 sublevelBit = ((u8)data_02092110 + 0xDC) & 0xFF;
+        int specialSublevel = 0;
+        if (sublevelBit <= 0xD) {
+            if ((1 << sublevelBit) & 0x2A15)
+                specialSublevel = 1;
         }
-        modeByte = data_0209f2d8;
-        int b1 = (modeByte == 1) ? 1 : 0;
+        mode = data_0209f2d8;
+        int vsModeReset = (mode == 1) ? 1 : 0;
 
-        if (b1 || data_0209f26c == 2 || v1 || temp_r4 == 0x1D || temp_r4 != temp_r0) {
-            int r8 = 0;
+        if (vsModeReset || data_0209f26c == 2 || specialSublevel || nextLevel == 0x1D ||
+            nextLevel != previousLevel) {
+            int row = 0;
             data_0209f34c = 0;
             do {
-                int r7 = 0;
+                int column = 0;
                 do {
-                    data_0209f4f8[r8][r7] = 0;
-                    r7 += 1;
-                } while (r7 < 0x10);
-                r8 += 1;
-            } while (r8 < 3);
+                    data_0209f4f8[row][column] = 0;
+                    column += 1;
+                } while (column < 0x10);
+                row += 1;
+            } while (row < 3);
 
             if ((s32)data_0209f21c > 0) {
-                int count = data_0209f21c;
-                int idx = 0;
-                u8 *p1 = data_0209f30c;
-                u8 *p2 = data_0209f310;
-                int sl = (modeByte == 1) ? 1 : 0;
-                u8 f26c = data_0209f26c;
+                int playerCount = data_0209f21c;
+                int playerIndex = 0;
+                u8 *redCoins = data_0209f30c;
+                u8 *vsStars = data_0209f310;
+                int vsModeCounters = (mode == 1) ? 1 : 0;
+                u8 loadMode = data_0209f26c;
                 do {
-                    if (sl || (v1 == 0 && f26c != 1)) {
-                        data_0209f358[idx] = 0;
+                    if (vsModeCounters || (specialSublevel == 0 && loadMode != 1)) {
+                        data_0209f358[playerIndex] = 0;
                     }
-                    *p1 = 0;
-                    *p2 = 0;
-                    idx += 1;
-                    p1 += 1;
-                    p2 += 1;
-                } while (idx < count);
+                    *redCoins = 0;
+                    *vsStars = 0;
+                    playerIndex += 1;
+                    redCoins += 1;
+                    vsStars += 1;
+                } while (playerIndex < playerCount);
             }
         }
 
@@ -228,80 +209,82 @@ int dScStage_c::InitResources()
             data_02092118 = -1;
         }
 
-        s8 prevLevel = data_0209f2f8;
+        s8 previousSublevel = data_0209f2f8;
         data_0209f2f8 = data_02092110;
         data_0209f264 = data_0209f268;
         data_0209f220 = data_0209f1f0;
         data_02092120 = -1;
-        data_0209f314 = (void*)((char*)thiz + 0x8bc);
+        data_0209f314 = (void *)scene->mTexAnimSlots;
         data_0209f32c = 0x80000000;
         data_0209f274 = 0;
         SublevelToLevel(data_0209f2f8);
 
-        s32 archiveIdx = 0xBF;
-        if (data_0209f2f8 == 0x33) archiveIdx = 2;
-        else if (data_0209f2f8 == 0x2B) archiveIdx = 3;
-        else if (data_0209f2f8 == 0x1D) archiveIdx = 4;
-        else if (data_0209f2f8 == 0x2A) archiveIdx = 5;
+        s32 levelArchive = 0xBF;
+        if (data_0209f2f8 == 0x33)
+            levelArchive = 2;
+        else if (data_0209f2f8 == 0x2B)
+            levelArchive = 3;
+        else if (data_0209f2f8 == 0x1D)
+            levelArchive = 4;
+        else if (data_0209f2f8 == 0x2A)
+            levelArchive = 5;
 
-        u32 r7_2 = 2;
+        u32 archiveToUnload = 2;
         do {
-            if (r7_2 != (u32)archiveIdx) {
-                UnloadArchive(r7_2);
+            if (archiveToUnload != (u32)levelArchive) {
+                UnloadArchive(archiveToUnload);
             }
-            r7_2 += 1;
-        } while (r7_2 <= 5);
+            archiveToUnload += 1;
+        } while (archiveToUnload <= 5);
 
         LoadTextNarcs();
         LoadArchive(0);
         if (data_0209f2f8 == 1) {
-            void *saved = _ZN5mHeap6Heap_t10SetDefaultEv(data_020a0eac);
+            mHeap::Heap_t *previousHeap = ((mHeap::Heap_t *)data_020a0eac)->SetDefault();
             LoadArchive(7);
-            _ZN5mHeap6Heap_t10SetDefaultEv(saved);
+            previousHeap->SetDefault();
         }
-        if (archiveIdx != 0xBF) {
-            LoadArchive(archiveIdx);
+        if (levelArchive != 0xBF) {
+            LoadArchive(levelArchive);
         }
 
-        Initialise3dGraphics(0x1F);
+        ::Initialise3dGraphics(0x1F);
         _ZN2GX15DisableAllBanksEv();
         dScStage_c::SetVramBanks();
 
-        volatile u32 *p0 = (volatile u32*)0x04000000;
-        volatile u32 *p1 = (volatile u32*)0x04001000;
-        *p0 &= 0xFFCFFFEF;
-        *p1 &= 0xFFCFFFEF;
+        volatile u32 *mainDisplay = (volatile u32 *)0x04000000;
+        volatile u32 *subDisplay = (volatile u32 *)0x04001000;
+        *mainDisplay &= 0xFFCFFFEF;
+        *subDisplay &= 0xFFCFFFEF;
         int one = 1;
         _ZN2GX15SetGraphicsModeEiii(one, 0, one);
         _ZN3GXS15SetGraphicsModeEi(3);
-        *p0 = (*p0 & ~0x38000000) | 0x08000000;
-        *(volatile u16*)0x04000304 = (*(volatile u16*)0x04000304 & 0xFFFFFDF1) | 0x20E;
+        *mainDisplay = (*mainDisplay & ~0x38000000) | 0x08000000;
+        *(volatile u16 *)0x04000304 = (*(volatile u16 *)0x04000304 & 0xFFFFFDF1) | 0x20E;
         _ZN2GX6DispOnEv();
-        *p1 |= 0x10000;
+        *subDisplay |= 0x10000;
         InitialiseVramGlobals();
 
-        volatile u16 *pVram = (volatile u16*)0x0400000A;
-        *pVram = *pVram & ~3;
-        *pVram = (*pVram & 0x43) | 0x1F1C;
-        *pVram = *pVram & ~0x40;
+        volatile u16 *bg1Control = (volatile u16 *)0x0400000A;
+        *bg1Control = *bg1Control & ~3;
+        *bg1Control = (*bg1Control & 0x43) | 0x1F1C;
+        *bg1Control = *bg1Control & ~0x40;
         data_0209d454 = 0x18;
         data_0209f204 = 0;
-        data_0209d4a8 = (void*)&data_0209f3c4;
+        data_0209d4a8 = (void *)&data_0209f3c4;
         data_0209b454 = 0;
         func_02039218();
         ResetKuppaScript();
 
-        int v0_3 = (data_0209f2d8 == 1) ? 1 : 0;
-        if (v0_3 == 0) goto L_zero304;
-        data_0209f2bc = 3;
-        data_0209f304 = 0x28;
-        data_0209f308 = 0;
-        goto L_after304;
-L_zero304:
-        data_0209f2bc = 0;
-        data_0209f304 = 0;
-L_after304:
-        ;
+        int vsModeTimers = (data_0209f2d8 == 1) ? 1 : 0;
+        if (vsModeTimers) {
+            data_0209f2bc = 3;
+            data_0209f304 = 0x28;
+            data_0209f308 = 0;
+        } else {
+            data_0209f2bc = 0;
+            data_0209f304 = 0;
+        }
 
         {
             int i;
@@ -332,71 +315,78 @@ L_after304:
         data_02092134 = 0x44444444;
         _Z17LoadLevelOverlaysi(data_0209f2f8);
 
-        int v0_4 = (data_0209f2d8 == 2) ? 1 : 0;
-        if (v0_4 == 0) {
-            s8 level2 = *(s8*)(unsigned)(((unsigned long long)(unsigned)&data_0209f2f8) & ~0ULL);
+        int skipSoundGroup = (data_0209f2d8 == 2) ? 1 : 0;
+        if (skipSoundGroup == 0) {
+            s8 sublevel = *(s8 *)(unsigned)(((unsigned long long)(unsigned)&data_0209f2f8) & ~0ULL);
             int soundGroup = 0;
             u8 bank = 0x36;
             if (data_0209f220 == 2) {
-                if (level2 == 1 || level2 == 0x33) soundGroup = 0x2B;
-                else if (level2 == 0x1D) soundGroup = 0x2E;
-                else if (level2 == 0x2A) soundGroup = 0x2C;
-                else if (level2 == 0x2B) soundGroup = 0x2D;
+                if (sublevel == 1 || sublevel == 0x33)
+                    soundGroup = 0x2B;
+                else if (sublevel == 0x1D)
+                    soundGroup = 0x2E;
+                else if (sublevel == 0x2A)
+                    soundGroup = 0x2C;
+                else if (sublevel == 0x2B)
+                    soundGroup = 0x2D;
             }
             if (soundGroup == 0) {
-                int idx = level2 * 3;
-                soundGroup = GetSoundGroupID(level2, data_0209f220);
-                bank = data_02075769[idx];
+                int soundTableIndex = sublevel * 3;
+                soundGroup = GetSoundGroupID(sublevel, data_0209f220);
+                bank = data_02075769[soundTableIndex];
             }
             _ZN5Sound19LoadGroupAndSetBankEii(soundGroup, bank);
         }
 
-        *(volatile u16*)0x04000008 = (*(volatile u16*)0x04000008 & ~3) | 2;
-        int v0_6 = (data_0209f2d8 == 1) ? 1 : 0;
-        _ZN10dScStage_c14LoadGraphics2DEbi(v0_6, data_0209f2f8);
+        *(volatile u16 *)0x04000008 = (*(volatile u16 *)0x04000008 & ~3) | 2;
+        int vsModeGraphics = (data_0209f2d8 == 1) ? 1 : 0;
+        _ZN10dScStage_c14LoadGraphics2DEbi(vsModeGraphics, data_0209f2f8);
 
         {
             u32 i;
             for (i = 0; i < 0xC; i++) {
-                _ZN5Model8LoadFileER13SharedFilePtr(data_020756f0[i]);
+                Model::LoadFile(*(SharedFilePtr *)data_020756f0[i]);
             }
         }
 
-        int v0_7 = (data_0209f2d8 == 1) ? 1 : 0;
-        u16 *faderTbl;
-        if (v0_7 && archiveIdx != 0xBF) {
-            faderTbl = data_02075600;
+        int vsModeFaders = (data_0209f2d8 == 1) ? 1 : 0;
+        u16 *faderFileIds;
+        if (vsModeFaders && levelArchive != 0xBF) {
+            faderFileIds = data_02075600;
         } else if (data_0209f2f8 == 5) {
-            faderTbl = data_020755f0;
+            faderFileIds = data_020755f0;
         } else {
-            faderTbl = data_020755e0;
+            faderFileIds = data_020755e0;
         }
 
-        data_0209f324 = (s32)func_02073470(7, 0x60, 8, (void*)&_ZN9dFdWipe_cC1Ev, (void*)&_ZN9dFdWipe_cD1Ev);
-        int r8_4 = 0;
-        int r7_3 = 0;
+        data_0209f324 =
+            (s32)func_02073470(7, 0x60, 8, (void *)&_ZN9dFdWipe_cC1Ev, (void *)&_ZN9dFdWipe_cD1Ev);
+        int faderIndex = 0;
+        int faderOffset = 0;
         do {
-            _ZN9dFdWipe_c14LoadAndSetFileEt(data_0209f324 + r7_3, faderTbl[r8_4]);
-            r8_4 += 1;
-            r7_3 += 0x60;
-        } while (r8_4 < 7);
+            ((dFdWipe_c *)(data_0209f324 + faderOffset))->LoadAndSetFile(faderFileIds[faderIndex]);
+            faderIndex += 1;
+            faderOffset += 0x60;
+        } while (faderIndex < 7);
 
         data_0209f340 = data_02092208[data_0209f2f8];
-        thiz->LoadModel();
+        scene->LoadModel();
         data_0208ee44 = 2;
-        dScStage_c::LoadClsnAndObjects(*(LVL_Overlay *)data_0209f340, data_0209f264, *(dBgW_Kc *)((char *)thiz + 0x91c));
+        dScStage_c::LoadClsnAndObjects(*(LVL_Overlay *)data_0209f340, data_0209f264,
+                                       scene->mMeshCollider);
 
-        int v0_8 = (data_0209f2d8 == 1) ? 1 : 0;
-        if (v0_8 == 0) {
-            int nofc = (data_0209fc48 != 0) ? 1 : 0;
-            if (nofc == 0) {
-                if (!IsLevelInsideCastle(data_0209f2f8) || !IsLevelInsideCastle(prevLevel)) {
-                    if (!IsLevelTinyHugeIslandOutside(data_0209f2f8) || !IsLevelTinyHugeIslandOutside(prevLevel)) {
+        int vsModeMusic = (data_0209f2d8 == 1) ? 1 : 0;
+        if (vsModeMusic == 0) {
+            int skipMusicSetup = (data_0209fc48 != 0) ? 1 : 0;
+            if (skipMusicSetup == 0) {
+                if (!IsLevelInsideCastle(data_0209f2f8) || !IsLevelInsideCastle(previousSublevel)) {
+                    if (!IsLevelTinyHugeIslandOutside(data_0209f2f8) ||
+                        !IsLevelTinyHugeIslandOutside(previousSublevel)) {
                         if (data_0209f2f8 != 2 || (data_0209caa0[2] & 0x200)) {
-                            _ZN5Sound22LoadAndSetMusic_Layer1Ei(data_0207576a[data_0209f2f8 * 3]);
-                            u8 sndIdx = data_0209f250;
-                            if (((u8*)data_0209f394[sndIdx])[0x6ff] != 0) {
-                                _ZN5Sound8SetMusicEjj(sndIdx, 0x33);
+                            Sound::LoadAndSetMusic_Layer1(data_0207576a[data_0209f2f8 * 3]);
+                            u8 localPlayer = data_0209f250;
+                            if (((u8 *)data_0209f394[localPlayer])[0x6ff] != 0) {
+                                _ZN5Sound8SetMusicEjj(localPlayer, 0x33);
                             }
                         }
                     }
@@ -404,42 +394,42 @@ L_after304:
             }
         }
 
-        if (func_0203da3c() != 2 && archiveIdx != 0xBF) {
-            UnloadArchive(archiveIdx);
+        if (func_0203da3c() != 2 && levelArchive != 0xBF) {
+            UnloadArchive(levelArchive);
         }
         LoadDebugFont();
-        thiz->LoadFog();
-        thiz->LoadTextureTransformers();
-        thiz->LoadSkybox();
+        scene->LoadFog();
+        scene->LoadTextureTransformers();
+        scene->LoadSkybox();
         data_0209cef0 = 1;
-        _ZN8Particle10SysTracker10InitialiseEv((char*)thiz + 0x50);
+        scene->mSysTracker.Initialise();
 
-        u8 f2fc = data_0209f2fc;
+        u8 loadMode = data_0209f2fc;
         data_0209f294 = 0;
         data_0209f290 = 0;
         data_0209f284 = 0;
         data_0209f300 = 0;
-        if (f2fc != 1) {
+        if (loadMode != 1) {
             data_0209f20c = 0;
             data_0209f2d4 = 0;
         }
         data_0209d45c = 0x11;
 
-        *p0 = (*p0 & ~0x1F00) | 0x1100;
-        int v0_9 = (data_0209f2d8 == 2) ? 1 : 0;
-        if (v0_9 == 0) {
-            *p1 = (*p1 & ~0x1F00) | (data_0209d454 << 8);
+        *mainDisplay = (*mainDisplay & ~0x1F00) | 0x1100;
+        int skipSubDisplayLayers = (data_0209f2d8 == 2) ? 1 : 0;
+        if (skipSubDisplayLayers == 0) {
+            *subDisplay = (*subDisplay & ~0x1F00) | (data_0209d454 << 8);
         }
         data_0209cee8 = 0;
-        _ZN17dExtShadowModel_c8CleanAllEv();
+        dExtShadowModel_c::CleanAll();
         data_02092110 = -1;
 
         if (data_0209fc68 != 0) {
-            *(s32*)((char*)thiz + 0x9c4) = 1;
+            scene->mWaitingForLoad = 1;
         }
     }
 
-    if (*(s32*)((char*)thiz + 0x9c4) != 0) {
+    if (scene->mWaitingForLoad != 0) {
         if (func_020308a8() == 0)
             return -1;
     }
@@ -447,8 +437,8 @@ L_after304:
     data_02092778 = 0;
     func_0203b9b4(&data_0209e650, func_0203dad4());
     data_0209f208 = 0;
-    u32 idx = func_0203dad4() % 6;
-    data_0209f344 = (s32)&VS_STAR_SPAWN_ORDERS[idx];
+    u32 starOrderIndex = func_0203dad4() % 6;
+    data_0209f344 = (s32)&VS_STAR_SPAWN_ORDERS[starOrderIndex];
 
     return 1;
 }
