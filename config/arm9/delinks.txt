@@ -2495,6 +2495,7 @@ src/unnamed/arm9/0203/func_0203b9b4.c:
 src/unnamed/arm9/0203/func_0203b9bc.c:
     complete
     .text start:0x0203b9bc end:0x0203bb14
+    .bss start:0x020a0dd8 end:0x020a0de0
 
 src/unnamed/arm9/0203/func_0203bb14.c:
     complete
