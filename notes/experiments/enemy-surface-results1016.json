@@ -129,7 +129,36 @@
     "Aea30C PMF dispatch, address-derived members, raw handler accesses, KbicVB/KbicM48/LAUNDER and Fix12/C ABI boundaries remain partial as documented in Source."
   ],
   "scoped_gates": {
-    "status": "Pending committed-candidate checks"
+    "tested_commit": "4ba6fd80023ec6b0e77c3cf0310de03ad1a5d044",
+    "prepush": {
+      "command": "python tools/prepush_linkcheck.py --range 2185de02580cbd47d2821ab1e7634ed7b04f290b..HEAD",
+      "exit_code": 0,
+      "checked": 33,
+      "verified": 33,
+      "warnings": 0,
+      "blocking": 0,
+      "seconds": 25.828000000008615,
+      "compile_accounting": "Generic CLI internal compile/cache/retry counts are not instrumented and are separate from the three explicit experiment compiles."
+    },
+    "declaration_agreement": {
+      "command": "python tools/check_decl_agreement.py --changed 2185de02580cbd47d2821ab1e7634ed7b04f290b",
+      "exit_code": 0,
+      "seconds": 11.046999999991385
+    },
+    "source_style": {
+      "command": "python tools/source_style.py --base 2185de02580cbd47d2821ab1e7634ed7b04f290b",
+      "exit_code": 0,
+      "files_checked": 1,
+      "patterns_only": false,
+      "findings": 0,
+      "formatting_deferrals": 0,
+      "seconds": 0.7190000000118744
+    },
+    "whitespace": {
+      "command": "git diff --check 2185de02580cbd47d2821ab1e7634ed7b04f290b..HEAD",
+      "exit_code": 0
+    },
+    "report_only_finalization": "Source and all other production inputs remain literal to the tested commit; no byte-build repetition for this evidence-only update."
   },
   "acceptance_limits": {
     "producer_only": true,
