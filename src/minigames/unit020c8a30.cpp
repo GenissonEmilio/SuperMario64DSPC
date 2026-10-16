@@ -8,9 +8,8 @@
  * 0x0212f660 passes to __cxa_vec_ctor.
  *
  * leftovers:
- * - 020c8ba8 and 020c8af4 still address the record as bytes. The
- *   ((int)c + offset) form is the one those bodies matched.
- * - 020c8c6c clears the active flag through a short* at index 12.
+ * - Draw, update and clear use the existing record fields. Their public
+ *   pointer signatures stay unchanged for the pool callers.
  * - ApproachLinear and ApproachLinear2 stay local externs. They
  *   take the value by reference.
  * - The pool, the counter and the sprite table are overlay data,
@@ -106,44 +105,48 @@ void Puff_Spawn(int x, int y)
 // @symbol Puff_Clear
 void Puff_Clear(short *p)
 {
-    p[12] = 0;
+    ((Ent_ov006 *)p)->mActive = 0;
 }
 
 // @symbol Puff_Update
-void Puff_Update(char* c)
+void Puff_Update(char *c)
 {
-    if (*(short*)(c+0x18) == 0) return;
-    *(short*)(((int)c + 0x1c)) += 0x200;
-    *(int*)(c+0x10) = (int)(((long long)*(int*)(c+0x10) * *(int*)(c+0x14) + 0x800) >> 12);
-    *(int*)(((int)c + 0xc)) -= 0x40;
-    ApproachLinear(*(int*)(c+0x14), 0x800, 0x10);
-    if (ApproachLinear2(*(short*)(c+0x1e), 0, 1) != 0) {
-        if (*(short*)(c+0x1a) != 2)
-            *(short*)(c+0x18) = 0;
+    Ent_ov006 *entry = (Ent_ov006 *)c;
+    if (entry->mActive == 0)
+        return;
+    entry->mAngle += 0x200;
+    entry->mSpread = (int)(((s64)entry->mSpread * entry->mScale + 0x800) >> 12);
+    entry->mVelY -= 0x40;
+    ApproachLinear(entry->mScale, 0x800, 0x10);
+    if (ApproachLinear2(entry->mTimer, 0, 1) != 0) {
+        if (entry->mIndex != 2)
+            entry->mActive = 0;
     } else {
-        *(int*)(c) += *(int*)(c+0x8);
-        *(int*)(((int)c + 0x4)) += *(int*)(c+0xc);
+        entry->x += entry->mVelX;
+        entry->y += entry->mVelY;
     }
 }
 
 // @symbol Puff_Draw
 void Puff_Draw(char *c)
 {
-    void *x;
-    int t;
-    int prod;
-    int pos;
-    if (*(short*)(c + 0x18) == 0) return;
+    Ent_ov006 *entry = (Ent_ov006 *)c;
+    void *sprite;
+    int sine;
+    int offsetX;
+    int drawX;
+    if (entry->mActive == 0)
+        return;
     if (data_ov006_021404c8 != 0) {
-        x = data_ov006_021404c8[*(short*)(c + 0x1a)];
+        sprite = data_ov006_021404c8[entry->mIndex];
     } else {
-        int idx2 = GetGameLanguage();
-        x = data_ov006_0213b0d8[idx2][*(short*)(c + 0x1a)];
+        int language = GetGameLanguage();
+        sprite = data_ov006_0213b0d8[language][entry->mIndex];
     }
-    t = data_02082214[(*(unsigned short*)(c + 0x1c) >> 4) * 2];
-    prod = (int)(((s64)*(int*)(c + 0x10) * t + 0x800) >> 12);
-    pos = *(int*)c + prod;
-    Hud_RenderSprite(x, pos >> 12, *(int*)(c + 4) >> 12, -1, -1);
+    sine = data_02082214[((unsigned short)entry->mAngle >> 4) * 2];
+    offsetX = (int)(((s64)entry->mSpread * sine + 0x800) >> 12);
+    drawX = entry->x + offsetX;
+    Hud_RenderSprite(sprite, drawX >> 12, entry->y >> 12, -1, -1);
 }
 
 // @symbol Puff_ClearAll

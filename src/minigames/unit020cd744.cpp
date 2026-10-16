@@ -16,7 +16,8 @@
  *   duplicate of the arm9 copy. Spare4 in TrmpLine_Build emits
  *   another, deadstripped as compiler-only output.
  * - The slot fields stay offsets. These bodies do not share one
- *   struct for the 0x32c record.
+ *   struct for the 0x32c record. Model and texture-animation operations
+ *   use their real headers; the containing item layout remains partial.
  */
 
 #include "types.h"
@@ -26,10 +27,8 @@
 #pragma defer_codegen off
 
 extern int ApproachLinear(int &, int, int);
-struct BMD_File; struct BTA_File;
-struct ModelBase { void SetFile(BMD_File*, int, int); };
-struct Model : ModelBase { void SetPolygonID(int); static unsigned int LoadTextureToVram(char *, unsigned int); };
-struct TextureTransformer { static void Prepare(BMD_File&, BTA_File&); void SetFile(BTA_File&, int, int, unsigned int); };
+#include "Model.h"
+#include "TextureTransformer.h"
 
 namespace s020cd744 {
 extern "C" extern void _Z14ApproachLinearRiii(int* a, int b, int c);
@@ -722,34 +721,27 @@ extern "C" {
 void Matrix4x3_FromQuaternion(const void* q, struct Matrix4x3* mF);
 void Matrix4x3_FromTranslation(struct Matrix4x3* m, int x, int y, int z);
 void MulMat4x3Mat4x3(struct Matrix4x3* a, struct Matrix4x3* b, struct Matrix4x3* out);
-void _ZN18TextureTransformer6UpdateER15ModelComponents(void* t, void* mc);
-void _ZN9ModelBase12ApplyOpacityEjj(void* mb, unsigned int opacity, unsigned int unused);
 }
 extern "C" {extern struct Matrix4x3 data_020a0e68;}
 
-struct VtO { int dummy[0x14/4]; void (*f)(void*, void*); };
 
-extern "C" void TrmpItem_UpdateMatrix(char* c){
-    struct Matrix4x3 tmp;
-    Matrix4x3_FromQuaternion(c+0x74, &tmp);
-    Matrix4x3_FromTranslation(&data_020a0e68, *(int*)(c+8), *(int*)(c+0xc), *(int*)(c+0x10));
-    MulMat4x3Mat4x3(&tmp, &data_020a0e68, &data_020a0e68);
-    *(struct Matrix4x3*)(*(char**)(c+0x190) + 0x1c) = data_020a0e68;
-    _ZN18TextureTransformer6UpdateER15ModelComponents(c+0x194, *(char**)(c+0x190) + 8);
-    _ZN9ModelBase12ApplyOpacityEjj(*(void**)(c+0x190), *(unsigned char*)(c+0x9c), 0);
-    {
-        void* o = *(void**)(c+0x190);
-        VtO* vt = *(VtO**)o;
-        vt->f(o, c+0x68);
-    }
+extern "C" void TrmpItem_UpdateMatrix(char *self)
+{
+    Matrix4x3 rotation;
+    Matrix4x3_FromQuaternion(self + 0x74, &rotation);
+    Matrix4x3_FromTranslation(&data_020a0e68,
+        *(int *)(self + 8), *(int *)(self + 0xc), *(int *)(self + 0x10));
+    MulMat4x3Mat4x3(&rotation, &data_020a0e68, &data_020a0e68);
+    (*(Model **)(self + 0x190))->mat4x3 = data_020a0e68;
+    ((TextureTransformer *)(self + 0x194))->Update((*(Model **)(self + 0x190))->data);
+    (*(Model **)(self + 0x190))->ApplyOpacity(*(unsigned char *)(self + 0x9c), 0);
+    (*(Model **)(self + 0x190))->Render((const Vector3 *)(self + 0x68));
 }
 }
 
 namespace s020cea2c {
 extern "C" {
 void AddVec3(void *a, void *b, void *c);
-/* local extern: the call passes an untyped this, so it cannot use the header method. */
-void _ZN15dExtFrameCtrl_c7AdvanceEv(void *anim);
 }
 
 struct C;
@@ -760,7 +752,7 @@ extern "C" void TrmpItem_Update(char *c)
     PMF *pp = (PMF *)c;
     (((C *)c)->**pp)();
     AddVec3(c + 8, c + 0x2c, c + 8);
-    _ZN15dExtFrameCtrl_c7AdvanceEv(c + 0x194);
+    ((TextureTransformer *)(c + 0x194))->Advance();
     *(int *)(c + 0x14) = *(int *)(c + 8);
     *(int *)(c + 0x18) = *(int *)(c + 0xc);
     *(int *)(c + 0x1c) = *(int *)(c + 0x10);
