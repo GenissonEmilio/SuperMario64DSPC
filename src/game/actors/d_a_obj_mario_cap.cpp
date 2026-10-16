@@ -317,7 +317,7 @@ extern McapStatePmf data_ov002_0210957c, data_ov002_02109584;
 extern McapStatePmf data_ov002_0210958c, data_ov002_02109594;
 extern McapStatePmf data_ov002_0210959c, data_ov002_021095a4;
 
-extern struct AnimRec *data_ov002_020ff0a0[];
+extern struct AnimRec *const data_ov002_020ff0a0[3];
 extern struct AnimRec *data_ov002_020ff0b8[];
 extern int            *data_ov002_020ff0c4[];
 
@@ -1477,6 +1477,16 @@ daObjMarioCapFileHandle data_ov002_0210de10(ASSET_MARIO_CAP_ED_L_CAP_OFF_WAIT_BC
 daObjMarioCapFileHandle data_ov002_0210de00(ASSET_MARIO_CAP_ED_W_CAP_OFF_WAIT_BCA);
 daObjMarioCapFileHandle data_ov002_0210de58(ASSET_MARIO_CAP_ED_M_KISS_WAIT_BCA);
 daObjMarioCapFileHandle data_ov002_0210de18(ASSET_MARIO_CAP_ED_M_KISS_TO_POSE_BCA);
+
+/* Type 15 indexes this by mModelIndex (0..2). The words are the handles above.
+ * A C++ definition of the const pointer array emits a static initializer. */
+#pragma cplusplus off
+extern struct AnimRec *const data_ov002_020ff0a0[3] = {
+    (struct AnimRec *)&data_ov002_0210de48,
+    (struct AnimRec *)&data_ov002_0210de60,
+    (struct AnimRec *)&data_ov002_0210de50,
+};
+#pragma cplusplus on
 
 /* The nine state records, in copy order: { enter, per-frame }. */
 McapStateRec data_ov002_0210df64 = { data_ov002_02109534, data_ov002_0210952c };

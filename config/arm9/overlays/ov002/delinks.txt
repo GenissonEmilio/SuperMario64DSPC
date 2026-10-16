@@ -133,6 +133,7 @@ src/game/actors/d_a_obj_waterfall.cpp:
 src/game/actors/d_a_obj_mario_cap.cpp:
     complete
     .text start:0x020b6f18 end:0x020b8bf0
+    .rodata start:0x020ff0a0 end:0x020ff0ac
     .init start:0x02101064 end:0x02101478
     .ctor start:0x021080f0 end:0x021080f4
     .bss start:0x0210de00 end:0x0210df94
