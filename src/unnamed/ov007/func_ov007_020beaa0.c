@@ -23,7 +23,12 @@ extern int func_ov007_020aebac(void);
 extern void *func_ov007_020bc6d4(void *r6, int flags);
 extern void func_ov007_020bc6b4(int *c, int r1, int r2);
 
-extern int data_ov007_020d7c5c[][2];
+
+/* rodata 0x020d7c5c..0x020d7c6c */
+#pragma force_active on
+const int data_ov007_020d7c5c[2][2] = { 11, 0, 12, 13 };
+#pragma force_active off
+
 /* symbols.txt spans: 0x4 bytes, then 0xc. The stores still index them as Slot. */
 void *data_ov007_02104bc4;
 unsigned char data_ov007_02104bc8[0xc];

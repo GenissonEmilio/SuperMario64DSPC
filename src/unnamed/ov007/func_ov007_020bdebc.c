@@ -1,10 +1,13 @@
+
+/* bss 0x02104bac..0x02104bb0 */
+int data_ov007_02104bac;
+
 void func_0204fa2c(int* p, int a);
 
 extern int  data_ov007_02104bb4;
 extern int  data_ov007_02104bb0;
 extern int* data_ov007_02104bbc;
 extern int* data_ov007_02104bb8;
-extern int  data_ov007_02104bac;
 
 void func_ov007_020bdebc(void)
 {

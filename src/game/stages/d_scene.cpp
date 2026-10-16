@@ -23,6 +23,12 @@
 #include "dScStage_c.h"
 #include "dFdColor_c.h"
 
+
+/* bss 0x0209f1e4..0x0209f1e8 */
+extern "C" {
+void * data_0209f1e4;
+}
+
 struct Matrix2x2 { int m[4]; };
 
 /* The transition calls pass a second word to fader slots 3/4, whereas the

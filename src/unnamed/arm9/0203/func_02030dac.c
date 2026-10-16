@@ -1,4 +1,8 @@
 #include "types.h"
+
+/* bss 0x0209fc5c..0x0209fc5d */
+u8 data_0209fc5c[1];
+
 extern int func_0203d890(void);
 extern u8 data_0209fc5c[];
 extern s8 data_0209fc64[];

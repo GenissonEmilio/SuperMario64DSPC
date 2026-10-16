@@ -36,6 +36,7 @@ src/unnamed/ov075/func_ov075_02116ad4.c:
     complete
     .text start:0x02116ad4 end:0x02116c38
 
+    .bss start:0x0211d888 end:0x0211d8a0
 src/unnamed/ov075/func_ov075_02116c38.c:
     complete
     .text start:0x02116c38 end:0x02116c8c
@@ -92,6 +93,7 @@ src/unnamed/ov075/func_ov075_02117918.c:
     complete
     .text start:0x02117918 end:0x02117ac4
 
+    .rodata start:0x0211b5d4 end:0x0211b5e0
 src/unnamed/ov075/func_ov075_02117ac4.c:
     complete
     .text start:0x02117ac4 end:0x02117b58

@@ -86,6 +86,12 @@
 // @symbol _ZN8dActor_c19BeforeInitResourcesEv
 /* ROM ordinal 90 -- _ZN8dActor_c19BeforeInitResourcesEv
  * 0x02011268  size 0x60 */
+
+/* bss 0x0209b468..0x0209b470 */
+extern "C" {
+unsigned char data_0209b468[8];
+}
+
 bool dActor_c::BeforeInitResources()
 {
     int spawnEvenIfKilledBefore;
@@ -264,7 +270,6 @@ void dActor_c::AfterRender(u32 vfSuccess)
  * 0x02010f3c  size 0x30 */
 extern "C" {
 extern dActor_c *func_02043f98(dActor_c **head, unsigned int id);
-extern void *data_0209b468;         /* the global actor list -- callers use &name */
 }
 dActor_c *dActor_c::FindWithID(u32 id)
 {

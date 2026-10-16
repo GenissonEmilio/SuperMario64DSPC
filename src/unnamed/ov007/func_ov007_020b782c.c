@@ -1,3 +1,7 @@
+
+/* bss 0x02103448..0x0210344c */
+void* data_ov007_02103448;
+
 int func_ov007_020c3df4(int a, void* b);
 char* func_0204a4c8(char* (*alloc)(int), int a, int b, int c, unsigned short arg5);
 int func_ov007_020b3f20(int a);

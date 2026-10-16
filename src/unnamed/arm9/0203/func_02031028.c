@@ -1,6 +1,9 @@
 #include "types.h"
+
+/* bss 0x0209fca0..0x0209fca4 */
+u8 data_0209fca0[4];
+
 extern u8 data_0209fc84;
-extern u8 data_0209fca0;
 extern u8 data_0209fc88;
 extern u8 data_0209fcd8;
 extern u8 data_02092818[];
@@ -24,8 +27,8 @@ void func_02031028(int arg)
   u16 val;
   p = (u16 *) func_0203d8a0(data_0209fc84);
   i = 0;
-  data_0209fca0 = ((u8 *) p)[1];
-  n = data_0209fca0;
+  data_0209fca0[0] = ((u8 *) p)[1];
+  n = data_0209fca0[0];
   if (n <= 0)
   {
     return;

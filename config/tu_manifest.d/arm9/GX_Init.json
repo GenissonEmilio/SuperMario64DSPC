@@ -18,6 +18,11 @@
       "name": ".text",
       "start": "0x02053a90",
       "end": "0x02053d9c"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020a6084",
+      "end": "0x020a6088"
     }
   ],
   "functions": [
@@ -79,7 +84,15 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "data_020a6084",
+      "address": "0x020a6084",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "ROM bss 0x20a6084..0x20a6088"
+    }
+  ],
   "relocations": [],
   "compiler_only_output": [],
   "notes": [

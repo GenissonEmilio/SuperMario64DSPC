@@ -1,3 +1,7 @@
+
+/* bss 0x020a6134..0x020a613c */
+int data_020a6134[2];
+
 extern int data_020a6134[];
 
 void func_020584d0(char* node)

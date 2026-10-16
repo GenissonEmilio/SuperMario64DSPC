@@ -1,4 +1,8 @@
 #include "types.h"
+
+/* bss 0x02103484..0x02103998 */
+s16 data_ov007_02103484[650];
+
 extern void MultiStore16(u16 val, s16 *dst, int nbytes);
 extern void func_ov007_020c43bc(char *a, char *b);
 extern void func_ov007_020c4388(char *a, char *b);

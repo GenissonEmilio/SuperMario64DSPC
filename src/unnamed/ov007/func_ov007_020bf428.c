@@ -1,4 +1,8 @@
 #include "types.h"
+
+/* bss 0x02104bd4..0x02104bd8 */
+int data_ov007_02104bd4;
+
 extern int func_ov007_020c3df4(int a, int b);
 extern int func_ov007_020cbbb0(int a, int b, int c, void *d);
 extern int func_ov007_020cbf8c(void *src);
@@ -8,7 +12,6 @@ extern void func_ov007_020bf57c(char *arg0, int idx);
 extern int func_ov007_020b42d8(int index);
 extern void func_ov007_020beeb0(void);
 
-extern int data_ov007_02104bd4;
 extern int data_ov007_020d7cb0;
 extern u8 data_ov007_020d7cf8[];
 extern u8 data_ov007_020d7c98[];

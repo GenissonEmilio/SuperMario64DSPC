@@ -107,7 +107,14 @@ extern int data_0208ee44;
 extern void *_ZN3OAM15MM_STAR_MARKERSE[];
 extern u8 data_0209f288;
 extern char _ZN3OAM11MM_RED_COINE[];
-extern u8 data_ov002_02111154[];
+
+/* bss 0x02111154..0x02111178 */
+extern "C" {
+unsigned char data_ov002_02111160[12];
+unsigned char data_ov002_02111154[12];
+struct Vec3 data_ov002_0211116c;
+}
+
 extern u8 data_0209f370[];
 extern void *data_ov002_0210cac8[];
 extern void *data_ov002_0210c748[];
@@ -144,7 +151,6 @@ extern void UpdateMinimap(s32 *a, s32 b, s32 c, s32 d, s32 e);
 void Vec3_DivScalarInPlace(struct Vec3* v, int s);
 void Vec3_MulScalarInPlace(struct Vec3* v, int s);
 void Vec3_RotateYAndTranslate(struct Vec3* out, struct Vec3* in, short ang, struct Vec3* t);
-struct Vec3 data_ov002_0211116c;
 }
 
 // @symbol _ZN6dMap_cD1Ev

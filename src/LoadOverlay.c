@@ -11,7 +11,10 @@ struct Region
   u32 start;
   u32 size;
 };
-extern struct Region data_0209d3c4[12];
+
+/* bss 0x0209d3c4..0x0209d454 */
+struct Region data_0209d3c4[12];
+
 struct Pair
 {
   int a;

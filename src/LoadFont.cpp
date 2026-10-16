@@ -1,5 +1,11 @@
 //cpp
 /* Runtime asset handles resolved through the overlay 0 file table. */
+
+/* bss 0x0209d660..0x0209d664 */
+extern "C" {
+unsigned char data_0209d660[4];
+}
+
 enum LoadFont_AssetId {
     ASSET_D_2D_MARIO_3DFONT_NCL_BIN = 0x0237
 };
@@ -18,7 +24,6 @@ struct GXS { static void LoadBGPltt(void const *p, unsigned a, unsigned b); };
 
 extern unsigned char data_0209d698;
 extern int data_0209d6f8;
-extern unsigned char data_0209d660;
 extern short data_0209d6d4;
 
 extern "C" void LoadFont(unsigned char arg);
@@ -46,6 +51,6 @@ extern "C" void LoadFont(unsigned char arg)
         Deallocate((void *)file);
     }
     Deallocate((void *)r4);
-    data_0209d660 = 0;
+    data_0209d660[0] = 0;
     data_0209d6d4 = -1;
 }
