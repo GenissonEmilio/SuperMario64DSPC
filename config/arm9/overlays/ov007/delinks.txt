@@ -311,10 +311,12 @@ src/unnamed/ov007/func_ov007_020b2764.c:
 src/unnamed/ov007/func_ov007_020b283c.c:
     complete
     .text start:0x020b283c end:0x020b2998
+    .rodata start:0x020ccca4 end:0x020cdb34
 
 src/unnamed/ov007/func_ov007_020b2998.c:
     complete
     .text start:0x020b2998 end:0x020b2bd4
+    .rodata start:0x020cdb4c end:0x020cfe94
 
 src/unnamed/ov007/func_ov007_020b2bd4.c:
     complete
