@@ -89,5 +89,7 @@ UkisimaClsnFileHandle gBkUkisimaCollisionFile(ASSET_BK_UKISIMA_KCL);
  * ov002 helpers. Its CLPS_Block is the shared .data run's record, not
  * this file's. */
 ResourceDescriptor data_ov015_021147a4 = {
-    &gBkUkisimaModelFile, &gBkUkisimaCollisionFile, &data_ov015_02113614,
+    &gBkUkisimaModelFile,
+    &gBkUkisimaCollisionFile,
+    &data_ov015_02113614,
 };

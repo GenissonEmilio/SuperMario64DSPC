@@ -84,8 +84,7 @@ enum {
 /* File handles this TU's static initializer constructs, and the two state
    records it copies pointer-to-member descriptors into. Definitions are at
    the end of the file. SharedFileBytes is that handle: fileID, refCount, filePtr. */
-struct SharedFileBytes : SharedFilePtr {
-};
+struct SharedFileBytes : SharedFilePtr {};
 
 struct TatumakiModelFilePtr : SharedFilePtr {
 

@@ -23,7 +23,7 @@ extern "C" int func_ov075_0211b458(char* c, int* src, int a2) {
     *(void**)(c + 0x80) = _ZN6Memory13operator_new2Ej(*(unsigned short*)(c + 0xa4) * 0x18);
     func_ov075_0211aa94(c, func_0201787c(&data_ov075_0211d980));
     ((SharedFilePtr *)(&data_ov075_0211d980))->Release();
-    *(PMF**)(c + 0x84) = &data_ov075_0211d994[0];
+    *(PMF **)(c + 0x84) = &data_ov075_0211d994[0];
     (((Foo*)c)->**(*(PMF**)(c + 0x84)))();
     *(int*)(c) = src[0];
     *(int*)(c + 4) = src[1];

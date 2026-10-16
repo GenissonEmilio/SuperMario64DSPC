@@ -125,7 +125,8 @@ KomaDCollisionFilePtr gFlKomaDCollisionFile(ASSET_FL_KOMA_D_KCL);
  * CleanupResources hand to the shared ov002 helpers. Its CLPS_Block is
  * ov064's record, not this file's. */
 extern "C" ResourceTail data_ov022_02113da8 = {
-    &gFlKomaDCollisionFile, &data_ov064_0211bb4c,
+    &gFlKomaDCollisionFile,
+    &data_ov064_0211bb4c,
 };
 
 #ifdef _MSC_VER

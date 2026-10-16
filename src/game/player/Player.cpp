@@ -238,45 +238,30 @@ extern AnimEntry27 data_ov002_0210a65c[];
 
 /* w[0] is the SetAnim id, w[1] the value (0x40000000 or 0). */
 AnimEntry27 data_ov002_0210a720[4] = {
-    { 181, 0x40000000 },
-    { 180, 0x40000000 },
-    { 178, 0x40000000 },
-    { 179, 0 },
+    {181, 0x40000000},
+    {180, 0x40000000},
+    {178, 0x40000000},
+    {179, 0},
 };
 AnimEntry27 data_ov002_0210a740[4] = {
-    { 186, 0x40000000 },
-    { 71, 0x40000000 },
-    { 187, 0x40000000 },
-    { 188, 0 },
+    {186, 0x40000000},
+    {71, 0x40000000},
+    {187, 0x40000000},
+    {188, 0},
 };
 /* Words between those lists and the index table. No relocation. */
 u32 data_ov002_0210a760[16] = {
-    0x3e1f3e1f, 0x3e1f3e1f, 0x3f1f3f1f, 0x3f1f3f1f,
-    0x43ff43ff, 0x43ff43ff, 0x4bef4bef, 0x4bef4bef,
-    0x7fef7fef, 0x7fef7fef, 0x7df07df0, 0x7df07df0,
-    0x7df87df8, 0x7df87df8, 0x69ff69ff, 0x69ff69ff,
+    0x3e1f3e1f, 0x3e1f3e1f, 0x3f1f3f1f, 0x3f1f3f1f, 0x43ff43ff, 0x43ff43ff, 0x4bef4bef, 0x4bef4bef,
+    0x7fef7fef, 0x7fef7fef, 0x7df07df0, 0x7df07df0, 0x7df87df8, 0x7df87df8, 0x69ff69ff, 0x69ff69ff,
 };
 AnimEntry27 data_ov002_0210e7b8[1];
 
 AnimEntry27 *data_ov002_0210a7a0[] = {
-    data_ov002_02109ff4,
-    data_ov002_0210a61c,
-    data_ov002_0210a720,
-    data_ov002_0210a63c,
-    data_ov002_0210a1d4,
-    data_ov002_0210a64c,
-    data_ov002_0210a740,
-    data_ov002_0210a66c,
-    data_ov002_0210e7b8,
-    data_ov002_0210a67c,
-    data_ov002_0210a4bc,
-    data_ov002_0210a434,
-    data_ov002_0210a3dc,
-    data_ov002_0210a5ec,
-    data_ov002_0210a5fc,
-    data_ov002_0210a62c,
-    data_ov002_0210a6bc,
-    data_ov002_0210a65c,
+    data_ov002_02109ff4, data_ov002_0210a61c, data_ov002_0210a720, data_ov002_0210a63c,
+    data_ov002_0210a1d4, data_ov002_0210a64c, data_ov002_0210a740, data_ov002_0210a66c,
+    data_ov002_0210e7b8, data_ov002_0210a67c, data_ov002_0210a4bc, data_ov002_0210a434,
+    data_ov002_0210a3dc, data_ov002_0210a5ec, data_ov002_0210a5fc, data_ov002_0210a62c,
+    data_ov002_0210a6bc, data_ov002_0210a65c,
 };
 
 // @symbol func_ov002_020bcdf0

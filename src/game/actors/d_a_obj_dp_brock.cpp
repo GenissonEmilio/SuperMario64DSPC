@@ -224,6 +224,5 @@ struct CLPS_Block {
 typedef char CLPS_Block_size_must_be_0x20[sizeof(CLPS_Block) == 0x20 ? 1 : -1];
 
 extern "C" CLPS_Block data_ov025_02112ce8 = {
-    0x53504c43, 0x00010008, 0x00000fc4, 0x000000ff,
-    0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+    0x53504c43, 0x00010008, 0x00000fc4, 0x000000ff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
 };

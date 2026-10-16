@@ -1518,7 +1518,9 @@ void daMky_c::func_ov030_02114170()
     (this->*mStateDesc->enter)();
 }
 // @symbol _ZN7daMky_c19func_ov030_021141a8Ei
-typedef struct { int a, b, c, d; } Item16;
+typedef struct {
+    int a, b, c, d;
+} Item16;
 extern "C" char data_ov030_02115e0c[0xb4];
 
 void daMky_c::func_ov030_021141a8(int idx)
@@ -1542,7 +1544,6 @@ extern SharedFilePtr  data_ov002_0210d9c0;
 extern int data_ov030_02115d00[2];
 extern SharedFilePtr *const data_ov030_02114824[10];
 extern int data_ov030_02115cf0[2];
-
 }
 
 // @symbol _ZN7daMky_c16CleanupResourcesEv
@@ -1628,7 +1629,8 @@ s32 daMky_c::InitResources()
         dExtFrameCtrl_c::LoadFile(*data_ov030_02114824[i]);
     if (mShadowModel.InitCylinder() == 0)
         return 0;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (void *)data_ov030_02115cf0[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (void *)data_ov030_02115cf0[1], 0,
+                                                0x1000, 0);
     mModelAnim.speed = 0x1000;
     _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(&mdCcAc_c, this, 0x28000, 0x64000, 0x800004, 0x49000);
     _ZN10dBgCh_Actr4InitEP8dActor_c5Fix12IiES3_P10Vector3_16S5_(&mWithMeshClsn, this, 0x32000, 0x32000, 0, 0);
@@ -1749,16 +1751,10 @@ char data_ov030_02115e0c[0xb4];
 
 extern "C" {
 SharedFilePtr *const data_ov030_02114824[10] = {
-    (SharedFilePtr *)&gMonkeyHoldAnimationFile,
-    (SharedFilePtr *)&gMonkeyJumpStAnimationFile,
-    (SharedFilePtr *)&gMonkeyJumpEdAnimationFile,
-    (SharedFilePtr *)&gMonkeyRunStAnimationFile,
-    (SharedFilePtr *)&gMonkeyRunAnimationFile,
-    (SharedFilePtr *)&gMonkeyRunEdAnimationFile,
-    (SharedFilePtr *)&data_ov030_02115cf0,
-    (SharedFilePtr *)&gMonkeyWait2AnimationFile,
-    (SharedFilePtr *)&gMonkeyWait3AnimationFile,
-    (SharedFilePtr *)&gMonkeyWait4AnimationFile,
+    (SharedFilePtr *)&gMonkeyHoldAnimationFile,   (SharedFilePtr *)&gMonkeyJumpStAnimationFile,
+    (SharedFilePtr *)&gMonkeyJumpEdAnimationFile, (SharedFilePtr *)&gMonkeyRunStAnimationFile,
+    (SharedFilePtr *)&gMonkeyRunAnimationFile,    (SharedFilePtr *)&gMonkeyRunEdAnimationFile,
+    (SharedFilePtr *)&data_ov030_02115cf0,        (SharedFilePtr *)&gMonkeyWait2AnimationFile,
+    (SharedFilePtr *)&gMonkeyWait3AnimationFile,  (SharedFilePtr *)&gMonkeyWait4AnimationFile,
 };
 }
-

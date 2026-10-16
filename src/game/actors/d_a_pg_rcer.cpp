@@ -31,27 +31,26 @@ void UpdateAngle(short &angle, short target, int divisor, short maxStep);
 #define LOADED(handle) ((handle).filePtr)
 
 /* File handle. The loaded file is filePtr. */
-struct PgRcerFile : SharedFilePtr {
-};
+struct PgRcerFile : SharedFilePtr {};
 
 extern "C" {
 
-extern PgRcerFile data_ov019_02113498;             /* model, file 0x3fb */
-extern PgRcerFile *const data_ov019_02112788[7];   /* the seven BCA handles */
-extern PgRcerFile *const data_ov019_0211277c[3];   /* the three BTP handles */
+extern PgRcerFile data_ov019_02113498;           /* model, file 0x3fb */
+extern PgRcerFile *const data_ov019_02112788[7]; /* the seven BCA handles */
+extern PgRcerFile *const data_ov019_0211277c[3]; /* the three BTP handles */
 extern u32 data_ov019_0211356c[];
-extern int data_ov019_021134e8[3];                /* finish volume */
-extern int data_ov019_0211353c[3];                /* cheat volume */
-extern PgRcerFile gPenguinJumpEdAnimationFile;          /* BCA land, file 0x401 */
-extern PgRcerFile gOV019PenguinWait1TextureSequenceFile;          /* BTP neutral, file 0x407 */
-extern PgRcerFile gOV019PenguinWait1AnimationFile;          /* BCA idle, file 0x406 */
-extern PgRcerFile gPenguinJumpStAnimationFile;          /* BCA jump, file 0x402 */
-extern PgRcerFile gPenguinDiveAnimationFile;          /* BCA race start, file 0x400 */
-extern PgRcerFile gPenguinSliderAnimationFile;          /* BCA race, file 0x403 */
+extern int data_ov019_021134e8[3];                       /* finish volume */
+extern int data_ov019_0211353c[3];                       /* cheat volume */
+extern PgRcerFile gPenguinJumpEdAnimationFile;           /* BCA land, file 0x401 */
+extern PgRcerFile gOV019PenguinWait1TextureSequenceFile; /* BTP neutral, file 0x407 */
+extern PgRcerFile gOV019PenguinWait1AnimationFile;       /* BCA idle, file 0x406 */
+extern PgRcerFile gPenguinJumpStAnimationFile;           /* BCA jump, file 0x402 */
+extern PgRcerFile gPenguinDiveAnimationFile;             /* BCA race start, file 0x400 */
+extern PgRcerFile gPenguinSliderAnimationFile;           /* BCA race, file 0x403 */
 extern PgRcerFile gPenguinStandUpAnimationFile;          /* BCA near finish, file 0x405 */
-extern PgRcerFile gOV019PenguinWalkAnimationFile;          /* BCA walk, file 0x408 */
-extern PgRcerFile gOV019PenguinAngryTextureSequenceFile;          /* BTP lost, file 0x3fd */
-extern PgRcerFile gPenguinSliderTextureSequenceFile;          /* BTP race, file 0x404 */
+extern PgRcerFile gOV019PenguinWalkAnimationFile;        /* BCA walk, file 0x408 */
+extern PgRcerFile gOV019PenguinAngryTextureSequenceFile; /* BTP lost, file 0x3fd */
+extern PgRcerFile gPenguinSliderTextureSequenceFile;     /* BTP race, file 0x404 */
 extern unsigned char data_0209d684;                /* talk-script choice */
 
 extern unsigned char NumStars(void);
@@ -429,7 +428,8 @@ int func_ov019_0211197c(daPgRcer_c *self)
             }
             ApproachLinear(self->mHorzSpeed, val, 0x800);
         }
-        if (self->mPenguinFinished == 0 && Vec3_Dist((Vector3 *)&data_ov019_021134e8, (Vector3 *)&self->mPosX) < 0x190000) {
+        if (self->mPenguinFinished == 0 &&
+            Vec3_Dist((Vector3 *)&data_ov019_021134e8, (Vector3 *)&self->mPosX) < 0x190000) {
             if (self->mPlayerFinished != 0) {
                 self->mPenguinWon = 0;
             } else {
@@ -450,10 +450,12 @@ int func_ov019_0211197c(daPgRcer_c *self)
     }
 
     self->func_ov019_021112b8();
-    if (Vec3_Dist((Vector3 *)&data_ov019_0211353c, (Vector3 *)&self->mTalkPlayer->mPosX) < 0x280000) {
+    if (Vec3_Dist((Vector3 *)&data_ov019_0211353c, (Vector3 *)&self->mTalkPlayer->mPosX) <
+        0x280000) {
         self->mPlayerCheated = 1;
     }
-    if (Vec3_Dist((Vector3 *)&data_ov019_021134e8, (Vector3 *)&self->mTalkPlayer->mPosX) < 0x190000) {
+    if (Vec3_Dist((Vector3 *)&data_ov019_021134e8, (Vector3 *)&self->mTalkPlayer->mPosX) <
+        0x190000) {
         self->mPlayerFinished = 1;
     }
     return 1;
@@ -711,12 +713,8 @@ PgRcerFile *const data_ov019_0211277c[3] = {
     &gOV019PenguinWait1TextureSequenceFile,
 };
 PgRcerFile *const data_ov019_02112788[7] = {
-    &gOV019PenguinWait1AnimationFile,
-    &gOV019PenguinWalkAnimationFile,
-    &gPenguinJumpStAnimationFile,
-    &gPenguinJumpEdAnimationFile,
-    &gPenguinDiveAnimationFile,
-    &gPenguinSliderAnimationFile,
+    &gOV019PenguinWait1AnimationFile, &gOV019PenguinWalkAnimationFile, &gPenguinJumpStAnimationFile,
+    &gPenguinJumpEdAnimationFile,     &gPenguinDiveAnimationFile,      &gPenguinSliderAnimationFile,
     &gPenguinStandUpAnimationFile,
 };
 

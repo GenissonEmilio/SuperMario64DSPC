@@ -99,13 +99,7 @@ extern "C" {
 extern RcBurankoClsnFilePtr data_ov036_02114020;   /* the collision KCL  */
 extern RcBurankoModelFilePtr data_ov036_02114028;   /* the platform's BMD */
 CLPS_Block data_ov036_02112b68 = {
-    0x53504c43,
-    0x00020008,
-    0x01000fc0,
-    0x000000ff,
-    0x01002fc0,
-    0x000000ff,
-    0xffffffff,
+    0x53504c43, 0x00020008, 0x01000fc0, 0x000000ff, 0x01002fc0, 0x000000ff, 0xffffffff,
 };
 u32 data_ov036_02112b84 = 0xffffffff;
 

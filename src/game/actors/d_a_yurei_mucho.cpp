@@ -112,8 +112,7 @@ extern void func_ov002_020aea30(void *self, void *actor, void *collision);
 struct YureiAnimationFileHandle : SharedFilePtr {
     /* SharedFilePtr::Load and func_02017e0c use this local eight-byte layout. */
 };
-struct YureiModelFilePtr : SharedFilePtr {
-};
+struct YureiModelFilePtr : SharedFilePtr {};
 /* Definition order is not address order: mwccarm emits each plain global's
    `.bss` section in a fixed permuted order, and this spelling emits the four
    handles in ascending ROM address order. */
@@ -390,8 +389,8 @@ int daYurei_Mucho_c::func_ov065_021168a8()
     mTargetAngle = (short)((RandomIntInternal(data_0209e650) >> 8) << 0xc);
     /* unsigned/signed timer store: a named s16 write DIFFs the ldrh sites. */
     *(short *)((char *)this + 0x100) = (short)(((RandomIntInternal(data_0209e650) >> 8) & 0x1f) + 0x32);
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
-        data_ov065_0211d600.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d600.filePtr, 0, 0x1000,
+                                                0);
     return 1;
 }
 
@@ -511,8 +510,8 @@ int daYurei_Mucho_c::func_ov065_021165d8()
 short daYurei_Mucho_c::func_ov065_02116588()
 {
     mShotCount = 0;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
-        data_ov065_0211d608.filePtr, 0x40000000, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d608.filePtr,
+                                                0x40000000, 0x1000, 0);
     *(short *)((char *)this + 0x100) = 0;
     return 1;
 }
@@ -567,8 +566,8 @@ int daYurei_Mucho_c::func_ov065_02116364()
                 func_ov065_0211691c((State *)data_ov065_0211d670);
             } else {
                 *(u16 *)((char *)this + 0x100) = 0x32;
-                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
-                    data_ov065_0211d600.filePtr, 0, 0x1000, 0);
+                _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+                    &mModelAnim, data_ov065_0211d600.filePtr, 0, 0x1000, 0);
                 func_ov065_0211691c((State *)&data_ov065_0211d680);
             }
         } else {

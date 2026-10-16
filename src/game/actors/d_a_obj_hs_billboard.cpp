@@ -44,7 +44,7 @@ typedef char HsBillboardModelFilePtr_size_must_be_8[
     sizeof(HsBillboardModelFilePtr) == 8 ? 1 : -1];
 
 extern "C" {
-extern SharedFilePtr * const data_ov031_02111424[4];
+extern SharedFilePtr *const data_ov031_02111424[4];
 void func_ov031_02111214(daObjHsBillboard_c *self);
 void Matrix4x3_FromRotationY(Matrix4x3 *m, s16 angY);
 }
@@ -135,7 +135,7 @@ HsBillboardModelFilePtr gHsBStarModelFile(ASSET_HS_B_STAR_BMD);
 
 /* extern keeps the table global; const keeps it in .rodata.
    Order is the ROM: moon, star, yellow star, blue star. */
-extern "C" SharedFilePtr * const data_ov031_02111424[4] = {
+extern "C" SharedFilePtr *const data_ov031_02111424[4] = {
     &gHsMoonModelFile,
     &gHsStarModelFile,
     &gHsYStarModelFile,

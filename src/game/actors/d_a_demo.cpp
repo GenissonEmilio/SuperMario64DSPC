@@ -155,7 +155,10 @@ typedef void (daDemo_c::*PMF3)(unsigned char*, int, int);
 /* Eight-byte (function, adjustment) records. A PMF3 initializer emits a
    static initializer and zero storage; these words are already relocated. */
 #pragma cplusplus off
-typedef struct PMFWords { int fn; int adj; } PMFWords;
+typedef struct PMFWords {
+    int fn;
+    int adj;
+} PMFWords;
 #pragma cplusplus on
 
 /* array-teardown callback used by the anmModel_c destructor */
@@ -634,39 +637,53 @@ extern PMF3 data_ov002_0210b628;
 extern PMF3 data_ov002_0210b648;
 
 extern "C" {
-int _ZN8daDemo_c19func_ov002_020f71c4Eii(int, int);
-int _ZN8daDemo_c19func_ov002_020f26c4EPh(unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f71c4Eii(daDemo_c *, int, int);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f26c4EPh(daDemo_c *, unsigned char *);
 void func_ov002_020f26d4(void);
-int _ZN8daDemo_c19func_ov002_020f63f8EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6448EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6a9cEv(void);
-int _ZN8daDemo_c19func_ov002_020f6ab8EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6ae4EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f7038Eii(int, int);
-int _ZN8daDemo_c19func_ov002_020f6b4cEPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6bc0EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6c24EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f6c34EPh(unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f63f8EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6448EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6a9cEv(daDemo_c *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6ab8EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6ae4EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f7038Eii(daDemo_c *, int, int);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6b4cEPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6bc0EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6c24EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6c34EPh(daDemo_c *, unsigned char *);
 int _ZN8daDemo_c19func_ov002_020f6c60EPvii(void *, int, int);
-int _ZN8daDemo_c19func_ov002_020f6e48EPh(unsigned char *);
-int _ZN8daDemo_c19func_ov002_020f7020Ev(void);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f6e48EPh(daDemo_c *, unsigned char *);
+/* local extern: {fn,0} address word, not a member-pointer initializer */
+int _ZN8daDemo_c19func_ov002_020f7020Ev(daDemo_c *);
 }
-PMFWords data_ov002_0210b8c0 = { (int)&_ZN8daDemo_c19func_ov002_020f71c4Eii, 0 };
-PMFWords data_ov002_0210b8c8 = { (int)&_ZN8daDemo_c19func_ov002_020f26c4EPh, 0 };
-PMFWords data_ov002_0210b8d0 = { (int)&func_ov002_020f26d4, 0 };
-PMFWords data_ov002_0210b8d8 = { (int)&_ZN8daDemo_c19func_ov002_020f63f8EPh, 0 };
-PMFWords data_ov002_0210b8e0 = { (int)&_ZN8daDemo_c19func_ov002_020f6448EPh, 0 };
-PMFWords data_ov002_0210b8e8 = { (int)&_ZN8daDemo_c19func_ov002_020f6a9cEv, 0 };
-PMFWords data_ov002_0210b8f0 = { (int)&_ZN8daDemo_c19func_ov002_020f6ab8EPh, 0 };
-PMFWords data_ov002_0210b8f8 = { (int)&_ZN8daDemo_c19func_ov002_020f6ae4EPh, 0 };
-PMFWords data_ov002_0210b900 = { (int)&_ZN8daDemo_c19func_ov002_020f7038Eii, 0 };
-PMFWords data_ov002_0210b908 = { (int)&_ZN8daDemo_c19func_ov002_020f6b4cEPh, 0 };
-PMFWords data_ov002_0210b910 = { (int)&_ZN8daDemo_c19func_ov002_020f6bc0EPh, 0 };
-PMFWords data_ov002_0210b918 = { (int)&_ZN8daDemo_c19func_ov002_020f6c24EPh, 0 };
-PMFWords data_ov002_0210b920 = { (int)&_ZN8daDemo_c19func_ov002_020f6c34EPh, 0 };
-PMFWords data_ov002_0210b928 = { (int)&_ZN8daDemo_c19func_ov002_020f6c60EPvii, 0 };
-PMFWords data_ov002_0210b930 = { (int)&_ZN8daDemo_c19func_ov002_020f6e48EPh, 0 };
-PMFWords data_ov002_0210b938 = { (int)&_ZN8daDemo_c19func_ov002_020f7020Ev, 0 };
+PMFWords data_ov002_0210b8c0 = {(int)&_ZN8daDemo_c19func_ov002_020f71c4Eii, 0};
+PMFWords data_ov002_0210b8c8 = {(int)&_ZN8daDemo_c19func_ov002_020f26c4EPh, 0};
+PMFWords data_ov002_0210b8d0 = {(int)&func_ov002_020f26d4, 0};
+PMFWords data_ov002_0210b8d8 = {(int)&_ZN8daDemo_c19func_ov002_020f63f8EPh, 0};
+PMFWords data_ov002_0210b8e0 = {(int)&_ZN8daDemo_c19func_ov002_020f6448EPh, 0};
+PMFWords data_ov002_0210b8e8 = {(int)&_ZN8daDemo_c19func_ov002_020f6a9cEv, 0};
+PMFWords data_ov002_0210b8f0 = {(int)&_ZN8daDemo_c19func_ov002_020f6ab8EPh, 0};
+PMFWords data_ov002_0210b8f8 = {(int)&_ZN8daDemo_c19func_ov002_020f6ae4EPh, 0};
+PMFWords data_ov002_0210b900 = {(int)&_ZN8daDemo_c19func_ov002_020f7038Eii, 0};
+PMFWords data_ov002_0210b908 = {(int)&_ZN8daDemo_c19func_ov002_020f6b4cEPh, 0};
+PMFWords data_ov002_0210b910 = {(int)&_ZN8daDemo_c19func_ov002_020f6bc0EPh, 0};
+PMFWords data_ov002_0210b918 = {(int)&_ZN8daDemo_c19func_ov002_020f6c24EPh, 0};
+PMFWords data_ov002_0210b920 = {(int)&_ZN8daDemo_c19func_ov002_020f6c34EPh, 0};
+PMFWords data_ov002_0210b928 = {(int)&_ZN8daDemo_c19func_ov002_020f6c60EPvii, 0};
+PMFWords data_ov002_0210b930 = {(int)&_ZN8daDemo_c19func_ov002_020f6e48EPh, 0};
+PMFWords data_ov002_0210b938 = {(int)&_ZN8daDemo_c19func_ov002_020f7020Ev, 0};
 
 /* Zero image. A pointer-to-member object emits a static initializer.
    __sinit_ov002_02107370 writes these slots. */
@@ -3044,7 +3061,7 @@ void func_ov002_020f5990(char* c)
     }
     for (i = 0; i < 4; i++, s = (Sub*)((char*)s + 0x4c)) {
         if (s->f44 == 0) continue;
-        (((C*)c)->*(*(PMF *)&data_ov002_02110e7c[s->f46]))(i);
+        (((C *)c)->*(*(PMF *)&data_ov002_02110e7c[s->f46]))(i);
         func_ov002_020f39ec(c, i);
         if (s->f49 == 0) continue;
         if (i != *(int*)(c + 0x1f8)) continue;
@@ -3325,7 +3342,7 @@ done:
 /* -------------------------------------------------------------------------- */
 // @symbol func_ov002_020f5dd8
 extern "C" void func_ov002_020f5dd8(C* c, int idx) {
-  (c->*(*(PMF0 *)&data_ov002_02110f34[idx]))();
+    (c->*(*(PMF0 *)&data_ov002_02110f34[idx]))();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -3441,8 +3458,8 @@ void func_ov002_020f5efc(void) {
 /* -------------------------------------------------------------------------- */
 // @symbol func_ov002_020f5f0c
 extern "C" void func_ov002_020f5f0c(C* c, int idx){
-  (c->*(*(PMF0 *)&data_ov002_02110f9c[idx]))();
-  func_ov002_020f2e30((Obj2e30*)c, idx);
+    (c->*(*(PMF0 *)&data_ov002_02110f9c[idx]))();
+    func_ov002_020f2e30((Obj2e30 *)c, idx);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -4820,7 +4837,11 @@ int daDemo_c::InitResources()
         }
         this->mModelAnim = (ModelAnim *)p;
         if (this->mModelAnim == 0) return 0;
-        if (((anmModel_c*)this->mModelAnim)->func_ov002_020f6618(&data_ov085_0213074c, 1, (SharedFilePtr**)&data_ov002_0210b60c, 1, 1, (SharedFilePtr**)&data_ov002_0210b608, -1) == 0) return 0;
+        if (((anmModel_c *)this->mModelAnim)
+                ->func_ov002_020f6618(&data_ov085_0213074c, 1,
+                                      (SharedFilePtr **)&data_ov002_0210b60c, 1, 1,
+                                      (SharedFilePtr **)&data_ov002_0210b608, -1) == 0)
+            return 0;
     } else if (param1 == 0x13) {
         p = _Znwj(0x84);
         if (p) {

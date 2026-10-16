@@ -22,28 +22,29 @@ extern void SharedFilePtr_Destruct_Anim(void);
 extern void SharedFilePtr_Destruct_TexSeq(void);
 extern void *_ZN7Vector3D1Ev(void *object);
 
-extern void* data_ov019_02113498;
-extern void* data_ov019_021134dc;
+typedef struct PgRcerFile PgRcerFile;
+extern PgRcerFile data_ov019_02113498;
+extern unsigned int data_ov019_021134dc[];
 extern struct SharedFilePtr gOV019PenguinWait1AnimationFile;
-extern void* data_ov019_021134f4;
+extern unsigned int data_ov019_021134f4[];
 extern struct SharedFilePtr gOV019PenguinWalkAnimationFile;
-extern void* data_ov019_02113500;
+extern unsigned int data_ov019_02113500[];
 extern struct SharedFilePtr gPenguinJumpStAnimationFile;
-extern void* data_ov019_0211350c;
+extern unsigned int data_ov019_0211350c[];
 extern struct SharedFilePtr gPenguinJumpEdAnimationFile;
-extern void* data_ov019_02113524;
+extern unsigned int data_ov019_02113524[];
 extern struct SharedFilePtr gPenguinDiveAnimationFile;
-extern void* data_ov019_02113530;
+extern unsigned int data_ov019_02113530;
 extern struct SharedFilePtr gPenguinSliderAnimationFile;
-extern void* data_ov019_02113548;
+extern unsigned int data_ov019_02113548[];
 extern struct SharedFilePtr gPenguinStandUpAnimationFile;
-extern void* data_ov019_02113554;
+extern unsigned int data_ov019_02113554[];
 extern struct SharedFilePtr gOV019PenguinAngryTextureSequenceFile;
-extern void* data_ov019_02113560;
+extern unsigned int data_ov019_02113560[];
 extern struct SharedFilePtr gPenguinSliderTextureSequenceFile;
-extern void* data_ov019_021134b8;
+extern unsigned int data_ov019_021134b8[];
 extern struct SharedFilePtr gOV019PenguinWait1TextureSequenceFile;
-extern void* data_ov019_021134c4;
+extern unsigned int data_ov019_021134c4[];
 
 struct P2 { int a, b; };
 extern struct P2 data_ov019_0211356c[12];
@@ -62,10 +63,10 @@ extern struct P2 data_ov019_021132c8;
 
 typedef struct { int x, y, z; } V3;
 extern V3 data_ov019_021134e8;
-extern void* data_ov019_021134d0;
+extern unsigned int data_ov019_021134d0[];
 
 extern V3 data_ov019_0211353c;
-extern void* data_ov019_02113518;
+extern unsigned int data_ov019_02113518[];
 
 void __sinit_ov019_021127a4(void)
 {

@@ -800,7 +800,8 @@ s32 daCoin_c::CleanupResources()
 
     dActor_c *manager;
     int isRed = (int)(actorID == 0x121);
-    if (isRed != 0) data_ov002_0210d9a8.Release();
+    if (isRed != 0)
+        data_ov002_0210d9a8.Release();
     if (mCoinType == COIN_BLUE) {
         ((SharedFilePtr *)data_ov002_020ff06c[mCoinType])->Release();
         ((SharedFilePtr *)data_ov002_020ff060[mCoinType])->Release();

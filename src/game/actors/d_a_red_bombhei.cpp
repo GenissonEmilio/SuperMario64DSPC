@@ -89,8 +89,7 @@ bool ApproachLinear(short &value, short target, short step);
 
 /* A loaded SharedFilePtr: the second word is the file it loaded.
    The loaded file is filePtr. */
-struct LoadedFile : SharedFilePtr {
-};
+struct LoadedFile : SharedFilePtr {};
 
 /* Zero in the image. __sinit_ov084_02130558 writes the file ids, the
    destructor nodes, and the three state rows. The two handles are

@@ -86,8 +86,7 @@ void LoadAndSetMusic_Layer3(unsigned int musicId);
 /* {file id, loaded file}. Same two words daStar_c reads as id/ptr, and the
  * words this TU passes to SetAnim / SetFile / compares with mModelAnim.file.
  * SharedFilePtr is the 8-byte handle; Release and LoadFile go through it. */
-struct ObjKeyFile : SharedFilePtr {
-};
+struct ObjKeyFile : SharedFilePtr {};
 
 /* File-scope objects at the end of this file construct the eight resource
  * handles and fill the eight-entry state table. mwcc emits
@@ -332,7 +331,7 @@ void daObjKey_c::func_ov089_0213115c(int anim)
     }
     mAnimID = anim;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov089_02132880[anim]->filePtr,
-                                                 ANIM_FLAGS, ANIM_SPEED, 0);
+                                                ANIM_FLAGS, ANIM_SPEED, 0);
 }
 
 // @symbol _ZN10daObjKey_c16StateFlyToCenterEv
@@ -911,7 +910,8 @@ int daObjKey_c::InitResources()
     if (mState == KEY_KIND_STAR) {
         if (mModelAnim.SetFile((BMD_File *)data_ov002_0211094c.filePtr, 1, 1) == 0)
             return 0;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov002_02110964.filePtr, ANIM_FLAGS, ANIM_SPEED, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov002_02110964.filePtr,
+                                                    ANIM_FLAGS, ANIM_SPEED, 0);
         mScaleX = SCALE_STAR;
         mScaleY = SCALE_STAR;
         mScaleZ = SCALE_STAR;
@@ -928,7 +928,8 @@ int daObjKey_c::InitResources()
         dExtFrameCtrl_c::LoadFile(data_ov089_02132c40);
         dExtFrameCtrl_c::LoadFile(data_ov089_02132c70);
         dExtFrameCtrl_c::LoadFile(data_ov089_02132c48);
-        if (mModelAnim.SetFile((BMD_File *)((ObjKeyFile *)data_ov089_02132894[mState])->filePtr, 1, 1) == 0)
+        if (mModelAnim.SetFile((BMD_File *)((ObjKeyFile *)data_ov089_02132894[mState])->filePtr, 1,
+                               1) == 0)
             return 0;
         {
             void *extra = data_ov089_021328b4[mState];
@@ -937,7 +938,8 @@ int daObjKey_c::InitResources()
                     return 0;
             }
         }
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov002_02110964.filePtr, ANIM_FLAGS, ANIM_SPEED, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov002_02110964.filePtr,
+                                                    ANIM_FLAGS, ANIM_SPEED, 0);
         mScaleX = SCALE_KEY;
         mScaleY = SCALE_KEY;
         mScaleZ = SCALE_KEY;
@@ -1008,9 +1010,5 @@ ObjKeyStateTable data_ov089_02132cec;
 ObjKeyVec3 data_ov089_02132b40 = {0, (int)0xfff92000, 0};
 
 extern "C" ObjKeyFile *const data_ov089_02132880[5] = {
-    0,
-    &data_ov089_02132c60,
-    &data_ov089_02132c70,
-    &data_ov089_02132c40,
-    &data_ov089_02132c48,
+    0, &data_ov089_02132c60, &data_ov089_02132c70, &data_ov089_02132c40, &data_ov089_02132c48,
 };

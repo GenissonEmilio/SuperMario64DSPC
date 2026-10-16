@@ -238,7 +238,8 @@ int daPeach_c::InitState0()
 // @symbol _ZN9daPeach_c6State0Ev
 int daPeach_c::State0()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim, ((void **)&data_ov085_021304ec)[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim,
+                                                ((void **)&data_ov085_021304ec)[1], 0, 0x1000, 0);
     ((dExtFrameCtrl_c *)&mModelAnim)->SetFlags(0x40000000);
     mHorzSpeed = 0x4000;
     mVertSpeed = 0xa000;
@@ -255,7 +256,8 @@ int daPeach_c::State2()
 // @symbol _ZN9daPeach_c10InitState2Ev
 int daPeach_c::InitState2()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim, ((void **)&data_ov085_021304e4)[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim,
+                                                ((void **)&data_ov085_021304e4)[1], 0, 0x1000, 0);
     mHorzSpeed = 0x4000;
     mStateValue = 3;
     return 1;
@@ -275,7 +277,8 @@ int daPeach_c::InitState4()
 // @symbol _ZN9daPeach_c6State1Ev
 int daPeach_c::State1()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim, ((void **)&data_ov085_021304c4)[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim,
+                                                ((void **)&data_ov085_021304c4)[1], 0, 0x1000, 0);
     mHorzSpeed = 0x1800;
     mStateValue = 2;
     return 1;
@@ -317,7 +320,8 @@ int daPeach_c::State3()
 // @symbol _ZN9daPeach_c10InitState1Ev
 int daPeach_c::InitState1()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim, ((void **)&data_ov085_021304d4)[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim,
+                                                ((void **)&data_ov085_021304d4)[1], 0, 0x1000, 0);
     ((dExtFrameCtrl_c *)&mModelAnim)->currFrame = 0;
     ((dExtFrameCtrl_c *)&mModelAnim)->Advance();
     mTalkState = 1;
@@ -348,7 +352,8 @@ int daPeach_c::InitState3()
 // @symbol _ZN9daPeach_c6State4Ev
 int daPeach_c::State4()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim, ((void **)&data_ov085_021304bc)[1], 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&mModelAnim,
+                                                ((void **)&data_ov085_021304bc)[1], 0, 0x1000, 0);
     mStateValue = 0;
     return 1;
 }
@@ -478,9 +483,7 @@ DaPeachAnimationFilePtr gPeachJumpEndAnimationFile(0x3f1);
 DaPeachAnimationFilePtr gPeachJumpLoopAnimationFile(0x3f2);
 DaPeachAnimationFilePtr data_ov085_021304bc(0x3f4);
 daPeach_c::StateEntry data_ov085_0213055c[5] = {
-    {data_ov085_0212ff7c, data_ov085_0212ff64},
-    {data_ov085_0212ff44, data_ov085_0212ff6c},
-    {data_ov085_0212ff4c, data_ov085_0212ff74},
-    {data_ov085_0212ff54, data_ov085_0212ff5c},
+    {data_ov085_0212ff7c, data_ov085_0212ff64}, {data_ov085_0212ff44, data_ov085_0212ff6c},
+    {data_ov085_0212ff4c, data_ov085_0212ff74}, {data_ov085_0212ff54, data_ov085_0212ff5c},
     {data_ov085_0212ff3c, data_ov085_0212ff34},
 };

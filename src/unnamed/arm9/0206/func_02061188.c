@@ -99,8 +99,7 @@ void func_02061188(int unused, u16 *msg, int flag)
                     for (i = 0; i < 0x10; i++) {
                         data_020a89ec.w6 = i;
                         if ((data_020a89ac + i)[0x2b] != 0) {
-                            *(u32 *)((char *)&data_020a89ec + 0x1c) =
-                                (data_020a89ac + i)[0x3b];
+                            *(u32 *)((char *)&data_020a89ec + 0x1c) = (data_020a89ac + i)[0x3b];
                             ((Handler)(data_020a89ac + i)[0x2b])(&data_020a89ec);
                         }
                     }

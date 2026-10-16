@@ -128,8 +128,9 @@ UkiyukaCollisionFilePtr gdaObjFl_UkiyukaFlShisoCollisionFile(ASSET_FL_SHISO_KCL)
 extern CLPS_Block data_ov064_0211baec;
 extern CLPS_Block data_ov064_0211bacc;
 extern "C" ResourceDescriptor data_ov022_021140d4[2] = {
-    { &gFlUkiYukaModelFile, &gFlUkiYukaCollisionFile, &data_ov064_0211baec },
-    { &gdaObjFl_UkiyukaFlShisoModelFile, &gdaObjFl_UkiyukaFlShisoCollisionFile, &data_ov064_0211bacc },
+    {&gFlUkiYukaModelFile, &gFlUkiYukaCollisionFile, &data_ov064_0211baec},
+    {&gdaObjFl_UkiyukaFlShisoModelFile, &gdaObjFl_UkiyukaFlShisoCollisionFile,
+     &data_ov064_0211bacc},
 };
 
 // @symbol daObjFl_Ukiyuka_c_classInit_FL_UKIYUKA_L

@@ -40,7 +40,7 @@
  * data_ov002_02108ab0 / data_ov002_02108ab4 / data_ov002_02108ab8. */
 struct ResourceRow {
     SharedFilePtr* file;
-    SharedFilePtr* clsn;
+    SharedFilePtr *clsn;
     CLPS_Block *block;
 };
 
@@ -484,19 +484,16 @@ int daObjBlockL_c::InitResources()
         if (is10 != 0) {
             KCL_File *kcl = (KCL_File *)dBgW_Kc::LoadFile(*data_ov002_02108ab0[idx].clsn);
             _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-                &mMeshCollider, kcl, &mClsnMat, 0x1800, mAngleY,
-                data_ov002_02108ab0[idx].block);
+                &mMeshCollider, kcl, &mClsnMat, 0x1800, mAngleY, data_ov002_02108ab0[idx].block);
         } else {
             KCL_File *kcl = (KCL_File *)dBgW_Kc::LoadFile(*data_ov002_02108ab0[idx].clsn);
             _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-                &mMeshCollider, kcl, &mClsnMat, 0x1000, mAngleY,
-                data_ov002_02108ab0[idx].block);
+                &mMeshCollider, kcl, &mClsnMat, 0x1000, mAngleY, data_ov002_02108ab0[idx].block);
         }
     } else {
         KCL_File *kcl = (KCL_File *)dBgW_Kc::LoadFile(*data_ov002_02108ab0[idx].clsn);
         _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-            &mMeshCollider, kcl, &mClsnMat, 0x199, mAngleY,
-            data_ov002_02108ab0[idx].block);
+            &mMeshCollider, kcl, &mClsnMat, 0x199, mAngleY, data_ov002_02108ab0[idx].block);
     }
 
     {
@@ -586,11 +583,11 @@ extern "C" daObjBlockLClsnFile data_ov002_0210dcd8(1426);
  * variant, and data_ov002_02108ab0[] above reads it by row. The ROM names
  * row 0's +4 and +8 cells separately; those land here. Row 0's +0 cell
  * stays a ROM copy: the import and a definition cannot share one name. */
-extern "C" SharedFilePtr* data_ov002_02108ab4 = &data_ov002_0210dcb8;
+extern "C" SharedFilePtr *data_ov002_02108ab4 = &data_ov002_0210dcb8;
 extern "C" ResourceTail data_ov002_02108ab8 = {
     &data_ov002_0210d794,
     {
-        { &data_ov002_0210dce0, &data_ov002_0210dcc8, &data_ov002_0210d8f4 },
-        { &data_ov002_0210dcd0, &data_ov002_0210dcd8, &data_ov009_021135f4 },
+        {&data_ov002_0210dce0, &data_ov002_0210dcc8, &data_ov002_0210d8f4},
+        {&data_ov002_0210dcd0, &data_ov002_0210dcd8, &data_ov009_021135f4},
     },
 };

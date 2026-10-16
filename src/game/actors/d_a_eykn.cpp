@@ -259,7 +259,8 @@ int daEykn_c::UpdateEyeAnim()
         return 0;
     case 1:
     case 4:
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
         mTextureSequence.SetFlags(0x40000000);
         mTextureSequence.speed = 0x1000;
         mTextureSequence.currFrame = 0;
@@ -268,7 +269,8 @@ int daEykn_c::UpdateEyeAnim()
     case 2:
     case 5:
         if (mTextureSequence.Finished() != 0) {
-            _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123040.filePtr, 0, 0x1000, 0);
+            _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+                &mTextureSequence, data_ov071_02123040.filePtr, 0, 0x1000, 0);
             mTextureSequence.SetFlags(0x40000000);
             mTextureSequence.speed = 0x1000;
             mTextureSequence.currFrame = 0;
@@ -294,7 +296,8 @@ int daEykn_c::UpdateEyeAnim()
 // @symbol _ZN8daEykn_c12ResetEyeAnimEv
 void daEykn_c::ResetEyeAnim()
 {
-    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
+    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence,
+                                                       data_ov071_02123038.filePtr, 0, 0x1000, 0);
     mTextureSequence.SetFlags(0x40000000);
     mTextureSequence.speed = 0x1000;
     mTextureSequence.currFrame = 0;
@@ -526,7 +529,8 @@ int daEykn_c::St_Die_Init()
         mDeathSpinSpeed = 0x2500;
     else
         mDeathSpinSpeed = -0x2500;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000,
+                                                0);
     mModelAnim.SetFlags(0x40000000);
     mModelAnim.speed = 0x2800;
     mModelAnim.currFrame = 0;
@@ -846,10 +850,12 @@ s32 daEykn_c::InitResources()
     mTerminalVelocity = 0;
     SetState(0);
 
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov071_02123048.filePtr, 0, 0x1000,
+                                                0);
 
     mModelAnim.speed = 0x1000;
-    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, data_ov071_02123038.filePtr, 0, 0x1000, 0);
+    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence,
+                                                       data_ov071_02123038.filePtr, 0, 0x1000, 0);
 
     mTextureSequence.speed = 0x1000;
     mTarget = 0;

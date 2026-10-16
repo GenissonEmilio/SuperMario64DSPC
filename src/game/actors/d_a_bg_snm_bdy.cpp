@@ -129,8 +129,8 @@ void _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(int x, int y, int z);
 /* The four objects are defined at the bottom of this file. The twelve
  * member pointers they copy from stay ROM .data. */
 extern SnmBdyModelFilePtr data_ov072_02122b20;
-extern Vector3            data_ov072_02122b40;
-extern Vector3            data_ov072_02122b58;
+extern Vector3 data_ov072_02122b40;
+extern Vector3 data_ov072_02122b58;
 extern daBgSnmBdy_c::StateEntry data_ov072_02122b64[];
 extern daBgSnmBdy_c::StateFunc data_ov072_02122750;
 extern daBgSnmBdy_c::StateFunc data_ov072_02122728;
@@ -660,12 +660,9 @@ int daBgSnmBdy_c::IsPlayerNearCenter()
  * then the reach point, then the landing point. */
 SnmBdyModelFilePtr data_ov072_02122b20(0x2ad);
 daBgSnmBdy_c::StateEntry data_ov072_02122b64[6] = {
-    {data_ov072_02122750, data_ov072_02122728},
-    {data_ov072_02122720, data_ov072_02122730},
-    {data_ov072_02122748, data_ov072_02122738},
-    {data_ov072_02122740, data_ov072_02122778},
-    {data_ov072_02122770, data_ov072_02122758},
-    {data_ov072_02122768, data_ov072_02122760},
+    {data_ov072_02122750, data_ov072_02122728}, {data_ov072_02122720, data_ov072_02122730},
+    {data_ov072_02122748, data_ov072_02122738}, {data_ov072_02122740, data_ov072_02122778},
+    {data_ov072_02122770, data_ov072_02122758}, {data_ov072_02122768, data_ov072_02122760},
 };
 Vector3 data_ov072_02122b40(-0xad0000, 0x290000, -0x9d0000);
 Vector3 data_ov072_02122b58(0xfeffc000, 0xffa6f000, 0x6fe000);

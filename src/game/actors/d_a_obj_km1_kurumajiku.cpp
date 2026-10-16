@@ -68,9 +68,8 @@ extern Km1KurumajikuCollisionFilePtr gKm1KurumajikuCollisionFile;
 extern ResourceDescriptor data_ov043_02112344;
 }
 
-ResourceDescriptor data_ov043_02112344 = {
-    &gKm1KurumajikuModelFile, &gKm1KurumajikuCollisionFile, &data_ov043_02111bc0
-};
+ResourceDescriptor data_ov043_02112344 = {&gKm1KurumajikuModelFile, &gKm1KurumajikuCollisionFile,
+                                          &data_ov043_02111bc0};
 
 struct KurumajikuSpawnInfo {
     daObjKm1_Kurumajiku_c *(*classInit)();

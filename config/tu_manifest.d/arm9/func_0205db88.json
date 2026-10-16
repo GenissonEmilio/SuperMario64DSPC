@@ -55,6 +55,7 @@
     "The recorded result is scratch-data-verified: the scratch rewrite is the licensed symbol_binding_rewrites promotion of data_0209a7d8 from STB_LOCAL (file-static) to STB_GLOBAL for DSD's global symbol surface; every other policy was a no-op."
   ],
   "verification": {
+    "flags": "-O4,p -enum int -lang c99 -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
     "linkcheck": {
       "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
       "result": "scratch-data-verified",

@@ -1833,8 +1833,9 @@ mStep: 0 starts animation 0x16 (once) with sound 0xb5, 1 starts 0x15 (looping),
 void daKpa_c::func_ov060_02114858(){
     int new_var2;
     s32 v134 = (s32)this->mModelAnim.file;
-    if ((v134 == (int)data_ov060_0211acd8.filePtr) || ((v134 == (int)data_ov060_0211acf0.filePtr) && ((((u32) (((u32) (this->mModelAnim.currFrame)) << 4)) >> 16) > 0x2a)))
-    {
+    if ((v134 == (int)data_ov060_0211acd8.filePtr) ||
+        ((v134 == (int)data_ov060_0211acf0.filePtr) &&
+         ((((u32)(((u32)(this->mModelAnim.currFrame)) << 4)) >> 16) > 0x2a))) {
         s32 v12c = this->mModelAnim.currFrame;
         s32 v450 = *(volatile s32 *)&this->mSoundID;
         s32 r4 = ((u32) (v12c << 4)) >> 16;
@@ -3443,7 +3444,8 @@ is entry 5 of the animation table), start animation 3 (looping). */
 void daKpa_c::func_ov060_02112350(){
     int finished = this->mModelAnim.Finished();
     if (!finished) return;
-    if ((int)this->mModelAnim.file != (int)data_ov060_0211acd0.filePtr) return;
+    if ((int)this->mModelAnim.file != (int)data_ov060_0211acd0.filePtr)
+        return;
     func_ov060_02111cc0(3, 0);
 }
 
@@ -3576,35 +3578,47 @@ void daKpa_c::func_ov060_02111cc0(int idx, int animFlags){
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&this->mModelAnim, (void *)((int *)data_ov060_021192dc[idx])[1], a, 0x1000, 0);
     switch (idx) {
     case 1:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211ac40.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211ac40.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211ac40.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211ac40.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0x40000000);
         return;
     case 2:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211acb8.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211acb8.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211acb8.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211acb8.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0x40000000);
         return;
     case 3:
     case 5:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211ac10.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211ac10.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211ac10.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211ac10.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0);
         return;
     case 14:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211abf0.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211abf0.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211abf0.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211abf0.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0);
         return;
     case 10:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211ac30.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211ac30.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211ac30.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211ac30.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0x40000000);
         return;
     case 0:
     default:
-        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr, *(BTP_File *)data_ov060_0211ac28.filePtr);
-        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&this->mTextureSequence, (void *)data_ov060_0211ac28.filePtr, 0, 0x1000, 0);
+        TextureSequence::Prepare(*(BMD_File *)data_ov060_0211ac78.filePtr,
+                                 *(BTP_File *)data_ov060_0211ac28.filePtr);
+        _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+            &this->mTextureSequence, (void *)data_ov060_0211ac28.filePtr, 0, 0x1000, 0);
         this->mTextureSequence.SetFlags(0);
         return;
     }
@@ -3797,14 +3811,10 @@ KpaTailState data_ov060_0211ae9c[3] = {
 /* The 28 animation handles, in the order InitResources loads them and
  * CleanupResources releases them. */
 SharedFilePtr *const data_ov060_021192dc[28] = {
-    &data_ov060_0211ac88, &data_ov060_0211ac50, &data_ov060_0211ac58,
-    &data_ov060_0211ac60, &data_ov060_0211ac18, &data_ov060_0211acd0,
-    &data_ov060_0211ac68, &data_ov060_0211ac70, &data_ov060_0211ac20,
-    &data_ov060_0211ac80, &data_ov060_0211abe8, &data_ov060_0211ac48,
-    &data_ov060_0211ac38, &data_ov060_0211ac90, &data_ov060_0211ac98,
-    &data_ov060_0211abf8, &data_ov060_0211aca8, &data_ov060_0211acb0,
-    &data_ov060_0211ac00, &data_ov060_0211ac08, &data_ov060_0211abe0,
-    &data_ov060_0211acd8, &data_ov060_0211acf0, &data_ov060_0211ace8,
-    &data_ov060_0211ace0, &data_ov060_0211aca0, &data_ov060_0211acc8,
-    &data_ov060_0211acc0
-};
+    &data_ov060_0211ac88, &data_ov060_0211ac50, &data_ov060_0211ac58, &data_ov060_0211ac60,
+    &data_ov060_0211ac18, &data_ov060_0211acd0, &data_ov060_0211ac68, &data_ov060_0211ac70,
+    &data_ov060_0211ac20, &data_ov060_0211ac80, &data_ov060_0211abe8, &data_ov060_0211ac48,
+    &data_ov060_0211ac38, &data_ov060_0211ac90, &data_ov060_0211ac98, &data_ov060_0211abf8,
+    &data_ov060_0211aca8, &data_ov060_0211acb0, &data_ov060_0211ac00, &data_ov060_0211ac08,
+    &data_ov060_0211abe0, &data_ov060_0211acd8, &data_ov060_0211acf0, &data_ov060_0211ace8,
+    &data_ov060_0211ace0, &data_ov060_0211aca0, &data_ov060_0211acc8, &data_ov060_0211acc0};

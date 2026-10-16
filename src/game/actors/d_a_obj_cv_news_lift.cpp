@@ -52,8 +52,7 @@
 struct Quaternion;
 
 /* The loaded buffer is filePtr, the same word Load stores. */
-struct NewsLiftFile : SharedFilePtr {
-};
+struct NewsLiftFile : SharedFilePtr {};
 
 /* mwccarm emits these four in address order from this source order.
    __sinit_ov021_02113500 still stores the file ids. */

@@ -149,9 +149,8 @@ int daObjCtMecha10_c::InitResources()
         UpdateModelPosAndRotY();
         UpdateClsnPosAndRot();
         _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-            &mMeshCollider,
-            (KCL_File *)dBgW_Kc::LoadFile(gCtMechaObj10CollisionFile),
-            &mClsnMat, 0x1000, mAngleY, (CLPS_Block *)&data_ov035_021121d8);
+            &mMeshCollider, (KCL_File *)dBgW_Kc::LoadFile(gCtMechaObj10CollisionFile), &mClsnMat,
+            0x1000, mAngleY, (CLPS_Block *)&data_ov035_021121d8);
         func_020396c0(&mMeshCollider, 0);
         func_020393d4(&mMeshCollider,
             (void *)&dBgW::UpdatePosAndAngs);
@@ -256,22 +255,9 @@ Mecha10ModelFilePtr gCtMechaObj12lModelFile(ASSET_CT_MECHA_OBJ12L_BMD);
 extern "C" u32 data_ov035_021121d8 = 0x53504C43;
 
 extern "C" u32 data_ov035_021121dc[] = {
-    0x00010008,
-    0x00000FC0,
-    0x000000FF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
+    0x00010008, 0x00000FC0, 0x000000FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 };
 
 extern "C" u32 data_ov035_021121f8[] = {
-    0x53504C43,
-    0x00010008,
-    0x00001FC0,
-    0x000000FF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
+    0x53504C43, 0x00010008, 0x00001FC0, 0x000000FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 };

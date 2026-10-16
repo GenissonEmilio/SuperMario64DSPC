@@ -308,8 +308,7 @@ extern "C" u32 data_ov017_02111b14[6] = {
 extern "C" u32 data_ov017_02111b2c[2] = {0x03840000, 0xfa880374};
 extern "C" u32 data_ov017_02111b34[4] = {0x80000000, 0x00800000, 0x028a0000, 0xfa880374};
 extern "C" u32 data_ov017_02111b44[8] = {
-    0x80000000, 0x00800000, 0x047e0000, 0xfa880374,
-    0x80000000, 0x00800000, 0x05460000, 0xfa880374,
+    0x80000000, 0x00800000, 0x047e0000, 0xfa880374, 0x80000000, 0x00800000, 0x05460000, 0xfa880374,
 };
 extern "C" u32 data_ov017_02111b64 = 0x80000000;
 extern "C" u32 data_ov017_02111b68 = 0x00800000;
@@ -319,10 +318,8 @@ extern "C" WordA50 data_ov017_02111a50 = {0x300, data_ov017_02111afc};
 extern "C" WordA10 data_ov017_02111a10 = {2, &data_ov017_02111a50};
 extern "C" NodeA24 data_ov017_02111a24 = {&data_ov017_02111a10, 0, 0x0c2b0000};
 extern "C" FourTagged data_ov017_02111ad4 = {
-    0x104, data_ov017_02111a30,
-    0x10b, &data_ov017_02111a00,
-    0x401, data_ov017_02111b2c,
-    0x208, data_ov017_02111a40,
+    0x104, data_ov017_02111a30, 0x10b, &data_ov017_02111a00,
+    0x401, data_ov017_02111b2c, 0x208, data_ov017_02111a40,
 };
 extern "C" WordA08 data_ov017_02111a08 = {5, &data_ov017_02111ad4};
 extern "C" WordA04 data_ov017_02111af4 = {0x10e, &data_ov017_02111a04};
@@ -335,20 +332,17 @@ extern "C" CLPS data_ov017_02111abc[3] = {
     {0xffffffff, 0xffffffff},
 };
 extern "C" BlockA78 data_ov017_02111a78 = {
-    &data_ov017_02111ab4,
-    &data_ov017_02111a08,
-    0x07640766,
-    0x07680767,
-    &data_ov017_02111a24,
-    0x03200001,
-    15,
+    &data_ov017_02111ab4, &data_ov017_02111a08, 0x07640766, 0x07680767,
+    &data_ov017_02111a24, 0x03200001,           15,
 };
 extern "C" BtaDesc data_ov017_02111a60 = {
     300, 0, &data_ov017_021114bc, data_ov017_021114b8, data_ov017_021114dc,
-    1, 0, &data_ov017_021114c0,
+    1,   0, &data_ov017_021114c0,
 };
 extern "C" CLPS_Block data_ov017_02111a94 = {
-    0x53504c43, 8, 1,
+    0x53504c43,
+    8,
+    1,
     {{0x00000fe0, 0x000000ff}, {0xffffffff, 0xffffffff}, {0xffffffff, 0xffffffff}},
 };
 

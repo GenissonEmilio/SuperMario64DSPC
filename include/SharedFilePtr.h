@@ -19,10 +19,10 @@
  */
 struct SharedFilePtr
 {
-    unsigned short fileID;   /* 0x00 */
-    unsigned char refCount;  /* 0x02 */
-    unsigned char pad;       /* 0x03, never written */
-    void *filePtr;           /* 0x04 */
+    unsigned short fileID;  /* 0x00 */
+    unsigned char refCount; /* 0x02 */
+    unsigned char pad;      /* 0x03, never written */
+    void *filePtr;          /* 0x04 */
 
     /* RETURN TYPES ARE MEASURED, not chosen: both of these set r0 on the way out
        and the C forms that defined them returned a value, so declaring them void

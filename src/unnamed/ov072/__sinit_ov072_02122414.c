@@ -20,15 +20,15 @@ typedef struct { S8 a, b; } S16;
 typedef struct { int x, y, z; } V3;
 
 extern S8 data_ov072_02122cb4;
-extern S8 data_ov072_02122d00;
+extern int data_ov072_02122d00[];
 extern S8 data_ov072_02122c9c;
-extern S8 data_ov072_02122d0c;
+extern int data_ov072_02122d0c[];
 extern S8 data_ov072_02122cbc;
-extern S8 data_ov072_02122d18;
+extern int data_ov072_02122d18[];
 extern S8 data_ov072_02122c94;
-extern S8 data_ov072_02122d24;
+extern int data_ov072_02122d24[];
 extern S8 data_ov072_02122cac;
-extern S8 data_ov072_02122d30;
+extern int data_ov072_02122d30[];
 extern S8 data_ov072_02122ca4;
 extern S8 data_ov072_02122cc4;
 
@@ -47,13 +47,13 @@ extern S8 data_ov072_021229f4;
 extern S8 data_ov072_02122a24;
 
 extern V3 data_ov072_02122d3c;
-extern V3 data_ov072_02122d48;
-extern V3 data_ov072_02122d54;
-extern V3 data_ov072_02122d60;
+extern int data_ov072_02122d48[];
+extern int data_ov072_02122d54[];
+extern int data_ov072_02122d60[];
 extern S8 data_ov072_02122cd0;
 extern S8 data_ov072_02122cdc;
 extern S8 data_ov072_02122ce8;
-extern S8 data_ov072_02122cf4;
+extern int data_ov072_02122cf4[];
 
 void __sinit_ov072_02122414(void)
 {

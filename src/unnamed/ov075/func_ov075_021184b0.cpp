@@ -31,19 +31,13 @@ extern OamAttr data_ov075_0211d2ac[];
 
 /* Indexed by func_0200f0bc. Each entry is one OAM list. */
 OamAttr *data_ov075_0211c9e0[5] = {
-    data_ov075_0211cc8c,
-    data_ov075_0211d04c,
-    data_ov075_0211d104,
-    data_ov075_0211ccb4,
-    data_ov075_0211d264,
+    data_ov075_0211cc8c, data_ov075_0211d04c, data_ov075_0211d104,
+    data_ov075_0211ccb4, data_ov075_0211d264,
 };
 
 OamAttr *data_ov075_0211c9f4[5] = {
-    data_ov075_0211cc64,
-    data_ov075_0211d014,
-    data_ov075_0211d0c4,
-    data_ov075_0211cda4,
-    data_ov075_0211d2ac,
+    data_ov075_0211cc64, data_ov075_0211d014, data_ov075_0211d0c4,
+    data_ov075_0211cda4, data_ov075_0211d2ac,
 };
 
 #define LADR(p) ((int *)(unsigned int)(p))

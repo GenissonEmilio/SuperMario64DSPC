@@ -42,8 +42,7 @@
 #pragma defer_codegen off
 
 /* The loaded BCA is filePtr. Same handle as daPkn_c's PknSharedFile. */
-struct PknSharedFile : SharedFilePtr {
-};
+struct PknSharedFile : SharedFilePtr {};
 typedef char PknSharedFile_size_must_be_0x8[sizeof(PknSharedFile) == 0x8 ? 1 : -1];
 
 /* The tag SubVec3.c / Vec3_Asr.c define their parameters by. */
@@ -147,7 +146,7 @@ extern SharedFilePtr data_ov002_0210da38;   /* the blue-coin model, out of ov002
 extern PknSharedFile data_ov084_02130df4;   /* idle animation */
 PknSharedFile data_ov084_02130e04;          /* spit animation; sinit writes file 0x3d1 */
 extern PknSharedFile data_ov084_02130e14;   /* grow-in lunge animation */
-extern SharedFilePtr data_ov084_02130e1c;         /* post-spit animation, a PknSharedFile pair */
+extern SharedFilePtr data_ov084_02130e1c;   /* post-spit animation, a PknSharedFile pair */
 extern PknSharedFile data_ov084_02130e24;   /* death animation */
 extern int data_ov084_0213029c[];           /* SpawnDeathBurst reach per frame */
 extern int data_ov084_021302c4[];           /* SpawnDeathBurst height per frame */
@@ -329,7 +328,8 @@ void daFPkn_c::CheckClsnHits()
             mSpinSpeed = 0x1f40;
             mdCcAc_c.flags |= 1;
             mFlags &= ~0x10000000;
-            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr, 0x40000000, 0x1000, 0);
+            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr,
+                                                        0x40000000, 0x1000, 0);
             mSuppressDeathReward = 0;
             mParticleHandle1 = 0;
         }
@@ -400,7 +400,8 @@ second:
         mSpinSpeed = 0x1f40;
         mdCcAc_c.flags |= 1;
         mFlags &= ~0x10000000;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr,
+                                                    0x40000000, 0x1000, 0);
         mSuppressDeathReward = 0;
         mParticleHandle1 = 0;
         return;
@@ -485,7 +486,8 @@ void daFPkn_c::StateSpit()
         else
             func_0201267c(SND_SPIT_END, (const Vector3 *)&mCamSpacePosX);
         mState = STATE_WAIT;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e1c.filePtr, 0, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e1c.filePtr, 0,
+                                                    0x1000, 0);
     } else {
         if ((u16)mStateTimer < 0x3a) {
             targetAngle = mAngleY;
@@ -635,10 +637,12 @@ void daFPkn_c::StateWait()
     cmp = actorID == ACTOR_PAKUN2;
     if (cmp != false) {
         mState = STATE_GROW;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr,
+                                                    0x40000000, 0x1000, 0);
     } else {
         mState = STATE_SPIT;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e04.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e04.filePtr,
+                                                    0x40000000, 0x1000, 0);
         mModelAnim.currFrame = 0;
     }
     cmp = actorID == ACTOR_FIREPAKUN;
@@ -779,8 +783,8 @@ int daFPkn_c::InitResources()
     LoadBlueCoinModel(this);
 
     /* A real SetAnim call with a Fix12<int> speed DIFFs; see the file header. */
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
-        &mModelAnim, data_ov084_02130df4.filePtr, 0x40000000, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr,
+                                                0x40000000, 0x1000, 0);
 
     _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(
         &mdCcAc_c, this, 0, 0, 0x200001, HIT_DAMAGE & ~HIT_MEGA_CHARACTER);

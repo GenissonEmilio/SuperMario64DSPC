@@ -30,12 +30,12 @@
 
 /* Globals that decl_common.h does not already declare with these types. */
 extern "C" {
-dMgMCarlo2CardObj_c* data_ov006_02142568;
-dMgMCarlo2CardObj_c* data_ov006_0214256c;
-dMgMCarlo2CardObj_c* data_ov006_02142570;
-dMgMCarlo2CardObj_c* data_ov006_02142574;
-dMgMCarlo2CardObj_c* data_ov006_02142578;
-dMgMCarlo2CardObj_c* data_ov006_0214257c;
+dMgMCarlo2CardObj_c *data_ov006_02142568;
+dMgMCarlo2CardObj_c *data_ov006_0214256c;
+dMgMCarlo2CardObj_c *data_ov006_02142570;
+dMgMCarlo2CardObj_c *data_ov006_02142574;
+dMgMCarlo2CardObj_c *data_ov006_02142578;
+dMgMCarlo2CardObj_c *data_ov006_0214257c;
 extern s16 data_ov006_02142558;     /* frames left before the pair resolves  */
 extern s16 data_ov006_0214255c;     /* pieces still animating                */
 extern s16 data_ov006_02142560;     /* difficulty row into data_ov006_0212e97c */

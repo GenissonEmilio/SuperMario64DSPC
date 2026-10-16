@@ -232,7 +232,8 @@ int daDossy_c::InitResources()
     Model::LoadFile(data_ov002_0210d9c0);
     for (i = 0; i < 3; i++)
         dExtFrameCtrl_c::LoadFile(*data_ov065_0211c080[i]);
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d770.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d770.filePtr, 0, 0x1000,
+                                                0);
     func_ov065_02118cc4();
     func_ov065_02118838();
 
@@ -586,7 +587,8 @@ void daDossy_c::func_ov065_02118634()
         mState++;
         mHorzSpeed = 0;
         mAngVelY = 0;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d768.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d768.filePtr,
+                                                    0x40000000, 0x1000, 0);
         mCylClsn1.Clear();
         mCylClsn2.Clear();
         mStateTimer = 0;
@@ -667,8 +669,8 @@ void daDossy_c::func_ov065_021183c8()
                     && ((Player *)mClsnPlayer)->SetNoControlState(5, -1, 0) != 0) {
                     mState++;
                     mStateState = 0;
-                    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
-                        data_ov065_0211d748.filePtr, 0x40000000, 0x1000, 0);
+                    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+                        &mModelAnim, data_ov065_0211d748.filePtr, 0x40000000, 0x1000, 0);
                     mRider = mClsnPlayer;
                 }
             }
@@ -679,8 +681,8 @@ void daDossy_c::func_ov065_021183c8()
         if (mStateTimer > 0x96) {
             mState++;
             mStateState = 0;
-            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
-                data_ov065_0211d748.filePtr, 0x40000000, 0x1000, 0);
+            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d748.filePtr,
+                                                        0x40000000, 0x1000, 0);
         }
         mStateTimer++;
     }
@@ -693,7 +695,8 @@ void daDossy_c::func_ov065_021182e4()
     case 0:
         if (mModelAnim.Finished() == 0) return;
         mStateState = 1;
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d770.filePtr, 0, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov065_0211d770.filePtr, 0,
+                                                    0x1000, 0);
         if (mRider == 0) return;
         ((Player *)mRider)->Unk_020ca150(5);
         return;
@@ -815,12 +818,8 @@ extern "C" SharedFilePtr *const data_ov065_0211c080[3] = {
 };
 
 extern "C" SharedFilePtr *const data_ov065_0211c08c[7] = {
-    &gDossyBodyCollisionFile,
-    &gDossyNeckCollisionFile,
-    &gDossyHeadCollisionFile,
-    &gDossyArmLCollisionFile,
-    &gDossyArmRCollisionFile,
-    &gDossyLegLCollisionFile,
+    &gDossyBodyCollisionFile, &gDossyNeckCollisionFile, &gDossyHeadCollisionFile,
+    &gDossyArmLCollisionFile, &gDossyArmRCollisionFile, &gDossyLegLCollisionFile,
     &gDossyLegRCollisionFile,
 };
 

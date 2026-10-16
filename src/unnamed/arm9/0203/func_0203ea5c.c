@@ -299,9 +299,9 @@ void func_0203ea5c(void)
                                 if (data_020a0ef8 == 0) {
                                     n75 = data_02099e18;
                                     if (n75 > 1U) {
-                                    var_r5 = (Rec *)&data_020a1178;
-                                    var_r6_2 = 1;
-                                    var_r2 = 1;
+                                        var_r5 = (Rec *)&data_020a1178;
+                                        var_r6_2 = 1;
+                                        var_r2 = 1;
 loop_75:
                                     temp_r1 = var_r5->unkC;
                                     if ((temp_r1 & 0x8000) && !(temp_r1 & 1)) {

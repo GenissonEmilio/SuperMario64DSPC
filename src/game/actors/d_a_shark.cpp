@@ -196,10 +196,8 @@ extern "C" int func_ov090_02133830(daShark_c *self)
 // @symbol func_ov090_0213387c
 extern "C" int func_ov090_0213387c(daShark_c *self)
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
-        (char *)&self->mModelAnim,
-        data_ov090_021345ac.filePtr,
-        0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&self->mModelAnim,
+                                                data_ov090_021345ac.filePtr, 0, 0x1000, 0);
     return 1;
 }
 
@@ -313,9 +311,7 @@ int daShark_c::InitResources()
 {
     /* Each PathPtr constructs at its declaration. The first call is
      * before the cylinder init and the second is after it. */
-    mModelAnim.SetFile(
-        (BMD_File *)Model::LoadFile(data_ov090_021345a4),
-        1, -1);
+    mModelAnim.SetFile((BMD_File *)Model::LoadFile(data_ov090_021345a4), 1, -1);
     dExtFrameCtrl_c::LoadFile(data_ov090_021345ac);
     mPathID = (*(s32 *)&param1) & 0xff;
     if (mPathID < 0)

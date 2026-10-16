@@ -106,7 +106,9 @@ extern "C" void _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj( Player*, const Vector3&
 /* Cylinder offset (0, -0x1e000, 0): this TU's own .data. Spelled as a
    plain three-word struct rather than Vector3, whose declared destructor
    would emit static-init machinery the ROM does not have here. */
-struct { s32 x, y, z; } data_ov090_021342d8 = {0, -0x1e000, 0};
+struct {
+    s32 x, y, z;
+} data_ov090_021342d8 = {0, -0x1e000, 0};
 extern int RandomIntInternal(void*);
 extern int data_0209e650[];
 extern s32 Vec3_Dist(void* a, void* b);

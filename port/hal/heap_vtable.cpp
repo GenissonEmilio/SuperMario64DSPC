@@ -46,7 +46,7 @@ extern "C" {
 void *data_020a0e9c;   /* Heap::rootHeap */
 void *data_020a0ea0;   /* Memory::defaultHeapPtr */
 Heap *GAME_HEAP_PTR;   /* the game heap; Heap::InitializeGameHeap publishes it */
-Heap *data_020a0ea8;   /* where SetupSolidHeapAsDefault parks the outgoing default */
+extern Heap *data_020a0ea8;   /* defined in Heap.cpp; SetupSolidHeapAsDefault parks the outgoing default here */
 unsigned char data_020a0e98; /* Heap::Intact's latched-corruption flag (decl_common.h) */
 int data_02099d90;     /* heap bring-up state flag */
 }

@@ -97,10 +97,8 @@ s32 data_ov006_0213c0ac[5] = {0x70000, 0x8C000, 0x70000, 0xDC000, 0x70000};
 s32 data_ov006_0213c0c0[1] = {0};
 #pragma explicit_zero_data off
 s32 data_ov006_0213c0c4[5] = {1, 1, 2, 0, 2};
-RoundRow data_ov006_0213c094[10] = {
-    {8, 1, 0}, {10, 4, 3}, {12, 7, 6}, {8, 1, 0}, {10, 2, 1},
-    {12, 4, 3}, {14, 6, 5}, {10, 2, 1}, {12, 4, 3}, {16, 7, 6}
-};
+RoundRow data_ov006_0213c094[10] = {{8, 1, 0},  {10, 4, 3}, {12, 7, 6}, {8, 1, 0},  {10, 2, 1},
+                                    {12, 4, 3}, {14, 6, 5}, {10, 2, 1}, {12, 4, 3}, {16, 7, 6}};
 extern int RandomIntInternal(int *seed);
 extern void Mg_SetSharedState(int c);
 extern void Cup_UpdateAnim(char *self, int i);
@@ -144,11 +142,9 @@ extern AnimStep data_ov006_02139db4[];
 extern AnimStep data_ov006_02139e4c[];
 extern AnimStep data_ov006_0213a274[];
 extern AnimStep data_ov006_0213a1ec[];
-AnimStep *data_ov006_0213c0d8[7] = {
-    data_ov006_02139dbc, data_ov006_02139e9c, data_ov006_02139ec4,
-    data_ov006_02139db4, data_ov006_02139e4c, data_ov006_0213a274,
-    data_ov006_0213a1ec
-};
+AnimStep *data_ov006_0213c0d8[7] = {data_ov006_02139dbc, data_ov006_02139e9c, data_ov006_02139ec4,
+                                    data_ov006_02139db4, data_ov006_02139e4c, data_ov006_0213a274,
+                                    data_ov006_0213a1ec};
 extern u8 data_0209d45c;
 extern u8 data_0209d454;
 extern int data_0208ee44;
@@ -440,11 +436,12 @@ extern "C" void Cup_PickShuffleSpeed(char *raw)
     self->mSwap1 = ((IdxPair *)data_ov006_0213c0c4)[rem].a;
 
     self->mMidX = (((RestPos *)data_ov006_0213c0a8)[self->mSwap1].x +
-                   ((RestPos *)data_ov006_0213c0a8)[self->mSwap0].x) / 2;
+                   ((RestPos *)data_ov006_0213c0a8)[self->mSwap0].x) /
+                  2;
     self->mMidY = (((RestPos *)data_ov006_0213c0ac)[self->mSwap1].x +
-                   ((RestPos *)data_ov006_0213c0ac)[self->mSwap0].x) / 2;
-    self->mHalfX = self->mMidX -
-                   ((RestPos *)data_ov006_0213c0a8)[self->mSwap0].x;
+                   ((RestPos *)data_ov006_0213c0ac)[self->mSwap0].x) /
+                  2;
+    self->mHalfX = self->mMidX - ((RestPos *)data_ov006_0213c0a8)[self->mSwap0].x;
     self->mShuffleAngle = 0;
 
     {

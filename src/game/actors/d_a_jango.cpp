@@ -675,7 +675,8 @@ int daJango_c::func_ov062_0211c594() {
         mStateTimer = 0x3c;
     }
 
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
+        &mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
     return 1;
 }
 }
@@ -789,7 +790,8 @@ int daJango_c::func_ov062_0211c218()
         mHitPlayer = 0;
     }
     unk_440 = 0;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
+        &mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
     if (mSilverStarFlag == 2 ||
         (unsigned char)(signed char)((signed char)data_0209f2f8 - 0x18) <= 1) {
         unk_440 = 2;
@@ -999,7 +1001,8 @@ int daJango_c::func_ov062_0211bc54()
     func_02012694(SND_AT_SWOOP_ENTER, &mCamSpacePosX);
     unk_43c =
         ((((unsigned)RandomIntInternal(&data_0209e650) >> 8) & 3) << 8) + 0x300;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, *(BCA_File *)data_ov062_0211e114.filePtr, 4, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
+        &mBlendModelAnim, *(BCA_File *)data_ov062_0211e114.filePtr, 4, 0, 0x1000, 0);
     return 1;
 }
 
@@ -1098,7 +1101,8 @@ int func_ov062_0211ba84(char *c)
 int daJango_c::func_ov062_0211b930()
 {
     dActor_c* found;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&(mBlendModelAnim), *(BCA_File *)data_ov062_0211e10c.filePtr, 4, 0x40000000, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
+        &(mBlendModelAnim), *(BCA_File *)data_ov062_0211e10c.filePtr, 4, 0x40000000, 0x1000, 0);
     unk_43c = 1;
     if (mHeldActorID != 0 && (found = dActor_c::FindWithID(mHeldActorID)) != 0) {
         found->mVertAccel = -0x2000;
@@ -1157,7 +1161,8 @@ int daJango_c::func_ov062_0211b880() {
     mVertSpeed = 0;
     unk_0ac = 0;
     mVertAccel = 0;
-    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
+    _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
+        &mBlendModelAnim, *(BCA_File *)data_ov062_0211e104.filePtr, 4, 0, 0x1000, 0);
     return 1;
 }
 

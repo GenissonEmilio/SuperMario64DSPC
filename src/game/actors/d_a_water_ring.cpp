@@ -292,4 +292,4 @@ daWater_Ring_c::State data_ov064_0211c944 = {data_ov064_0211c3c0, data_ov064_021
 
 /* Collider offset: three 20.12 words in .data. A Vector3 object would
    construct them from the static initializer instead. */
-extern "C" Fix12i data_ov064_0211c3d0[3] = { 0x0, 0xfff88000, 0x0 };
+extern "C" Fix12i data_ov064_0211c3d0[3] = {0x0, 0xfff88000, 0x0};

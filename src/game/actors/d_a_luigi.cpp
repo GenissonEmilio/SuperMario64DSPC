@@ -47,9 +47,8 @@
 struct Mtx { int m[12]; };
 
 /* filePtr is the word Model::LoadFile and dExtFrameCtrl_c::LoadFile read.
- * include/SharedFilePtr is the 8-byte handle. */
-struct LoadedSharedFile : SharedFilePtr {
-};
+ * include/SharedFilePtr.h is the 8-byte handle. */
+struct LoadedSharedFile : SharedFilePtr {};
 
 /* Vec3_Asr's definition. Three ints, same layout as mPosX/Y/Z. */
 struct Vec3 { int x, y, z; };

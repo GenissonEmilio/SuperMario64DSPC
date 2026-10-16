@@ -200,28 +200,19 @@ struct OamAttr data_ov002_0210d2a0[] = {
     {0x00f8, 0x4028, 0xc1de, 0xffff},
 };
 struct OamAttr data_ov002_0210d2d0[] = {
-    {0x40f8, 0x81ac, 0xc1cb, 0x0000},
-    {0x40f8, 0x81cc, 0xc1cf, 0x0000},
-    {0x40f8, 0x81ec, 0xc1d3, 0x0000},
-    {0x40f8, 0x800c, 0xc1d7, 0x0000},
-    {0x40f8, 0x802c, 0xc1db, 0x0000},
-    {0x80f8, 0x004c, 0xc1df, 0xffff},
+    {0x40f8, 0x81ac, 0xc1cb, 0x0000}, {0x40f8, 0x81cc, 0xc1cf, 0x0000},
+    {0x40f8, 0x81ec, 0xc1d3, 0x0000}, {0x40f8, 0x800c, 0xc1d7, 0x0000},
+    {0x40f8, 0x802c, 0xc1db, 0x0000}, {0x80f8, 0x004c, 0xc1df, 0xffff},
 };
 struct OamAttr data_ov002_0210d308[] = {
-    {0x40f8, 0x81ac, 0xc1cb, 0x0000},
-    {0x40f8, 0x81cc, 0xc1cf, 0x0000},
-    {0x40f8, 0x81ec, 0xc1d3, 0x0000},
-    {0x40f8, 0x800c, 0xc1d7, 0x0000},
-    {0x40f8, 0x802c, 0xc1db, 0x0000},
-    {0x80f8, 0x004c, 0xc1df, 0xffff},
+    {0x40f8, 0x81ac, 0xc1cb, 0x0000}, {0x40f8, 0x81cc, 0xc1cf, 0x0000},
+    {0x40f8, 0x81ec, 0xc1d3, 0x0000}, {0x40f8, 0x800c, 0xc1d7, 0x0000},
+    {0x40f8, 0x802c, 0xc1db, 0x0000}, {0x80f8, 0x004c, 0xc1df, 0xffff},
 };
 struct OamAttr data_ov002_0210d348[] = {
-    {0x40f8, 0x81b4, 0xc1cd, 0x0000},
-    {0x40f8, 0x81d4, 0xc1d1, 0x0000},
-    {0x40f8, 0x81f4, 0xc1d5, 0x0000},
-    {0x40f8, 0x8014, 0xc1d9, 0x0000},
-    {0x00f8, 0x4034, 0xc1dd, 0x0000},
-    {0x80f8, 0x0044, 0xc1df, 0xffff},
+    {0x40f8, 0x81b4, 0xc1cd, 0x0000}, {0x40f8, 0x81d4, 0xc1d1, 0x0000},
+    {0x40f8, 0x81f4, 0xc1d5, 0x0000}, {0x40f8, 0x8014, 0xc1d9, 0x0000},
+    {0x00f8, 0x4034, 0xc1dd, 0x0000}, {0x80f8, 0x0044, 0xc1df, 0xffff},
 };
 extern struct OamAttr _ZN3OAM10VS_TIME_UPE;
 extern int GetOwnerLanguage(void);
@@ -829,13 +820,16 @@ void dMeter_c::RenderVsTimer()
 
     if ((unsigned char)(data_0209f2c4 | data_0209f20c | data_0209f294) == 0) {
         if (GetOwnerLanguage() == 5) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d290[0], 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d290[0], 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 4) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2c0[0], 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2c0[0], 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 3) {
             _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d300, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d338[0], 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d338[0], 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else {
             _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM7VS_TIMEE, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
         }
@@ -857,13 +851,17 @@ void dMeter_c::RenderVsTimer()
         }
     } else {
         if (GetOwnerLanguage() == 5) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2a0[0], 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2a0[0], 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 4) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2d0[0], 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2d0[0], 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 3) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d308[0], 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d308[0], 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d348[0], 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d348[0], 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else {
             _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM10VS_TIME_UPE, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
         }

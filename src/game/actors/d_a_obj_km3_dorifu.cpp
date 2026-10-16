@@ -82,14 +82,13 @@ extern CLPS_Block data_ov047_02111bd4;
  * row, so the emit splits into two word runs there and the methods below
  * read the table through a daObjDorifuResources view. */
 extern "C" void *data_ov047_02112508[10] = {
-    &gKm3Dan0ModelFile, &gKm3Dan0CollisionFile, &data_ov047_02111bb4,
-    &gKm3Dan1ModelFile, &gKm3Dan1CollisionFile, &data_ov047_02111a74,
-    &gKm3Dan2ModelFile, &gKm3Dan2CollisionFile, &data_ov047_02111a94,
-    &gKm3Dan3ModelFile,
+    &gKm3Dan0ModelFile,     &gKm3Dan0CollisionFile, &data_ov047_02111bb4, &gKm3Dan1ModelFile,
+    &gKm3Dan1CollisionFile, &data_ov047_02111a74,   &gKm3Dan2ModelFile,   &gKm3Dan2CollisionFile,
+    &data_ov047_02111a94,   &gKm3Dan3ModelFile,
 };
 extern "C" void *data_ov047_02112530[5] = {
-    &gKm3Dan3CollisionFile, &data_ov047_02111b94,
-    &gKm3Dan4ModelFile, &gKm3Dan4CollisionFile, &data_ov047_02111bd4,
+    &gKm3Dan3CollisionFile, &data_ov047_02111b94, &gKm3Dan4ModelFile,
+    &gKm3Dan4CollisionFile, &data_ov047_02111bd4,
 };
 
 // @symbol daObjKm3_Dorifu_c_classInit
@@ -101,15 +100,13 @@ extern "C" daObjKm3_Dorifu_c *daObjKm3_Dorifu_c_classInit()
 // @symbol _ZN17daObjKm3_Dorifu_c13InitResourcesEv
 s32 daObjKm3_Dorifu_c::InitResources()
 {
-    return daObjDorifu_c::InitResources(
-        (daObjDorifuResources *)data_ov047_02112508);
+    return daObjDorifu_c::InitResources((daObjDorifuResources *)data_ov047_02112508);
 }
 
 // @symbol _ZN17daObjKm3_Dorifu_c16CleanupResourcesEv
 s32 daObjKm3_Dorifu_c::CleanupResources()
 {
-    return daObjDorifu_c::CleanupResources(
-        (daObjDorifuResources *)data_ov047_02112508);
+    return daObjDorifu_c::CleanupResources((daObjDorifuResources *)data_ov047_02112508);
 }
 
 /* Retail construction order. mwcc emits __sinit_d_a_obj_km3_dorifu.cpp. */

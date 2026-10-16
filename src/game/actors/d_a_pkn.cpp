@@ -199,7 +199,8 @@ int daPkn_c::InitResources()
     mParticleHandle2 = 0;
     mParticleHandle = mParticleHandle2;
     mLoopSoundHandle = 0;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0, 0x1000,
+                                                0);
     return 1;
 }
 
@@ -304,7 +305,8 @@ void daPkn_c::StateWait()
     mScaleZ = 0x1000;
     mClsnEnabled = 1;
     mFlags |= 0x10000000;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0, 0x1000,
+                                                0);
     if (mPlayerDist < 0x4b0000)
         mState = 1;
     CheckHits();
@@ -316,10 +318,12 @@ void daPkn_c::StateSleep()
 {
     mClsnEnabled = 1;
     if (mModelAnim.Finished() || mModelAnim.WillHitFrame(0))
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130df4.filePtr, 0,
+                                                    0x1000, 0);
     int thr = (mPlayerAirborne != 0) ? 0x12c000 : 0x190000;
     if (mPlayerDist < thr && PlayerMovingFast()) {
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr,
+                                                    0x40000000, 0x1000, 0);
         mState = 3;
         func_02012694(0x175, &mCamSpacePosX);
         _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0xfe, mBubblePos.x, mBubblePos.y, mBubblePos.z);
@@ -481,7 +485,8 @@ void daPkn_c::StateWake()
     /* mStateTimer is s16; the ROM compares it as a u16 (ldrh). */
     if ((u16)mStateTimer <= 0xb) return;
     if (!mModelAnim.Finished()) return;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr, 0x40000000, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr,
+                                                0x40000000, 0x1000, 0);
     mState = 2;
 }
 
@@ -491,7 +496,8 @@ void daPkn_c::StateDoze()
 {
     mClsnEnabled = 1;
     if (mModelAnim.Finished()) {
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr, 0x40000000, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr,
+                                                    0x40000000, 0x1000, 0);
         mState = 1;
     } else {
         int thresh = (mPlayerAirborne != 0) ? 0x12c000 : 0x190000;
@@ -574,7 +580,8 @@ void daPkn_c::StateGone()
     mState = 8;
     mParticleHandle2 = 0;
     mParticleHandle = mParticleHandle2;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr, 0, 0x1000,
+                                                0);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -670,7 +677,8 @@ int daPkn_c::CheckHits()
                     v.y = mPosY;
                     v.z = mPosZ;
                     _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(actor, &v, 3, 0xc000, 1, 0, 1);
-                    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e0c.filePtr, 0, 0x1000, 0);
+                    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+                        &mModelAnim, data_ov084_02130e0c.filePtr, 0, 0x1000, 0);
                     mModelAnim.SetFlags(0x40000000);
                     mState = 3;
                     func_02012694(0x175, &mCamSpacePosX);
@@ -805,7 +813,8 @@ s32 daPkn_c::OnAimedAtWithEgg()
 void daPkn_c::EnterLunge(int frame)
 {
     mState = 2;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr, 0x40000000, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e14.filePtr,
+                                                0x40000000, 0x1000, 0);
     mModelAnim.currFrame = (u16)frame << 12;
 }
 
@@ -816,5 +825,6 @@ void daPkn_c::Die()
 {
     func_0201267c(0xc1, &mCamSpacePosX);
     mState = 5;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr, 0x40000000, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov084_02130e24.filePtr,
+                                                0x40000000, 0x1000, 0);
 }

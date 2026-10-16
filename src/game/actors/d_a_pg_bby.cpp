@@ -747,10 +747,8 @@ s32 daPgBby_c::OnYoshiTryEat()
 // @symbol _ZN9daPgBby_cD0Ev
 
 extern "C" SharedFilePtr *const data_ov072_02122004[5] = {
-    (SharedFilePtr *)data_ov072_02122c9c,
-    (SharedFilePtr *)data_ov072_02122cbc,
-    (SharedFilePtr *)data_ov072_02122c94,
-    (SharedFilePtr *)data_ov072_02122cac,
+    (SharedFilePtr *)data_ov072_02122c9c, (SharedFilePtr *)data_ov072_02122cbc,
+    (SharedFilePtr *)data_ov072_02122c94, (SharedFilePtr *)data_ov072_02122cac,
     (SharedFilePtr *)data_ov072_02122ca4,
 };
 

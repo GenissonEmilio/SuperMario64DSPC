@@ -1286,17 +1286,12 @@ HanachanTextureSeqFileHandle gHanachanBody04TextureSequenceFile(ASSET_HANACHAN_B
 /* One model handle and one texture-sequence handle per body segment.
    The retail words are those handles' addresses. */
 extern "C" SharedFilePtr *const data_ov034_02113838[5] = {
-    &gHanachanHeadModelFile,
-    &gHanachanBody01ModelFile,
-    &gHanachanBody02ModelFile,
-    &gHanachanBody03ModelFile,
-    &gHanachanBody04ModelFile,
+    &gHanachanHeadModelFile,   &gHanachanBody01ModelFile, &gHanachanBody02ModelFile,
+    &gHanachanBody03ModelFile, &gHanachanBody04ModelFile,
 };
 extern "C" SharedFilePtr *const data_ov034_0211384c[5] = {
-    &gHanachanHeadTextureSequenceFile,
-    &gHanachanBody01TextureSequenceFile,
-    &gHanachanBody02TextureSequenceFile,
-    &gHanachanBody03TextureSequenceFile,
+    &gHanachanHeadTextureSequenceFile,   &gHanachanBody01TextureSequenceFile,
+    &gHanachanBody02TextureSequenceFile, &gHanachanBody03TextureSequenceFile,
     &gHanachanBody04TextureSequenceFile,
 };
 

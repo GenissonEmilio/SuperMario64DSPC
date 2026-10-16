@@ -618,8 +618,7 @@ struct UpdownLiftSpawnInfo {
     Fix12i clipDistance;
     Fix12i farDistance;
 };
-typedef char UpdownLiftSpawnInfo_size_must_be_0x1c[
-    sizeof(UpdownLiftSpawnInfo) == 0x1c ? 1 : -1];
+typedef char UpdownLiftSpawnInfo_size_must_be_0x1c[sizeof(UpdownLiftSpawnInfo) == 0x1c ? 1 : -1];
 
 // 0x02134bf8 (0x1c)
 // @symbol g_profile_UPDOWN_LIFT
@@ -631,8 +630,7 @@ extern "C" UpdownLiftSpawnInfo g_profile_UPDOWN_LIFT = {
     0,
     0x200000,
     0x1000000,
-    0x1000000
-};
+    0x1000000};
 
 // 0x02134c14 (0x1c)
 // @symbol g_profile_HS_UPDOWN_LIFT
@@ -644,8 +642,7 @@ extern "C" UpdownLiftSpawnInfo g_profile_HS_UPDOWN_LIFT = {
     0,
     0x500000,
     0x1000000,
-    0
-};
+    0};
 
 /* Static-init globals (was the handwritten __sinit_ov091_02134524 shard).
  * Definition order is the retail initializer's construction order. */

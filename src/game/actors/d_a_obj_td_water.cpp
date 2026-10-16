@@ -116,8 +116,7 @@ s32 daObjTdWater_c::InitResources()
        the descriptor rather than reusing LoadFile's return value. The class has
        no recovered layout (include/SharedFilePtr.h says so), so the offset is
        spelled out instead of being named. */
-    TextureTransformer::Prepare(
-        *(BMD_File *)data_ov032_02113afc.filePtr, data_ov032_02112f64);
+    TextureTransformer::Prepare(*(BMD_File *)data_ov032_02113afc.filePtr, data_ov032_02112f64);
     /* 6az: header SetFile takes Fix12<int> by value. */
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(
         &mTextureTransformer, data_ov032_02112f64, 0, 0x1000, 0);

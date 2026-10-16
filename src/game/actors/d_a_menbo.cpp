@@ -164,7 +164,9 @@ extern int           data_0209f32c;
 /* Cylinder offset (0, 0x1e000, 0): this TU's own .data, between the type
    name and the typeinfo. A Vector3 would emit static-init machinery the
    ROM does not have here, so the three words stay a plain struct. */
-struct { s32 x, y, z; } data_ov090_0213412c = {0, 0x1e000, 0};
+struct {
+    s32 x, y, z;
+} data_ov090_0213412c = {0, 0x1e000, 0};
 extern MenboAnimationFilePtr data_ov090_02134480; /* patrol anim, file 0x3a1 */
 extern MenboAnimationFilePtr data_ov090_02134488; /* water-chase anim, file 0x3a0 */
 extern MenboAnimationFilePtr data_ov090_02134490; /* water-rest anim, file 0x3a2 */

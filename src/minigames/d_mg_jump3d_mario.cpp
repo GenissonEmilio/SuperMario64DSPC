@@ -89,24 +89,24 @@ void Puff_ClearAll(int a, int b);
  * The unsigned arm is the static image; .pmf is the same bytes read as a
  * pointer-to-member so equality keeps the null short-circuit. */
 union Jump3DRec {
-    unsigned w[2];
     Jump3DState pmf;
+    unsigned w[2];
 };
-extern unsigned pmf_dMgJump3DMario_c_StateMove[2];
-extern unsigned pmf_dMgJump3DMario_c_StateHold[2];
-extern unsigned pmf_dMgJump3DMario_c_StateDamp[2];
-extern unsigned pmf_dMgJump3DMario_c_StateRespawn[2];
-extern unsigned pmf_dMgJump3DMario_c_StateIdle[2];
-extern unsigned pmf_dMgJump3DMario_c_StateIdle_2[2];
-extern unsigned pmf_dMgJump3DMario_c_StateWindUp[2];
-extern Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3;
-extern unsigned pmf_dMgJump3DMario_c_StateBounce[2];
-extern Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2;
-extern Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3;
-extern Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2;
-extern unsigned pmf_dMgJump3DMario_c_StateRiseOut[2];
-extern Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2;
-extern Jump3DRec pmf_dMgJump3DMario_c_StateFallOut;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateMove;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateHold;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateDamp;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateRespawn;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateIdle;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateIdle_2;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateWindUp;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateBounce;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateRiseOut;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateFallOut;
 
 /* Slots the current mAnimIdx (0/1/2) picks the anim file from. */
 extern BCA_File **data_ov006_0213b098[];
@@ -279,8 +279,7 @@ extern "C" int Jump3D_AllIdle(void)
         int *v = (int *)(&((Jump3DEnt *)data_ov006_02140420)[i].x);
         int *p = (int *)&pmf_dMgJump3DMario_c_StateIdle;
         volatile int *q = (volatile int *)&pmf_dMgJump3DMario_c_StateIdle;
-        if (v[0] != p[0]
-            || (v[1] != q[1] && ((Jump3DEnt *)data_ov006_02140420)[i].x != 0))
+        if (v[0] != p[0] || (v[1] != q[1] && ((Jump3DEnt *)data_ov006_02140420)[i].x != 0))
             return 0;
     }
     return 1;
@@ -974,30 +973,21 @@ dMgJump3DMario_c::dMgJump3DMario_c()
 
 extern "C" const int data_ov006_0212ddd0[3] = {0x2000, 0x2000, 0x2000};
 
-extern "C" void _ZN16dMgJump3DMario_c9StateMoveEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c9StateHoldEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c9StateDampEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c12StateRespawnEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c9StateIdleEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c11StateWindUpEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c11StateBounceEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c12StateRiseOutEv(dMgJump3DMario_c *);
-extern "C" void _ZN16dMgJump3DMario_c12StateFallOutEv(dMgJump3DMario_c *);
-extern "C" unsigned pmf_dMgJump3DMario_c_StateMove[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateMoveEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateHold[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateHoldEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateDamp[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateDampEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateRespawn[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateIdle[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateIdle_2[2] = { (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 };
-extern "C" unsigned pmf_dMgJump3DMario_c_StateWindUp[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 };
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3 = {{ (unsigned)_ZN16dMgJump3DMario_c9StateIdleEv, 0 }};
-extern "C" unsigned pmf_dMgJump3DMario_c_StateBounce[2] = { (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 };
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateWindUpEv, 0 }};
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2 = {{ (unsigned)_ZN16dMgJump3DMario_c11StateBounceEv, 0 }};
-extern "C" unsigned pmf_dMgJump3DMario_c_StateRiseOut[2] = { (unsigned)_ZN16dMgJump3DMario_c12StateRiseOutEv, 0 };
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2 = {{ (unsigned)_ZN16dMgJump3DMario_c12StateRespawnEv, 0 }};
-extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateFallOut = {{ (unsigned)_ZN16dMgJump3DMario_c12StateFallOutEv, 0 }};
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateMove = &dMgJump3DMario_c::StateMove;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateHold = &dMgJump3DMario_c::StateHold;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateDamp = &dMgJump3DMario_c::StateDamp;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateRespawn = &dMgJump3DMario_c::StateRespawn;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateIdle = &dMgJump3DMario_c::StateIdle;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateIdle_2 = &dMgJump3DMario_c::StateIdle;
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateWindUp = &dMgJump3DMario_c::StateWindUp;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateIdle_3 = {&dMgJump3DMario_c::StateIdle};
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateBounce = &dMgJump3DMario_c::StateBounce;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_2 = {&dMgJump3DMario_c::StateWindUp};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateWindUp_3 = {&dMgJump3DMario_c::StateWindUp};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateBounce_2 = {&dMgJump3DMario_c::StateBounce};
+extern "C" Jump3DState pmf_dMgJump3DMario_c_StateRiseOut = &dMgJump3DMario_c::StateRiseOut;
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateRespawn_2 = {&dMgJump3DMario_c::StateRespawn};
+extern "C" Jump3DRec pmf_dMgJump3DMario_c_StateFallOut = {&dMgJump3DMario_c::StateFallOut};
 extern "C" BCA_File **data_ov006_0213b098[3] = {
     &data_ov006_02140430,
     &data_ov006_0214040c,

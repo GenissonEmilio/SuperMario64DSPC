@@ -163,13 +163,16 @@ struct dMg3DEspModelStateWords {
     int adjustment;
 };
 
-extern "C" void _ZN15dMg3DEspModel_c5IntroEv();
-extern "C" void _ZN15dMg3DEspModel_c4WaitEv();
-extern "C" void _ZN15dMg3DEspModel_c4IdleEv();
+/* local extern: {fn,0} address */
+extern "C" void _ZN15dMg3DEspModel_c5IntroEv(dMg3DEspModel_c *);
+/* local extern: {fn,0} address */
+extern "C" void _ZN15dMg3DEspModel_c4WaitEv(dMg3DEspModel_c *);
+/* local extern: {fn,0} address */
+extern "C" void _ZN15dMg3DEspModel_c4IdleEv(dMg3DEspModel_c *);
 
-dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Intro = { _ZN15dMg3DEspModel_c5IntroEv, 0 };
-dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Wait = { _ZN15dMg3DEspModel_c4WaitEv, 0 };
-dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Idle_3 = { _ZN15dMg3DEspModel_c4IdleEv, 0 };
+dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Intro = {_ZN15dMg3DEspModel_c5IntroEv, 0};
+dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Wait = {_ZN15dMg3DEspModel_c4WaitEv, 0};
+dMg3DEspModelStateWords pmf_dMg3DEspModel_c_Idle_3 = {_ZN15dMg3DEspModel_c4IdleEv, 0};
 
 /* ---- dScMg3DEsp_c: the destructor (key function) ---------------------- */
 
@@ -413,7 +416,8 @@ void dMg3DEspModel_c::Hit()
 // @symbol _ZN15dMg3DEspModel_c8StartHitEv
 void dMg3DEspModel_c::StartHit()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (BCA_File *)data_ov006_02141e8c.filePtr, 0x40000000, 0x800, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+        &mModelAnim, (BCA_File *)data_ov006_02141e8c.filePtr, 0x40000000, 0x800, 0);
     if (mMuted == 0)
         Sound::PlayBank2_2D(0x191);
     mState = pmf_dMg3DEspModel_c_Hit;
@@ -440,7 +444,8 @@ void dMg3DEspModel_c::Intro()
 // @symbol _ZN15dMg3DEspModel_c10StartIntroEv
 void dMg3DEspModel_c::StartIntro()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (BCA_File *)data_ov006_02141e5c.filePtr, 0x40000000, 0x800, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+        &mModelAnim, (BCA_File *)data_ov006_02141e5c.filePtr, 0x40000000, 0x800, 0);
     mAnimSet.SetPeriod(0xf);
     mAnimSet.SetSpeed(0x1000);
     mAnimSet.SetRepeats(3);

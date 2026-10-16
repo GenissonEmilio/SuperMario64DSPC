@@ -116,20 +116,23 @@ extern int  data_ov006_02140434;
 /* The state rows are raw {fn, 0} words. A pointer-to-member initializer
  * would emit a static initializer this overlay does not have, so each
  * function is named by the mangled spelling the relocation already uses. */
-void _ZN11dScMgJump_c10State_IdleEv(void);
-void _ZN11dScMgJump_c11State_FinalEv(void);
-void _ZN11dScMgJump_c12State_ResultEv(void);
-void _ZN11dScMgJump_c9State_EndEv(void);
-void _ZN11dScMgJump_c10State_PlayEv(void);
-void _ZN11dScMgJump_c11State_IntroEv(void);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c10State_IdleEv(dScMgJump_c *);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c11State_FinalEv(dScMgJump_c *);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c12State_ResultEv(dScMgJump_c *);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c9State_EndEv(dScMgJump_c *);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c10State_PlayEv(dScMgJump_c *);
+/* local extern: {fn,0} address */
+void _ZN11dScMgJump_c11State_IntroEv(dScMgJump_c *);
 void *dScMgJump_c_classInit(void);
 
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Result = {
-    (s32)_ZN11dScMgJump_c12State_ResultEv, 0};
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Intro = {
-    (s32)_ZN11dScMgJump_c11State_IntroEv, 0};
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_End = {
-    (s32)_ZN11dScMgJump_c9State_EndEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Result = {(s32)_ZN11dScMgJump_c12State_ResultEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Intro = {(s32)_ZN11dScMgJump_c11State_IntroEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_End = {(s32)_ZN11dScMgJump_c9State_EndEv, 0};
 
 /* MG_JUMP's registry profile: the factory, then the same priority in both
  * halfwords. Eight bytes, between the third state row and the fourth. */
@@ -138,20 +141,13 @@ struct MgJumpProfile {
     s16 behaviorPriority;
     s16 renderPriority;
 };
-typedef char MgJumpProfile_size_must_be_8[
-    sizeof(MgJumpProfile) == 8 ? 1 : -1];
-MgJumpProfile g_profile_MG_JUMP = {
-    dScMgJump_c_classInit, 0x174, 0x174
-};
+typedef char MgJumpProfile_size_must_be_8[sizeof(MgJumpProfile) == 8 ? 1 : -1];
+MgJumpProfile g_profile_MG_JUMP = {dScMgJump_c_classInit, 0x174, 0x174};
 
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Final = {
-    (s32)_ZN11dScMgJump_c11State_FinalEv, 0};
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Idle = {
-    (s32)_ZN11dScMgJump_c10State_IdleEv, 0};
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Idle_2 = {
-    (s32)_ZN11dScMgJump_c10State_IdleEv, 0};
-dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Play = {
-    (s32)_ZN11dScMgJump_c10State_PlayEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Final = {(s32)_ZN11dScMgJump_c11State_FinalEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Idle = {(s32)_ZN11dScMgJump_c10State_IdleEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Idle_2 = {(s32)_ZN11dScMgJump_c10State_IdleEv, 0};
+dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Play = {(s32)_ZN11dScMgJump_c10State_PlayEv, 0};
 }
 
 namespace GX   { void LoadOBJPltt(const void *src, unsigned int offset, unsigned int size); }

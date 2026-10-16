@@ -233,14 +233,7 @@ DpLiftModelFilePtr data_ov025_02113ae0(ASSET_DP_LIFT_BMD);
 DpLiftCollisionFilePtr data_ov025_02113ad8(ASSET_DP_LIFT_KCL);
 
 extern "C" CLPS_Block data_ov025_02112d08 = {
-    0x53504C43,
-    0x00010008,
-    0x00000FC4,
-    0x000000FF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
-    0xFFFFFFFF,
+    0x53504C43, 0x00010008, 0x00000FC4, 0x000000FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 };
 
 /* Mesh-collider touch callback: remembers that the player (actor 0xbf)

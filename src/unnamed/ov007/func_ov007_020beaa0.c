@@ -45,7 +45,8 @@ Obj *func_ov007_020beaa0(int p0, int p1)
 
     ((Slot *)&data_ov007_02104bc4)[p0].p = func_ov007_020b3f20(data_ov007_020d7c5c[p1][p0]);
 
-    ((Slot *)data_ov007_02104bc8)[p0].p = func_ov007_020b3f20(func_ov007_020aebac() != 0 ? 0xe : 0xf);
+    ((Slot *)data_ov007_02104bc8)[p0].p =
+        func_ov007_020b3f20(func_ov007_020aebac() != 0 ? 0xe : 0xf);
 
     flags = 2;
     if (p0 == 1)

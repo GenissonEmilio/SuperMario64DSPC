@@ -77,7 +77,7 @@ struct Linelift2CollisionFilePtr : SharedFilePtr {
 extern "C" {
 extern SharedFilePtr *const data_ov091_021344fc[]; /* BMD, by mVariant */
 extern SharedFilePtr *const data_ov091_021344f4[]; /* KCL, by mVariant */
-extern CLPS_Block *data_ov091_02134e5c[];           /* CLPS, by mVariant */
+extern CLPS_Block *data_ov091_02134e5c[];          /* CLPS, by mVariant */
 extern StateFunc data_ov091_021354e0[];      /* by mState */
 extern s16 data_02082214[];                  /* sin/cos pairs */
 

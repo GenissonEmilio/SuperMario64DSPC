@@ -101,10 +101,9 @@ enum daKuriKing_c_AssetId {
 
 #define FX(a, b) (int)(((long long)(a) * (long long)(b) + 0x800) >> 12)
 
-/* include/SharedFilePtr is the 8-byte handle; filePtr is the word LoadFile stashes
+/* include/SharedFilePtr.h is the 8-byte handle; filePtr is the word LoadFile stashes
  * and what SetFile/Prepare consume. daLuigi_c spells the same view. */
-struct LoadedSharedFile : SharedFilePtr {
-};
+struct LoadedSharedFile : SharedFilePtr {};
 #define FileOf(handle) ((LoadedSharedFile *)&(handle))->filePtr
 
 /* Resource handles this TU's static initializer constructs. The wrapper
@@ -2039,16 +2038,15 @@ extern KrbAnimationFileHandle data_ov084_02130cf0;
 /* The two clip lists InitResources walks in order: seven animation handles
    borrowed from ov084's daKrb_c, then this TU's own twelve. */
 SharedFilePtr *const data_ov074_0212292c[7] = {
-    &data_ov084_02130ce8, &data_ov084_02130ce0, &data_ov084_02130cd0,
-    &data_ov084_02130cc0, &gKuriboRecoverAnimationFile, &data_ov084_02130cc8,
-    &data_ov084_02130cf0
-};
+    &data_ov084_02130ce8,         &data_ov084_02130ce0, &data_ov084_02130cd0, &data_ov084_02130cc0,
+    &gKuriboRecoverAnimationFile, &data_ov084_02130cc8, &data_ov084_02130cf0};
 SharedFilePtr *const data_ov074_02122948[12] = {
-    &gKurikingAngerAnimationFile, &gKurikingDamageBAnimationFile, &gKurikingDamageFAnimationFile,
-    &gKurikingDownStartAnimationFile, &gKurikingDownAnimationFile, &gKurikingSerchWaitAnimationFile,
-    &gKurikingTurnAnimationFile, &data_ov074_02123030, &gKurikingWalkAnimationFile,
-    &gKurikingWalkEndAnimationFile, &gKurikingWalkStartAnimationFile, &gKurikingSpawnAnimationFile
-};
+    &gKurikingAngerAnimationFile,     &gKurikingDamageBAnimationFile,
+    &gKurikingDamageFAnimationFile,   &gKurikingDownStartAnimationFile,
+    &gKurikingDownAnimationFile,      &gKurikingSerchWaitAnimationFile,
+    &gKurikingTurnAnimationFile,      &data_ov074_02123030,
+    &gKurikingWalkAnimationFile,      &gKurikingWalkEndAnimationFile,
+    &gKurikingWalkStartAnimationFile, &gKurikingSpawnAnimationFile};
 
 /* The two registry factories close the unit (ov074 .text 0x02122764..
  * 0x0212290c), KURIKING_VANISH first. Both construct the same 0x610-byte

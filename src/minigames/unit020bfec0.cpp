@@ -2735,19 +2735,19 @@ void Camera_ProjectToScreen16(char* r4, void* r1, short* r5) {
  * this source order is the one that links them in address order.
  * data_ov006_0213acc0 points at further rows and stays the ROM copy. */
 extern "C" {
-int pmf_Dealer_StateCollect_2[2] = { (int)Dealer_StateCollect, 0 };
-int pmf_Dealer_StateReveal[2] = { (int)Dealer_StateReveal, 0 };
-int pmf_Dealer_StateSwap[2] = { (int)Dealer_StateSwap, 0 };
-int pmf_Dealer_StateLose[2] = { (int)Dealer_StateLose, 0 };
-int pmf_Dealer_StateIdle_3[2] = { (int)Dealer_StateIdle, 0 };
-int pmf_MascotWalker_StateWalk_3[2] = { (int)MascotWalker_StateWalk, 0 };
-int pmf_Dealer_StateWin[2] = { (int)Dealer_StateWin, 0 };
-int pmf_MascotWalker_StateWalk_2[2] = { (int)MascotWalker_StateWalk, 0 };
-int pmf_MascotWalker_StatePause[2] = { (int)MascotWalker_StatePause, 0 };
-int pmf_MascotWalker_StateWalk[2] = { (int)MascotWalker_StateWalk, 0 };
-int pmf_Dealer_StateDeal[2] = { (int)Dealer_StateDeal, 0 };
-int pmf_Dealer_StateIdle_2[2] = { (int)Dealer_StateIdle, 0 };
-int pmf_Dealer_StateIdle[2] = { (int)Dealer_StateIdle, 0 };
-int pmf_Dealer_StateCollect[2] = { (int)Dealer_StateCollect, 0 };
-int pmf_Dealer_StateReveal_2[2] = { (int)Dealer_StateReveal, 0 };
+int pmf_Dealer_StateCollect_2[2] = {(int)Dealer_StateCollect, 0};
+int pmf_Dealer_StateReveal[2] = {(int)Dealer_StateReveal, 0};
+int pmf_Dealer_StateSwap[2] = {(int)Dealer_StateSwap, 0};
+int pmf_Dealer_StateLose[2] = {(int)Dealer_StateLose, 0};
+int pmf_Dealer_StateIdle_3[2] = {(int)Dealer_StateIdle, 0};
+int pmf_MascotWalker_StateWalk_3[2] = {(int)MascotWalker_StateWalk, 0};
+int pmf_Dealer_StateWin[2] = {(int)Dealer_StateWin, 0};
+int pmf_MascotWalker_StateWalk_2[2] = {(int)MascotWalker_StateWalk, 0};
+int pmf_MascotWalker_StatePause[2] = {(int)MascotWalker_StatePause, 0};
+int pmf_MascotWalker_StateWalk[2] = {(int)MascotWalker_StateWalk, 0};
+int pmf_Dealer_StateDeal[2] = {(int)Dealer_StateDeal, 0};
+int pmf_Dealer_StateIdle_2[2] = {(int)Dealer_StateIdle, 0};
+int pmf_Dealer_StateIdle[2] = {(int)Dealer_StateIdle, 0};
+int pmf_Dealer_StateCollect[2] = {(int)Dealer_StateCollect, 0};
+int pmf_Dealer_StateReveal_2[2] = {(int)Dealer_StateReveal, 0};
 }

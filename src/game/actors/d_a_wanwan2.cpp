@@ -508,8 +508,8 @@ extern "C" int func_ov100_02143aa4(daWanwan2_c *c)
    animation from data_ov100_021486ac. Was a C source. */
 extern "C" int func_ov100_02143ae0(daWanwan2_c *c)
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&c->mModelAnim,
-        data_ov100_021486ac.filePtr, 0, 0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((char *)&c->mModelAnim, data_ov100_021486ac.filePtr,
+                                                0, 0x1000, 0);
     return 1;
 }
 
@@ -879,9 +879,9 @@ struct ChompPmfWords {
     int (*fn)(daWanwan2_c *);
     int adj;
 };
-extern "C" ChompPmfWords data_ov100_02147ff8 = { func_ov100_02143aa4, 0 };
-extern "C" ChompPmfWords data_ov100_02148000 = { func_ov100_02143ae0, 0 };
-extern "C" s32 data_ov100_02148008[3] = { 0, -0xa0000, 0 };
+extern "C" ChompPmfWords data_ov100_02147ff8 = {func_ov100_02143aa4, 0};
+extern "C" ChompPmfWords data_ov100_02148000 = {func_ov100_02143ae0, 0};
+extern "C" s32 data_ov100_02148008[3] = {0, -0xa0000, 0};
 
 ChompState data_ov100_021486f4 = {
     *(ChompPmf *)&data_ov100_02148000,

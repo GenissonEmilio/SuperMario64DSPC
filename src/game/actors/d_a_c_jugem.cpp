@@ -965,10 +965,10 @@ int daC_Jugem_c::InitResources()
   TextureSequence::LoadFile(data_ov085_0213073c);
   mShadowModel1.InitCylinder();
   mShadowModel2.InitCylinder();
-  TextureSequence::Prepare(
-      *(BMD_File *)data_ov085_0213074c.filePtr, *(BTP_File *)data_ov085_0213073c.filePtr);
-  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
-      &mModelAnim1, (BCA_File *)data_ov085_02130744.filePtr, 0, 0x1000, 0);
+  TextureSequence::Prepare(*(BMD_File *)data_ov085_0213074c.filePtr,
+                           *(BTP_File *)data_ov085_0213073c.filePtr);
+  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim1, (BCA_File *)data_ov085_02130744.filePtr,
+                                              0, 0x1000, 0);
   _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
       &mTextureSequence, *(BTP_File *)data_ov085_0213073c.filePtr, 0, 0x1000, 0);
   mModelAnim1.speed = 0x1000;

@@ -163,8 +163,7 @@ int daObjCtMecha04_c::InitResources()
     }
 
     variant = mVariant;
-    modelFile = Model::LoadFile(
-        **(SharedFilePtr **)((char *)data_ov065_0211d194 + variant * 12));
+    modelFile = Model::LoadFile(**(SharedFilePtr **)((char *)data_ov065_0211d194 + variant * 12));
     mModel.SetFile(
         (BMD_File *)modelFile, 1, -1);
 
@@ -172,8 +171,8 @@ int daObjCtMecha04_c::InitResources()
 
     variant = mVariant;
     TextureTransformer::Prepare(
-        *(BMD_File *)((void **)(*(SharedFilePtr **)(
-            (char *)data_ov065_0211d194 + variant * 12)))[1],
+        *(BMD_File *)((
+            void **)(*(SharedFilePtr **)((char *)data_ov065_0211d194 + variant * 12)))[1],
         *animationFiles[variant]);
 
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(
@@ -184,11 +183,10 @@ int daObjCtMecha04_c::InitResources()
     UpdateClsnPosAndRot();
 
     variant = mVariant;
-    collisionFile = dBgW_Kc::LoadFile(
-        **(SharedFilePtr **)((char *)data_ov065_0211d198 + variant * 12));
+    collisionFile =
+        dBgW_Kc::LoadFile(**(SharedFilePtr **)((char *)data_ov065_0211d198 + variant * 12));
     _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-        &mMeshCollider, (KCL_File *)collisionFile, mClsnMat,
-        0x199, mAngleY,
+        &mMeshCollider, (KCL_File *)collisionFile, mClsnMat, 0x199, mAngleY,
         **(CLPS_Block **)((char *)data_ov065_0211d19c + variant * 12));
 
     func_020393c4(

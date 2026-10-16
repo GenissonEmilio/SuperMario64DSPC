@@ -91,8 +91,10 @@ extern PoleliftModelFile data_ov026_02113ea0;
    A plain zero word lands in .bss; the named section keeps that one word in .data.
    symbols.txt names the middle word. Readers still start at the first word. */
 #pragma define_section polelift_data ".data" abs32 RW
-extern "C" __declspec(polelift_data) struct { Fix12i x; } data_ov026_02113a9c = { 0x0 };
-extern "C" Fix12i data_ov026_02113aa0[2] = { 0x28000, 0x0 };
+extern "C" __declspec(polelift_data) struct {
+    Fix12i x;
+} data_ov026_02113a9c = {0x0};
+extern "C" Fix12i data_ov026_02113aa0[2] = {0x28000, 0x0};
 
 // @symbol daObjWlPolelift_c_classInit
 extern "C" daObjWlPolelift_c *daObjWlPolelift_c_classInit()

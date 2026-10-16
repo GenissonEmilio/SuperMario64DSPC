@@ -134,5 +134,7 @@ MarutaClsnFileHandle gHmMarutaCollisionFile(ASSET_HM_MARUTA_KCL);
 /* The descriptor InitResources and CleanupResources hand to the shared
  * ov080 helpers. Its CLPS_Block is unclaimed ROM data, not this file's. */
 ResourceDescriptor data_ov030_02115a04 = {
-    &gHmMarutaModelFile, &gHmMarutaCollisionFile, &data_ov030_02114f24,
+    &gHmMarutaModelFile,
+    &gHmMarutaCollisionFile,
+    &data_ov030_02114f24,
 };

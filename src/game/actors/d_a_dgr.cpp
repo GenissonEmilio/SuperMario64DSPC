@@ -91,11 +91,7 @@ extern DgrModelFilePtr data_ov025_02113a68;
 extern DgrCollisionFilePtr data_ov025_02113a60;
 extern s16 data_02082214[];
 CLPS_Block data_ov025_02112c28 = {
-    0x53504c43,
-    0x00010008,
-    0x01000fc0,
-    0x000000ff,
-    {0xffffffff, 0xffffffff, 0xffffffff},
+    0x53504c43, 0x00010008, 0x01000fc0, 0x000000ff, {0xffffffff, 0xffffffff, 0xffffffff},
 };
 u32 data_ov025_02112c44 = 0xffffffff;
 

@@ -68,16 +68,15 @@ extern u32 data_ov085_0212fe88[];
 
 /* SharedFilePtr is the 8-byte handle. The sinit constructs these eight-byte handles
    (files 0x35c, 0x35d, 0x35e). */
-struct KinopioFile : SharedFilePtr {
-};
+struct KinopioFile : SharedFilePtr {};
 
 extern "C" {
 
 /* ov085 statics */
 extern u8 data_ov085_0212f27c[];           /* star-count requirement table */
-extern KinopioFile data_ov085_02130480;  /* body model */
-extern KinopioFile data_ov085_02130488;  /* idle animation */
-extern KinopioFile data_ov085_02130490;  /* talk animation */
+extern KinopioFile data_ov085_02130480;    /* body model */
+extern KinopioFile data_ov085_02130488;    /* idle animation */
+extern KinopioFile data_ov085_02130490;    /* talk animation */
 
 /* ov002 statics -- the three models the variant-1 Toad preloads */
 extern SharedFilePtr data_ov002_0210da40;
@@ -657,28 +656,12 @@ extern "C" daKinopio_c *daKinopio_c_classInit(void)
 extern "C" char data_ov085_0212fe20[8] = "TALK";
 extern "C" char data_ov085_0212fe28[8] = "WAIT";
 
-/* The sinit copies these into the zero PMF slots. Each record is the
- * method address and a zero adjustment. */
-extern "C" void _ZN11daKinopio_c12St_Talk_InitEv(daKinopio_c *);
-extern "C" void _ZN11daKinopio_c12St_Talk_MainEv(daKinopio_c *);
-extern "C" void _ZN11daKinopio_c12St_Idle_InitEv(daKinopio_c *);
-extern "C" void _ZN11daKinopio_c12St_Idle_MainEv(daKinopio_c *);
-extern "C" struct {
-    void (*fn)(daKinopio_c *);
-    int adj;
-} data_ov085_0212fe30 = { _ZN11daKinopio_c12St_Talk_InitEv, 0 };
-extern "C" struct {
-    void (*fn)(daKinopio_c *);
-    int adj;
-} data_ov085_0212fe38 = { _ZN11daKinopio_c12St_Talk_MainEv, 0 };
-extern "C" struct {
-    void (*fn)(daKinopio_c *);
-    int adj;
-} data_ov085_0212fe40 = { _ZN11daKinopio_c12St_Idle_InitEv, 0 };
-extern "C" struct {
-    void (*fn)(daKinopio_c *);
-    int adj;
-} data_ov085_0212fe48 = { _ZN11daKinopio_c12St_Idle_MainEv, 0 };
+/* The sinit copies these into the zero PMF slots. A non-virtual method
+ * pointer is the address word plus a zero adjustment. */
+extern "C" void (daKinopio_c::*data_ov085_0212fe30)() = &daKinopio_c::St_Talk_Init;
+extern "C" void (daKinopio_c::*data_ov085_0212fe38)() = &daKinopio_c::St_Talk_Main;
+extern "C" void (daKinopio_c::*data_ov085_0212fe40)() = &daKinopio_c::St_Idle_Init;
+extern "C" void (daKinopio_c::*data_ov085_0212fe48)() = &daKinopio_c::St_Idle_Main;
 
 struct KinopioSpawnInfo {
     daKinopio_c *(*classInit)();
@@ -703,9 +686,18 @@ extern "C" KinopioSpawnInfo g_profile_KINOPIO = {
 };
 
 u32 data_ov085_0212fe88[12] = {
-    0, 0, 0, 0, (u32)&data_ov085_0212fe28,
-    0, 0, 0, 0, (u32)&data_ov085_0212fe20,
-    0, (u32)&typeid(daKinopio_c),
+    0,
+    0,
+    0,
+    0,
+    (u32)&data_ov085_0212fe28,
+    0,
+    0,
+    0,
+    0,
+    (u32)&data_ov085_0212fe20,
+    0,
+    (u32) & typeid(daKinopio_c),
 };
 
 extern "C" {
@@ -713,4 +705,3 @@ KinopioFile data_ov085_02130480;
 KinopioFile data_ov085_02130488;
 KinopioFile data_ov085_02130490;
 }
-

@@ -35,7 +35,10 @@
 #include "decl_common.h"
 #include "decl_ModelAnim.h"
 struct W2 { int w[2]; };
-struct SharedFilePtr { int w[2]; void Release(); };
+struct SharedFilePtr {
+    int w[2];
+    void Release();
+};
 extern "C" void Trmp2Mario_State5(void *self);
 extern "C" void Trmp2Mario_State6(char *c);
 extern "C" void Trmp2Mario_State7(int *p);
@@ -43,10 +46,10 @@ extern "C" void Trmp3DMario_State10(int *c);
 /* mwcc emits every definition except the last in reverse, then the last.
    This order is what makes the object come out address order. */
 extern "C" {
-W2 pmf_Trmp2Mario_State5 = { (int)Trmp2Mario_State5, 0 };
-W2 pmf_Trmp3DMario_State10 = { (int)Trmp3DMario_State10, 0 };
-W2 pmf_Trmp2Mario_State6 = { (int)Trmp2Mario_State6, 0 };
-W2 pmf_Trmp2Mario_State7_3 = { (int)Trmp2Mario_State7, 0 };
+W2 pmf_Trmp2Mario_State5 = {(int)Trmp2Mario_State5, 0};
+W2 pmf_Trmp3DMario_State10 = {(int)Trmp3DMario_State10, 0};
+W2 pmf_Trmp2Mario_State6 = {(int)Trmp2Mario_State6, 0};
+W2 pmf_Trmp2Mario_State7_3 = {(int)Trmp2Mario_State7, 0};
 SharedFilePtr data_ov006_02140610;
 SharedFilePtr data_ov006_02140608;
 SharedFilePtr data_ov006_02140600;
@@ -1121,7 +1124,7 @@ extern "C" W2 pmf_Trmp2Mario_State6;
 void Trmp2Mario_EnterState6(char *o, short v){
   *(short*)(o+0x6c)=v;
   *(int*)(o+0x48)=0;
-  *(struct S2*)(o+0x70)=*(struct S2*)&pmf_Trmp2Mario_State6;
+  *(struct S2 *)(o + 0x70) = *(struct S2 *)&pmf_Trmp2Mario_State6;
 }
 }
 }

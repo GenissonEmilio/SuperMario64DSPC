@@ -220,8 +220,7 @@ KomaUModelFilePtr gFlKomaUModelFile(ASSET_FL_KOMA_U_BMD);
 KomaUClsnFileHandle gFlKomaUCollisionFile(ASSET_FL_KOMA_U_KCL);
 
 extern "C" CLPS_Block data_ov064_0211bdac = {
-    0x53504C43, 0x00010008, 0x00000FC0, 0x000000FF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0x53504C43, 0x00010008, 0x00000FC0, 0x000000FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 };
 
 extern "C" const FileTable data_ov064_0211adbc = {

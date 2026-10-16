@@ -477,9 +477,9 @@ int daObjPowerUpItem_c::InitResources()
 
     Model::LoadFile(gPFlowerCloseModelFile);
     Model::LoadFile(gPFlowerOpenModelFile);
-    if (mOpenModel.SetFile((BMD_File*)gPFlowerOpenModelFile.filePtr, 1, -1) == 0)
+    if (mOpenModel.SetFile((BMD_File *)gPFlowerOpenModelFile.filePtr, 1, -1) == 0)
         return 0;
-    if (mCloseModel.SetFile((BMD_File*)gPFlowerCloseModelFile.filePtr, 1, -1) == 0)
+    if (mCloseModel.SetFile((BMD_File *)gPFlowerCloseModelFile.filePtr, 1, -1) == 0)
         return 0;
     if (mShadowModel.InitCylinder() == 0)
         return 0;

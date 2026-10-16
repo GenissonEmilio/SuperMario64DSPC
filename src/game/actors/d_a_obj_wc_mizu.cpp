@@ -116,8 +116,8 @@ extern s16 data_02082214[];
 
 /* The three .rodata words the BTA names. 021129b4 is the next symbols.txt
  * row and is ambiguous, so the frame table at 021129c0 stays an extern. */
-extern "C" const u32 data_ov029_0211299c[1] = { 0 };
-extern "C" const u32 data_ov029_021129a0[1] = { 0x1000 };
+extern "C" const u32 data_ov029_0211299c[1] = {0};
+extern "C" const u32 data_ov029_021129a0[1] = {0x1000};
 extern "C" const struct {
     u32 word0;
     u32 *target1;
@@ -142,12 +142,7 @@ extern "C" struct {
     u32 word4;
     u32 *target5;
 } data_ov029_02112f88 = {
-    0x1e00,
-    data_ov029_021134ec,
-    0x2305,
-    data_ov029_021133d4,
-    0x1a0,
-    data_ov029_02112ed8,
+    0x1e00, data_ov029_021134ec, 0x2305, data_ov029_021133d4, 0x1a0, data_ov029_02112ed8,
 };
 
 extern "C" struct {
@@ -158,12 +153,7 @@ extern "C" struct {
     u32 word4;
     u32 word5;
 } data_ov029_02112fa0 = {
-    data_ov029_02112eb0,
-    0,
-    0x109A0001,
-    data_ov029_02112ea8,
-    0,
-    1,
+    data_ov029_02112eb0, 0, 0x109A0001, data_ov029_02112ea8, 0, 1,
 };
 
 extern "C" struct {
@@ -175,7 +165,7 @@ extern "C" struct {
     u32 word;
     u32 *name3;
 } data_ov029_02112fb8 = {
-    { 91 },
+    {91},
     0,
     (u32 *)data_ov029_021129a0,
     (u32 *)data_ov029_0211299c,
@@ -193,13 +183,8 @@ extern "C" struct {
     u32 word5;
     u32 word6;
 } data_ov029_02112fd0 = {
-    data_ov029_02113204,
-    data_ov029_02112eb8,
-    0x07ED07F0,
-    0x07F207F1,
-    &data_ov029_02112fa0,
-    0x03E80002,
-    0x8F,
+    data_ov029_02113204,  data_ov029_02112eb8, 0x07ED07F0, 0x07F207F1,
+    &data_ov029_02112fa0, 0x03E80002,          0x8F,
 };
 
 extern "C" u32 data_ov029_02112fec[4] = {
@@ -236,7 +221,8 @@ int daObjWc_Mizu_c::InitResources()
 
     m = Model::LoadFile(daObjWc_Obj07_c_ModelFile);
     mModel.SetFile((BMD_File *)m, 1, -1);
-    TextureTransformer::Prepare(*(BMD_File *)daObjWc_Obj07_c_ModelFile.filePtr, data_ov029_02112fb8.file);
+    TextureTransformer::Prepare(*(BMD_File *)daObjWc_Obj07_c_ModelFile.filePtr,
+                                data_ov029_02112fb8.file);
     /* 6az: header SetFile takes Fix12<int> by value. */
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(
         &mTextureTransformer, &data_ov029_02112fb8, 0, 0x1000, 0);

@@ -24,7 +24,9 @@ struct KCL_File;
 
 /* CLPS.h keeps the block opaque: an 8-byte header whose halfword at +4 is
  * the entry stride, then N entries. This TU's block is 0x20 bytes. */
-struct CLPS_Block { u32 words[8]; };
+struct CLPS_Block {
+    u32 words[8];
+};
 
 /* Retail constructs these 8-byte handles in this order and registers
  * their destructors. The wrapper names are local; the ctor/dtor
@@ -179,8 +181,5 @@ AgaruCollisionFilePtr data_ov045_02113180(ASSET_KM2_AGARU_KCL);
 /* The block SetFile takes: the "CLPS" header with entry stride 8 at +4,
  * two entries, then the all-ones terminator. */
 CLPS_Block data_ov045_021125d0 = {
-    0x53504c43, 0x00020008,
-    0x00000fc0, 0x000000ff,
-    0x00000fc4, 0x000000ff,
-    0xffffffff, 0xffffffff,
+    0x53504c43, 0x00020008, 0x00000fc0, 0x000000ff, 0x00000fc4, 0x000000ff, 0xffffffff, 0xffffffff,
 };

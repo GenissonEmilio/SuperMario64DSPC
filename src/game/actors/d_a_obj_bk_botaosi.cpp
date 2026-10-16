@@ -439,8 +439,7 @@ struct CLPS_Block {
 typedef char CLPS_Block_size_must_be_0x20[sizeof(CLPS_Block) == 0x20 ? 1 : -1];
 
 extern "C" CLPS_Block data_ov015_02113574 = {
-    0x53504c43, 0x00010008, 0x01000fc5, 0x000000ff,
-    0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+    0x53504c43, 0x00010008, 0x01000fc5, 0x000000ff, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
 };
 
 BkBotaosiModelFilePtr data_ov015_0211497c(ASSET_BK_BOTAOSI_BMD);

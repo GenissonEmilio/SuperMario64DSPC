@@ -1106,7 +1106,8 @@ int daMip_c::StateIdleInit()
 {
   extern DaMipAnimationFilePtr data_ov085_021305c0;
 
-  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0, 0x1000, 0);
+  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0, 0x1000,
+                                              0);
   mIdlePosX = mPosX;
   mIdlePosY = mPosY;
   mIdlePosZ = mPosZ;
@@ -1466,7 +1467,8 @@ int daMip_c::Behavior()
         UpdateMatrixAndShadow();
         unk_426 = 2;
         SetState(&data_ov085_021306ac);
-        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0, 0x1000, 0);
+        _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0,
+                                                    0x1000, 0);
         if (*(void**)&mTalkingPlayer == 0)
             *(void**)&mTalkingPlayer = ClosestPlayer();
         return 1;
@@ -1477,7 +1479,8 @@ int daMip_c::Behavior()
         if (p != (void*)&data_ov085_021306ac && p != (void*)&data_ov085_0213068c &&
             p != (void*)&data_ov085_021306bc && p != (void*)&data_ov085_021306dc) {
             SetState(&data_ov085_021306ac);
-            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0, 0x1000, 0);
+            _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov085_021305c0.filePtr, 0,
+                                                        0x1000, 0);
         }
         mHorzSpeed = 0;
     }

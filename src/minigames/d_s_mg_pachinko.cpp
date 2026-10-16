@@ -2901,10 +2901,8 @@ Ent7d0 data_ov006_02142624[4] = {
     pmf_PachinkoPipe_State3,
 };
 PMF2 data_ov006_0214266c[5] = {
-    *(PMF2 *)&pmf_PachinkoFlyer_State0,
-    *(PMF2 *)&pmf_PachinkoFlyer_State1,
-    *(PMF2 *)&pmf_PachinkoFlyer_State2,
-    *(PMF2 *)&pmf_PachinkoFlyer_State3,
+    *(PMF2 *)&pmf_PachinkoFlyer_State0, *(PMF2 *)&pmf_PachinkoFlyer_State1,
+    *(PMF2 *)&pmf_PachinkoFlyer_State2, *(PMF2 *)&pmf_PachinkoFlyer_State3,
     *(PMF2 *)&pmf_PachinkoFlyer_State4,
 };
 Entry data_ov006_02142604[4] = {
@@ -2916,22 +2914,22 @@ Entry data_ov006_02142604[4] = {
 
 /* {code pointer, 0} records at 0x0213d878..0x0213d910. The profile at
    0x0213d910 splits the rest of the table off this range. */
-Ent7d0 pmf_PachinkoFlyer_State0 = { (int)PachinkoFlyer_State0, 0 };
-Ent7d0 pmf_PachinkoBall_State5 = { (int)PachinkoBall_State5, 0 };
-Ent7d0 pmf_PachinkoFlyer_State4 = { (int)PachinkoFlyer_State4, 0 };
-Ent7d0 pmf_PachinkoFlyer_State3 = { (int)PachinkoFlyer_State3, 0 };
-Ent7d0 pmf_PachinkoBall_State2 = { (int)PachinkoBall_State2, 0 };
-Ent7d0 pmf_PachinkoBg_State2 = { (int)PachinkoBg_State2, 0 };
-Ent7d0 pmf_PachinkoBobOmb_State0 = { (int)PachinkoBobOmb_State0, 0 };
-Ent7d0 pmf_PachinkoBall_State4 = { (int)PachinkoBall_State4, 0 };
-Ent7d0 pmf_PachinkoBobOmb_State3 = { (int)PachinkoBobOmb_State3, 0 };
-Ent7d0 pmf_PachinkoBall_State0 = { (int)PachinkoBall_State0, 0 };
-Ent7d0 pmf_PachinkoBall_State1 = { (int)PachinkoBall_State1, 0 };
-Ent7d0 pmf_PachinkoPipe_State3 = { (int)PachinkoPipe_State3, 0 };
-Ent7d0 pmf_PachinkoBall_State6 = { (int)PachinkoBall_State6, 0 };
-Ent7d0 pmf_PachinkoFlyer_State2 = { (int)PachinkoFlyer_State2, 0 };
-Ent7d0 pmf_PachinkoFlyer_State1 = { (int)PachinkoFlyer_State1, 0 };
-Ent7d0 pmf_PachinkoBobOmb_State1 = { (int)PachinkoBobOmb_State1, 0 };
-Ent7d0 pmf_PachinkoBobOmb_State2 = { (int)PachinkoBobOmb_State2, 0 };
-Ent7d0 pmf_PachinkoBg_State3 = { (int)PachinkoBg_State3, 0 };
-Ent7d0 pmf_PachinkoBobOmb_State4 = { (int)PachinkoBobOmb_State4, 0 };
+Ent7d0 pmf_PachinkoFlyer_State0 = {(int)PachinkoFlyer_State0, 0};
+Ent7d0 pmf_PachinkoBall_State5 = {(int)PachinkoBall_State5, 0};
+Ent7d0 pmf_PachinkoFlyer_State4 = {(int)PachinkoFlyer_State4, 0};
+Ent7d0 pmf_PachinkoFlyer_State3 = {(int)PachinkoFlyer_State3, 0};
+Ent7d0 pmf_PachinkoBall_State2 = {(int)PachinkoBall_State2, 0};
+Ent7d0 pmf_PachinkoBg_State2 = {(int)PachinkoBg_State2, 0};
+Ent7d0 pmf_PachinkoBobOmb_State0 = {(int)PachinkoBobOmb_State0, 0};
+Ent7d0 pmf_PachinkoBall_State4 = {(int)PachinkoBall_State4, 0};
+Ent7d0 pmf_PachinkoBobOmb_State3 = {(int)PachinkoBobOmb_State3, 0};
+Ent7d0 pmf_PachinkoBall_State0 = {(int)PachinkoBall_State0, 0};
+Ent7d0 pmf_PachinkoBall_State1 = {(int)PachinkoBall_State1, 0};
+Ent7d0 pmf_PachinkoPipe_State3 = {(int)PachinkoPipe_State3, 0};
+Ent7d0 pmf_PachinkoBall_State6 = {(int)PachinkoBall_State6, 0};
+Ent7d0 pmf_PachinkoFlyer_State2 = {(int)PachinkoFlyer_State2, 0};
+Ent7d0 pmf_PachinkoFlyer_State1 = {(int)PachinkoFlyer_State1, 0};
+Ent7d0 pmf_PachinkoBobOmb_State1 = {(int)PachinkoBobOmb_State1, 0};
+Ent7d0 pmf_PachinkoBobOmb_State2 = {(int)PachinkoBobOmb_State2, 0};
+Ent7d0 pmf_PachinkoBg_State3 = {(int)PachinkoBg_State3, 0};
+Ent7d0 pmf_PachinkoBobOmb_State4 = {(int)PachinkoBobOmb_State4, 0};

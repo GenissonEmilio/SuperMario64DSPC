@@ -2490,10 +2490,10 @@ int data_ov006_02142044;
    address and a zero word, except g_profile_MG_HANACHAN's second word.
    The holes between the job's symbols are the same shape and have to
    sit in this one .data run. */
-void _ZN15dScMgHanachan_c15Phase_WaitTouchEv(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c12Phase_ResultEv(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c10Phase_PlayEv(dScMgHanachan_c *);
-void _ZN15dScMgHanachan_c15Phase_WaitIntroEv(dScMgHanachan_c *);
+void _ZN15dScMgHanachan_c15Phase_WaitTouchEv(dScMgHanachan_c *); /* local extern: {fn,0} address */
+void _ZN15dScMgHanachan_c12Phase_ResultEv(dScMgHanachan_c *); /* local extern: {fn,0} address */
+void _ZN15dScMgHanachan_c10Phase_PlayEv(dScMgHanachan_c *); /* local extern: {fn,0} address */
+void _ZN15dScMgHanachan_c15Phase_WaitIntroEv(dScMgHanachan_c *); /* local extern: {fn,0} address */
 void *dScMgHanachan_c_classInit(void);
 
 P2 pmf_Wiggler_StateWait = {{(int)Wiggler_StateWait, 0}};

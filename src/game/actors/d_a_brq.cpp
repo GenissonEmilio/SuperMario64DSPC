@@ -68,19 +68,12 @@ extern "C" char data_ov070_021231e4[16] = "mat_bilikyu2";
 extern "C" const int data_ov070_02122244 = 0x1000;
 extern "C" const int data_ov070_02122248 = 0;
 extern "C" const unsigned int data_ov070_0212224c[7] = {
-    0x0000ffff,
-    (unsigned int)&data_ov070_021231e4,
-    1,
-    1,
-    0x3c,
-    1,
-    1,
+    0x0000ffff, (unsigned int)&data_ov070_021231e4, 1, 1, 0x3c, 1, 1,
 };
 extern "C" const unsigned int data_ov070_02122268[30] = {
-    0x00890044, 0x011100cd, 0x019a0155, 0x022201de, 0x02ab0266, 0x033302ef,
-    0x03bc0377, 0x04440400, 0x04cd0489, 0x05550511, 0x05de059a, 0x06660622,
-    0x06ef06ab, 0x07770733, 0x080007bc, 0xf889f844, 0xf911f8cd, 0xf99af955,
-    0xfa22f9de, 0xfaabfa66, 0xfb33faef, 0xfbbcfb77, 0xfc44fc00, 0xfccdfc89,
+    0x00890044, 0x011100cd, 0x019a0155, 0x022201de, 0x02ab0266, 0x033302ef, 0x03bc0377, 0x04440400,
+    0x04cd0489, 0x05550511, 0x05de059a, 0x06660622, 0x06ef06ab, 0x07770733, 0x080007bc, 0xf889f844,
+    0xf911f8cd, 0xf99af955, 0xfa22f9de, 0xfaabfa66, 0xfb33faef, 0xfbbcfb77, 0xfc44fc00, 0xfccdfc89,
     0xfd55fd11, 0xfddefd9a, 0xfe66fe22, 0xfeeffeab, 0xff77ff33, 0x0000ffbc,
 };
 extern "C" unsigned int data_ov070_021231f4[6] = {
@@ -278,8 +271,8 @@ extern "C" void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
 // @symbol _ZN7daBrq_c18EnterCooldownStateEv
 s32 daBrq_c::EnterCooldownState()
 {
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (BCA_File *)data_ov070_0212360c.filePtr, 0x40000000,
-                                                0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+        &mModelAnim, (BCA_File *)data_ov070_0212360c.filePtr, 0x40000000, 0x1000, 0);
     mStateTimer = 0x3c;
     mState = 0;
     return 1;
@@ -313,8 +306,8 @@ s32 daBrq_c::EnterActiveState()
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
         &mModelAnim, (BCA_File *)data_ov070_021235f4.filePtr, 0, 0x1000, 0);
     mModelAnim.speed = 0x1000;
-    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(&mTextureSequence, *(BTP_File *)data_ov070_021235ec.filePtr,
-                                                       0, 0x1000, 0);
+    _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
+        &mTextureSequence, *(BTP_File *)data_ov070_021235ec.filePtr, 0, 0x1000, 0);
     mTextureSequence.speed = 0x1000;
     _ZN18TextureTransformer7SetFileER8BTA_Filei5Fix12IiEj(
         &mTextureTransformer, data_ov070_021231f4, 0, 0x1000, 0);
@@ -419,8 +412,8 @@ s32 daBrq_c::EnterDefeatedState()
     mHorzSpeed = 0xa000;
     mVertSpeed = 0x28000;
     mStateTimer = 0x2d;
-    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (BCA_File *)data_ov070_0212360c.filePtr, 0x40000000,
-                                                0x1000, 0);
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
+        &mModelAnim, (BCA_File *)data_ov070_0212360c.filePtr, 0x40000000, 0x1000, 0);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
         0x43, mPosX, mPosY, mPosZ);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(

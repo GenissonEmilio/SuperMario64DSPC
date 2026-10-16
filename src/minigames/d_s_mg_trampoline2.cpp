@@ -151,10 +151,8 @@ extern char *_ZN2G212GetBG3ScrPtrEv(void);
 extern void MultiStore16(unsigned short val, char *dst, int nbytes);
 /* BG palette loaded at 0xe0, 32 bytes. One white entry, the rest clear. */
 extern const unsigned char data_ov006_0212f1ac[32] = {
-    0x00, 0x00, 0x00, 0x00, 0xff, 0x7f, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0xff, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 extern char* data_0209f5bc;
 extern int data_ov006_0213fbc4;
@@ -1441,25 +1439,25 @@ Trampoline2ModelFilePtr data_ov006_02142f80(537);
  * loop bound. base is x, y, z in 0x1000 units, three words per spawn. a is the
  * facing angle (0x10000 per turn). b is the model variant. c is the other short. */
 #pragma cplusplus off
-extern const short data_ov006_0212f0f0[2] = { 2, 2 };
-extern const short data_ov006_0212f0f4[2] = { 0x4000, 0x4000 };
-extern const short data_ov006_0212f0f8[2] = { 2, 2 };
-extern const short data_ov006_0212f0fc[4] = { 0, 0, 0, 0 };
-extern const short data_ov006_0212f104[4] = { 3, 3, 3, 0 };
-extern const short data_ov006_0212f10c[4] = { 0x4000, 0x4000, 0x4000, 0 };
-extern const short data_ov006_0212f114[4] = { 2, 1, 2, 0 };
-extern const short data_ov006_0212f11c[4] = { 2, 1, 2, 0 };
-extern const short data_ov006_0212f124[4] = { 1, 1, 1, 0 };
-extern const short data_ov006_0212f12c[4] = { 0, 0, 0, 0 };
-extern const short data_ov006_0212f134[4] = { 0, 0, 0, 0 };
-extern const short data_ov006_0212f13c[4] = { 0x4000, 0x4000, 0x4000, 0 };
-extern const unsigned short data_ov006_0212f144[4] = { 0x7fff, 0x03ff, 0x001f, 0x7c00 };
-extern const short data_ov006_0212f14c[6] = { 0, 0, 0, 0, 0, 0 };
-extern const short data_ov006_0212f158[6] = { -0x2000, -0x2000, -0x2000, -0x2000, -0x2000, 0 };
-extern const short data_ov006_0212f164[6] = { 2, 1, 2, 1, 0, 0 };
-extern const short data_ov006_0212f170[6] = { 2, 2, 2, 2, 2, 0 };
-extern const short data_ov006_0212f17c[6] = { 1, 1, 1, 1, 1, 0 };
-extern const short data_ov006_0212f188[6] = { 0, 0, 0, 0, 0, 0 };
+extern const short data_ov006_0212f0f0[2] = {2, 2};
+extern const short data_ov006_0212f0f4[2] = {0x4000, 0x4000};
+extern const short data_ov006_0212f0f8[2] = {2, 2};
+extern const short data_ov006_0212f0fc[4] = {0, 0, 0, 0};
+extern const short data_ov006_0212f104[4] = {3, 3, 3, 0};
+extern const short data_ov006_0212f10c[4] = {0x4000, 0x4000, 0x4000, 0};
+extern const short data_ov006_0212f114[4] = {2, 1, 2, 0};
+extern const short data_ov006_0212f11c[4] = {2, 1, 2, 0};
+extern const short data_ov006_0212f124[4] = {1, 1, 1, 0};
+extern const short data_ov006_0212f12c[4] = {0, 0, 0, 0};
+extern const short data_ov006_0212f134[4] = {0, 0, 0, 0};
+extern const short data_ov006_0212f13c[4] = {0x4000, 0x4000, 0x4000, 0};
+extern const unsigned short data_ov006_0212f144[4] = {0x7fff, 0x03ff, 0x001f, 0x7c00};
+extern const short data_ov006_0212f14c[6] = {0, 0, 0, 0, 0, 0};
+extern const short data_ov006_0212f158[6] = {-0x2000, -0x2000, -0x2000, -0x2000, -0x2000, 0};
+extern const short data_ov006_0212f164[6] = {2, 1, 2, 1, 0, 0};
+extern const short data_ov006_0212f170[6] = {2, 2, 2, 2, 2, 0};
+extern const short data_ov006_0212f17c[6] = {1, 1, 1, 1, 1, 0};
+extern const short data_ov006_0212f188[6] = {0, 0, 0, 0, 0, 0};
 extern const int data_ov006_0212f194[6] = {
     0x54000, 0x70000, 0, -0x54000, 0x70000, 0,
 };
@@ -1473,19 +1471,19 @@ extern const int data_ov006_0212f214[9] = {
     -0x40000, 0x50000, 0, 0, 0x88000, 0, 0x40000, 0x50000, 0,
 };
 extern const int data_ov006_0212f238[15] = {
-    -0x38000, 0x30000, 0, 0x40000, 0x48000, 0, -0x38000, 0x60000, 0,
-    0x40000, 0x78000, 0, -0x48000, 0x90000, 0,
+    -0x38000, 0x30000, 0,       0x40000, 0x48000,  0,       -0x38000, 0x60000,
+    0,        0x40000, 0x78000, 0,       -0x48000, 0x90000, 0,
 };
 extern const int data_ov006_0212f274[15] = {
-    -0x3c000, 0x38000, 0, -0x1e000, 0x56000, 0, 0, 0x74000, 0,
-    0x1e000, 0x92000, 0, 0x3c000, 0xb0000, 0,
+    -0x3c000, 0x38000, 0,       -0x1e000, 0x56000, 0,       0, 0x74000,
+    0,        0x1e000, 0x92000, 0,        0x3c000, 0xb0000, 0,
 };
 extern const SpawnDef data_ov006_0212f2b0[6] = {
-    { 3, (int)data_ov006_0212f1cc, data_ov006_0212f10c, data_ov006_0212f114, data_ov006_0212f12c },
-    { 3, (int)data_ov006_0212f1f0, data_ov006_0212f13c, data_ov006_0212f11c, data_ov006_0212f134 },
-    { 5, (int)data_ov006_0212f238, data_ov006_0212f14c, data_ov006_0212f164, data_ov006_0212f17c },
-    { 2, (int)data_ov006_0212f194, data_ov006_0212f0f4, data_ov006_0212f0f8, data_ov006_0212f0f0 },
-    { 3, (int)data_ov006_0212f214, data_ov006_0212f0fc, data_ov006_0212f124, data_ov006_0212f104 },
-    { 5, (int)data_ov006_0212f274, data_ov006_0212f158, data_ov006_0212f170, data_ov006_0212f188 },
+    {3, (int)data_ov006_0212f1cc, data_ov006_0212f10c, data_ov006_0212f114, data_ov006_0212f12c},
+    {3, (int)data_ov006_0212f1f0, data_ov006_0212f13c, data_ov006_0212f11c, data_ov006_0212f134},
+    {5, (int)data_ov006_0212f238, data_ov006_0212f14c, data_ov006_0212f164, data_ov006_0212f17c},
+    {2, (int)data_ov006_0212f194, data_ov006_0212f0f4, data_ov006_0212f0f8, data_ov006_0212f0f0},
+    {3, (int)data_ov006_0212f214, data_ov006_0212f0fc, data_ov006_0212f124, data_ov006_0212f104},
+    {5, (int)data_ov006_0212f274, data_ov006_0212f158, data_ov006_0212f170, data_ov006_0212f188},
 };
 #pragma cplusplus on

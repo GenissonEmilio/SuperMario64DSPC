@@ -66,20 +66,12 @@ extern "C" struct {
     DaBarSpawnInfo info;
     int offsetToTop;
     const void *typeinfo;
-} g_profile_BAR = {
-    {
-        daBar_c_classInit,
-        0x011f,       /* behavior/execute priority */
-        0x0099,       /* render priority */
-        0x00000003,   /* actorFlags */
-        0,
-        0,
-        0,
-        0
-    },
-    0,
-    &typeid(daBar_c)
-};
+} g_profile_BAR = {{daBar_c_classInit, 0x011f, /* behavior/execute priority */
+                    0x0099,                    /* render priority */
+                    0x00000003,                /* actorFlags */
+                    0, 0, 0, 0},
+                   0,
+                   &typeid(daBar_c)};
 
 // @symbol _ZN7daBar_c13InitResourcesEv
 s32 daBar_c::InitResources()

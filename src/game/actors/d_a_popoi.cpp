@@ -117,7 +117,9 @@ extern char data_020a0e68[];            /* scratch Matrix4x3 */
 /* Sensor offset (0, 0, 44 units): this TU's own .data. Spelled as a plain
    three-word struct rather than Vector3, whose declared destructor would
    emit static-init machinery the ROM does not have here. */
-struct { s32 x, y, z; } data_ov077_02127a5c = {0, 0, 0x2c000};
+struct {
+    s32 x, y, z;
+} data_ov077_02127a5c = {0, 0, 0x2c000};
 
 unsigned short DecIfAbove0_Short(unsigned short *p);
 extern unsigned int RandomIntInternal(void *s);
