@@ -32,7 +32,7 @@
     {
       "name": ".data",
       "start": "0x020bc6e8",
-      "end": "0x020bc7d0"
+      "end": "0x020bc860"
     },
     {
       "name": ".bss",
