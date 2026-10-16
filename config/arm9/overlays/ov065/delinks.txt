@@ -45,6 +45,7 @@ src/game/actors/d_a_obj_ct_mecha04.cpp:
     .text start:0x0211a494 end:0x0211ab60
     .init start:0x0211c7d8 end:0x0211c890
     .ctor start:0x0211caf4 end:0x0211caf8
+    .data start:0x0211d16c end:0x0211d1ac
     .bss start:0x0211d8b4 end:0x0211d904
 
 src/game/actors/d_a_obj_ct_mecha05.cpp:
