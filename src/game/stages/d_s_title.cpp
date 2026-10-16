@@ -35,11 +35,6 @@
  *   passes differently at the call site, so declaring the true types breaks
  *   the byte match (notes/mwccarm-codegen.md 6az). Carried verbatim from
  *   the legacy Render source, unchanged.
- * - data_0209f5bc (the active scene) gates Behavior through a plain virtual
- *   call on slot 5; the tree's spellings disagree with each other and none
- *   has a ROM RTTI identity, so the TU-local shadow spells six virtuals and
- *   Behavior calls v5. Same slot as d_s_mg_base.cpp's SceneVCall6 and
- *   src/game/stages/d_s_game_over.cpp's SceneGate.
  * - The GX/G2 shadow namespaces have no header in the tree yet; they are
  *   carried from the legacy InitResources source unchanged.
  * - unk_050: the one own field, a repeat-delay counter. See dScTitle_c.h.
@@ -49,19 +44,10 @@
 #include "decl_common.h"
 #include "Sound.h"
 #include "PlayerInput.h"
+#include "dFdBrightness_c.h"
 
-/* The active scene at data_0209f5bc, which gates Behavior. Only its call
- * shape is proven -- a virtual call through slot 5 taking itself as the
- * receiver and returning a truth value -- so the class spells six virtuals
- * and Behavior calls v5. It has no ROM RTTI identity to name it with. */
-struct VObj {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual int v5();
-};
+/* SetFaders stores the scene fade controller in data_0209f5bc.
+ * Slot 5 is IsAtStart: input waits until the entrance fade reaches zero. */
 
 /* OAM::EnableSubOAM's receiver. A one-int stand-in carried verbatim from
  * the legacy Render source: the point of the local type is that the true
@@ -110,7 +96,7 @@ extern "C" {
  * ever read at [0]. */
 extern u32 data_0209b2f4;
 extern char data_0209e674[];
-extern VObj *data_0209f5bc;
+extern dFdBrightness_c *data_0209f5bc;
 extern u16 data_020a0e58[];
 extern u8 data_0209f2d8;
 extern u16 data_0209f5e8[];
@@ -264,7 +250,7 @@ s32 dScTitle_c::CleanupResources()
 // @symbol _ZN10dScTitle_c8BehaviorEv
 s32 dScTitle_c::Behavior()
 {
-    if (data_0209f5bc->v5()) {
+    if (data_0209f5bc->IsAtStart()) {
         int r3 = 0;
         u8 idx = gActivePlayerSlot;
         if (gTouchHeld[idx * 4] != 0)

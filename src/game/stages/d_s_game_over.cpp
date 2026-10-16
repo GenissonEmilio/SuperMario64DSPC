@@ -32,13 +32,6 @@
  *   spelling for 0730's pointer arithmetic (typing ergonomics, not a codegen
  *   wall -- void* compiles identically, see
  *   notes/experiments/gameover-2711-bg1scrptr-u16.md).
- * - data_0209f5bc (the active scene) gates Behavior through a plain virtual
- *   call on slot 5; the tree's spellings disagree with each other
- *   (SceneVCall6, UnkObj, ...) and none has a ROM RTTI identity. The
- *   TU-local shadow vtable this file used to spell out to slot 5 was
- *   measured inert and dropped for the plain call, so it is no longer a
- *   retained substitution
- *   (notes/experiments/gameover-2711-scenegate-virtual-call.md).
  * - unk_080[8]: zeroed by InitResources, never read back.
  */
 
@@ -57,6 +50,7 @@ enum dScGameOver_c_AssetId {
 #include "OamAttr.h"
 #include "decl_common.h"
 #include "PlayerInput.h"
+#include "dFdBrightness_c.h"
 
 /* File scope is the only place this pragma works. 0x020b060c needs
  * `#pragma opt_strength_reduction off`: it walks the eight glyphs with an
@@ -69,12 +63,8 @@ enum dScGameOver_c_AssetId {
  * here, all 10 members verify, so it costs the other nine nothing. */
 #pragma opt_strength_reduction off
 
-/* The active scene at data_0209f5bc, which gates Behavior. Only its call
- * shape is proven -- a virtual call through slot 5 taking itself as the
- * receiver and returning a truth value -- so the class spells six virtuals
- * and Behavior calls f05. It has no ROM RTTI identity to name it with. Same
- * slot as d_s_mg_base.cpp's SceneVCall6. */
-struct SceneGate { virtual int f00(); virtual int f01(); virtual int f02(); virtual int f03(); virtual int f04(); virtual int f05(); };
+/* SetFaders stores the scene fade controller in data_0209f5bc.
+ * Slot 5 is IsAtStart: input waits until the entrance fade reaches zero. */
 
 /* ROM symbols this TU references that no header in the tree declares yet.
  * Spelt by their exact final names under C linkage, the way decl_common.h
@@ -84,7 +74,7 @@ extern "C" {
 extern short data_ov003_020b1774[];
 extern unsigned short data_ov003_020b174c[];
 extern OamAttr *data_ov003_020b1824[];
-extern SceneGate *data_0209f5bc;
+extern dFdBrightness_c *data_0209f5bc;
 extern int data_0208ee44;
 /* Scalars, not tables: the two BG-enable bit registers, main and sub --
  * the spelling the rest of the tree uses for this pair. */
@@ -302,7 +292,7 @@ s32 dScGameOver_c::CleanupResources()
  // @symbol _ZN13dScGameOver_c8BehaviorEv
 s32 dScGameOver_c::Behavior()
 {
-    if (data_0209f5bc->f05() == 0)
+    if (data_0209f5bc->IsAtStart() == 0)
         goto end;
 
     func_ov003_020b060c();

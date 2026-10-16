@@ -32,6 +32,7 @@
 #include "common.h"
 #include "dScStarSel_c.h"
 #include "decl_common.h"
+#include "dFdBrightness_c.h"
 #include "OAM.h"
 #include "SaveData.h"
 #include "Message.h"
@@ -663,20 +664,12 @@ s32 dScStarSel_c::Render()
 // sharing is what puts the plate count in r0 and the slot index in r2 at the loop;
 // as four fresh locals they colour the other way round. The file's
 // opt_strength_reduction off keeps the frame at 0x834 (with it on, r8 is pushed).
-struct VObj {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual int v5();
-};
 
 extern "C" {
 u8 DecIfAbove0_Byte(u8 *p);
 u16 DecIfAbove0_Short(u16 *p);
 
-extern VObj *data_0209f5bc;
+extern dFdBrightness_c *data_0209f5bc;
 extern u16 data_0209f5e8[];
 }
 
@@ -692,7 +685,7 @@ s32 dScStarSel_c::Behavior() {
     u8 val;
     unsigned char idx;
 
-    if (data_0209f5bc->v5() != 0) {
+    if (data_0209f5bc->IsAtStart() != 0) {
         DecIfAbove0_Byte(&FB(this, 0x117));
         DecIfAbove0_Byte(&FB(this, 0x118));
         if (FB(this, 0x119) != 0 ||

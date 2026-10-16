@@ -36,14 +36,18 @@ extern "C" {
    each copies one Vector3 out of the line into the caller's out-param. Defined
    last so reverse source-order emission places them at the head of the run. */
 // @symbol func_ov002_020fea68
-void func_ov002_020fea68(int *a, int *b)
+void func_ov002_020fea68(int *outPosition, int *line)
 {
-    a[0] = b[0]; a[1] = b[1]; a[2] = b[2];
+    outPosition[0] = line[0];
+    outPosition[1] = line[1];
+    outPosition[2] = line[2];
 }
 
 // @symbol func_ov002_020fea4c
-void func_ov002_020fea4c(int *a, int *b)
+void func_ov002_020fea4c(int *outPosition, int *line)
 {
-    a[0] = b[3]; a[1] = b[4]; a[2] = b[5];
+    outPosition[0] = line[3];
+    outPosition[1] = line[4];
+    outPosition[2] = line[5];
 }
 }

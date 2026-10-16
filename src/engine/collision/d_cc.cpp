@@ -62,11 +62,14 @@ dCc_c::~dCc_c()
  * bytes as a method, but emits _ZN5dCc_c4InitEiijj. Production still names
  * this entry _ZN5dCc_c4InitE5Fix12IiES1_jj; keep the C-linkage boundary
  * until the symbol and its callers are reconciled. */
-extern "C" void _ZN5dCc_c4InitE5Fix12IiES1_jj(struct dCc_c *self, int a, int b, unsigned d, unsigned e) {
-  *(int*)&self->radius=a;
-  *(int*)&self->height=b;
-  *(int*)&self->flags=d;
-  *(int*)&self->vulnFlags=e;
+extern "C" void _ZN5dCc_c4InitE5Fix12IiES1_jj(dCc_c *self, int radius,
+                                            int height, unsigned flags,
+                                            unsigned vulnFlags)
+{
+    self->radius = radius;
+    self->height = height;
+    self->flags = flags;
+    self->vulnFlags = vulnFlags;
 }
 
 // @symbol _ZN5dCc_c5ClearEv
@@ -134,53 +137,54 @@ extern "C" void func_02014f44(u32 id, dCc_c *self)
 // @symbol _ZN5dCc_c7ProcessEv
 void dCc_c::Process()
 {
-    u32 owner0;
-    Fix12i vertDist;
-    Vector3* pos0;
+    u32 ownerID;
+    Fix12i verticalOverlap;
+    Vector3* position;
     dCc_c* other;
-    Fix12i dist;
+    Fix12i horizontalDistance;
     Fix12i overlap;
     u32 sharedFlags;
-    Fix12i minDist;
-    Vector3 diff;
+    Fix12i coincidentDistance;
+    Vector3 separation;
 
     if (data_0209cee8 == 0)
         return;
 
-    minDist = 0x1000;
+    coincidentDistance = 0x1000;
 
     do
     {
-        pos0 = &data_0209cee8->GetPos();
-        owner0 = data_0209cee8->GetOwnerID();
+        position = &data_0209cee8->GetPos();
+        ownerID = data_0209cee8->GetOwnerID();
 
         for (other = data_0209cee8->next; other != 0; other = other->next)
         {
             sharedFlags = (data_0209cee8->flags & other->vulnFlags) | (data_0209cee8->vulnFlags & other->flags);
             if (sharedFlags == 0)
                 continue;
-            if (owner0 != 0 && owner0 == other->GetOwnerID())
+            if (ownerID != 0 && ownerID == other->GetOwnerID())
                 continue;
 
-            Vector3& pos1 = other->GetPos();
-            diff.y = pos1.y - pos0->y;
-            if (diff.y < 0)
-                vertDist = other->height + diff.y;
+            Vector3& otherPosition = other->GetPos();
+            separation.y = otherPosition.y - position->y;
+            if (separation.y < 0)
+                verticalOverlap = other->height + separation.y;
             else
-                vertDist = data_0209cee8->height - diff.y;
-            if (vertDist <= 0)
+                verticalOverlap = data_0209cee8->height - separation.y;
+            if (verticalOverlap <= 0)
                 continue;
 
-            diff.x = pos1.x - pos0->x;
-            diff.z = pos1.z - pos0->z;
-            dist = Vec3_HorzLen(&diff);
-            if (dist == 0)
+            separation.x = otherPosition.x - position->x;
+            separation.z = otherPosition.z - position->z;
+            horizontalDistance = Vec3_HorzLen(&separation);
+            // Coincident centers need a nonzero separation for division.
+            if (horizontalDistance == 0)
             {
-                dist = minDist;
-                diff.x = dist;
+                horizontalDistance = coincidentDistance;
+                separation.x = horizontalDistance;
             }
 
-            overlap = data_0209cee8->radius + other->radius - dist;
+            overlap = data_0209cee8->radius + other->radius - horizontalDistance;
             if (overlap <= 0)
                 continue;
 
@@ -191,117 +195,117 @@ void dCc_c::Process()
 
             if (sharedFlags & 0x4000000)
             {
-                u32* pf1 = (u32*)((char*)other + 0x20);
-                u32* pf0 = (u32*)((char*)data_0209cee8 + 0x20);
-                *pf0 |= 0x8000000;
+                u32* otherHitFlags = &other->hitFlags;
+                u32* hitFlags = &data_0209cee8->hitFlags;
+                *hitFlags |= 0x8000000;
                 overlap -= 0x50000;
-                *pf1 |= 0x8000000;
+                *otherHitFlags |= 0x8000000;
                 if (overlap < 0)
                     continue;
             }
 
             {
-                u32 f0 = data_0209cee8->flags;
-                if (f0 & 2)
+                u32 flags = data_0209cee8->flags;
+                if (flags & 2)
                     continue;
-                u32 f1 = other->flags;
-                if (f1 & 2)
+                u32 otherFlags = other->flags;
+                if (otherFlags & 2)
                     continue;
 
-                if (f0 & 4)
+                if (flags & 4)
                 {
-                    if (f1 & 4)
+                    if (otherFlags & 4)
                     {
-                        if (diff.y < 0)
+                        if (separation.y < 0)
                         {
-                            Fix12i h = vertDist >> 1;
-                            data_0209cee8->pushback.y = h;
-                            other->pushback.y = -h;
+                            Fix12i halfVerticalOverlap = verticalOverlap >> 1;
+                            data_0209cee8->pushback.y = halfVerticalOverlap;
+                            other->pushback.y = -halfVerticalOverlap;
                         }
                         else
                         {
-                            Fix12i h = vertDist >> 1;
-                            data_0209cee8->pushback.y = -h;
-                            other->pushback.y = h;
+                            Fix12i halfVerticalOverlap = verticalOverlap >> 1;
+                            data_0209cee8->pushback.y = -halfVerticalOverlap;
+                            other->pushback.y = halfVerticalOverlap;
                         }
                         other->pushback.x = 0;
                         other->pushback.z = 0;
                     }
                     else
                     {
-                        if (diff.y < 0)
-                            other->pushback.y = -vertDist;
+                        if (separation.y < 0)
+                            other->pushback.y = -verticalOverlap;
                         else
-                            other->pushback.y = vertDist;
+                            other->pushback.y = verticalOverlap;
                         if (data_0209cee8->flags & 8)
                         {
-                            Fix12i r = data_0209cee8->radius;
-                            Fix12i t = overlap - (r - (((r << 1) + r) >> 3));
-                            if (t < 0)
+                            Fix12i radius = data_0209cee8->radius;
+                            Fix12i adjustedOverlap = overlap - (radius - (((radius << 1) + radius) >> 3));
+                            if (adjustedOverlap < 0)
                                 overlap = 0;
                             else
-                                overlap = cstd::fdiv(t, dist);
+                                overlap = cstd::fdiv(adjustedOverlap, horizontalDistance);
                             func_02014f44(data_0209cee8->otherOwner, data_0209cee8);
                         }
                         else
-                            overlap = cstd::fdiv(overlap, dist);
-                        other->pushback.x = (Fix12i)(((long long)diff.x * overlap + 0x800) >> 12);
-                        other->pushback.z = (Fix12i)(((long long)diff.z * overlap + 0x800) >> 12);
+                            overlap = cstd::fdiv(overlap, horizontalDistance);
+                        other->pushback.x = (Fix12i)(((long long)separation.x * overlap + 0x800) >> 12);
+                        other->pushback.z = (Fix12i)(((long long)separation.z * overlap + 0x800) >> 12);
                     }
                     data_0209cee8->pushback.x = 0;
                     data_0209cee8->pushback.z = 0;
                 }
-                else if (f1 & 4)
+                else if (otherFlags & 4)
                 {
-                    if (diff.y < 0)
-                        data_0209cee8->pushback.y = vertDist;
+                    if (separation.y < 0)
+                        data_0209cee8->pushback.y = verticalOverlap;
                     else
-                        data_0209cee8->pushback.y = -vertDist;
+                        data_0209cee8->pushback.y = -verticalOverlap;
                     if (other->flags & 8)
                     {
-                        Fix12i r = data_0209cee8->radius;
-                        Fix12i t = overlap - (r - (((r << 1) + r) >> 3));
-                        if (t < 0)
+                        Fix12i radius = data_0209cee8->radius;
+                        Fix12i adjustedOverlap = overlap - (radius - (((radius << 1) + radius) >> 3));
+                        if (adjustedOverlap < 0)
                             overlap = 0;
                         else
-                            overlap = cstd::fdiv(t, dist);
+                            overlap = cstd::fdiv(adjustedOverlap, horizontalDistance);
                         func_02014f44(other->otherOwner, other);
                     }
                     else
-                        overlap = cstd::fdiv(overlap, dist);
-                    data_0209cee8->pushback.x = -(Fix12i)(((long long)diff.x * overlap + 0x800) >> 12);
-                    data_0209cee8->pushback.z = -(Fix12i)(((long long)diff.z * overlap + 0x800) >> 12);
+                        overlap = cstd::fdiv(overlap, horizontalDistance);
+                    data_0209cee8->pushback.x = -(Fix12i)(((long long)separation.x * overlap + 0x800) >> 12);
+                    data_0209cee8->pushback.z = -(Fix12i)(((long long)separation.z * overlap + 0x800) >> 12);
                     other->pushback.x = 0;
                     other->pushback.z = 0;
                 }
-                else if (!(f0 & 0x10000000) && !(f1 & 0x10000000))
+                else if (!(flags & 0x10000000) && !(otherFlags & 0x10000000))
                 {
-                    if (diff.y < 0)
+                    if (separation.y < 0)
                     {
-                        Fix12i h = vertDist >> 1;
-                        data_0209cee8->pushback.y = h;
-                        other->pushback.y = -h;
+                        Fix12i halfVerticalOverlap = verticalOverlap >> 1;
+                        data_0209cee8->pushback.y = halfVerticalOverlap;
+                        other->pushback.y = -halfVerticalOverlap;
                     }
                     else
                     {
-                        Fix12i h = vertDist >> 1;
-                        data_0209cee8->pushback.y = -h;
-                        other->pushback.y = h;
+                        Fix12i halfVerticalOverlap = verticalOverlap >> 1;
+                        data_0209cee8->pushback.y = -halfVerticalOverlap;
+                        other->pushback.y = halfVerticalOverlap;
                     }
-                    Fix12i ratio = cstd::fdiv(overlap, dist) >> 1;
-                    data_0209cee8->pushback.x = -(Fix12i)(((long long)diff.x * ratio + 0x800) >> 12);
-                    data_0209cee8->pushback.z = -(Fix12i)(((long long)diff.z * ratio + 0x800) >> 12);
-                    other->pushback.x = (Fix12i)(((long long)diff.x * ratio + 0x800) >> 12);
-                    other->pushback.z = (Fix12i)(((long long)diff.z * ratio + 0x800) >> 12);
+                    Fix12i ratio = cstd::fdiv(overlap, horizontalDistance) >> 1;
+                    data_0209cee8->pushback.x = -(Fix12i)(((long long)separation.x * ratio + 0x800) >> 12);
+                    data_0209cee8->pushback.z = -(Fix12i)(((long long)separation.z * ratio + 0x800) >> 12);
+                    other->pushback.x = (Fix12i)(((long long)separation.x * ratio + 0x800) >> 12);
+                    other->pushback.z = (Fix12i)(((long long)separation.z * ratio + 0x800) >> 12);
                 }
             }
         }
 
         {
-            dCc_c* nxt = data_0209cee8->next;
+            dCc_c* nextCollider = data_0209cee8->next;
             data_0209cee8->prev = 0;
             data_0209cee8->next = 0;
-            data_0209cee8 = nxt;
+            data_0209cee8 = nextCollider;
         }
     } while (data_0209cee8 != 0);
 }

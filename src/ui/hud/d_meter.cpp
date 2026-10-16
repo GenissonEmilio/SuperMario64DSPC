@@ -46,8 +46,6 @@
  *
  * leftovers:
  * - The HUD globals are data_ names: symbols.txt has no recovered name for them.
- * - VObj below is a file-local shadow of the object data_0209f5bc points at;
- *   the tree has no header for it and only its slot-5 method is called.
  * - The OAM class below stands in for the OamAttr statics include/OAM.h lacks.
  * - The OAM::Render overloads that take Fix12<int> by value keep their mangled
  *   spellings: the natural static member call homes the Fix12 arguments
@@ -80,6 +78,7 @@ enum dMeter_c_AssetId {
 #include "dMeter_c.h"
 #include "Timer.h"
 #include "decl_common.h"
+#include "dFdBrightness_c.h"
 #include "types.h"
 #include "decl_Player.h"
 #include "Player.h"
@@ -118,15 +117,6 @@ public:
     static void Render(bool vis, OamAttr* attr, int x, int y, int a, int b, Matrix2x2* m);
 };
 
-/* The object data_0209f5bc points at, reached through slot 5 alone. */
-struct VObj {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual int v5();
-};
 
 namespace GX { void LoadOBJPltt(const void*, u32, u32); }
 
@@ -204,7 +194,7 @@ extern struct OamAttr data_ov002_0210c690;
 extern int _ZN5Event6GetBitEj(unsigned int bit);
 extern int data_0209caa0[];
 extern unsigned char data_0209f284;
-extern VObj *data_0209f5bc;
+extern dFdBrightness_c *data_0209f5bc;
 void* LoadFile(int handle);
 void DecompressLZ16(void* handle, int addr);
 void Deallocate(void* handle);
@@ -401,7 +391,7 @@ int dMeter_c::Behavior()
 {
     int t;
 
-    if (data_0209f5bc->v5() == 0)
+    if (data_0209f5bc->IsAtStart() == 0)
         goto ret;
     t = (data_0209f2d8 == 1);
     if (t != false)

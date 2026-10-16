@@ -2,6 +2,7 @@
 #include "types.h"
 // @symbol _ZN10dScEntry_c8BehaviorEv
 #include "decl_common.h"
+#include "dFdBrightness_c.h"
 #include "dScEntry_c.h"
 /* dScEntry_c::Behavior() -- vtable slot 6. Runs the sub-screen fade-out if
  * one is in flight, then the per-frame callback, then every live icon. The local `Self` models
@@ -14,15 +15,7 @@ extern "C" {
     extern int data_0209fc68;
 }
 
-struct VObj {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual int v5();
-};
-extern "C" VObj *data_0209f5bc;
+extern "C" dFdBrightness_c *data_0209f5bc;
 
 struct Poly0 { virtual void v0(); };
 
@@ -57,7 +50,7 @@ s32 dScEntry_c::Behavior()
         }
     }
 
-    if (data_0209f5bc->v5() == 0 || c->isFading != 0)
+    if (data_0209f5bc->IsAtStart() == 0 || c->isFading != 0)
         return 1;
 
     if (data_0209fc68 != 0) {

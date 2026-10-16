@@ -1,0 +1,891 @@
+{
+  "base_commit": "723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+  "scope": "Scene fade-controller calls and cylinder/line collision readability; partial progress on broader scene and physics cleanup.",
+  "source_changes": [
+    "Replace five local six-slot fader stand-ins with dFdBrightness_c::IsAtStart in entry, title, star-select, game-over and HUD callers.",
+    "Use known cylinder fields in Init and hit-flag writes; name collision positions, separation, overlap and owner ID without changing control flow.",
+    "Name line endpoints, midpoint and output parameters; preserve the existing raw-copy ABI."
+  ],
+  "naming_evidence": [
+    {
+      "claim": "data_0209f5bc is the installed fade controller; slot 5 is IsAtStart.",
+      "sources": [
+        "src/game/stages/d_scene.cpp: dScene_c::SetFaders stores its dFdBrightness_c pointer into the global",
+        "include/dFdBrightness_c.h: virtual slot 5",
+        "src/runtime/graphics/fader/d_fader.cpp: IsAtStart tests currInterp == 0"
+      ]
+    },
+    {
+      "claim": "Cylinder field accesses and line endpoints use existing measured layouts.",
+      "sources": [
+        "include/dCc_c.h: radius 0x04, height 0x08, flags 0x18, vulnFlags 0x1c, hitFlags 0x20",
+        "include/dM3dGLin.h: start 0x00, end 0x0c",
+        "src/engine/collision/d_cc.cpp: distance and overlap arithmetic"
+      ]
+    }
+  ],
+  "runtime_validation": {
+    "melonDS_used": false,
+    "reason": "These changes follow existing field layouts, SetFaders assignment and known virtual slots; no new gameplay interpretation needs runtime evidence."
+  },
+  "verification": {
+    "compiler": "2004/b56",
+    "complete_allocated_output_comparison": {
+      "base": "723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+      "compiler": "2004/b56",
+      "files": [
+        {
+          "file": "src/_ZN10dScEntry_c8BehaviorEv.cpp",
+          "source_sha256": "ce553be2c10a740072a450fbcd3e34eaa027fb44929d699ecf4f2d5636f4b839",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 1,
+          "after_sections": 1,
+          "before_sha256": "5dac56aa6c73e2ffdbf0824586bcbbf4b6b72daf62a868abb780bf6d14a4ae00",
+          "after_sha256": "5dac56aa6c73e2ffdbf0824586bcbbf4b6b72daf62a868abb780bf6d14a4ae00"
+        },
+        {
+          "file": "src/engine/collision/d_bg_ch_lin.cpp",
+          "source_sha256": "c7dc2c1dee6f5f7a190bc1ef85eb3dfc30198f3720b2bf1bcdbbe764f4747ce5",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 23,
+          "after_sections": 23,
+          "before_sha256": "aed5a226afcc6a52977945808b73a2b9e7d83bcccdfdb379d53a68283d1cfd04",
+          "after_sha256": "aed5a226afcc6a52977945808b73a2b9e7d83bcccdfdb379d53a68283d1cfd04"
+        },
+        {
+          "file": "src/engine/collision/d_cc.cpp",
+          "source_sha256": "1382fe7f2376eeec6fabec966b7afcd998f0846d278405afb1e72641e24a22b9",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 16,
+          "after_sections": 16,
+          "before_sha256": "99a28944ac3a8a16716755c574cd54fde9a99d739c557947d1b012cf529cbe36",
+          "after_sha256": "99a28944ac3a8a16716755c574cd54fde9a99d739c557947d1b012cf529cbe36"
+        },
+        {
+          "file": "src/engine/collision/d_m3d_g_lin.cpp",
+          "source_sha256": "ba82b0f95f4ff1ca25cce54032e1270a346ac083c2e6373fb22f2dd152e6c1bd",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 5,
+          "after_sections": 5,
+          "before_sha256": "635a596f0c92cf74e75af4cbd02de8e9ecb1acb9e24298cbdea07fb4e2ad6a91",
+          "after_sha256": "635a596f0c92cf74e75af4cbd02de8e9ecb1acb9e24298cbdea07fb4e2ad6a91"
+        },
+        {
+          "file": "src/game/stages/d_s_game_over.cpp",
+          "source_sha256": "d85617c3f51891f18d3a77c16af93396dc5628d911504778a01657085dbde3a2",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 21,
+          "after_sections": 21,
+          "before_sha256": "06ee1988ebd6df8bf82129e1512c2a2be6f69b03d1f760002b36dd114d9c3d73",
+          "after_sha256": "06ee1988ebd6df8bf82129e1512c2a2be6f69b03d1f760002b36dd114d9c3d73"
+        },
+        {
+          "file": "src/game/stages/d_s_star_sel_methods.cpp",
+          "source_sha256": "5fb0e64a5e9e6c6e19012de7b88ca04f91c55e65e6991994fe71783d6be315c1",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 25,
+          "after_sections": 25,
+          "before_sha256": "b7e912468bdddc03df8fd291252caa9bb380d421ab2cca48c7c49b18c9d93ebc",
+          "after_sha256": "b7e912468bdddc03df8fd291252caa9bb380d421ab2cca48c7c49b18c9d93ebc"
+        },
+        {
+          "file": "src/game/stages/d_s_title.cpp",
+          "source_sha256": "a18c7b605792f4d919ff0d1881d4495ec9979fe0e51f82cc0fd1c32963370859",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 22,
+          "after_sections": 22,
+          "before_sha256": "42b926371871b97b03c83b60245ff85281cb1c7db022be6da68dae2c27e5fe17",
+          "after_sha256": "42b926371871b97b03c83b60245ff85281cb1c7db022be6da68dae2c27e5fe17"
+        },
+        {
+          "file": "src/ui/hud/d_meter.cpp",
+          "source_sha256": "c99ceef9e3b4da973faaeef2269d0ce2ff73a97cb6be348936ce325f42ef1473",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 28,
+          "after_sections": 28,
+          "before_sha256": "d227cfd0745905edcb1a73a4a75cf18a2d1a6aa24423f799319cdbe08b096648",
+          "after_sha256": "d227cfd0745905edcb1a73a4a75cf18a2d1a6aa24423f799319cdbe08b096648"
+        }
+      ]
+    },
+    "relocated_functions": 81,
+    "verified": 81,
+    "blind": 0,
+    "wrong": 0,
+    "function_results": [
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_cD1Ev",
+        "module": "ov003",
+        "addr": "0x20b0580",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_cD0Ev",
+        "module": "ov003",
+        "addr": "0x20b05bc",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c19func_ov003_020b060cEv",
+        "module": "ov003",
+        "addr": "0x20b060c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c19func_ov003_020b0730Ei",
+        "module": "ov003",
+        "addr": "0x20b0730",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c16OnPendingDestroyEv",
+        "module": "ov003",
+        "addr": "0x20b0810",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c6RenderEv",
+        "module": "ov003",
+        "addr": "0x20b0814",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c8BehaviorEv",
+        "module": "ov003",
+        "addr": "0x20b0894",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c16CleanupResourcesEv",
+        "module": "ov003",
+        "addr": "0x20b0b34",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "_ZN13dScGameOver_c13InitResourcesEv",
+        "module": "ov003",
+        "addr": "0x20b0b3c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "name": "dScGameOver_c_classInit",
+        "module": "ov003",
+        "addr": "0x20b1118",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_cD1Ev",
+        "module": "ov003",
+        "addr": "0x20ad660",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_cD0Ev",
+        "module": "ov003",
+        "addr": "0x20ad69c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "func_ov003_020ad6ec",
+        "module": "ov003",
+        "addr": "0x20ad6ec",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_c16OnPendingDestroyEv",
+        "module": "ov003",
+        "addr": "0x20ad7a0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_c6RenderEv",
+        "module": "ov003",
+        "addr": "0x20ad7a4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_c8BehaviorEv",
+        "module": "ov003",
+        "addr": "0x20ad814",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_c16CleanupResourcesEv",
+        "module": "ov003",
+        "addr": "0x20ada80",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "_ZN10dScTitle_c13InitResourcesEv",
+        "module": "ov003",
+        "addr": "0x20ada9c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "dScTitle_c_classInit",
+        "module": "ov003",
+        "addr": "0x20adc10",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "func_ov003_020adc74",
+        "module": "ov003",
+        "addr": "0x20adc74",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "name": "func_ov003_020adcbc",
+        "module": "ov003",
+        "addr": "0x20adcbc",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_c7ProcessEv",
+        "module": "arm9",
+        "addr": "0x2014aa8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "func_02014f44",
+        "module": "arm9",
+        "addr": "0x2014f44",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "func_02014f5c",
+        "module": "arm9",
+        "addr": "0x2014f5c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_c6UnlinkEv",
+        "module": "arm9",
+        "addr": "0x2014fa4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_c6UpdateEv",
+        "module": "arm9",
+        "addr": "0x2014ff0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_c5ClearEv",
+        "module": "arm9",
+        "addr": "0x2015024",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_c4InitE5Fix12IiES1_jj",
+        "module": "arm9",
+        "addr": "0x2015040",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_cD2Ev",
+        "module": "arm9",
+        "addr": "0x2015058",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_cD0Ev",
+        "module": "arm9",
+        "addr": "0x201507c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_cD1Ev",
+        "module": "arm9",
+        "addr": "0x20150a8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "name": "_ZN5dCc_cC2Ev",
+        "module": "arm9",
+        "addr": "0x20150cc",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_Lin10GetClsnPosEv",
+        "module": "arm9",
+        "addr": "0x20375d0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_Lin10SetClsnPosERK7Vector3",
+        "module": "arm9",
+        "addr": "0x20375ec",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_Lin13func_02037608Ev",
+        "module": "arm9",
+        "addr": "0x2037608",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_Lin13SetObjAndLineERK7Vector3S2_P8dActor_c",
+        "module": "arm9",
+        "addr": "0x2037670",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_LinD0Ev",
+        "module": "arm9",
+        "addr": "0x2037710",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_LinD1Ev",
+        "module": "arm9",
+        "addr": "0x2037764",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZN9dBgCh_LinC1Ev",
+        "module": "arm9",
+        "addr": "0x20377b0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZThn16_N9dBgCh_LinD0Ev",
+        "module": "arm9",
+        "addr": "0x203780c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "name": "_ZThn16_N9dBgCh_LinD1Ev",
+        "module": "arm9",
+        "addr": "0x203781c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "name": "func_ov002_020fea4c",
+        "module": "ov002",
+        "addr": "0x20fea4c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "name": "func_ov002_020fea68",
+        "module": "ov002",
+        "addr": "0x20fea68",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "name": "_ZN8dM3dGLin3SetERK7Vector3S2_",
+        "module": "ov002",
+        "addr": "0x20fea84",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "name": "_ZN8dM3dGLinD2Ev",
+        "module": "ov002",
+        "addr": "0x20feab8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/_ZN10dScEntry_c8BehaviorEv.cpp",
+        "name": "_ZN10dScEntry_c8BehaviorEv",
+        "module": "ov075",
+        "addr": "0x211a2b8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_cD1Ev",
+        "module": "ov003",
+        "addr": "0x20addfc",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_cD0Ev",
+        "module": "ov003",
+        "addr": "0x20ade54",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020adec0Ej",
+        "module": "ov003",
+        "addr": "0x20adec0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020adf50Ev",
+        "module": "ov003",
+        "addr": "0x20adf50",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020adfc8Ev",
+        "module": "ov003",
+        "addr": "0x20adfc8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020ae0b0Ev",
+        "module": "ov003",
+        "addr": "0x20ae0b0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020ae1a4Ei",
+        "module": "ov003",
+        "addr": "0x20ae1a4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020ae238Ev",
+        "module": "ov003",
+        "addr": "0x20ae238",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c19func_ov003_020ae358Ev",
+        "module": "ov003",
+        "addr": "0x20ae358",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c16OnPendingDestroyEv",
+        "module": "ov003",
+        "addr": "0x20ae6f0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c6RenderEv",
+        "module": "ov003",
+        "addr": "0x20ae6f4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c8BehaviorEv",
+        "module": "ov003",
+        "addr": "0x20af038",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c16CleanupResourcesEv",
+        "module": "ov003",
+        "addr": "0x20af86c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "_ZN12dScStarSel_c13InitResourcesEv",
+        "module": "ov003",
+        "addr": "0x20af8a0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "name": "dScStarSel_c_classInit",
+        "module": "ov003",
+        "addr": "0x20b04f0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_cD1Ev",
+        "module": "ov002",
+        "addr": "0x20fb8f8",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_cD0Ev",
+        "module": "ov002",
+        "addr": "0x20fb928",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c15RenderTimeTimerEv",
+        "module": "ov002",
+        "addr": "0x20fb96c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c15CalculateDigitsEt",
+        "module": "ov002",
+        "addr": "0x20fbdac",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c15RenderLifeCountEv",
+        "module": "ov002",
+        "addr": "0x20fbe38",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c19RenderCameraButtonsEv",
+        "module": "ov002",
+        "addr": "0x20fc04c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c17RenderSilverStarsEv",
+        "module": "ov002",
+        "addr": "0x20fc3c4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c15RenderStarCountEv",
+        "module": "ov002",
+        "addr": "0x20fc458",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c14RenderRedCoinsEv",
+        "module": "ov002",
+        "addr": "0x20fc77c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c15RenderCoinCountEv",
+        "module": "ov002",
+        "addr": "0x20fc81c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c13RenderVsTimerEv",
+        "module": "ov002",
+        "addr": "0x20fca18",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c13UpdateVsTimerEv",
+        "module": "ov002",
+        "addr": "0x20fce9c",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c17RenderHealthMeterEv",
+        "module": "ov002",
+        "addr": "0x20fcfec",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c17UpdateHealthMeterEv",
+        "module": "ov002",
+        "addr": "0x20fd218",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c16CleanupResourcesEv",
+        "module": "ov002",
+        "addr": "0x20fd5d4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c16OnPendingDestroyEv",
+        "module": "ov002",
+        "addr": "0x20fd5dc",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c6RenderEv",
+        "module": "ov002",
+        "addr": "0x20fd5e0",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c8BehaviorEv",
+        "module": "ov002",
+        "addr": "0x20fd7a4",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "_ZN8dMeter_c13InitResourcesEv",
+        "module": "ov002",
+        "addr": "0x20fda04",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "name": "dMeter_c_classInit",
+        "module": "ov002",
+        "addr": "0x20fe154",
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": []
+      }
+    ],
+    "declaration_agreement": {
+      "command": "python tools/check_decl_agreement.py --changed 723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+      "exit_code": 0,
+      "scoped_files": 155,
+      "new_disagreements": 0,
+      "new_local_redeclarations": 0
+    },
+    "rombuild": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "build/scene-physics-rombuild.log",
+      "log_sha256": "7bccc646ef72ba0c84bae4250834af964ee52d32b36981c9e0c8bbcbb8a80300",
+      "compiled": 8,
+      "cached": 2693,
+      "module_fidelity": "106/106 exact",
+      "source_functions_reproducing": 11334,
+      "source_functions_mismatching": 0,
+      "source_owned_data": {
+        "reproducing": 338,
+        "mismatching": 0
+      },
+      "source_owned_bss_claims": 245,
+      "intact_tu_gates": "dsd modules PASS; zero new symbol errors; storage aliases exact",
+      "rom_file_generated_by_candidate": false,
+      "baseline_control": "Automatic no-substitution ROM-gap control passed modules but failed its symbol check; candidate intact-TU gate reports zero new symbol errors.",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15,
+        "note": "These are the whole-tree advisory counts, separate from exact linked modules and source-owned data gates; this change does not claim to resolve them."
+      }
+    },
+    "diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  },
+  "remaining_work": [
+    "Independent source review and publication have not been performed.",
+    "Continue remaining scene/minigame fader stand-ins and dBgCh_Actr offset-based movement code; recheck live ownership before edits.",
+    "Preserve address names and unknown collision flags until caller or melonDS evidence supports stronger names.",
+    "The scene-base class has an existing live queue owner (scene-tu-reduce-1002); this candidate does not edit that scope."
+  ]
+}
