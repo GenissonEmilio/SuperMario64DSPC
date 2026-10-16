@@ -485,5 +485,125 @@
       "path": "build/yegg-current1014/prior-source-acceptance-summary.json",
       "sha256": "e6fb133f19c4b1b7dc475f04de08dbe7be65750fb49693a0c679a542f2662a38"
     }
-  ]
+  ],
+  "typed_result_access_checkpoint_2026_10_16": {
+    "date": "2026-10-16",
+    "task_id": "yegg-native-current-dfd-continuation1016",
+    "producer": "Codex Astra / codex-yegg-native-current-dfd-astra-producer1016",
+    "base_commit": "dfd9500e1662260bc9e3a4fc757f779899fe783c",
+    "status": "bounded producer checkpoint; independent verification pending",
+    "source_path": "src/game/actors/d_a_yegg.cpp",
+    "source_physical_sha256": "0ee6537267098a45b4b781d4909bdc9f80efa26de5c6468ebfad78615db9d908",
+    "changes": [
+      "Borrow the actual dBgPi floor result and call its inherited surface.CopyNormalTo, retaining the existing void-pointer API boundary.",
+      "Load the existing Player mCarryMatrix member while retaining the M48 copy view, guard, volatile workspace and ordering.",
+      "Remove only the corresponding stale raw-offset and padding descriptions."
+    ],
+    "unchanged_scope": "No shared header, manifest, compiler policy, callee declaration, layout or lifecycle change. Remaining Yegg reconstruction is partial.",
+    "validation": {
+      "compiler": "2004/b56",
+      "initial_fresh_compiles": {
+        "untouched_base_control": 1,
+        "candidate": 1
+      },
+      "whole_RAW": {
+        "bytes": 26808,
+        "control_equals_candidate": true,
+        "sha256": "ed175da7ffd0772481935afbc654c750d459e9724362654c46a333bc32af1fa4"
+      },
+      "whole_prepared": {
+        "bytes": 26808,
+        "control_equals_candidate": true,
+        "sha256": "b5358c2475f7bd8f4e76b92a3479ef64d57fc80d687a3e12830ff820f62a87da"
+      },
+      "saved_object_link_checks": {
+        "each_epoch_checked": 34,
+        "each_epoch_VERIFIED": 34,
+        "blind": 0,
+        "diffs": 0
+      },
+      "standard_TU_CLI": {
+        "command": "python tools/tubuild.py verify ov002/daYegg_c --no-write",
+        "exit_code": 1,
+        "text_MATCH": 33,
+        "objisolate_and_relocation_destinations": "clean",
+        "refusal": "Raw .text __sinit_d_a_yegg.cpp, size0xdc, is classified EXTRA despite existing manifest.init ownership.",
+        "independent_untouched_base_control": "Same exit1, byte-identical complete stdout and RAW object; no tool/policy waiver or retry.",
+        "normal_route_34_checks_remain_separate": true
+      },
+      "full_build": {
+        "command": "python tools/rombuild.py -j16 --no-rom",
+        "exit_code": 0,
+        "seconds": 161.85899999999674,
+        "modules_exact": 106,
+        "modules_total": 106,
+        "functions_reproducing": 11334,
+        "functions_mismatching": 0,
+        "objects_cached": 2506,
+        "objects_freshly_compiled": 1,
+        "owned_data_exact": 338,
+        "BSS_claims": 245,
+        "BSS_bytes": 31216,
+        "intact_new_symbol_errors": 0,
+        "inherited_baseline_symbol_errors": 9,
+        "broader_data_diagnostic": {
+          "verified": 974,
+          "partial": 1559,
+          "differ": 1,
+          "unnamed": 15
+        }
+      },
+      "postcommit_scoped_gates": "pending; recorded separately after actual execution"
+    },
+    "historical_attribution_erratum": {
+      "finding_id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+      "kind": "provenance",
+      "original_finding_verbatim": {
+        "disposition": "unresolved",
+        "id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
+        "kind": "provenance",
+        "location": "notes/experiments/yegg-current9893-1014.json:13",
+        "reason": "actual_composition_report_producer reads Codex /root, claude-producer-0930d; the actual new task producer is Codex /root, codex-yegg-current9893-root-producer1014. Root confirmed the generator incorrectly selected first inherited session. Producer inheritance is not authorship of this report.",
+        "summary": "New composition report attributes its producer session to an unrelated inherited historical Claude label."
+      },
+      "rejected_report": {
+        "commit": "e3fb4b8d5fabe6f57b67b5d6fce3db8249831ee5",
+        "path": "notes/experiments/yegg-current9893-1014.json",
+        "Git_LF_sha256": "f52b66dc0eb5e64f42a76f2c663a259d3159dc4b73294fccb3cc8b44a4e12454",
+        "incorrect_actual_composition_report_producer": "Codex /root, claude-producer-0930d"
+      },
+      "already_repaired_historical_report": {
+        "commit": "09ffcc9873ac4cef9d80d70e14175df9b94f85b2",
+        "path": "notes/experiments/yegg-current9893-1014.json",
+        "Git_LF_sha256": "4986c221f9b76c6cab5548c6e54ce9ebc93bc494f1597f8e591f9203f6dc5c4a",
+        "actual_composition_report_producer": "Codex /root, codex-yegg-current9893-root-producer1014"
+      },
+      "separate_current_resolution": "The historical09ff report already corrected only its producer attribution and received independent partial review. This dated erratum reconciles that fact while preserving the original unresolved dictionary. Exact current appended bytes and immutable candidate await independent review; no new historical byte proof or original-packet rewrite is claimed.",
+      "historical_identity_preserved": "The original yegg-current1014.json identity belongs to the different47aa composition and codex-yegg-current-producer1014; it remains unchanged."
+    },
+    "remaining_reconstruction_original_finding_verbatim": {
+      "disposition": "deferred",
+      "id": "YEGG-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+      "kind": "reconstruction",
+      "location": "src/actors/daYegg_c.cpp and include/daYegg_c.h",
+      "owner": "codex-yegg-readable-producer1014 and codex-yegg-readable-coordinator1014 reconstruction followup",
+      "reason": "Candidate retains Fix12 scalar bridges and other raw/POD array-backed math workspaces, spawned-coin field writes, DOSUN byte, Player+0xc8 access, floor-result+4 view, unknown fields/numeric flags and address-based helper names. Existing two free Player-entry helpers and constructor/factory alias boundaries remain. Historic compiler measurements are not newly generalized; no original method/field/file identifiers recovered. New34strict/storage/metadata proof accepts this slice with existing ownership policy, not completion of every class or caller ABI.",
+      "summary": "Yegg remains a partial reconstructed class despite three genuine interface/lifetime replacements and intact owned TU storage."
+    },
+    "remaining_reconstruction_current_disposition": "partial/deferred; these two reads are resolved in this candidate, while all other recorded limitations remain",
+    "obligations": {
+      "original_Source": 257,
+      "original_proof_dependencies": 50,
+      "original_total": 307,
+      "accepted_Source": 208,
+      "separate_foundations": 4,
+      "remaining_migrations": 45,
+      "accepted_proof_dependencies": 30,
+      "remaining_proof_dependencies": 20,
+      "counter_increment": 0,
+      "full307_or_current_main_acceptance": false,
+      "foreign_handoffs_accepted": false
+    }
+  }
 }
