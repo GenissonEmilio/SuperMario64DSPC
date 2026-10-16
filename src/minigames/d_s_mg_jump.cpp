@@ -59,3 +59,16 @@ extern "C" void *dScMgJump_c_classInit(void)
     }
     return p;
 }
+
+/* .data 0x0213cb98..0x0213cbb4 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int _ZTI11dScMgJump_c[3] = {
+    0x0209a764, 0x0213cba4, 0x0213c5c8,
+};
+int _ZTS11dScMgJump_c[4] = {
+    0x53643131, 0x4a674d63, 0x5f706d75, 0x00000063,
+};
+}
+#pragma section forcedata end

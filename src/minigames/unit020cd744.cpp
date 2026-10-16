@@ -2323,3 +2323,18 @@ extern "C" void TrmpLine_Reset(char *p)
     p[808] = 0;
 }
 }
+
+/* .data 0x0213b19c..0x0213b1a4 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int _ZTI19dMgTrmpObjAdapter_c[2] = {
+    0x0209a774, 0x0213b288,
+};
+}
+#pragma section forcedata end
+
+/* .bss 0x02141402..0x02141590 */
+extern "C" {
+unsigned char data_ov006_02141402[398];
+}

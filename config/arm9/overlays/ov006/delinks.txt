@@ -29,6 +29,7 @@ src/minigames/d_mg_jump3d_mario.cpp:
 src/minigames/unit020c8a30.cpp:
     complete
     .text start:0x020c8a30 end:0x020c8dd4
+    .bss start:0x021404dc end:0x021404f0
 
 src/minigames/d_mg_trmpln2_mario.cpp:
     complete
@@ -39,6 +40,8 @@ src/minigames/d_mg_trmpln2_mario.cpp:
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018
+    .data start:0x0213b19c end:0x0213b1a4
+    .bss start:0x02141402 end:0x02141590
 
 src/minigames/d_s_mg_amida.cpp:
     complete
@@ -110,6 +113,7 @@ src/minigames/d_s_mg_hanachan_methods.cpp:
 src/minigames/d_s_mg_hanachan.cpp:
     complete
     .text start:0x020ede18 end:0x020edec0
+    .data start:0x0213ca7c end:0x0213ca9c
 
 src/minigames/d_s_mg_jump_methods.cpp:
     complete
@@ -122,6 +126,7 @@ src/minigames/d_s_mg_jump_methods.cpp:
 src/minigames/d_s_mg_jump.cpp:
     complete
     .text start:0x020eeafc end:0x020eebe8
+    .data start:0x0213cb98 end:0x0213cbb4
 
 src/minigames/d_s_mg_jump2.cpp:
     complete
@@ -198,6 +203,7 @@ src/minigames/d_s_mg_roulette_methods.cpp:
 src/minigames/d_s_mg_roulette.cpp:
     complete
     .text start:0x0210a400 end:0x0210a4b0
+    .data start:0x0213e4e8 end:0x0213e4f8
 
 src/minigames/d_s_mg_single3d_base.cpp:
     complete

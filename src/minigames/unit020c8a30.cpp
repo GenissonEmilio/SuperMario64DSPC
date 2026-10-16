@@ -180,3 +180,12 @@ void Puff_DrawAll(void){
   }
 }
 }
+
+/* .bss 0x021404dc..0x021404f0 */
+extern "C" {
+int data_ov006_021404e8[1];
+int data_ov006_021404e4[1];
+int data_ov006_021404e0[1];
+int data_ov006_021404dc[1];
+int data_ov006_021404ec[1];
+}

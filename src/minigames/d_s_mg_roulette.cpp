@@ -60,3 +60,16 @@ extern "C" void* dScMgRoulette_c_classInit(void){
   }
   return scene;
 }
+
+/* .data 0x0213e4e8..0x0213e4f8 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int data_ov006_0213e4e8[2] = {
+    0x41f800f8, (int)0xffff009eu,
+};
+int data_ov006_0213e4f0[2] = {
+    0x41f800f8, (int)0xffff005eu,
+};
+}
+#pragma section forcedata end
