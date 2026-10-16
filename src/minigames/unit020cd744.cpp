@@ -1039,34 +1039,32 @@ extern "C" extern void SubVec3(struct Vec3 *a, struct Vec3 *b, struct Vec3 *c);
 extern "C" extern int LenVec3(struct Vec3 *v);
 extern "C" extern int _ZN4cstd4fdivEii(int a, int b);
 extern "C" {extern int data_ov006_0212e0f0[];}
-extern "C" void TrmpLine_PointDistance(char *sl, void *arg1, struct Vec3 *r2)
+extern "C" void TrmpLine_PointDistance(char *self, void *referencePoint, struct Vec3 *offsetVector)
 {
-  int i;
-  int n5 = -DotVec3(r2, (struct Vec3 *) (sl + 0x14));
-  int *op = (int *) (sl + 0x29c);
-  char *vp = sl + 0x11c;
-  int new_var;
-  int *dp = data_ov006_0212e0f0;
-  for (i = 0; i < 4; i++)
-  {
-    int j;
-    for (j = 0; j < 4; j++)
+    int row;
+    int negatedProjection = -DotVec3(offsetVector, (struct Vec3 *) (self + 0x14));
+    int *amplitude = (int *) (self + 0x29c);
+    char *restVertex = self + 0x11c;
+    int weightedAmplitude;
+    int *gridWeight = data_ov006_0212e0f0;
+    for (row = 0; row < 4; row++)
     {
-      struct Vec3 d;
-      SubVec3((struct Vec3 *) vp, (struct Vec3 *) arg1, &d);
-      int r4 = (long long) (*((int *) (sl + 0x58)));
-      int len = LenVec3(&d);
-      int f = _ZN4cstd4fdivEii(r4, r4 + len);
-      int t = (int) (((((long long) n5) * (*dp)) + 0x800) >> 12);
-      new_var = (int) (((((long long) t) * f) + 0x800) >> 12);
-      *op = new_var;
-      vp += 0xc;
-      dp++;
-      op++;
+        int column;
+        for (column = 0; column < 4; column++)
+        {
+            struct Vec3 delta;
+            SubVec3((struct Vec3 *) restVertex, (struct Vec3 *) referencePoint, &delta);
+            int halfLength = (long long) (*((int *) (self + 0x58)));
+            int distance = LenVec3(&delta);
+            int distanceWeight = _ZN4cstd4fdivEii(halfLength, halfLength + distance);
+            int weightedProjection = (int) (((((long long) negatedProjection) * (*gridWeight)) + 0x800) >> 12);
+            weightedAmplitude = (int) (((((long long) weightedProjection) * distanceWeight) + 0x800) >> 12);
+            *amplitude = weightedAmplitude;
+            restVertex += 0xc;
+            gridWeight++;
+            amplitude++;
+        }
     }
-
-  }
-
 }
 }
 
@@ -1079,57 +1077,63 @@ extern "C" extern void NormalizeVec3(int* v, int* out);
 
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void TrmpLine_ComputeNormals(char* self)
+extern "C" void TrmpLine_ComputeNormals(char *self)
 {
-    Vec3 ej;
-    Vec3 ei;
-    char* p;
-    Vec3* n;
-    int* out;
-    int i;
-    int j;
-    int mask = 0x3ff;
+    Vec3 columnEdge;
+    Vec3 rowEdge;
+    char *vertex;
+    Vec3 *normal;
+    int *packedNormal;
+    int row;
+    int column;
+    int componentMask = 0x3ff;
 
-    p = self + 0x5c;
-    n = (Vec3*)(self + 0x1dc);
-    out = (int*)(self + 0x2dc);
+    vertex = self + 0x5c;
+    normal = (Vec3 *)(self + 0x1dc);
+    packedNormal = (int *)(self + 0x2dc);
 
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 4; j++) {
-            int *q;
-            int z = 0;
+    for (row = 0; row < 4; row++) {
+        for (column = 0; column < 4; column++) {
+            int *components;
+            int zero = 0;
 
-            q = (int*)&ej; q[0] = z; q[1] = z; q[2] = z;
-            q = (int*)&ei; q[0] = z; q[1] = z; q[2] = z;
+            components = (int *)&columnEdge;
+            components[0] = zero;
+            components[1] = zero;
+            components[2] = zero;
+            components = (int *)&rowEdge;
+            components[0] = zero;
+            components[1] = zero;
+            components[2] = zero;
 
-            if (j == 0)
-                SubVec3((Vec3*)p, (Vec3*)(p + 0xc), &ej);
-            else if (j == 3)
-                SubVec3((Vec3*)(p - 0xc), (Vec3*)p, &ej);
+            if (column == 0)
+                SubVec3((Vec3 *)vertex, (Vec3 *)(vertex + 0xc), &columnEdge);
+            else if (column == 3)
+                SubVec3((Vec3 *)(vertex - 0xc), (Vec3 *)vertex, &columnEdge);
             else
-                SubVec3((Vec3*)(p - 0xc), (Vec3*)(p + 0xc), &ej);
+                SubVec3((Vec3 *)(vertex - 0xc), (Vec3 *)(vertex + 0xc), &columnEdge);
 
-            if (i == 0)
-                SubVec3((Vec3*)p, (Vec3*)(p + 0x30), &ei);
-            else if (i == 3)
-                SubVec3((Vec3*)(p - 0x30), (Vec3*)p, &ei);
+            if (row == 0)
+                SubVec3((Vec3 *)vertex, (Vec3 *)(vertex + 0x30), &rowEdge);
+            else if (row == 3)
+                SubVec3((Vec3 *)(vertex - 0x30), (Vec3 *)vertex, &rowEdge);
             else
-                SubVec3((Vec3*)(p - 0x30), (Vec3*)(p + 0x30), &ei);
+                SubVec3((Vec3 *)(vertex - 0x30), (Vec3 *)(vertex + 0x30), &rowEdge);
 
-            CrossVec3(&ej, &ei, n);
-            NormalizeVec3((int*)n, (int*)n);
+            CrossVec3(&columnEdge, &rowEdge, normal);
+            NormalizeVec3((int *)normal, (int *)normal);
 
-            n->x = (int)(((long long)n->x * 0xff8 + 0x800) >> 12);
-            n->y = (int)(((long long)n->y * 0xff8 + 0x800) >> 12);
-            n->z = (int)(((long long)n->z * 0xff8 + 0x800) >> 12);
+            normal->x = (int)(((long long)normal->x * 0xff8 + 0x800) >> 12);
+            normal->y = (int)(((long long)normal->y * 0xff8 + 0x800) >> 12);
+            normal->z = (int)(((long long)normal->z * 0xff8 + 0x800) >> 12);
 
-            *out = ((n->x >> 3) & mask)
-                 | (((n->y >> 3) & mask) << 10)
-                 | (((n->z >> 3) & mask) << 20);
+           *packedNormal = ((normal->x >> 3) & componentMask)
+                 | (((normal->y >> 3) & componentMask) << 10)
+                 | (((normal->z >> 3) & componentMask) << 20);
 
-            n++;
-            out++;
-            p += 0xc;
+            normal++;
+            packedNormal++;
+            vertex += 0xc;
         }
     }
 }
@@ -1323,13 +1327,13 @@ extern "C" {extern s16 data_02082214[];}
 // @symbol TrmpLine_StateSettle
 extern "C" void TrmpLine_StateSettle(char *c)
 {
-    int vx, vz;
-    int negS;
-    int dx, dz;
-    u16 ang;
-    int j, i;
-    int target, step;
-    int *src, *dst, *val;
+    int normalX, normalY;
+    int negativeSine;
+    int deflectionX, deflectionY;
+    u16 phase;
+    int row, column;
+    int targetAmplitude, decayStep;
+    int *restPosition, *position, *amplitude;
 
     if ((data_020a0db0 & 1) != 0) {
         if (_Z15ApproachLinear2Riii((int *)(c + 0x329), 0, 1) != 0) {
@@ -1338,37 +1342,37 @@ extern "C" void TrmpLine_StateSettle(char *c)
     }
 
     {
-        u16 *fieldPtr = (u16 *)LA(c + 0x320);
-        *fieldPtr = *fieldPtr + *(u16 *)(c + 0x322);
-        ang = *(u16 *)(c + 0x320);
+        u16 *phasePtr = (u16 *)LA(c + 0x320);
+        *phasePtr = *phasePtr + *(u16 *)(c + 0x322);
+        phase = *(u16 *)(c + 0x320);
     }
 
-    vx = *(int *)(c + 0x14);
-    vz = *(int *)(c + 0x18);
+    normalX = *(int *)(c + 0x14);
+    normalY = *(int *)(c + 0x18);
 
-    negS = -(int)data_02082214[(ang >> 4) * 2];
+    negativeSine = -(int)data_02082214[(phase >> 4) * 2];
 
-    dx = (int)(((s64)vx * negS + 0x800) >> 12);
-    dz = (int)(((s64)vz * negS + 0x800) >> 12);
+    deflectionX = (int)(((s64)normalX * negativeSine + 0x800) >> 12);
+    deflectionY = (int)(((s64)normalY * negativeSine + 0x800) >> 12);
 
-    src = (int *)(c + 0x11c);
-    dst = (int *)(c + 0x5c);
-    val = (int *)(c + 0x29c);
+    restPosition = (int *)(c + 0x11c);
+    position = (int *)(c + 0x5c);
+    amplitude = (int *)(c + 0x29c);
 
-    target = 0;
-    step = 0x100;
+    targetAmplitude = 0;
+    decayStep = 0x100;
 
-    for (j = 0; j < 4; j++) {
-        for (i = 0; i < 4; i++) {
-            dst[0] = src[0];
-            dst[1] = src[1];
-            dst[2] = src[2];
-            dst[0] = dst[0] + (int)(((s64)*val * dx + 0x800) >> 12);
-            dst[1] = dst[1] + (int)(((s64)*val * dz + 0x800) >> 12);
-            _Z14ApproachLinearRiii(val, target, step);
-            src += 3;
-            dst += 3;
-            val += 1;
+    for (row = 0; row < 4; row++) {
+        for (column = 0; column < 4; column++) {
+            position[0] = restPosition[0];
+            position[1] = restPosition[1];
+            position[2] = restPosition[2];
+            position[0] = position[0] + (int)(((s64)*amplitude * deflectionX + 0x800) >> 12);
+            position[1] = position[1] + (int)(((s64)*amplitude * deflectionY + 0x800) >> 12);
+            _Z14ApproachLinearRiii(amplitude, targetAmplitude, decayStep);
+            restPosition += 3;
+            position += 3;
+            amplitude += 1;
         }
     }
 
@@ -1396,56 +1400,56 @@ extern "C" extern void TrmpLine_SetStateFade(char *o);
 // @symbol TrmpLine_StateFlex
 extern "C" void TrmpLine_StateFlex(char *o)
 {
-    int j, i;
-    int a14, a18;
-    int k;
-    s16 s;
-    int ns;
-    int mulX, mulY;
-    int zeroArg;
-    int izero;
-    int stepArg;
-    Vec3 *src;
-    Vec3 *dst;
-    int *ratep;
-    u16 *p320;
+    int row, column;
+    int normalX, normalY;
+    int angleIndex;
+    s16 sine;
+    int negativeSine;
+    int deflectionX, deflectionY;
+    int targetAmplitude;
+    int firstColumn;
+    int decayStep;
+    Vec3 *restPosition;
+    Vec3 *position;
+    int *amplitude;
+    u16 *phasePtr;
 
     TrmpLine_PushJumper(o);
 
-    p320 = (u16 *)LA(o + 0x320);
-    *p320 = *p320 + *(u16 *)(o + 0x322);
+    phasePtr = (u16 *)LA(o + 0x320);
+    *phasePtr = *phasePtr + *(u16 *)(o + 0x322);
 
-    a14 = *(int *)(o + 0x14);
-    a18 = *(int *)(o + 0x18);
+    normalX = *(int *)(o + 0x14);
+    normalY = *(int *)(o + 0x18);
 
-    k = *(u16 *)(o + 0x320) >> 4;
-    s = data_02082214[k * 2];
-    ns = -(int)s;
+    angleIndex = *(u16 *)(o + 0x320) >> 4;
+    sine = data_02082214[angleIndex * 2];
+    negativeSine = -(int)sine;
 
-    src = (Vec3 *)(o + 0x11c);
-    dst = (Vec3 *)(o + 0x5c);
+    restPosition = (Vec3 *)(o + 0x11c);
+    position = (Vec3 *)(o + 0x5c);
 
-    mulX = (int)(((s64)a14 * ns + 0x800) >> 12);
-    mulY = (int)(((s64)a18 * ns + 0x800) >> 12);
+    deflectionX = (int)(((s64)normalX * negativeSine + 0x800) >> 12);
+    deflectionY = (int)(((s64)normalY * negativeSine + 0x800) >> 12);
 
-    ratep = (int *)(o + 0x29c);
+    amplitude = (int *)(o + 0x29c);
 
-    zeroArg = 0;
-    izero = 0;
-    stepArg = 0x100;
+    targetAmplitude = 0;
+    firstColumn = 0;
+    decayStep = 0x100;
 
-    for (j = 0; j < 4; j++) {
-        for (i = izero; i < 4; i++) {
-            dst->x = src->x;
-            dst->y = src->y;
-            dst->z = src->z;
-            dst->x += (int)(((s64)(*ratep) * mulX + 0x800) >> 12);
-            dst->y += (int)(((s64)(*ratep) * mulY + 0x800) >> 12);
+    for (row = 0; row < 4; row++) {
+        for (column = firstColumn; column < 4; column++) {
+            position->x = restPosition->x;
+            position->y = restPosition->y;
+            position->z = restPosition->z;
+            position->x += (int)(((s64)(*amplitude) * deflectionX + 0x800) >> 12);
+            position->y += (int)(((s64)(*amplitude) * deflectionY + 0x800) >> 12);
 
-            _Z14ApproachLinearRiii(ratep, zeroArg, stepArg);
-            src++;
-            dst++;
-            ratep++;
+            _Z14ApproachLinearRiii(amplitude, targetAmplitude, decayStep);
+            restPosition++;
+            position++;
+            amplitude++;
         }
     }
 
