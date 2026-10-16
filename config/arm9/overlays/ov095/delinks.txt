@@ -23,3 +23,4 @@ src/game/actors/d_a_udlift.cpp:
 src/game/actors/d_a_obj_flamethrower.cpp:
     complete
     .text start:0x0213682c end:0x02136f58
+    .rodata start:0x02136f98 end:0x02136fb0
