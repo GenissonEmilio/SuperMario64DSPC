@@ -24,6 +24,7 @@ src/game/actors/d_a_pukupuku.cpp:
     .text start:0x02133034 end:0x0213367c
     .init start:0x02133f4c end:0x02134020
     .ctor start:0x021340cc end:0x021340d0
+    .data start:0x021342d8 end:0x021342e4
     .bss start:0x0213455c end:0x021345a4
 
 src/game/actors/d_a_shark.cpp:

@@ -105,7 +105,10 @@ extern PukuStateRow data_ov090_02134584;
 
 extern "C" {
 extern "C" void _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj( Player*, const Vector3&, unsigned int, Fix12i, unsigned int, unsigned int, unsigned int);
-extern Vector3 data_ov090_021342d8;
+/* Cylinder offset (0, -0x1e000, 0): this TU's own .data. Spelled as a
+   plain three-word struct rather than Vector3, whose declared destructor
+   would emit static-init machinery the ROM does not have here. */
+struct { s32 x, y, z; } data_ov090_021342d8 = {0, -0x1e000, 0};
 extern int RandomIntInternal(void*);
 extern int data_0209e650[];
 extern s32 Vec3_Dist(void* a, void* b);
@@ -143,7 +146,7 @@ int daPukupuku_c::InitResources()
 
     dExtFrameCtrl_c::LoadFile(*(struct SharedFilePtr *)&data_ov090_0213455c);
 
-    v = data_ov090_021342d8;
+    v = *(Vector3 *)&data_ov090_021342d8;
     _ZN10dCcAcPos_c4InitEP8dActor_cRK7Vector35Fix12IiES6_jj(
         &mdCcAcPos_c, this, v, 0x32000, 0x3c000, 0x200004, 0x8000);
 
