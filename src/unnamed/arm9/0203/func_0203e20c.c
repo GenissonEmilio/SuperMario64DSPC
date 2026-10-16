@@ -20,7 +20,7 @@ extern u8 data_020a1064[];
 extern u8 data_020a10fc[];
 extern u8 data_020a1112[];
 extern u8 data_020a1154[];
-extern u16 data_020a117c[4];
+u16 data_020a117c[4];
 extern u16 data_020a11a0[4];
 extern u16 data_020a11c4[4];
 extern s32 data_020a1680;

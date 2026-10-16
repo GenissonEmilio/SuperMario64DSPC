@@ -1,7 +1,7 @@
 extern int data_0209b284[];
 extern unsigned char data_0209f21c[];
 extern unsigned char data_0209b270[];
-extern int data_0209b2a4[];
+int data_0209b2a4[16];
 extern int data_0209fc4c[];
 extern int data_0209fc48[];
 

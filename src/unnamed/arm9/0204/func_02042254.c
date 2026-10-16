@@ -1,6 +1,6 @@
 #pragma opt_strength_reduction off
 
-extern char data_02099e6c[];
+char data_02099e6c[4] = { 114, 111, 109, 0 };
 extern int data_020a1fc0;
 extern char data_020a2400[];
 

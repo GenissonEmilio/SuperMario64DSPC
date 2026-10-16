@@ -11,7 +11,7 @@ extern void SDK_IRQ_STACKSIZE(void);
 
 extern int data_020a6130;
 extern Mgr data_020a6134;
-extern char data_020a621c[];
+char data_020a621c[348];
 extern char data_020a613c[];
 extern void *data_020a612c;
 extern char data_023c0000;

@@ -3,7 +3,7 @@ extern int _ZN6Memory8AllocateEji(u32 sz, int align);
 extern void func_02058200(void *c, int f, int a, int p, int s, int x);
 extern void func_02057f38(void *c, int v);
 extern void func_02058048(void *c);
-extern unsigned char data_0209d4f8;
+unsigned char data_0209d4f8;
 extern int data_0209d518;
 extern char data_0209d5b8[];
 

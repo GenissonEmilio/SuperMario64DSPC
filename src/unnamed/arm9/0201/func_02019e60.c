@@ -1,4 +1,4 @@
-extern unsigned char data_0209d4d4;
+unsigned char data_0209d4d4;
 extern int data_0209d508;
 extern int data_0209d510;
 extern void func_0205f8e0(int *a, int *b);

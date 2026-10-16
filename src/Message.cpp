@@ -36,7 +36,7 @@ extern u8 data_0209d45c;
 extern u8 data_0209d454;
 extern u8 data_0209d64c;
 extern u8 data_0209d650;
-extern u8 data_0209d654;
+u8 data_0209d654;
 extern u8 data_0209d658;
 extern u8 data_0209d65c;
 extern u8 data_0209d660;

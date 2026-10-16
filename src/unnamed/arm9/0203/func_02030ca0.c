@@ -7,7 +7,7 @@ extern unsigned char data_0208f274;
 extern unsigned char data_0209fc5c[];
 extern char data_0209fc64[];
 extern unsigned char data_0209fc50;
-extern int data_0209fc68;
+int data_0209fc68;
 
 void func_02030ca0(void) {
     int count;

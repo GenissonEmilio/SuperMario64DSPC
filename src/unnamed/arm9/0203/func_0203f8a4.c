@@ -2,7 +2,7 @@ extern int func_0203f818(int a);
 extern void func_0203f6e8(short v);
 extern void func_0203f6a4(int v);
 extern short data_020a0f18;
-extern short data_020a0f34;
+short data_020a0f34;
 
 void func_0203f8a4(void) {
     int r;

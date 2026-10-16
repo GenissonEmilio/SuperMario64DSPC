@@ -18,7 +18,7 @@ struct Ddc { int a, b, c, d, e; };
 extern Obj* data_ov007_0210346c;
 extern Obj* data_ov007_02103460;
 extern int data_ov007_02103484;
-extern int data_ov007_02103470;
+int data_ov007_02103470;
 extern int data_ov007_02103474;
 extern struct Ddc data_ov007_02102ddc;
 extern Obj* func_ov007_020c44e4(int n);

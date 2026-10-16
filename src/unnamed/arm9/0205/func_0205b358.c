@@ -11,7 +11,7 @@ extern unsigned char data_020a7760[];
 extern int data_020a648c;
 extern int data_020a6490;
 extern int data_020a64a0;
-extern int data_020a6498;
+int data_020a6498;
 extern int data_020a649c;
 extern int data_020a6488;
 extern void *data_020a7f48;

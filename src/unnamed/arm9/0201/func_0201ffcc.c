@@ -1,4 +1,4 @@
-extern unsigned char data_0209e64c;
+unsigned char data_0209e64c;
 extern char data_0209d574[];
 extern unsigned char data_0208f274;
 extern unsigned char func_0201a9ec(char *c);

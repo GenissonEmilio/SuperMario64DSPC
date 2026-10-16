@@ -27,6 +27,7 @@ src/minigames/unit020b4aa4.cpp:
 src/minigames/d_mg_state.cpp:
     complete
     .text start:0x020b67e8 end:0x020b8c18
+    .data start:0x020bc860 end:0x020bc864
     .bss start:0x020bfd04 end:0x020bfda8
 
 src/minigames/d_mg_ps_opt.cpp:

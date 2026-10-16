@@ -347,7 +347,7 @@ extern u8 data_0209caa0[];
 extern s32 data_0209cef0;
 extern void *data_0209d4a8;
 extern s32 data_0209e650;
-extern u8 data_0209f1f4;
+u8 data_0209f1f4;
 extern u8 data_0209f1f8;
 extern u8 data_0209f200;
 extern u8 data_0209f204;
