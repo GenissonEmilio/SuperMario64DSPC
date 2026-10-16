@@ -935,7 +935,6 @@ extern int data_ov085_02130490[];
 extern int data_ov085_02130830[];
 extern void *data_ov089_02132894[];
 extern int data_ov091_021344e8[];
-extern int data_ov091_02134e5c[];
 extern int data_ov091_02135138[];
 extern int data_ov094_02136a1c[];
 extern int data_ov095_02136fb0[];
