@@ -14,8 +14,8 @@ struct dScMgCurling2_stone {
     s32 speed;          /* 0x08 */
     s32 prevX;          /* 0x0c, snapshot of x before this frame's step */
     s32 prevY;          /* 0x10 */
-    s32 velX;           /* 0x14, per-frame step while the stylus steers */
-    s32 velY;           /* 0x18 */
+    s32 grabX;                  /* 0x14, stone position minus stylus position, in Fix12 */
+    s32 grabY;                  /* 0x18 */
     s32 snd;            /* 0x1c, rolling-sound slot for func_02012468 */
     u16 timer;          /* 0x20, counts down while the stone is active */
     u16 spinVel;        /* 0x22, sprite spin rate, written from speed and angle */
@@ -208,33 +208,33 @@ struct dScMgCurling2_c : dScMgBase_c {
     u8  pad_4fdc[0x4];
     dScMgCurling2_value mValue[0x3c];   /* 0x4fe0 */
     s32 mState;              /* 0x5580, Behavior state, indexes data_ov006_02141a18 */
-    s32 unk_5584;            /* 0x5584, drag x (fx32) */
-    s32 unk_5588;            /* 0x5588, drag y */
+    s32 mDragX;                 /* 0x5584, drag x (fx32) */
+    s32 mDragY;                 /* 0x5588, drag y */
     s32 unk_558c;            /* 0x558c, drag x + grab x latch */
-    s32 unk_5590;            /* 0x5590, drag y at the last direction change */
-    s32 unk_5594;            /* 0x5594, drag x offset from the stylus */
-    s32 unk_5598;            /* 0x5598, drag y offset */
-    s32 unk_559c;            /* 0x559c, throw power */
+    s32 mSwingReferenceY;       /* 0x5590, drag y at the last direction change */
+    s32 mGrabOffsetX;           /* 0x5594, drag x offset from the stylus */
+    s32 mGrabOffsetY;           /* 0x5598, drag y offset */
+    s32 mThrowSpeed;            /* 0x559c, throw power */
     s32 unk_55a0;            /* 0x55a0 */
     s32 unk_55a4;            /* 0x55a4 */
-    s32 unk_55a8;            /* 0x55a8, last drag dy */
-    s32 unk_55ac;            /* 0x55ac */
+    s32 mLastSwingDeltaY;       /* 0x55a8, last drag dy */
+    s32 mTopRecord;             /* 0x55ac, cached Mg_GetTopRecord result */
     u16 unk_55b0;            /* 0x55b0 */
-    u16 unk_55b2;            /* 0x55b2, throw angle */
+    u16 mThrowAngle;            /* 0x55b2, throw angle */
     u16 mSpawnTimer;         /* 0x55b4, counts down to the next stone */
     u16 mStateTimer;         /* 0x55b6, state-entry countdown */
-    u8  unk_55b8;            /* 0x55b8, drag-state index into data_ov006_02141978 */
-    u8  unk_55b9;            /* 0x55b9 */
+    u8  mDragState;             /* 0x55b8, drag-state index into data_ov006_02141978 */
+    u8  mCursorVisible;         /* 0x55b9, enables DrawCursor */
     u8  thrown;              /* 0x55ba, stones thrown this round (0..5) */
     u8  spawning;            /* 0x55bb, a stone is queued to spawn */
     u8  gameOver;            /* 0x55bc, set once the last stone is thrown */
     u8  sndCooldown;         /* 0x55bd, scrape-sound throttle */
-    u8  unk_55be;            /* 0x55be, drag phase */
+    u8  mSwingState;            /* 0x55be, drag phase */
     u8  combo;               /* 0x55bf, collision-streak counter for SpawnValue */
     u8  unk_55c0;            /* 0x55c0 */
     u8  unk_55c1;            /* 0x55c1 */
     u8  unk_55c2;            /* 0x55c2 */
-    u8  unk_55c3;            /* 0x55c3 */
+    u8  mCounterVisible;        /* 0x55c3, enables DrawCounter */
 };
 
 #ifndef SM64DS_PLATFORM_PC

@@ -30,9 +30,8 @@
 // constant and loses the raw + 0x4000 base the ROM shares with the stone
 // operand (this TU's SpawnValue). DragUpdate and SeparateStones call
 // _ZN4cstd5atan2E5Fix12IiES1_ -- cstd::atan2 takes Fix12 by value, and no
-// header declares the scalar overload. The unk_55xx drag fields keep their
-// names -- renaming them is header work on include/dScMgCurling2_c.h, which
-// the upper-half TU also includes.
+// header declares the scalar overload. The drag controls are declared in
+// dScMgCurling2_c.h; this consolidated TU is their sole consumer.
 
 /* Required: ROM order, and the brackets on AgeMarks and DragUpdate. */
 /* Runtime asset handles resolved through the overlay 0 file table. */
@@ -786,14 +785,14 @@ void dScMgCurling2_c::AgeMarks()
 
 
 // @symbol _ZN15dScMgCurling2_c10DrawCursorEv
-/* Draw the drag cursor at the unk_5584/unk_5588 drag point,
- * offset up and left, while the unk_55b9 flag is set. */
+/* Draw the drag cursor at the mDragX/mDragY drag point,
+ * offset up and left, while the mCursorVisible flag is set. */
 void dScMgCurling2_c::DrawCursor()
 {
-    if (unk_55b9 == 0) return;
+    if (mCursorVisible == 0) return;
 
-    int x = unk_5584;
-    int y = unk_5588;
+    int x = mDragX;
+    int y = mDragY;
     Mg_RenderSpriteBoth((int)data_ov006_0213c4f0, (x >> 12) - 0x20, (y >> 12) - 8, -1, 0);
 }
 
@@ -802,12 +801,12 @@ void dScMgCurling2_c::DrawCursor()
  * the current input record it just drops the drag flags. Otherwise it moves
  * the drag point to the stylus plus the grab offset, clamps it to the rink,
  * and bails out (restoring the old point) when the stylus moved a unit or
- * less. The vertical direction-change tracker (unk_55be, unk_55a8,
- * unk_5590) plays the scrape sound on the first move and flips phases on
- * reversals; the throw angle (unk_55b2) is atan2 of the move with the
+ * less. The vertical direction-change tracker (mSwingState, mLastSwingDeltaY,
+ * mSwingReferenceY) plays the scrape sound on the first move and flips phases on
+ * reversals; the throw angle (mThrowAngle) is atan2 of the move with the
  * horizontal halved, snapped to straight up inside [0x4000,0x8000] and to
  * zero below, then averaged with the previous frame; the throw power
- * (unk_559c) follows the move length times 9 with a 0xc000 cap, rising
+ * (mThrowSpeed) follows the move length times 9 with a 0xc000 cap, rising
  * instantly and decaying by half. Finally the grab offset is recomputed
  * from the new point and a fresh read of the input index.
  *
@@ -846,70 +845,70 @@ void dScMgCurling2_c::DragUpdate()
 
         by = gTouchY[i4];
         bx = gTouchX[i4];
-        oldx = self->unk_5584;
-        oldy = self->unk_5588;
-        self->unk_5584 = self->unk_5594 + (bx << 12);
-        self->unk_5588 = self->unk_5598 + (by << 12);
-        if (self->unk_5588 <= 0x94000) self->unk_5588 = 0x94000;
-        if (self->unk_5584 <= 0x20000) self->unk_5584 = 0x20000;
-        if (self->unk_5584 >= 0xe0000) self->unk_5584 = 0xe0000;
-        if (self->unk_5588 >= 0xb8000) self->unk_5588 = 0xb8000;
-        dx = (self->unk_5584 - oldx) >> 12;
-        dy = (self->unk_5588 - oldy) >> 12;
+        oldx = self->mDragX;
+        oldy = self->mDragY;
+        self->mDragX = self->mGrabOffsetX + (bx << 12);
+        self->mDragY = self->mGrabOffsetY + (by << 12);
+        if (self->mDragY <= 0x94000) self->mDragY = 0x94000;
+        if (self->mDragX <= 0x20000) self->mDragX = 0x20000;
+        if (self->mDragX >= 0xe0000) self->mDragX = 0xe0000;
+        if (self->mDragY >= 0xb8000) self->mDragY = 0xb8000;
+        dx = (self->mDragX - oldx) >> 12;
+        dy = (self->mDragY - oldy) >> 12;
         dy2 = dy * dy;
         if (cstd::sqrt((u64)(dx * dx + dy2)) <= 1) {
-            self->unk_5584 = oldx;
-            self->unk_5588 = oldy;
+            self->mDragX = oldx;
+            self->mDragY = oldy;
             return;
         }
-        diff = (self->unk_5588 - self->unk_5590) >> 12;
-        if (self->unk_55be == 0) {
-            func_02012718(0x1d6, self->unk_5584);
-            self->unk_55be = 2;
-            self->unk_55a8 = (self->unk_5588 - self->unk_5590) >> 12;
-            self->unk_5590 = self->unk_5588;
-        } else if (self->unk_55be == 1) {
-            if (self->unk_55a8 * diff > 0) {
+        diff = (self->mDragY - self->mSwingReferenceY) >> 12;
+        if (self->mSwingState == 0) {
+            func_02012718(0x1d6, self->mDragX);
+            self->mSwingState = 2;
+            self->mLastSwingDeltaY = (self->mDragY - self->mSwingReferenceY) >> 12;
+            self->mSwingReferenceY = self->mDragY;
+        } else if (self->mSwingState == 1) {
+            if (self->mLastSwingDeltaY * diff > 0) {
                 if (diff < 0) diff = -diff;
-                if (diff >= 0xa) self->unk_55be = 0;
+                if (diff >= 0xa) self->mSwingState = 0;
             } else {
-                self->unk_55a8 = diff;
-                self->unk_5590 = self->unk_5588;
+                self->mLastSwingDeltaY = diff;
+                self->mSwingReferenceY = self->mDragY;
             }
         } else {
-            if (self->unk_55a8 * diff < 0) self->unk_55be = 1;
-            self->unk_55a8 = (self->unk_5588 - self->unk_5590) >> 12;
-            self->unk_5590 = self->unk_5588;
+            if (self->mLastSwingDeltaY * diff < 0) self->mSwingState = 1;
+            self->mLastSwingDeltaY = (self->mDragY - self->mSwingReferenceY) >> 12;
+            self->mSwingReferenceY = self->mDragY;
         }
-        oldAng = self->unk_55b2;
-        self->unk_55b2 = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx >> 1);
+        oldAng = self->mThrowAngle;
+        self->mThrowAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx >> 1);
         {
-            u16 a = self->unk_55b2;
+            u16 a = self->mThrowAngle;
 
             if (a <= 0x8000 && a >= 0x4000) {
-                self->unk_55b2 = 0x8000;
+                self->mThrowAngle = 0x8000;
             } else if (a <= 0x4000) {
-                self->unk_55b2 = 0;
+                self->mThrowAngle = 0;
             }
         }
-        self->unk_55b2 = (self->unk_55b2 + oldAng) >> 1;
+        self->mThrowAngle = (self->mThrowAngle + oldAng) >> 1;
         mag = cstd::sqrt((u64)((dx >> 1) * (dx >> 1) + dy2)) * 9;
         mag = (mag << 12) >> 4;
         if (mag >= 0xc000) mag = 0xc000;
-        if (mag > self->unk_559c) self->unk_559c = mag;
-        if (self->unk_559c > mag) self->unk_559c -= (self->unk_559c - mag) >> 1;
+        if (mag > self->mThrowSpeed) self->mThrowSpeed = mag;
+        if (self->mThrowSpeed > mag) self->mThrowSpeed -= (self->mThrowSpeed - mag) >> 1;
         {
             int j = gActivePlayerSlot;
-            int ay = (self->unk_5588 >> 12) - gTouchY[j * 4];
-            int ax = (self->unk_5584 >> 12) - gTouchX[j * 4];
+            int ay = (self->mDragY >> 12) - gTouchY[j * 4];
+            int ax = (self->mDragX >> 12) - gTouchX[j * 4];
 
-            self->unk_5594 = ax << 12;
-            self->unk_5598 = ay << 12;
+            self->mGrabOffsetX = ax << 12;
+            self->mGrabOffsetY = ay << 12;
         }
         return;
     }
-    self->unk_55b8 = 0;
-    self->unk_55b9 = 1;
+    self->mDragState = 0;
+    self->mCursorVisible = 1;
 }
 #pragma pop
 
@@ -936,26 +935,26 @@ void dScMgCurling2_c::DragBegin()
     if (flag == 0)
         return;
 
-    x = (unk_5584 >> 0xc) - gTouchX[idx * 4];
-    y = (unk_5588 >> 0xc) - gTouchY[idx * 4];
+    x = (mDragX >> 0xc) - gTouchX[idx * 4];
+    y = (mDragY >> 0xc) - gTouchY[idx * 4];
 
-    unk_5594 = x << 0xc;
-    unk_5598 = y << 0xc;
-    unk_55b8 = 1;
-    unk_55b2 = 0xc000;
+    mGrabOffsetX = x << 0xc;
+    mGrabOffsetY = y << 0xc;
+    mDragState = 1;
+    mThrowAngle = 0xc000;
 
     if (sndCooldown == 0)
     {
-        func_02012718(0x1d2, unk_5584);
+        func_02012718(0x1d2, mDragX);
         sndCooldown = 6;
     }
 
     unk_55a0 = 0;
     unk_55a4 = 0;
-    unk_558c = unk_5584 + unk_5594;
-    unk_5590 = unk_5588 + unk_5598;
-    unk_55a8 = 0xff;
-    unk_55be = 0;
+    unk_558c = mDragX + mGrabOffsetX;
+    mSwingReferenceY = mDragY + mGrabOffsetY;
+    mLastSwingDeltaY = 0xff;
+    mSwingState = 0;
 }
 
 
@@ -966,7 +965,7 @@ void dScMgCurling2_c::DragBegin()
 void dScMgCurling2_c::DrawCounter()
 {
     int left;
-    if (unk_55c3 == 0)
+    if (mCounterVisible == 0)
         return;
     left = 5 - thrown;
     if (left < 0)
@@ -1002,68 +1001,68 @@ void dScMgCurling2_c::DrawStones()
 // @symbol _ZN15dScMgCurling2_c14SeparateStonesEi
 /* Stone separation. The two-player rink's twin of SeparateStones in
  * dScMgCurling_c: eleven stones at a 0x30 stride instead of five at 0x2c,
- * and after the bump sound the pushed pair gets a SpawnValue. Keep vx and
- * vy named and the inner scan's locals declared in the loop body; both
+ * and after the bump sound the pushed pair gets a SpawnValue. Keep separate temporaries
+ * for the rotated offsets and the inner scan's locals declared in the loop body; both
  * shapes are needed, as in the Curling version. */
-void dScMgCurling2_c::SeparateStones(int idx)
+void dScMgCurling2_c::SeparateStones(int stoneIndex)
 {
-    int i;
-    int j;
+    int hitIndex;
+    int nextIndex;
     int dx;
     int dy;
-    int dist;
-    u16 ang;
-    int k;
+    int distance;
+    u16 contactAngle;
+    int angleIndex;
 
-    for (i = 0; i < 11; i++) {
-        if (mStone[i].active == 0) continue;
-        if (idx == i) continue;
-        dx = (mStone[i].x - mStone[idx].x) >> 12;
-        dy = (mStone[i].y - mStone[idx].y) >> 12;
-        dist = cstd::sqrt((u64)(dx * dx + dy * dy));
-        ang = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
-        if (dist > 0x18) continue;
+    for (hitIndex = 0; hitIndex < 11; hitIndex++) {
+        if (mStone[hitIndex].active == 0) continue;
+        if (stoneIndex == hitIndex) continue;
+        dx = (mStone[hitIndex].x - mStone[stoneIndex].x) >> 12;
+        dy = (mStone[hitIndex].y - mStone[stoneIndex].y) >> 12;
+        distance = cstd::sqrt((u64)(dx * dx + dy * dy));
+        contactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
+        if (distance > 0x18) continue;
         {
-            int cs;
-            int sn;
-            int vx;
-            int vy;
+            int contactCos;
+            int contactSin;
+            int separationX;
+            int separationY;
 
-            k = (ang >> 4) * 2;
-            cs = data_02082214[k + 1];
-            vx = (int)(((long long)cs * 0x1a + 0x800) >> 12);
-            mStone[i].x = mStone[idx].x + (vx << 12);
-            sn = data_02082214[k];
-            vy = (int)(((long long)sn * 0x1a + 0x800) >> 12);
-            mStone[i].y = mStone[idx].y + (vy << 12);
-            for (j = 0; j < 11; j++) {
+            angleIndex = (contactAngle >> 4) * 2;
+            contactCos = data_02082214[angleIndex + 1];
+            separationX = (int)(((long long)contactCos * 0x1a + 0x800) >> 12);
+            mStone[hitIndex].x = mStone[stoneIndex].x + (separationX << 12);
+            contactSin = data_02082214[angleIndex];
+            separationY = (int)(((long long)contactSin * 0x1a + 0x800) >> 12);
+            mStone[hitIndex].y = mStone[stoneIndex].y + (separationY << 12);
+            for (nextIndex = 0; nextIndex < 11; nextIndex++) {
                 int dx2;
                 int dy2;
-                int dist2;
-                u16 ang2;
+                int nextDistance;
+                u16 nextContactAngle;
 
-                if (mStone[j].active == 0) continue;
-                if (i == j) continue;
-                dx2 = (mStone[j].x - mStone[i].x) >> 12;
-                dy2 = (mStone[j].y - mStone[i].y) >> 12;
-                dist2 = cstd::sqrt((u64)(dx2 * dx2 + dy2 * dy2));
-                ang2 = _ZN4cstd5atan2E5Fix12IiES1_(dy2, dx2);
-                if (dist2 > 0x18) continue;
+                if (mStone[nextIndex].active == 0) continue;
+                if (hitIndex == nextIndex) continue;
+                dx2 = (mStone[nextIndex].x - mStone[hitIndex].x) >> 12;
+                dy2 = (mStone[nextIndex].y - mStone[hitIndex].y) >> 12;
+                nextDistance = cstd::sqrt((u64)(dx2 * dx2 + dy2 * dy2));
+                nextContactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy2, dx2);
+                if (nextDistance > 0x18) continue;
                 {
-                    int cs2;
-                    int sn2;
-                    int vx2;
-                    int vy2;
+                    int nextContactCos;
+                    int nextContactSin;
+                    int nextSeparationX;
+                    int nextSeparationY;
 
-                    k = (ang2 >> 4) * 2;
-                    cs2 = data_02082214[k + 1];
-                    vx2 = (int)(((long long)cs2 * 0x1a + 0x800) >> 12);
-                    mStone[j].x = mStone[i].x + (vx2 << 12);
-                    sn2 = data_02082214[k];
-                    vy2 = (int)(((long long)sn2 * 0x1a + 0x800) >> 12);
-                    mStone[j].y = mStone[i].y + (vy2 << 12);
-                    func_02012718(0xe8, mStone[idx].x);
-                    SpawnValue(idx, i);
+                    angleIndex = (nextContactAngle >> 4) * 2;
+                    nextContactCos = data_02082214[angleIndex + 1];
+                    nextSeparationX = (int)(((long long)nextContactCos * 0x1a + 0x800) >> 12);
+                    mStone[nextIndex].x = mStone[hitIndex].x + (nextSeparationX << 12);
+                    nextContactSin = data_02082214[angleIndex];
+                    nextSeparationY = (int)(((long long)nextContactSin * 0x1a + 0x800) >> 12);
+                    mStone[nextIndex].y = mStone[hitIndex].y + (nextSeparationY << 12);
+                    func_02012718(0xe8, mStone[stoneIndex].x);
+                    SpawnValue(stoneIndex, hitIndex);
                     return;
                 }
             }
@@ -1075,118 +1074,119 @@ void dScMgCurling2_c::SeparateStones(int idx)
 #define FMUL(a, b) ((int)(((long long)(a) * (b) + 0x800) >> 12))
 
 // @symbol Curling2_ResolveStoneCollision
-/* Stone collision: the first live, moving stone within 0x18 of stone idx
- * takes the hit. Both velocities are rotated into the contact frame, the
- * along-contact parts swapped, and the results become each stone's new
- * angle and speed; the moving stone is set back 0x1b000 along the contact
- * line, the hit one is clamped to the rink. Then the bump sound and a
+/* Stone collision: find the first active stone within 0x18, excluding
+ * waiting and dragged stones. Both velocities are rotated into the contact
+ * frame, the normal components swapped, and the results become each stone's
+ * new angle and speed. The moving stone is set back 0x1b000 along the contact
+ * line and clamped to the rink, adjusting the hit stone when needed. Then the bump sound and a
  * SpawnValue for the pair. StoneSlide calls it directly and StoneRest
  * through a veneer; it keeps C linkage under its recovered name.
  *
  * Two spellings are codegen levers, not style: the contact angle's cosine
- * and sine get explicit long long copies (cw, sw), cast where they are
- * made -- without the cast the sine's sign word is hoisted above the hit
- * stone's table reads -- and the hit stone's vex is computed before the
- * contact table words are read, which keeps both loads below the hit
- * stone's chain. The rest (one rel/k/c/s set for both stones, pointer
- * locals for the fields written after a call, the hitAngle reference) are
+ * and sine get explicit long long copies, cast where they are made. Without
+ * the cast the sine's sign word is hoisted above the hit stone's table reads.
+ * The hit stone's normal velocity is computed before the contact table words
+ * are read, keeping both loads below that chain. The shared relative-angle
+ * and sine/cosine temporaries, pointers to fields written after a call,
+ * and hitAngle reference are
  * described in notes/mwccarm-codegen.md 6cz. */
-extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int idx)
+extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneIndex)
 {
-    long long sw;
-    long long cw;
-    int i;
+    long long wideContactSin;
+    long long wideContactCos;
+    int hitIndex;
     int dx;
     int dy;
 
-    for (i = 0; i < 11; i++) {
-        if (self->mStone[i].active == 0) continue;
-        if (idx == i) continue;
-        if (self->mStone[i].state == 0) continue;
-        if (self->mStone[i].state == 3) continue;
-        dy = self->mStone[i].y;
-        dx = self->mStone[i].x - self->mStone[idx].x;
-        dy -= self->mStone[idx].y;
+    for (hitIndex = 0; hitIndex < 11; hitIndex++) {
+        if (self->mStone[hitIndex].active == 0) continue;
+        if (stoneIndex == hitIndex) continue;
+        if (self->mStone[hitIndex].state == 0) continue;
+        if (self->mStone[hitIndex].state == 3) continue;
+        dy = self->mStone[hitIndex].y;
+        dx = self->mStone[hitIndex].x - self->mStone[stoneIndex].x;
+        dy -= self->mStone[stoneIndex].y;
         if ((cstd::sqrt((u64)((long long)dx * dx + (long long)dy * dy)) >> 12) >= 0x18) continue;
         {
-            int nex;
-            int ney;
-            u16 ang;
-            u16 rel;
-            int k;
-            int E;
-            int c;
-            int s;
-            int sP;
-            int cP;
-            int vmx;
-            int vmy;
-            int vex;
-            int vey;
-            int yi;
+            int hitVelocityX;
+            int hitVelocityY;
+            u16 contactAngle;
+            u16 relativeAngle;
+            int relativeAngleIndex;
+            int contactAngleIndex;
+            int relativeCos;
+            int relativeSin;
+            int contactSin;
+            int contactCos;
+            int movingNormal;
+            int movingTangent;
+            int hitNormal;
+            int hitTangent;
+            int pixelY;
             int xi;
             int *pHitX;
             int *pX;
             int *pHitY;
 
-            dx = self->mStone[i].x - self->mStone[idx].x;
-            dy = self->mStone[i].y - self->mStone[idx].y;
-            pHitX = &self->mStone[i].x;
-            pX = &self->mStone[idx].x;
-            pHitY = &self->mStone[i].y;
-            ang = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
-            u16 &hitAngle = self->mStone[i].angle;
-            E = (ang >> 4) * 2;
-            rel = self->mStone[idx].angle - ang;
-            k = (rel >> 4) * 2;
-            c = data_02082214[k + 1];
-            s = data_02082214[k];
-            vmx = FMUL(c, self->mStone[idx].speed);
-            vmy = FMUL(s, self->mStone[idx].speed);
-            rel = self->mStone[i].angle - ang;
-            k = (rel >> 4) * 2;
-            c = data_02082214[k + 1];
-            s = data_02082214[k];
-            vex = FMUL(c, self->mStone[i].speed);
-            sP = data_02082214[E];
-            cP = data_02082214[E + 1];
-            vey = FMUL(s, self->mStone[i].speed);
-            cw = (long long)cP;
-            dy = (int)((cw * vex + 0x800) >> 12) - FMUL(sP, vmy);
-            sw = (long long)sP;
-            dx = (int)((sw * vex + 0x800) >> 12) + FMUL(cP, vmy);
-            nex = FMUL(cP, vmx) - FMUL(sP, vey);
-            ney = (int)((sw * vmx + 0x800) >> 12) + FMUL(cP, vey);
-            self->mStone[idx].angle = _ZN4cstd5atan2E5Fix12IiES1_(dx, dy);
-            self->mStone[idx].speed = cstd::sqrt((u64)((long long)dy * dy + (long long)dx * dx));
-            self->mStone[idx].x = self->mStone[i].x - FMUL(cP, 0x1b000);
-            self->mStone[idx].y = self->mStone[i].y - (int)((sw * 0x1b000 + 0x800) >> 12);
-            xi = self->mStone[idx].x >> 12;
-            yi = self->mStone[idx].y >> 12;
+            dx = self->mStone[hitIndex].x - self->mStone[stoneIndex].x;
+            dy = self->mStone[hitIndex].y - self->mStone[stoneIndex].y;
+            pHitX = &self->mStone[hitIndex].x;
+            pX = &self->mStone[stoneIndex].x;
+            pHitY = &self->mStone[hitIndex].y;
+            contactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
+            u16 &hitAngle = self->mStone[hitIndex].angle;
+            contactAngleIndex = (contactAngle >> 4) * 2;
+            relativeAngle = self->mStone[stoneIndex].angle - contactAngle;
+            relativeAngleIndex = (relativeAngle >> 4) * 2;
+            relativeCos = data_02082214[relativeAngleIndex + 1];
+            relativeSin = data_02082214[relativeAngleIndex];
+            movingNormal = FMUL(relativeCos, self->mStone[stoneIndex].speed);
+            movingTangent = FMUL(relativeSin, self->mStone[stoneIndex].speed);
+            relativeAngle = self->mStone[hitIndex].angle - contactAngle;
+            relativeAngleIndex = (relativeAngle >> 4) * 2;
+            relativeCos = data_02082214[relativeAngleIndex + 1];
+            relativeSin = data_02082214[relativeAngleIndex];
+            hitNormal = FMUL(relativeCos, self->mStone[hitIndex].speed);
+            contactSin = data_02082214[contactAngleIndex];
+            contactCos = data_02082214[contactAngleIndex + 1];
+            hitTangent = FMUL(relativeSin, self->mStone[hitIndex].speed);
+            /* Reuse dy/dx for the moving stone's resulting x/y velocity. */
+            wideContactCos = (long long)contactCos;
+            dy = (int)((wideContactCos * hitNormal + 0x800) >> 12) - FMUL(contactSin, movingTangent);
+            wideContactSin = (long long)contactSin;
+            dx = (int)((wideContactSin * hitNormal + 0x800) >> 12) + FMUL(contactCos, movingTangent);
+            hitVelocityX = FMUL(contactCos, movingNormal) - FMUL(contactSin, hitTangent);
+            hitVelocityY = (int)((wideContactSin * movingNormal + 0x800) >> 12) + FMUL(contactCos, hitTangent);
+            self->mStone[stoneIndex].angle = _ZN4cstd5atan2E5Fix12IiES1_(dx, dy);
+            self->mStone[stoneIndex].speed = cstd::sqrt((u64)((long long)dy * dy + (long long)dx * dx));
+            self->mStone[stoneIndex].x = self->mStone[hitIndex].x - FMUL(contactCos, 0x1b000);
+            self->mStone[stoneIndex].y = self->mStone[hitIndex].y - (int)((wideContactSin * 0x1b000 + 0x800) >> 12);
+            xi = self->mStone[stoneIndex].x >> 12;
+            pixelY = self->mStone[stoneIndex].y >> 12;
             if (xi - 0xc < 0) {
-                xi = self->mStone[idx].x - 0xc000;
+                xi = self->mStone[stoneIndex].x - 0xc000;
                 *pHitX += xi;
-                self->mStone[idx].x = 0xc000;
+                self->mStone[stoneIndex].x = 0xc000;
             }
             if (xi + 0xc > 0x100) {
-                *pHitX += self->mStone[idx].x - 0xf4000;
-                self->mStone[idx].x = 0xf4000;
+                *pHitX += self->mStone[stoneIndex].x - 0xf4000;
+                self->mStone[stoneIndex].x = 0xf4000;
             }
-            if (yi - 0xc < -0xe0) {
-                self->mStone[idx].y = -0xd4000;
-                *pHitY = self->mStone[idx].y + 0x18000;
+            if (pixelY - 0xc < -0xe0) {
+                self->mStone[stoneIndex].y = -0xd4000;
+                *pHitY = self->mStone[stoneIndex].y + 0x18000;
             }
-            hitAngle = _ZN4cstd5atan2E5Fix12IiES1_(ney, nex);
-            self->mStone[i].speed = cstd::sqrt((u64)((long long)nex * nex + (long long)ney * ney));
-            self->mStone[idx].state = 1;
-            self->mStone[i].state = 1;
-            if (self->mStone[i].speed >= 0x3800) {
-                self->mStone[i].fast = 1;
+            hitAngle = _ZN4cstd5atan2E5Fix12IiES1_(hitVelocityY, hitVelocityX);
+            self->mStone[hitIndex].speed = cstd::sqrt((u64)((long long)hitVelocityX * hitVelocityX + (long long)hitVelocityY * hitVelocityY));
+            self->mStone[stoneIndex].state = 1;
+            self->mStone[hitIndex].state = 1;
+            if (self->mStone[hitIndex].speed >= 0x3800) {
+                self->mStone[hitIndex].fast = 1;
             } else {
-                self->mStone[i].fast = 0;
+                self->mStone[hitIndex].fast = 0;
             }
             func_02012718(0xe8, *pX);
-            self->SpawnValue(idx, i);
+            self->SpawnValue(stoneIndex, hitIndex);
             return;
         }
     }
@@ -1195,60 +1195,59 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int idx)
 #undef FMUL
 
 // @symbol _ZN15dScMgCurling2_c9StoneSpinEi
-/* Spin-rate update for the stone sprite: -sin(heading) * speed, scaled.
+/* Spin-rate update for the stone sprite: -cos(heading) * speed, scaled.
  * The offsets stay raw this + i * 0x30 + 0x46xx, like SpawnValue's
  * 0x4000 base in the lower TU: folding them through &mStone[i] changes
  * the base rematerialization. */
-void dScMgCurling2_c::StoneSpin(int i)
+void dScMgCurling2_c::StoneSpin(int stoneIndex)
 {
-    char *o = (char *)this + i * 0x30;
-    int h = *(unsigned short *)(o + 0x4686);
-    int idx = (((h >> 4) << 1) + 1) << 1;
-    int s = *(short *)((char *)data_02082214 + idx);
-    int v = *(int *)(o + 0x4668);
-    long long m = (long long)s * v;
-    int hi = (int)(((unsigned long long)(m + 0x800)) >> 12);
-    *(short *)(o + 0x4682) = (short)((-hi) >> 2);
+    char *stoneBase = (char *)this + stoneIndex * 0x30;
+    int heading = *(unsigned short *)(stoneBase + 0x4686);
+    int tableOffset = (((heading >> 4) << 1) + 1) << 1;
+    int cosHeading = *(short *)((char *)data_02082214 + tableOffset);
+    int speed = *(int *)(stoneBase + 0x4668);
+    long long product = (long long)cosHeading * speed;
+    int velocityX = (int)(((unsigned long long)(product + 0x800)) >> 12);
+    *(short *)(stoneBase + 0x4682) = (short)((-velocityX) >> 2);
 }
 
 
 // @symbol _ZN15dScMgCurling2_c10StoneSteerEi
-/* Stone state 3: while the touch is down, the stylus feeds velX/velY out
- * of the input-record deltas (x clamped to the rink); once it lifts, the
+/* Stone state 3: while the touch is down, the stone follows the stylus
+ * plus grabX/grabY (x clamped to the rink); once it lifts, the
  * stone is armed again and, when the drag point is close, snaps above it. */
-void dScMgCurling2_c::StoneSteer(int idx)
+void dScMgCurling2_c::StoneSteer(int stoneIndex)
 {
-    u8 i = gActivePlayerSlot;
-    int off = i * 4;
-    if (gTouchHeld[i * 4] != 0) {
-        int bp = mStone[idx].velX;
-        mStone[idx].x = bp + (gTouchX[off] << 12);
-        int t = mStone[idx].x >> 12;
-        if (t < 0xe) mStone[idx].x = 0xe000;
-        if (t > 0xf2) mStone[idx].x = 0xf2000;
-        int av = mStone[idx].x >> 12;
-        int bv = av - gTouchX[i * 4];
-        int cv = mStone[idx].y >> 12;
-        int dv = cv - gTouchY[i * 4];
-        mStone[idx].velX = bv << 12;
-        mStone[idx].velY = dv << 12;
+    u8 playerSlot = gActivePlayerSlot;
+    int touchOffset = playerSlot * 4;
+    if (gTouchHeld[playerSlot * 4] != 0) {
+        int grabX = mStone[stoneIndex].grabX;
+        mStone[stoneIndex].x = grabX + (gTouchX[touchOffset] << 12);
+        int stoneXPixels = mStone[stoneIndex].x >> 12;
+        if (stoneXPixels < 0xe) mStone[stoneIndex].x = 0xe000;
+        if (stoneXPixels > 0xf2) mStone[stoneIndex].x = 0xf2000;
+        int stoneX = mStone[stoneIndex].x >> 12;
+        int grabXPixels = stoneX - gTouchX[playerSlot * 4];
+        int stoneY = mStone[stoneIndex].y >> 12;
+        int grabYPixels = stoneY - gTouchY[playerSlot * 4];
+        mStone[stoneIndex].grabX = grabXPixels << 12;
+        mStone[stoneIndex].grabY = grabYPixels << 12;
     } else {
-        mStone[idx].state = 0;
-        int dx = (unk_5584 - mStone[idx].x) >> 12;
-        int cy = mStone[idx].y;
-        int dy = (unk_5588 - cy) >> 12;
+        mStone[stoneIndex].state = 0;
+        int dx = (mDragX - mStone[stoneIndex].x) >> 12;
+        int stoneY = mStone[stoneIndex].y;
+        int dy = (mDragY - stoneY) >> 12;
         if (dx < -0x2e) return;
         if (dx > 0x2e) return;
         if (dy < -0x14) return;
         if (dy > 0x14) return;
-        unk_5588 = cy + 0x15000;
+        mDragY = stoneY + 0x15000;
     }
 }
 
 
 // @symbol _ZN15dScMgCurling2_c9StoneRestEi
-/* Stone state 2: the resting handler veneers to the sourceless collision
- * step. See the file-top leftover for Curling2_ResolveStoneCollision. */
+/* Stone state 2: run the shared collision step. */
 void dScMgCurling2_c::StoneRest(int i)
 {
     Curling2_ResolveStoneCollision(this, i);
@@ -1260,15 +1259,15 @@ void dScMgCurling2_c::StoneRest(int i)
  * walls (the bounce flips the heading and plays 0x1d4), decay speed to a
  * stop, run the collision step and the spin update, then feed the rolling
  * sound from speed and position. */
-void dScMgCurling2_c::StoneSlide(int idx)
+void dScMgCurling2_c::StoneSlide(int stoneIndex)
 {
-    char *c = (char *)this;
-    int m;
+    char *sceneBytes = (char *)this;
+    int stoneOffset;
     int zi;
-    u16 *pang;
-    int *p668;
-    int *p660;
-    int *p664;
+    u16 *pHeading;
+    int *pSpeed;
+    int *pX;
+    int *pY;
     int x;
     int z;
     int xi;
@@ -1276,103 +1275,103 @@ void dScMgCurling2_c::StoneSlide(int idx)
     int p;
     int w;
     int *pd;
-    int sn;
-    int cs;
+    int cosAngle;
+    int sinAngle;
 
-    m = idx * 0x30;
+    stoneOffset = stoneIndex * 0x30;
 
-    pang = (u16 *)(c + 0x4686 + m);
-    p668 = (int *)(c + 0x4668 + m);
-    p660 = (int *)(c + 0x4660 + m);
-    p664 = (int *)(c + 0x4664 + m);
+    pHeading = (u16 *)(sceneBytes + 0x4686 + stoneOffset);
+    pSpeed = (int *)(sceneBytes + 0x4668 + stoneOffset);
+    pX = (int *)(sceneBytes + 0x4660 + stoneOffset);
+    pY = (int *)(sceneBytes + 0x4664 + stoneOffset);
 
-    sn = data_02082214[((*pang) >> 4) * 2 + 1];
-    *p660 += (int)(((long long)sn * *p668 + 0x800) >> 12);
-    cs = data_02082214[((*pang) >> 4) * 2];
-    *p664 += (int)(((long long)cs * *p668 + 0x800) >> 12);
-    *(u16 *)(c + 0x4684 + m) += *(u16 *)(c + m + 0x4682);
+    cosAngle = data_02082214[((*pHeading) >> 4) * 2 + 1];
+    *pX += (int)(((long long)cosAngle * *pSpeed + 0x800) >> 12);
+    sinAngle = data_02082214[((*pHeading) >> 4) * 2];
+    *pY += (int)(((long long)sinAngle * *pSpeed + 0x800) >> 12);
+    *(u16 *)(sceneBytes + 0x4684 + stoneOffset) += *(u16 *)(sceneBytes + stoneOffset + 0x4682);
 
-    x = *p660;
-    z = *p664;
+    x = *pX;
+    z = *pY;
     xi = x >> 12;
     zi = z >> 12;
 
     if (xi + 0xc >= 0x100) {
-        *pang = 0x8000 - *pang;
-        *p660 = 0xf4000;
-        func_02012718(0x1d4, *p660);
+        *pHeading = 0x8000 - *pHeading;
+        *pX = 0xf4000;
+        func_02012718(0x1d4, *pX);
     } else if (xi - 0xc < 0) {
-        *pang = 0x8000 - *pang;
-        *p660 = 0xc000;
-        func_02012718(0x1d4, *p660);
+        *pHeading = 0x8000 - *pHeading;
+        *pX = 0xc000;
+        func_02012718(0x1d4, *pX);
     }
 
     if (zi + 0xc > 0xc0) {
-        *(u16 *)(c + 0x4686 + m) = -*(u16 *)(c + 0x4686 + m);
-        *p664 = 0xb4000;
-        func_02012718(0x1d4, *p660);
+        *(u16 *)(sceneBytes + 0x4686 + stoneOffset) = -*(u16 *)(sceneBytes + 0x4686 + stoneOffset);
+        *pY = 0xb4000;
+        func_02012718(0x1d4, *pX);
     } else if (zi - 0xc < -0xe0) {
-        *(u16 *)(c + 0x4686 + m) = -*(u16 *)(c + 0x4686 + m);
-        *p664 = -0xd4000;
-        func_02012718(0x1d4, *p660);
+        *(u16 *)(sceneBytes + 0x4686 + stoneOffset) = -*(u16 *)(sceneBytes + 0x4686 + stoneOffset);
+        *pY = -0xd4000;
+        func_02012718(0x1d4, *pX);
     }
 
-    zi = *p668;
+    zi = *pSpeed;
     v = zi >> 9;
     if (v <= 0x1c)
         v = 0x1c;
 
-    *(int *)(c + 0x4668 + m) -= v;
-    pd = (int *)(c + 0x4668 + m);
-    if (*(int *)(c + 0x4668 + m) <= 0) {
-        *p668 = 0;
-        *(u8 *)(c + idx * 0x30 + 0x4688) = 2;
+    *(int *)(sceneBytes + 0x4668 + stoneOffset) -= v;
+    pd = (int *)(sceneBytes + 0x4668 + stoneOffset);
+    if (*(int *)(sceneBytes + 0x4668 + stoneOffset) <= 0) {
+        *pSpeed = 0;
+        *(u8 *)(sceneBytes + stoneIndex * 0x30 + 0x4688) = 2;
     }
 
-    Curling2_ResolveStoneCollision((dScMgCurling2_c *)c, idx);
-    StoneSpin(idx);
+    Curling2_ResolveStoneCollision((dScMgCurling2_c *)sceneBytes, stoneIndex);
+    StoneSpin(stoneIndex);
 
     v = *pd;
     w = -0xfa - ((0xc0 - (v >> 8)) * -0xfa) / 0xc0;
     p = v >> 7;
     if (p >= 0x7f)
         p = 0x7f;
-    *(int *)(c + 0x467c + m) = func_02012468(*(int *)(c + 0x467c + m), 2, 0xe7, 7, p, w, func_020126e8(*p660), 0);
+    *(int *)(sceneBytes + 0x467c + stoneOffset) = func_02012468(*(int *)(sceneBytes + 0x467c + stoneOffset), 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
 }
 
 
 // @symbol _ZN15dScMgCurling2_c9StoneWaitEi
-/* Stone state 0: armed, waiting. While a drag is on (unk_55b8 == 1) and
+/* Stone state 0: armed, waiting. While a drag is on (mDragState == 1) and
  * the drag point overlaps the stone, throw it at the latched angle and
  * power (clamped to the legal cone), mark it fast when the power is high,
  * then re-arm the spawn slot and separate it from any stone it landed on. */
 void dScMgCurling2_c::StoneWait(int idx)
 {
-    if (unk_55b8 != 1) return;
+    if (mDragState != 1) return;
 
-    int v = (unk_5584 - mStone[idx].x) >> 12;
-    int w = (unk_5588 - mStone[idx].y) >> 12;
+    int v = (mDragX - mStone[idx].x) >> 12;
+    int w = (mDragY - mStone[idx].y) >> 12;
     if (v < -0x2e) return;
     if (v > 0x2e) return;
     if (w < -0x14) return;
     if (w > 0x14) return;
 
     mStone[idx].state = 1;
-    mStone[idx].angle = unk_55b2;
-    mStone[idx].speed = unk_559c;
+    mStone[idx].angle = mThrowAngle;
+    mStone[idx].speed = mThrowSpeed;
 
-    if (unk_55b2 < 0x9800u ||
-        unk_55b2 > 0xe800u) {
-        if (unk_55b2 >= 0x4000u &&
-            unk_55b2 <= 0x9800u) {
-            unk_55b2 = 0x9800;
+    if (mThrowAngle < 0x9800u ||
+        mThrowAngle > 0xe800u) {
+        if (mThrowAngle >= 0x4000u &&
+            mThrowAngle <= 0x9800u) {
+            mThrowAngle = 0x9800;
         } else {
-            unk_55b2 = 0xe800;
+            mThrowAngle = 0xe800;
         }
-        mStone[idx].angle = unk_55b2;
+        mStone[idx].angle = mThrowAngle;
     }
 
-    if (unk_559c >= 0x3800) {
+    if (mThrowSpeed >= 0x3800) {
         mStone[idx].fast = 1;
     } else {
         mStone[idx].fast = 0;
@@ -1444,8 +1443,8 @@ void dScMgCurling2_c::NextStone()
             Sound::PlayBank2_2D(0x1d7);
         }
         *((unsigned char *) ((int)self + 0x55ba)) += 1;
-        unk_5584 = 0x80000;
-        unk_5588 = 0xb0000;
+        mDragX = 0x80000;
+        mDragY = 0xb0000;
         *((unsigned char *) (self + 0x55b8)) = 0;
         *((unsigned char *) (self + 0x55b9)) = 1;
         ClearStoneFlags();
@@ -1518,11 +1517,11 @@ void dScMgCurling2_c::EndRound()
         Mg_SetSharedState(MG_STATE_RESULTS);
     }
     mPromptEnabled = 0;
-    unk_55b9 = 0;
+    mCursorVisible = 0;
     for (i = 0; i < 0xb; i++) {
         mStone[i].visible = 0;
     }
-    unk_55c3 = 0;
+    mCounterVisible = 0;
 }
 
 
@@ -1584,7 +1583,7 @@ void dScMgCurling2_c::Play()
         u8* q = (u8*)(c + 0x55bd);
         *q = *q - 1;
     }
-    (((C*)c)->*data_ov006_02141978[unk_55b8])();
+    (((C*)c)->*data_ov006_02141978[mDragState])();
 
     {
         int count = 0;
@@ -1617,7 +1616,7 @@ void dScMgCurling2_c::BeginRound()
     ResetGame();
     spawning = 1;
     mSpawnTimer = 0;
-    unk_55c3 = 1;
+    mCounterVisible = 1;
     NextStone();
     mState = 1;
 }
@@ -1706,11 +1705,11 @@ void dScMgCurling2_c::ResetGame()
 
     *((short *) (c + 0x55b4)) = 0;
     *((unsigned char *) (c + 0x55ba)) = 0;
-    unk_5584 = 0;
-    unk_5588 = 0;
-    unk_5594 = 0;
-    unk_5598 = 0;
-    unk_559c = 0;
+    mDragX = 0;
+    mDragY = 0;
+    mGrabOffsetX = 0;
+    mGrabOffsetY = 0;
+    mThrowSpeed = 0;
     *((short *) (c + 0x55b2)) = 0;
     *((unsigned char *) (c + 0x55b8)) = 0;
     *((unsigned char *) (c + 0x55b9)) = 0;
@@ -1734,7 +1733,7 @@ void dScMgCurling2_c::StartRound(int /* arg */)
     Scroll();
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4000050, 0, 0xd, 2, 0x10);
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4001050, 0, 4, 2, 0x10);
-    unk_55ac = Mg_GetTopRecord();
+    mTopRecord = Mg_GetTopRecord();
 }
 
 
@@ -1847,7 +1846,7 @@ s32 dScMgCurling2_c::InitResources()
     Scroll();
     spawning = 1;
     mSpawnTimer = 0;
-    unk_55c3 = 1;
+    mCounterVisible = 1;
     NextStone();
     SeedPieces();
     mState = 1;
@@ -1856,7 +1855,7 @@ s32 dScMgCurling2_c::InitResources()
     mRunDuringFade = 1;
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4000050, 0, 0xd, 2, 0x10);
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4001050, 0, 4, 2, 0x10);
-    unk_55ac = Mg_GetTopRecord();
+    mTopRecord = Mg_GetTopRecord();
     return 1;
 }
 

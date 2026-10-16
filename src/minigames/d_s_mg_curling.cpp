@@ -18,7 +18,7 @@
  *   opt_strength_reduction off: 1608's volatile countdown launder, 1680's
  *   M() popup-Y launder and stone walk, 3078's stone walk and base-field
  *   words, and 3388's clear loops all DIFF when typed (20-999 words).
- * - Stone_Slide keeps its pang/p668/p660/p664 pointer temps;
+ * - Stone_Slide keeps its heading/speed/position pointer temporaries;
  *   &mStone[idx] form moves the address math (45 words).
  * - Stone_Drag reads the dragged stone through DragView; the
  *   mStone[i] spelling costs one word.
@@ -759,27 +759,27 @@ void dScMgCurling_c::Aim_Swing()
             return;
         }
 
-        diff = (mAimY - mAimHomeY) >> 12;
+        diff = (mAimY - mSwingReferenceY) >> 12;
         if (mSwingState == 0) {
             func_02012718(0x1d6, mAimX);
             mSwingState = 2;
-            mSwingDelta = (mAimY - mAimHomeY) >> 12;
-            mAimHomeY = mAimY;
+            mLastSwingDeltaY = (mAimY - mSwingReferenceY) >> 12;
+            mSwingReferenceY = mAimY;
         } else if (mSwingState == 1) {
-            if (mSwingDelta * diff > 0) {
+            if (mLastSwingDeltaY * diff > 0) {
                 if (diff < 0)
                     diff = -diff;
                 if (diff >= 0xa)
                     mSwingState = 0;
             } else {
-                mSwingDelta = diff;
-                mAimHomeY = mAimY;
+                mLastSwingDeltaY = diff;
+                mSwingReferenceY = mAimY;
             }
         } else {
-            if (mSwingDelta * diff < 0)
+            if (mLastSwingDeltaY * diff < 0)
                 mSwingState = 1;
-            mSwingDelta = (mAimY - mAimHomeY) >> 12;
-            mAimHomeY = mAimY;
+            mLastSwingDeltaY = (mAimY - mSwingReferenceY) >> 12;
+            mSwingReferenceY = mAimY;
         }
 
         ang = mSwingAng;
@@ -868,8 +868,8 @@ void dScMgCurling_c::Aim_WaitTouch()
   unk_4ecc = 0;
   unk_4ed0 = 0;
   mAimHomeX = mAimX + mGrabX;
-  mAimHomeY = mAimY + mGrabY;
-  mSwingDelta = 0xff;
+  mSwingReferenceY = mAimY + mGrabY;
+  mLastSwingDeltaY = 0xff;
   mSwingState = 0;
 }
 
@@ -906,66 +906,66 @@ void dScMgCurling_c::DrawStonesLeft()
  * then that stone gets the same check once against the rest (with a bump
  * sound). Only one push each way per call.
  *
- * The rotated offsets must be named (vx, vy), and the inner scan needs its
- * own dx, dy, dist and ang; sharing the outer ones changes the registers. */
-void dScMgCurling_c::SeparateStones(int idx)
+ * The rotated offsets need separate temporaries, and the inner scan needs
+ * its own displacement, distance and angle; sharing the outer ones changes the registers. */
+void dScMgCurling_c::SeparateStones(int stoneIndex)
 {
-    int i;
-    int j;
+    int hitIndex;
+    int nextIndex;
     int dx;
     int dy;
-    int dist;
-    u16 ang;
-    int k;
+    int distance;
+    u16 contactAngle;
+    int angleIndex;
 
-    for (i = 0; i < 5; i++) {
-        if (mStone[i].active == 0) continue;
-        if (idx == i) continue;
-        dx = (mStone[i].x - mStone[idx].x) >> 12;
-        dy = (mStone[i].y - mStone[idx].y) >> 12;
-        dist = cstd::sqrt((u64)(dx * dx + dy * dy));
-        ang = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
-        if (dist > 0x18) continue;
+    for (hitIndex = 0; hitIndex < 5; hitIndex++) {
+        if (mStone[hitIndex].active == 0) continue;
+        if (stoneIndex == hitIndex) continue;
+        dx = (mStone[hitIndex].x - mStone[stoneIndex].x) >> 12;
+        dy = (mStone[hitIndex].y - mStone[stoneIndex].y) >> 12;
+        distance = cstd::sqrt((u64)(dx * dx + dy * dy));
+        contactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
+        if (distance > 0x18) continue;
         {
-            int cs;
-            int sn;
-            int vx;
-            int vy;
+            int contactCos;
+            int contactSin;
+            int separationX;
+            int separationY;
 
-            k = (ang >> 4) * 2;
-            cs = data_02082214[k + 1];
-            vx = (int)(((long long)cs * 0x1a + 0x800) >> 12);
-            mStone[i].x = mStone[idx].x + (vx << 12);
-            sn = data_02082214[k];
-            vy = (int)(((long long)sn * 0x1a + 0x800) >> 12);
-            mStone[i].y = mStone[idx].y + (vy << 12);
-            for (j = 0; j < 5; j++) {
+            angleIndex = (contactAngle >> 4) * 2;
+            contactCos = data_02082214[angleIndex + 1];
+            separationX = (int)(((long long)contactCos * 0x1a + 0x800) >> 12);
+            mStone[hitIndex].x = mStone[stoneIndex].x + (separationX << 12);
+            contactSin = data_02082214[angleIndex];
+            separationY = (int)(((long long)contactSin * 0x1a + 0x800) >> 12);
+            mStone[hitIndex].y = mStone[stoneIndex].y + (separationY << 12);
+            for (nextIndex = 0; nextIndex < 5; nextIndex++) {
                 int dx2;
                 int dy2;
-                int dist2;
-                u16 ang2;
+                int nextDistance;
+                u16 nextContactAngle;
 
-                if (mStone[j].active == 0) continue;
-                if (i == j) continue;
-                dx2 = (mStone[j].x - mStone[i].x) >> 12;
-                dy2 = (mStone[j].y - mStone[i].y) >> 12;
-                dist2 = cstd::sqrt((u64)(dx2 * dx2 + dy2 * dy2));
-                ang2 = _ZN4cstd5atan2E5Fix12IiES1_(dy2, dx2);
-                if (dist2 > 0x18) continue;
+                if (mStone[nextIndex].active == 0) continue;
+                if (hitIndex == nextIndex) continue;
+                dx2 = (mStone[nextIndex].x - mStone[hitIndex].x) >> 12;
+                dy2 = (mStone[nextIndex].y - mStone[hitIndex].y) >> 12;
+                nextDistance = cstd::sqrt((u64)(dx2 * dx2 + dy2 * dy2));
+                nextContactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy2, dx2);
+                if (nextDistance > 0x18) continue;
                 {
-                    int cs2;
-                    int sn2;
-                    int vx2;
-                    int vy2;
+                    int nextContactCos;
+                    int nextContactSin;
+                    int nextSeparationX;
+                    int nextSeparationY;
 
-                    k = (ang2 >> 4) * 2;
-                    cs2 = data_02082214[k + 1];
-                    vx2 = (int)(((long long)cs2 * 0x1a + 0x800) >> 12);
-                    mStone[j].x = mStone[i].x + (vx2 << 12);
-                    sn2 = data_02082214[k];
-                    vy2 = (int)(((long long)sn2 * 0x1a + 0x800) >> 12);
-                    mStone[j].y = mStone[i].y + (vy2 << 12);
-                    func_02012718(0xe8, mStone[idx].x);
+                    angleIndex = (nextContactAngle >> 4) * 2;
+                    nextContactCos = data_02082214[angleIndex + 1];
+                    nextSeparationX = (int)(((long long)nextContactCos * 0x1a + 0x800) >> 12);
+                    mStone[nextIndex].x = mStone[hitIndex].x + (nextSeparationX << 12);
+                    nextContactSin = data_02082214[angleIndex];
+                    nextSeparationY = (int)(((long long)nextContactSin * 0x1a + 0x800) >> 12);
+                    mStone[nextIndex].y = mStone[hitIndex].y + (nextSeparationY << 12);
+                    func_02012718(0xe8, mStone[stoneIndex].x);
                     return;
                 }
             }
@@ -988,121 +988,121 @@ void dScMgCurling_c::SeparateStones(int idx)
  * are reached through pointers taken beside each stone's reads, which puts
  * their addresses in the frame ahead of the temporaries; and the moving
  * stone's new x velocity reuses the outer dx. */
-void dScMgCurling_c::ResolveStoneCollision(int idx)
+void dScMgCurling_c::ResolveStoneCollision(int stoneIndex)
 {
-    int i;
+    int hitIndex;
     int dx;
     int dy;
 
-    for (i = 0; i < 5; i++) {
-        if (mStone[i].active == 0) continue;
-        if (idx == i) continue;
-        if (mStone[i].state == 0) continue;
-        if (mStone[i].state == 3) continue;
-        dx = (mStone[i].x - mStone[idx].x) >> 12;
-        dy = (mStone[i].y - mStone[idx].y) >> 12;
+    for (hitIndex = 0; hitIndex < 5; hitIndex++) {
+        if (mStone[hitIndex].active == 0) continue;
+        if (stoneIndex == hitIndex) continue;
+        if (mStone[hitIndex].state == 0) continue;
+        if (mStone[hitIndex].state == 3) continue;
+        dx = (mStone[hitIndex].x - mStone[stoneIndex].x) >> 12;
+        dy = (mStone[hitIndex].y - mStone[stoneIndex].y) >> 12;
         if (cstd::sqrt((long long)(dx * dx + dy * dy)) > 0x18) continue;
         {
             u16 *pAngle;
             s32 *pSpeed;
             u16 *pHitAngle;
-            int mTangent;
-            int k;
-            int cosA;
-            int vmy;
-            int sinA;
-            u16 contact;
-            int hTangent;
-            int cosN;
-            int hvx;
-            u16 rel;
+            int movingTangent;
+            int angleIndex;
+            int contactCos;
+            int movingVelocityY;
+            int contactSin;
+            u16 contactAngle;
+            int hitTangent;
+            int inverseContactCos;
+            int hitResultX;
+            u16 relativeAngle;
             int xi;
-            int sinN;
-            int mNormal;
-            int yi;
-            int vmx;
-            int hNormal;
-            int vhx;
-            int mvy;
-            int hvy;
-            int vhy;
+            int inverseContactSin;
+            int movingNormal;
+            int pixelY;
+            int movingVelocityX;
+            int hitNormal;
+            int hitVelocityX;
+            int movingResultY;
+            int hitResultY;
+            int hitVelocityY;
 
             /* Contact line, from the hit stone to the moving one. */
-            dx = mStone[idx].x - mStone[i].x;
-            dy = mStone[idx].y - mStone[i].y;
-            contact = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
-            rel = -contact;
+            dx = mStone[stoneIndex].x - mStone[hitIndex].x;
+            dy = mStone[stoneIndex].y - mStone[hitIndex].y;
+            contactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
+            relativeAngle = -contactAngle;
 
-            /* Both velocities as x/y. A hit stone at rest takes half the
-             * moving stone's y so the exchange below cannot stall. */
-            pAngle = &mStone[idx].angle;
-            pSpeed = &mStone[idx].speed;
-            k = (mStone[idx].angle >> 4) * 2;
-            vmx = FMUL(data_02082214[k + 1], mStone[idx].speed);
-            vmy = FMUL(data_02082214[k], mStone[idx].speed);
-            pHitAngle = &mStone[i].angle;
-            k = (mStone[i].angle >> 4) * 2;
-            vhx = FMUL(data_02082214[k + 1], mStone[i].speed);
-            vhy = FMUL(data_02082214[k], mStone[i].speed);
-            if (vhy == 0) vhy = vmy >> 1;
+            /* Both velocities as x/y. If the hit stone has zero y velocity,
+             * it takes half the moving stone's y velocity before the exchange. */
+            pAngle = &mStone[stoneIndex].angle;
+            pSpeed = &mStone[stoneIndex].speed;
+            angleIndex = (mStone[stoneIndex].angle >> 4) * 2;
+            movingVelocityX = FMUL(data_02082214[angleIndex + 1], mStone[stoneIndex].speed);
+            movingVelocityY = FMUL(data_02082214[angleIndex], mStone[stoneIndex].speed);
+            pHitAngle = &mStone[hitIndex].angle;
+            angleIndex = (mStone[hitIndex].angle >> 4) * 2;
+            hitVelocityX = FMUL(data_02082214[angleIndex + 1], mStone[hitIndex].speed);
+            hitVelocityY = FMUL(data_02082214[angleIndex], mStone[hitIndex].speed);
+            if (hitVelocityY == 0) hitVelocityY = movingVelocityY >> 1;
 
-            /* sin/cos of -contact rotate into the contact frame; sin/cos of
-             * +contact rotate back out. */
-            k = (rel >> 4) * 2;
-            sinN = data_02082214[k];
-            cosN = data_02082214[k + 1];
-            rel = -rel;
-            k = (rel >> 4) * 2;
-            sinA = data_02082214[k];
-            cosA = data_02082214[k + 1];
+            /* sin/cos of -contactAngle rotate into the contact frame; sin/cos of
+             * +contactAngle rotate back out. */
+            angleIndex = (relativeAngle >> 4) * 2;
+            inverseContactSin = data_02082214[angleIndex];
+            inverseContactCos = data_02082214[angleIndex + 1];
+            relativeAngle = -relativeAngle;
+            angleIndex = (relativeAngle >> 4) * 2;
+            contactSin = data_02082214[angleIndex];
+            contactCos = data_02082214[angleIndex + 1];
 
             /* Normal and tangential components of each velocity. */
-            mNormal = FMUL(cosN, vmx);
-            mNormal -= FMUL(sinN, vmy);
-            mTangent = FMUL(sinN, vmx) + FMUL(cosN, vmy);
-            hNormal = FMUL(cosN, vhx) - FMUL(sinN, vhy);
-            hTangent = FMUL(sinN, vhx) + FMUL(cosN, vhy);
+            movingNormal = FMUL(inverseContactCos, movingVelocityX);
+            movingNormal -= FMUL(inverseContactSin, movingVelocityY);
+            movingTangent = FMUL(inverseContactSin, movingVelocityX) + FMUL(inverseContactCos, movingVelocityY);
+            hitNormal = FMUL(inverseContactCos, hitVelocityX) - FMUL(inverseContactSin, hitVelocityY);
+            hitTangent = FMUL(inverseContactSin, hitVelocityX) + FMUL(inverseContactCos, hitVelocityY);
 
-            /* Swap the normal components and rotate back: dx/mvy for the
-             * moving stone, hvx/hvy for the one it hit. */
-            dx = FMUL(cosA, hNormal) - FMUL(sinA, mTangent);
-            mvy = FMUL(sinA, hNormal) + FMUL(cosA, mTangent);
-            hvx = FMUL(cosA, mNormal) - FMUL(sinA, hTangent);
-            hvy = FMUL(sinA, mNormal) + FMUL(cosA, hTangent);
+            /* Swap the normal components and rotate back: dx/movingResultY for the
+             * moving stone, hitResultX/hitResultY for the one it hit. */
+            dx = FMUL(contactCos, hitNormal) - FMUL(contactSin, movingTangent);
+            movingResultY = FMUL(contactSin, hitNormal) + FMUL(contactCos, movingTangent);
+            hitResultX = FMUL(contactCos, movingNormal) - FMUL(contactSin, hitTangent);
+            hitResultY = FMUL(contactSin, movingNormal) + FMUL(contactCos, hitTangent);
 
-            *pAngle = _ZN4cstd5atan2E5Fix12IiES1_(mvy, dx);
-            *pSpeed = cstd::sqrt((u64)((long long)dx * dx + (long long)mvy * mvy));
+            *pAngle = _ZN4cstd5atan2E5Fix12IiES1_(movingResultY, dx);
+            *pSpeed = cstd::sqrt((u64)((long long)dx * dx + (long long)movingResultY * movingResultY));
 
             /* Separate the stones along the contact line, then keep the
              * moving one on the board and hand any overshoot to the other. */
-            mStone[idx].x = mStone[i].x + FMUL(cosA, 0x1b000);
-            mStone[idx].y = mStone[i].y + FMUL(sinA, 0x1b000);
-            xi = mStone[idx].x >> 12;
-            yi = mStone[idx].y >> 12;
+            mStone[stoneIndex].x = mStone[hitIndex].x + FMUL(contactCos, 0x1b000);
+            mStone[stoneIndex].y = mStone[hitIndex].y + FMUL(contactSin, 0x1b000);
+            xi = mStone[stoneIndex].x >> 12;
+            pixelY = mStone[stoneIndex].y >> 12;
             if (xi - 0xc < 0) {
-                xi = mStone[idx].x - 0xc000;
-                mStone[i].x += xi;
-                mStone[idx].x = 0xc000;
+                xi = mStone[stoneIndex].x - 0xc000;
+                mStone[hitIndex].x += xi;
+                mStone[stoneIndex].x = 0xc000;
             }
             if (xi + 0xc > 0x100) {
-                mStone[i].x += mStone[idx].x - 0xf4000;
-                mStone[idx].x = 0xf4000;
+                mStone[hitIndex].x += mStone[stoneIndex].x - 0xf4000;
+                mStone[stoneIndex].x = 0xf4000;
             }
-            if (yi - 0xc < -0xe0) {
-                mStone[i].y += mStone[idx].y + 0xd4000;
-                mStone[idx].y = -0xd4000;
+            if (pixelY - 0xc < -0xe0) {
+                mStone[hitIndex].y += mStone[stoneIndex].y + 0xd4000;
+                mStone[stoneIndex].y = -0xd4000;
             }
 
-            *pHitAngle = _ZN4cstd5atan2E5Fix12IiES1_(hvy, hvx);
-            mStone[i].speed = cstd::sqrt((u64)((long long)hvx * hvx + (long long)hvy * hvy));
-            mStone[idx].state = 1;
-            mStone[i].state = 1;
-            if (mStone[i].speed >= 0x3800) {
-                mStone[i].fast = 1;
+            *pHitAngle = _ZN4cstd5atan2E5Fix12IiES1_(hitResultY, hitResultX);
+            mStone[hitIndex].speed = cstd::sqrt((u64)((long long)hitResultX * hitResultX + (long long)hitResultY * hitResultY));
+            mStone[stoneIndex].state = 1;
+            mStone[hitIndex].state = 1;
+            if (mStone[hitIndex].speed >= 0x3800) {
+                mStone[hitIndex].fast = 1;
             } else {
-                mStone[i].fast = 0;
+                mStone[hitIndex].fast = 0;
             }
-            func_02012718(0xe8, mStone[idx].x);
+            func_02012718(0xe8, mStone[stoneIndex].x);
             return;
         }
     }
@@ -1111,15 +1111,15 @@ void dScMgCurling_c::ResolveStoneCollision(int idx)
 // @symbol _ZN14dScMgCurling_c12SetStoneSpinEi
 /* Sets stone i's spin (0x4682) from the x component of its velocity:
  * -(cos(angle) * speed) / 4. */
-void dScMgCurling_c::SetStoneSpin(int i)
+void dScMgCurling_c::SetStoneSpin(int stoneIndex)
 {
-    int h = mStone[i].angle;
-    int idx = (((h >> 4) << 1) + 1) << 1;
-    int s = *(short *)((char *)data_02082214 + idx);
-    int v = mStone[i].speed;
-    long long m = (long long)s * v;
-    int hi = (int)(((unsigned long long)(m + 0x800)) >> 12);
-    mStone[i].spin = (short)((-hi) >> 2);
+    int heading = mStone[stoneIndex].angle;
+    int tableOffset = (((heading >> 4) << 1) + 1) << 1;
+    int cosHeading = *(short *)((char *)data_02082214 + tableOffset);
+    int speed = mStone[stoneIndex].speed;
+    long long product = (long long)cosHeading * speed;
+    int velocityX = (int)(((unsigned long long)(product + 0x800)) >> 12);
+    mStone[stoneIndex].spin = (short)((-velocityX) >> 2);
 }
 
 // @symbol _ZN14dScMgCurling_c10Stone_DragEi
@@ -1128,29 +1128,29 @@ void dScMgCurling_c::SetStoneSpin(int i)
  * between 0xe and 0xf2 units, and the offset is recomputed; with the stylus
  * up the drag flag clears and, if the aimed stone (0x4eb0) overlaps it, the
  * aimed stone is moved just below it. */
-void dScMgCurling_c::Stone_Drag(int i)
+void dScMgCurling_c::Stone_Drag(int stoneIndex)
 {
-    DragView *w = (DragView *)this;
-    unsigned char idx = gActivePlayerSlot;
-    if (((struct B4 *)gTouchHeld)[idx].v) {
-        int t, mm, nn;
-        w->stone[i].x = w->stone[i].grabX + (((struct B4 *)gTouchX)[idx].v << 12);
-        t = w->stone[i].x >> 12;
-        if (t < 0xe) w->stone[i].x = 0xe000;
-        if (t > 0xf2) w->stone[i].x = 0xf2000;
-        mm = (w->stone[i].x >> 12) - ((struct B4 *)gTouchX)[gActivePlayerSlot].v;
-        nn = (w->stone[i].y >> 12) - ((struct B4 *)gTouchY)[idx].v;
-        w->stone[i].grabX = mm << 12;
-        w->stone[i].grabY = nn << 12;
+    DragView *dragView = (DragView *)this;
+    unsigned char playerSlot = gActivePlayerSlot;
+    if (((struct B4 *)gTouchHeld)[playerSlot].v) {
+        int stoneXPixels, grabXPixels, grabYPixels;
+        dragView->stone[stoneIndex].x = dragView->stone[stoneIndex].grabX + (((struct B4 *)gTouchX)[playerSlot].v << 12);
+        stoneXPixels = dragView->stone[stoneIndex].x >> 12;
+        if (stoneXPixels < 0xe) dragView->stone[stoneIndex].x = 0xe000;
+        if (stoneXPixels > 0xf2) dragView->stone[stoneIndex].x = 0xf2000;
+        grabXPixels = (dragView->stone[stoneIndex].x >> 12) - ((struct B4 *)gTouchX)[gActivePlayerSlot].v;
+        grabYPixels = (dragView->stone[stoneIndex].y >> 12) - ((struct B4 *)gTouchY)[playerSlot].v;
+        dragView->stone[stoneIndex].grabX = grabXPixels << 12;
+        dragView->stone[stoneIndex].grabY = grabYPixels << 12;
     } else {
         int dx, dy;
-        w->stone[i].dragging = 0;
-        dx = (w->aimX - w->stone[i].x) >> 12;
-        dy = (w->aimY - w->stone[i].y) >> 12;
+        dragView->stone[stoneIndex].dragging = 0;
+        dx = (dragView->aimX - dragView->stone[stoneIndex].x) >> 12;
+        dy = (dragView->aimY - dragView->stone[stoneIndex].y) >> 12;
         if (dx < -0x2e) return;
         if (dx > 0x2e) return;
         if (dy < -0x14) return;
-        if (dy <= 0x14) w->aimY = w->stone[i].y + 0x15000;
+        if (dy <= 0x14) dragView->aimY = dragView->stone[stoneIndex].y + 0x15000;
     }
 }
 
@@ -1169,15 +1169,15 @@ void dScMgCurling_c::Stone_Collide(int idx)
  * steeper rate while the stone still travels upward above -0x20. At zero
  * speed the stone stops (state 2). The collision and spin helpers run, and
  * the slide sound at 0x467c is retuned to the speed. */
-void dScMgCurling_c::Stone_Slide(int idx)
+void dScMgCurling_c::Stone_Slide(int stoneIndex)
 {
-    char *c = (char *)this;
-    int m;
+    char *sceneBytes = (char *)this;
+    int stoneOffset;
     int zi;
-    u16 *pang;
-    int *p668;
-    int *p660;
-    int *p664;
+    u16 *pHeading;
+    int *pSpeed;
+    int *pX;
+    int *pY;
     int x;
     int z;
     int xi;
@@ -1188,54 +1188,54 @@ void dScMgCurling_c::Stone_Slide(int idx)
     int p;
     int w;
     int *pd;
-    int sn;
-    int cs;
+    int cosAngle;
+    int sinAngle;
 
-    m = idx * 0x2c;
+    stoneOffset = stoneIndex * 0x2c;
 
-    pang = (u16 *)(c + 0x4686 + m);
-    p668 = (int *)(c + 0x4668 + m);
-    p660 = (int *)(c + 0x4660 + m);
-    p664 = (int *)(c + 0x4664 + m);
+    pHeading = (u16 *)(sceneBytes + 0x4686 + stoneOffset);
+    pSpeed = (int *)(sceneBytes + 0x4668 + stoneOffset);
+    pX = (int *)(sceneBytes + 0x4660 + stoneOffset);
+    pY = (int *)(sceneBytes + 0x4664 + stoneOffset);
 
-    sn = data_02082214[((*pang) >> 4) * 2 + 1];
-    *p660 += (int)(((long long)sn * *p668 + 0x800) >> 12);
-    cs = data_02082214[((*pang) >> 4) * 2];
-    *p664 += (int)(((long long)cs * *p668 + 0x800) >> 12);
-    mStone[idx].heading += (u16)mStone[idx].spin;
+    cosAngle = data_02082214[((*pHeading) >> 4) * 2 + 1];
+    *pX += (int)(((long long)cosAngle * *pSpeed + 0x800) >> 12);
+    sinAngle = data_02082214[((*pHeading) >> 4) * 2];
+    *pY += (int)(((long long)sinAngle * *pSpeed + 0x800) >> 12);
+    mStone[stoneIndex].heading += (u16)mStone[stoneIndex].spin;
 
-    x = *p660;
-    z = *p664;
+    x = *pX;
+    z = *pY;
     xi = x >> 12;
     zi = z >> 12;
 
     if (xi + 0xc >= 0x100) {
-        *pang = 0x8000 - *pang;
-        *p660 = 0xf4000;
-        func_02012718(0x1d4, *p660);
+        *pHeading = 0x8000 - *pHeading;
+        *pX = 0xf4000;
+        func_02012718(0x1d4, *pX);
     } else if (xi - 0xc < 0) {
-        *pang = 0x8000 - *pang;
-        *p660 = 0xc000;
-        func_02012718(0x1d4, *p660);
+        *pHeading = 0x8000 - *pHeading;
+        *pX = 0xc000;
+        func_02012718(0x1d4, *pX);
     }
 
     if (zi + 0xc > 0xc0) {
-        mStone[idx].angle = -mStone[idx].angle;
-        *p664 = 0xb4000;
-        func_02012718(0x1d4, *p660);
+        mStone[stoneIndex].angle = -mStone[stoneIndex].angle;
+        *pY = 0xb4000;
+        func_02012718(0x1d4, *pX);
     } else if (zi - 0xc < -0xe0) {
-        mStone[idx].angle = -mStone[idx].angle;
-        *p664 = -0xd4000;
-        func_02012718(0x1d4, *p660);
+        mStone[stoneIndex].angle = -mStone[stoneIndex].angle;
+        *pY = -0xd4000;
+        func_02012718(0x1d4, *pX);
     }
 
-    zi = *p668;
+    zi = *pSpeed;
     v = zi >> 9;
     if (v <= 0x1c)
         v = 0x1c;
-    for (i2 = 0, sbv = *p664 >> 12; i2 < 5; i2++) {
+    for (i2 = 0, sbv = *pY >> 12; i2 < 5; i2++) {
         if (sbv <= -(data_ov006_0212e478[i2] + 0x20)) {
-            s = data_02082214[(*pang >> 4) * 2];
+            s = data_02082214[(*pHeading >> 4) * 2];
             if (s < 0) {
                 v = zi >> data_ov006_0212e48c[i2];
                 if (v < data_ov006_0212e4b4[i2])
@@ -1250,7 +1250,7 @@ void dScMgCurling_c::Stone_Slide(int idx)
     }
 
     if (sbv > -0x20) {
-        s = data_02082214[(*pang >> 4) * 2];
+        s = data_02082214[(*pHeading >> 4) * 2];
         if (s > 0) {
             v = zi >> 3;
             if (v <= 0x180)
@@ -1258,22 +1258,22 @@ void dScMgCurling_c::Stone_Slide(int idx)
         }
     }
 
-    mStone[idx].speed -= v;
-    pd = &mStone[idx].speed;
-    if (mStone[idx].speed <= 0) {
-        *p668 = 0;
-        mStone[idx].state = 2;
+    mStone[stoneIndex].speed -= v;
+    pd = &mStone[stoneIndex].speed;
+    if (mStone[stoneIndex].speed <= 0) {
+        *pSpeed = 0;
+        mStone[stoneIndex].state = 2;
     }
 
-    ResolveStoneCollision(idx);
-    SetStoneSpin(idx);
+    ResolveStoneCollision(stoneIndex);
+    SetStoneSpin(stoneIndex);
 
     v = *pd;
     w = -0xfa - ((0xc0 - (v >> 8)) * -0xfa) / 0xc0;
     p = v >> 7;
     if (p >= 0x7f)
         p = 0x7f;
-    mStone[idx].slideSnd = func_02012468(mStone[idx].slideSnd, 2, 0xe7, 7, p, w, func_020126e8(*p660), 0);
+    mStone[stoneIndex].slideSnd = func_02012468(mStone[stoneIndex].slideSnd, 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
 }
 
 // @symbol _ZN14dScMgCurling_c17Stone_WaitReleaseEi
@@ -1601,7 +1601,7 @@ void dScMgCurling_c::StartRound(int /* arg */)
     PickHouse();
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4000050, 0, 0xd, 2, 0x10);
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4001050, 0, 4, 2, 0x10);
-    unk_4ed8 = Mg_GetTopRecord();
+    mTopRecord = Mg_GetTopRecord();
 }
 
 // @symbol _ZN14dScMgCurling_c6RenderEv
@@ -1694,7 +1694,7 @@ s32 dScMgCurling_c::InitResources()
     mRunDuringFade = 1;
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4000050, 0, 0xd, 2, 0x10);
     _ZN3G2x13SetBlendAlphaEPVttttj((volatile u16 *)0x4001050, 0, 4, 2, 0x10);
-    unk_4ed8 = Mg_GetTopRecord();
+    mTopRecord = Mg_GetTopRecord();
     return 1;
 }
 

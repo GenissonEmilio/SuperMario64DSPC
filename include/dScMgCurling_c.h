@@ -7,8 +7,7 @@
  * dScMgCurling_c's own -- the old flat header's `mRunDuringFade` at 0x0a4 is
  * really dScMgBase_c's own field at that offset, misattributed by
  * tools/deepen_rtti.py's flat-struct generation (it doesn't know about
- * inheritance). SIZE NOT ASSERTED: a leaf, so nothing needs the number
- * (same reasoning include/dScStage_c.h documents). */
+ * inheritance). The final class size is asserted below. */
 #ifndef DSCMGCURLING_C_H
 #define DSCMGCURLING_C_H
 #include "dScMgBase_c.h"
@@ -20,8 +19,8 @@ struct dScMgCurling_stone {
     s32 speed;          /* 0x08 */
     s32 lastX;          /* 0x0c */
     s32 lastY;          /* 0x10 */
-    s32 grabX;          /* 0x14 */
-    s32 grabY;          /* 0x18 */
+    s32 grabX;                  /* 0x14 */
+    s32 grabY;                  /* 0x18 */
     s32 slideSnd;       /* 0x1c, slide sound handle */
     u16 timer;          /* 0x20 */
     s16 spin;           /* 0x22 */
@@ -144,14 +143,14 @@ struct dScMgCurling_c : dScMgBase_c {
     s32 mAimX;               /* 0x4eb0 */
     s32 mAimY;               /* 0x4eb4 */
     s32 mAimHomeX;           /* 0x4eb8 */
-    s32 mAimHomeY;           /* 0x4ebc */
+    s32 mSwingReferenceY;       /* 0x4ebc */
     s32 mGrabX;              /* 0x4ec0 */
     s32 mGrabY;              /* 0x4ec4 */
     s32 mSwingSpeed;         /* 0x4ec8 */
     s32 unk_4ecc;            /* 0x4ecc */
     s32 unk_4ed0;            /* 0x4ed0 */
-    s32 mSwingDelta;         /* 0x4ed4 */
-    s32 unk_4ed8;            /* 0x4ed8 */
+    s32 mLastSwingDeltaY;       /* 0x4ed4 */
+    s32 mTopRecord;             /* 0x4ed8, cached Mg_GetTopRecord result */
     u16 unk_4edc;            /* 0x4edc */
     u16 mSwingAng;           /* 0x4ede */
     u16 mStoneDelay;         /* 0x4ee0, before the next stone comes out */
@@ -162,7 +161,7 @@ struct dScMgCurling_c : dScMgBase_c {
     u8  mNextStone;          /* 0x4ee7 */
     u8  mRoundOver;          /* 0x4ee8 */
     u8  mSwingTimer;         /* 0x4ee9 */
-    u8  mSwingState;         /* 0x4eea */
+    u8  mSwingState;            /* 0x4eea */
     u8  pad_4eeb;
 };
 
