@@ -27,6 +27,28 @@
  * pointer-to-member state tables in src/game/stages/d_ent_obj.cpp; the fields
  * after them are named from what those states read and write. */
 struct UnknownVsPlayer {
+    enum MovementState {
+        MOVE_IDLE = 0,
+        MOVE_TO_SLOT,
+        MOVE_WAIT_FOR_EXIT,
+        MOVE_TURN_TO_EXIT,
+        MOVE_AT_EXIT,
+        MOVE_RUN_OFF_STAGE,
+        MOVE_FINISHED,
+        MOVE_CHOOSE_POSE,
+        MOVE_WAIT_FOR_POSE_SOUND,
+        MOVE_POSE_PARTICLES
+    };
+
+    enum AnimationState {
+        ANIM_NONE = 0,
+        ANIM_WALK_SOUNDS,
+        ANIM_WAIT_FOR_NEXT,
+        ANIM_WAIT_FOR_IDLE,
+        ANIM_SLOW_GAIT,
+        ANIM_FAST_GAIT
+    };
+
     BlendModelAnim mModel;             /* 0x000 */
     ModelAnim mAnimation;              /* 0x070 */
     TextureSequence mTextureSequence;  /* 0x0d4 */
@@ -46,7 +68,7 @@ struct UnknownVsPlayer {
     u8 mPlayerNo;                      /* 0x152 - slot in dEntObj_c::mPlayers */
     u8 mInAir;                         /* 0x153 - also a once-flag in movement state 8 */
     u8 mFellOff;                       /* 0x154 */
-    u8 unk_155;                        /* 0x155 - set the frame it falls off */
+    u8 mFellOffThisFrame;              /* 0x155 - event when crossing the exit depth */
     u8 mWaitTimer;                     /* 0x156 */
     u8 pad_157;
 
@@ -73,7 +95,7 @@ struct UnknownVsPlayer {
 
     /* Send the figure toward its exit slot at x = exitX. */
     void func_ov075_02114904(int exitX);
-    /* The selection one-shot on this figure; returns 1 when armed. */
+    /* The selection one-shot on this figure; returns animation state 3 when armed. */
     int func_ov075_02114988();
     /* Walk the figure toward x = targetX. */
     void func_ov075_021149d0(int targetX);
@@ -100,6 +122,12 @@ typedef char UnknownVsPlayer_size_must_be_0x158[
 #endif
 
 struct dEntObj_c : dBase_c {
+    enum SceneState {
+        STATE_IDLE = 0,
+        STATE_WAIT_FOR_EXIT,
+        STATE_RUN_OFF_STAGE
+    };
+
     Particle::SysTracker mParticles;   /* 0x050 */
     Model mModel;                      /* 0x86c */
     ModelAnim mModelAnim;              /* 0x8bc */
@@ -140,7 +168,7 @@ struct dEntObj_c : dBase_c {
     int func_ov075_0211524c(int playerNo);
     /* The slot x for figure playerNo under the current player count. */
     int func_ov075_02115290(int playerNo);
-    /* Copy the camera target/position fields into the shared block. */
+    /* Rebuild the projection and view from the camera eye and target. */
     void func_ov075_021152d4();
 };
 
