@@ -1,18 +1,23 @@
 //cpp
 // @symbol _ZN10dScEntry_c6RenderEv
-/* dScEntry_c::Render() -- vtable slot 9. Real C++ method over the shared
- * header; local `C` models the pmf field this function touches at +0x64. */
+/* The render callback at +0x64 belongs to this scene. The local view keeps
+ * the surrounding unreconstructed storage opaque; the receiver is dScEntry_c. */
 #include "decl_common.h"
 #include "dScEntry_c.h"
-struct C;
-typedef void (C::*PMF)();
-struct C { char pad[0x64]; PMF pp[1]; };
-s32 dScEntry_c::Render(){
-  C *c = (C*)this;
-  if(*(int*)&c->pp[0]!=0){
-    PMF *p = c->pp;
-    (c->**p)();
-  }
-  func_0203083c();
-  return 1;
+
+typedef void (dScEntry_c::*EntryRenderCallback)();
+struct EntryRenderState {
+    char pad[0x64];
+    EntryRenderCallback callback[1];
+};
+
+s32 dScEntry_c::Render()
+{
+    EntryRenderState *state = (EntryRenderState *)this;
+    if (*(int *)&state->callback[0] != 0) {
+        EntryRenderCallback *callback = state->callback;
+        (this->**callback)();
+    }
+    func_0203083c();
+    return 1;
 }

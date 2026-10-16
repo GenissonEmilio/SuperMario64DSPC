@@ -46,7 +46,7 @@ struct dScEntry_c : dScene_c {
 struct dScEntry_c::graphCallback_c : dGraph_c::callback_c {
     void *compressedBg2Screen; /* 0x04 */
     void *entryScene;          /* 0x08 */
-    s32 bg2Priority;           /* 0x0c */
+    s32 bg2ScreenBase;         /* 0x0c - BG2 screen block, written to bits 8..12 */
     u8 unk_010[0x1c];          /* 0x10 */
 
     graphCallback_c();
