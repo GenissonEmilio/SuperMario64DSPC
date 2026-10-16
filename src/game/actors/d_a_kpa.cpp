@@ -401,7 +401,7 @@ extern "C" void func_02011cfc(void);
  *   data_ov060_0211b208              a model handle reached through a flat
  *                                    int[] view and cast (see its local extern)
  *   data_ov060_0211ac78              Bowser's model handle (KpaModelFilePtr) */
-extern SharedFilePtr *data_ov060_021192dc[];
+extern SharedFilePtr *const data_ov060_021192dc[];
 extern SharedFilePtr *data_ov060_0211927c[];
 extern SharedFilePtr data_ov089_02132c50;
 /* local extern: daFRing_c now defines this handle as a real typed object; the
@@ -3794,4 +3794,19 @@ KpaTailState data_ov060_0211ae9c[3] = {
     &daKpaTail_c::func_ov060_02115d68,  /* BOWSER_TAIL_FREE */
     &daKpaTail_c::func_ov060_02115d50,  /* BOWSER_TAIL_COOLDOWN */
     &daKpaTail_c::func_ov060_02115c1c   /* BOWSER_TAIL_HOLDING */
+};
+
+/* The 28 animation handles, in the order InitResources loads them and
+ * CleanupResources releases them. */
+SharedFilePtr *const data_ov060_021192dc[28] = {
+    &data_ov060_0211ac88, &data_ov060_0211ac50, &data_ov060_0211ac58,
+    &data_ov060_0211ac60, &data_ov060_0211ac18, &data_ov060_0211acd0,
+    &data_ov060_0211ac68, &data_ov060_0211ac70, &data_ov060_0211ac20,
+    &data_ov060_0211ac80, &data_ov060_0211abe8, &data_ov060_0211ac48,
+    &data_ov060_0211ac38, &data_ov060_0211ac90, &data_ov060_0211ac98,
+    &data_ov060_0211abf8, &data_ov060_0211aca8, &data_ov060_0211acb0,
+    &data_ov060_0211ac00, &data_ov060_0211ac08, &data_ov060_0211abe0,
+    &data_ov060_0211acd8, &data_ov060_0211acf0, &data_ov060_0211ace8,
+    &data_ov060_0211ace0, &data_ov060_0211aca0, &data_ov060_0211acc8,
+    &data_ov060_0211acc0
 };
