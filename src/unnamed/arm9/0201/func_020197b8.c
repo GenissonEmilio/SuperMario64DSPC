@@ -63,3 +63,5 @@ void func_020197b8(void) {
             func_02030e4c();
     } while (1);
 }
+
+unsigned char data_0209d4f0;

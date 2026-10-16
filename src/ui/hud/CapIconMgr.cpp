@@ -533,3 +533,5 @@ void func_ov001_020aa420(void) {
 }
 
 }
+
+unsigned char data_ov001_020ad628[4];

@@ -55,3 +55,5 @@ void func_ov007_020b7eec(unsigned char *t)
   r = func_ov007_020c94a0(0, (unsigned int) r);
   func_ov007_020b8b80(0, r, 0);
 }
+
+int data_ov007_02103468;

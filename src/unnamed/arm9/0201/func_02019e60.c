@@ -11,3 +11,5 @@ void func_02019e60(void)
     func_0205f9ac(2, 0);
     data_0209d4d4 = 1;
 }
+
+int data_0209d510;

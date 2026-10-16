@@ -43,3 +43,5 @@ void func_02058200(char *self, int a1, int a2, int end, int arg4, int arg5)
     *(int*)(self + 0x80) = 0;
     _ZN3IRQ7RestoreEj(saved);
 }
+
+int data_020a6148[16];

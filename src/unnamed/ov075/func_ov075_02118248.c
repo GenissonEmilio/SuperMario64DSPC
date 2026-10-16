@@ -39,3 +39,6 @@ void func_ov075_02118248(char* self)
     func_ov075_0211a148(self, (int)&data_ov075_0211d8b8, 0x14);
     func_02012790(0x119);
 }
+
+int data_ov075_0211d8b8;
+static unsigned char data_ov075_0211d8b8_pad[0x14];

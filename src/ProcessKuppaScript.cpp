@@ -181,3 +181,5 @@ extern "C" void ProcessKuppaScript(void)
     if (data_0209b274 == 0)
         data_0209b274--;
 }
+
+u16 data_0209b274;

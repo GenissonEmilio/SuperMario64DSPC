@@ -116,3 +116,5 @@ void __sinit_ov002_02100560(void)
     func_02017acc(&data_ov002_0210d9f0, 0x9c0c);
     func_020731dc(&data_ov002_0210d9f0, (void*)&func_02017ab4, (void**)&data_ov002_0210db74);
 }
+
+void* data_ov002_0210d9a0;

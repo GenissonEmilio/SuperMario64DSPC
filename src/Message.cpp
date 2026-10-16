@@ -1516,3 +1516,10 @@ void Message::ResetAllGlobals()
     func_0201eaac();
     data_0209d660 = 0;
 }
+
+extern "C" {
+#pragma define_section zdata ".data" ".data" ".data" abs32 RW
+#pragma section zdata begin
+unsigned char data_0208eeec[2] = {0, 0};
+#pragma section zdata end
+}

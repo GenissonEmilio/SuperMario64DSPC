@@ -23,3 +23,6 @@ void func_0203bbc0(void)
     if (func_0205e9fc(2) != 0)
         Crash();
 }
+
+void * data_020a0df8;
+static unsigned char data_020a0df8_pad[0x44];

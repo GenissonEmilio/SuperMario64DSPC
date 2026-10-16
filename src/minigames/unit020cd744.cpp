@@ -2323,3 +2323,7 @@ extern "C" void TrmpLine_Reset(char *p)
     p[808] = 0;
 }
 }
+
+extern "C" {
+int data_ov006_02140818;
+}

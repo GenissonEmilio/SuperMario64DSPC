@@ -10,3 +10,5 @@ void func_ov007_020b4100(int a, int b) {
     data_ov007_02103368 = a;
     data_ov007_0210336c = b;
 }
+
+int data_ov007_02103368;

@@ -15,6 +15,7 @@ src/game/stages/d_ent_obj.cpp:
 src/game/stages/d_s_entry.cpp:
     complete
     .text start:0x02115ab8 end:0x02116128
+    .bss start:0x0211d740 end:0x0211d742
 
 src/unnamed/ov075/func_ov075_02116128.cpp:
     complete
@@ -43,6 +44,7 @@ src/unnamed/ov075/func_ov075_02116c38.c:
 src/unnamed/ov075/func_ov075_02116c8c.c:
     complete
     .text start:0x02116c8c end:0x02116ce4
+    .data start:0x0211c6ec end:0x0211c6f0
 
 src/unnamed/ov075/func_ov075_02116ce4.c:
     complete
@@ -127,6 +129,7 @@ src/unnamed/ov075/func_ov075_02117fe4.c:
 src/unnamed/ov075/func_ov075_02118248.c:
     complete
     .text start:0x02118248 end:0x02118378
+    .bss start:0x0211d8b8 end:0x0211d8d0
 
 src/unnamed/ov075/func_ov075_02118378.c:
     complete
@@ -346,3 +349,4 @@ src/unnamed/ov075/__sinit_ov075_0211bb00.c:
 src/unnamed/ov075/__sinit_ov075_0211c51c.c:
     complete
     .init start:0x0211c51c end:0x0211c5a4
+

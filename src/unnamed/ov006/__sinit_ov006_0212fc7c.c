@@ -31,3 +31,9 @@ void __sinit_ov006_0212fc7c(void){
   func_02017acc(data_ov006_02140848, ASSET_RINGC_BMD);
   func_020731dc(data_ov006_02140848, (void*)func_02017ab4, data_ov006_02140950);
 }
+
+extern int data_ov006_02136fa4;
+extern int data_ov006_02136f94;
+extern int data_ov006_02136f8c;
+extern int data_ov006_02136f7c;
+extern int data_ov006_02137164;

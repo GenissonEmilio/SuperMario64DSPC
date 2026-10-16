@@ -148,3 +148,5 @@ void func_0203db64(void *arg0, void *arg1)
     }
     data_020a0ef0 = 1;
 }
+
+u8 data_02099e18 = 1;

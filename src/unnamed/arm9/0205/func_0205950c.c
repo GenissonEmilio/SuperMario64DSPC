@@ -32,3 +32,5 @@ void func_0205950c(void)
     }
     _ZN4CP1510DisableMPUEv();
 }
+
+u32 data_020a63a4;

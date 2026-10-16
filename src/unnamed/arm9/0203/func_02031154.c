@@ -41,3 +41,5 @@ void func_02031154(void) {
         break;
     }
 }
+
+u8 data_0209fc80;

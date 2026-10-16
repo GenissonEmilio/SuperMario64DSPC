@@ -69,3 +69,5 @@ void __sinit_ov084_02130654(void)
     data_ov084_02130e80[7] = data_ov084_02130bd4;
     data_ov084_02130e80[8] = data_ov084_02130be4;
 }
+
+char data_ov084_02130dfc[8];

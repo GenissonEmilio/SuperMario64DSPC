@@ -125,3 +125,5 @@ void func_ov007_020b7a78(void)
         data_ov007_02103460->unk3C = data_ov007_02103460->unk40;
     }
 }
+
+int data_ov007_02102dd8 = 0xe;

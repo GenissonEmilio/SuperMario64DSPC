@@ -185,3 +185,5 @@ extern "C" void func_02044334(Obj *self) {
         *ctr = *ctr - 1;
     } while (self->idx >= 0);
 }
+
+void * data_020a4b68;
