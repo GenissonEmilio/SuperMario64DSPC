@@ -1277,3 +1277,102 @@ const unsigned int sMgCoinRiseFrames[1] = {
 };
 }
 #pragma force_active off
+
+/* .data 0x020bc7d0..0x020bc860 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+extern unsigned int sMgCoinsBetCap[];
+extern unsigned int gMgCoinsShowDelta[];
+extern unsigned int pmf_Coin_MoveThenRise[];
+extern unsigned int pmf_Coin_RiseSpent[];
+extern unsigned int pmf_Coin_Move[];
+extern unsigned int pmf_Coin_Move_2[];
+extern unsigned int pmf_Coin_Rise[];
+extern unsigned int pmf_Coin_MoveThenBank[];
+extern unsigned int pmf_Coin_FlyToCounter[];
+extern unsigned int pmf_Coin_MoveThenRiseSpent[];
+extern unsigned int pmf_Coin_MoveThenRefund[];
+extern unsigned int pmf_Coin_Move_3[];
+extern unsigned int sMgCoinsButtonSprites[];
+extern unsigned int sMgCoinsDeltaSprites[];
+extern unsigned int data_ov004_020bc850[];
+extern unsigned int data_ov004_020bc854[];
+extern unsigned int data_ov004_020bc858[];
+extern unsigned int data_ov004_020bc85c[];
+extern unsigned char Coin_MoveThenRiseSpent[];
+extern unsigned char data_ov006_021372f4[];
+extern unsigned char data_ov006_0213734c[];
+extern unsigned char Coin_Move[];
+extern unsigned char Coin_RiseSpent[];
+extern unsigned char Coin_FlyToCounter[];
+extern unsigned char data_ov006_021338c4[];
+extern unsigned char data_ov006_021338a0[];
+extern unsigned char data_ov006_02137454[];
+extern unsigned char data_ov006_021338b8[];
+extern unsigned char data_ov006_021338ac[];
+extern unsigned char Coin_MoveThenRise[];
+extern unsigned char Coin_MoveThenRefund[];
+extern unsigned char data_ov006_021373a4[];
+extern unsigned char data_ov006_021338d0[];
+extern unsigned char Coin_MoveThenBank[];
+extern unsigned char data_ov006_021373fc[];
+extern unsigned char Coin_Rise[];
+unsigned int sMgCoinsBetCap[1] = {
+    0x00000005u,
+};
+unsigned int gMgCoinsShowDelta[1] = {
+    0x00000001u,
+};
+unsigned int pmf_Coin_MoveThenRise[2] = {
+    (unsigned int)Coin_MoveThenRise, 0x00000000u,
+};
+unsigned int pmf_Coin_RiseSpent[2] = {
+    (unsigned int)Coin_RiseSpent, 0x00000000u,
+};
+unsigned int pmf_Coin_Move[2] = {
+    (unsigned int)Coin_Move, 0x00000000u,
+};
+unsigned int pmf_Coin_Move_2[2] = {
+    (unsigned int)Coin_Move, 0x00000000u,
+};
+unsigned int pmf_Coin_Rise[2] = {
+    (unsigned int)Coin_Rise, 0x00000000u,
+};
+unsigned int pmf_Coin_MoveThenBank[2] = {
+    (unsigned int)Coin_MoveThenBank, 0x00000000u,
+};
+unsigned int pmf_Coin_FlyToCounter[2] = {
+    (unsigned int)Coin_FlyToCounter, 0x00000000u,
+};
+unsigned int pmf_Coin_MoveThenRiseSpent[2] = {
+    (unsigned int)Coin_MoveThenRiseSpent, 0x00000000u,
+};
+unsigned int pmf_Coin_MoveThenRefund[2] = {
+    (unsigned int)Coin_MoveThenRefund, 0x00000000u,
+};
+unsigned int pmf_Coin_Move_3[2] = {
+    (unsigned int)Coin_Move, 0x00000000u,
+};
+unsigned int sMgCoinsButtonSprites[5] = {
+    (unsigned int)data_ov006_021338c4, (unsigned int)data_ov006_021338ac, (unsigned int)data_ov006_021338b8, (unsigned int)data_ov006_021338a0,
+    (unsigned int)data_ov006_021338d0,
+};
+unsigned int sMgCoinsDeltaSprites[5] = {
+    (unsigned int)data_ov006_021373a4, (unsigned int)data_ov006_021373fc, (unsigned int)data_ov006_0213734c, (unsigned int)data_ov006_021372f4,
+    (unsigned int)data_ov006_02137454,
+};
+unsigned int data_ov004_020bc850[1] = {
+    0x00000080u,
+};
+unsigned int data_ov004_020bc854[1] = {
+    0x00000080u,
+};
+unsigned int data_ov004_020bc858[1] = {
+    0x00000058u,
+};
+unsigned int data_ov004_020bc85c[1] = {
+    0x00000080u,
+};
+}
+#pragma section forcedata end
