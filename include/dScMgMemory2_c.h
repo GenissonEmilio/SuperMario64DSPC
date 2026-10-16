@@ -104,6 +104,51 @@ struct dScMgMemory2_c : dScMgSingle3DBase_c {
     s32 Behavior();        /* slot  6 -- 0x020f7458 */
     s32 Render();          /* slot  9 -- 0x020f73f4 */
 
+    /* Numeric order follows the five pointer-to-member dispatch tables. */
+    enum SceneState {
+        STATE_SETUP = 0,
+        STATE_PLAY,
+        STATE_JUDGE_PAIRS,
+        STATE_RESULT,
+        STATE_EXIT
+    };
+
+    enum CardState {
+        CARD_MOVE = 0,
+        CARD_IDLE,
+        CARD_SELECT,
+        CARD_FLIP_UP,
+        CARD_WAIT,
+        CARD_FLIP_DOWN,
+        CARD_FLY_AWAY
+    };
+
+    enum PlayerState {
+        PLAYER_DROP = 0,
+        PLAYER_MOVE,
+        PLAYER_WAIT
+    };
+
+    enum RoundState {
+        ROUND_START = 0,
+        ROUND_DEAL_EASY,
+        ROUND_DEAL_NORMAL,
+        ROUND_DEAL_HARD,
+        ROUND_DEAL_FOURTH,
+        ROUND_SHOW_CARDS,
+        ROUND_HIDE_CARDS,
+        ROUND_READY_CARDS,
+        ROUND_WAIT_DEAL,
+        ROUND_REVEAL
+    };
+
+    enum ResultState {
+        RESULT_WAIT = 0,
+        RESULT_REWARD,
+        RESULT_TURN_CARDS,
+        RESULT_FINISH
+    };
+
     void DrawMessage();
     void DrawCursor();
     void UpdateCursor();
@@ -164,8 +209,8 @@ struct dScMgMemory2_c : dScMgSingle3DBase_c {
     u16 mRoundTimer;                 /* 0x53e0 */
     u16 mCardTimer;                  /* 0x53e2 */
     u16 mResultTimer;                /* 0x53e4 */
-    s16 mReadyCount;                 /* 0x53e6 */
-    s16 mDealCount;                  /* 0x53e8 */
+    s16 mDealSignals;                /* 0x53e6 -- incremented by the dealer animation */
+    s16 mCardsDealt;                 /* 0x53e8 -- cards activated by round-deal states */
     u16 mTargetPairs;                /* 0x53ea */
     u16 mPreviewTimer;               /* 0x53ec */
     u8 mSelectedValues[2];           /* 0x53ee */
