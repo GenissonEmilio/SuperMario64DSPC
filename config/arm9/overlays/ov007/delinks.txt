@@ -15,14 +15,17 @@ src/unnamed/ov007/func_ov007_020ada70.cpp:
 src/unnamed/ov007/func_ov007_020adb84.c:
     complete
     .text start:0x020adb84 end:0x020adbc8
+    .rodata start:0x020ccb7c end:0x020ccc20
 
 src/unnamed/ov007/func_ov007_020adbc8.c:
     complete
     .text start:0x020adbc8 end:0x020adc08
+    .rodata start:0x020ccc20 end:0x020ccc44
 
 src/unnamed/ov007/func_ov007_020adc08.c:
     complete
     .text start:0x020adc08 end:0x020add3c
+    .rodata start:0x020ccc44 end:0x020ccc48
 
 src/unnamed/ov007/func_ov007_020add3c.c:
     complete
