@@ -18,9 +18,8 @@
  * type-name, profile, five-entry file table, vtable.
  *
  * deslop
- * Leftover: data_ov047_02112508 and g_profile_KM3_DORIFU are
- *   overlay data this TU does not own; the BMD/KCL SharedFilePtrs
- *   and CLPS_Block are still data_ov047_*.
+ * Leftover: g_profile_KM3_DORIFU is overlay data this TU does not
+ *   own; the CLPS_Block targets are still data_ov047_*.
  */
 
 /* Runtime asset handles resolved through the overlay 0 file table. */
@@ -42,8 +41,7 @@ enum d_a_obj_km3_dorifu_AssetId {
 
 /* Five model handles construct through func_02017acc and destroy through
  * func_02017ab4. Five collision handles construct through func_02017b4c and
- * destroy through SharedFilePtr_Destruct_Clsn. The five-plank table stays
- * ROM data. */
+ * destroy through SharedFilePtr_Destruct_Clsn. */
 struct DorifuModelFilePtr : SharedFilePtr {
     unsigned int words[2];
     DorifuModelFilePtr(unsigned int fileId);
@@ -59,9 +57,42 @@ typedef char DorifuModelFilePtr_size_must_be_8[
 typedef char DorifuClsnFileHandle_size_must_be_8[
     sizeof(DorifuClsnFileHandle) == 8 ? 1 : -1];
 
+struct CLPS_Block;
+
 extern "C" {
-extern daObjDorifuResources data_ov047_02112508[5];
+extern DorifuModelFilePtr data_ov047_021126a0;
+extern DorifuModelFilePtr data_ov047_02112680;
+extern DorifuModelFilePtr data_ov047_02112668;
+extern DorifuModelFilePtr data_ov047_02112688;
+extern DorifuModelFilePtr data_ov047_02112690;
+extern DorifuClsnFileHandle data_ov047_02112678;
+extern DorifuClsnFileHandle data_ov047_02112658;
+extern DorifuClsnFileHandle data_ov047_02112670;
+extern DorifuClsnFileHandle data_ov047_02112698;
+extern DorifuClsnFileHandle data_ov047_02112660;
+extern CLPS_Block data_ov047_02111a74;
+extern CLPS_Block data_ov047_02111a94;
+extern CLPS_Block data_ov047_02111b94;
+extern CLPS_Block data_ov047_02111bb4;
+extern CLPS_Block data_ov047_02111bd4;
 }
+
+/* Five-plank file table; defined here because this TU owns it in overlay
+ * .data. Each row hands Model::LoadFile the BMD handle, dBgW_Kc::LoadFile the
+ * KCL handle, and SetFile that plank's CLPS block (still ROM data).
+ * symbols.txt names the tenth word data_ov047_02112530, inside plank 3's
+ * row, so the emit splits into two word runs there and the methods below
+ * read the table through a daObjDorifuResources view. */
+extern "C" void *data_ov047_02112508[10] = {
+    &data_ov047_021126a0, &data_ov047_02112678, &data_ov047_02111bb4,
+    &data_ov047_02112680, &data_ov047_02112658, &data_ov047_02111a74,
+    &data_ov047_02112668, &data_ov047_02112670, &data_ov047_02111a94,
+    &data_ov047_02112688,
+};
+extern "C" void *data_ov047_02112530[5] = {
+    &data_ov047_02112698, &data_ov047_02111b94,
+    &data_ov047_02112690, &data_ov047_02112660, &data_ov047_02111bd4,
+};
 
 // @symbol daObjKm3_Dorifu_c_classInit
 extern "C" daObjKm3_Dorifu_c *daObjKm3_Dorifu_c_classInit()
@@ -72,13 +103,15 @@ extern "C" daObjKm3_Dorifu_c *daObjKm3_Dorifu_c_classInit()
 // @symbol _ZN17daObjKm3_Dorifu_c13InitResourcesEv
 s32 daObjKm3_Dorifu_c::InitResources()
 {
-    return daObjDorifu_c::InitResources(data_ov047_02112508);
+    return daObjDorifu_c::InitResources(
+        (daObjDorifuResources *)data_ov047_02112508);
 }
 
 // @symbol _ZN17daObjKm3_Dorifu_c16CleanupResourcesEv
 s32 daObjKm3_Dorifu_c::CleanupResources()
 {
-    return daObjDorifu_c::CleanupResources(data_ov047_02112508);
+    return daObjDorifu_c::CleanupResources(
+        (daObjDorifuResources *)data_ov047_02112508);
 }
 
 /* Retail construction order. mwcc emits __sinit_d_a_obj_km3_dorifu.cpp. */
