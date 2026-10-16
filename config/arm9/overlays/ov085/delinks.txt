@@ -38,6 +38,7 @@ src/game/actors/d_a_c_jugem.cpp:
 src/game/actors/d_a_obj_kanban.cpp:
     complete
     .text start:0x0212edac end:0x0212f27c
+    .rodata start:0x0212f29c end:0x0212f2a8
     .init start:0x0212fdb0 end:0x0212fdf0
     .ctor start:0x0212fe04 end:0x0212fe08
     .bss start:0x02130858 end:0x0213086c

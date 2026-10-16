@@ -40,6 +40,11 @@ struct KanbanModelFilePtr : SharedFilePtr {
     ~KanbanModelFilePtr();
 };
 
+/* KanbanVec3 is three plain words: the retail initializer registers no
+ * destructor for the collider offset, so it was never a Vector3 global
+ * (Vector3 carries a declared ~Vector3, which would register at exit). */
+struct KanbanVec3 { s32 x, y, z; };
+
 /* The sign model's shared file; Cleanup releases it, Init loads it. Defined
  * at the end of this file so the constructor does not enter .text. */
 extern KanbanModelFilePtr data_ov085_02130858;
@@ -47,7 +52,7 @@ extern KanbanModelFilePtr data_ov085_02130858;
 extern "C" {
 
 /* the collider's offset, in .rodata */
-extern struct Vector3 data_ov085_0212f29c;
+extern const KanbanVec3 data_ov085_0212f29c;
 
 /* math / vector helpers */
 extern int Vec3_HorzDist(Vector3 *a, Vector3 *b);
@@ -208,3 +213,5 @@ extern "C" daObjKanban_c *daObjKanban_c_classInit(void)
 }
 
 KanbanModelFilePtr data_ov085_02130858(ASSET_OBJ_KANBAN_BMD);
+
+const KanbanVec3 data_ov085_0212f29c = { 0, -0x28000, 0 };
