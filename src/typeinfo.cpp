@@ -33,3 +33,16 @@ abi::__si_class_type_info::~__si_class_type_info()
 abi::__vmi_class_type_info::~__vmi_class_type_info()
 {
 }
+
+/* ROM copies of the arm9 symbols no other src file names, and whose
+   claim can follow the earlier delinks entries. mwcc emits each object
+   in its own section, in reverse source order. */
+extern "C" {
+extern const int data_02086868[6] = {0x4000, 0x1000, 0x7000, 0x1000, 0, 0};
+}
+
+extern "C" {
+int data_020aa2d4[64];
+int data_020aa1d4[64];
+int data_020aa0d4[64];
+}

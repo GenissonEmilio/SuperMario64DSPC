@@ -16,6 +16,16 @@
       "name": ".text",
       "start": "0x0207359c",
       "end": "0x020736f4"
+    },
+    {
+      "name": ".rodata",
+      "start": "0x02086868",
+      "end": "0x02086880"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020aa0d4",
+      "end": "0x020aa3d4"
     }
   ],
   "functions": [
@@ -91,7 +101,38 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "rodata": [
+    {
+      "symbol": "data_02086868",
+      "address": "0x02086868",
+      "size": "0x18",
+      "binding": "STB_GLOBAL",
+      "evidence": "Six words 0x4000, 0x1000, 0x7000, 0x1000, 0, 0. The next row is data_02086880."
+    }
+  ],
+  "bss": [
+    {
+      "symbol": "data_020aa0d4",
+      "address": "0x020aa0d4",
+      "size": "0x100",
+      "binding": "STB_GLOBAL",
+      "evidence": "Zero-filled 0x100 bytes. The next row is data_020aa1d4."
+    },
+    {
+      "symbol": "data_020aa1d4",
+      "address": "0x020aa1d4",
+      "size": "0x100",
+      "binding": "STB_GLOBAL",
+      "evidence": "Zero-filled 0x100 bytes. The next row is data_020aa2d4."
+    },
+    {
+      "symbol": "data_020aa2d4",
+      "address": "0x020aa2d4",
+      "size": "0x100",
+      "binding": "STB_GLOBAL",
+      "evidence": "Zero-filled 0x100 bytes. The next row is data_020aa3d4."
+    }
+  ],
   "compiler_only_output": [
     {
       "symbol": "_ZN3abi21__vmi_class_type_infoD2Ev",
@@ -188,9 +229,10 @@
       "reason": "Typeinfo name for abi::__vmi_class_type_info. Cartridge home arm9:0x0209a7b8 is .data, outside the claimed .text."
     }
   ],
+  "relocations": [],
   "notes": [
     "HAND-BUILT manifest entry, not tools/tubuild.py create output -- the `main` module is unsegmentable, so there is no create candidate id.",
-    "Text-only. The hierarchy's _ZTV/_ZTI/_ZTS records stay in cartridge .data at 0x0209a700..0x0209a7d7; this TU re-emits them (the destructor is each class's key function) and deadstrips the copies.",
+    "The hierarchy's _ZTV/_ZTI/_ZTS records stay in cartridge .data at 0x0209a700..0x0209a7d7; this TU re-emits them (the destructor is each class's key function) and deadstrips the copies. It also defines data_02086868 and the BSS run data_020aa0d4..data_020aa2d4, the unclaimed symbols whose owning .text is this file and whose ranges still sort after the earlier delinks claims.",
     "Deferred codegen emits each destructor's D2/D0/D1 group and emits the four definition groups in reverse order, so the source defines std::type_info, __class_type_info, __si_class_type_info, __vmi_class_type_info; the emitted sections land vmi{D2,D0,D1}, si{D2,D0,D1}, class{D2,D0,D1}, type_info{D2,D0,D1} and deadstrip of the leaf D2s leaves exactly the cartridge order. Out-of-line destructor variants are the compiler's group order, not source order.",
     "si/vmi emit D2 sections that the cartridge never carried: nothing derives from the leaf classes, so no reloc targets their D2 and the sections die unreferenced."
   ],
