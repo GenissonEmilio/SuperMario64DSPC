@@ -256,7 +256,39 @@
       "No shared-header, manifest, canonical-home, relocation-policy, enrollment, tooling or port change.",
       "Broad original307 remains incomplete; Source208 plus4foundations and45remaining migrations, proof30 accepted and20remaining, no counter increment."
     ],
-    "independent_review": "Pending exact final immutable three-file composition; registry task does not complete or publish the broad parent."
+    "independent_review": "Pending exact final immutable three-file composition; registry task does not complete or publish the broad parent.",
+    "tested_production_commit": "69b51667728586d5f7c7d6c45c102ffed7de8411",
+    "required_scoped_gates": {
+      "base": "dfd9500e1662260bc9e3a4fc757f779899fe783c",
+      "prepush_linkcheck": {
+        "command": "python tools/prepush_linkcheck.py --range dfd9500e..HEAD",
+        "checked": 91,
+        "verified": 91,
+        "warnings": 0,
+        "blocking": 0,
+        "blind_bytes": 0,
+        "seconds": 76.38999999998487,
+        "exit_code": 0,
+        "compile_accounting": "Internal CLI compilation/cache behavior is not separately instrumented; no additional fresh compile credit."
+      },
+      "declaration_agreement": {
+        "exit_code": 0,
+        "new_disagreements": 0,
+        "new_local_header_redeclarations": 0,
+        "seconds": 12.764999999984866
+      },
+      "source_style": {
+        "exit_code": 0,
+        "files": 1,
+        "findings": 0,
+        "format_deferrals": 0,
+        "patterns_only": false,
+        "seconds": 0.7969999999913853
+      },
+      "whitespace": {
+        "exit_code": 0
+      },
+      "finalization": "Final report-only child retains exact tested src/include/config/tools/port trees; no duplicate byte build for report finalization."
+    }
   }
-
 }
