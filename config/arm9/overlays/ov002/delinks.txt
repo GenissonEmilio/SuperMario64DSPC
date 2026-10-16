@@ -64,6 +64,7 @@ src/game/actors/d_a_obj_block_l.cpp:
     .text start:0x020b35a0 end:0x020b415c
     .init start:0x02100d44 end:0x02100e50
     .ctor start:0x021080e0 end:0x021080e4
+    .data start:0x02108ab4 end:0x02108b5c
     .bss start:0x0210dcb8 end:0x0210dd30
 
 src/game/actors/d_a_obj_block_item_tag.cpp:
