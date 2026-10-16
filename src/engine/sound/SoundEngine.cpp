@@ -354,7 +354,9 @@ extern struct D data_020a5634;
 extern int data_020a5684;
 extern struct Q data_020a5718[];
 extern char *data_020a5bb8;
-extern NestedHeapIterator data_020a5bbc;
+#pragma cplusplus off
+struct NestedHeapIterator data_020a5bbc; /* BSS record is zero; func_020520a4 fills it */
+#pragma cplusplus on
 extern NestedHeapIterator data_020a5bc8;
 extern struct Ent data_020a5bd4[];
 extern void func_0204ebb8(void *alloc);
