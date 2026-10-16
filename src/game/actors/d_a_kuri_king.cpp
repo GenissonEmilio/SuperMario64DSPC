@@ -226,8 +226,8 @@ extern SharedFilePtr data_ov084_02130cc8;
 extern KuriKingModelFilePtr gKurikingModelModelFile;
 extern KuriKingTexSeqFilePtr gKurikingAngerTextureSequenceFile;
 extern KuriKingAnimationFilePtr data_ov074_02123030;
-extern SharedFilePtr *data_ov074_0212292c[];
-extern SharedFilePtr *data_ov074_02122948[];
+extern SharedFilePtr *const data_ov074_0212292c[];
+extern SharedFilePtr *const data_ov074_02122948[];
 
 /* Intra-TU forward decls: calls run both ways across the file. */
 extern "C" void func_ov074_02121270(Vector3* out, daKuriKing_c* self, int bone);
@@ -2027,6 +2027,36 @@ extern "C" unsigned short data_ov074_02122e04[4] = { 0x0059, 0x003c, 0x001e, 0x0
 KuriKingFreeState data_ov074_02122e0c = { (void (*)())func_ov074_021201ec };
 
 KuriKingStateTable data_ov074_021230f8;
+
+/* The ov084 clip handles data_ov074_0212292c borrows, declared with the
+   subclass spelling daKrb_c defines them under. Declaring them this late
+   keeps them below every compiler-temp emission, so the TU's @NNN uniquifier
+   matches the cartridge's numbering. */
+struct KrbAnimationFileHandle : SharedFilePtr {
+    u32 id; void *ptr;
+    KrbAnimationFileHandle(u32 fileID);
+    ~KrbAnimationFileHandle();
+};
+extern KrbAnimationFileHandle data_ov084_02130ce8;
+extern KrbAnimationFileHandle data_ov084_02130ce0;
+extern KrbAnimationFileHandle data_ov084_02130cd0;
+extern KrbAnimationFileHandle data_ov084_02130cc0;
+extern KrbAnimationFileHandle gKuriboRecoverAnimationFile;
+extern KrbAnimationFileHandle data_ov084_02130cf0;
+
+/* The two clip lists InitResources walks in order: seven animation handles
+   borrowed from ov084's daKrb_c, then this TU's own twelve. */
+SharedFilePtr *const data_ov074_0212292c[7] = {
+    &data_ov084_02130ce8, &data_ov084_02130ce0, &data_ov084_02130cd0,
+    &data_ov084_02130cc0, &gKuriboRecoverAnimationFile, &data_ov084_02130cc8,
+    &data_ov084_02130cf0
+};
+SharedFilePtr *const data_ov074_02122948[12] = {
+    &gKurikingAngerAnimationFile, &gKurikingDamageBAnimationFile, &gKurikingDamageFAnimationFile,
+    &gKurikingDownStartAnimationFile, &gKurikingDownAnimationFile, &gKurikingSerchWaitAnimationFile,
+    &gKurikingTurnAnimationFile, &data_ov074_02123030, &gKurikingWalkAnimationFile,
+    &gKurikingWalkEndAnimationFile, &gKurikingWalkStartAnimationFile, &gKurikingSpawnAnimationFile
+};
 
 /* The two registry factories close the unit (ov074 .text 0x02122764..
  * 0x0212290c), KURIKING_VANISH first. Both construct the same 0x610-byte
