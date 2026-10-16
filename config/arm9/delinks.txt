@@ -575,6 +575,7 @@ src/runtime/actor/d_actor.cpp:
     complete
     .text start:0x0200f658 end:0x020112c8
 
+    .data start:0x0208e37c end:0x0208e384
 src/_ZN8dActor_cD2Ev.cpp:
     complete
     .text start:0x020112c8 end:0x02011314
