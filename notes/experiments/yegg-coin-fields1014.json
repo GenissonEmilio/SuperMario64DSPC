@@ -171,5 +171,92 @@
       "full_current_main_acceptance": false
     }
   }
+,
+  "actor_horz_speed_style_followup_2026_10_16": {
+    "date": "2026-10-16",
+    "class_history_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3169",
+    "parent_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+    "parent_task": "yegg-native-current-dfd-continuation1016",
+    "registry_task": "dactor-native-speed-style-continuation1016",
+    "actual_producer": "Codex /root/cpp_frontier_astra1014, codex-yegg-native-current-dfd-astra-producer1016",
+    "base": "dfd9500e1662260bc9e3a4fc757f779899fe783c",
+    "prior_candidate": "96d8ac8bd996d6ad5423592df370b7f0cdd36fb1",
+    "historical_values": "All preceding report values and findings remain unchanged historical epochs. The preceding Actor checkpoint describes its first measured spelling; this follow-up records the final token-preserving formatting and separately owned registry correction.",
+    "scope": [
+      "src/runtime/actor/d_actor.cpp",
+      "notes/experiments/yegg-coin-fields1014.json",
+      "config/source-style-exceptions.json"
+    ],
+    "first_style_failure": {
+      "exit_code": 1,
+      "unknown_field_occurrences": 4,
+      "format_findings": 3,
+      "preserved": true
+    },
+    "correction": {
+      "target_method": "dActor_c::UpdatePosWithHorzSpeedAndAng",
+      "source_tokens_unchanged_from_prior_candidate": true,
+      "format": "Pinned clang-format19.1.7, target method only",
+      "registry": "Exactly two independently reviewed unknown-field rows; prior rows/order unchanged. These retain existing shared-header names and do not waive any byte check.",
+      "total_caps": {
+        "unk_0a4": 3,
+        "unk_0ac": 2
+      },
+      "base_occurrences": {
+        "unk_0a4": 1,
+        "unk_0ac": 0
+      },
+      "naming_debt": "Keep the existing unknown member names until a separately coordinated velocity-layout reconstruction is accepted across consumers; no invented original identifiers or new member layout."
+    },
+    "corrected_measurement": {
+      "fresh_candidate_compiles": 1,
+      "new_control_compiles": 0,
+      "RAW_literal": true,
+      "ordinary_literal": true,
+      "raw_sha256": "f30358dbac60c04514bbffa46d8bbffd28e94168c2931e1944736cb651badedc",
+      "ordinary_sha256": "e13bbd1c626833af41cc99738506ba698d630aa81d4caa4ee1ee139dd54d844d",
+      "raw_bytes": 29480,
+      "ordinary_bytes": 29480,
+      "checks": {
+        "candidate": {
+          "VERIFIED": 91
+        }
+      },
+      "source_sha256": "c0eaf9f93829aeb92bc8a0e70a3003e761a6f6a9fc11c6b20127093e9ba27ef1",
+      "report_not_yet_edited": true
+    },
+    "control_provenance": "Reuse the original untouched-dfd control RAW and previously prepared control; zero new control compiles. Original first and renamed-local measurements remain preserved.",
+    "full_build": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "seconds": 92.43799999999464,
+      "qualification": "Actual default build and inherited baseline/data diagnostics are recorded separately; no clean-global-metadata or final cartridge assembly claim.",
+      "modules_exact": 106,
+      "modules_total": 106,
+      "functions_reproducing": 11334,
+      "function_mismatches": 0,
+      "cached_objects": 2506,
+      "fresh_main_objects": 1,
+      "owned_data_exact": 338,
+      "BSS_claims": 245,
+      "BSS_bytes": 31216,
+      "new_symbol_errors": 0,
+      "inherited_baseline_symbol_errors": 9,
+      "baseline_control": "Existing same-input baseline reused; nine prior actual baseline symbol errors retained, not a new baseline run.",
+      "global_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      }
+    },
+    "remaining_scope": [
+      "Other raw Actor accesses, vector grouping and shared-header constructor/destructor lifetime boundaries remain partial.",
+      "Historical Yegg findings are neither resolved nor rewritten by this Actor-method checkpoint.",
+      "No shared-header, manifest, canonical-home, relocation-policy, enrollment, tooling or port change.",
+      "Broad original307 remains incomplete; Source208 plus4foundations and45remaining migrations, proof30 accepted and20remaining, no counter increment."
+    ],
+    "independent_review": "Pending exact final immutable three-file composition; registry task does not complete or publish the broad parent."
+  }
 
 }

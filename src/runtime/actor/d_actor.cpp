@@ -393,14 +393,15 @@ typedef long long s64;
 extern "C" {
 extern "C" s16 data_02082214[];
 }
-void dActor_c::UpdatePosWithHorzSpeedAndAng(){
+void dActor_c::UpdatePosWithHorzSpeedAndAng() {
     s32 horzSpeed = mHorzSpeed;
     if (horzSpeed == 0) {
         s32 vertSpeed = mVertSpeed;
         s32 vertAccel = mVertAccel;
         s32 terminalVelocity = mTerminalVelocity;
         s32 nx = vertSpeed + vertAccel;
-        if (nx >= terminalVelocity) terminalVelocity = nx;
+        if (nx >= terminalVelocity)
+            terminalVelocity = nx;
         unk_0a4 = 0;
         mVertSpeed = terminalVelocity;
         unk_0ac = 0;
@@ -415,14 +416,15 @@ void dActor_c::UpdatePosWithHorzSpeedAndAng(){
         s32 nx;
         s16 cosv;
         s64 pz;
-        j = ((s32)static_cast<unsigned short>(mPrevAngleY) >> 4) << 1;
+        j = ((s32) static_cast<unsigned short>(mPrevAngleY) >> 4) << 1;
         sinv = data_02082214[j + 1];
         vertSpeed = mVertSpeed;
         vertAccel = mVertAccel;
         terminalVelocity = mTerminalVelocity;
         px = FX_MUL(horzSpeed, sinv);
         nx = vertSpeed + vertAccel;
-        if (nx >= terminalVelocity) terminalVelocity = nx;
+        if (nx >= terminalVelocity)
+            terminalVelocity = nx;
         cosv = data_02082214[j];
         pz = FX_MUL(horzSpeed, cosv);
         unk_0a4 = (s32)pz;
