@@ -5484,6 +5484,7 @@ src/unnamed/arm9/0206/func_02060364.c:
 src/unnamed/arm9/0206/func_02060398.c:
     complete
     .text start:0x02060398 end:0x020603c8
+    .rodata start:0x020867bc end:0x0208685c
 
 src/unnamed/arm9/0206/func_020603c8.cpp:
     complete
