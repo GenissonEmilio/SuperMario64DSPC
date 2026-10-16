@@ -20,7 +20,7 @@ src/game/actors/d_a_popoi.cpp:
     .text start:0x0212624c end:0x02127230
     .init start:0x021275fc end:0x021277cc
     .ctor start:0x021277d4 end:0x021277d8
-    .data start:0x02127a00 end:0x02127a50
+    .data start:0x02127a00 end:0x02127a68
     .bss start:0x02127c88 end:0x02127d40
 
 src/unnamed/ov077/__sinit_ov077_0212749c.c:
