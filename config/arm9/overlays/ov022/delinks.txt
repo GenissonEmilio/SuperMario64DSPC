@@ -73,6 +73,8 @@ src/unnamed/ov022/__sinit_ov022_02112f78.c:
     complete
     .init start:0x02112f78 end:0x02112fe4
 
+    .bss start:0x02114628 end:0x02114640
 src/unnamed/ov022/__sinit_ov022_02113050.c:
     complete
     .init start:0x02113050 end:0x021130bc
+    .bss start:0x02114668 end:0x02114690

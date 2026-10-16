@@ -20,3 +20,11 @@ void __sinit_ov022_02113050(void)
     func_02017b4c(gFlLogCollisionFile, ASSET_FL_LOG_KCL);
     func_020731dc(gFlLogCollisionFile, SharedFilePtr_Destruct_Clsn, data_ov022_02114684);
 }
+
+int gFlLogModelFile[2];
+
+int gFlLogCollisionFile[2];
+
+int data_ov022_02114678[3];
+
+int data_ov022_02114684[3];
