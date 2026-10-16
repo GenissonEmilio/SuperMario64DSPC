@@ -247,7 +247,7 @@ void LoadBlueCoinModel(void* c);
 void _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(void* self, void* a, Fix12i r, Fix12i h, unsigned int e, unsigned int g);
 void _ZN10dBgCh_Actr4InitEP8dActor_c5Fix12IiES3_P10Vector3_16S5_(void* self, void* a, Fix12i b, Fix12i cc, void* d, Fix12i e);
 void func_ov084_021290d4(char *c);
-extern SharedFilePtr* data_ov084_02130278[7];
+extern const SharedFilePtr* const data_ov084_02130278[7];
 extern int data_ov084_02130258[];
 extern int data_ov084_02130208[];
 extern int data_ov084_02130238[];
@@ -2166,4 +2166,17 @@ StateHandler data_ov084_02130d74[5] = {
     &daKrb_c::func_ov084_0212aab0,    /* STATE_AIRBORNE */
     krbStateDesc_Tumble.pmf,          /* STATE_TUMBLE */
     krbStateDesc_Pause.pmf,           /* STATE_PAUSE */
+};
+
+/* The BCA table: the seven animation handles in the order the resource
+   loops walk them (Release on cleanup, LoadFile on init). The pointee is
+   const, so each use casts it back to SharedFilePtr*. */
+const SharedFilePtr* const data_ov084_02130278[7] = {
+    &data_ov084_02130ce8,
+    &data_ov084_02130ce0,
+    &data_ov084_02130cd0,
+    &data_ov084_02130cc0,
+    &data_ov084_02130cd8,
+    &data_ov084_02130cc8,
+    &data_ov084_02130cf0,
 };
