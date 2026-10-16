@@ -35,7 +35,29 @@
 #include "decl_common.h"
 #include "decl_ModelAnim.h"
 struct W2 { int w[2]; };
-struct SharedFilePtr { void Release(); };
+struct SharedFilePtr { int w[2]; void Release(); };
+extern "C" void func_ov006_020ca070(void *self);
+extern "C" void func_ov006_020ca310(char *c);
+extern "C" void func_ov006_020ca39c(int *p);
+extern "C" void func_ov006_020cc9b8(int *c);
+/* mwcc emits every definition except the last in reverse, then the last.
+   This order is what makes the object come out address order. */
+extern "C" {
+W2 data_ov006_0213b134 = { (int)func_ov006_020ca070, 0 };
+W2 data_ov006_0213b12c = { (int)func_ov006_020cc9b8, 0 };
+W2 data_ov006_0213b124 = { (int)func_ov006_020ca310, 0 };
+W2 data_ov006_0213b11c = { (int)func_ov006_020ca39c, 0 };
+SharedFilePtr data_ov006_02140610;
+SharedFilePtr data_ov006_02140608;
+SharedFilePtr data_ov006_02140600;
+SharedFilePtr data_ov006_021405f8;
+SharedFilePtr data_ov006_021405f0;
+SharedFilePtr data_ov006_021405e8;
+SharedFilePtr data_ov006_021405e0;
+SharedFilePtr data_ov006_021405d8;
+SharedFilePtr data_ov006_021405d0;
+SharedFilePtr data_ov006_02140618;
+}
 struct ModelAnim { ~ModelAnim(); };
 struct dExtFrameCtrl_c { void Advance(); int WillHitFrame(int) const; };
 struct Sound { static void PlayBank2_2D(unsigned int); };
@@ -1062,8 +1084,8 @@ L260:
 namespace ns_020ca2ec {
 extern "C" {
 typedef struct { int a, b; } S8;
-extern "C" S8 pmf_Trmp2Mario_State5;
-extern void Trmp2Mario_State5(void *self);
+extern "C" W2 data_ov006_0213b134;
+extern void func_ov006_020ca070(void *self);
 
 // @symbol Trmp2Mario_EnterState5
 void Trmp2Mario_EnterState5(void *self) {
@@ -1094,12 +1116,12 @@ extern "C" void Trmp2Mario_State6(char* c){
 namespace ns_020ca374 {
 extern "C" {
 struct S2{int w[2];};
-extern "C" struct S2 pmf_Trmp2Mario_State6;
-// @symbol Trmp2Mario_EnterState6
-void Trmp2Mario_EnterState6(char *o, short v){
+extern "C" W2 data_ov006_0213b124;
+// @symbol func_ov006_020ca374
+void func_ov006_020ca374(char *o, short v){
   *(short*)(o+0x6c)=v;
   *(int*)(o+0x48)=0;
-  *(struct S2*)(o+0x70)=pmf_Trmp2Mario_State6;
+  *(struct S2*)(o+0x70)=*(struct S2*)&data_ov006_0213b124;
 }
 }
 }
@@ -1127,7 +1149,7 @@ extern "C" void _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(void *, BCA_File *f,
 extern "C" {
 extern int data_020a0ebc[];
 extern int data_ov006_02140564[];
-extern double pmf_Trmp2Mario_State7_3;
+extern W2 data_ov006_0213b11c;
 }
 
 // @symbol Trmp2Mario_EnterState7
@@ -1143,7 +1165,7 @@ extern "C" void Trmp2Mario_EnterState7(char *c)
     *(int *)(c + 0x48) = 0;
     *(int *)(c + 0x64) = 0;
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj((ModelAnim *)(c + 0x78), (BCA_File *)data_ov006_02140564[0], 0, 0x800, 0);
-    *(double *)(c + 0x70) = pmf_Trmp2Mario_State7_3;
+    *(double *)(c + 0x70) = *(double *)&data_ov006_0213b11c;
 }
 }
 // ---- Trmp2Mario_Load
@@ -2999,7 +3021,7 @@ extern "C" int data_ov006_021405c8;
 extern "C" struct G2 data_ov006_02140564;
 extern "C" struct G2 pmf_Trmp3DMario_State11;
 extern "C" int data_ov006_0214058c;
-extern "C" struct G2 pmf_Trmp3DMario_State10;
+extern "C" W2 data_ov006_0213b12c;
 
 // @symbol Trmp3DMario_EnterState10
 extern "C" void Trmp3DMario_EnterState10(char *c)
@@ -3020,7 +3042,7 @@ extern "C" void Trmp3DMario_EnterState10(char *c)
     if (s[0] != d->w[0] || (s[1] != d->w[1] && *(int *)(c + 0x64) != 0)) {
         data_ov006_0214058c += 1;
     }
-    *(struct G2 *)(c + 0x64) = pmf_Trmp3DMario_State10;
+    *(struct G2 *)(c + 0x64) = *(struct G2 *)&data_ov006_0213b12c;
 }
 }
 #pragma pop
