@@ -76,6 +76,7 @@ src/game/actors/d_a_obj_block_item_tag.cpp:
 src/game/actors/d_a_obj_kinoko_tag.cpp:
     complete
     .text start:0x020b46a0 end:0x020b4a70
+    .data start:0x02108c94 end:0x02108d70
 
 src/game/actors/d_a_obj_dorifu.cpp:
     complete
