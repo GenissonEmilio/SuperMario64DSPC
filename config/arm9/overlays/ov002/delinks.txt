@@ -193,6 +193,7 @@ src/game/actors/d_a_obj_cannon_shutter.cpp:
     .init start:0x02101968 end:0x021019d0
     .ctor start:0x0210810c end:0x02108110
     .bss start:0x0210e124 end:0x0210e14c
+    .data start:0x02109cf0 end:0x02109db8
 
 src/game/player/Player.cpp:
     complete
