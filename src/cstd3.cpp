@@ -19,7 +19,18 @@
 #include "nitro/hw/registers.h"
 
 extern "C" {
-extern char data_020868a0;
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+char data_020868a0[52] = {
+    65, 83, 83, 69, 82, 84, 73, 79, 78, 32, 70, 65,
+    73, 76, 69, 68, 32, 32, 70, 73, 76, 69, 61, 91,
+    37, 115, 93, 32, 76, 73, 78, 69, 61, 91, 37, 100,
+    93, 32, 32, 69, 88, 80, 61, 91, 37, 115, 93, 32,
+    10, 0, 0, 0
+};
+#pragma section forcerodata end
+}
 extern char data_020868d4;
 void func_0206ccd8(int fmt, ...);
 int func_0206cf7c(int mask);

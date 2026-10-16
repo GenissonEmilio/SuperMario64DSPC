@@ -21,7 +21,10 @@ extern void LoadFont(int id);
 
 extern int OVERLAY_0_ID;
 extern int OVERLAY_1_ID;
-extern int data_0208ee5c;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_0208ee5c = 0x6d6f72;
+#pragma section forcedata end
 
 void func_0201a2f8(void) {
     int cond = (*(unsigned short*)0x27ffc40 == 2);

@@ -325,8 +325,18 @@ extern u16 data_02075620[];
 extern struct LevelReturnEntry data_02075638[];
 extern s16 data_020756b0[];
 extern void *data_020756f0[12];
-extern unsigned char data_02075768[];
-extern u8 data_02075769[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned char data_02075768[1] = {
+    3
+};
+
+u8 data_02075769[1] = {
+    32
+};
+#pragma section forcerodata end
+}
 extern s8 data_0207576a[];
 extern OvTbl data_02075804[];
 extern int data_020758c8[];

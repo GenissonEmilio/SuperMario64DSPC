@@ -502,6 +502,7 @@ src/unnamed/arm9/0200/func_0200ee68.c:
     complete
     .text start:0x0200ee68 end:0x0200ee8c
 
+    .data start:0x020889b0 end:0x02088a18
 src/unnamed/arm9/0200/func_0200ee8c.c:
     complete
     .text start:0x0200ee8c end:0x0200eec8
@@ -576,6 +577,7 @@ src/runtime/actor/d_actor.cpp:
     .text start:0x0200f658 end:0x020112c8
 
     .data start:0x0208e37c end:0x0208e384
+    .rodata start:0x02075244 end:0x02075250
 src/_ZN8dActor_cD2Ev.cpp:
     complete
     .text start:0x020112c8 end:0x02011314
@@ -605,10 +607,13 @@ src/engine/sound/Sound.cpp:
     .text start:0x02011654 end:0x02013548
 
     .bss start:0x0209b4a0 end:0x0209b4a4
+    .rodata start:0x02075250 end:0x02075264
+    .data start:0x0208e438 end:0x0208e448
 src/GetLevelPart.c:
     complete
     .text start:0x02013548 end:0x02013558
 
+    .rodata start:0x02075264 end:0x02075298
 src/SublevelToLevel.c:
     complete
     .text start:0x02013558 end:0x02013568
@@ -651,6 +656,7 @@ src/func_02013f4c.c:
     complete
     .text start:0x02013f4c end:0x02014150
 
+    .bss start:0x0209cde4 end:0x0209cde8
 src/InitCrashScreen.c:
     complete
     .text start:0x02014150 end:0x02014214
@@ -676,6 +682,7 @@ src/unnamed/arm9/0201/func_0201473c.c:
     complete
     .text start:0x0201473c end:0x02014770
 
+    .bss start:0x0209cde8 end:0x0209cee8
 src/nds_print.c:
     complete
     .text start:0x02014770 end:0x020147bc
@@ -1063,6 +1070,7 @@ src/unnamed/arm9/0201/func_02018a58.cpp:
     complete
     .text start:0x02018a58 end:0x02018aa4
 
+    .bss start:0x0209d3b0 end:0x0209d3b4
 src/unnamed/arm9/0201/func_02018aa4.c:
     complete
     .text start:0x02018aa4 end:0x02018ac4
@@ -1297,6 +1305,7 @@ src/func_0201a2f8.c:
     complete
     .text start:0x0201a2f8 end:0x0201a3e4
 
+    .data start:0x0208ee5c end:0x0208ee60
 src/unnamed/arm9/0201/func_0201a3e4.c:
     complete
     .text start:0x0201a3e4 end:0x0201a428
@@ -1407,6 +1416,7 @@ src/Message2.cpp:
     .text start:0x0201ab04 end:0x0201cb2c
 
     .data start:0x0208eecc end:0x0208eeec
+    .bss start:0x0209d700 end:0x0209d704
 src/ui/messages/func_0201cb2c.c:
     complete
     .text start:0x0201cb2c end:0x0201cb7c
@@ -1556,6 +1566,7 @@ src/engine/particle/Particle.cpp:
     complete
     .text start:0x020226d4 end:0x020233d4
 
+    .bss start:0x0209ee84 end:0x0209ee88
 src/GetActorDebugName.c:
     complete
     .text start:0x020233d4 end:0x020233f0
@@ -1597,6 +1608,7 @@ src/game/stages/d_s_stage_methods.cpp:
     complete
     .text start:0x02023688 end:0x0202e118
 
+    .rodata start:0x02075768 end:0x0207576a
 src/unnamed/arm9/0202/func_0202e118.c:
     complete
     .text start:0x0202e118 end:0x0202e140
@@ -1760,6 +1772,7 @@ src/game/stages/d_s_mb.cpp:
     complete
     .text start:0x02034a78 end:0x02035354
 
+    .bss start:0x020a0c60 end:0x020a0c64
 src/unnamed/arm9/0203/func_02035354.c:
     complete
     .text start:0x02035354 end:0x02035394
@@ -1854,6 +1867,7 @@ src/engine/path/PathPtr.cpp:
     .text start:0x0203ac80 end:0x0203adbc
     .bss start:0x020a0d84 end:0x020a0d88
 
+    .data start:0x020994d4 end:0x020994e0
 src/DecIfAbove0_Short.c:
     complete
     .text start:0x0203adbc end:0x0203add4
@@ -2758,6 +2772,8 @@ src/engine/model/ModelComponents.cpp:
     complete
     .text start:0x020443c8 end:0x0204547c
 
+    .rodata start:0x02082190 end:0x020821c0
+    .bss start:0x020a4bd4 end:0x020a4bd8
 src/func_0204547c.c:
     complete
     .text start:0x0204547c end:0x020456a0
@@ -2779,6 +2795,7 @@ src/engine/model/Model4.cpp:
     complete
     .text start:0x020458e0 end:0x020468a0
 
+    .bss start:0x020a4bd8 end:0x020a4bec
 src/_ZN15TextureSequence17UpdateFileOffsetsER8BTP_File.cpp:
     complete
     .text start:0x020468a0 end:0x020469ac
@@ -3115,7 +3132,7 @@ src/unnamed/arm9/0204/func_0204dcc0.c:
 src/engine/heap/NestedHeapIterator.cpp:
     complete
     .text start:0x0204dcfc end:0x0204e084
-    .bss start:0x020a4d38 end:0x020a4d44
+    .bss start:0x020a4d34 end:0x020a4d44
 
 src/engine/heap/ExpandingHeapAllocator.cpp:
     complete
@@ -3299,6 +3316,7 @@ src/engine/gx/GX.cpp:
     complete
     .text start:0x02056870 end:0x02056c1c
 
+    .rodata start:0x02086324 end:0x02086328
 src/Copy48BytesFixed.c:
     complete
     .text start:0x02056c1c end:0x02056c40
@@ -3339,6 +3357,7 @@ src/_ZN3IRQ13DmaTimHandlerEj.cpp:
     complete
     .text start:0x02056cc0 end:0x02056d60
 
+    .data start:0x02099fd4 end:0x02099fe4
 src/_ZN3IRQ12EmptyHandlerEv.cpp:
     complete
     .text start:0x02056d60 end:0x02056d64
@@ -4740,6 +4759,7 @@ src/_ZN3IRQ21GameCardIREQMCHandlerEv.cpp:
     complete
     .text start:0x020610ac end:0x020610fc
 
+    .bss start:0x020a89a0 end:0x020a89a4
 src/unnamed/arm9/0206/func_020610fc.c:
     complete
     .text start:0x020610fc end:0x02061128
@@ -5593,6 +5613,7 @@ src/cstd3.cpp:
     complete
     .text start:0x0206ccd8 end:0x0206ce90
 
+    .rodata start:0x020868a0 end:0x020868d4
 src/unnamed/arm9/0206/func_0206ce90.c:
     complete
     .text start:0x0206ce90 end:0x0206cec0

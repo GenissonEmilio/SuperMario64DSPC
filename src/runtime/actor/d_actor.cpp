@@ -1199,7 +1199,14 @@ dActor_c *dActor_c::UntrackAndSpawnStar(s8 &trackStarID, u32 starID,
  * 0x0200fec8  size 0x4c */
 extern "C" {
 extern unsigned char data_0209f2c0[];
-extern int data_02075244[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_02075244[3] = {
+    0x2d000, 0x3e8000, 0xabe000
+};
+#pragma section forcerodata end
+}
 }
 s32 dActor_c::GetWaterHeightWDW()
 {

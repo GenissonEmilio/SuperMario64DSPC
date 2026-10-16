@@ -15,11 +15,17 @@
 extern "C" {
 extern u32 data_020a4bc8;
 extern u32 data_020a4bcc;
-extern u32 data_020a4bd8;
-extern u32 data_020a4bdc;
-extern u32 data_020a4be0;
-extern u32 data_020a4be4;
-extern u32 data_020a4be8;
+extern "C" {
+u32 data_020a4be4;
+
+u32 data_020a4be0;
+
+u32 data_020a4bdc;
+
+u32 data_020a4bd8;
+
+u32 data_020a4be8;
+}
 void Crash();
 void _ZN2GX16BeginLoadTexPlttEv(void);
 void _ZN2GX11LoadTexPlttEPKvjj(const void *src, u32 slot, u32 size);

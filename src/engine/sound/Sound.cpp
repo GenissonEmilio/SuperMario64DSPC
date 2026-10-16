@@ -127,10 +127,18 @@ extern signed char data_0208e428;
 extern signed char data_0208e42c;
 extern int data_0208e430;
 extern int data_0208e434;
-extern int data_0208e438;
-extern int data_0208e43c;
-extern int data_0208e440;
-extern int data_0208e444;
+extern "C" {
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_0208e438 = -1;
+
+int data_0208e444 = -1;
+
+int data_0208e440 = -1;
+
+int data_0208e43c = -1;
+#pragma section forcedata end
+}
 extern signed char data_0209b470;
 extern unsigned char data_0209b474;
 extern unsigned char data_0209b478;
@@ -156,8 +164,18 @@ extern unsigned char data_0209f250;
 extern signed char data_0209f2f8;
 extern void *data_0209f394[];
 extern signed char data_02092120;
-extern unsigned char data_02075250[];
-extern unsigned char data_02075258[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned char data_02075258[12] = {
+    2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 15, 0
+};
+
+unsigned char data_02075250[8] = {
+    0, 64, 128, 192, 192, 0, 0, 0
+};
+#pragma section forcerodata end
+}
 extern char data_0208e498[];
 
 }

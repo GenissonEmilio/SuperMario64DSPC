@@ -14,7 +14,14 @@ typedef struct
   void *arg;
 } DmaEnt;
 extern DmaEnt data_020a60c4[];
-extern u16 data_02099fd4[];
+extern "C" {
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+u16 data_02099fd4[8] = {
+    8, 9, 10, 11, 3, 4, 5, 6
+};
+#pragma section forcedata end
+}
 extern u32 data_023c0000[];
 }
 inline void (*inline_fn(DmaEnt *arg0, u32 arg1))(void *)

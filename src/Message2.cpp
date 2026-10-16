@@ -72,7 +72,9 @@ extern u8 data_0209d6e4[];
 extern u8 *data_0209d6f0;
 extern u8 *data_0209d6f4;
 extern int data_0209d6f8;
-extern int data_0209d700;
+extern "C" {
+int data_0209d700;
+}
 extern int data_0209d704;
 extern u8 data_0209d710[];
 extern int data_0209d74c[];

@@ -38,7 +38,14 @@ extern int NUM_PATHS;       /* entries in PATH_DEFS */
 
 extern "C" {
 void func_02018434(int a0, int a1, int a2);
-extern char data_020994d4[];
+extern "C" {
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned int data_020994d4[3] = {
+    0x4955422f, 0x4954444c, 0x454d
+};
+#pragma section forcedata end
+}
 extern char data_020a0d90[];
 }
 
