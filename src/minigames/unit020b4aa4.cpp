@@ -1056,3 +1056,14 @@ extern "C" void Coin_FlyToCounter(Sprite* s) {
     ApproachLinear(sMgCoinsPayoutLeft, 0, 1);
     Coin_Reset(s);
 }
+
+/* .data 0x020bc868..0x020bc86c */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+extern unsigned int data_ov004_020bc868[];
+unsigned int data_ov004_020bc868[1] = {
+    0x00000080u,
+};
+}
+#pragma section forcedata end

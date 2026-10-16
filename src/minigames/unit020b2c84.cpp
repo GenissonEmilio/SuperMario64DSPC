@@ -1257,3 +1257,23 @@ PairW sBannerDrawTable[13] = {
 };
 int sMgBannerFiles[29];
 }
+
+/* .rodata 0x020b944c..0x020b948c */
+#pragma force_active on
+extern "C" {
+extern const unsigned int data_ov004_020b944c[];
+extern const unsigned int data_ov004_020b9468[];
+extern const unsigned int sMgCoinRiseFrames[];
+const unsigned int data_ov004_020b944c[7] = {
+    0x00000000u, 0x00000009u, 0x00000063u, 0x000003e7u,
+    0x0000270fu, 0x0001869fu, 0x000f423fu,
+};
+const unsigned int data_ov004_020b9468[8] = {
+    0x00000000u, 0x00007fffu, 0x00000000u, 0x00000000u,
+    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+};
+const unsigned int sMgCoinRiseFrames[1] = {
+    0x00000014u,
+};
+}
+#pragma force_active off
