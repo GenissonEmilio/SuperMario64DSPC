@@ -10,6 +10,7 @@ src/game/actors/d_a_obj_clock_huriko.cpp:
     .init start:0x021116b8 end:0x021116f8
     .ctor start:0x02111760 end:0x02111764
     .bss start:0x02112280 end:0x02112294
+    .rodata start:0x021116ac end:0x021116b0
 
 src/game/actors/d_a_obj_clock.cpp:
     complete
