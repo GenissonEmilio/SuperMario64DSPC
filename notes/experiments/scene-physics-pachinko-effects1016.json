@@ -1,0 +1,91 @@
+{
+  "base_commit": "808b125df8b4b5e6ef21a069160432dad8b35cbe",
+  "scope": "Tamaire pachinko scene popup, hit-effect and paddle readability.",
+  "changes": [
+    "Replace raw offsets with the established mScorePops and mHitFx members in all six draw/update/spawn routines.",
+    "Use native mPaddles members in Paddle_State10 and Paddle_State11, and the established scene state member in DrawTopRecord.",
+    "Remove four obsolete view types: View, Obj4c0, Sub and Obje3c.",
+    "Name lane selection, popup arguments, spark coordinates, paddle target/trigonometry and vertical-distance locals.",
+    "Correct comments about separate array storage, spark timing and popup motion; header changes are comments only."
+  ],
+  "evidence": {
+    "array_layout": "48 balls at 0x4660, three paddles at 0x5260, 16 hit effects at 0x5320, 16 score popups at 0x54a0, two cups at 0x5620. Existing header definitions and size checks are unchanged.",
+    "popup_arguments": "Ball_State7 passes mBalls[i].x, mBalls[i].y and Mg_GetSubmittedScore()+1.",
+    "popup_motion": "Popup_UpdateAll integrates y/vy while falling is zero, setting falling at life 0x30; later updates hold position until life expires. Existing falling field name is retained.",
+    "spark_timing": "Spark_UpdateAll increments timer until it reaches eight, then advances frame on each update without resetting timer; frame >= 4 clears active/frame/visible.",
+    "retained_compiler_constraint": "Paddle_State12 retains currentY = deltaX ? currentY : currentY. Removing it swaps rsb/sub instructions at function offsets 0x74/0x78; both forms have 484-byte bodies. Candidate and disassembly comparison retained under build/scene-physics10-no-conditional-candidate.cpp and build/scene-physics10-conditional-diff.txt.",
+    "runtime_validation": "No emulator run needed for this slice: names follow established member layouts, callers and the complete matching bodies. No new dynamic behavior claim.",
+    "ownership_snapshot": "build/scene-physics10-queue.json, state b36dce6254ed7393e802c8922235cf56ee596e4a: no active pachinko2 reservation."
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base_commit": "808b125df8b4b5e6ef21a069160432dad8b35cbe",
+      "header": "include/dScMgPachinko2_c.h",
+      "header_before_sha256": "c8065bba6f908ec759e5a136e3a341470cebf09c15a15b03d307d395e1c6943c",
+      "header_after_sha256": "a6fcb9a76ba36f13c2da6c5bd7f74e4ac79b4d4e92178c6349fdf8549ed2b995",
+      "consumers": [
+        {
+          "file": "src/minigames/d_s_mg_pachinko2.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "165d2988378d46da54f21a0cca243cbc9bf7b8c44bfe261bf66b09b408f5ac26",
+          "source_after_sha256": "d81b81504c1f045f90e70e79d9e52e016003c1f1f32c2eae6351dd49d41d3195",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 91,
+          "sections_after": 91,
+          "before_output_sha256": "9be528e22b0564d2fba1d46314e5df5df07596ef3743c5d8f60ead43bb89e680",
+          "after_output_sha256": "9be528e22b0564d2fba1d46314e5df5df07596ef3743c5d8f60ead43bb89e680"
+        }
+      ]
+    },
+    "comparison_scope": "The sole consumer of include/dScMgPachinko2_c.h, also the edited source.",
+    "comparison_method": "All allocated section metadata/bytes and named relocation records compare exactly; no masking or canonicalization.",
+    "focused_linkcheck": {
+      "checked": 75,
+      "verified": 75,
+      "blind": 0,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "declaration_agreement": {
+      "files_in_scope": 1649,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "exit_code": 0
+    },
+    "diff_check": "PASS",
+    "comparison_script": {
+      "path": "build/scene-physics10-consumer-control.py",
+      "sha256": "641a003bd2f806249c8991e52dadc5e1049441a5e9bdb2fb50cefa65457e1de0"
+    },
+    "focused_report": {
+      "path": "build/scene-physics10-linkcheck.json",
+      "sha256": "9b50b77ebd14a228172fadb577f612fe39da79c46c833381730fc4e0f47e61db"
+    },
+    "declaration_log": {
+      "path": "build/scene-physics10-declarations.log",
+      "sha256": "6c8463064e4bf87b7aa09ad4b787424691cec1d7e3965211dddebfb706d3c5d9"
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "1ed9087390c2224d5f25ff7ccec1273163f50ae1d72ef8a6f7bc7e897b7f98d4"
+    }
+  },
+  "review_status": "Producer checkpoint; independent source review and publication remain pending. Broader scene/physics goal remains active."
+}

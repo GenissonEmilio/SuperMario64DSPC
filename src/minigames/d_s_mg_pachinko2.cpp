@@ -20,14 +20,9 @@
  * runtime copies are made by __sinit_ov006_02131cd0.
  *
  * leftovers:
- * - The helpers still address the scene through byte offsets and the local
- *   view structs below. mBalls[0x40] is the typed name for 0x4660..0x565f,
- *   but only balls 0..0x2f are live balls: the tail overlaps three 0x40-byte
- *   paddle records at 0x5260, two 16 x 0x18 sprite records at 0x5320/0x54a0
- *   and the two 0x20-byte cup records at 0x5620. Naming those sub-records as
- *   members needs a union or punned views and is deferred; receivers stay as
- *   `char *c = (char *)this` locals because the offset arithmetic is what
- *   the matching bytes already prove.
+ * - Some helpers still use byte offsets or local view structs. The class
+ *   header already separates the 48 balls, three paddles, 16 hit effects,
+ *   16 score popups and two cups into non-overlapping member arrays.
  * - PlotSubBg2Pixels keeps an unused receiver: every call passes the
  *   scene in r0 and the body only uses (a1, a2, a3). Memberized with the
  *   others for the uniform call shape.
@@ -90,19 +85,6 @@ struct Obj4ec {
     struct Slot slots[2];  /* 0x563b */
 };
 
-/* Spark_UpdateAll's view of the 16 entries at 0x5330. */
-typedef struct {
-    char _pad0[0x5330];
-    u16 timer;   /* +0x5330 */
-    char _pad1[2];
-    u8 f4;       /* +0x5334 */
-    u8 stage;    /* +0x5335 */
-    u8 active;   /* +0x5336 */
-} View;
-
-/* DrawTopRecord's view: the state word at 0x5660. */
-struct Obj4c0 { char pad[0x5660]; int f; /* 0x5660 */ };
-
 /* Paddle_DrawAll's three 0x40-byte records at 0x5260. */
 struct E68c {
     int x;                          /* +0x00 (abs 0x5260) */
@@ -115,37 +97,6 @@ struct E68c {
 struct Obj68c {
     unsigned char pad[0x5260];
     struct E68c arr[3];
-};
-
-/* Paddle_State10's view of the same records. */
-struct Sub {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ s32 unk04;
-    /* 0x08 */ s32 unk08;
-    /* 0x0c */ s32 unk0c;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1c */ s32 unk1c;
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ s32 unk24;
-    /* 0x28 */ s32 unk28;
-    /* 0x2c */ s32 unk2c;
-    /* 0x30 */ u16 unk30;
-    /* 0x32 */ u16 unk32;
-    /* 0x34 */ u16 unk34;
-    /* 0x36 */ u8 unk36;
-    /* 0x37 */ u8 unk37;
-    /* 0x38 */ u8 unk38;
-    /* 0x39 */ u8 unk39;
-    /* 0x3a */ u8 unk3a;
-    /* 0x3b */ u8 unk3b;
-    /* 0x3c */ s32 unk3c;
-};
-
-struct Obje3c {
-    /* 0x0000 */ u8 pad0[0x5260];
-    /* 0x5260 */ struct Sub sub[2];
 };
 
 /* Paddle_UpdateAll's stride-only view of the records at 0x5260. */
@@ -688,15 +639,15 @@ void dScMgPachinko2_c::Cup_HideAll()
 // @symbol _ZN16dScMgPachinko2_c16ChooseLaneConfigEv
 void dScMgPachinko2_c::ChooseLaneConfig()
 {
-    unsigned int a, b;
+    unsigned int nextConfig, configOffset;
     if ((int)mLevel != 0) {
-        a = ((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 6) >> 0xf;
-        if ((unsigned int)mLaneConfig == a) {
-            b = (((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 5) >> 0xf) + 1;
-            a = a + b;
-            if ((int)a >= 6) a -= 6;
+        nextConfig = ((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 6) >> 0xf;
+        if ((unsigned int)mLaneConfig == nextConfig) {
+            configOffset = (((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 5) >> 0xf) + 1;
+            nextConfig = nextConfig + configOffset;
+            if ((int)nextConfig >= 6) nextConfig -= 6;
         }
-        mLaneConfig = a;
+        mLaneConfig = nextConfig;
         return;
     }
     mLaneConfig = ((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 6) >> 0xf;
@@ -705,69 +656,53 @@ void dScMgPachinko2_c::ChooseLaneConfig()
 // @symbol _ZN16dScMgPachinko2_c13Popup_DrawAllEv
 void dScMgPachinko2_c::Popup_DrawAll()
 {
-    char *c = (char *)this;
-    int i;
-    for(i=0;i<0x10;i++){
-        if(*(unsigned char*)(c+0x5000+0x4b5) != 0){
-            Mg_DrawBigNumber(
-                *(int*)(c+0x5000+0x4a0) >> 12,
-                *(int*)(c+0x5000+0x4a4) >> 12,
-                *(unsigned char*)(c+0x5000+0x4b6),
-                -1, -1, 0, 0);
+    for (int i = 0; i < 0x10; i++) {
+        if (mScorePops[i].visible != 0) {
+            Mg_DrawBigNumber(mScorePops[i].x >> 12, mScorePops[i].y >> 12,
+                mScorePops[i].sprite, -1, -1, 0, 0);
         }
-        c += 0x18;
     }
 }
 
 // @symbol _ZN16dScMgPachinko2_c15Popup_UpdateAllEv
 void dScMgPachinko2_c::Popup_UpdateAll()
 {
-    char *p = (char *)this;
-    int i;
-    for (i = 0; i < 0x10; i++, p += 0x18) {
-        if (*(u8*)(p + 0x54b4) != 0) {
-            if (*(u8*)(p + 0x54b7) == 0) {
-                *(int*)(((int)p + 0x54a4)) += *(int*)(p + 0x54a8);
-                *(int*)(((int)p + 0x54a8)) -= 0x200;
-                if (*(u16*)(p + 0x54b0) == 0x30) {
-                    *(u8*)(((int)p + 0x54b7)) += 1;
-                }
+    for (int i = 0; i < 0x10; i++) {
+        if (mScorePops[i].active != 0) {
+            if (mScorePops[i].falling == 0) {
+                mScorePops[i].y += mScorePops[i].vy;
+                mScorePops[i].vy -= 0x200;
+                if (mScorePops[i].life == 0x30)
+                    mScorePops[i].falling += 1;
             }
-            if (*(u16*)(p + 0x54b0) != 0) {
-                *(u16*)(((int)p + 0x54b0)) -= 1;
+            if (mScorePops[i].life != 0) {
+                mScorePops[i].life -= 1;
             } else {
-                *(u8*)(p + 0x54b5) = 0;
-                *(u8*)(p + 0x54b4) = 0;
-                *(u16*)(p + 0x54b0) = 0;
+                mScorePops[i].visible = 0;
+                mScorePops[i].active = 0;
+                mScorePops[i].life = 0;
             }
         }
     }
 }
 
 // @symbol _ZN16dScMgPachinko2_c11Popup_SpawnEiii
-void dScMgPachinko2_c::Popup_Spawn(int r1, int r2, int r3)
+void dScMgPachinko2_c::Popup_Spawn(int ballX, int ballY, int value)
 {
-    char *c = (char *)this;
-    int i;
-    char *p = c;
-    for (i = 0; i < 0x10; i++, p += 0x18) {
-        if (*(unsigned char *)(p + 0x54b4) == 0) {
-            int off = i * 0x18;
+    for (int i = 0; i < 0x10; i++) {
+        if (mScorePops[i].active == 0) {
             mScorePops[i].active = 1;
             mScorePops[i].visible = 1;
-            if (r1 >= 0x80000)
+            if (ballX >= 0x80000)
                 mScorePops[i].x = 0xa4000;
             else
                 mScorePops[i].x = 0x5c000;
-            {
-                char *w = (char *)(int)(c + off);
-                *(int *)(w + 0x54a4) = r2 + 0x48000;
-                *(int *)(w + 0x54ac) = 0;
-                *(int *)(w + 0x54a8) = 0;
-                *(unsigned char *)(w + 0x54b6) = (unsigned char)r3;
-                *(unsigned char *)(w + 0x54b7) = 0;
-                *(short *)(w + 0x54b0) = 0x40;
-            }
+            mScorePops[i].y = ballY + 0x48000;
+            mScorePops[i].unk_0c = 0;
+            mScorePops[i].vy = 0;
+            mScorePops[i].sprite = (u8)value;
+            mScorePops[i].falling = 0;
+            mScorePops[i].life = 0x40;
             return;
         }
     }
@@ -776,53 +711,42 @@ void dScMgPachinko2_c::Popup_Spawn(int r1, int r2, int r3)
 // @symbol _ZN16dScMgPachinko2_c13Spark_DrawAllEv
 void dScMgPachinko2_c::Spark_DrawAll()
 {
-    char *c = (char *)this;
-    int i;
-    for(i=0;i<0x10;i++){
-        if(*(unsigned char*)(c+0x5000+0x334) != 0){
-            Mg_RenderSpriteBoth(
-                (void *)data_ov006_02136bd4[*(unsigned char*)(c+0x5000+0x335)],
-                *(int*)(c+0x5000+0x320) >> 12,
-                *(int*)(c+0x5000+0x324) >> 12,
-                -1, -1);
+    for (int i = 0; i < 0x10; i++) {
+        if (mHitFx[i].visible != 0) {
+            Mg_RenderSpriteBoth((void *)data_ov006_02136bd4[mHitFx[i].frame],
+                mHitFx[i].x >> 12, mHitFx[i].y >> 12, -1, -1);
         }
-        c += 0x18;
     }
 }
 
 // @symbol _ZN16dScMgPachinko2_c15Spark_UpdateAllEv
-/* For each of 16 active entries (stride 0x18 array at 0x5330): every 8
- * ticks bump a stage byte; after 4 stages clear the entry. */
+/* Hold the first frame until timer reaches eight, then advance each
+ * update. The timer is not reset between frames. */
 void dScMgPachinko2_c::Spark_UpdateAll()
 {
-    char *c = (char *)this;
-    int i;
-    for (i = 0; i < 16; i++, c += 0x18) {
-        View *v = (View*)c;
-        if (v->active == 0)
+    for (int i = 0; i < 16; i++) {
+        if (mHitFx[i].active == 0)
             continue;
-        (*(u16*)(c + 0x5330))++;
-        if (v->timer < 8)
+        mHitFx[i].timer++;
+        if (mHitFx[i].timer < 8)
             continue;
-        (*(u8*)(c + 0x5335))++;
-        if (v->stage >= 4) {
-            v->active = 0;
-            v->stage = 0;
-            v->f4 = 0;
+        mHitFx[i].frame++;
+        if (mHitFx[i].frame >= 4) {
+            mHitFx[i].active = 0;
+            mHitFx[i].frame = 0;
+            mHitFx[i].visible = 0;
         }
     }
 }
 
 // @symbol _ZN16dScMgPachinko2_c11Spark_SpawnEii
-void dScMgPachinko2_c::Spark_Spawn(int a2, int a3)
+void dScMgPachinko2_c::Spark_Spawn(int x, int y)
 {
-    char *c = (char *)this;
     int i = 0;
-    char *p = c;
     do {
-        if (*(unsigned char *)(p + 0x5336) == 0) {
-            mHitFx[i].x = a2;
-            mHitFx[i].y = a3;
+        if (mHitFx[i].active == 0) {
+            mHitFx[i].x = x;
+            mHitFx[i].y = y;
             mHitFx[i].active = 1;
             mHitFx[i].timer = 0;
             mHitFx[i].unk_08 = 0;
@@ -832,7 +756,6 @@ void dScMgPachinko2_c::Spark_Spawn(int a2, int a3)
             return;
         }
         i++;
-        p += 0x18;
     } while (i < 0x10);
 }
 
@@ -846,8 +769,7 @@ void dScMgPachinko2_c::DrawScore()
 // @symbol _ZN16dScMgPachinko2_c13DrawTopRecordEv
 void dScMgPachinko2_c::DrawTopRecord()
 {
-    struct Obj4c0 *o = (struct Obj4c0 *)this;
-    if (o->f < 2)
+    if (unk_5660 < 2)
         return;
     Mg_GetTopRecord();
     Mg_DrawTopLeftCounter();
@@ -1102,8 +1024,6 @@ void dScMgPachinko2_c::Paddle_State13(int idx)
 #pragma opt_common_subs off
 void dScMgPachinko2_c::Paddle_State12(int i)
 {
-    int b = i << 6;
-
     if (mPaddles[i].timer != 0) {
         mPaddles[i].timer--;
         if ((s16)mPaddles[i].timer < 0)
@@ -1112,31 +1032,32 @@ void dScMgPachinko2_c::Paddle_State12(int i)
     }
 
     {
-        int r4 = data_ov006_0213db9c[mLaneConfig][i];
-        int ax = 0x80 - (mPaddles[i].x >> 12);
-        int y_raw = mPaddles[i].y;
+        int targetY = data_ov006_0213db9c[mLaneConfig][i];
+        int deltaX = 0x80 - (mPaddles[i].x >> 12);
+        int currentY = mPaddles[i].y;
 
-        y_raw = ax ? y_raw : y_raw;
+        /* This expression preserves the pinned compiler's instruction order. */
+        currentY = deltaX ? currentY : currentY;
         mPaddles[i].angle = (s16)_ZN4cstd5atan2E5Fix12IiES1_(
-            r4 - (y_raw >> 12), ax);
+            targetY - (currentY >> 12), deltaX);
 
         {
-            s16 tv = data_02082214[(((u16)mPaddles[i].angle >> 4) << 1) + 1];
-            int spd = mPaddles[i].speed;
-            mPaddles[i].x += (int)(((s64)tv * spd + 0x800) >> 0xc);
+            s16 cosine = data_02082214[(((u16)mPaddles[i].angle >> 4) << 1) + 1];
+            int speed = mPaddles[i].speed;
+            mPaddles[i].x += (int)(((s64)cosine * speed + 0x800) >> 0xc);
         }
 
         {
-            s16 tv = data_02082214[((u16)mPaddles[i].angle >> 4) << 1];
-            int spd = mPaddles[i].speed;
-            mPaddles[i].y += (int)(((s64)tv * spd + 0x800) >> 0xc);
+            s16 sine = data_02082214[((u16)mPaddles[i].angle >> 4) << 1];
+            int speed = mPaddles[i].speed;
+            mPaddles[i].y += (int)(((s64)sine * speed + 0x800) >> 0xc);
         }
 
         mPaddles[i].speed += 0x100;
 
         {
             int dx = (mPaddles[i].x >> 12) - 0x80;
-            int dy = (mPaddles[i].y >> 12) - r4;
+            int dy = (mPaddles[i].y >> 12) - targetY;
             if (dx < -3)
                 return;
             if (dx > 3)
@@ -1148,7 +1069,7 @@ void dScMgPachinko2_c::Paddle_State12(int i)
         }
 
         mPaddles[i].x = 0x80000;
-        mPaddles[i].y = r4 << 12;
+        mPaddles[i].y = targetY << 12;
         mPaddles[i].state = 0xd;
         CupSlot_ResetAll();
         mPaddles[i].timer = 0x40;
@@ -1162,64 +1083,56 @@ void dScMgPachinko2_c::Paddle_State12(int i)
 // @symbol _ZN16dScMgPachinko2_c14Paddle_State11Ei
 void dScMgPachinko2_c::Paddle_State11(int idx)
 {
-    char *base = (char *)this;
-  char *r3 = base + (idx * 0x40);
-  if ((*((unsigned short *) (r3 + 0x5292))) != 0)
-  {
-    unsigned short *h = (unsigned short *) ((base + 0x5292) + (idx * 0x40));
-    *h = (*h) - 1;
-    return;
-  }
-  char *q;
-  *((int *) ((base + 0x5264) + (idx * 0x40))) = (*((int *) ((base + 0x5264) + (idx * 0x40)))) + (*((int *) ((r3 + 0x5000) + 0x26c)));
-  *((int *) ((base + 0x526c) + (idx * 0x40))) = (*((int *) ((base + 0x526c) + (idx * 0x40)))) - 0x100;
-  int a = *((int *) ((r3 + 0x5000) + 0x280));
-  int b = *((int *) ((r3 + 0x5000) + 0x264));
-  if (a < b)
-  {
-    return;
-  }
-  *((int *) ((r3 + 0x5000) + 0x264)) = a;
-  *((unsigned char *) ((r3 + 0x5000) + (b = 0x296))) = *((unsigned char *) ((r3 + 0x5000) + 0x297));
-  *((int *) ((r3 + 0x5000) + 0x268)) = *((int *) ((r3 + 0x5000) + 0x284));
-  *((int *) ((r3 + 0x5000) + 0x26c)) = *((int *) ((r3 + 0x5000) + 0x288));
+    if (mPaddles[idx].timer != 0) {
+        mPaddles[idx].timer -= 1;
+        return;
+    }
+    mPaddles[idx].y += mPaddles[idx].vy;
+    mPaddles[idx].vy -= 0x100;
+    int homeY = mPaddles[idx].homeY;
+    int y = mPaddles[idx].y;
+    if (homeY < y)
+        return;
+    mPaddles[idx].y = homeY;
+    mPaddles[idx].state = mPaddles[idx].savedState;
+    mPaddles[idx].vx = mPaddles[idx].savedVx;
+    mPaddles[idx].vy = mPaddles[idx].savedVy;
 }
 
 // @symbol _ZN16dScMgPachinko2_c14Paddle_State10Ei
 void dScMgPachinko2_c::Paddle_State10(int idx)
 {
-    struct Obje3c *obj = (struct Obje3c *)this;
-    obj->sub[idx].unk00 += obj->sub[idx].unk08;
+    mPaddles[idx].x += mPaddles[idx].vx;
 
-    if (obj->sub[idx].unk3a == 0) {
-        obj->sub[idx].unk08 += 0x200;
-        if (obj->sub[idx].unk08 >= 0x1800) {
-            obj->sub[idx].unk3a = 1;
+    if (mPaddles[idx].swing == 0) {
+        mPaddles[idx].vx += 0x200;
+        if (mPaddles[idx].vx >= 0x1800) {
+            mPaddles[idx].swing = 1;
         }
-    } else if (obj->sub[idx].unk3a == 1) {
-        obj->sub[idx].unk08 -= 0x200;
-        if (obj->sub[idx].unk08 <= -0x1800) {
-            obj->sub[idx].unk3a = 0;
+    } else if (mPaddles[idx].swing == 1) {
+        mPaddles[idx].vx -= 0x200;
+        if (mPaddles[idx].vx <= -0x1800) {
+            mPaddles[idx].swing = 0;
         }
     }
 
-    if (obj->sub[idx].unk32 != 0) {
-        obj->sub[idx].unk32--;
+    if (mPaddles[idx].timer != 0) {
+        mPaddles[idx].timer--;
         return;
     }
 
-    if ((obj->sub[idx].unk00 - obj->sub[idx].unk1c) >> 12 < -2) {
+    if ((mPaddles[idx].x - mPaddles[idx].homeX) >> 12 < -2) {
         return;
     }
-    if ((obj->sub[idx].unk00 - obj->sub[idx].unk1c) >> 12 > 2) {
+    if ((mPaddles[idx].x - mPaddles[idx].homeX) >> 12 > 2) {
         return;
     }
 
-    obj->sub[idx].unk32 = 0x10;
-    obj->sub[idx].unk0c = 0;
-    obj->sub[idx].unk36 = 0xb;
-    obj->sub[idx].unk00 = obj->sub[idx].unk1c;
-    obj->sub[idx].unk08 = 0;
+    mPaddles[idx].timer = 0x10;
+    mPaddles[idx].vy = 0;
+    mPaddles[idx].state = 0xb;
+    mPaddles[idx].x = mPaddles[idx].homeX;
+    mPaddles[idx].vx = 0;
 }
 
 // @symbol _ZN16dScMgPachinko2_c13Paddle_State9Ei
@@ -1227,12 +1140,12 @@ void dScMgPachinko2_c::Paddle_State10(int idx)
 #pragma opt_common_subs off
 void dScMgPachinko2_c::Paddle_State9(int i)
 {
-    int d;
+    int screenY;
     mPaddles[i].y += mPaddles[i].vy;
-    d = mPaddles[i].y >> 12;
+    screenY = mPaddles[i].y >> 12;
     if (mPaddles[i].vy <= 0x4000)
         mPaddles[i].vy += 0x200;
-    if (d < 0xa0)
+    if (screenY < 0xa0)
         return;
     mPaddles[i].y = 0xa0000;
     mPaddles[i].state = 0xa;
@@ -1253,16 +1166,16 @@ void dScMgPachinko2_c::Paddle_State9(int i)
 #pragma opt_common_subs off
 void dScMgPachinko2_c::Paddle_State8(int i)
 {
-    int d;
+    int distanceBelowHome;
     mPaddles[i].y += mPaddles[i].vy;
-    d = (mPaddles[i].y - mPaddles[i].homeY) >> 12;
-    if (d >= 0x40) {
+    distanceBelowHome = (mPaddles[i].y - mPaddles[i].homeY) >> 12;
+    if (distanceBelowHome >= 0x40) {
         if (mPaddles[i].vy >= 0x1000)
             mPaddles[i].vy -= 0x100;
     } else if (mPaddles[i].vy <= 0x4000) {
         mPaddles[i].vy += 0x200;
     }
-    if (d < 0x60) return;
+    if (distanceBelowHome < 0x60) return;
     mPaddles[i].timer = 0x10;
     mPaddles[i].vy = 0;
     mPaddles[i].state = 0xb;

@@ -77,8 +77,9 @@ struct dScMgPachinko2_Paddle {
     u8  pad_3e[0x2];
 };
 
-/* The flash at a paddle catch: four frames from data_ov006_02136bd4, eight
-   ticks each (Spark_UpdateAll). */
+/* The flash at a paddle catch: four frames from data_ov006_02136bd4.
+   Spark_UpdateAll holds the first until timer reaches eight, then advances
+   one frame each update. */
 struct dScMgPachinko2_HitFx {
     s32 x;            /* +0x00 */
     s32 y;            /* +0x04 */
@@ -92,8 +93,8 @@ struct dScMgPachinko2_HitFx {
     u8  pad_17;
 };
 
-/* The popup a scoring ball throws up: rises, falls, and expires after
-   0x40 ticks (Popup_UpdateAll). */
+/* The popup a scoring ball throws up: moves while life counts from 0x40
+   through 0x30, then holds its position until expiry (Popup_UpdateAll). */
 struct dScMgPachinko2_ScorePop {
     s32 x;            /* +0x00 */
     s32 y;            /* +0x04 */
@@ -143,7 +144,7 @@ struct dScMgPachinko2_c : dScMgBase_c {
     virtual s32 Render();         /* slot 9 */
     virtual void StartRound(int arg); /* slot 18 */
 
-    /* cups: the two 0x20-byte drop targets at 0x5620 (the mBalls[63] slot) */
+    /* cups: the two 0x20-byte drop targets at 0x5620 */
     void CupSlot_DrawAll();            /* render both cups */
     void CupSlot_ResetAll();            /* reset cup slots */
     void Cup_PickTarget(int k);       /* launched-ball vs cup k check */
