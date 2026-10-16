@@ -301,7 +301,7 @@ int dBgW_KcMbg::DetectClsn(dBgCh_SphCrr &sphere)
     func_02039e48(this, &sphere.centre, &localCentre);
     _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre,
         FMUL(sphere.radius, invScale), 0);
-    localSphere.unk_0ec = FMUL(sphere.unk_0ec, invScale);
+    localSphere.mWallRejectHalfExtent = FMUL(sphere.mWallRejectHalfExtent, invScale);
     localSphere.func_02037940(sphere.flags);
     func_02035394(&localSphere, &sphere);
     hit = dBgW_Kc::DetectClsn(localSphere);

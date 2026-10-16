@@ -51,7 +51,11 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
     dBgPi mClsnResult1;     /* 0x074 */
     dBgPi mClsnResult2;     /* 0x09c */
     dBgPi mClsnResult3;     /* 0x0c4 */
-    s32 unk_0ec;            /* 0x0ec */
+    /* Positive values reject wall triangles whose three axis projections lie
+       within [-(extent + radius), extent - radius]. The axis is the collider's
+       preferred-contact direction. Zero disables this test. This descriptive
+       name follows the retail comparison at 0x01ffcfa8; original spelling unknown. */
+    s32 mWallRejectHalfExtent; /* 0x0ec */
     u8  pad_0f0[0xc];
     /* Normal of the floor contact with the greatest Y component. The retail
        KCL query copies SurfaceInfo's normal at 0x01ffbe6c, then compares its
@@ -159,7 +163,7 @@ struct dBgCh_SphCrr {
     struct dBgPi mClsnResult1; /* 0x074 */
     struct dBgPi mClsnResult2; /* 0x09c */
     struct dBgPi mClsnResult3; /* 0x0c4 */
-    s32 unk_0ec;            /* 0x0ec */
+    s32 mWallRejectHalfExtent; /* 0x0ec - same projection test as the C++ view */
     u8  pad_0f0[0xc];
     s32 mFloorNormalX;      /* 0x0fc */
     s32 mFloorNormalY;      /* 0x100 */

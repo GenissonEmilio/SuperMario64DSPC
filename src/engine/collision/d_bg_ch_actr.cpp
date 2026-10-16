@@ -1245,9 +1245,9 @@ extern "C" int func_0203564c(int p)
 }
 
 // @symbol func_02035644
-extern "C" void func_02035644(int *p, int v)
+extern "C" void func_02035644(int *query, int halfExtent)
 {
-    ((dBgCh_Actr *)p)->mSphereClsn.unk_0ec = v;
+    ((dBgCh_Actr *)query)->mSphereClsn.mWallRejectHalfExtent = halfExtent;
 }
 
 // @symbol func_02035638

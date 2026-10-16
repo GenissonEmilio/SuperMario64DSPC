@@ -851,13 +851,13 @@ s32 dBgW_Kc::DetectClsn(dBgCh_SphCrr &sphere)
                            along the collider's axis.
 
                            The slab is NOT symmetric: the bounds are
-                           -(unk_ec + radius) and (unk_ec - radius), built at
+                           -(extent + radius) and (extent - radius), built at
                            0x01ffcfa8 by `add r1,r6,r3` then `rsb r2,r1,#0` and
                            then re-formed by `sub r1,r6,r3`. And the sense is
                            wholly-INSIDE rejects -- the last compare is
                            `ble 0x1ffd314`, the reject -- so a triangle that
                            escapes the slab in any component keeps its hit. */
-                        if (sphere.unk_0ec > 0 && cls == 1
+                        if (sphere.mWallRejectHalfExtent > 0 && cls == 1
                                 && !(tri->length & 0xf0000000)) {
 
                             tp.x = vtx[0] << 6;
@@ -876,7 +876,7 @@ s32 dBgW_Kc::DetectClsn(dBgCh_SphCrr &sphere)
                             KCL_VERTEX(&vc.x, en1, tp.x, tp.y, tp.z)
 
                             {
-                            s32 da, db, dc;
+                            s32 projectionA, projectionB, projectionC;
                             /* `c` being a volatile pointee already forces most of the
                                reloads the ROM makes (ldr [sp,#0xc4], nine times in this
                                block).  These two re-binds are what is left: without them
@@ -890,26 +890,26 @@ s32 dBgW_Kc::DetectClsn(dBgCh_SphCrr &sphere)
                             tp.x -= c->x;
                             tp.y -= c->y;
                             tp.z -= c->z;
-                            da = AXIS_DOT0(tp);
+                            projectionA = AXIS_DOT0(tp);
                             vb.x -= c->x;
                             vb.y -= c->y;
                             vb.z -= c->z;
-                            db = AXIS_DOT0(vb);
+                            projectionB = AXIS_DOT0(vb);
                             vc.x -= c->x;
                             vc.y -= c->y;
                             vc.z -= c->z;
-                            dc = AXIS_DOT0(vc);
+                            projectionC = AXIS_DOT0(vc);
                             /* The two loads and the add have to be spelled apart.  The cartridge
-                               loads unk_0ec first and radius second, then adds them in that same
+                               loads mWallRejectHalfExtent first and radius second, then adds them in that same
                                order; written as one expression those two orders are welded together
                                and mwcc picks the operand order from the source, so flipping the sum
                                re-orders the LOADS instead and costs three.  Naming the two reads
                                makes them independent knobs, and then both land. */
-                            s32 ext = sphere.unk_0ec;
-                            s32 rad = sphere.radius;
-                            if (da >= -(ext + rad) && da <= ext - rad
-                             && db >= -(ext + rad) && db <= ext - rad
-                             && dc >= -(ext + rad) && dc <= ext - rad)
+                            s32 rejectHalfExtent = sphere.mWallRejectHalfExtent;
+                            s32 sphereRadius = sphere.radius;
+                            if (projectionA >= -(rejectHalfExtent + sphereRadius) && projectionA <= rejectHalfExtent - sphereRadius
+                             && projectionB >= -(rejectHalfExtent + sphereRadius) && projectionB <= rejectHalfExtent - sphereRadius
+                             && projectionC >= -(rejectHalfExtent + sphereRadius) && projectionC <= rejectHalfExtent - sphereRadius)
                                 continue;
                             }
                         }

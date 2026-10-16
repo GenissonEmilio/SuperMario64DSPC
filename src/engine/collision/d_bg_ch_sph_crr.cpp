@@ -21,7 +21,7 @@ void _ZN5dBgPi9RecordHitEsP11SurfaceInfo(void *res, int triID, void *info);
 }
 
 // @symbol _ZN12dBgCh_SphCrrC1Ev
-dBgCh_SphCrr::dBgCh_SphCrr() : unk_0ec(0) {}
+dBgCh_SphCrr::dBgCh_SphCrr() : mWallRejectHalfExtent(0) {}
 
 // @symbol _ZN12dBgCh_SphCrrD1Ev
 // @symbol _ZN12dBgCh_SphCrrD0Ev

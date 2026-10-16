@@ -172,11 +172,11 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
 
     inverseScale = invScale;
     localRadius = FMUL(sphere.radius, inverseScale);
-    localExtraExtent = FMUL(sphere.unk_0ec, inverseScale);
+    localExtraExtent = FMUL(sphere.mWallRejectHalfExtent, inverseScale);
 
     dBgCh_SphCrr localSphere;
     _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre, localRadius, 0);
-    localSphere.unk_0ec = localExtraExtent;
+    localSphere.mWallRejectHalfExtent = localExtraExtent;
     localSphere.func_02037940(sphere.flags);
     func_02035394(&localSphere, &sphere);
     hit = dBgW_Kc::DetectClsn(localSphere);
