@@ -14,7 +14,7 @@ struct S {
     char* f48;
     void** f4c;
 };
-extern S* data_ov007_0210342c;
+S* data_ov007_0210342c;
 extern char data_ov007_02102f28[];
 
 extern "C" void func_ov007_020c92d0(Sub* s);

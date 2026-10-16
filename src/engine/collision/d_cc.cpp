@@ -25,7 +25,7 @@ struct Arg;
 extern "C" {
 /* local extern: the collider-list head. decl_common.h's copy is `void*`; the
    real type is the node pointer every method here reads. */
-extern dCc_c *data_0209cee8;
+dCc_c * data_0209cee8;
 extern Fix12i Vec3_HorzLen(const Vector3 *v);
 /* local extern: file-static pair below -- the head-link helpers only this
    TU calls. */

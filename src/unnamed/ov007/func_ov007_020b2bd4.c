@@ -8,7 +8,9 @@ extern void func_02045ef8(void* a, void* b);
 extern void func_02046234(void* a, void* b);
 extern void func_ov007_020bbf98(void* a, int b);
 extern int data_ov007_020ccc48[];
-extern char data_ov007_020ccc68[];
+const char data_ov007_020ccc68[24] = {
+    0x10, 0, 0, 0, 0x11, 0, 0, 0, 0x12, 0, 0, 0, 0x13, 0, 0, 0, 0x14, 0, 0, 0, 0x15, 0, 0, 0
+};
 extern char data_ov007_020ccc80[];
 extern int data_ov007_02103348[];
 extern int data_ov007_02103354[];

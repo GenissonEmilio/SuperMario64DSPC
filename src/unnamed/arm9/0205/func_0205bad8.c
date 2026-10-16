@@ -6,7 +6,7 @@ extern void _ZN3IRQ10EnableIRQsEj(u32 irqBits);
 extern void _ZN3IRQ24IPCRxFifoNotEmptyHandlerEv(void);
 
 extern u16 data_020a7fc4;
-extern u32 data_020a7fc8[];
+u32 data_020a7fc8[32];
 
 typedef struct {
     unsigned char pad[0x388];

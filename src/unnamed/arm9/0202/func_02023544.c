@@ -1,4 +1,4 @@
-extern unsigned char data_0209f1e0;
+unsigned char data_0209f1e0;
 extern unsigned char data_0209b2fc;
 extern unsigned char gMgSaveDirty;
 extern void func_0202fd2c(void);

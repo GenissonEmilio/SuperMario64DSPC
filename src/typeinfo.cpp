@@ -1,5 +1,8 @@
 //cpp
 #include "typeinfo.h"
+extern "C" {
+void* data_0209b2e8;
+}
 
 // Deferred codegen emits each destructor's D2, D0, D1 group in that order and the
 // groups in reverse definition order, so the definitions below run base-to-leaf

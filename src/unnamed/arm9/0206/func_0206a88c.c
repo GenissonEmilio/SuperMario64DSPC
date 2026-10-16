@@ -7,7 +7,7 @@ extern void func_0206a694(void);
 extern void func_0206a634(void);
 
 extern int data_020a9de8;
-extern int data_020a9dec;
+int data_020a9dec;
 
 void func_0206a88c(void)
 {

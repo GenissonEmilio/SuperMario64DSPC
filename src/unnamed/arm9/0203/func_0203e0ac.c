@@ -3,7 +3,7 @@ extern u8 data_020a1040[];
 extern u8 data_020a1154[];
 extern u16 data_020a117c[4];
 extern u16 data_020a11a0[4];
-extern u16 data_020a11c4[4];
+u16 data_020a11c4[4];
 
 #define H(base, off) (*(u16 *)((char *)(base) + (off)))
 

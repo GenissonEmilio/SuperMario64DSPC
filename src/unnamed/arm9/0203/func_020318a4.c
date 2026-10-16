@@ -6,7 +6,7 @@ extern unsigned char data_0209fc7c;
 extern unsigned char data_0208f174[];
 extern unsigned char data_0209fca0;
 extern unsigned char *data_0209fd0c;
-extern int data_0209fd18;
+int data_0209fd18;
 extern unsigned char data_02092818[];
 
 void func_020318a4(int sl)

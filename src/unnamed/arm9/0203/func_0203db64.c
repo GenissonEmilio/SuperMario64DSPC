@@ -21,7 +21,7 @@ typedef struct {
 
 extern u8 data_020a0ef0;
 extern u8 data_020a1064[];
-extern u8 data_020a0fec[];
+u8 data_020a0fec[52];
 extern u16 data_020a1040[];
 extern u8 data_020a0fb8[];
 extern u8 data_020a0fa0[];

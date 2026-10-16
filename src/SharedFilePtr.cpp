@@ -78,7 +78,7 @@ struct Obj {
 extern "C" {
 /* The last file ID any handle touched: every entry point stores it first,
    so a crash mid-load names the file. */
-extern unsigned int data_0209d3bc;
+unsigned int data_0209d3bc;
 
 void func_02017e0c(void *self, unsigned int fileID);
 unsigned int func_02018a24(unsigned int);

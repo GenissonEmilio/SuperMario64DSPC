@@ -3,7 +3,7 @@ extern int func_02053ec0(void);
 
 extern int data_ov007_02104bdc;
 extern int data_ov007_02104be4;
-extern int data_ov007_02104be8;
+int data_ov007_02104be8;
 extern int data_ov007_02104be0;
 
 void func_ov007_020c184c(void) {

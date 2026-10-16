@@ -5,7 +5,9 @@ extern unsigned char data_0209fc7c;
 extern unsigned char data_0209fcd8;
 extern unsigned int data_0209fd5c[];
 extern unsigned char data_0209fd20[];
-extern unsigned int data_0209287c[];
+unsigned int data_0209287c[8] = {
+    0xffffffff, 0xfffffff0, 0xffffff00, 0xfffff000, 0xffff0000, 0xfff00000, 0xff000000, 0xf0000000
+};
 extern unsigned int data_0209283c[];
 extern char *_ZN3G2S13GetBG0CharPtrEv(void);
 extern char *func_02054d88(void);

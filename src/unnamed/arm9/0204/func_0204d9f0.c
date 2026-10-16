@@ -4,6 +4,7 @@
 #include "decl_common.h"
 /* recovered: shared common types */
 #include "common.h"
+u32 data_020a4d30;
 /* func_0204d9f0 at 0x0204d9f0, size=0x5c
  * LCG RNG: generates 2 random values for x,y (z=0), normalizes the vector.
  */

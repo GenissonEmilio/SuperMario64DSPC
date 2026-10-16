@@ -6,7 +6,7 @@ extern volatile u16 data_020a0f1c;
 extern u16 data_020a0f20;
 extern u16 data_020a0f28;
 extern void *data_020a0f3c;
-extern s32 data_020a0f40;
+s32 data_020a0f40;
 extern s32 data_020a0f50;
 extern s32 data_020a0f6c;
 extern s32 data_020a0f70;

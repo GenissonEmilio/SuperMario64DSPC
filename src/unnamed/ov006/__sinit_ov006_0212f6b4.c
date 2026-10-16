@@ -54,7 +54,7 @@ extern int data_ov006_0212e004;
 extern int data_ov006_02140570;
 
 extern int data_ov006_0212e010;
-extern int data_ov006_021405b4;
+int data_ov006_021405b4;
 extern int data_ov006_0212e00c;
 extern int data_ov006_021405b0;
 extern int data_ov006_0212e018;

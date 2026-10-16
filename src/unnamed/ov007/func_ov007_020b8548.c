@@ -14,7 +14,7 @@ extern int data_ov007_02103468;
 extern int data_ov007_02102dd8;
 
 typedef struct { int a, b, c; } Trio;
-extern Trio data_ov007_02103478;
+Trio data_ov007_02103478;
 
 extern unsigned short data_ov007_02103998[];
 extern unsigned short data_ov007_02104598[];

@@ -44,7 +44,7 @@ extern u8 data_ov001_020ad62c[];
 extern u8 data_ov001_020ad628[];
 
 extern u8 data_ov001_020ad624;
-extern u8 data_ov001_020ad620;
+u8 data_ov001_020ad620;
 
 extern void func_ov001_020aa6b0(int *icon, int value);
 extern void func_ov001_020aa6cc(int character);

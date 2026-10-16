@@ -1,7 +1,7 @@
 #include "types.h"
 extern int data_02099fa8;
 extern int data_02099fac;
-extern u16 data_02099fa4;
+u16 data_02099fa4 = 0xf;
 int func_02049018(void* p);
 void func_0204f924(void* obj, int v);
 void func_0204f7cc(void* obj, int a, int b);

@@ -92,7 +92,7 @@ extern u8 data_02092660;
 
 extern u8   data_0209f1e0;
 
-extern dFdBrightness_c *data_0209f5bc;
+dFdBrightness_c * data_0209f5bc;
 extern dFdBrightness_c data_0209f5d0;
 extern u16  data_02092664;
 

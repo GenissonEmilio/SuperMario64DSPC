@@ -2,7 +2,7 @@ extern unsigned short func_0203da80(unsigned short x);
 extern int func_0203d950(int i);
 extern void func_02030790(void);
 extern int data_0209fc68;
-extern unsigned char data_0209fc58;
+unsigned char data_0209fc58;
 extern unsigned char data_0209fc54;
 extern void (*data_020927ec[])(void);
 

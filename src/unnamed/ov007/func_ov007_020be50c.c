@@ -6,7 +6,7 @@ extern void func_0204dc84(char *p);
 extern void func_ov007_020be8b8(void);
 
 extern int* data_ov007_0210342c;
-extern int* data_ov007_02104bc0;
+int* data_ov007_02104bc0;
 
 extern int data_ov007_020d7c6c;
 extern int data_ov007_02103234;

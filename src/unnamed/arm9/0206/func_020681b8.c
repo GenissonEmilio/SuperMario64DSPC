@@ -27,7 +27,7 @@ struct Pkt {
 };
 extern struct Pkt data_020a9d40;
 extern u8 data_020a9d4e[];
-extern u16 data_020a9d48[];
+u16 data_020a9d48[3];
 
 extern void MultiStore16(u16 val, void *dst, int nbytes);
 extern void MultiCopyHalf(const void *src, void *dst, int count);

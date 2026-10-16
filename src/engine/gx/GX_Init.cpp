@@ -61,7 +61,7 @@
 
 extern "C" {
 
-extern u16 data_02099fcc; // display on (TRUE until GX_DispOff)
+u16 data_02099fcc = 0x1; // display on (TRUE until GX_DispOff)
 extern int data_02099fd0; // GX DMA channel, -1 if none
 extern u16 data_020a6084; // display mode parked by GX_DispOff
 

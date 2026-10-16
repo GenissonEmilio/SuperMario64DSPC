@@ -2,7 +2,7 @@ extern unsigned short data_020a8104;
 extern int data_020a8114[2];
 extern short data_020a8138;
 extern char data_020a8124;
-extern int data_020a8110;
+int data_020a8110;
 extern void func_0205fcfc(void);
 extern void func_0205b858(void);
 extern int func_0205ba3c(int bit, int word);

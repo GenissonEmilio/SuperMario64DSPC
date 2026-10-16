@@ -27,7 +27,7 @@ extern const char data_020868fc;
 extern const char data_0208690c;
 extern const char data_0208692c;
 extern const char data_0208696c;
-extern const char data_0208698c;
+const char data_0208698c = 0x70;
 extern const char data_020869bc;
 extern const char data_020869dc;
 

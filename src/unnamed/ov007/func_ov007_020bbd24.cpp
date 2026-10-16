@@ -10,7 +10,7 @@ struct BA0 { int f0; char pad4[0x18 - 4]; int f18; char pad1c[0x34 - 0x18 - 4]; 
 struct B9C_inner { char pad[0x50]; int f50; };
 struct B9C { char pad4[4]; B9C_inner *f4; };
 
-extern BA0 *data_ov007_02104ba0;
+BA0 * data_ov007_02104ba0;
 extern B9C *data_ov007_02104b9c;
 
 extern "C" int func_ov007_020bbd24(int param)
