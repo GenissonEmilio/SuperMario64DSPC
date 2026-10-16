@@ -18,11 +18,10 @@
  * Leftover: func_ov002_020b6c54 / func_ov002_020b6ac8 are still the
  *   linker names of daObjKurumajiku_c Init/Cleanup (the base leaves
  *   those slots pure virtual). Naming belongs in ov002.
- * Leftover: data_ov043_02112344 is overlay data this TU does not
- *   own; the BMD/KCL SharedFilePtrs and CLPS_Block are still
- *   data_ov043_*.
- * Leftover: g_profile_KM1_KURUMAJIKU is overlay data; this TU is
- *   text-only so the definition here is a deadstripped duplicate.
+ * Leftover: the descriptor's CLPS_Block is still
+ *   data_ov043_02111bc0 in the module's shared .data band.
+ * Leftover: g_profile_KM1_KURUMAJIKU is overlay data; the definition
+ *   here is a deadstripped duplicate.
  */
 
 /* Runtime asset handles resolved through the overlay 0 file table. */
@@ -65,8 +64,15 @@ int func_ov002_020b6c54(daObjKm1_Kurumajiku_c *self,
                         ResourceDescriptor *descriptor, unsigned actorID);
 int func_ov002_020b6ac8(daObjKm1_Kurumajiku_c *self,
                         ResourceDescriptor *descriptor);
+extern CLPS_Block data_ov043_02111bc0;
+extern Km1KurumajikuModelFilePtr data_ov043_02112610;
+extern Km1KurumajikuCollisionFilePtr data_ov043_02112608;
 extern ResourceDescriptor data_ov043_02112344;
 }
+
+ResourceDescriptor data_ov043_02112344 = {
+    &data_ov043_02112610, &data_ov043_02112608, &data_ov043_02111bc0
+};
 
 struct KurumajikuSpawnInfo {
     daObjKm1_Kurumajiku_c *(*classInit)();
