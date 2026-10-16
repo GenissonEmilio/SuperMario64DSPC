@@ -53,6 +53,7 @@ src/game/actors/d_a_obj_fl_ukiyuka.cpp:
 src/game/actors/d_a_obj_fl_uki_ki.cpp:
     complete
     .text start:0x02112130 end:0x02112380
+    .bss start:0x0211462c end:0x02114634
 
 src/game/actors/d_a_obj_fl_fall_block.cpp:
     complete
