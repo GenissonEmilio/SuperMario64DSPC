@@ -15,34 +15,42 @@ src/game/stages/d_ent_obj.cpp:
 src/game/stages/d_s_entry.cpp:
     complete
     .text start:0x02115ab8 end:0x02116128
+    .bss start:0x0211d610 end:0x0211d614
 
 src/unnamed/ov075/func_ov075_02116128.cpp:
     complete
     .text start:0x02116128 end:0x0211621c
+    .data start:0x0211c708 end:0x0211c718
 
 src/unnamed/ov075/func_ov075_0211621c.c:
     complete
     .text start:0x0211621c end:0x021165b0
+    .data start:0x0211c778 end:0x0211c780
 
 src/unnamed/ov075/func_ov075_021165b0.c:
     complete
     .text start:0x021165b0 end:0x02116818
+    .data start:0x0211c7d0 end:0x0211c7d8
 
 src/unnamed/ov075/func_ov075_02116818.c:
     complete
     .text start:0x02116818 end:0x02116ad4
+    .data start:0x0211c7e0 end:0x0211c7e8
 
 src/unnamed/ov075/func_ov075_02116ad4.c:
     complete
     .text start:0x02116ad4 end:0x02116c38
+    .data start:0x0211c7f8 end:0x0211c800
 
 src/unnamed/ov075/func_ov075_02116c38.c:
     complete
     .text start:0x02116c38 end:0x02116c8c
+    .data start:0x0211c890 end:0x0211c898
 
 src/unnamed/ov075/func_ov075_02116c8c.c:
     complete
     .text start:0x02116c8c end:0x02116ce4
+    .data start:0x0211c8e0 end:0x0211c94c
 
 src/unnamed/ov075/func_ov075_02116ce4.c:
     complete
@@ -140,14 +148,17 @@ src/unnamed/ov075/func_ov075_021184b0.cpp:
 src/unnamed/ov075/func_ov075_0211867c.c:
     complete
     .text start:0x0211867c end:0x021188b4
+    .data start:0x0211ca1c end:0x0211ca3c
 
 src/unnamed/ov075/func_ov075_021188b4.c:
     complete
     .text start:0x021188b4 end:0x02118a78
+    .data start:0x0211ca7c end:0x0211cb64
 
 src/unnamed/ov075/func_ov075_02118a78.c:
     complete
     .text start:0x02118a78 end:0x02118a84
+    .data start:0x0211cb80 end:0x0211cb84
 
 src/unnamed/ov075/func_ov075_02118a84.c:
     complete

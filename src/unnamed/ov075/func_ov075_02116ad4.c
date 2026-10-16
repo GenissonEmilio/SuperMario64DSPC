@@ -68,3 +68,11 @@ int func_ov075_02116ad4(void *arg) {
     *(void **)((char *)arg + 0x50) = _ZN7dBase_c5SpawnEjP7fBase_cii(0x15a, data_0209f5c0, mode, 0);
     return 1;
 }
+
+/* .data 0x0211c7f8..0x0211c800 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_ov075_0211c7f8[2] = {
+    0x11f80000, (int)0xffffe118u,
+};
+#pragma section forcedata end
