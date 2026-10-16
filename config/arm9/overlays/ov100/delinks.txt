@@ -15,6 +15,7 @@ src/game/actors/d_a_btfly.cpp:
 src/game/actors/d_a_ibl.cpp:
     complete
     .text start:0x02141f04 end:0x021431c4
+    .bss start:0x0214867c end:0x021486a4
 
 src/game/actors/d_a_wanwan2.cpp:
     complete
