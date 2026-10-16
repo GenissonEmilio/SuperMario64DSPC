@@ -553,7 +553,38 @@
           "unnamed": 15
         }
       },
-      "postcommit_scoped_gates": "pending; recorded separately after actual execution"
+      "postcommit_scoped_gates": {
+        "tested_Source_commit": "16d8bd92f1b2d7f880783be598032ed4e5f42650",
+        "prepush_linkcheck": {
+          "command": "python tools/prepush_linkcheck.py --range dfd9500e1662260bc9e3a4fc757f779899fe783c..16d8bd92f1b2d7f880783be598032ed4e5f42650",
+          "exit_code": 0,
+          "checked": 34,
+          "VERIFIED": 34,
+          "blind": 0,
+          "warnings": 0,
+          "blocking": 0,
+          "seconds": 32.0
+        },
+        "declaration_agreement": {
+          "command": "python tools/check_decl_agreement.py --changed dfd9500e1662260bc9e3a4fc757f779899fe783c",
+          "exit_code": 0,
+          "new_disagreements": 0,
+          "new_local_redeclarations": 0
+        },
+        "source_style": {
+          "command": "python tools/source_style.py --base dfd9500e1662260bc9e3a4fc757f779899fe783c",
+          "exit_code": 0,
+          "files": 1,
+          "findings": 0,
+          "formatting_deferrals": 0,
+          "patterns_only": false
+        },
+        "whitespace": {
+          "command": "git diff --check dfd9500e1662260bc9e3a4fc757f779899fe783c..16d8bd92f1b2d7f880783be598032ed4e5f42650",
+          "exit_code": 0
+        },
+        "finalization": "Report-only recording of completed checks; Source and all production inputs remain literal to tested Source commit. No duplicate byte build for this note-only update."
+      }
     },
     "historical_attribution_erratum": {
       "finding_id": "YEGG-CURRENT9893-PRODUCER-PROVENANCE-01",
