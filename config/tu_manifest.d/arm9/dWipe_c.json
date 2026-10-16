@@ -22,6 +22,11 @@
       "name": ".data",
       "start": "0x020926d0",
       "end": "0x02092718"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209f61c",
+      "end": "0x0209f648"
     }
   ],
   "functions": [
@@ -195,7 +200,14 @@
       "evidence": "two-word ABI preamble (offset-to-top 0, typeinfo 0x020926dc) + ten slots D1 D0 AdvanceFade SetBackwardTime SetForwardTime IsAtStart IsAtEnd IsBetweenStartAndEnd SetToEnd SetToStart; public address point 0x020926f0"
     }
   ],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "data_0209f61c",
+      "address": "0x0209f61c",
+      "size": "0x2c",
+      "evidence": "wipe singleton, zero-filled BSS; stored as unsigned int[11] so the object does not emit a constructor"
+    }
+  ],
   "compiler_only_output": [
     {
       "symbol": "_ZN7dWipe_cC2Ev",

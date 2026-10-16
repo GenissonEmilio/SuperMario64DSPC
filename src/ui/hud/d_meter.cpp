@@ -218,7 +218,7 @@ extern struct OamAttr _ZN3OAM10VS_TIME_UPE;
 extern int GetOwnerLanguage(void);
 extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int sub, struct OamAttr* attr, int x, int y, int a, int b, int s, int c);
 extern unsigned char data_0209f2bc;
-extern unsigned short data_ov002_02111188;
+unsigned short data_ov002_02111188;
 extern unsigned char data_0209d454;
 void func_02012790(int);
 extern unsigned char data_ov002_0211117c[];

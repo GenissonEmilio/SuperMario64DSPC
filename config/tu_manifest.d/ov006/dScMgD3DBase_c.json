@@ -19,7 +19,7 @@
     },
     {
       "name": ".bss",
-      "start": "0x02141a54",
+      "start": "0x02141a40",
       "end": "0x02141e54"
     }
   ],
@@ -216,6 +216,41 @@
   ],
   "data": [],
   "bss": [
+    {
+      "symbol": "data_ov006_02141a40",
+      "address": "0x02141a40",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "camera pointer this TU stores from the raw file"
+    },
+    {
+      "symbol": "data_ov006_02141a44",
+      "address": "0x02141a44",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "camera word this TU stores beside the pointer"
+    },
+    {
+      "symbol": "data_ov006_02141a48",
+      "address": "0x02141a48",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "OBJ palette file this TU loads and releases"
+    },
+    {
+      "symbol": "data_ov006_02141a4c",
+      "address": "0x02141a4c",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "second file pointer this TU releases"
+    },
+    {
+      "symbol": "data_ov006_02141a50",
+      "address": "0x02141a50",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "pointer this TU stores at raw+0x4728"
+    },
     {
       "symbol": "data_ov006_02141a54",
       "address": "0x02141a54",

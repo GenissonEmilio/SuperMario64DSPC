@@ -189,16 +189,20 @@ extern int data_ov004_020bc85c;
 extern int data_ov004_020bc860;
 extern int data_ov004_020bc864;
 extern int data_ov004_020bc868;
-extern int data_ov004_020bc86c;
-extern int data_ov004_020bc870;
-extern int data_ov004_020bc874;
-extern int data_ov004_020bc878;
-extern int data_ov004_020bc87c;
-extern int data_ov004_020bc880;
-extern int data_ov004_020bc884;
-extern int data_ov004_020bc888;
-extern int data_ov004_020bc88c;
-extern int data_ov004_020bc890;
+/* Declaration order is the reverse of address order: mwcc emits these
+   .data sections backwards. */
+extern "C" {
+int data_ov004_020bc890 = 0x60;
+int data_ov004_020bc88c = 0x80;
+int data_ov004_020bc888 = 0x80;
+int data_ov004_020bc884 = 0x60;
+int data_ov004_020bc880 = 0x80;
+int data_ov004_020bc87c = 0x60;
+int data_ov004_020bc878 = 0x80;
+int data_ov004_020bc874 = 0x28;
+int data_ov004_020bc870 = 0x80;
+int data_ov004_020bc86c = 0x80;
+}
 extern int data_ov004_020bc894;
 extern int data_ov004_020bc898;
 extern int data_ov004_020bc89c;

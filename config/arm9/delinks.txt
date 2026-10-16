@@ -1555,7 +1555,7 @@ src/unnamed/arm9/0202/func_02020768.c:
 src/engine/oam/OAM.cpp:
     complete
     .text start:0x02020820 end:0x02021a04
-    .bss start:0x0209ea74 end:0x0209ee74
+    .bss start:0x0209e660 end:0x0209ee74
 
 src/engine/particle/Particle_SysTracker_Contents.cpp:
     complete
@@ -1625,6 +1625,7 @@ src/runtime/graphics/fader/d_wipe.cpp:
     complete
     .text start:0x0202ec9c end:0x0202fc98
     .data start:0x020926d0 end:0x02092718
+    .bss start:0x0209f61c end:0x0209f648
 
 src/engine/view/d_view.cpp:
     complete
@@ -1858,6 +1859,7 @@ src/engine/collision/d_bg_w_kc.cpp:
 src/engine/collision/d_bg_w_kc_mbg.cpp:
     complete
     .text start:0x020398fc end:0x0203a4dc
+    .bss start:0x020a0d60 end:0x020a0d6c
 
 src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp:
     complete
@@ -6017,3 +6019,4 @@ src/unnamed/arm9/0207/__sinit_02075150.c:
 src/unnamed/arm9/0207/__sinit_02075154.c:
     complete
     .init start:0x02075154 end:0x02075230
+    .bss start:0x020a4b98 end:0x020a4ba8

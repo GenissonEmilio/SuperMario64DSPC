@@ -21,6 +21,11 @@
       "end": "0x020b8c18"
     },
     {
+      "name": ".data",
+      "start": "0x020bc86c",
+      "end": "0x020bc894"
+    },
+    {
       "name": ".bss",
       "start": "0x020bfd04",
       "end": "0x020bfda8"
@@ -392,7 +397,68 @@
       "ordinal": 51
     }
   ],
-  "data": [],
+  "data": [
+    {
+      "symbol": "data_ov004_020bc86c",
+      "address": "0x020bc86c",
+      "size": "0x4",
+      "evidence": "banner x this TU stores as 0x80"
+    },
+    {
+      "symbol": "data_ov004_020bc870",
+      "address": "0x020bc870",
+      "size": "0x4",
+      "evidence": "screen word 0x80 between the two banner coordinates"
+    },
+    {
+      "symbol": "data_ov004_020bc874",
+      "address": "0x020bc874",
+      "size": "0x4",
+      "evidence": "screen word 0x28"
+    },
+    {
+      "symbol": "data_ov004_020bc878",
+      "address": "0x020bc878",
+      "size": "0x4",
+      "evidence": "banner x this TU passes to Mg_ShowBanner"
+    },
+    {
+      "symbol": "data_ov004_020bc87c",
+      "address": "0x020bc87c",
+      "size": "0x4",
+      "evidence": "screen word 0x60"
+    },
+    {
+      "symbol": "data_ov004_020bc880",
+      "address": "0x020bc880",
+      "size": "0x4",
+      "evidence": "screen word 0x80"
+    },
+    {
+      "symbol": "data_ov004_020bc884",
+      "address": "0x020bc884",
+      "size": "0x4",
+      "evidence": "screen word 0x60"
+    },
+    {
+      "symbol": "data_ov004_020bc888",
+      "address": "0x020bc888",
+      "size": "0x4",
+      "evidence": "screen word 0x80"
+    },
+    {
+      "symbol": "data_ov004_020bc88c",
+      "address": "0x020bc88c",
+      "size": "0x4",
+      "evidence": "screen word 0x80"
+    },
+    {
+      "symbol": "data_ov004_020bc890",
+      "address": "0x020bc890",
+      "size": "0x4",
+      "evidence": "banner y this TU stores as 0x60"
+    }
+  ],
   "bss": [
     {
       "symbol": "_ZGVsEnterTable$170",

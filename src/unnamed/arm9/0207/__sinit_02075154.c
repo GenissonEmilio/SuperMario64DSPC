@@ -6,7 +6,8 @@ struct Dst4 { int z0; int z4; void *s0; void *s1; };
 extern Pair data_02099f60, data_02099f70, data_02099f48, data_02099f68, data_02099f50;
 
 extern struct Dst3 data_020a4b6c;
-extern struct Dst4 data_020a4b88, data_020a4b78, data_020a4b98, data_020a4ba8;
+extern struct Dst4 data_020a4b88, data_020a4b78, data_020a4ba8;
+struct Dst4 data_020a4b98;
 
 void __sinit_02075154(void) {
     data_020a4b6c.s0 = data_02099f60.a;
