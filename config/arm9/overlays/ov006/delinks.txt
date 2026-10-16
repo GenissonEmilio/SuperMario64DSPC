@@ -151,7 +151,7 @@ src/minigames/d_s_mg_m_carlo2.cpp:
     .text start:0x020f8ef4 end:0x020fa75c
     .init start:0x0213195c end:0x02131a38
     .ctor start:0x021335bc end:0x021335c0
-    .bss start:0x021425a8 end:0x02142604
+    .bss start:0x02142568 end:0x02142604
 
 src/minigames/d_s_mg_pachinko.cpp:
     complete
