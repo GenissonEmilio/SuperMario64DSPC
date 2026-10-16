@@ -1,14 +1,11 @@
 //cpp
+#include "dFdBrightness_c.h"
 #include "dScStage_c.h"
 // _ZN10dScStage_c21RenderVsModeCountdownEv at 0x0202a168
 // Matched byte-for-byte with mwccarm 1.2/sp2p3 (arm9 main).
-struct Base {
-    virtual void v0(); virtual void v1(); virtual void v2();
-    virtual void v3(); virtual void v4(); virtual int m();
-};
 extern "C" {
 extern unsigned char* data_0209f394[4];
-extern Base* data_0209f5bc;
+extern dFdBrightness_c* data_0209f5bc;
 extern unsigned char data_0209fc50;
 extern unsigned char data_0209f2bc;
 extern unsigned short data_0209f304;
@@ -36,7 +33,7 @@ void dScStage_c::RenderVsModeCountdown() {
             if (t == 1) count++;
         }
     }
-    if (data_0209f5bc->m() == 0) return;
+    if (data_0209f5bc->IsAtStart() == 0) return;
     if (count < data_0209fc50) return;
     if (data_0209f2bc != 0) {
         if (GetOwnerLanguage() == 5)

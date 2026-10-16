@@ -1,4 +1,5 @@
 //cpp
+#include "dFdBrightness_c.h"
 #include "types.h"
 #include "PlayerInput.h"
 extern "C" {
@@ -48,15 +49,7 @@ extern "C" {
     extern u8 data_0209f218;
 }
 
-struct UnkVis {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual int v5();
-};
-extern UnkVis* data_0209f5bc;
+extern dFdBrightness_c* data_0209f5bc;
 
 class Sound {
 public:
@@ -110,7 +103,7 @@ int dScStage_c::Behavior()
     if (data_0209f2c4 == 2 && data_0209f22c == 0)
         PS_Cleanup();
     ProcessKuppaScript();
-    if (data_0209f5bc->v5() == 0) {
+    if (data_0209f5bc->IsAtStart() == 0) {
         dExtShadowModel_c::CleanAll();
         return 1;
     }

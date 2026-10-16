@@ -1,4 +1,5 @@
 //cpp
+#include "dFdBrightness_c.h"
 /* dScMgTrampoline_c -- Trampoline Time. Draw a line on the touch screen
  * (up to three at once) and bounce Mario to the lit door. Three misses
  * end the round.
@@ -81,11 +82,6 @@ struct Obj {
     int bgLayer;
 };
 
-typedef struct UnkObj UnkObj;
-
-struct UnkObj {
-    int (**vt)(UnkObj*);
-};
 
 typedef struct Vec2s { s16 x, y; } Vec2s;
 
@@ -164,7 +160,7 @@ extern int func_02054d88(void);
 extern void MultiCopy_Int(int *dst, int *src, int len);
 extern void MultiStore16(unsigned short val, char *dst, int nbytes);
 extern const unsigned char data_ov006_0212f0d0[];
-extern UnkObj* data_0209f5bc;
+extern dFdBrightness_c* data_0209f5bc;
 extern int data_ov006_0213fa9c;
 unsigned int func_02012790(unsigned int a);
 int TrmpLine_Create(Vec2s* a, Vec2s* b);
@@ -934,9 +930,9 @@ int dScMgTrampoline_c::OnGraphCallback0()
     if (!dScMgBase_c::OnGraphCallback0())
         return 0;
 
-    if (data_0209f5bc->vt[5](data_0209f5bc)) {
+    if (data_0209f5bc->IsAtStart()) {
         data_ov006_0213fa9c = 0;
-    } else if (data_0209f5bc->vt[7](data_0209f5bc)) {
+    } else if (data_0209f5bc->IsBetweenStartAndEnd()) {
         data_ov006_0213fa9c = 1;
     }
 
