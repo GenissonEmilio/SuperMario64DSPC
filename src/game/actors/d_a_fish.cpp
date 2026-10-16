@@ -88,8 +88,8 @@ extern FishModelFilePtr gFishAModelFile;
 extern FishModelFilePtr gFishBModelFile;
 extern FishAnimationFileHandle gFishSwimAnimationFile;
 extern FishAnimationFileHandle gFishAbSwimAnimationFile;
-extern SharedFilePtr *data_ov100_021473a4[]; /* BMD, by mModelIndex */
-extern SharedFilePtr *data_ov100_021473b0[]; /* BCA, by mModelIndex */
+extern SharedFilePtr *const data_ov100_021473a4[]; /* BMD, by mModelIndex */
+extern SharedFilePtr *const data_ov100_021473b0[]; /* BCA, by mModelIndex */
 extern daFishState data_ov100_02148a1c[];    /* by mState */
 /* The ROM PMF constants the state table copies from (unlicensed .data). */
 extern daFishState data_ov100_02148450;
@@ -487,6 +487,20 @@ FishModelFilePtr gFishBModelFile(ASSET_FISH_B_BMD);
 FishAnimationFileHandle gFishSwimAnimationFile(ASSET_FISH_SWIM_BCA);
 FishAnimationFileHandle data_ov100_021489cc(ASSET_FISH_WAIT_BCA);
 FishAnimationFileHandle gFishAbSwimAnimationFile(ASSET_FISH_AB_SWIM_BCA);
+
+/* Model files, then animation files, indexed by mModelIndex.
+   The last two animation slots are the same handle. */
+extern "C" SharedFilePtr *const data_ov100_021473a4[3] = {
+    &gFishModelFile,
+    &gFishAModelFile,
+    &gFishBModelFile,
+};
+extern "C" SharedFilePtr *const data_ov100_021473b0[3] = {
+    &gFishSwimAnimationFile,
+    &gFishAbSwimAnimationFile,
+    &gFishAbSwimAnimationFile,
+};
+
 daFishState data_ov100_02148a1c[7] = {
     data_ov100_02148450,
     data_ov100_02148460,
