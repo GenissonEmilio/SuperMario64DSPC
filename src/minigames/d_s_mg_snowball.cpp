@@ -91,19 +91,6 @@ typedef struct Pair {
     s32 y;
 } Pair;
 
-struct InitObject {
-    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
-    virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
-    virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
-    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
-    virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
-    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
-    virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
-    virtual void v32(); virtual void v33(); virtual void v34();
-    virtual int query();
-};
-
 struct SPS {
     int a[2];
     int b[2];
@@ -290,13 +277,13 @@ int dScMgSnowball_c::IsInWater(int *point) {
     char *scene = (char *)this;
     int x = point[0];
     int y;
-    int fa;
-    int fb;
-    int row;
-    int col;
-    unsigned int v;
-    int sum;
-    int diff;
+    int pixelX;
+    int pixelY;
+    int lane;
+    int courseRow;
+    unsigned int tile;
+    int diagonalSum;
+    int diagonalDifference;
 
     if (x < 0) {
         return 1;
@@ -316,15 +303,15 @@ int dScMgSnowball_c::IsInWater(int *point) {
         return 0;
     }
 
-    fa = x >> 12;
-    fb = y >> 12;
-    row = fa / 16;
-    col = fb / 16;
-    v = *(unsigned short *)(scene + row * 0x5c0 + col * 2 + 0x4f38);
-    sum = (fa & 0xf) + (fb & 0xf);
-    diff = (fa & 0xf) - (fb & 0xf);
+    pixelX = x >> 12;
+    pixelY = y >> 12;
+    lane = pixelX / 16;
+    courseRow = pixelY / 16;
+    tile = *(unsigned short *)(scene + lane * 0x5c0 + courseRow * 2 + 0x4f38);
+    diagonalSum = (pixelX & 0xf) + (pixelY & 0xf);
+    diagonalDifference = (pixelX & 0xf) - (pixelY & 0xf);
 
-    switch (v) {
+    switch (tile) {
     case 0:
     case 0xd:
         return 0;
@@ -332,26 +319,26 @@ int dScMgSnowball_c::IsInWater(int *point) {
         return 1;
     case 0x11:
     case 0x1b:
-        return (fa & 8) == 0;
+        return (pixelX & 8) == 0;
     case 0x12:
-        return sum < 0x18;
+        return diagonalSum < 0x18;
     case 0x13:
-        return sum < 8;
+        return diagonalSum < 8;
     case 0x14:
-        return diff < 8;
+        return diagonalDifference < 8;
     case 0x15:
-        return diff < -8;
+        return diagonalDifference < -8;
     case 0x16:
     case 0x1c:
-        return (fa & 8) != 0;
+        return (pixelX & 8) != 0;
     case 0x17:
-        return diff >= 8;
+        return diagonalDifference >= 8;
     case 0x18:
-        return diff >= -8;
+        return diagonalDifference >= -8;
     case 0x19:
-        return sum >= 0x18;
+        return diagonalSum >= 0x18;
     case 0x1a:
-        return sum >= 8;
+        return diagonalSum >= 8;
     case 0xc:
         return 0;
     default:
@@ -413,47 +400,47 @@ int dScMgSnowball_c::HitsWall(int *point)
 {
     int raw = (int)this;
     char *scene = (char *)raw;
-    int z = point[1];
+    int courseY = point[1];
     int x;
-    unsigned short t;
-    int sum, diff, xf, zf;
+    unsigned short tile;
+    int diagonalSum, diagonalDifference, localX, localY;
 
-    if (z < -0x20000)
+    if (courseY < -0x20000)
         return 1;
-    if (z >= *(int *)(scene + 0xba08) << 16)
+    if (courseY >= *(int *)(scene + 0xba08) << 16)
         return 1;
-    if (z >= *(int *)(scene + 0xab6c) + 0x1d0000)
+    if (courseY >= *(int *)(scene + 0xab6c) + 0x1d0000)
         return 1;
     x = point[0];
     if (x < 0)
         return 1;
     if (x >= 0x100000)
         return 1;
-    if (z < 0)
-        t = *(unsigned short *)(scene + ((x >> 12) / 16) * 0x5c0 + 0x4f38);
+    if (courseY < 0)
+        tile = *(unsigned short *)(scene + ((x >> 12) / 16) * 0x5c0 + 0x4f38);
     else
     {
-        int xq = (x >> 12) / 16;
-        xq = xq ? xq : xq;
-        t = *(unsigned short *)((char *)(raw + xq * 0x5c0 + ((z >> 12) / 16) * 2) + 0x4f38);
+        int lane = (x >> 12) / 16;
+        lane = lane ? lane : lane;
+        tile = *(unsigned short *)((char *)(raw + lane * 0x5c0 + ((courseY >> 12) / 16) * 2) + 0x4f38);
     }
-    zf = (z >> 12) & 0xf;
-    xf = (x >> 12) & 0xf;
-    sum = xf + zf;
-    diff = xf - zf;
-    switch (t) {
+    localY = (courseY >> 12) & 0xf;
+    localX = (x >> 12) & 0xf;
+    diagonalSum = localX + localY;
+    diagonalDifference = localX - localY;
+    switch (tile) {
     case 0: case 13: return 0;
     case 1: return 1;
     case 2: case 14: return ((x >> 12) & 8) == 0;
-    case 3: return sum < 0x18;
-    case 4: return sum < 8;
-    case 5: return diff < 8;
-    case 6: return diff < -8;
+    case 3: return diagonalSum < 0x18;
+    case 4: return diagonalSum < 8;
+    case 5: return diagonalDifference < 8;
+    case 6: return diagonalDifference < -8;
     case 7: case 15: return ((x >> 12) & 8) != 0;
-    case 8: return diff >= 8;
-    case 9: return diff >= -8;
-    case 10: return sum >= 0x18;
-    case 11: return sum >= 8;
+    case 8: return diagonalDifference >= 8;
+    case 9: return diagonalDifference >= -8;
+    case 10: return diagonalSum >= 0x18;
+    case 11: return diagonalSum >= 8;
     case 12: return 0;
     default: return 0;
     }
@@ -498,10 +485,10 @@ void dScMgSnowball_c::UpdateSnowball()
     dScMgSnowball_c *self = (dScMgSnowball_c *)p_;
     int i;
     int k;
-    int farHit;
+    int fastWallHit;
     int anyHit;
-    int initInside;
-    int iter;
+    int startedInWater;
+    int resolvePass;
     int zNoHit;
     int zDry;
     int zOrigin;
@@ -514,23 +501,23 @@ void dScMgSnowball_c::UpdateSnowball()
     int j;
     int sample[2];
     dScMgSnowball_c::Vec2 hit;
-    int acc[2];
-    int rotA[2];
-    int rotB[2];
+    int response[2];
+    int hitNormal[2];
+    int waterNormal[2];
     int push[2];
     int rotPush[2];
-    int initPt[2];
-    int cdcCopy[2];
-    int bbcCopy[2];
-    int waterCopy[2];
+    int startPoint[2];
+    int wallProbe[2];
+    int breakableProbe[2];
+    int waterProbe[2];
     Vector3 part;
     int allWater;
     int len;
     int *sys;
     u32 id1;
     u32 id2;
-    int cosv;
-    int sc;
+    int headingComponent;
+    int normalVelocity;
     int vx;
     int vy;
 
@@ -541,14 +528,14 @@ void dScMgSnowball_c::UpdateSnowball()
         self->mProbeWater[i] = 0;
         i = i + 1;
     } while (i < 0x20);
-    farHit = 0;
+    fastWallHit = 0;
     self->mHitBreakable = 0;
 
-    initPt[0] = self->mPosX;
-    initPt[1] = self->mPosY;
-    initInside = IsInWater(initPt);
+    startPoint[0] = self->mPosX;
+    startPoint[1] = self->mPosY;
+    startedInWater = IsInWater(startPoint);
 
-    iter = 0;
+    resolvePass = 0;
     zDry = 0;
     pushDirX = 0;
     pushDirY = 0x800;
@@ -568,20 +555,20 @@ void dScMgSnowball_c::UpdateSnowball()
             func_0203d388(sample, angle);
             sample[0] += self->mPosX;
             sample[1] += self->mPosY;
-            cdcCopy[0] = sample[0];
-            cdcCopy[1] = sample[1];
-            if (HitsWall(cdcCopy) != 0) {
+            wallProbe[0] = sample[0];
+            wallProbe[1] = sample[1];
+            if (HitsWall(wallProbe) != 0) {
                 self->mProbeHit[j] = 1;
                 self->mProbePush[j] = 1;
                 anyHit = 1;
                 if (Vec2_Len(&self->mVelX) >= 0x800)
-                    farHit = 1;
+                    fastWallHit = 1;
                 hit.x = sample[0];
                 hit.y = sample[1];
             } else {
-                bbcCopy[0] = sample[0];
-                bbcCopy[1] = sample[1];
-                if (HitsBreakable(bbcCopy) != 0) {
+                breakableProbe[0] = sample[0];
+                breakableProbe[1] = sample[1];
+                if (HitsBreakable(breakableProbe) != 0) {
                     self->mProbeHit[j] = 1;
                     anyHit = 1;
                     self->mProbePush[j] = 1;
@@ -590,58 +577,58 @@ void dScMgSnowball_c::UpdateSnowball()
                     hit.y = sample[1];
                 }
             }
-            waterCopy[0] = sample[0];
-            waterCopy[1] = sample[1];
-            if (IsInWater(waterCopy) != 0)
+            waterProbe[0] = sample[0];
+            waterProbe[1] = sample[1];
+            if (IsInWater(waterProbe) != 0)
                 self->mProbeWater[j] = 1;
             else
                 self->mProbeWater[j] = zDry;
             angle = (s16)(angle + 0x800);
         }
 
-        acc[0] = zOrigin;
-        acc[1] = zOrigin;
+        response[0] = zOrigin;
+        response[1] = zOrigin;
         angle = zOrigin;
         if (anyHit != 0) {
             for (i = 0; i < 0x20; i++) {
                 if (self->mProbeHit[i] == 1) {
-                    rotA[0] = pushDirX;
-                    rotA[1] = pushDirY;
-                    func_0203d388(rotA, angle);
-                    acc[0] += rotA[0];
-                    acc[1] += rotA[1];
+                    hitNormal[0] = pushDirX;
+                    hitNormal[1] = pushDirY;
+                    func_0203d388(hitNormal, angle);
+                    response[0] += hitNormal[0];
+                    response[1] += hitNormal[1];
                 }
                 angle = (s16)(angle + 0x800);
             }
-            func_0203d434(acc);
+            func_0203d434(response);
             if (Vec2_Len(&self->mVelX) < 0x800)
-                func_0203d630(acc, Vec2_Len(&self->mVelX));
+                func_0203d630(response, Vec2_Len(&self->mVelX));
             else
-                func_0203d630(acc, pushDirY);
-            self->mPosX -= acc[0];
-            self->mPosY -= acc[1];
-        } else if (initInside == 1) {
+                func_0203d630(response, pushDirY);
+            self->mPosX -= response[0];
+            self->mPosY -= response[1];
+        } else if (startedInWater == 1) {
             allWater = 1;
             for (i = 0; i < 0x20; i++) {
                 if (self->mProbeWater[i] == 1) {
-                    rotB[0] = floatDirX;
-                    rotB[1] = floatDirY;
-                    func_0203d388(rotB, angle);
-                    acc[0] += rotB[0];
-                    acc[1] += rotB[1];
+                    waterNormal[0] = floatDirX;
+                    waterNormal[1] = floatDirY;
+                    func_0203d388(waterNormal, angle);
+                    response[0] += waterNormal[0];
+                    response[1] += waterNormal[1];
                 } else {
                     allWater = zNotAllWater;
                 }
                 angle = (s16)(angle + 0x800);
             }
-            func_0203d434(acc);
-            self->mVelX += acc[0];
-            self->mVelY += acc[1];
+            func_0203d434(response);
+            self->mVelX += response[0];
+            self->mVelY += response[1];
             if (allWater == 1)
                 self->mAllWater = 1;
         }
-        iter = iter + 1;
-    } while (anyHit == 1 && iter < 0x21);
+        resolvePass = resolvePass + 1;
+    } while (anyHit == 1 && resolvePass < 0x21);
 
     if (self->mHitBreakable == 1) {
         len = Vec2_Len(&self->mVelX);
@@ -679,7 +666,7 @@ void dScMgSnowball_c::UpdateSnowball()
                 }
             }
         }
-    } else if (farHit == 1 && self->mState == 1) {
+    } else if (fastWallHit == 1 && self->mState == 1) {
         func_02012718(0x168, hit.x);
     }
 
@@ -702,21 +689,21 @@ void dScMgSnowball_c::UpdateSnowball()
         return;
 
     func_0203d434(push);
-    sc = MUL12(self->mVelX, push[0]) + MUL12(self->mVelY, push[1]);
+    normalVelocity = MUL12(self->mVelX, push[0]) + MUL12(self->mVelY, push[1]);
     if (self->mHitBreakable == 1) {
-        sc = MUL12(sc, 0x1800);
-        self->mVelX -= MUL12(sc, push[0]);
-        self->mVelY -= MUL12(sc, push[1]);
-        cosv = data_02082214[((unsigned short)_ZN4cstd5atan2E5Fix12IiES1_(
+        normalVelocity = MUL12(normalVelocity, 0x1800);
+        self->mVelX -= MUL12(normalVelocity, push[0]);
+        self->mVelY -= MUL12(normalVelocity, push[1]);
+        headingComponent = data_02082214[((unsigned short)_ZN4cstd5atan2E5Fix12IiES1_(
             self->mVelY, self->mVelX) >> 4) * 2];
         vx = self->mVelX;
-        self->mVelX = vx / 8 + MUL12(vx, cosv) / 4;
+        self->mVelX = vx / 8 + MUL12(vx, headingComponent) / 4;
         vy = self->mVelY;
-        self->mVelY = vy / 8 + MUL12(vy, cosv) / 4;
+        self->mVelY = vy / 8 + MUL12(vy, headingComponent) / 4;
     } else {
-        sc = MUL12(sc, 0x1200);
-        self->mVelX -= MUL12(sc, push[0]);
-        self->mVelY -= MUL12(sc, push[1]);
+        normalVelocity = MUL12(normalVelocity, 0x1200);
+        self->mVelX -= MUL12(normalVelocity, push[0]);
+        self->mVelY -= MUL12(normalVelocity, push[1]);
     }
 }
 
@@ -1279,7 +1266,7 @@ void dScMgSnowball_c::ResetScene()
     u16 display;
     Pair *saved;
 
-    if (((InitObject *)c)->query()) {
+    if (IsAltVariant()) {
         I(0xba00) = 0x2dc0;
         I(0xba04) = 0x190;
         I(0xba08) = 0x2e0;

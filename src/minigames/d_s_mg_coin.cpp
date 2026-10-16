@@ -26,14 +26,13 @@
  *
  */
 
-// leftovers: DrawBlocks and Block_Animate still use local
-// layout structs instead of the class members. The address-named helpers
-// keep ROM names (no symbol table: SpawnBlocks, KickBlockUnderCoin
+// DrawBlocks and Block_Animate use the native block record. The remaining
+// address-named helpers keep ROM names (no symbol table: SpawnBlocks, KickBlockUnderCoin
 // and the func_ov006_020dc* family). RenderOamMainScreen and
 // Mg_RenderSpriteBothMtx are redeclared extern "C" at the call -- the ROM symbols
 // are unmangled and the sites disagree on the types. DrawScoreRival
-// reads the other score at gMgScene + 0xac (not a dScMgBase_c
-// field). Caption_State0 casts the scene through unsigned long long
+// reads the other score from gMgScene->mCreditsShown. Caption_State0
+// casts the scene through unsigned long long
 // before clearing the caption frameTime (five words without it).
 // Popup_UpdateAll/_020dc960/_020dcb1c stay on byte offsets (popup and
 // sparkle structs miss: timer address reused, 0x18 kept as stride and timer,
@@ -1002,7 +1001,7 @@ void dScMgCoin_c::KickBlockUnderCoin(int id)
             id == *(unsigned char *)(p + 0x467b)) {
             int v = mCoins[id].y;
             mBlocks[i].y = v - 0x20000;
-            mBlocks[i].unk16 = 1;
+            mBlocks[i].visible = 1;
             mBlocks[i].state = 5;
             mBlocks[i].vy = -0x4800;
             mBlocks[i].delay = 0;
@@ -1019,43 +1018,24 @@ void dScMgCoin_c::KickBlockUnderCoin(int id)
 
 // @symbol _ZN11dScMgCoin_c10DrawBlocksEv
 /* Draws the 40 blocks on both screens. */
-typedef struct {
-    int f0;
-    int f4;
-    char pad8[0xd];
-    unsigned char b15;
-    unsigned char b16;
-    char pad17;
-    unsigned char b18;
-    char pad19[3];
-} E_dd594;
-
-typedef struct {
-    char pad0[0x4660];
-    E_dd594 e[40];
-    char pad1[0x708];
-    int f51c8;
-    int f51cc;
-} Self_dd594;
-
 void dScMgCoin_c::DrawBlocks()
 {
-    Self_dd594 *self = (Self_dd594 *)this;
+    dScMgCoin_c *self = this;
     int i;
-    if (self->f51c8 == 5 && self->f51cc == 0) return;
+    if (self->mPhase == 5 && self->mCountdown == 0) return;
     for (i = 0; i < 0x28; i++) {
-        if (self->e[i].b16 == 0) continue;
+        if (self->mBlocks[i].visible == 0) continue;
         {
-            unsigned int flag = self->e[i].b15;
-            int v0 = self->e[i].f0;
-            int v4 = self->e[i].f4;
-            int a1, a2, a4;
-            unsigned short idx;
-            a1 = v0 >> 12;
-            a2 = v4 >> 12;
-            a4 = (flag >= 3) ? 1 : 0;
-            idx = data_ov006_0212e314[self->e[i].b18];
-            RenderOamBothScreens(data_ov006_0213bf0c[idx], a1, a2, -1, a4, 0);
+            unsigned int state = self->mBlocks[i].state;
+            int posX = self->mBlocks[i].x;
+            int posY = self->mBlocks[i].y;
+            int screenX, screenY, priority;
+            unsigned short spriteIndex;
+            screenX = posX >> 12;
+            screenY = posY >> 12;
+            priority = (state >= 3) ? 1 : 0;
+            spriteIndex = data_ov006_0212e314[self->mBlocks[i].animFrame];
+            RenderOamBothScreens(data_ov006_0213bf0c[spriteIndex], screenX, screenY, -1, priority, 0);
         }
     }
 }
@@ -1097,8 +1077,8 @@ void dScMgCoin_c::Block_State5(int i)
             return;
 
         mBlocks[i].state = 4;
-        mBlocks[i].unk16 = 0;
-        mBlocks[i].unk17 = 0;
+        mBlocks[i].visible = 0;
+        mBlocks[i].active = 0;
         mScore.total++;
 
         {
@@ -1338,29 +1318,14 @@ void dScMgCoin_c::Block_UpdateAll()
 // @symbol _ZN11dScMgCoin_c13Block_AnimateEi
 /* Steps one block's four-frame animation; data_ov006_0212e32c holds each
    frame's length. */
-typedef struct {
-    char _pad0[0x12];
-    u16 timer;   /* +0x12 */
-    char _pad1[4];
-    u8 frame;    /* +0x18 */
-    char _pad2[3];
-} Entry_dde28; /* 0x1c */
-
-typedef struct {
-    char _pad0[0x4660];
-    Entry_dde28 entries[16];
-} Work_dde28;
-
 void dScMgCoin_c::Block_Animate(int index)
 {
-    char *c = (char *)this;
-    Work_dde28 *w = (Work_dde28 *)c;
-    w->entries[index].timer++;
-    if (w->entries[index].timer < data_ov006_0212e32c[w->entries[index].frame])
+    mBlocks[index].animTimer++;
+    if (mBlocks[index].animTimer < data_ov006_0212e32c[mBlocks[index].animFrame])
         return;
-    w->entries[index].frame++;
-    w->entries[index].frame &= 3;
-    w->entries[index].timer = 0;
+    mBlocks[index].animFrame++;
+    mBlocks[index].animFrame &= 3;
+    mBlocks[index].animTimer = 0;
 }
 
 // @symbol _ZN11dScMgCoin_c11SpawnBlocksEv
@@ -1377,8 +1342,8 @@ void dScMgCoin_c::SpawnBlocks()
         unsigned int v = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
         mBlocks[i].x = ((((v << 3) >> 0xf) << 5) + 0x10) << 0xc;
         mBlocks[i].y = -0xf0000;
-        mBlocks[i].unk17 = 1;
-        mBlocks[i].unk16 = 1;
+        mBlocks[i].active = 1;
+        mBlocks[i].visible = 1;
         {
             unsigned int w = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
             mBlocks[i].delay = (short)(((i & 0xf) << 3) + (((w << 4) >> 0xf) << 4));
@@ -1530,11 +1495,11 @@ void dScMgCoin_c::Phase_State3()
 
     count = 0;
     for (i = 0; i < 0x28; i++) {
-        if (mBlocks[i].unk17) {
+        if (mBlocks[i].active) {
             int idx = mBlocks[i].state;
             (this->*data_ov006_02141840[idx].pmf)(i);
             if (mBlocks[i].state != 4) count++;
-            if (mBlocks[i].unk16 != 0) this->Block_Animate(i);
+            if (mBlocks[i].visible != 0) this->Block_Animate(i);
         }
     }
     for (j = 0; j < 0x18; j++) {
@@ -1545,21 +1510,21 @@ void dScMgCoin_c::Phase_State3()
     this->Sparkle_UpdateAll();
     if (count != 0) return;
 
-    if ((&mSparkles[31].y)[0x73] != 0) {
-        *(int *)(((long long)(int)(self + 0x51cc))) -= 1;
-        if ((&mSparkles[31].y)[0x73] == 0x20 && ((unsigned char *)(self + 0x5000))[0x1df] == 0)
+    if (mCountdown != 0) {
+        mCountdown -= 1;
+        if (mCountdown == 0x20 && ((unsigned char *)(self + 0x5000))[0x1df] == 0)
             this->Caption_Finish();
-        if ((&mSparkles[31].y)[0x73] == 0x20 && ((unsigned char *)(self + 0x5000))[0x1df] != 0) {
+        if (mCountdown == 0x20 && ((unsigned char *)(self + 0x5000))[0x1df] != 0) {
             Mg_ShowBanner(6, 0x80, -0x80, -1, -1, 0xd);
             Mg_PlayJingle(0);
         }
-        if ((&mSparkles[31].y)[0x73] <= 0) (&mSparkles[31].y)[0x73] = 0;
+        if (mCountdown <= 0) mCountdown = 0;
         return;
     }
     g = gMgScene;
     Mg_SubmitScore(g != 0 ? g->mCredits : 0);
-    (&mSparkles[31].y)[0x73] = 0x70;
-    (&mSparkles[31].y)[0x72] = 4;
+    mCountdown = 0x70;
+    mPhase = 4;
 }
 
 // @symbol _ZN11dScMgCoin_c12Phase_State2Ev
@@ -1571,7 +1536,7 @@ void dScMgCoin_c::Phase_State2()
     char *c = (char *)this;
     int i;
     for (i = 0; i < 0x28; i++) {
-        if (mBlocks[i].unk17 != 0) {
+        if (mBlocks[i].active != 0) {
             (this->*data_ov006_02141840[mBlocks[i].state].pmf)(i);
             this->Block_Animate(i);
         }

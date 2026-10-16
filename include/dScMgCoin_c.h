@@ -63,12 +63,12 @@ struct dScMgCoin_Block {
     s32 vx;           /* 0x08 */
     s32 vy;           /* 0x0c */
     s16 delay;        /* 0x10 */
-    u8 pad12[2];      /* 0x12 */
+    u16 animTimer;     /* 0x12 ticks in the current animation frame */
     u8 row;           /* 0x14 the stage it stops on */
     u8 state;         /* 0x15 */
-    u8 unk16;         /* 0x16 */
-    u8 unk17;         /* 0x17 */
-    u8 unk18;         /* 0x18 */
+    u8 visible;       /* 0x16 draw and animate the block */
+    u8 active;        /* 0x17 run the block state handler */
+    u8 animFrame;     /* 0x18 cycles through four frames */
     u8 hops;          /* 0x19 hops left on this stage */
     u8 stage;         /* 0x1a */
     u8 unk1b;         /* 0x1b */

@@ -60,33 +60,14 @@ struct Pair2W { int w[2]; };
    types both as `char[]`, so every read casts. */
 struct TileXY { int x, y; };
 
-/* The two BMD files behind the slider model pair, at +0x530c. */
-struct ResPair { char pad[8]; void *a; void *b; };
-
-/* A ModelAnim-shaped subobject, reached only through its slot 5. */
-struct Sub {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-    virtual void v4();
-    virtual void m(int a);
-};
-
-/* The slider as RouletteBoard_Update sees it: a pointer-to-member state
-   callback at +0x0 and a subobject with four virtuals at +0x10. */
-struct ObjV {
-    virtual void v0();
-    virtual void v1();
-    virtual void v2();
-    virtual void v3();
-};
-struct C;
-typedef void (C::*PMF)();
-struct C {
+/* The slider view keeps its state PMF at +0 and first Model at +0x10. */
+struct RouletteSliderView;
+typedef void (RouletteSliderView::*PMF)();
+struct RouletteSliderView {
     PMF pmf;            /* 0x0 */
-    char pad8[0x10 - 8];
-    ObjV obj;           /* 0x10 */
+    BMD_File *firstFile; /* 0x08 */
+    BMD_File *secondFile; /* 0x0c */
+    Model model;        /* 0x10 */
 };
 
 /* One racer, 0x34 bytes, five of them at 0x51a8. Thing, RacerXY and
@@ -255,12 +236,12 @@ extern u8    data_0209d454;
 void RouletteResults_Draw(void);
 void RouletteStrip_AddRacer(int *p, int val);
 void RouletteStrip_Reset(int *p);
-void RouletteBoard_Update(C *c);
+void RouletteBoard_Update(RouletteSliderView *c);
 void RouletteBoard_StateSlow(char *self);
 void RouletteBoard_StartSlowdown(char *p);
 void RouletteBoard_StateSpin(char *self);
 void RouletteBoard_SetStateSpin(char *p);
-int  RouletteBoard_FreeModels(ResPair *o);
+int  RouletteBoard_FreeModels(RouletteSliderView *o);
 short Roulette_TileAt(int x, int y);
 int  RouletteRacer_GetPayout(short *r0, int r1);
 void RouletteRacer_CheckLandingB(int *p);
@@ -558,7 +539,7 @@ s32 dScMgRoulette_c::Behavior()
             } while (n < mRacerCount);
         }
     }
-    RouletteBoard_Update((C *)(c + 0x530c));
+    RouletteBoard_Update((RouletteSliderView *)(c + 0x530c));
     Dealer_Update((char *)mTable);
     MgCoins_Update();
     return 1;
@@ -657,7 +638,7 @@ s32 dScMgRoulette_c::Render()
 /* Frees the slider's two model files. */
 s32 dScMgRoulette_c::CleanupResources()
 {
-    RouletteBoard_FreeModels((ResPair *)mSlider);
+    RouletteBoard_FreeModels((RouletteSliderView *)mSlider);
     return 1;
 }
 
@@ -1252,12 +1233,12 @@ int RouletteBoard_LoadModels(char *slider){
 
 // @symbol RouletteBoard_FreeModels
 extern "C" {
-int RouletteBoard_FreeModels(ResPair *res)
+int RouletteBoard_FreeModels(RouletteSliderView *res)
 {
-    if (res->a)
-        Ov004_Deallocate(res->a);
-    if (res->b)
-        Ov004_Deallocate(res->b);
+    if (res->firstFile)
+        Ov004_Deallocate(res->firstFile);
+    if (res->secondFile)
+        Ov004_Deallocate(res->secondFile);
     return 1;
 }
 }
@@ -1447,13 +1428,13 @@ void RouletteBoard_StateSlow(char *slider)
 }
 
 // @symbol RouletteBoard_Update
-extern "C" void RouletteBoard_Update(C *c)
+extern "C" void RouletteBoard_Update(RouletteSliderView *c)
 {
     char *raw = (char *)c;
     short *p = (short *)(((int)raw + 0xc2));
     *p = (short)(*p + *(short *)(raw + 0xc8));
     *(short *)(*(int *)(raw + 0x20) + 0x82) = (short)(-*(short *)(raw + 0xc2));
-    c->obj.v3();
+    c->model.UpdateVerts();
     Matrix4x3_FromTranslation(&data_020a0e68, 0, 0, 0);
     *(Matrix4x3 *)(raw + 0x2c) = *(Matrix4x3 *)&data_020a0e68;
     (c->*(c->pmf))();
@@ -1470,8 +1451,8 @@ extern "C" void RouletteBoard_Update(C *c)
 
 // @symbol RouletteBoard_Draw
 extern "C" void RouletteBoard_Draw(char* slider){
-    ((Sub*)(slider + 0x10))->m(0);
-    ((Sub*)(slider + 0x60))->m(0);
+    ((Model*)(slider + 0x10))->Render(0);
+    ((Model*)(slider + 0x60))->Render(0);
 }
 
 // @symbol RouletteStrip_Reset
