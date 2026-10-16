@@ -57,6 +57,7 @@ enum daWbm_c_AssetId {
 #include "daWbm_c.h"
 #include "SharedFilePtr.h"
 #include "Player.h"
+#include "nitro/fx/fx.h"
 
 typedef void (daWbm_c::*State)();
 
@@ -357,7 +358,7 @@ void daWbm_c::StateBounce()
             if (ApproachLinear(mSquashScale, 0x300, mSquashSpeed) != 0)
                 mBouncePhase++;
         }
-        mSquashSpeed = cstd::fdiv((int)(((long long)mSquashSpeed * 0xb00 + 0x800) >> 12), 0x1000);
+        mSquashSpeed = cstd::fdiv(FX_MUL(mSquashSpeed, 0xb00), 0x1000);
         mScaleY = mSquashScale;
         mScaleZ = 0x2000 - mScaleY;
         mScaleX = mScaleZ;
@@ -376,7 +377,7 @@ void daWbm_c::StateBounce()
                 return;
             }
         }
-        mSquashSpeed = cstd::fdiv((int)(((long long)mSquashSpeed * 0x1400 + 0x800) >> 12), 0x1000);
+        mSquashSpeed = cstd::fdiv(FX_MUL(mSquashSpeed, 0x1400), 0x1000);
         mScaleY = mSquashScale;
         mScaleZ = 0x2000 - mScaleY;
         mScaleX = mScaleZ;

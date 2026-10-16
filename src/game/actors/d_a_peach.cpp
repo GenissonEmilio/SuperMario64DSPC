@@ -18,6 +18,7 @@
 #include "dExtFrameCtrl_c.h"
 #include "dCc_c.h"
 #include "types.h"
+#include "dBgCh_Actr.h"
 
 bool ApproachLinear(short &value, short target, short step);
 
@@ -53,8 +54,6 @@ extern int data_020a0e68[];
 
 /* mesh collision */
 extern void dBgCh_Actr_UpdateContinuous_Veneer(void *c);
-extern void *_ZNK10dBgCh_Actr14GetFloorResultEv(void *c);
-extern void *_ZNK10dBgCh_Actr13GetWallResultEv(void *c);
 extern void _ZN10dBgCh_Actr4InitEP8dActor_c5Fix12IiES3_P10Vector3_16S5_(
     void *self, dActor_c *a, int b, int c, Vector3_16 *d, Vector3_16 *e);
 
@@ -70,14 +69,12 @@ extern int _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(char *self, void *bca, in
 /* The seven animation-file pointers stay a ROM .data object. This file
  * does not construct them. */
 extern int data_ov085_0212f280[];
-
 }
 
 /* Peach's file handles. The model handle is constructed with file id 0x3f3
  * and registers func_02017ab4; each animation handle is a SharedFilePtr
  * constructed with its file id and registers SharedFilePtr_Destruct_Anim.
- * Eight bytes: the empty base plus the file pointer the loads below read
- * at +4. */
+ * Eight bytes: fileID, refCount, and filePtr. */
 struct DaPeachModelFile : SharedFilePtr {
 
     DaPeachModelFile(u32 fileID);
@@ -98,7 +95,7 @@ extern DaPeachAnimationFilePtr data_ov085_021304d4;
 extern DaPeachAnimationFilePtr gPeachJumpLoopAnimationFile;
 extern DaPeachAnimationFilePtr data_ov085_021304e4;
 extern DaPeachAnimationFilePtr data_ov085_021304ec;
-extern daPeach_c::StateFunc data_ov085_0213055c[];
+extern daPeach_c::StateEntry data_ov085_0213055c[];
 
 #pragma defer_codegen off
 
@@ -169,7 +166,7 @@ void daPeach_c::UpdateGroundCollision(dBgCh_Actr *clsn)
     int wallN[3];
     dBgCh_Actr_UpdateContinuous_Veneer(clsn);
     if (clsn->IsOnGround()) {
-        ((SurfaceInfo *)((char *)_ZNK10dBgCh_Actr14GetFloorResultEv(clsn) + 4))->CopyNormalTo(*(Vector3 *)floorN);
+        ((SurfaceInfo *)((char *)clsn->GetFloorResult() + 4))->CopyNormalTo(*(Vector3 *)floorN);
         if (floorN[1] != 0) {
             long long xProd = (long long)floorN[0] * (long long)words[0xa4 / 4];
             long long zProd = (long long)floorN[2] * (long long)words[0xac / 4];
@@ -179,7 +176,7 @@ void daPeach_c::UpdateGroundCollision(dBgCh_Actr *clsn)
         }
     }
     if (clsn->IsOnWall()) {
-        ((SurfaceInfo *)((char *)_ZNK10dBgCh_Actr13GetWallResultEv(clsn) + 4))->CopyNormalTo(*(Vector3 *)wallN);
+        ((SurfaceInfo *)((char *)clsn->GetWallResult() + 4))->CopyNormalTo(*(Vector3 *)wallN);
     }
 }
 
@@ -357,25 +354,23 @@ int daPeach_c::State4()
 }
 
 // @symbol _ZN9daPeach_c17CallStateBehaviorEv
-/* The second member of the selected pair. mStateFuncs points at a pair of
+/* The behavior half of the selected row. The table rows are pairs of
  * pointers-to-member copied out of the ten ROM constants at 0x0212ff34. */
 void daPeach_c::CallStateBehavior()
 {
-    StateFunc *func = mStateFuncs + 1;
-    (this->**func)();
+    (this->*mState->behavior)();
 }
 
 // @symbol _ZN9daPeach_c13CallStateInitEv
 void daPeach_c::CallStateInit()
 {
-    StateFunc *func = mStateFuncs;
-    (this->**func)();
+    (this->*mState->init)();
 }
 
 // @symbol _ZN9daPeach_c8SetStateEi
 void daPeach_c::SetState(int state)
 {
-    mStateFuncs = data_ov085_0213055c + state * 2;
+    mState = &data_ov085_0213055c[state];
     CallStateInit();
 }
 
@@ -482,15 +477,10 @@ DaPeachAnimationFilePtr data_ov085_021304ec(0x3f0);
 DaPeachAnimationFilePtr gPeachJumpEndAnimationFile(0x3f1);
 DaPeachAnimationFilePtr gPeachJumpLoopAnimationFile(0x3f2);
 DaPeachAnimationFilePtr data_ov085_021304bc(0x3f4);
-daPeach_c::StateFunc data_ov085_0213055c[10] = {
-    data_ov085_0212ff7c,
-    data_ov085_0212ff64,
-    data_ov085_0212ff44,
-    data_ov085_0212ff6c,
-    data_ov085_0212ff4c,
-    data_ov085_0212ff74,
-    data_ov085_0212ff54,
-    data_ov085_0212ff5c,
-    data_ov085_0212ff3c,
-    data_ov085_0212ff34,
+daPeach_c::StateEntry data_ov085_0213055c[5] = {
+    {data_ov085_0212ff7c, data_ov085_0212ff64},
+    {data_ov085_0212ff44, data_ov085_0212ff6c},
+    {data_ov085_0212ff4c, data_ov085_0212ff74},
+    {data_ov085_0212ff54, data_ov085_0212ff5c},
+    {data_ov085_0212ff3c, data_ov085_0212ff34},
 };

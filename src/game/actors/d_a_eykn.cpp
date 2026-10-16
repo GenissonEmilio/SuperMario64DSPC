@@ -42,7 +42,7 @@
  * - data_ov071_02123038 / 02123040 are BTP files 0x2f8 / 0x2fb,
  *   02123048 is BCA 0x2f9, 02123050 is BMD 0x2f7. 021226a4 points at
  *   the two BTPs and 021226a0 at the BCA. data_ov002_0210da38 is the
- *   shared blue-coin model. SharedFilePtr is the 8-byte handle, so the loaded
+ *   shared blue-coin model. SharedFilePtr has no fields, so the loaded
  *   word is read as LoadedFile.
  * - data_0209f2f8 is the current sublevel. 0x2e maps through
  *   SUBLEVEL_LEVEL_TABLE to course 19, which is not BBH's entrance
@@ -73,6 +73,7 @@
 #include "Sound.h"
 #include "Particle__System.h"
 #include "dBgCh_Gnd.h"
+#include "nitro/fx/fx.h"
 
 /* Twelve plain words: assigning a Matrix4x3 copies it member by member,
    0x1c bytes longer than the cartridge's block copy. */
@@ -80,8 +81,54 @@ struct MatrixWords {
     s32 m[12];
 };
 
-/* A loaded SharedFilePtr: the second word is the file it loaded. */
+/* A loaded file handle. filePtr is the file it loaded. */
 struct LoadedFile : SharedFilePtr {
+};
+
+/* Inferred local resource-family ABI views; these type names are not ROM
+ * names. The manifest binds each constructor/destructor to its existing
+ * model, texture-sequence or animation helper at the original address. */
+struct EyknModelFile : LoadedFile {
+    EyknModelFile(u32 fileID);
+    ~EyknModelFile();
+};
+
+struct EyknTextureSequenceFile : LoadedFile {
+    EyknTextureSequenceFile(u32 fileID);
+    ~EyknTextureSequenceFile();
+};
+
+struct EyknAnimationFileHandle : LoadedFile {
+    EyknAnimationFileHandle(u32 fileID);
+    ~EyknAnimationFileHandle();
+};
+
+EyknModelFile data_ov071_02123050(0x02f7);           // EYEKUN_BMD
+EyknTextureSequenceFile data_ov071_02123038(0x02f8); // EYEKUN_CLOSE_BTP
+EyknTextureSequenceFile data_ov071_02123040(0x02fb); // EYEKUN_OPEN_BTP
+EyknAnimationFileHandle data_ov071_02123048(0x02f9); // EYEKUN_DEAD_BCA
+
+extern "C" {
+SharedFilePtr *const data_ov071_021226a0 = &data_ov071_02123048;
+SharedFilePtr *const data_ov071_021226a4[2] = {
+    &data_ov071_02123038,
+    &data_ov071_02123040,
+};
+}
+
+/* Existing ROM PMF descriptors remain ROM-owned. Their native copies build
+ * the three wait/attack/die rows in BSS, in the original initialization order. */
+extern daEykn_c::StateFunc data_ov071_02122cb8;
+extern daEykn_c::StateFunc data_ov071_02122cc0;
+extern daEykn_c::StateFunc data_ov071_02122ca8;
+extern daEykn_c::StateFunc data_ov071_02122cd0;
+extern daEykn_c::StateFunc data_ov071_02122cb0;
+extern daEykn_c::StateFunc data_ov071_02122cc8;
+
+daEykn_c::State data_ov071_02123088[3] = {
+    {data_ov071_02122cb8, data_ov071_02122cc0},
+    {data_ov071_02122ca8, data_ov071_02122cd0},
+    {data_ov071_02122cb0, data_ov071_02122cc8},
 };
 
 int ApproachLinear(int &value, int target, int step);
@@ -122,14 +169,7 @@ void _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES
 extern s16 data_02082214[];
 extern s8 data_0209f2f8; /* current sublevel id */
 extern Matrix4x3 IDENTITY_MATRIX4X3;
-extern char data_ov071_02123088[0x30];
-extern LoadedFile data_ov071_02123038; /* BTP 0x2f8 */
-extern LoadedFile data_ov071_02123040; /* BTP 0x2fb */
-extern LoadedFile data_ov071_02123048; /* BCA 0x2f9 */
 extern SharedFilePtr data_ov002_0210da38; /* blue-coin model */
-extern LoadedFile data_ov071_02123050; /* BMD 0x2f7 */
-extern SharedFilePtr *const data_ov071_021226a4[2]; /* the two BTPs */
-extern SharedFilePtr *const data_ov071_021226a0; /* the BCA */
 }
 
 /* Debug-table actor ids, and the thresholds this file compares against. */
@@ -399,7 +439,7 @@ int daEykn_c::St_Die_Main()
     switch (mSubState) {
     case 0: {
         s16 sinv = data_02082214[((int)mWobblePhase >> 4) * 2];
-        mAngleX = (s16)((int)(((s64)mWobbleAmp * sinv + 0x800) >> 12));
+        mAngleX = (s16)(FX_MUL(mWobbleAmp, sinv));
         mWobblePhase = (u16)((s16)mWobblePhase + 0xe000);
         ApproachLinear(mWobbleAmp, 0, 0x1b);
         if (DecIfAbove0_Byte(&mSubTimer) == 0) {
@@ -698,7 +738,7 @@ void daEykn_c::RunStateInit()
 // @symbol _ZN8daEykn_c8SetStateEi
 void daEykn_c::SetState(int state)
 {
-    mState = &((daEykn_c::State *)data_ov071_02123088)[state];
+    mState = &data_ov071_02123088[state];
     RunStateInit();
 }
 
@@ -762,7 +802,7 @@ s32 daEykn_c::InitResources()
     for (i = 0; i < 2; i++) {
         SharedFilePtr *seq = data_ov071_021226a4[i];
         TextureSequence::LoadFile(*seq);
-        BMD_File *bmd2 = (BMD_File *)data_ov071_02123050.filePtr;
+        BMD_File *bmd2 = (BMD_File *)((LoadedFile *)&data_ov071_02123050)->filePtr;
         BTP_File *btp = (BTP_File *)((LoadedFile *)seq)->filePtr;
         TextureSequence::Prepare(*bmd2, *btp);
     }
@@ -842,24 +882,4 @@ extern "C" daEykn_c *daEykn_c_classInit_EYEKUN_BOSS()
 extern "C" daEykn_c *daEykn_c_classInit_EYEKUN()
 {
     return new daEykn_c();
-}
-
-/* Zero in the image. __sinit_ov071_021228c8 writes the file ids, the
-   destructor nodes, and the six state rows. Address order. */
-extern "C" {
-LoadedFile data_ov071_02123038;
-LoadedFile data_ov071_02123040;
-LoadedFile data_ov071_02123048;
-LoadedFile data_ov071_02123050;
-char data_ov071_02123058[0xc];
-char data_ov071_02123064[0x8];
-char data_ov071_0212306c[0x4];
-char data_ov071_02123070[0xc];
-char data_ov071_0212307c[0xc];
-char data_ov071_02123088[0x30];
-SharedFilePtr *const data_ov071_021226a0 = &data_ov071_02123048;
-SharedFilePtr *const data_ov071_021226a4[2] = {
-    &data_ov071_02123038,
-    &data_ov071_02123040,
-};
 }

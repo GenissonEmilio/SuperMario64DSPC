@@ -24,13 +24,7 @@
 struct BMD_File;
 struct BTP_File;
 
-/* First state-function slot. __sinit_ov072_021221f8 copies eight PMF
- * descriptors into the table that starts here. symbols.txt also names
- * data_ov072_02122c08, so this object is the first slot and the rest
- * of the table stays in the gap. */
-extern "C" {
-daBgSnmHed_c::StateFunc data_ov072_02122c00[1];
-}
+extern "C" daBgSnmHed_c::StateEntry data_ov072_02122c00[];
 extern int gBigSnowmanSmileTextureSequenceFile[];
 extern int gBigSnowmanCryTextureSequenceFile[];
 
@@ -252,21 +246,19 @@ int daBgSnmHed_c::InitState0()
 // @symbol _ZN12daBgSnmHed_c17CallStateBehaviorEv
 void daBgSnmHed_c::CallStateBehavior()
 {
-    StateFunc *func = mStateFuncs + 1;
-    (this->**func)();
+    (this->*mState->behavior)();
 }
 
 // @symbol _ZN12daBgSnmHed_c13CallStateInitEv
 void daBgSnmHed_c::CallStateInit()
 {
-    StateFunc *func = mStateFuncs;
-    (this->**func)();
+    (this->*mState->init)();
 }
 
 // @symbol _ZN12daBgSnmHed_c8SetStateEi
 void daBgSnmHed_c::SetState(int state)
 {
-    mStateFuncs = data_ov072_02122c00 + state * 2;
+    mState = &data_ov072_02122c00[state];
     CallStateInit();
 }
 
