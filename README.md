@@ -109,7 +109,6 @@ Code size  ███████████████████████
 ```
 MATCHED    ██████████████████████████████  100.0%   11,389 / 11,389 functions
            of which 108 are byte-exact assembly (hand-written in the original, not C)
-CONVERTED  ████████████░░░░░░░░░░░░░░░░░░  39.6%   4,506 / 11,386 functions
 LINKED     ████████████████████████████░░  93.5%   10,595 / 11,328 matched TUs
 ```
 <!-- tiers:end -->
@@ -121,13 +120,10 @@ size, and status, see the [progress treemap on GitHub Pages](https://tangosdev.g
 The [recovered TU treemap](https://tangosdev.github.io/sm64ds-decomp/tu-treemap.html)
 groups code by reconstructed translation unit, with links to each source file and TU manifest.
 
-The three bars measure different things:
+The two bars measure different things:
 
 - **MATCHED** means the source compiles to the cartridge's exact bytes. This is the
   classic decomp number.
-- **CONVERTED** means a person can read that source without the ROM open next to them:
-  real C++ classes with their real names, bases and vtables instead of flat C full of
-  offsets.
 - **LINKED** means the matched file is compiled straight into the PC port, replacing the
   stand-in the port used before.
 
@@ -139,7 +135,7 @@ functions in the game, the ones everything else was matched around, plus a handf
 sit at documented floors where every spelling we have tried lands on the same small
 difference. Those are written down rather than ground on again.
 
-Most of the work now goes into the other two bars. The readable source push turns matched
+Most of the work now goes into the other bar. The readable source push turns matched
 files into real C++ class by class. The actor tree (`fBase_c`, `dBase_c`, `dActor_c`,
 `dBgActor_c`, `dEnemyBase_c` and every `daObj*_c` scene actor) is declared in `include/`
 as actual C++, named from the ROM's own RTTI, and finished classes get merged back into

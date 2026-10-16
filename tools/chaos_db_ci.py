@@ -140,30 +140,22 @@ def enrollment_of(label, addr, src_path, enrolled, blocks):
 
 
 def tier_stats():
-    """The CONVERTED and LINKED tiers, flattened for the stats block.
+    """The LINKED tier, flattened for the stats block.
 
     Flat rather than nested because the two consumers downstream are a shell
     script's python one-liner and a C# record, and neither gains anything from
     nesting. MATCHED is not repeated here; it is already the block above.
 
     Never raises. This runs inside the generator whose output pays the coin
-    ledger, and a readability scan is not worth killing a refresh over -- a run
-    that dies here would leave contributions.json unmoved and every match landed
-    since the last refresh uncredited. On failure the key is simply absent, and
+    ledger. On failure the key is simply absent, and
     the site falls back to showing MATCHED alone.
     """
     try:
-        c = TIERS.converted()
         k = TIERS.linked()
     except Exception as e:  # noqa: BLE001 - see docstring
         print(f"  tiers: SKIPPED ({e})")
         return None
-    out = {
-        "converted": c["converted"],
-        "convertedOf": c["functions"],
-        "convertedSourceFiles": c["source_files"],
-        "convertedPct": c["pct"],
-    }
+    out = {}
     if k:
         out.update({
             "linked": k["linked"],
@@ -464,7 +456,7 @@ def main():
             "handAsmFunctions": handasm_n,
             "handAsmBytes": handasm_b,
             "moduleCount": len({f["module"] for f in functions}),
-            # The other two tiers ride along here so every consumer reads ONE file.
+            # The LINKED tier rides along here so every consumer reads ONE file.
             # romstats-sync.sh on the VPS fetches this db and nothing else, and the
             # backend stores what it is told rather than walking any repository, so a
             # tier that is not in this block does not reach the site at all. Both are
