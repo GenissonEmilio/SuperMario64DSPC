@@ -34,8 +34,10 @@
  * - MainMeshCallback and Platform0Callback: testing actorID == 0xbf
  *   inline is 0x34 against 0x40. The int temporary stays on all five
  *   callbacks.
- * - data_ov021_* handles, data_02092768, data_020a0e68 and data_02082214
- *   stay address names (__sinit_ov021_02113500 owns the handles).
+ * - The four NewsLiftFile handles are defined here. __sinit_ov021_02113500
+ *   still stores their file ids. The two CLPS blocks and the four offset
+ *   vectors stay the ROM copy. data_02092768, data_020a0e68 and
+ *   data_02082214 stay address names.
  *   dActor_c has no Pos(), so callers cast &mPosX.
  */
 
@@ -57,10 +59,12 @@ struct NewsLiftFile {
     void *filePtr;
 };
 
-extern NewsLiftFile data_ov021_021149a0;
-extern NewsLiftFile data_ov021_021149a8;
-extern NewsLiftFile data_ov021_021149b0;
-extern NewsLiftFile data_ov021_021149b8;
+/* mwccarm emits these four in address order from this source order.
+   __sinit_ov021_02113500 still stores the file ids. */
+NewsLiftFile data_ov021_021149a0;
+NewsLiftFile data_ov021_021149b0;
+NewsLiftFile data_ov021_021149b8;
+NewsLiftFile data_ov021_021149a8;
 extern CLPS_Block data_ov021_02113a60;
 extern CLPS_Block data_ov021_02113a80;
 
