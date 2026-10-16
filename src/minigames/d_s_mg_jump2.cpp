@@ -54,11 +54,11 @@ struct Elem {
     int   targetX, targetY; /* 0x0c */
     int   speedX, speedY;   /* 0x14 */
     short life;             /* 0x1c -- frames left */
-    short sprite;           /* 0x1e */
+    short number;           /* 0x1e -- displayed numeric value */
     short active;           /* 0x20 */
     short _22;
 
-    void Spawn(int startX, int startY, int spriteId);  /* spawn */
+    void Spawn(int startX, int startY, int value);  /* spawn */
     void Tick();                                      /* update */
     void DrawNumber();                                      /* draw   */
 };
@@ -82,7 +82,7 @@ struct G2 { int w[2]; };
 /* Vtable shim for InitResources' last call, a virtual dispatch through slot
  * 18 of this class's own table. Calling StartRound by name would compile
  * to a direct branch instead. */
-struct Base {
+struct RoundStartCallbacks {
     virtual void m00();
     virtual void m04();
     virtual void m08();
@@ -101,7 +101,7 @@ struct Base {
     virtual void m3c();
     virtual void m40();
     virtual void m44();
-    virtual void m48(int x);
+    virtual void StartRound(int x);
 };
 
 /* File-scope objects at the end of this file construct the two model
@@ -304,31 +304,31 @@ s32 dScMgJump2_c::InitResources()
     }
 
     Mg_SetTopScreenYOffset(0x10);
-    ((Base *)this)->m48(-1);
+    ((RoundStartCallbacks *)this)->StartRound(-1);
     return 1;
 }
 
 /* The state functions: five are the exec targets the PMF records at
  * pmf_dScMgJump2_c_State_Idle..9c point into (see the header's state-machine note);
  * the other three are the transitions that install a record and arm
- * unk_5a74. unk_5a64 accumulates unk_5a68 >> 12 each tick and wraps at
+ * mStateTimer. mScrollPhase accumulates mScrollRate >> 12 each tick and wraps at
  * 0x1000.
  *
  * This one arms the countdown and installs the next state. */
 // @symbol _ZN12dScMgJump2_c10BeginIntroEv
 void dScMgJump2_c::BeginIntro(){
-  unk_5a74 = 0x78;
-  unk_5a64 = 0;
-  unk_5a68 = 0x4000;
+  mStateTimer = 0x78;
+  mScrollPhase = 0;
+  mScrollRate = 0x4000;
   *(struct G2*)pad_5004 = pmf_dScMgJump2_c_State_Intro;
 }
 
 // @symbol _ZN12dScMgJump2_c11State_IntroEv
 void dScMgJump2_c::State_Intro()
 {
-    s16 *countdown = &unk_5a74;
+    s16 *countdown = &mStateTimer;
     *countdown = *countdown - 1;
-    if (unk_5a74 == 0) {
+    if (mStateTimer == 0) {
         if (mPromptBlinkCount == 0) {
             mPromptEnabled = 1;
             mPromptBlinkCount = 1;
@@ -343,7 +343,7 @@ void dScMgJump2_c::State_Intro()
 // @symbol _ZN12dScMgJump2_c9BeginPlayEv
 void dScMgJump2_c::BeginPlay()
 {
-    unk_5a74 = 0xf0;
+    mStateTimer = 0xf0;
     *(struct G2 *)pad_5004 = pmf_dScMgJump2_c_State_Play;
 }
 
@@ -352,11 +352,11 @@ void dScMgJump2_c::State_Play()
 {
     s16 done;
     int prevScore = data_ov006_02140308;
-    int *acc = &unk_5a64;
+    int *acc = &mScrollPhase;
     int mode;
 
-    *acc += unk_5a68 >> 12;
-    if (unk_5a64 > 0x1000)
+    *acc += mScrollRate >> 12;
+    if (mScrollPhase > 0x1000)
         *acc -= 0x1000;
 
     done = 0;
@@ -367,14 +367,14 @@ void dScMgJump2_c::State_Play()
         break;
     case 1:
         {
-            int rc = ApproachLinear2(unk_5a74, done, 2);
+            int rc = ApproachLinear2(mStateTimer, done, 2);
             if (rc)
                 done = 1;
         }
         break;
     default:
         {
-            int rc = ApproachLinear2(unk_5a74, done, 1);
+            int rc = ApproachLinear2(mStateTimer, done, 1);
             if (rc)
                 done = 1;
         }
@@ -385,11 +385,11 @@ void dScMgJump2_c::State_Play()
         int value;
         s16 countdown;
         Heyho_SettleAll();
-        unk_5a74 = 0xf0 - data_ov006_02140308 * 6;
-        countdown = unk_5a74;
+        mStateTimer = 0xf0 - data_ov006_02140308 * 6;
+        countdown = mStateTimer;
         if (countdown < 0x3c)
             countdown = 0x3c;
-        unk_5a74 = countdown;
+        mStateTimer = countdown;
         value = (data_ov006_02140308 << 4) + 0x1600;
         if (value > 0x2200)
             value = 0x2200;
@@ -423,22 +423,22 @@ void dScMgJump2_c::State_Play()
 // @symbol _ZN12dScMgJump2_c8BeginEndEv
 void dScMgJump2_c::BeginEnd()
 {
-    unk_5a74 = 0x20;
+    mStateTimer = 0x20;
     *(struct G2 *)pad_5004 = pmf_dScMgJump2_c_State_End;
 }
 
 // @symbol _ZN12dScMgJump2_c9State_EndEv
 void dScMgJump2_c::State_End()
 {
-  int *acc = &unk_5a64;
-  *acc += unk_5a68 >> 12;
-  if (unk_5a64 > 0x1000)
+  int *acc = &mScrollPhase;
+  *acc += mScrollRate >> 12;
+  if (mScrollPhase > 0x1000)
   {
     *acc -= 0x1000;
   }
   Heyho_SeparateAll();
   Jump3D_UpdateAll();
-  if (ApproachLinear2(unk_5a74, 0, 1) == 0)
+  if (ApproachLinear2(mStateTimer, 0, 1) == 0)
   {
     return;
   }
@@ -469,16 +469,16 @@ void dScMgJump2_c::State_Idle()
 }
 
 // @symbol _ZN12dScMgJump2_c8BehaviorEv
-/* Slot 6. unk_5a6c is a particle system's unique ID, handed to
+/* Slot 6. mParticleID is a particle system's unique ID, handed to
  * NewUnkCallback818 and back each frame. The object FromUniqueID returns is
  * untyped, so its fields at 0x50 and 0x58 stay raw. Both Particle::System
  * calls keep their mangled spellings: declaring the real Fix12<int>
  * parameters changes how the call passes them. */
 s32 dScMgJump2_c::Behavior()
 {
-    unk_5a6c = _ZN8Particle6System17NewUnkCallback818Ejj5Fix12IiES2_S2_PK11Vector3_16f(
-        unk_5a6c, 0xf0, 0x400000, 0x800000, -0x480000, 0);
-    void *system = Particle::System::FromUniqueID(unk_5a6c);
+    mParticleID = _ZN8Particle6System17NewUnkCallback818Ejj5Fix12IiES2_S2_PK11Vector3_16f(
+        mParticleID, 0xf0, 0x400000, 0x800000, -0x480000, 0);
+    void *system = Particle::System::FromUniqueID(mParticleID);
     if (system != 0) {
         *(int *)((char *)system + 0x50) = 0x4000;
         *(unsigned char *)((char *)system + 0x58) = 0x2c;
@@ -548,7 +548,7 @@ s32 dScMgJump2_c::Render()
         anim = (void *)obj[1];
         func_02045e44((void *)obj, 1, 0);
     }
-    *(int *)((char *)anim + 0x18) = unk_5a64;
+    *(int *)((char *)anim + 0x18) = mScrollPhase;
     {
         Model *model = (Model *)mModel;
         model->Render((Vector3 *)&scale);
@@ -594,12 +594,12 @@ void Jump2Popup_InitPool(int table, int count){
 }
 
 extern "C" {  /* .c-derived member: C linkage for the whole block */
-void Jump2Popup_Spawn(int x, int y, int sprite)
+void Jump2Popup_Spawn(int x, int y, int number)
 {
     int i;
     for (i = data_ov006_021421bc - 1; i >= 0; i--) {
         if (data_ov006_021421b0[i].active == 0) {
-            data_ov006_021421b0[i].Spawn(x, y, sprite);
+            data_ov006_021421b0[i].Spawn(x, y, number);
             return;
         }
     }
@@ -667,7 +667,7 @@ void Node::Unlink() {
 }
 
 // @symbol _ZN4Elem5SpawnEiii
-void Elem::Spawn(int startX, int startY, int spriteId)
+void Elem::Spawn(int startX, int startY, int value)
 {
     x = startX;
     y = startY;
@@ -688,7 +688,7 @@ void Elem::Spawn(int startX, int startY, int spriteId)
 done:
     life = 0x80;
     active = 1;
-    sprite = (short)spriteId;
+    number = (short)value;
     ((Node *)this)->Link();
 }
 
@@ -709,7 +709,7 @@ void Elem::DrawNumber()
 {
     if (active == 0) return;
     Mg_DrawBigNumber(x >> 12, y >> 12,
-                        sprite, -1, -1, 0, data_ov006_021421b4);
+                        number, -1, -1, 0, data_ov006_021421b4);
 }
 
 extern "C" {  /* .c-derived member: C linkage for the whole block */

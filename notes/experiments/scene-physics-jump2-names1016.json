@@ -1,0 +1,1101 @@
+{
+  "base_commit": "3525781b00763a8d63047a7ef114d0ddf212b0a3",
+  "scope": "Readable Jump2 scene state fields, numeric popups and named round-start dispatch.",
+  "changes": [
+    "Rename four scene fields to mScrollPhase, mScrollRate, mParticleID and mStateTimer; keep their types, offsets and ordering.",
+    "Rename the popup field/arguments from sprite/spriteId to number/value because DrawNumber passes the value to Mg_DrawBigNumber.",
+    "Rename the partial slot18 view to RoundStartCallbacks::StartRound, retaining virtual dispatch. The tested direct genuine call devirtualizes and changes output.",
+    "Correct the conflicting header key-function comment: StartRound owns the vtable; the inline destructor does not serve as its key function."
+  ],
+  "evidence": {
+    "status": "Preferred source/header candidate adopted; complete-output, declaration, focused link checks and full ROM build completed. Focused initializer/header warnings remain explicitly recorded.",
+    "file": "src/minigames/d_s_mg_jump2.cpp",
+    "source_before_sha256": "57044871e1357e206bcc0bc6c7dc60c324b3b2c386010ed0a1d0f5417cbf2581",
+    "queue_state": "71341c4067c2622255a692a49d6d88221e51062c",
+    "complete_ranges": [
+      {
+        "module": "ov006",
+        "section": ".text",
+        "start": 34532328,
+        "end": 34536460
+      },
+      {
+        "module": "ov006",
+        "section": ".init",
+        "start": 34803456,
+        "end": 34803556
+      },
+      {
+        "module": "ov006",
+        "section": ".ctor",
+        "start": 34813352,
+        "end": 34813356
+      },
+      {
+        "module": "ov006",
+        "section": ".bss",
+        "start": 34873796,
+        "end": 34873836
+      }
+    ],
+    "conflicts": [],
+    "evidence": [
+      "Elem::DrawNumber passes its short at+0x1e to Mg_DrawBigNumber. Trampoline caller supplies computed score values through Jump2Popup_Spawn, so sprite/spriteId incorrectly imply an image identifier.",
+      "dScMgJump2_c.h declares virtual StartRound atslot18; InitResources currently calls that slot through a private19-method shim. Probe named genuine call before assuming the old devirtualization comment still applies.",
+      "Native StartRound call probe changes output; retain the slot18 dispatch through a renamed partial RoundStartCallbacks view.",
+      "mScrollPhase feeds model animation clock+0x18; updates add mScrollRate>>12 and wrap at0x1000. mStateTimer is decremented by ApproachLinear2 in state routines.",
+      "mParticleID passes to Particle::System::NewUnkCallback818 and FromUniqueID; existing body comment already establishes unique-ID semantics.",
+      "Correct the conflicting header key-function comment: destructor is inline; StartRound is first non-inline virtual, as documented earlier in the same header."
+    ],
+    "candidates": {
+      "names": "build\\sp44-jump-names\\src\\minigames\\d_s_mg_jump2.cpp",
+      "direct": "build\\sp44-jump-direct\\src\\minigames\\d_s_mg_jump2.cpp",
+      "fields": "build\\sp44-jump-fields\\src\\minigames\\d_s_mg_jump2.cpp"
+    },
+    "candidate_header": "build\\sp44-jump-fields\\include\\dScMgJump2_c.h",
+    "field_names": {
+      "unk_5a64": "mScrollPhase",
+      "unk_5a68": "mScrollRate",
+      "unk_5a6c": "mParticleID",
+      "unk_5a74": "mStateTimer"
+    },
+    "header_consumers": [
+      "src/minigames/d_s_mg_jump2.cpp"
+    ],
+    "direct_call_diagnostic": {
+      "function": "dScMgJump2_c::InitResources",
+      "before_size": 592,
+      "direct_call_size": 592,
+      "before_control_flow": [
+        "328: bl #0x150",
+        "356: bl #0x16c",
+        "388: bl #0x18c",
+        "412: bl #0x1a4",
+        "440: bl #0x1c0",
+        "488: bx lr",
+        "496: bl #0x1f8",
+        "528: bx lr"
+      ],
+      "after_control_flow": [
+        "328: bl #0x150",
+        "356: bl #0x16c",
+        "388: bl #0x18c",
+        "412: bl #0x1a4",
+        "440: bl #0x1c0",
+        "488: bx lr",
+        "496: bl #0x1f8",
+        "528: bx lr"
+      ]
+    },
+    "preferred_candidate": "fields",
+    "preferred_proof": {
+      "base_commit": "bb243e6998fbd2e385a233a1f8a09ec09a3965e3",
+      "consumers": [
+        {
+          "file": "src/minigames/d_s_mg_jump2.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "57044871e1357e206bcc0bc6c7dc60c324b3b2c386010ed0a1d0f5417cbf2581",
+          "source_after_sha256": "faee1fc63949796b1aaf8cf21a14b1d587bed011ad9c3c69aaeabdad3237e27d",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 49,
+          "sections_after": 49,
+          "before_output_sha256": "6205267f8399bc6d09194f89126eaae036c088b501f562c01995f4fb4db2b00c",
+          "after_output_sha256": "6205267f8399bc6d09194f89126eaae036c088b501f562c01995f4fb4db2b00c"
+        }
+      ],
+      "headers": [
+        {
+          "file": "include/dScMgJump2_c.h",
+          "before_sha256": "aadab18a36b82c94c6fcf580725fc27c52f936779b9d231c330e30399004eda1",
+          "after_sha256": "7d5e24a202464b9377b3f3f98b4e5bb54ee478a43b608081cc4383d5092dbcad"
+        }
+      ],
+      "header_scope": "Baseline uses canonical current header; candidate uses isolated renamed fields/comments with types/order/layout unchanged. affected_src reports this sole consumer."
+    },
+    "candidate_header_sha256": "7d5e24a202464b9377b3f3f98b4e5bb54ee478a43b608081cc4383d5092dbcad",
+    "ownership": {
+      "state_commit": "7c05d9e7c58b5a72cf7fd95a7b0013f3d95e16e4",
+      "active_conflicts": [],
+      "complete_production_ranges": {
+        "src/minigames/d_s_mg_jump2.cpp": [
+          {
+            "module": "ov006",
+            "section": ".text",
+            "start": 34532328,
+            "end": 34536460
+          },
+          {
+            "module": "ov006",
+            "section": ".init",
+            "start": 34803456,
+            "end": 34803556
+          },
+          {
+            "module": "ov006",
+            "section": ".ctor",
+            "start": 34813352,
+            "end": 34813356
+          },
+          {
+            "module": "ov006",
+            "section": ".bss",
+            "start": 34873796,
+            "end": 34873836
+          }
+        ]
+      }
+    },
+    "retained_constraints": [
+      "Keep all field types/order/widths, raw padding/model storage, destructor sequencing, PMF storage and partial callback shape unchanged.",
+      "No public symbol names, source paths, shared ABI signatures, configurations or numeric gameplay-state meanings changed.",
+      "Existing initializer aliases and compiler-temp renames remain untouched. Raw allocated sections and raw named relocations match before applying any production mapping.",
+      "Header consumer scope is checked by affected_src and contains only src/minigames/d_s_mg_jump2.cpp; both baseline/header and current/header compiles are compared."
+    ],
+    "runtime_validation": "No new emulator claim. Field names come from state timer arithmetic, model animation clock writes, Particle::System APIs and the numeric renderer."
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base_commit": "3525781b00763a8d63047a7ef114d0ddf212b0a3",
+      "consumers": [
+        {
+          "file": "src/minigames/d_s_mg_jump2.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "57044871e1357e206bcc0bc6c7dc60c324b3b2c386010ed0a1d0f5417cbf2581",
+          "source_after_sha256": "faee1fc63949796b1aaf8cf21a14b1d587bed011ad9c3c69aaeabdad3237e27d",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 49,
+          "sections_after": 49,
+          "before_output_sha256": "6205267f8399bc6d09194f89126eaae036c088b501f562c01995f4fb4db2b00c",
+          "after_output_sha256": "6205267f8399bc6d09194f89126eaae036c088b501f562c01995f4fb4db2b00c"
+        }
+      ],
+      "headers": [
+        {
+          "file": "include/dScMgJump2_c.h",
+          "before_sha256": "aadab18a36b82c94c6fcf580725fc27c52f936779b9d231c330e30399004eda1",
+          "after_sha256": "7d5e24a202464b9377b3f3f98b4e5bb54ee478a43b608081cc4383d5092dbcad"
+        }
+      ],
+      "header_scope": "Baseline uses saved original header; candidate uses current renamed fields/comments, preserving types/order/layout. affected_src reports this sole consumer."
+    },
+    "comparison_method": "Pinned2004/b56 baseline source with saved original header versus current source/header. All49 allocated sections, metadata/alignment and raw named relocation offset/type/target/addend match. No masking or label canonicalization.",
+    "focused_linkcheck": {
+      "checked": 32,
+      "verified": 30,
+      "warnings": [
+        {
+          "file": "src/minigames/d_s_mg_jump2.cpp",
+          "name": "__sinit_d_s_mg_jump2.cpp",
+          "module": "ov006",
+          "addr": "0x2130f00",
+          "verdict": "BLIND-5",
+          "blind": 5,
+          "diffs": []
+        },
+        {
+          "file": "include/dScMgJump2_c.h",
+          "name": "dScMgJump2_c",
+          "verdict": "NO-SYM",
+          "note": "no symbol entry"
+        }
+      ],
+      "unresolved_slots": 5,
+      "header_nonfunction_rows": 1,
+      "blocking": 0,
+      "exit_code": 0,
+      "baseline_and_supplemental_initializer_check": {
+        "rows": [
+          {
+            "side": "before",
+            "isolation_plan_error": null,
+            "standard_result": {
+              "name": "__sinit_d_s_mg_jump2.cpp",
+              "module": "ov006",
+              "addr": "0x02130f00",
+              "verdict": "BLIND-5",
+              "diffs": [],
+              "blind": 5
+            },
+            "existing_manifest_alias_result": {
+              "name": "__sinit_d_s_mg_jump2.cpp",
+              "module": "ov006",
+              "addr": "0x02130f00",
+              "verdict": "VERIFIED",
+              "diffs": [],
+              "blind": 0
+            },
+            "unresolved_standard_relocations": [
+              {
+                "off": 16,
+                "type": 1,
+                "sym": "_ZN14Jump2ModelFileC1Ej",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 32,
+                "type": 1,
+                "sym": "__register_global_object",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 44,
+                "type": 1,
+                "sym": "_ZN14Jump2ModelFileC1Ej",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 60,
+                "type": 1,
+                "sym": "__register_global_object",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 84,
+                "type": 2,
+                "sym": "_ZN14Jump2ModelFileD1Ev",
+                "addr": null,
+                "add": 0
+              }
+            ]
+          },
+          {
+            "side": "after",
+            "isolation_plan_error": null,
+            "standard_result": {
+              "name": "__sinit_d_s_mg_jump2.cpp",
+              "module": "ov006",
+              "addr": "0x02130f00",
+              "verdict": "BLIND-5",
+              "diffs": [],
+              "blind": 5
+            },
+            "existing_manifest_alias_result": {
+              "name": "__sinit_d_s_mg_jump2.cpp",
+              "module": "ov006",
+              "addr": "0x02130f00",
+              "verdict": "VERIFIED",
+              "diffs": [],
+              "blind": 0
+            },
+            "unresolved_standard_relocations": [
+              {
+                "off": 16,
+                "type": 1,
+                "sym": "_ZN14Jump2ModelFileC1Ej",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 32,
+                "type": 1,
+                "sym": "__register_global_object",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 44,
+                "type": 1,
+                "sym": "_ZN14Jump2ModelFileC1Ej",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 60,
+                "type": 1,
+                "sym": "__register_global_object",
+                "addr": null,
+                "add": -8
+              },
+              {
+                "off": 84,
+                "type": 2,
+                "sym": "_ZN14Jump2ModelFileD1Ev",
+                "addr": null,
+                "add": 0
+              }
+            ]
+          }
+        ],
+        "alias_manifest": "config\\tu_manifest.d\\ov006\\dScMgJump2_c.json",
+        "alias_manifest_sha256": "c9cce9cf70ff59946242c64da9d98b14a72256c77a314e9b61ef43ec963e6aa5",
+        "aliases": [
+          {
+            "symbol": "_ZN14Jump2ModelFileC1Ej",
+            "canonical_symbol": "func_02017acc",
+            "canonical_module": "arm9",
+            "canonical_address": "0x02017acc",
+            "evidence": "retail initializer call destination and the model wrapper constructor exact PC24 relocation"
+          },
+          {
+            "symbol": "_ZN14Jump2ModelFileD1Ev",
+            "canonical_symbol": "func_02017ab4",
+            "canonical_module": "arm9",
+            "canonical_address": "0x02017ab4",
+            "evidence": "retail destructor registration destination and the model wrapper destructor exact ABS32 relocation"
+          },
+          {
+            "symbol": "__register_global_object",
+            "canonical_symbol": "func_020731dc",
+            "canonical_module": "arm9",
+            "canonical_address": "0x020731dc",
+            "evidence": "compiler-generated static initialization call shape and the direct retail reference in this initializer"
+          }
+        ],
+        "defined_symbol_renames": [
+          {
+            "from": "@748",
+            "to": "@158",
+            "evidence": "compiler temp; the types.h Vector3 ctors advance this TU's per-TU @NNN counter, so mwcc emits it as @748 where main emits @734; licensed under the existing pin @158"
+          },
+          {
+            "from": "@749",
+            "to": "@159",
+            "evidence": "compiler temp; the types.h Vector3 ctors advance this TU's per-TU @NNN counter, so mwcc emits it as @749 where main emits @735; licensed under the existing pin @159"
+          }
+        ],
+        "note": "The normal focused gate remains BLIND-5. Supplemental strict check applies only the three pre-existing production aliases after the same manifest renames/isolation as the normal checker. All100 initializer bytes then link exactly; no relocation masking or configuration changes. Raw object checking without per-TU renames is invalid for @748/@749 and is retained only as a diagnostic.",
+        "header_warning": {
+          "name": "dScMgJump2_c",
+          "verdict": "NO-SYM",
+          "symbol_exists": false,
+          "note": "Header-stem fallback produces this nonfunction row; the sole real header consumer is checked separately."
+        }
+      }
+    },
+    "declaration_agreement": {
+      "files_in_scope": 1830,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "total_disagreements_before": 7341,
+      "total_disagreements_after": 7341,
+      "baseline_changed": false,
+      "exit_code": 0
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "1ed9087390c2224d5f25ff7ccec1273163f50ae1d72ef8a6f7bc7e897b7f98d4"
+    },
+    "artifacts": {
+      "build/scene-physics45-consumer-control.py": "41cd50ee498c96bfff6ba58382fd261408fd8c0d7e71afdbbc1bb03e34d777fd",
+      "build/sp45-proof/consumers.json": "bcd1ea2dc3fbef0c192f7ac357a5829fe44874c942fa38a4e8eab471e75b2e56",
+      "build/scene-physics45-linkcheck.json": "d1ffcf15676e70c1b5cb56835ef3d6e0a189f002e14580a7a279bc44eec5cb18",
+      "build/scene-physics45-declarations.log": "a238431cbc5070735ec310af7cd609c132acc965a21755f134f80cc0eae3c60f",
+      "build/scene-physics45-queue.json": "b764a439f401b3b211f279e80e7e2b0b0788a43518c50068bb6be5efda3d39ab",
+      "build/scene-physics45-naming.json": "32c4766396a3adf125211352a756f9822ce5366fc4b1a4d35d8b18a60db79e11",
+      "build/scene-physics45-sinit-control.json": "ab99915573d6f8ecd1dc7dabd5b3f2ace273cbb1f4ab2dfbe44cf4ec6fcd2606",
+      "build/scene-physics45-affected.txt": "5590722a79ae47597aaa77992a43396838cef03b6cc4c498ab9cdfbcc28439a6"
+    },
+    "diff_check": "PASS"
+  },
+  "branch_evidence_coverage": {
+    "base_commit": "723f1dfb0ddc527b9e650fe837d51f2cb2815ac1",
+    "changed_source_and_header_count": 97,
+    "all_current_hashes_match_evidence": true,
+    "files": [
+      {
+        "file": "include/cMgSmartball_wing_c.h",
+        "sha256": "558cd467bb0bc874cf7f36d485c42497fde75f8ee15064c1b3a5c8cb0d6f5d4e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-smartball1016.json"
+        ]
+      },
+      {
+        "file": "include/dBgCh_SphCrr.h",
+        "sha256": "dcd629f1f4eb1f97cb7397faed6f2d79a4810e7988bd4cdc9551f096fc7c49f2",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "include/dEntObj_c.h",
+        "sha256": "9220884e756cb20d6b2ddfe20bc02cca3f41e6e42cf302686171c8a164715e21",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-object1016.json"
+        ]
+      },
+      {
+        "file": "include/dScBoot_c.h",
+        "sha256": "12495166937d069bfdc9db9d52308cc81bd030cbccf11f58ea57ac042b2e4b68",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "include/dScEntry_c.h",
+        "sha256": "646abb2e730458dddeab7db069e9cafdf2fb0c43e9e8312ae94a772ffe8fbd9f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-scene1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMB_c.h",
+        "sha256": "d6038c04d0466fcb70f15160d4d7416e37cbb83f94787883d396dc4be7ee8460",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgBSC_c.h",
+        "sha256": "93b3321a9cc5b0bd3a38ceb0c253f3079ea837cf06fa164e19b3e3e2a56b2beb",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-bsc1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgCoin_c.h",
+        "sha256": "153dd025abd40f3d76f156260b9fc6ea55349ccc7cc99e7952b334d367d9c085",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgCup_c.h",
+        "sha256": "a78b9886f8c6e29b69a6afc76f72b7d3e2557bc49e478d54ece96101cc18e612",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-cup1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgCurling2_c.h",
+        "sha256": "f3b6b47dbf49f96d3ddb959e9e446715d49e41f9fc0649bedf4dff6e6a4e5e99",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-curling1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgCurling_c.h",
+        "sha256": "32aa4b99c7dc39015fcacaee2923c4d576fa3d222677a8cfbfb2a2c9fb0b2721",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-curling1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgFlower_c.h",
+        "sha256": "10d59172e3b98f12d09d125c27ffb0bb2b5cc7e2bef6c40007834467b47b0aab",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-flower1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgHanachan_c.h",
+        "sha256": "01960296ca1c2609cbafd7b3ff809cc02fb806423a153389dbb59f94975e52b9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-hanachan1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgJump2_c.h",
+        "sha256": "7d5e24a202464b9377b3f3f98b4e5bb54ee478a43b608081cc4383d5092dbcad",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-jump2-names1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgLuigi_c.h",
+        "sha256": "8d68f4169bc6cf272f916ccabc682c8baef1f738b8f52035b4891e89a4b297d1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-luigi1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgMCarlo_c.h",
+        "sha256": "d7792631c8eca154d37a3913a68b48b287ebadaa348018bbcb25f2066c990fc7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-mcarlo1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgMemory2_c.h",
+        "sha256": "83aef2ab7798940ff646c61f03eb2582ce8d5ef8b8d115d3a0eccfd5ea017f0d",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-memory2-1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgMemory_c.h",
+        "sha256": "cf3bae3863bbcad03df330c1db041b5343b21a12ed65553d8be9d99e5b9f887f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-memory1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgPachinko2_c.h",
+        "sha256": "a6fcb9a76ba36f13c2da6c5bd7f74e4ac79b4d4e92178c6349fdf8549ed2b995",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-effects1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgPanel_c.h",
+        "sha256": "da710063bd0aaf9e89763456737501baf98b8a1a90d7dd96270fb8a4670cd361",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-panel1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgSlot1_c.h",
+        "sha256": "9d4e0fe018194becc55b3f4d0ecf903bba5adb1cfef83f766b8757873cc8832e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "include/dScMgSlot3_c.h",
+        "sha256": "9db713bf0d5c2254e73a62e2c4612d8bb1b27b6e510cb2e033cb4f96795fd573",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "include/dScStage_c.h",
+        "sha256": "33b0b7876d713648a9dc5078bfb75c385df935830b4e90c71be32e64dbd8e0f0",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScEntry_c13InitResourcesEv.cpp",
+        "sha256": "43f92efaa098f012052a756e0f5e7bf6969af45b3898361188c9fae63c6b025e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-scene1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScEntry_c6RenderEv.cpp",
+        "sha256": "f219da1c90fdb9afd33ae72f5dd3b8ba190939e07552f56f468a18332977a09f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-scene1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScEntry_c8BehaviorEv.cpp",
+        "sha256": "ce553be2c10a740072a450fbcd3e34eaa027fb44929d699ecf4f2d5636f4b839",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-scene1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c10CheckInputEv.cpp",
+        "sha256": "292d04a1dc228571d7f4eabe5496dd1d05ef73677db6997a3b8f4e31b8847893",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c10LoadSkyboxEv.cpp",
+        "sha256": "900644711ec8080726e9a86eb0321b2286778da194490843b29d93989c0c11d3",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c11RenderModelEv.cpp",
+        "sha256": "d10913d5e3a380adf8cc9d3b59b1aea236c12bd899d7fa5d3de59254c46060b1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c13InitResourcesEv.cpp",
+        "sha256": "195eed97a4127ba02e090ae929cfd9836454d94e8592b41adfc196ebfb8bd490",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c13UpdateMessageEv.cpp",
+        "sha256": "93c2801138bdb44f779a4564c3af0affaae1c7439ee5cded614356ff0d178f62",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c14GraphCallback2Ev.cpp",
+        "sha256": "01bd82c5e392aca6274393415863cc8e0185c44a8bb256670b4c4466207c3311",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c14LoadGraphics2DEbi.cpp",
+        "sha256": "7bacd62b4248642e890731cecccbab31e6ee3b6a16e1e16268b2525aaee5fd0f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c16CleanupResourcesEv.cpp",
+        "sha256": "5f47aceb5066a210b2f07144c4b79fc8357a905958a5f10d080b041d9e2f8b27",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c21RenderVsModeCountdownEv.cpp",
+        "sha256": "db888bdab07120362010bd6acd1be6a50d70b4dac278c35458b013ec0e0c3227",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c22RenderModelTransparentEv.cpp",
+        "sha256": "1780df6e52c2bc90869c228907579badac0e515e87f1c8af19123eeca5e19ce6",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c23LoadTextureTransformersEv.cpp",
+        "sha256": "ef485ea108d219f570b3fa02e6887954cac356b5f02023fd179ba6ef61b4740b",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c6RenderEv.cpp",
+        "sha256": "94f8e07f5fd73877fddde343b78260ecb73d5982f471968ffc4e14fd86a3cf9a",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c7LoadFogEv.cpp",
+        "sha256": "beacf20ca8c75cf296434dce927eadbae3bed54605b9d55ef3e8eecc6e9f35a7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c7PS_InitEv.cpp",
+        "sha256": "9844233b0113b4ae820434ff2c8f2c3907ad9eecf5ab8153a7e9a3bbd9b0f5a0",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c8BehaviorEv.cpp",
+        "sha256": "3e7e9afd43b138dd726e7367b9f42ae60c8bb866167386b18e8a2a2345264d66",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-movement1015.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c9LoadModelEv.cpp",
+        "sha256": "7a4816d96aa80c9c69d56693cefe61357f3cd30372353e0d1bb70c053e78cd2a",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN10dScStage_c9RenderFogEv.cpp",
+        "sha256": "e992307792c9106ad7f2d94978e12ab97c55b649a49658fcf099ecf9220257aa",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/_ZN7dBgW_Kc8LoadFileER13SharedFilePtr.cpp",
+        "sha256": "940d9b90fdf9942f1f373c2ad78cb953c7926f770cdf6b2d809fe55a0a0c9eaf",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-collision-file-api1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch.cpp",
+        "sha256": "b9bbb68d6c45cc538029e92efc769bc3638bb60306a79603c97d30b1bea9bf75",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_actr.cpp",
+        "sha256": "170688f9901bb8aeec7584be6e4768e543a7447d0c23dd5210a8b3780cac87ce",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_lin.cpp",
+        "sha256": "c7dc2c1dee6f5f7a190bc1ef85eb3dfc30198f3720b2bf1bcdbbe764f4747ce5",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr.cpp",
+        "sha256": "eb0c360dd3824d14ef631c0912fb3682dba3e0e881aaf8e1982bbddd84b92b6c",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_ch_sph_crr_query.cpp",
+        "sha256": "1202975f8e11e71cd4dd5087249e4ee249f47c778167040fbacfda69dbb7172f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w.cpp",
+        "sha256": "10b3d807297ca1c2ac84018e48d4e4737d7d203cc454e65ee8d3ccb8fa25a4e1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc.cpp",
+        "sha256": "9bac6d2ec41046af3e5ce8f1df89ab25307c5f4bf511be7f07532f935e8ba69e",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_itcm.cpp",
+        "sha256": "90e1684394ce8901fb556c9bb5c0efd89790908546dfa535bfa495d81515fd7b",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg.cpp",
+        "sha256": "ac47f9d824f83c2fa8c73aea6441b8c5e29c76a325c3f828599adba4d739c8c9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp",
+        "sha256": "b2dab76c0ce95807d92d8cbbc7db500fa893f4e89cbbfebe4b641eaa6a278f20",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-wall-extent1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_cc.cpp",
+        "sha256": "1382fe7f2376eeec6fabec966b7afcd998f0846d278405afb1e72641e24a22b9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_clipper.cpp",
+        "sha256": "88ca50630eb477df5c9b5c80af27d9d9e076ebb62583629d6bc3fd598e5ed0b2",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/engine/collision/d_m3d_g_lin.cpp",
+        "sha256": "ba82b0f95f4ff1ca25cce54032e1270a346ac083c2e6373fb22f2dd152e6c1bd",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/LevelObjects.cpp",
+        "sha256": "be3112ad873f91164c7533931be34209b48b2fd429e7a3b3f5cedbaeb8ef022a",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_ent_obj.cpp",
+        "sha256": "dce4cfa3cdd3a7ff847a3e44deed1f8d6f088e4b4c7e9884886c1477e1c0bfa7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-object1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_boot_methods.cpp",
+        "sha256": "18542a61d9f8fcb8bab409a4ca2aaa3b733ab71021bcc1f5a9e1f55c8df440ac",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-confirmation-scenes1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_dsmt.cpp",
+        "sha256": "264555ad72120fea58b028eee58efff38e34b0890882e684f937d9e21c366517",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_entry.cpp",
+        "sha256": "e90d07d0e4a4aea4195475c2bbb90a8075553d64e46b6ba788666bd9dc1b624d",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-entry-scene1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_game_over.cpp",
+        "sha256": "1447e5e54539ad405174f8f065e66fc217c00b50279513c81963389066fc9b60",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_mb.cpp",
+        "sha256": "4705f16b4c8ee8d3e1e598ffa21fb63e77dd2cf0e8ed3c9e70161818303260c6",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-download-clipper1016.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_star_sel_methods.cpp",
+        "sha256": "5fb0e64a5e9e6c6e19012de7b88ca04f91c55e65e6991994fe71783d6be315c1",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-readability1015.json"
+        ]
+      },
+      {
+        "file": "src/game/stages/d_s_title.cpp",
+        "sha256": "074ecf96f9507cac20dc4b451bd3babc50602c24fe3e77f784a9194b3672cbb7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-title1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_mg_state.cpp",
+        "sha256": "7c87606029a99ccb0755943af92f8e23edec1f0bc91af75698fb8534f99468be",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-audit1016.json#verification.complete_output_comparison"
+        ]
+      },
+      {
+        "file": "src/minigames/d_mg_trmpln2_mario.cpp",
+        "sha256": "5c169fb3e9075a59d314e2a75f26afee1c35b698e2727b03a48928ef6da7f718",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-trampoline-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_amida.cpp",
+        "sha256": "95f537f0f62689126f7f9ee2501d32058bd7a07ded4b0904a6796adaa40d427d",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-amida1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_bsc.cpp",
+        "sha256": "efbcb02fca221003f79355d016fe0aa54660734c1eb11842b775c5904de8b0d6",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-bsc1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_coin.cpp",
+        "sha256": "1689977e4e9b0d0d43ae2d65413349a89b8c3021076925968b88dc3890e84fc7",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_cup.cpp",
+        "sha256": "c5b52f3c5e6d9d7fab8d7f3c5ea5a5a2b17feee5122903e3999a7d3e7981f167",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-cup1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_curling.cpp",
+        "sha256": "4821f832abf6660572a08288a36c64ff5b569cb1cc65a936d67f617e8852a3c4",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-curling1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_curling2.cpp",
+        "sha256": "242a5a3e7fe96b15925a4e9776d3b0de0fd6a83070f533489fa91cfabbf90973",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-curling1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_flower.cpp",
+        "sha256": "2225cbc1c277bd73ecf7b9a07a4f5fae7b085684d55fb3bb65406c9bb07cbfc9",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-flower1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_hanachan.cpp",
+        "sha256": "06e6d28467fc96efac82d3e53f6833eb6d6011be8353f4d0db99f48e4e66bfde",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-hanachan1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_hanachan_methods.cpp",
+        "sha256": "78dc113e14176d3892e4d7192b8777c0b0954ff87abcee88048802b41aa98b32",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-hanachan1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_jump2.cpp",
+        "sha256": "faee1fc63949796b1aaf8cf21a14b1d587bed011ad9c3c69aaeabdad3237e27d",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-jump2-names1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_luigi.cpp",
+        "sha256": "e6ce8325bcf9b7fb508e1fe4fc0b9249d2ccc94c401b5ea140f410259de1c01c",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-luigi1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_m_carlo.cpp",
+        "sha256": "dab5d25f5f4069e379dfb33d8a3bfae1acac68e75f3e28c2bccda31fd1dd7290",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-mcarlo1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_memory.cpp",
+        "sha256": "b4f592b7dc7e479788a296dc306814825f0a44d6acfa3f073b2dbf97422e98c5",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-memory1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_memory2.cpp",
+        "sha256": "fbf03a4d41a6e3aed3a8489edd77e963f2e6e033ed1bdf09d473bc228def36a3",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-memory2-1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_pachinko2.cpp",
+        "sha256": "ed99b7d03063d10b52952bc33c96a0bc18326fe8d357c6215446884a4cb93e01",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-pachinko-collision1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_panel.cpp",
+        "sha256": "7096c5c3080dbeb61c3c1079d8097549e6c02a2a8432b870eae5d637eb575362",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-panel1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_roulette_methods.cpp",
+        "sha256": "7e0312971e0db9ae9426d0416184c9743165b3ef42c3b423297a67a7031d16ec",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_slots.cpp",
+        "sha256": "33179b1332ed99433fd28572e504a97004895b8b8f3f46a583deecbb82eb0152",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-slots1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_smartball.cpp",
+        "sha256": "78cea37c1269d6b6a7154c7a9058b93be05c8cb4992f8476c9349ac1bcfe8940",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-smartball1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_snowball.cpp",
+        "sha256": "0aa9a844be6f47f1d3a744af0accdeb29bf2fdfc61e91976eb072e79a79d61ef",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-scene-batch1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_sound.cpp",
+        "sha256": "60fc32dda7650e812363fa0ab76c2bf882455f3ce3f3cafaf79ca800be59b037",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-sound1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline.cpp",
+        "sha256": "6c40d0a0788934c4601073ac8987222b3a42ffe36172f2bcd2775fe6d6d6397f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/d_s_mg_trampoline2.cpp",
+        "sha256": "e744739139ed2a6ad4489dad7eb109e54fca942acf009c7931f495d9a4d7ac9f",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/unit020bfec0.cpp",
+        "sha256": "8a1154934a8abb2c532691783e7cd277a089c48727c934087a94614e28310c00",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-world-helpers1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/unit020c8a30.cpp",
+        "sha256": "2135df9c0755ca72f1e7699020081b29c02530e05b6f22eaf2b4b71170a8c5b0",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-trampoline-helper-apis1016.json"
+        ]
+      },
+      {
+        "file": "src/minigames/unit020cd744.cpp",
+        "sha256": "46aa0d89c3cf1b3795ade49999bce0b7d049c4da04fbadf90acd62a78ffaa288",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-trampoline-construction1016.json"
+        ]
+      },
+      {
+        "file": "src/ui/hud/d_meter.cpp",
+        "sha256": "c99ceef9e3b4da973faaeef2269d0ce2ff73a97cb6be348936ce325f42ef1473",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-stage-callbacks1016.json"
+        ]
+      },
+      {
+        "file": "src/unnamed/arm9/0203/func_0203d5dc.c",
+        "sha256": "de4b11369e1191cc28903ce2a834ceb053724db301eda2fa93e2c4d41c873c58",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-hanachan1016.json"
+        ]
+      },
+      {
+        "file": "src/unnamed/ov006/__sinit_ov006_0212fc7c.c",
+        "sha256": "ccc64426ed60d31ab502118cda479ab135813beb9ffb1686ae3614df82859fdc",
+        "matching_evidence": [
+          "notes/experiments/scene-physics-trampoline-geometry-apis1016.json"
+        ]
+      }
+    ],
+    "scope_note": "Current-file evidence coverage, not completion of the broader readability objective. Historical evidence limits remain explicit in referenced reports."
+  },
+  "review_status": "Producer checkpoint; independent source review and publication pending. Broader scene/physics goal remains active."
+}
