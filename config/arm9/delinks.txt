@@ -6478,6 +6478,7 @@ src/engine/cp15/CP154.cpp:
 src/cstd4.cpp:
     complete
     .text start:0x0206dab4 end:0x0206ece0
+    .bss start:0x020a9ecc end:0x020a9ed0
 
 src/unnamed/arm9/0206/func_0206ece0.c:
     complete
