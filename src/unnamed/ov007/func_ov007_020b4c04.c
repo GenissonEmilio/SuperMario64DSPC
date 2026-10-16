@@ -11,7 +11,20 @@ extern u8 data_ov007_020d77e0[];
 extern u16 data_ov007_020d76a0[];
 extern u16 data_ov007_020d76a1[];
 extern u8 data_ov007_020d77e1[];
-extern s32 data_ov007_020d7648[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+u16 data_ov007_020d7638[8] = {
+    0, 0, 0, 48, 48, 48, 88, 88
+};
+
+u16 data_ov007_020d7628[8] = {
+    0, 72, 144, 0, 72, 144, 128, 0
+};
+
+s32 data_ov007_020d7648[4] = {
+    -0x11fe, -0x20ff, -0x21fe, -0x22fd
+};
+#pragma section forcerodata end
 extern char *data_ov007_0210342c;
 extern u16 data_ov007_020d75e8[];
 extern u16 data_ov007_020d75f8[];
@@ -21,8 +34,6 @@ extern u16 data_ov007_020d7608[];
 extern u16 data_ov007_020d7600[];
 extern u8 data_ov007_020d7658[];
 extern u8 data_ov007_020d766c[];
-extern u16 data_ov007_020d7628[];
-extern u16 data_ov007_020d7638[];
 
 void *func_ov007_020b4c04(int arg0)
 {

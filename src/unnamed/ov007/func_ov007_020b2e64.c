@@ -1,6 +1,6 @@
 extern int* data_ov007_02103360;
 extern int* data_ov007_0210342c;
-extern int data_ov007_02103364;
+int data_ov007_02103364;
 extern int func_ov007_020c1da0(int i);
 extern int _ZN4cstd3modEii(int a, int b);
 extern void func_ov007_020c92d0(int q);

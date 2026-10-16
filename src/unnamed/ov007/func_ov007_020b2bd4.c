@@ -11,7 +11,7 @@ extern int data_ov007_020ccc48[];
 extern char data_ov007_020ccc68[];
 extern char data_ov007_020ccc80[];
 extern int data_ov007_02103348[];
-extern int data_ov007_02103354[];
+int data_ov007_02103354[3];
 extern char data_ov007_020d7ee8[];
 
 void* func_ov007_020b2bd4(int a, int b)

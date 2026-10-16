@@ -9,7 +9,12 @@ extern int* data_ov007_0210342c;
 extern int* data_ov007_02104bc0;
 
 extern int data_ov007_020d7c6c;
-extern int data_ov007_02103234;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_ov007_02103234[3] = {
+    0x66454432, 0x74636566, 0
+};
+#pragma section forcedata end
 
 void func_ov007_020be50c(void)
 {

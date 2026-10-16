@@ -1,6 +1,11 @@
 #include "types.h"
 extern char *data_ov007_0210342c;
-extern u8 data_ov007_020ccc44[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+u8 data_ov007_020ccc44[4] = {
+    3, 4, 0, 0
+};
+#pragma section forcerodata end
 extern void func_ov007_020c0288(u16 *p, int count, int val);
 extern void func_ov007_020c0638(void *a, int b, int c, int d);
 void func_ov007_020b1390(int mode)

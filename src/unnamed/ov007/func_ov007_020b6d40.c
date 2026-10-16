@@ -4,7 +4,13 @@ extern int data_ov007_020d7e28[];
 extern int data_ov007_020d7e38[];
 extern int data_ov007_020d7e50[];
 extern int data_ov007_020d7ec8[];
-extern u8 data_ov007_020d7a24[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+u8 data_ov007_020d7a24[16] = {
+    1, 1, 3, 1, 3, 0, 2, 3, 2, 2, 0, 1,
+    1, 1, 1, 0
+};
+#pragma section forcerodata end
 
 extern int func_ov007_020b7594(int a, int b);
 extern void func_ov007_020b7320(char *c, int a, int b);

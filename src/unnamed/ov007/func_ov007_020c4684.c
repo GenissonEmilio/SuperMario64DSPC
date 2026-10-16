@@ -6,7 +6,10 @@ typedef signed long long s64;
 extern void func_ov007_020c1448(void *tex, int texGen, int repeat, int flip, int color0);
 extern void func_ov007_020c1404(void *tex);
 extern void func_ov007_020c49bc(int a0, int a1, int a2, int a3, int a4, int a5, u16 *a6, int a7);
-extern int data_ov007_0210325c;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_ov007_0210325c = 0x1000;
+#pragma section forcedata end
 void func_ov007_020c4684(u8 *self, int color, int p3, int p4, int flags, s16 *vec)
 {
   u8 *s;
