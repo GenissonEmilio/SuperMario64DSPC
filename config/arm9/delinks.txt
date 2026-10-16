@@ -2400,6 +2400,7 @@ src/engine/collision/d_m3d_g_sph.cpp:
 src/engine/path/PathPtr.cpp:
     complete
     .text start:0x0203ac80 end:0x0203adbc
+    .bss start:0x020a0d84 end:0x020a0d88
 
 src/DecIfAbove0_Short.c:
     complete
