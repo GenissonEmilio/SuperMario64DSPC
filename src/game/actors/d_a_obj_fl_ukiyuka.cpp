@@ -13,10 +13,9 @@
  * Leftover: func_ov002_020b6584 / func_ov002_020b6424 are still the
  *   linker names of daObjUkiyuka_c Init/Cleanup (the base leaves
  *   those slots pure virtual). Naming belongs in ov002.
- * Leftover: the file table is still data_ov022_021140d4 (two
- *   ResourceDescriptor rows, indexed by mVariant). The four handles
- *   it points at are defined at the bottom of this file;
- *   __sinit_d_a_obj_fl_ukiyuka.cpp constructs them.
+ * Leftover: g_profile_FL_UKIYUKA and g_profile_FL_UKIYUKA_L stay the
+ *   ROM copy. Their symbols sit between the two-row file table and
+ *   this class's vtable.
  * Leftover: func_020393a4 is still the linker name of the dBgW range
  *   setter both Init arms call on mMeshCollider.
  * Leftover: InitResources returns nothing, faithfully: the header
@@ -126,6 +125,14 @@ UkiyukaModelFilePtr gFlUkiYukaModelFile(ASSET_FL_UKI_YUKA_BMD);
 UkiyukaCollisionFilePtr gFlUkiYukaCollisionFile(ASSET_FL_UKI_YUKA_KCL);
 UkiyukaModelFilePtr gdaObjFl_UkiyukaFlShisoModelFile(ASSET_FL_SHISO_BMD);
 UkiyukaCollisionFilePtr gdaObjFl_UkiyukaFlShisoCollisionFile(ASSET_FL_SHISO_KCL);
+
+/* Two rows, indexed by mVariant. The CLPS blocks live in overlay 64. */
+extern CLPS_Block data_ov064_0211baec;
+extern CLPS_Block data_ov064_0211bacc;
+extern "C" ResourceDescriptor data_ov022_021140d4[2] = {
+    { &data_ov022_021145e0, &data_ov022_021145d0, &data_ov064_0211baec },
+    { &data_ov022_021145d8, &data_ov022_021145c8, &data_ov064_0211bacc },
+};
 
 // @symbol daObjFl_Ukiyuka_c_classInit_FL_UKIYUKA_L
 /* Reconstructed source-style name: SM64DS proves daObjFl_Ukiyuka_c through RTTI,
