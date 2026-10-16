@@ -7,6 +7,7 @@
 src/game/actors/d_a_yurei_mucho.cpp:
     complete
     .text start:0x02115ee0 end:0x02116f98
+    .bss start:0x0211d600 end:0x0211d620
 
 src/game/actors/d_a_basabasa.cpp:
     complete
