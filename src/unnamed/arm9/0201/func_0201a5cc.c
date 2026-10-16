@@ -1,4 +1,6 @@
-void * data_020a4b5c;
+void * data_0209d524;
+extern void * data_020a4b5c;
+
 
 extern void func_0201a694(void);
 extern void func_0201a614(void);

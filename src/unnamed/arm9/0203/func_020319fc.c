@@ -1,3 +1,4 @@
+int data_0209f3e8[9];
 unsigned int data_0209283c[8] = {
     0x00000000, 0x0000000f, 0x000000ff, 0x00000fff, 0x0000ffff, 0x000fffff, 0x00ffffff, 0x0fffffff
 };

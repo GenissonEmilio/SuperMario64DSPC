@@ -1,4 +1,5 @@
-void * data_020a0f60;
+extern void * data_020a0f60;
+
 
 extern void *_ZN6Memory8AllocateEji(unsigned int size, int align);
 extern void func_020672d0(void *thiz, int a1, int a2, int a3, int a4);

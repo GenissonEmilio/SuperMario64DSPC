@@ -1,8 +1,8 @@
 #include "types.h"
 extern int data_020a0f5c;
 extern u16 data_020a0f24;
-extern u8 data_020a0f9d[4];
-u16 data_020a0fbe[3][3];
+extern u8 data_020a0f9d[4];extern u16 data_020a0fbe[3][3];
+
 extern u16 data_020a0fa0[][3];
 
 extern int Wireless_Reset(void);

@@ -1,3 +1,4 @@
+char data_0209a5ec[8] = { 0x2d, 0x49, 0x4e, 0x46, 0x00, 0x00, 0x00, 0x00 };
 #include "types.h"
 #include "nitro/fx/fx.h"
 typedef struct { int x, y, z; } Vec3;

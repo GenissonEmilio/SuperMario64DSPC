@@ -6,8 +6,8 @@
 #include "common.h"
 #include "PlayerInput.h"
 #include "nitro/fx/fx.h"
-extern u16 data_0209f49c[];
-u16 data_0209f49e[1];
+extern u16 data_0209f49c[];extern u16 data_0209f49e[1];
+
 
 extern u32 func_02012790(u32 a);
 extern s32 ApproachAngle(s16* cur, s16 target, s32 div, s32 band, s32 step);

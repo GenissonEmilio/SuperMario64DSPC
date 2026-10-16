@@ -1,3 +1,8 @@
+typedef struct {
+    void *obj;
+    int dist;
+} SoundSlot;
+SoundSlot data_020a4c18[6];
 #include "types.h"
 // Copies pair i (i in 0..8) from table data_020821c0 into
 // data_02099fa8 / data_02099fac.

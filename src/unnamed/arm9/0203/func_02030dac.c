@@ -1,3 +1,6 @@
+unsigned char data_0209f254;
+static unsigned char data_0209f254_pad[3];
+
 #include "types.h"
 extern int func_0203d890(void);
 extern u8 data_0209fc5c[];

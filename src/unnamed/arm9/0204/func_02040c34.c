@@ -1,4 +1,5 @@
-int data_020a0f84;
+extern int data_020a0f84;
+
 
 #include "types.h"
 typedef struct InitArrays {

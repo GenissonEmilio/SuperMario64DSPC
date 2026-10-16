@@ -1,6 +1,4 @@
-const int IDENTITY_MATRIX4X3[12] = {
-    0x1000, 0x0, 0x0, 0x0, 0x1000, 0x0, 0x0, 0x0, 0x1000, 0x0, 0x0, 0x0
-};
+extern const int IDENTITY_MATRIX4X3[12];
 
 extern void Matrix4x3_FromRotationZ(void *m, int angle);
 extern void Matrix4x3_FromRotationY(void *m, int angle);

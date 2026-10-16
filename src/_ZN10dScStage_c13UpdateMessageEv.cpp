@@ -1,4 +1,7 @@
 //cpp
+extern "C" {extern unsigned char data_0209d6a0;
+
+}
 #include "types.h"
 #include "SaveData.h"
 extern u8 data_0209d660;

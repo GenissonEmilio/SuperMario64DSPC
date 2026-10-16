@@ -1,3 +1,4 @@
+int data_0209e650;
 extern int GetPlayerFlagByte(int a0, int a1);
 unsigned char GetControllerMode(int a0)
 {

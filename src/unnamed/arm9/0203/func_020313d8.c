@@ -1,3 +1,4 @@
+signed char data_0209f30c;
 /* func_020313d8 - calls func_02031b84 (the glyph emitter Message3.cpp's text
  * loop uses for an ordinary character) twice, with a font-encoded char and char+1.
  * Reads index from data_0209fd0c bytes [3] and [4], looks up in data_02092810.

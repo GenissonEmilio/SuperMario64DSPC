@@ -1,3 +1,5 @@
+extern unsigned char data_0209f290;
+
 #include "types.h"
 // func_0200e6d8 - find player actor by parameter
 struct dActor_c {

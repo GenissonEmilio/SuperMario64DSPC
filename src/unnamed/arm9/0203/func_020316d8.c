@@ -1,3 +1,4 @@
+char *data_0209f340;
 #include "types.h"
 extern u8 data_0209fcdc[];
 extern u8 data_0209fc78[];

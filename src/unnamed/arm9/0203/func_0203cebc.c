@@ -1,3 +1,4 @@
+unsigned short data_020a0fbe[3][3];
 typedef int s32;
 typedef unsigned int u32;
 

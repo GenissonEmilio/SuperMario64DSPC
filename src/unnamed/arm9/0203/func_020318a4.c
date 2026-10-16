@@ -1,3 +1,4 @@
+short data_0209f358[4];
 extern int func_02054d88(void);
 extern void func_02031028(int a);
 extern void func_020316d8(int a, int b, int c, int d);

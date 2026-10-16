@@ -1,4 +1,5 @@
-int data_0209cddc;
+extern int data_0209cddc;
+
 
 
 extern void func_02013f28(void);

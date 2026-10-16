@@ -1,4 +1,5 @@
-int data_020a0f38;
+extern int data_020a0f38;
+
 
 #include "types.h"
 extern char data_020a1fc0[];

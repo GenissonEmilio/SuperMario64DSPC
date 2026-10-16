@@ -1,3 +1,7 @@
+/* 0x020a1064 - copy destination buffer */
+unsigned short data_020a0f20;
+static unsigned char data_020a0f20_pad[2];
+
 extern short data_02082214[];
 
 void func_0203ccd4(int *m, short angle)

@@ -1,5 +1,5 @@
-unsigned char data_0209d4e0;
-static unsigned char data_0209d4e0_pad[3];
+extern unsigned char data_0209d4e0;
+
 
 
 extern int data_0208ee4c;

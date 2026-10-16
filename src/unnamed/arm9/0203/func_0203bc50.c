@@ -1,3 +1,4 @@
+int gActivePlayerSlot;
 extern short data_020a0e58[];
 
 void func_0203bc50(void)

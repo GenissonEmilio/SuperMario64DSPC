@@ -1,3 +1,4 @@
+signed char data_02092120[4] = {(signed char)0xff, 0, 0, 0};
 extern unsigned char data_0209d4f8;
 extern int data_0209d5b8[];
 extern void *data_0209d518;

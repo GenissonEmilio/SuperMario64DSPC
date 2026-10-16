@@ -1,3 +1,6 @@
+unsigned char data_0209d670;
+static unsigned char data_0209d670_pad[3];
+
 #include "MessageBank.h"
 
 extern int gMessageBankBase;

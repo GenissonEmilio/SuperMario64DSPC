@@ -1,4 +1,5 @@
-void * data_0209d524;
+extern void * data_0209d524;
+
 
 /* func_0201a458 -- create the root heap over 0x0211d9c0..0x02140d80 and store it in
  * data_0209d524. Both callers (func_02034fbc in d_s_mb.cpp and dScDSMT_c's result-6

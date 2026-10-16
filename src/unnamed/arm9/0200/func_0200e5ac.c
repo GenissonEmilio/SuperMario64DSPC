@@ -1,3 +1,7 @@
+/* spawn rotation, or null */
+short data_0208e378[2] = {-1, 0};
+extern unsigned char data_0209f254;
+
 extern int func_0200e6d8(int);
 extern int func_0200e5fc(int);
 struct Player;

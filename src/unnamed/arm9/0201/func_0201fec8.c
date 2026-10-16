@@ -1,3 +1,6 @@
+int data_0209d6f8;
+extern int *data_0209f324;
+
 extern unsigned char data_0209e64c;
 extern char data_0209d574[];
 extern unsigned char data_0208f274;
