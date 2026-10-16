@@ -1,0 +1,80 @@
+{
+  "base_commit": "22abfb0ad3ea31d307dc53ab6bece42418aff11b",
+  "scope": "Amida brush coordinates, touch controls and walker path locals; six routines.",
+  "changes": [
+    "PaintSquare now names brushX, brushY, colour, previous x neighbours, occupancy marks and the y grid offset; corrects the transposed parameter names and stale signature commentary.",
+    "CheckHurryButton and CheckEdgeBoost name the player slot, touch edge and touch coordinates.",
+    "ProbeRung names the starting x/y; StepWalker names the walker index, grid coordinates, current and next line marks, scaled progress and sound position.",
+    "StepWalkers distinguishes x/y pointers, direction storage, delay storage, completed walkers, goal matches and the pattern speed mode."
+  ],
+  "evidence": {
+    "coordinates": "HandlePen reads gTouchX/Y into Point.x/y; Mg_DrawLine dispatches PaintSquare(x,y,colour,size). The base PaintSquare uses its first coordinate as screen x. Amida stores ink at x * 0x158 + y + 0xc0.",
+    "walker_fields": "include/dScMgAmida_c.h maps +0x4660/+0x4664 to walker x/y, +0x4680 to marks, +0x4684 to directions, +0x46b4 to done flags and +0x46b8 to delays. The direction switch explicitly increments/decrements the two coordinates.",
+    "progress": "The progress500 local is (y + 0xd4) * 500 / (goalY + 0xd4); its name states the scale without assigning an unverified sound parameter meaning.",
+    "sound_position": "func_020126e8 in src/engine/sound/Sound.cpp maps the fixed-point x argument into a clamped 0x1a..0x66 value passed to sound playback.",
+    "ownership_snapshot": "build/scene-physics13-queue.json at bf99ec878a253a3437d8bd1bdb502ae49020609d: no nonterminal resource containing Amida, including class and old/new file spelling.",
+    "runtime_validation": "No new emulator run: this pass follows existing fields, direct touch-coordinate dataflow and explicit arithmetic. No new dynamic behavior claim.",
+    "retained_constraints": [
+      "All raw address expression trees, temporary lifetimes and optimisation pragmas retained.",
+      "StepWalkers retains unnamed literal-backed temporaries; this is a partial readability improvement.",
+      "Point special members, touch row declarations, helper membership and unk_53e4 unchanged."
+    ]
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base": "22abfb0ad3ea31d307dc53ab6bece42418aff11b",
+      "compiler": "2004/b56",
+      "files": [
+        {
+          "file": "src/minigames/d_s_mg_amida.cpp",
+          "source_sha256": "95f537f0f62689126f7f9ee2501d32058bd7a07ded4b0904a6796adaa40d427d",
+          "all_allocated_sections_and_relocations_equal": true,
+          "before_sections": 41,
+          "after_sections": 41,
+          "before_sha256": "88e18f57ae17ba403e2c7a0f279da561f223cd49237590959b98e7deb5056625",
+          "after_sha256": "88e18f57ae17ba403e2c7a0f279da561f223cd49237590959b98e7deb5056625"
+        }
+      ]
+    },
+    "comparison_method": "All allocated section metadata/bytes and named relocation records compare exactly, with no masking or canonicalization. Shared headers unchanged.",
+    "focused_linkcheck": {
+      "checked": 28,
+      "verified": 28,
+      "blind": 0,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "declaration_agreement": {
+      "files_in_scope": 1649,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "exit_code": 0
+    },
+    "diff_check": "PASS",
+    "artifacts": {
+      "build/scene-physics13-control.py": "44ad4cebe220e0d46070d1c5a85f4f7b0e739072ada4f906ef45f82614fde1c2",
+      "build/scene-physics13-linkcheck.json": "940c90c94e3906967ea0bfdd2bf5a49990924042119a2e8d1d3f0419213ee350",
+      "build/scene-physics13-declarations.log": "e3757207a7453a072f22a88bfebe110874b1ca19065a30f8898bf666bd8bfbc6"
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "1ed9087390c2224d5f25ff7ccec1273163f50ae1d72ef8a6f7bc7e897b7f98d4"
+    }
+  },
+  "review_status": "Producer checkpoint; independent source review and publication remain pending. Broader scene/physics goal remains active."
+}
