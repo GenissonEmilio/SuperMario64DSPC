@@ -95,12 +95,12 @@ struct dScMgCup_c : dScMgSingle3DBase_c {
     s32 mMidX;            /* 0x5400 -- average of the two cups' rest x */
     s32 mMidY;            /* 0x5404 -- average of the two rest y */
     s32 mHalfX;           /* 0x5408 -- mMidX minus the first cup's rest x */
-    s32 mOnes[3];         /* 0x540c -- Fix12 passed to Cup_DrawOamList; it reciprocates it */
+    s32 mCupScale[3];           /* 0x540c -- Fix12 size; converted to reciprocal for OAM rendering */
     s32 mState;           /* 0x5418 */
     s32 mTimer;           /* 0x541c */
-    s32 mIds[3];          /* 0x5420 -- which cup sits in each slot */
-    s32 mSwap0;           /* 0x542c -- index into mIds, from data_ov006_0213c0c0 */
-    s32 mSwap1;           /* 0x5430 -- the other index, from data_ov006_0213c0c4 */
+    s32 mCupAtSlot[3];          /* 0x5420 -- which cup sits in each slot */
+    s32 mSwapSlotA;             /* 0x542c -- index into mCupAtSlot, from data_ov006_0213c0c0 */
+    s32 mSwapSlotB;             /* 0x5430 -- the other index, from data_ov006_0213c0c4 */
     s32 mAnim[3];         /* 0x5434 -- index into data_ov006_0213c0d8 */
     s32 mFrame[3];        /* 0x5440 */
     s32 mTick[3];         /* 0x544c -- counts up to that frame's length */
@@ -111,7 +111,7 @@ struct dScMgCup_c : dScMgSingle3DBase_c {
     u8  mSwapsRemaining;  /* 0x5460 -- swaps left this round */
     u8  mRoundRow;        /* 0x5461 -- round row in data_ov006_0213c094 */
     u8  mCupContents[3];  /* 0x5462 -- per-cup value; deed8's mode argument */
-    u8  mFlags[3];        /* 0x5465 */
+    u8  mRevealRequested[3];    /* 0x5465 -- selects reveal rather than cover animation */
     u8  mTargetContent;   /* 0x5468 -- the value the HUD is asking for */
     u8  mCorrect;         /* 0x5469 -- 1 when the touched cup's mCupContents matched mTargetContent */
     u8  mFakeOut;         /* 0x546a -- the next swap turns back a third of the way in */
