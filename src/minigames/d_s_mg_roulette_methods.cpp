@@ -1617,3 +1617,6 @@ void Roulette_Nothing(void)
    defined here. It is declared inline as the class's first member in
    dScMgRoulette_c.h: that is the only form that makes the compiler emit D1
    below D0 with no D2, as the cartridge has them. */
+
+/* Function address, then zero. g_profile_MG_ROULETTE at 0x0213e2f0 is next. */
+struct Pair2W data_ov006_0213e2e8 = { (int)&func_ov006_021082fc, 0 };
