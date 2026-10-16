@@ -23,6 +23,7 @@ src/game/actors/d_a_trs_trap.cpp:
 src/game/actors/d_a_trs_trap_classinits.cpp:
     complete
     .text start:0x0211d270 end:0x0211d3a0
+    .data start:0x0211ea10 end:0x0211ea88
 
 src/game/actors/d_a_obj_th_fall_block.cpp:
     complete
