@@ -68,3 +68,7 @@ int func_ov075_02116ad4(void *arg) {
     *(void **)((char *)arg + 0x50) = _ZN7dBase_c5SpawnEjP7fBase_cii(0x15a, data_0209f5c0, mode, 0);
     return 1;
 }
+
+int data_ov075_0211c9a4[5] = {
+    0xa006, 0xa406, 0xa806, 0xac06, 0xb006
+};

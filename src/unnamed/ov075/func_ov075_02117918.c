@@ -63,3 +63,7 @@ void func_ov075_02117918(char *self)
     *(int *)(self + 0x268) = *(unsigned char *)(self + 0x281);
     func_02020304();
 }
+
+int data_ov075_0211c9b8[5] = {
+    0xa001, 0xa401, 0xa801, 0xac01, 0xb001
+};

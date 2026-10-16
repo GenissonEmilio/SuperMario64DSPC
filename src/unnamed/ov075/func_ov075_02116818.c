@@ -127,3 +127,11 @@ int func_ov075_02116818(char *c)
     *(void **)(c + 0x50) = _ZN7dBase_c5SpawnEjP7fBase_cii(0x15a, data_0209f5c0, 1, 0);
     return 1;
 }
+
+int data_ov075_0211c97c[5] = {
+    0xa002, 0xa402, 0xa802, 0xac02, 0xb002
+};
+
+int data_ov075_0211c990[5] = {
+    0xa008, 0xa408, 0xa808, 0xac08, 0xb008
+};
