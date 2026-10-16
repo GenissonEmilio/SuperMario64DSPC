@@ -201,6 +201,7 @@ src/game/player/Player.cpp:
     .data start:0x0210a720 end:0x0210a7e8
     .bss start:0x0210e7b8 end:0x0210e7c0
 
+    .rodata start:0x020ff138 end:0x02100000
 src/_ZN6PlayerD0Ev.cpp:
     complete
     .text start:0x020e67a8 end:0x020e6858
@@ -265,6 +266,7 @@ src/game/actors/d_a_star_base.c:
     complete
     .text start:0x020ebe8c end:0x020ebed4
 
+    .data start:0x0210aab8 end:0x0210ab3c
 src/game/actors/d_a_star_silver_star.c:
     complete
     .text start:0x020ebed4 end:0x020ebf30
@@ -408,10 +410,12 @@ src/unnamed/ov002/__sinit_ov002_02100f84.c:
     complete
     .init start:0x02100f84 end:0x02101064
 
+    .bss start:0x0210dddc end:0x0210dde8
 src/unnamed/ov002/__sinit_ov002_021019d0.c:
     complete
     .init start:0x021019d0 end:0x02106e40
 
+    .bss start:0x0210ed68 end:0x0210ed74
 src/unnamed/ov002/__sinit_ov002_02107370.c:
     complete
     .init start:0x02107370 end:0x02107f88
@@ -423,3 +427,4 @@ src/unnamed/ov002/__sinit_ov002_02107f88.c:
 src/unnamed/ov002/__sinit_ov002_0210804c.c:
     complete
     .init start:0x0210804c end:0x02108094
+    .bss start:0x02111160 end:0x0211116c

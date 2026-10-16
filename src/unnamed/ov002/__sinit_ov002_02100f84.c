@@ -42,3 +42,5 @@ void __sinit_ov002_02100f84(void) {
         func_020731dc(p, (void*)_ZN7Vector3D1Ev, &data_ov002_0210dda0);
     }
 }
+
+int data_ov002_0210dddc[3];
