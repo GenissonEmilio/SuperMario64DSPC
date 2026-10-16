@@ -18,7 +18,7 @@
   {
    "name": ".bss",
    "start": "0x020a5bbc",
-   "end": "0x020a5bc8"
+   "end": "0x020a5bd4"
   }
  ],
  "functions": [
@@ -997,6 +997,13 @@
    "address": "0x020a5bbc",
    "size": "0xc",
    "evidence": "NestedHeapIterator; the BSS record is zero and func_020520a4 fills it"
+  },
+  {
+   "symbol": "data_020a5bc8",
+   "address": "0x020a5bc8",
+   "size": "0xc",
+   "binding": "STB_GLOBAL",
+   "evidence": "nested-heap allocator list iterator: NestedHeapIterator is 12 bytes (mFirst/mLast/mCount/mLinkOffset); func_0205212c traverses it via Next/Remove"
   }
  ],
  "compiler_only_output": [],
@@ -1056,7 +1063,7 @@
     {
      "section": ".bss",
      "start": "0x020a5bbc",
-     "end": "0x020a5bc8",
+     "end": "0x020a5bd4",
      "comparison": "NOBITS -- symbol/module gates"
     }
    ],

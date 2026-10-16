@@ -3726,7 +3726,7 @@ src/engine/heap/SolidHeapAllocator.cpp:
 src/engine/sound/SoundEngine.cpp:
     complete
     .text start:0x0204eda4 end:0x020524e4
-    .bss start:0x020a5bbc end:0x020a5bc8
+    .bss start:0x020a5bbc end:0x020a5bd4
 
 src/unnamed/arm9/0205/func_020524e4.c:
     complete
