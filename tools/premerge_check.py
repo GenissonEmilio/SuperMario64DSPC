@@ -50,7 +50,8 @@ only what text can answer. The two do not overlap; they do not even share a ques
 THIS IS NOT HYPOTHETICAL
 ------------------------
 Run by hand on 2026-08-29 against PR #2001: green on its own PR, clean-merging, no
-conflict. The merge result turned `langmode-ratchet` RED, because
+conflict. The merge result turned `converted-ratchet` RED (that gate has since
+been retired with the CONVERTED tier), because
 `src/runtime/actor/ActorDerived.cpp` had landed in one of the sixteen commits the PR was
 behind. Neither side shows this. The PR's tree is green. Main is green. Only the
 tree that does not yet exist is red.
