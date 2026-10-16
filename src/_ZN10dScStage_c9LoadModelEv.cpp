@@ -3,29 +3,28 @@
 extern "C" {
 extern char data_0209f340[];
 extern int data_0209f320;
-void _ZN5Model14LoadAndSetFileEtii(char* model, unsigned short id, int b, int c);
 }
-void dScStage_c::LoadModel() {
-    char *self = (char *)this;
-    _ZN5Model14LoadAndSetFileEtii(self + 0x86c, *(unsigned short*)(*(char**)data_0209f340 + 8), 1, -1);
-    char* list;
-    unsigned int count;
-    char* node;
-    unsigned int i;
-    char* p;
+void dScStage_c::LoadModel()
+{
+    mModel.LoadAndSetFile(*(unsigned short *)(*(char **)data_0209f340 + 8), 1, -1);
+    BMD_File *modelFile;
+    unsigned int materialCount;
+    BMD_Material *material;
+    unsigned int materialIndex;
+    ModelComponents *components;
 
-    p = (char*)(self + 0x874);
-    list = ((char**)p)[0];
-    node = ((char**)p)[1];
-    count = *(unsigned int*)(list + 0x24);
-    i = 0;
-    while (i < count) {
-        unsigned int v = *(unsigned int*)(node + 0x24);
-        i++;
-        if ((v & 0x1f0000) != 0x1f0000) {
-            *(unsigned int*)(node + 0x24) = (v & ~0x3f000000) | 0x13000000;
+    components = &mModel.data;
+    modelFile = components->modelFile;
+    material = components->materials;
+    materialCount = modelFile->numMaterials;
+    materialIndex = 0;
+    while (materialIndex < materialCount) {
+        unsigned int flags = material->flags;
+        materialIndex++;
+        if ((flags & 0x1f0000) != 0x1f0000) {
+            material->flags = (flags & ~0x3f000000) | 0x13000000;
         }
-        node += 0x30;
+        material++;
     }
-    data_0209f320 = (int)p;
+    data_0209f320 = (int)components;
 }

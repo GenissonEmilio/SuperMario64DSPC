@@ -1,42 +1,34 @@
 //cpp
 #include "types.h"
 // @symbol _ZN10dScStage_c22RenderModelTransparentEv
-/* recovered: named members + shared header, real C++ method, declarations from a shared header */
 #include "decl_common.h"
-/* recovered: named members + shared header, real C++ method */
 #include "dScStage_c.h"
-struct VBase {
-    virtual void m0();
-    virtual void m1();
-    virtual void m2();
-    virtual void m3();
-    virtual void m4();
-    virtual void m5(void *arg);
-};
-
 extern "C" {
 extern char *data_0209f340;
 }
 
 void dScStage_c::RenderModelTransparent()
 {
-    char *p = (char *)(((int)((char *)this) + 0x874));
-    char *arr = *(char **)(*(char **)p + 8);
-    StageTexAnimSlot *q = mTexAnimSlots;
-    int i;
-    for (i = 0; i < *(u8 *)(data_0209f340 + 0x14); i++, q++, arr += 0x40) {
-        if (q->mActive != 0) {
-            u8 *bp = *(u8 **)(arr + 0x34);
-            u16 j;
-            for (j = 0; j < *(u16 *)(arr + 0x30); j++) {
-                char *e = *(char **)(p + 4) + *bp * 0x30;
-                if ((*(int *)(e + 0x24) & 0x1f0000) != 0x1f0000)
-                    *(int *)(((int)e + 0x24)) &= ~0x80000000;
+    // The material count at bone +0x30 is still opaque in BMD_Bone.
+    ModelComponents *components = &mModel.data;
+    BMD_Bone *bone = components->modelFile->bones;
+    StageTexAnimSlot *slot = mTexAnimSlots;
+    int slotIndex;
+    for (slotIndex = 0; slotIndex < *(u8 *)(data_0209f340 + 0x14); slotIndex++, slot++, bone++) {
+        if (slot->mActive != 0) {
+            u8 *materialIds = bone->materialIds;
+            u16 materialIndex;
+            for (materialIndex = 0; materialIndex < *(u16 *)((char *)bone + 0x30);
+                 materialIndex++) {
+                BMD_Material *material = &components->materials[*materialIds];
+                if ((material->flags & 0x1f0000) != 0x1f0000)
+                    material->flags &= ~0x80000000;
                 else
-                    *(int *)(((int)e + 0x24)) |= 0x80000000;
-                bp++;
+                    material->flags |= 0x80000000;
+                materialIds++;
             }
         }
     }
-    ((VBase *)((char *)&mModel))->m5(&data_020755d4);
+    Model *model = &mModel;
+    model->Render((const Vector3 *)&data_020755d4);
 }

@@ -1,54 +1,48 @@
 //cpp
 // @symbol _ZN10dScStage_c7LoadFogEv
-/* recovered: named members + shared header, real C++ method, declarations from a shared header */
 #include "decl_common.h"
-/* recovered: named members + shared header, real C++ method */
 #include "dScStage_c.h"
-/* dScStage_c::LoadFog. Lays down two default ramps -- a shallow one in mFog[0] and
-   a steeper one in mFog[1] -- then lets the level's own fog records, if it has
-   any, overwrite them through Fog::Init. */
+/* dScStage_c::LoadFog. Initializes the normal and underwater density ramps,
+   disabling normal fog by default. Level records override these defaults
+   through Fog::Init when present. */
 extern "C" {
 extern void _ZN3Fog4InitEt5Fix12IiES1_(Fog *self, unsigned short color, int nearv, int farv);
 }
 
 void dScStage_c::LoadFog()
 {
-  unsigned char a = 0;
-  unsigned char b = 0x28;
-  int i;
-  for (i = 0; i < 0x20; i++)
-  {
-    mFog[0].mDensity[i] = a;
-    mFog[1].mDensity[i] = b;
-    a += 4;
-    b += 2;
-  }
-  mFog[0].mEnabled = 0;
-  mFog[1].mEnabled = 1;
-  mFog[1].mShift = 6;
-  mFog[1].mOffset = 0;
-  mFog[1].mColor = 0x6000;
-  if (data_0209f258 == 0)
-  {
-    return;
-  }
-  {
-    unsigned char *src = (unsigned char *) data_0209f31c;
-    Fog *dst = mFog;
-    int j;
-    for (j = 0; j < data_0209f258; j++)
-    {
-      if (src[0] != 1)
-      {
-        dst->mEnabled = 0;
-      }
-      else
-      {
-        unsigned short color = ((src[1] >> 3) | ((src[2] >> 3) << 5)) | ((src[3] >> 3) << 10);
-        _ZN3Fog4InitEt5Fix12IiES1_(dst, color, *((unsigned short *) (src + 4)), *((unsigned short *) (src + 6)));
-      }
-      src += 8;
-      dst++;
+    unsigned char normalDensity = 0;
+    unsigned char underwaterDensity = 0x28;
+    int densityIndex;
+    for (densityIndex = 0; densityIndex < 0x20; densityIndex++) {
+        mFog[0].mDensity[densityIndex] = normalDensity;
+        mFog[1].mDensity[densityIndex] = underwaterDensity;
+        normalDensity += 4;
+        underwaterDensity += 2;
     }
-  }
+    mFog[0].mEnabled = 0;
+    mFog[1].mEnabled = 1;
+    mFog[1].mShift = 6;
+    mFog[1].mOffset = 0;
+    mFog[1].mColor = 0x6000;
+    if (data_0209f258 == 0) {
+        return;
+    }
+    {
+        unsigned char *fogRecord = (unsigned char *)data_0209f31c;
+        Fog *fog = mFog;
+        int fogIndex;
+        for (fogIndex = 0; fogIndex < data_0209f258; fogIndex++) {
+            if (fogRecord[0] != 1) {
+                fog->mEnabled = 0;
+            } else {
+                unsigned short color = ((fogRecord[1] >> 3) | ((fogRecord[2] >> 3) << 5)) |
+                                       ((fogRecord[3] >> 3) << 10);
+                _ZN3Fog4InitEt5Fix12IiES1_(fog, color, *((unsigned short *)(fogRecord + 4)),
+                                           *((unsigned short *)(fogRecord + 6)));
+            }
+            fogRecord += 8;
+            fog++;
+        }
+    }
 }

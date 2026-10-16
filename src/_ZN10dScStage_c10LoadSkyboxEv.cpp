@@ -11,28 +11,29 @@
  * and the virtual destroy in CleanupResources are the two ends of the evidence.
  *
  * The `new` is spelled as the raw _Znwj call rather than as `new Model` because
- * the ROM calls operator new and then guards the constructor on a null return,
- * which the language's own `new` expression does not emit.
+ * the pinned compiler selects _Znwm for a language-level new expression.
+ * Keep the ROM's _Znwj allocator and its explicit null-guarded C1 call.
  */
 #include "dScStage_c.h"
 #include "Model.h"
 
 extern "C" {
 extern void *_Znwj(u32 size);
+// local extern: retain the C1 call after the ROM's unsigned-int allocator.
 extern void *_ZN5ModelC1Ev(void *thiz);
-extern void _ZN5Model14LoadAndSetFileEtii(void *thiz, u16 fileID, s32 a, s32 b);
 extern u16 data_02075620[];
 }
 
 void dScStage_c::LoadSkybox()
 {
     u32 skyboxID = GetSkyboxID();
-    if (!skyboxID) return;
+    if (!skyboxID)
+        return;
     Model *model = (Model *)_Znwj(0x50);
     if (model != 0) {
         model = (Model *)_ZN5ModelC1Ev(model);
     }
     mSkyboxModel = model;
     u16 fileID = data_02075620[skyboxID - 1];
-    _ZN5Model14LoadAndSetFileEtii(mSkyboxModel, fileID, 0, 2);
+    mSkyboxModel->LoadAndSetFile(fileID, 0, 2);
 }
