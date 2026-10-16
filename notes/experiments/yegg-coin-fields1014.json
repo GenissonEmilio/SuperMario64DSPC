@@ -83,5 +83,93 @@
   },
   "finding_continuation": "Four spawned-coin stores within YEGG-RECONSTRUCTION-01 are addressed here; preserve its full inherited dictionary and deferred disposition. Raw DOSUN/Player fields, math workspaces, helper names and other partial reconstruction remain.",
   "scope": "One Source file and this report. No header, manifest, symbol, policy, enrollment or matching-credit changes. Prior accepted Yegg history retained.",
-  "review": "Producer evidence only. A distinct actual reviewer must claim and accept this exact final commit at the declared current base. The final report-only commit must retain all five tested production trees."
+  "review": "Producer evidence only. A distinct actual reviewer must claim and accept this exact final commit at the declared current base. The final report-only commit must retain all five tested production trees.",
+  "actor_horz_speed_member_checkpoint_2026_10_16": {
+    "date": "2026-10-16",
+    "scope": "One dActor_c movement method; this appendix does not revise the historical Yegg coin-field checkpoint.",
+    "class_history_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3169",
+    "parent_task": "yegg-native-current-dfd-continuation1016",
+    "parent_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+    "actual_producer": "Codex /root/cpp_frontier_astra1014, codex-yegg-native-current-dfd-astra-producer1016",
+    "base": "dfd9500e1662260bc9e3a4fc757f779899fe783c",
+    "source": "src/runtime/actor/d_actor.cpp",
+    "symbol": "_ZN8dActor_c28UpdatePosWithHorzSpeedAndAngEv",
+    "address": "arm9:0x02010c5c",
+    "size": 228,
+    "change": "Replace fourteen byte-offset accesses with existing horizontal speed, vertical speed, acceleration, terminal velocity, previous-angle and unknown scalar members; name four local values by their role. Preserve local declaration order, loads/stores, branches, FX_MUL and unsigned 16-bit previous-Y-angle interpretation.",
+    "limits": [
+      "Existing reconstructed member names do not establish original Nintendo identifiers.",
+      "Unknown unk_0a4 and unk_0ac remain explicit; no new field grouping or semantics is claimed.",
+      "Other Actor raw accesses, vector views, shared-header type and constructor/destructor lifetime boundaries remain outside this method.",
+      "Historical inherited findings remain literal and deferred where previously deferred.",
+      "No header, manifest, symbol, enrollment, policy, tooling or ABI declaration change."
+    ],
+    "proof": {
+      "compiler": "2004/b56",
+      "initial_epoch": {
+        "control_compiles": 1,
+        "candidate_compiles": 1,
+        "target_function_verified": true
+      },
+      "renamed_local_epoch": {
+        "fresh_candidate_compiles": 1,
+        "new_control_compiles": 0,
+        "RAW_literal": true,
+        "ordinary_literal": true,
+        "raw_sha256": "f30358dbac60c04514bbffa46d8bbffd28e94168c2931e1944736cb651badedc",
+        "ordinary_sha256": "e13bbd1c626833af41cc99738506ba698d630aa81d4caa4ee1ee139dd54d844d",
+        "raw_bytes": 29480,
+        "ordinary_bytes": 29480,
+        "checks": {
+          "control": {
+            "VERIFIED": 91
+          },
+          "candidate": {
+            "VERIFIED": 91
+          }
+        },
+        "source_sha256": "cb45e95fb43fd16b60e3b18c83789a36e084ec0fe6369968774c44f0d7982f71",
+        "report_not_yet_edited": true
+      },
+      "compiler_warnings": "Inherited missing MWCIncludes environment warning and five return-value warnings outside the edited method retained.",
+      "normal_route": "Existing rombuild retarget/isolate path and unchanged manifest policies; both complete ordinary objects equal, all91 configured functions VERIFIED with zero blind bytes and zero differences.",
+      "full_build": {
+        "command": "python tools/rombuild.py -j16 --no-rom",
+        "exit_code": 0,
+        "seconds": 145.4220000000205,
+        "qualification": "Actual default-build results and inherited symbol/data diagnostics recorded separately below; --no-rom does not claim final cartridge assembly.",
+        "modules_exact": 106,
+        "modules_total": 106,
+        "functions_reproducing": 11334,
+        "function_mismatches": 0,
+        "cached_objects": 2506,
+        "fresh_main_objects": 1,
+        "owned_data_exact": 338,
+        "BSS_claims": 245,
+        "BSS_bytes": 31216,
+        "new_symbol_errors": 0,
+        "inherited_baseline_symbol_errors": 9,
+        "global_data_advisory": {
+          "verified": 974,
+          "partial": 1559,
+          "differ": 1,
+          "unnamed": 15
+        }
+      }
+    },
+    "acceptance": {
+      "producer_only": true,
+      "independent_review": "pending exact immutable checkpoint",
+      "Source_consumers": 208,
+      "foundations": 4,
+      "remaining_migrations": 45,
+      "proof_only_accepted": 30,
+      "proof_only_remaining": 20,
+      "original_total": 307,
+      "counter_increment": 0,
+      "parent_complete": false,
+      "full_current_main_acceptance": false
+    }
+  }
+
 }
