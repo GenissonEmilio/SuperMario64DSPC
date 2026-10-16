@@ -56,6 +56,7 @@ src/game/actors/d_a_obj_fl_fall_block.cpp:
     .text start:0x02112380 end:0x02112498
     .init start:0x02112fe4 end:0x02113050
     .ctor start:0x02113114 end:0x02113118
+    .data start:0x0211427c end:0x02114288
     .bss start:0x02114640 end:0x02114668
 
 src/game/actors/d_a_obj_fl_maruta.cpp:
