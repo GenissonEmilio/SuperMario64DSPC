@@ -2,7 +2,8 @@
 
 extern char data_02099e6c[];
 extern int data_020a1fc0;
-extern char data_020a2400[];
+char data_020a2400[4];
+
 
 extern void *func_0205d23c(void *a, int b);
 extern unsigned int _ZN3IRQ7DisableEv(void);

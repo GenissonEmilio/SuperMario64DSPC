@@ -20,7 +20,8 @@ extern void* data_ov002_0210da18;
 extern void* data_ov002_0210da90;
 extern void* data_ov002_0210da20;
 extern void* data_ov002_0210dac0;
-extern void* data_ov002_0210d9d8;
+unsigned char data_ov002_0210d9d8[0x8];
+
 extern void* data_ov002_0210dacc;
 extern void* data_ov002_0210da30;
 extern void* data_ov002_0210dae4;

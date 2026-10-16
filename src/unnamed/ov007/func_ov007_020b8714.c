@@ -15,7 +15,8 @@ typedef struct Obj {
   void* x84;              /* 0x84 */
 } Obj;
 struct Ddc { int a, b, c, d, e; };
-extern Obj* data_ov007_0210346c;
+Obj *data_ov007_0210346c;
+
 extern Obj* data_ov007_02103460;
 extern int data_ov007_02103484;
 extern int data_ov007_02103470;

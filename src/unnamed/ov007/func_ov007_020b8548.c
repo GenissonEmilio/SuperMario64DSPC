@@ -18,7 +18,8 @@ extern Trio data_ov007_02103478;
 
 extern unsigned short data_ov007_02103998[];
 extern unsigned short data_ov007_02104598[];
-extern unsigned short data_ov007_02103f98[];
+unsigned short data_ov007_02103f98[768];
+
 
 void func_ov007_020b8548(void *unused0, int p1, int p2, void *p3, void *p4, int p5, void *p6)
 {

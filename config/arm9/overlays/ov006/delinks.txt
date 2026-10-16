@@ -39,6 +39,7 @@ src/minigames/d_mg_trmpln2_mario.cpp:
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018
+    .bss start:0x02140828 end:0x0214082c
 
 src/minigames/d_s_mg_amida.cpp:
     complete

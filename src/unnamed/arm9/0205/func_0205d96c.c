@@ -1,4 +1,6 @@
 extern void *data_020a8060;
+int data_020a805c;
+
 extern int data_020a805c;
 extern int data_020a8064[2];
 extern int data_020a806c[2];

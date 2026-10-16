@@ -1,4 +1,6 @@
 extern int func_02053ed0(void);
+int data_ov007_02104bdc;
+
 extern int func_02053ec0(void);
 
 extern int data_ov007_02104bdc;

@@ -8,7 +8,8 @@ extern void* data_ov007_02103448;
 extern int data_ov007_02103444;
 extern char* (func_ov007_020b78d0)(int);
 extern void* data_ov007_0210344c;
-extern int data_ov007_02103450[];
+int data_ov007_02103450[2];
+
 
 void func_ov007_020b782c(void)
 {

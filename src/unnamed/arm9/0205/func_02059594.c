@@ -1,4 +1,6 @@
 extern int func_02058764(void);
+int data_020a63a8;
+
 extern int data_020a63a8;
 extern int data_020a63a0;
 extern void func_020593f4(void);

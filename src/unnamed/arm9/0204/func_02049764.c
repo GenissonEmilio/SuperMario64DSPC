@@ -1,4 +1,5 @@
-extern int data_020a4c5c[2];
+int data_020a4c5c[2];
+
 extern int data_020a4c54[2];
 extern int data_020a4c4c[2];
 

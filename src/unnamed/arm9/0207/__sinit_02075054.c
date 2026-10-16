@@ -1,5 +1,6 @@
 extern void func_020731dc(short* a, void* b, void* node);
-extern short data_020a0dbc[];
+short data_020a0dbc[2];
+
 extern short data_020a0db8[];
 extern char NoOpDestructor[];
 extern char data_020a0dc0[];

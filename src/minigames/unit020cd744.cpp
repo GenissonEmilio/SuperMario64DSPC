@@ -26,6 +26,10 @@
 
 #pragma defer_codegen off
 
+extern "C" {
+int data_ov006_02140828;
+}
+
 extern int ApproachLinear(int &, int, int);
 struct BMD_File; struct BTA_File;
 struct ModelBase { void SetFile(BMD_File*, int, int); };

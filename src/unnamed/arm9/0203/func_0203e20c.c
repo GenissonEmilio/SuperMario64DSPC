@@ -1,4 +1,6 @@
 #include "types.h"
+unsigned char data_020a1064[0x40];
+
 extern u8 data_020a0f04;
 extern u8 data_020a0f08;
 extern u8 data_020a0f0c;

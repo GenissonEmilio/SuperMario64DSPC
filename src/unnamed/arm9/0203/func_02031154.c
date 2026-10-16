@@ -7,7 +7,8 @@ extern u8 data_0209fcbc;
 extern u8 data_0209fc80;
 extern u8 data_0209fcd0;
 extern u8 data_0209fcd8;
-extern u8 data_0209fcf4[];
+u8 data_0209fcf4[4];
+
 extern u8 data_0209fca4;
 
 void func_02031154(void) {
