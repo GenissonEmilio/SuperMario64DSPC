@@ -2440,3 +2440,10 @@ extern "C" int data_ov006_0213b3a4[8] = {
 extern "C" {
 unsigned char data_ov006_02141314[238];
 }
+
+extern "C" {
+const unsigned int data_ov006_0212e0f0[16] = {
+    0, 0x6000, 0x6000, 0, 0x6000, 0x9000, 0x9000, 0x6000,
+    0x6000, 0x9000, 0x9000, 0x6000, 0, 0x6000, 0x6000, 0
+};
+}
