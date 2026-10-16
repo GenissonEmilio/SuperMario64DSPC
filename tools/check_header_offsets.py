@@ -113,9 +113,9 @@ learn_aggregates(REPO / "include" / "types.h")
 DECL = re.compile(r"^\s*(?:(?:const|volatile)\s+)*(?:(?:struct|union|class|enum)\s+)?"
                   r"(?:(?:const|volatile)\s+)*((?:\w+::)*[A-Za-z_]\w*)\s*"
                   r"(?:(?:const|volatile)\b\s*)*(\**)\s*(\w+)\s*"
-                  r"((?:\[\s*(?:0x[0-9a-fA-F]+|\d+)\s*\])*)\s*;"
+                  r"((?:\[\s*(?:0x[0-9a-fA-F]+|\d+|[A-Za-z_]\w*)\s*\])*)\s*;"
                   r"(?:\s*/\*\s*(0x[0-9a-fA-F]+))?")
-ARR_DIMS = re.compile(r"\[\s*(0x[0-9a-fA-F]+|\d+)\s*\]")
+ARR_DIMS = re.compile(r"\[\s*(0x[0-9a-fA-F]+|\d+|[A-Za-z_]\w*)\s*\]")
 # `s32 mPosX, mPosY, mPosZ;` -- several plain (no pointer, no array) declarators of
 # one type. Group 3 keeps the trailing `/* 0x...` text for DECL to read.
 MULTI_DECL = re.compile(r"^\s*((?:\w+::)*[A-Za-z_]\w*)\s+(\w+(?:\s*,\s*\w+)+)\s*;"
@@ -537,6 +537,47 @@ def _resolve_paths(argv, repo=None):
     return argv, 0
 
 
+def _enum_constants(all_lines):
+    """Enumerator values declared in this file, for array bounds such as
+    `DealerFile mAnims[DEALER_ANIM_COUNT];`.
+
+    A header that sizes a table by its enum's `_COUNT` member came back UNPARSED,
+    which failed the gate on #3939's Dealer.h and Presenter.h with every offset
+    comment right. Only enumerators in the SAME file are learned, and only the
+    values C itself would give them: the next integer after the previous one, or
+    an integer literal or an earlier enumerator after `=`. Anything else (an
+    expression, a macro, a cast) ends that enum's numbering, so a bound named
+    after it stays UNPARSED rather than being guessed.
+    """
+    consts = {}
+    code, in_comment = [], False
+    for line in all_lines:
+        text, in_comment = _code_without_comments_or_strings(line, in_comment)
+        code.append(text)
+    for body in re.findall(r"\benum\s+(?:class\s+)?(?:\w+\s*)?(?::\s*\w+\s*)?\{([^{}]*)\}",
+                           "\n".join(code)):
+        nxt = 0
+        for item in body.split(","):
+            item = item.strip()
+            if not item:
+                continue
+            em = re.fullmatch(r"([A-Za-z_]\w*)(?:\s*=\s*(\S.*))?", item, re.S)
+            if not em:
+                break
+            init = em.group(2)
+            if init is not None:
+                init = init.strip()
+                if re.fullmatch(r"-?(?:0x[0-9a-fA-F]+|\d+)", init):
+                    nxt = int(init, 0)
+                elif init in consts:
+                    nxt = consts[init]
+                else:
+                    break
+            consts[em.group(1)] = nxt
+            nxt += 1
+    return consts
+
+
 def _nested_names(all_lines):
     """Tags defined as a NESTED type somewhere in this file.
 
@@ -641,6 +682,7 @@ def main(argv, repo=None):
         expected = fp.stem
         all_lines = txt.splitlines()
         nested_names = _nested_names(all_lines)
+        enum_consts = _enum_constants(all_lines)
         for lineno, line in enumerate(all_lines, 1):
             if not started:
                 # A struct-with-body BEFORE the file's own class is a helper type
@@ -919,6 +961,16 @@ def main(argv, repo=None):
                 w = None
             else:
                 w = 4 if (m and m.group(2)) else SZ.get(typ)
+            # An array bound spelled as an enumerator is resolved from this file's
+            # enums (see _enum_constants); one it cannot resolve leaves the field's
+            # size unknown, which is the UNPARSED case below.
+            arr_n = 1
+            for d in (ARR_DIMS.findall(m.group(4)) if m else ()):
+                d = int(d, 0) if d[0].isdigit() else enum_consts.get(d)
+                if d is None:
+                    w = None
+                    break
+                arr_n *= d
             if w is None:
                 # An unrecognised declaration is NOT harmless: skipping it leaves the
                 # running offset short, so every later field silently "matches" at the
@@ -957,9 +1009,6 @@ def main(argv, repo=None):
                     pending.append(f"  MISMATCH {path}:{lineno} {name}: comment {decl}, "
                                    f"computed 0x{off:03x}")
                     bad += 1
-            arr_n = 1
-            for d in ARR_DIMS.findall(arr):
-                arr_n *= int(d, 0)
             off += w * arr_n * n_decl
             if in_union:
                 u_members += 1

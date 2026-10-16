@@ -1274,5 +1274,67 @@ class CvQualifiedFieldTests(unittest.TestCase):
         self.assertIn("const Mystery mValue;", out)
 
 
+class EnumArrayBoundTests(unittest.TestCase):
+    """An array sized by an enumerator, `DealerFile mAnims[DEALER_ANIM_COUNT];`.
+
+    The bound only read as a number, so this came back UNPARSED and failed the gate
+    on #3939's Dealer.h and Presenter.h with every offset comment right.
+    """
+
+    ENUM = ("enum WidgetPart {\n"
+            "    WIDGET_PART_A,\n"
+            "    WIDGET_PART_B, /* a comma inside a comment, */\n"
+            "    WIDGET_PART_C,\n"
+            "    WIDGET_PART_COUNT\n"
+            "};\n\n")
+
+    def _run(self, prefix, members):
+        with tempfile.TemporaryDirectory(prefix="offset_enum_") as tmp:
+            header = pathlib.Path(tmp) / "Widget.h"
+            header.write_text(prefix + "struct Widget {\n" + members + "\n};\n",
+                              encoding="utf-8")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = C.main([str(header)])
+            return rc, out.getvalue()
+
+    def test_a_count_enumerator_sizes_the_array(self):
+        rc, out = self._run(self.ENUM,
+                            "    u32 first; /* 0x000 */\n"
+                            "    u32 parts[WIDGET_PART_COUNT]; /* 0x004 */\n"
+                            "    u16 tail; /* 0x010 */")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("3 commented fields, 0 mismatched, 0 unparsed, struct spans 0x12", out)
+
+    def test_explicit_and_aliased_initializers_are_followed(self):
+        rc, out = self._run("enum { KIND_FIRST = 0x2, KIND_NEXT, KIND_LAST = KIND_NEXT };\n",
+                            "    u8 kinds[KIND_LAST][KIND_FIRST]; /* 0x000 */\n"
+                            "    u8 tail; /* 0x006 */")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("2 commented fields, 0 mismatched, 0 unparsed, struct spans 0x7", out)
+
+    def test_a_wrong_offset_after_an_enum_sized_array_still_fails(self):
+        rc, out = self._run(self.ENUM,
+                            "    u32 parts[WIDGET_PART_COUNT]; /* 0x000 */\n"
+                            "    u16 tail; /* 0x010 */")
+        self.assertEqual(rc, 1, out)
+        self.assertIn("2 commented fields, 1 mismatched, 0 unparsed", out)
+
+    def test_a_bound_from_another_file_is_still_unparsed(self):
+        rc, out = self._run("#include \"WidgetParts.h\"\n",
+                            "    u32 parts[WIDGET_PART_COUNT]; /* 0x000 */\n"
+                            "    u16 tail; /* 0x00c */")
+        self.assertEqual(rc, 1, out)
+        self.assertIn("UNPARSED", out)
+        self.assertIn("u32 parts[WIDGET_PART_COUNT];", out)
+
+    def test_an_expression_initializer_ends_the_numbering(self):
+        rc, out = self._run("enum { BITS = 1 << 2, BITS_COUNT };\n",
+                            "    u32 a[BITS]; /* 0x000 */\n"
+                            "    u32 b[BITS_COUNT]; /* 0x010 */")
+        self.assertEqual(rc, 1, out)
+        self.assertIn("2 unparsed", out)
+
+
 if __name__ == "__main__":
     unittest.main()
