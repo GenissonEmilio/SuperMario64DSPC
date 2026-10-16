@@ -44,6 +44,7 @@ src/minigames/d_s_mg_amida.cpp:
 src/minigames/d_s_mg_bomroom.cpp:
     complete
     .text start:0x020d5a54 end:0x020d95a4
+    .bss start:0x02141660 end:0x02141768
 
 src/minigames/d_s_mg_card.cpp:
     complete
