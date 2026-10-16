@@ -144,7 +144,7 @@ src/minigames/d_s_mg_m_carlo.cpp:
     .text start:0x020f7634 end:0x020f8ef4
     .init start:0x021318a0 end:0x0213195c
     .ctor start:0x021335b8 end:0x021335bc
-    .bss start:0x0214250c end:0x02142558
+    .bss start:0x021424fc end:0x02142558
 
 src/minigames/d_s_mg_m_carlo2.cpp:
     complete
