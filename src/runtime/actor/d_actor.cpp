@@ -493,18 +493,24 @@ extern int data_0208e37c;
 extern unsigned char data_0209f21c;
 extern void* data_0209f394[];
 }
-Player *dActor_c::ClosestPlayer()
-{
+Player *dActor_c::ClosestPlayer() {
     if (!data_0209b458) {
         data_0208e380 = 0x7fffffff;
         data_0208e37c = 0x80000000;
         int i;
         for (i = 0; i < data_0209f21c; i++) {
-            void* p = data_0209f394[i];
-            if (!p) continue;
-            int d = Vec3_Dist((char*)this + 0x5c, (char*)p + 0x5c);
-            if (d < data_0208e380) { data_0208e380 = d; data_0209b458 = p; }
-            if (d > data_0208e37c) { data_0208e37c = d; data_0209b450 = p; }
+            Player *p = static_cast<Player *>(data_0209f394[i]);
+            if (!p)
+                continue;
+            int d = Vec3_Dist(&mPosX, &p->mPosX);
+            if (d < data_0208e380) {
+                data_0208e380 = d;
+                data_0209b458 = p;
+            }
+            if (d > data_0208e37c) {
+                data_0208e37c = d;
+                data_0209b450 = p;
+            }
         }
     }
     return (Player *)data_0209b458;
@@ -514,19 +520,26 @@ Player *dActor_c::ClosestPlayer()
 // @symbol _ZN8dActor_c22ClosestNonVanishPlayerEv
 /* ROM ordinal 69 -- _ZN8dActor_c22ClosestNonVanishPlayerEv
  * 0x02010a08  size 0xd0 */
-Player *dActor_c::ClosestNonVanishPlayer()
-{
+Player *dActor_c::ClosestNonVanishPlayer() {
     if (!data_0209b458) {
         data_0208e380 = 0x7fffffff;
         data_0208e37c = 0x80000000;
         int i;
         for (i = 0; i < data_0209f21c; i++) {
-            void* p = data_0209f394[i];
-            if (!p) continue;
-            if (*(unsigned char*)((char*)p + 0x6fb)) continue;
-            int d = Vec3_Dist((char*)this + 0x5c, (char*)p + 0x5c);
-            if (d < data_0208e380) { data_0208e380 = d; data_0209b458 = p; }
-            if (d > data_0208e37c) { data_0208e37c = d; data_0209b450 = p; }
+            Player *p = static_cast<Player *>(data_0209f394[i]);
+            if (!p)
+                continue;
+            if (p->mIsVanish)
+                continue;
+            int d = Vec3_Dist(&mPosX, &p->mPosX);
+            if (d < data_0208e380) {
+                data_0208e380 = d;
+                data_0209b458 = p;
+            }
+            if (d > data_0208e37c) {
+                data_0208e37c = d;
+                data_0209b450 = p;
+            }
         }
     }
     return (Player *)data_0209b458;
@@ -1584,8 +1597,7 @@ done:
 // @symbol _ZN8dActor_c19MakeVanishLuigiWorkER5dCc_c
 /* ROM ordinal 3 -- _ZN8dActor_c19MakeVanishLuigiWorkER5dCc_c
  * 0x0200f7a8  size 0x48 */
-void dActor_c::MakeVanishLuigiWork(dCc_c &clsn)
-{
+void dActor_c::MakeVanishLuigiWork(dCc_c &clsn) {
     Player *player;
 
     clsn.flags &= ~2;
@@ -1594,7 +1606,7 @@ void dActor_c::MakeVanishLuigiWork(dCc_c &clsn)
     if (player == 0)
         return;
 
-    if (((u8 *)player)[0x6fb] != 0)
+    if (player->mIsVanish != 0)
         clsn.flags |= 2;
 }
 

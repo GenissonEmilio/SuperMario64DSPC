@@ -424,5 +424,101 @@
       "sha256": "ccca006d7293ca8d92512680176a95327a9c4c359cf40afd6233dfb5a2cd2365"
     }
   ],
-  "next_action": "Independent actual-session Source reviewer audits this exact immutable candidate and manifest with complete literal resource coverage and retained partial findings. Coordinator binds the candidate to the then-current PR base before any public action; producer does not self-accept."
+  "next_action": "Independent actual-session Source reviewer audits this exact immutable candidate and manifest with complete literal resource coverage and retained partial findings. Coordinator binds the candidate to the then-current PR base before any public action; producer does not self-accept.",
+  "actor_player_query_members_checkpoint_2026_10_16": {
+    "date": "2026-10-16",
+    "scope": "Three Actor player-query methods only; all preceding report values remain the historical Yegg-readable checkpoint.",
+    "class_history_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3169",
+    "class_issue_status": "Closed class-history reference; not reopened by this checkpoint.",
+    "parent_task": "yegg-native-current-dfd-continuation1016",
+    "parent_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+    "actual_source_author": "Codex /root/cpp_frontier_astra1014, codex-yegg-native-current-dfd-astra-producer1016",
+    "base": "dfd9500e1662260bc9e3a4fc757f779899fe783c",
+    "source": "src/runtime/actor/d_actor.cpp",
+    "functions": [
+      {
+        "method": "dActor_c::ClosestPlayer",
+        "address": "arm9:0x02010ad8",
+        "size": 196
+      },
+      {
+        "method": "dActor_c::ClosestNonVanishPlayer",
+        "address": "arm9:0x02010a08",
+        "size": 208
+      },
+      {
+        "method": "dActor_c::MakeVanishLuigiWork(dCc_c&)",
+        "address": "arm9:0x0200f7a8",
+        "size": 72
+      }
+    ],
+    "change": "Borrow actual Player objects from the existing void-pointer registry, pass addresses of existing mPosX scalar members to the unchanged const-void distance boundary, and use the existing unsigned-byte mIsVanish field. Preserve player order, null guards, distance comparisons/cache assignments, initial collision flags &= ~2, ClosestPlayer call and final conditional flags |=2.",
+    "boundaries": [
+      "The registry remains void* and Vec3_Dist remains const void*; scalar position spans are not newly declared Vector3 objects.",
+      "Shared Actor vector grouping, constructor/destructor lifetime and other raw-field/API boundaries remain partial and outside these three methods.",
+      "Existing field/method spellings are reconstructed identifiers, not newly recovered original Nintendo names.",
+      "No header, manifest, config, style exception, canonical home, enrollment, tools or port change.",
+      "The separately reviewed Actor horizontal-speed change and Yegg typed-result change are not adopted into this dfd-based branch."
+    ],
+    "initial_proof": {
+      "compiler": "2004/b56",
+      "actual_fresh_candidate_compiles": 1,
+      "new_control_compiles": 0,
+      "own_original_dfd_control_reused_after_input_binding": true,
+      "headers_bound": 502,
+      "tracked_tools_config_inputs_bound": 1117,
+      "exact_flags_compiler_license_bound": true,
+      "full_style_preflight_exit": 0,
+      "style_findings": 0,
+      "format_deferrals": 0,
+      "whole_RAW_literal_control": true,
+      "whole_ordinary_literal_control": true,
+      "whole_object_bytes": 29480,
+      "RAW_sha256": "f30358dbac60c04514bbffa46d8bbffd28e94168c2931e1944736cb651badedc",
+      "ordinary_sha256": "e13bbd1c626833af41cc99738506ba698d630aa81d4caa4ee1ee139dd54d844d",
+      "normal_linked_functions_verified": 91,
+      "blind_bytes": 0,
+      "different_words": 0,
+      "Source_sha256": "ce6166de0ee1347f8f32fe3d3d510ddc8423664a0e463912a26971df2d4683f7",
+      "compiler_warnings": "Inherited missing MWCIncludes variable and return-value warnings outside the edited methods remain recorded."
+    },
+    "full_default_build": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "seconds": 136.06200000000536,
+      "modules_exact": 106,
+      "modules_total": 106,
+      "source_functions_reproducing": 11334,
+      "source_function_mismatches": 0,
+      "main_cached_sources": 2506,
+      "main_fresh_compiles": 1,
+      "baseline_cached_sources": 2242,
+      "baseline_fresh_compiles": 1,
+      "source_owned_data_reproducing": 338,
+      "source_owned_BSS_claims": 245,
+      "source_owned_BSS_bytes": 31216,
+      "inherited_baseline_symbol_errors": 9,
+      "broader_data_diagnostic": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "qualification": "Default build compatibility only; inherited baseline symbol and broader data diagnostics retained separately, no final cartridge assembly claim."
+    },
+    "acceptance": {
+      "producer_only": true,
+      "independent_exact_checkpoint_review": "pending",
+      "original307_complete": false,
+      "full_current_main_acceptance": false,
+      "Source_consumers": 208,
+      "foundations": 4,
+      "remaining_migrations": 45,
+      "proof_only_accepted": 30,
+      "proof_only_remaining": 20,
+      "counter_increment": 0
+    },
+    "historical_findings": "Every original finding dictionary and identity remains unchanged; this appendix does not rewrite or close the historical Yegg findings."
+  }
+
 }
