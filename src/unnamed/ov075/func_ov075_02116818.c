@@ -1,5 +1,11 @@
 #include "types.h"
 
+
+/* bss 0x0211d72c..0x0211d72e */
+#pragma force_active on
+unsigned char data_ov075_0211d72c[2];
+#pragma force_active off
+
 extern void *_ZN2G213GetBG2CharPtrEv(void);
 extern void *_ZN2G212GetBG1ScrPtrEv(void);
 extern void *_ZN2G212GetBG2ScrPtrEv(void);

@@ -17,6 +17,24 @@
  *   not this TU's.
  */
 
+
+
+extern "C" {
+/* bss 0x021405bc..0x021405c0 */
+#pragma force_active on
+unsigned char data_ov006_021405bc[4];
+#pragma force_active off
+}
+
+extern "C" {
+/* data 0x0213b0ec..0x0213b0f0 */
+#pragma force_active on
+#pragma explicit_zero_data on
+unsigned char data_ov006_0213b0ec[4] = { 3, 0, 0, 0 };
+#pragma explicit_zero_data off
+#pragma force_active off
+}
+
 typedef long long s64;
 
 struct Ent_ov006 {

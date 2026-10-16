@@ -1,3 +1,9 @@
+
+/* bss 0x0209d678..0x0209d67c */
+#pragma force_active on
+unsigned char data_0209d678[4];
+#pragma force_active off
+
 int func_0203da9c(void);
 int GetPlayerFlagByte(int handle, int i);
 void func_0203db3c(int i, unsigned char v);

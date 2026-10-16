@@ -29,6 +29,14 @@
  */
 #include "dM3dGSph.h"
 
+
+extern "C" {
+/* bss 0x0209fd20..0x0209fd5c */
+#pragma force_active on
+unsigned char data_0209fd20[60];
+#pragma force_active off
+}
+
 dM3dGSph::dM3dGSph()
 {
 }

@@ -688,6 +688,7 @@ src/unnamed/ov007/func_ov007_020b8860.c:
     complete
     .text start:0x020b8860 end:0x020b88c0
 
+    .bss start:0x02103464 end:0x02103468
 src/unnamed/ov007/func_ov007_020b88c0.c:
     complete
     .text start:0x020b88c0 end:0x020b8a78

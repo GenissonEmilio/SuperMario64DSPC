@@ -11,6 +11,14 @@
 
 #include "types.h"
 
+
+extern "C" {
+/* bss 0x020a4ba8..0x020a4bb8 */
+#pragma force_active on
+unsigned char data_020a4ba8[16];
+#pragma force_active off
+}
+
 extern "C" {
 extern void func_02048fd4(int i);
 }

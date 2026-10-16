@@ -16,6 +16,11 @@
       "name": ".text",
       "start": "0x02048eb4",
       "end": "0x02048f34"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020a4ba8",
+      "end": "0x020a4bb8"
     }
   ],
   "functions": [
@@ -77,7 +82,15 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "data_020a4ba8",
+      "address": "0x020a4ba8",
+      "size": "0x10",
+      "binding": "STB_GLOBAL",
+      "evidence": "ROM bss 0x20a4ba8..0x20a4bb8"
+    }
+  ],
   "compiler_only_output": [],
   "notes": [
     "HAND-BUILT manifest entry, not tools/tubuild.py create output -- the main module is unsegmentable, so there is no create candidate id.",

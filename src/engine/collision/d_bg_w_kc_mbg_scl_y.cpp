@@ -19,6 +19,14 @@
 #include "dBgPi.h"
 #include "nitro/fx/fx.h"
 
+
+extern "C" {
+/* bss 0x0209fcd8..0x0209fcdc */
+#pragma force_active on
+unsigned char data_0209fcd8[4];
+#pragma force_active off
+}
+
 extern "C" {
 /* This TU's own free helpers, called from the members below. */
 void func_0203aa10(dBgW_KcMbgSclY *self, Vector3 *v, Vector3 *res);

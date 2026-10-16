@@ -1,3 +1,9 @@
+
+/* bss 0x020a609a..0x020a609c */
+#pragma force_active on
+unsigned char data_020a609a[2];
+#pragma force_active off
+
 extern int data_020a6134[];
 void func_02058488(int target)
 {

@@ -1,5 +1,11 @@
 #include "types.h"
 /* 4x3 matrix: 12 s32 values = 48 bytes */
+
+/* bss 0x0209b2ec..0x0209b2ed */
+#pragma force_active on
+unsigned char data_0209b2ec[1];
+#pragma force_active off
+
 typedef struct {
     s32 m[12];
 } Matrix4x3;

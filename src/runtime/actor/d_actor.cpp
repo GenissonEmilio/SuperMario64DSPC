@@ -88,6 +88,16 @@
  * 0x02011268  size 0x60 */
 
 /* bss 0x0209b468..0x0209b470 */
+
+extern "C" {
+/* data 0x02087094..0x020870e4 */
+#pragma force_active on
+#pragma explicit_zero_data on
+unsigned char data_02087094[80] = { 255, 255, 255, 7, 0, 236, 10, 0, 183, 245, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 250, 255, 255, 255, 255, 7, 0, 0, 19, 0, 0, 0, 28, 0, 91, 16, 226, 1, 0, 0, 0, 0, 255, 255, 255, 7, 0, 0, 0, 0, 0, 8, 0, 0, 128, 71, 2, 0, 224, 180, 1, 0, 255, 255, 255, 7, 0, 0, 0, 0, 0, 29, 19, 0, 199, 17, 166, 0 };
+#pragma explicit_zero_data off
+#pragma force_active off
+}
+
 extern "C" {
 unsigned char data_0209b468[8];
 }

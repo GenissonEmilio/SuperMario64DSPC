@@ -1,4 +1,12 @@
 //cpp
+
+extern "C" {
+/* bss 0x0209d704..0x0209d708 */
+#pragma force_active on
+unsigned char data_0209d704[4];
+#pragma force_active off
+}
+
 extern "C" {
 struct Matrix2x2;
 }
