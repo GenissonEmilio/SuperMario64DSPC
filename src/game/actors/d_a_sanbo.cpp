@@ -16,8 +16,8 @@
  *
  * All helpers are daSanbo_c members; the func_ov096_<addr> names are
  * ours, not recovered. The state pairs they serve live in
- * data_ov096_02137b48, filled by __sinit_ov096_0213770c, which this
- * file does not own. func_ov096_02135878's ROM signature carried a
+ * data_ov096_02137b48, filled by this file's own static initializer
+ * (__sinit_d_a_sanbo.cpp, 0x0213770c). func_ov096_02135878's ROM signature carried a
  * dead first argument (r0) that was never read -- as a member its
  * real argument lands in r1 either way.
  *
@@ -107,7 +107,7 @@ struct SanboModelFilePtr : SharedFilePtr {
 };
 extern SanboModelFilePtr gSanboHeadModelFile;
 extern SanboModelFilePtr gSanboBodyModelFile;
-extern daSanbo_c::StateFunc data_ov096_02137b48[];
+extern daSanbo_c::StateEntry data_ov096_02137b48[];
 
 /* Both profiles construct this class. The synthesized ctor stores
  * `_ZTV9daSanbo_c + 2`; do not restate a file-local `extern _ZTV`. */
@@ -257,22 +257,20 @@ int daSanbo_c::CleanupResources()
 
 // @symbol _ZN9daSanbo_c19func_ov096_02136928Ei
 void daSanbo_c::func_ov096_02136928(int a) {
-    mStateFunctions = data_ov096_02137b48 + (a << 1);
+    mState = &data_ov096_02137b48[a];
     func_ov096_021368f0();
 }
 
 // @symbol _ZN9daSanbo_c19func_ov096_021368f0Ev
 void daSanbo_c::func_ov096_021368f0()
 {
-    daSanbo_c::StateFunc *p = mStateFunctions;
-    (this->**p)();
+    (this->*mState->init)();
 }
 
 // @symbol _ZN9daSanbo_c19func_ov096_021368b4Ev
 void daSanbo_c::func_ov096_021368b4()
 {
-    daSanbo_c::StateFunc *p = mStateFunctions + 1;
-    (this->**p)();
+    (this->*mState->behavior)();
 }
 
 // @symbol _ZN9daSanbo_c19func_ov096_021368a4Ev
@@ -944,11 +942,11 @@ extern "C" daSanbo_c::StateFunc data_ov096_02137968;
 extern "C" daSanbo_c::StateFunc data_ov096_02137960;
 extern "C" daSanbo_c::StateFunc data_ov096_02137958;
 
-daSanbo_c::StateFunc data_ov096_02137b48[12] = {
-    data_ov096_02137948, data_ov096_02137940,   /* state 0 */
-    data_ov096_02137950, data_ov096_02137928,   /* state 1 */
-    data_ov096_02137930, data_ov096_02137920,   /* state 2 */
-    data_ov096_02137978, data_ov096_02137970,   /* state 3 */
-    data_ov096_02137938, data_ov096_02137968,   /* state 4 */
-    data_ov096_02137960, data_ov096_02137958,   /* state 5 */
+daSanbo_c::StateEntry data_ov096_02137b48[6] = {
+    {data_ov096_02137948, data_ov096_02137940}, /* state 0 */
+    {data_ov096_02137950, data_ov096_02137928}, /* state 1 */
+    {data_ov096_02137930, data_ov096_02137920}, /* state 2 */
+    {data_ov096_02137978, data_ov096_02137970}, /* state 3 */
+    {data_ov096_02137938, data_ov096_02137968}, /* state 4 */
+    {data_ov096_02137960, data_ov096_02137958}, /* state 5 */
 };

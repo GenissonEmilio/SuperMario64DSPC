@@ -32,6 +32,12 @@ struct daSanbo_c : dActor_c {
        handlers return int in the ROM; the records are raw words, so the PMF
        spelling is a convenience, not a constraint. */
     typedef void (daSanbo_c::*StateFunc)();
+    /* One row of the sinit-built table: the 8-byte init PMF, then the
+       8-byte per-frame behavior PMF. */
+    struct StateEntry {
+        StateFunc init;
+        StateFunc behavior;
+    };
 
     u8  pad_0d0[0x4];
     Model mModel;                            /* 0x0d4 */
@@ -54,7 +60,7 @@ struct daSanbo_c : dActor_c {
     s32 mOffsetX;             /* 0x378 */
     s32 mOffsetY;             /* 0x37c */
     s32 mOffsetZ;             /* 0x380 */
-    StateFunc *mStateFunctions; /* 0x384 -- current entry/update pair */
+    StateEntry *mState;       /* 0x384 -- current init/behavior pair */
     dActor_c *mHitActor;        /* 0x388 */
     /* Behavior early-outs on distance from the player UNLESS mState is 2 or 5,
        which keep running however far away the player is.
