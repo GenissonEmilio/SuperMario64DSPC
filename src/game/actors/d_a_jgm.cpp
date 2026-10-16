@@ -167,8 +167,8 @@ extern DaJgmAnimationFilePtr data_ov077_02127b28;
 extern DaJgmAnimationFilePtr data_ov077_02127b40;
 extern DaJgmTexSequenceFilePtr data_ov077_02127b20;
 extern DaJgmTexSequenceFilePtr data_ov077_02127b30;
-extern SharedFilePtr *data_ov077_02127238[];
-extern SharedFilePtr *data_ov077_02127230[];
+extern SharedFilePtr *const data_ov077_02127238[];
+extern SharedFilePtr *const data_ov077_02127230[];
 extern DaJgmStateHandlers data_ov077_02127bc4[];
 extern JgmVector3 data_ov077_02127b88;
 extern DaJgmStateHandler data_ov077_021277e0;
@@ -868,6 +868,18 @@ DaJgmAnimationFilePtr data_ov077_02127b28(ASSET_JUGEM_WAIT_BCA);
 DaJgmAnimationFilePtr data_ov077_02127b40(ASSET_JUGEM_THROW_BCA);
 DaJgmTexSequenceFilePtr data_ov077_02127b20(ASSET_JUGEM_WAIT_BTP);
 DaJgmTexSequenceFilePtr data_ov077_02127b30(ASSET_JUGEM_THROW_BTP);
+
+/* Texture-sequence files, then animation files, in the order InitResources loads them. */
+extern "C" SharedFilePtr *const data_ov077_02127230[2] = {
+    &data_ov077_02127b20,
+    &data_ov077_02127b30,
+};
+
+extern "C" SharedFilePtr *const data_ov077_02127238[2] = {
+    &data_ov077_02127b28,
+    &data_ov077_02127b40,
+};
+
 DaJgmStateHandlers data_ov077_02127bc4[5] = {
     {data_ov077_021277e0, data_ov077_02127828},
     {data_ov077_02127820, data_ov077_021277e8},
