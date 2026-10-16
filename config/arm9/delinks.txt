@@ -1800,6 +1800,7 @@ src/ExitLevel.c:
 src/SetNextLevel.c:
     complete
     .text start:0x02029bf4 end:0x02029d1c
+    .rodata start:0x02075638 end:0x02075650
 
 src/SetNextStar.c:
     complete
