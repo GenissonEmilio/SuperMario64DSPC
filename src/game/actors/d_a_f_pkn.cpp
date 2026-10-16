@@ -147,7 +147,7 @@ extern SharedFilePtr data_ov084_02130dfc;   /* the plant's model */
 extern SharedFilePtr *data_ov084_021302f4[];/* the six shared animation handles */
 extern SharedFilePtr data_ov002_0210da38;   /* the blue-coin model, out of ov002 */
 extern PknSharedFile data_ov084_02130df4;   /* idle animation */
-extern PknSharedFile data_ov084_02130e04;   /* spit animation */
+PknSharedFile data_ov084_02130e04;          /* spit animation; sinit writes file 0x3d1 */
 extern PknSharedFile data_ov084_02130e14;   /* grow-in lunge animation */
 extern void *data_ov084_02130e1c[];         /* post-spit animation, a PknSharedFile pair */
 extern PknSharedFile data_ov084_02130e24;   /* death animation */

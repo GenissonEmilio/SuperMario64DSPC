@@ -19,6 +19,7 @@ src/game/actors/d_a_red_bombhei.cpp:
 src/game/actors/d_a_f_pkn.cpp:
     complete
     .text start:0x0212d248 end:0x0212eaf0
+    .bss start:0x02130e04 end:0x02130e0c
 
 src/game/actors/d_a_pkn.cpp:
     complete
