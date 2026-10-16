@@ -20,9 +20,3 @@ void __sinit_ov022_02112f78(void)
     func_02017b4c(data_ov022_02114618, ASSET_FL_UKI_KI_KCL);
     func_020731dc(data_ov022_02114618, SharedFilePtr_Destruct_Clsn, data_ov022_02114628);
 }
-
-int data_ov022_02114628[1];
-
-int data_ov022_0211462c[2];
-
-int data_ov022_02114634[3];

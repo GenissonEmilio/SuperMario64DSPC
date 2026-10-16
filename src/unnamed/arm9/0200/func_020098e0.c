@@ -70,7 +70,3 @@ int func_020098e0(char *self)
     func_020089d8(self);
     return 1;
 }
-
-int data_02086e9c[3] = {
-    0, 0x80000, 0
-};

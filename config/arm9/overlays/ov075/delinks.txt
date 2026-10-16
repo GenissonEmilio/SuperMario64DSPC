@@ -83,7 +83,6 @@ src/unnamed/ov075/func_ov075_021173a8.c:
     complete
     .text start:0x021173a8 end:0x02117590
 
-    .data start:0x0211ca08 end:0x0211ca1c
 src/unnamed/ov075/func_ov075_02117590.cpp:
     complete
     .text start:0x02117590 end:0x0211763c
@@ -352,4 +351,3 @@ src/unnamed/ov075/__sinit_ov075_0211bb00.c:
 src/unnamed/ov075/__sinit_ov075_0211c51c.c:
     complete
     .init start:0x0211c51c end:0x0211c5a4
-    .bss start:0x0211d988 end:0x0211d994

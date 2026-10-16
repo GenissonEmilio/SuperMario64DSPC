@@ -26,7 +26,6 @@ src/game/actors/d_a_pic_gate.cpp:
     .text start:0x02125404 end:0x021264ec
     .rodata start:0x0212775c end:0x021277a8
 
-    .bss start:0x02128688 end:0x02128858
 src/game/actors/d_a_pic_gate_methods.cpp:
     complete
     .text start:0x021264ec end:0x02126fbc

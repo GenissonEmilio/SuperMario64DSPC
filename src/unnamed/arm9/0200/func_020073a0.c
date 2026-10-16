@@ -16,7 +16,3 @@ int func_020073a0(struct dActor_c *actor)
     _Z14ApproachLinearRiii((int *)((char *)actor + 0xc4), -0xc8000, 0x6aaa);
     return 1;
 }
-
-int data_02086ed8[3] = {
-    0x258000, 0, -0x190000
-};

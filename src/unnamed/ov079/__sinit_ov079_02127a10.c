@@ -30,5 +30,3 @@ void __sinit_ov079_02127a10(void)
     func_02017b4c(gBkKillerDaiCollisionFile, ASSET_BK_KILLER_DAI_KCL);
     func_020731dc(gBkKillerDaiCollisionFile, SharedFilePtr_Destruct_Clsn, data_ov079_02128310);
 }
-
-int data_ov079_02128310[3];

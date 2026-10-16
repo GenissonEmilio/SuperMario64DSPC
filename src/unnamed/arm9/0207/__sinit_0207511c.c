@@ -9,5 +9,3 @@ void __sinit_0207511c(void)
     data_020a0edc[2] = 0;
     func_020731dc(data_020a0edc, _ZN8Vector3sD1Ev, data_020a0ee4);
 }
-
-int data_020a0ee4[3];

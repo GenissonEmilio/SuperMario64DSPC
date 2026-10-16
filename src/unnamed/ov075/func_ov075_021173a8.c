@@ -50,7 +50,3 @@ void func_ov075_021173a8(char *c) {
 
     func_02020304();
 }
-
-int data_ov075_0211ca08[5] = {
-    0xa005, 0xa405, 0xa805, 0xac05, 0xb005
-};

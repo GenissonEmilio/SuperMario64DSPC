@@ -27,4 +27,3 @@ src/game/actors/d_a_obj_cv_shutter.cpp:
 src/unnamed/ov021/__sinit_ov021_02113500.c:
     complete
     .init start:0x02113500 end:0x02113688
-    .bss start:0x021149c0 end:0x021149cc

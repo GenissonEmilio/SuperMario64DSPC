@@ -14,5 +14,3 @@ void __sinit_02075054(void)
     data_020a0db8[1] = 1;
     func_020731dc(data_020a0db8, NoOpDestructor, data_020a0dcc);
 }
-
-char data_020a0dc0[12];

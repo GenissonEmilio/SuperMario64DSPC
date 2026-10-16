@@ -8,5 +8,3 @@ void __sinit_02074fe4(void)
     dBgPc_Construct(data_020a0cec);
     func_020731dc(data_020a0cec, dBgPc_Destroy, data_020a0ce0);
 }
-
-int data_020a0ce0[3];

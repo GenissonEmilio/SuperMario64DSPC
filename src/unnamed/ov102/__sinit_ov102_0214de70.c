@@ -44,5 +44,3 @@ void __sinit_ov102_0214de70(void)
     { volatile V3* p = (volatile V3*)&data_ov102_0214ea3c; p->x = 0x30000; p->y = -0x1e000; p->z = 0x3c000; }
     func_020731dc(&data_ov102_0214ea3c, _ZN7Vector3D1Ev, data_ov102_0214e9e8);
 }
-
-int data_ov102_0214e9d0[3];

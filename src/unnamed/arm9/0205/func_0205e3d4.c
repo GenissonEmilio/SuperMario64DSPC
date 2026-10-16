@@ -128,7 +128,3 @@ void func_0205e3d4(void *ctx)
         *(unsigned int *)(blk + 0x38) = save[1];
     }
 }
-
-unsigned int data_0209a054[4] = {
-    0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6
-};

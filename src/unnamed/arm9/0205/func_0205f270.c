@@ -23,5 +23,3 @@ void func_0205f270(void)
         ;
     func_0205ba64(6, (void *)func_0205f300);
 }
-
-char data_020a80c8[4];

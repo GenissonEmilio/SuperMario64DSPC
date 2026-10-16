@@ -95,7 +95,6 @@ src/unnamed/arm9/0200/func_020073a0.c:
     complete
     .text start:0x020073a0 end:0x02007414
 
-    .data start:0x02086ed8 end:0x02086ee4
 src/unnamed/arm9/0200/func_02007414.c:
     complete
     .text start:0x02007414 end:0x02007450
@@ -128,7 +127,6 @@ src/unnamed/arm9/0200/func_0200762c.c:
     complete
     .text start:0x0200762c end:0x02007698
 
-    .data start:0x02086ec0 end:0x02086ecc
 src/unnamed/arm9/0200/func_02007698.c:
     complete
     .text start:0x02007698 end:0x02007758
@@ -338,7 +336,6 @@ src/unnamed/arm9/0200/func_020094e4.c:
     complete
     .text start:0x020094e4 end:0x02009540
 
-    .data start:0x02086eb4 end:0x02086ec0
 src/unnamed/arm9/0200/func_02009540.c:
     complete
     .text start:0x02009540 end:0x020095c4
@@ -371,7 +368,6 @@ src/unnamed/arm9/0200/func_020098e0.c:
     complete
     .text start:0x020098e0 end:0x02009a8c
 
-    .data start:0x02086e9c end:0x02086ea8
 src/unnamed/arm9/0200/func_02009a8c.c:
     complete
     .text start:0x02009a8c end:0x02009aa8
@@ -380,7 +376,6 @@ src/unnamed/arm9/0200/func_02009aa8.c:
     complete
     .text start:0x02009aa8 end:0x02009d30
 
-    .data start:0x02086e90 end:0x02086e9c
 src/unnamed/arm9/0200/func_02009d30.c:
     complete
     .text start:0x02009d30 end:0x02009d70
@@ -429,7 +424,6 @@ src/unnamed/arm9/0200/func_0200af20.c:
     complete
     .text start:0x0200af20 end:0x0200b0fc
 
-    .data start:0x02086f38 end:0x02086f58
 src/unnamed/arm9/0200/func_0200b0fc.c:
     complete
     .text start:0x0200b0fc end:0x0200b590
@@ -451,7 +445,6 @@ src/unnamed/arm9/0200/func_0200bb28.c:
     complete
     .text start:0x0200bb28 end:0x0200bec4
 
-    .data start:0x02086cc8 end:0x02086cd0
 src/engine/view/d_camera.cpp:
     complete
     .text start:0x0200bec4 end:0x0200e494
@@ -546,7 +539,6 @@ src/unnamed/arm9/0200/func_0200f220.c:
     complete
     .text start:0x0200f220 end:0x0200f2cc
 
-    .data start:0x0208a10c end:0x0208a120
 src/unnamed/arm9/0200/func_0200f2cc.c:
     complete
     .text start:0x0200f2cc end:0x0200f450
@@ -1102,7 +1094,6 @@ src/unnamed/arm9/0201/func_02018d98.c:
     complete
     .text start:0x02018d98 end:0x02018dc4
 
-    .data start:0x0208eb8c end:0x0208eb9c
 src/unnamed/arm9/0201/func_02018dc4.c:
     complete
     .text start:0x02018dc4 end:0x02018e00
@@ -1115,7 +1106,6 @@ src/unnamed/arm9/0201/func_02018e3c.c:
     complete
     .text start:0x02018e3c end:0x02018e68
 
-    .data start:0x0208ecd8 end:0x0208ecf4
 src/unnamed/arm9/0201/func_02018e68.c:
     complete
     .text start:0x02018e68 end:0x02018ea0
@@ -2345,7 +2335,6 @@ src/unnamed/arm9/0203/func_0203db64.c:
     complete
     .text start:0x0203db64 end:0x0203df40
 
-    .bss start:0x020a10a6 end:0x020a10ba
 src/unnamed/arm9/0203/func_0203df40.c:
     complete
     .text start:0x0203df40 end:0x0203e0ac
@@ -2358,7 +2347,6 @@ src/unnamed/arm9/0203/func_0203e20c.c:
     complete
     .text start:0x0203e20c end:0x0203e978
 
-    .bss start:0x020a1780 end:0x020a1fc0
 src/unnamed/arm9/0203/func_0203e978.c:
     complete
     .text start:0x0203e978 end:0x0203e9a8
@@ -2400,7 +2388,6 @@ src/unnamed/arm9/0203/func_0203f714.c:
     complete
     .text start:0x0203f714 end:0x0203f818
 
-    .bss start:0x020a0fd0 end:0x020a0fec
 src/unnamed/arm9/0203/func_0203f818.c:
     complete
     .text start:0x0203f818 end:0x0203f8a4
@@ -2662,7 +2649,6 @@ src/unnamed/arm9/0204/func_020423c8.c:
     complete
     .text start:0x020423c8 end:0x020423dc
 
-    .bss start:0x020a15e4 end:0x020a1680
 src/unnamed/arm9/0204/func_020423dc.c:
     complete
     .text start:0x020423dc end:0x020424c0
@@ -4434,7 +4420,6 @@ src/unnamed/arm9/0205/func_0205e3d4.c:
     complete
     .text start:0x0205e3d4 end:0x0205e6e4
 
-    .data start:0x0209a054 end:0x0209a064
 src/unnamed/arm9/0205/func_0205e6e4.c:
     complete
     .text start:0x0205e6e4 end:0x0205e7e0
@@ -4512,7 +4497,6 @@ src/unnamed/arm9/0205/func_0205f270.c:
     complete
     .text start:0x0205f270 end:0x0205f300
 
-    .bss start:0x020a80c8 end:0x020a80cc
 src/unnamed/arm9/0205/func_0205f300.c:
     complete
     .text start:0x0205f300 end:0x0205f5c0
@@ -5372,7 +5356,6 @@ src/unnamed/arm9/0206/func_020681b8.c:
     complete
     .text start:0x020681b8 end:0x0206834c
 
-    .bss start:0x020a9d4e end:0x020a9d50
 src/unnamed/arm9/0206/func_0206834c.c:
     complete
     .text start:0x0206834c end:0x02068398
@@ -5557,7 +5540,6 @@ src/unnamed/arm9/0206/func_0206a928.c:
     complete
     .text start:0x0206a928 end:0x0206bc8c
 
-    .data start:0x0209a130 end:0x0209a330
 src/unnamed/arm9/0206/func_0206bc8c.c:
     complete
     .text start:0x0206bc8c end:0x0206bdb4
@@ -5724,7 +5706,6 @@ src/unnamed/arm9/0207/func_02070ec0.c:
     complete
     .text start:0x02070ec0 end:0x020712a0
 
-    .data start:0x0209a628 end:0x0209a658
 src/unnamed/arm9/0207/func_020712a0.c:
     complete
     .text start:0x020712a0 end:0x02071364
@@ -5923,8 +5904,6 @@ src/unnamed/arm9/0207/__sinit_02073e6c.c:
     complete
     .init start:0x02073e6c end:0x02074d90
 
-    .data start:0x02089dcc end:0x0208a0e0
-    .bss start:0x0209b278 end:0x0209b284
 src/unnamed/arm9/0207/__sinit_02074d90.c:
     complete
     .init start:0x02074d90 end:0x02074da8
@@ -5949,7 +5928,6 @@ src/unnamed/arm9/0207/__sinit_02074e0c.c:
     complete
     .init start:0x02074e0c end:0x02074e44
 
-    .bss start:0x0209d528 end:0x0209d534
 src/unnamed/arm9/0207/__sinit_02074e44.c:
     complete
     .init start:0x02074e44 end:0x02074e80
@@ -5966,12 +5944,10 @@ src/unnamed/arm9/0207/__sinit_02074edc.c:
     complete
     .init start:0x02074edc end:0x02074f80
 
-    .bss start:0x0209f5c4 end:0x0209f5d0
 src/unnamed/arm9/0207/__sinit_02074f80.c:
     complete
     .init start:0x02074f80 end:0x02074fb8
 
-    .bss start:0x0209f610 end:0x0209f61c
 src/unnamed/arm9/0207/__sinit_02074fb8.c:
     complete
     .init start:0x02074fb8 end:0x02074fe4
@@ -5980,17 +5956,14 @@ src/unnamed/arm9/0207/__sinit_02074fe4.c:
     complete
     .init start:0x02074fe4 end:0x0207501c
 
-    .bss start:0x020a0ce0 end:0x020a0cec
 src/unnamed/arm9/0207/__sinit_0207501c.c:
     complete
     .init start:0x0207501c end:0x02075054
 
-    .bss start:0x020a0d00 end:0x020a0d0c
 src/unnamed/arm9/0207/__sinit_02075054.c:
     complete
     .init start:0x02075054 end:0x020750b4
 
-    .bss start:0x020a0dc0 end:0x020a0dcc
 src/unnamed/arm9/0207/__sinit_020750b4.c:
     complete
     .init start:0x020750b4 end:0x020750b8
@@ -5999,17 +5972,14 @@ src/unnamed/arm9/0207/__sinit_020750b8.c:
     complete
     .init start:0x020750b8 end:0x020750ec
 
-    .bss start:0x020a0eb0 end:0x020a0ebc
 src/unnamed/arm9/0207/__sinit_020750ec.c:
     complete
     .init start:0x020750ec end:0x0207511c
 
-    .bss start:0x020a0ec8 end:0x020a0edc
 src/unnamed/arm9/0207/__sinit_0207511c.c:
     complete
     .init start:0x0207511c end:0x02075150
 
-    .bss start:0x020a0ee4 end:0x020a0ef0
 src/unnamed/arm9/0207/__sinit_02075150.c:
     complete
     .init start:0x02075150 end:0x02075154

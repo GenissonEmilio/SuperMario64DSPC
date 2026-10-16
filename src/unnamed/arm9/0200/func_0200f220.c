@@ -22,7 +22,3 @@ void func_0200f220(void)
     LoadCompressedFileAt(0x8408, _ZN3G2S12GetBG2ScrPtrEv() + 0x2800);
     LoadCompressedFileAt(0x8407, _ZN3G2S12GetBG3ScrPtrEv());
 }
-
-u32 data_0208a10c[5] = {
-    0xa00d, 0xa40d, 0xa80d, 0xac0d, 0xb00d
-};

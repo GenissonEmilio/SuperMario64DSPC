@@ -24,11 +24,3 @@ void func_ov007_020b3d30(char* thiz, int idx){
   func_ov007_020c43bc(thiz, *(int*)((char*)data_ov007_0210342c+0x34));
 }
 }
-
-extern "C" unsigned char data_ov007_020d7dd0[1] = {
-    80
-};
-
-extern "C" unsigned char data_ov007_020d7dd1[11] = {
-    112, 104, 112, 0, 0, 216, 0, 216, 0, 240, 0
-};

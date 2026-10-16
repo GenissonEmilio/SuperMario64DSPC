@@ -46,9 +46,3 @@ void __sinit_ov072_021221f8(void)
     data_ov072_02122c00[6] = *(struct S2*)data_ov072_0212284c;
     data_ov072_02122c00[7] = *(struct S2*)data_ov072_0212283c;
 }
-
-int data_ov072_0212283c[2] = {
-    0x212001c, 0
-};
-
-int data_ov072_02122bdc[3];

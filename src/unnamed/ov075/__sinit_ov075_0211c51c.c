@@ -15,5 +15,3 @@ void __sinit_ov075_0211c51c(void){
   data_ov075_0211d994[1] = data_ov075_0211d34c;
   data_ov075_0211d994[2] = data_ov075_0211d35c;
 }
-
-int data_ov075_0211d988[3];

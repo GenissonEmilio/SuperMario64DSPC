@@ -35,8 +35,6 @@ src/unnamed/ov072/__sinit_ov072_021221f8.c:
     complete
     .init start:0x021221f8 end:0x02122350
 
-    .data start:0x0212283c end:0x02122844
-    .bss start:0x02122bdc end:0x02122be8
 src/unnamed/ov072/__sinit_ov072_02122414.c:
     complete
     .init start:0x02122414 end:0x02122708

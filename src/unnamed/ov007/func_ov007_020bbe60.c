@@ -31,7 +31,3 @@ void func_ov007_020bbe60(int idx) {
         if (p[idx] >= 3) p[idx] = 0;
     }
 }
-
-int data_ov007_020d7e68[6] = {
-    0x20cf700, 0x20cfa70, 0x20cfb84, 0x20cef80, 0x20cf96c, 0x20cf8ec
-};

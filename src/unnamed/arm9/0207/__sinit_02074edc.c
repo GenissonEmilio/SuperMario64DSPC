@@ -32,5 +32,3 @@ void __sinit_02074edc(void)
     data_0209f5d0.field8 = 0;
     func_020731dc(&data_0209f5d0, _ZN15dFdBrightness_cD1Ev, data_0209f5c4);
 }
-
-int data_0209f5c4[3];

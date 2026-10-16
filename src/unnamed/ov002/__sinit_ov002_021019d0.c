@@ -2403,5 +2403,3 @@ void __sinit_ov002_021019d0(void)
     ((int *)&data_ov002_0211075c)[12] = ((int *)&data_ov002_0210a3f4)[0];
     ((int *)&data_ov002_0211075c)[13] = ((int *)&data_ov002_0210a3f4)[1];
 }
-
-char data_ov002_0210ed68[12];

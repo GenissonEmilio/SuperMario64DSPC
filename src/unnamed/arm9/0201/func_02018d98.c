@@ -13,7 +13,3 @@ int func_02018d98(void *file, const char *path){
   }
   return r;
 }
-
-int data_0208eb8c[4] = {
-    0x5346796d, 0x65704f5f, 0x6c69466e, 101
-};
