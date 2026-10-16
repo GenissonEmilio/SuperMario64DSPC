@@ -518,7 +518,34 @@
       "proof_only_remaining": 20,
       "counter_increment": 0
     },
-    "historical_findings": "Every original finding dictionary and identity remains unchanged; this appendix does not rewrite or close the historical Yegg findings."
+    "historical_findings": "Every original finding dictionary and identity remains unchanged; this appendix does not rewrite or close the historical Yegg findings.",
+    "final_scoped_gates": {
+      "tested_commit": "cd6f48b9a1b3f3c2324052e118f1ff3fb97924f4",
+      "prepush_linkcheck": {
+        "range": "dfd9500e1662260bc9e3a4fc757f779899fe783c..cd6f48b9a1b3f3c2324052e118f1ff3fb97924f4",
+        "exit_code": 0,
+        "functions_verified": 91,
+        "warnings": 0,
+        "blocking": 0,
+        "seconds": 65.64100000000326,
+        "generic_internal_compile_cache_retry_counts": "Not instrumented; no fresh compile credit inferred."
+      },
+      "declaration_agreement": {
+        "exit_code": 0,
+        "seconds": 11.078000000008615
+      },
+      "full_source_style": {
+        "exit_code": 0,
+        "findings": 0,
+        "format_deferrals": 0,
+        "patterns_only": false,
+        "seconds": 0.8429999999934807
+      },
+      "whitespace": {
+        "exit_code": 0,
+        "seconds": 0.062000000005355105
+      },
+      "report_only_finalization": "Source and production trees remain literal to the tested commit; no repeated byte builds."
+    }
   }
-
 }
