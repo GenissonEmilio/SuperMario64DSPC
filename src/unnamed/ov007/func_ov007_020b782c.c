@@ -24,3 +24,7 @@ void func_ov007_020b782c(void)
     } while (i < 2);
     func_0204a17c((int)data_ov007_0210344c, func_ov007_020b3f20(0x17));
 }
+
+char data_ov007_02102dd0[8] = {
+    69, 102, 102, 101, 99, 116, 0, 0
+};

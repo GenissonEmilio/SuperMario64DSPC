@@ -63,3 +63,15 @@ void func_ov007_020b6d40(void)
             func_ov007_020adc08(i, *(char **)(*(char **)(c + 0x34) + i * 4));
     }
 }
+
+int data_ov007_020d7e28[4] = {
+    0x20ea6ec, 0x20e2204, 0x20e6478, 0x20f295c
+};
+
+int data_ov007_020d7e38[6] = {
+    0x20d9568, 0x20d8a8c, 0x20d8cb8, 0x20d8ee4, 0x20d9110, 0x20d933c
+};
+
+int data_ov007_020d7e50[6] = {
+    0x20d9794, 0x20da744, 0x20db0ac, 0x20d9ec0, 0x20d87b8, 0x20d8914
+};
