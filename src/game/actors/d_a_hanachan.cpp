@@ -123,8 +123,8 @@ extern void Vec3_Add(void *out, void *a, void *b);
 extern void _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(void *self, struct Vector3 *v, unsigned int b, int c, unsigned int d, unsigned int e, unsigned int f);
 extern int NormalizeVec3IfNonZero(void *v);
 extern void Vec3_MulScalarInPlace(void *v, int s);
-extern SharedFilePtr *data_ov034_02113838[];
-extern SharedFilePtr *data_ov034_0211384c[];
+extern SharedFilePtr *const data_ov034_02113838[5];
+extern SharedFilePtr *const data_ov034_0211384c[5];
 extern void **data_ov034_02113874[];
 extern void _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(s32 x, s32 y, s32 z);
 extern void *_ZN8Particle6System3NewEjj5Fix12IiES2_S2_PK11Vector3_16fPNS_8CallbackE(
@@ -1281,6 +1281,23 @@ HanachanTextureSeqFileHandle gHanachanBody01TextureSequenceFile(ASSET_HANACHAN_B
 HanachanTextureSeqFileHandle gHanachanBody02TextureSequenceFile(ASSET_HANACHAN_BODY02_BTP);
 HanachanTextureSeqFileHandle gHanachanBody03TextureSequenceFile(ASSET_HANACHAN_BODY03_BTP);
 HanachanTextureSeqFileHandle gHanachanBody04TextureSequenceFile(ASSET_HANACHAN_BODY04_BTP);
+
+/* One model handle and one texture-sequence handle per body segment.
+   The retail words are those handles' addresses. */
+extern "C" SharedFilePtr *const data_ov034_02113838[5] = {
+    &data_ov034_02114660,
+    &data_ov034_02114688,
+    &data_ov034_02114670,
+    &data_ov034_021146f0,
+    &data_ov034_02114700,
+};
+extern "C" SharedFilePtr *const data_ov034_0211384c[5] = {
+    &data_ov034_02114730,
+    &data_ov034_02114708,
+    &data_ov034_02114690,
+    &data_ov034_021146c0,
+    &data_ov034_02114720,
+};
 
 typedef void (daHanachan_c::*HanachanStatePmf)();
 
