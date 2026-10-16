@@ -88,3 +88,9 @@ void func_02030500(void)
     *(volatile u32*)0x4000000 = (*(volatile u32*)0x4000000 & ~0x1f00) | 0x200;
     *(volatile u32*)0x4001000 = (*(volatile u32*)0x4001000 & ~0x1f00) | 0x200;
 }
+
+/* arm9-data-run 0x02082A1F rodata */
+const unsigned char data_02082a1f[9] = {
+    0x0B, 0x5E, 0x0B, 0x43, 0x0B, 0x62, 0x0B, 0x3E, 0x0B,
+};
+/* end arm9-data-run 0x02082A1F */

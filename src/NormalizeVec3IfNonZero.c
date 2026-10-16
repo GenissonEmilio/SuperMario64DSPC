@@ -10,3 +10,12 @@ int NormalizeVec3IfNonZero(Vector3 *v)
     func_0203ce80(&tmp, v);
     return 1;
 }
+
+/* arm9-data-run 0x02099F78 data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int data_02099f78[2] = {
+    0x4E4E4F43, 0x00544345,
+};
+#pragma pop
+/* end arm9-data-run 0x02099F78 */

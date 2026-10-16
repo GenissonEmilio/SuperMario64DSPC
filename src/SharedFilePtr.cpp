@@ -421,3 +421,50 @@ extern "C" void *func_0201787c(SharedFilePtr *ptr) {
     return filePtr;
 }
 #endif
+
+/* arm9-data-run 0x0208EB58 data */
+#pragma push
+#pragma explicit_zero_data on
+extern "C" {
+unsigned int data_0208eb84[1] = {
+    0x00347376,
+};
+unsigned int data_0208eb80[1] = {
+    0x00696563,
+};
+unsigned int data_0208eb7c[1] = {
+    0x00317261,
+};
+unsigned int data_0208eb78[1] = {
+    0x00337376,
+};
+unsigned int data_0208eb74[1] = {
+    0x00316E65,
+};
+unsigned int data_0208eb70[1] = {
+    0x00317376,
+};
+unsigned int data_0208eb6c[1] = {
+    0x00736563,
+};
+unsigned int data_0208eb68[1] = {
+    0x00656563,
+};
+unsigned int data_0208eb64[1] = {
+    0x00666563,
+};
+unsigned int data_0208eb60[1] = {
+    0x00643263,
+};
+unsigned int data_0208eb5c[1] = {
+    0x00307261,
+};
+unsigned int data_0208eb58[1] = {
+    0x00327376,
+};
+unsigned int data_0208eb88[1] = {
+    0x00676563,
+};
+}
+#pragma pop
+/* end arm9-data-run 0x0208EB58 */

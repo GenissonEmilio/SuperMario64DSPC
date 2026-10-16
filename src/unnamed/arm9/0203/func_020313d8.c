@@ -24,3 +24,12 @@ void func_020313d8(void) {
     func_02031b84(data_02092810[idx]);
     func_02031b84((data_02092810[idx] + 1) & 0xff);
 }
+
+/* arm9-data-run 0x020991C8 data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int _ZTI5dBgCh[4] = {
+    0x0209A774, 0x020991C0, 0x00000000, 0x020991C8,
+};
+#pragma pop
+/* end arm9-data-run 0x020991C8 */

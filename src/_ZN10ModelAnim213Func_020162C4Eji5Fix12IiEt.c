@@ -37,3 +37,24 @@ void _ZN10ModelAnim213Func_020162C4Eji5Fix12IiEt(struct ModelAnim2* thiz, void* 
         _ZN15dExtFrameCtrl_c12SetAnimationEti5Fix12IiEt(&thiz->otherAnim, ((struct BCA_File*)newUnk64)->numFrames, flags, speed, startFrame);
     }
 }
+
+/* arm9-data-run 0x0208E7FC data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int _ZTS15dExtAnm2Model_c[5] = {
+    0x45643531, 0x6E417478, 0x6F4D326D, 0x5F6C6564, 0x00000063,
+};
+unsigned int _ZTS15dExtAnmTexPat_c[5] = {
+    0x45643531, 0x6E417478, 0x7865546D, 0x5F746150, 0x00000063,
+};
+unsigned int _ZTS15dExtAnmTexSRT_c[5] = {
+    0x45643531, 0x6E417478, 0x7865546D, 0x5F545253, 0x00000063,
+};
+unsigned int _ZTS14dExtAnmModel_c[5] = {
+    0x45643431, 0x6E417478, 0x646F4D6D, 0x635F6C65, 0x00000000,
+};
+unsigned int _ZTS15dExtFrameCtrl_c[7] = {
+    0x45643531, 0x72467478, 0x43656D61, 0x5F6C7274, 0x00000063, 0x00000000, 0x0208E770,
+};
+#pragma pop
+/* end arm9-data-run 0x0208E7FC */

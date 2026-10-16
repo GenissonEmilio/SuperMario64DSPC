@@ -6,3 +6,12 @@ extern void func_0203d81c(void);
 void func_020308a8(void) {
     func_0203d81c();
 }
+
+/* arm9-data-run 0x0209435C data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int g_profile_MULTIBOOT[2] = {
+    0x020352B4, 0x01680168,
+};
+#pragma pop
+/* end arm9-data-run 0x0209435C */

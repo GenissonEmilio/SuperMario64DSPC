@@ -37,3 +37,12 @@ void nds_printt(unsigned short *dest, char *str, int value)
         } while (len != 0);
     }
 }
+
+/* arm9-data-run 0x0208E680 data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int _ZTI10dCcAcPos_c[3] = {
+    0x0209A764, 0x0208E6A4, 0x0208E698,
+};
+#pragma pop
+/* end arm9-data-run 0x0208E680 */

@@ -30,3 +30,12 @@ void UnloadOverlay(int id)
         return;
     func_02017fd0(&rgn);
 }
+
+/* arm9-data-run 0x0208EE04 data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int _ZTIN8dGraph_c10callback_cE[4] = {
+    0x0209A774, 0x0208EE24, 0x00000000, 0x0208EE04,
+};
+#pragma pop
+/* end arm9-data-run 0x0208EE04 */
