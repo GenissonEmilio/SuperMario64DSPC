@@ -9,6 +9,7 @@ src/game/actors/d_a_dgr.cpp:
     .text start:0x021111a0 end:0x021118c8
     .init start:0x02112970 end:0x021129dc
     .ctor start:0x02112b18 end:0x02112b1c
+    .data start:0x02112c28 end:0x02112c48
     .bss start:0x02113a60 end:0x02113a88
 
 src/game/actors/d_a_dkk.cpp:
