@@ -354,9 +354,10 @@ s32 dScMgSound_c::InitResources()
 }
 
 // @symbol _ZN12dScMgSound_c8BehaviorEv
-/* One frame of the round, by mState: 0 starts, 1 counts down mIntroTimer,
-   2 plays the round and, when mResultTimer runs out, bumps the win counter
-   (capped at 9999), 3 counts down a retry.
+/* One frame of the round, by mState: 0 starts; 1 plays the round while
+   mIntroTimer controls the prompt; 2 waits for the result, then celebrates
+   a win or advances to 3 for the loss delay. Wins increment the HUD score
+   up to 9999.
    The `(int)` casts on the three countdown decrements are needed: without
    them the address folds into the decrement and the function comes out
    short. */
@@ -406,8 +407,7 @@ s32 dScMgSound_c::Behavior()
                                 active->mBestHudScore = active->mHudScore;
                         }
                     }
-                    Mg_SubmitScore(gMgScene != 0
-                                            ? gMgScene->mHudScore : 0);
+                    Mg_SubmitScore(gMgScene != 0 ? gMgScene->mHudScore : 0);
                     StartWinSpriteA();
                     StartWinSpriteB();
                     mPromptEnabled = 0;
@@ -515,13 +515,13 @@ void dScMgSound_c::OnNewRecord()
 // @symbol _ZN12dScMgSound_c10ResetRoundEv
 void dScMgSound_c::ResetRound()
 {
-        int i;
-    int cnt1;
-    int cnt2;
-    char *b = (char *)this;
+    int popSlot;
+    int noteSlot;
+    int pairIndex;
+    char *cursor = (char *)this;
 
-    for (cnt1 = 0; cnt1 < 10; cnt1++) {
-        dMgSoundNoteCur *note = (dMgSoundNoteCur *)b;
+    for (noteSlot = 0; noteSlot < 10; noteSlot++) {
+        dMgSoundNoteCur *note = (dMgSoundNoteCur *)cursor;
         note->note.x = 0;
         note->note.y = 0;
         note->note.timer = 0;
@@ -530,17 +530,17 @@ void dScMgSound_c::ResetRound()
         note->note.shown = 0;
         note->note.frame = 0;
         note->note.note = 0;
-        b += 0x14;
+        cursor += 0x14;
     }
 
-    for (cnt2 = 0; cnt2 < 5; cnt2++) {
-        this->mPairUses[cnt2] = 0;
-        this->mPairNotes[cnt2] = 0;
+    for (pairIndex = 0; pairIndex < 5; pairIndex++) {
+        mPairUses[pairIndex] = 0;
+        mPairNotes[pairIndex] = 0;
     }
 
-    b = (char *)this;
-    for (i = 0; i < 0x1e; i++) {
-        dMgSoundPopCur *pop = (dMgSoundPopCur *)b;
+    cursor = (char *)this;
+    for (popSlot = 0; popSlot < 0x1e; popSlot++) {
+        dMgSoundPopCur *pop = (dMgSoundPopCur *)cursor;
         pop->pop.x = 0;
         pop->pop.y = 0;
         pop->pop.velX = 0;
@@ -556,119 +556,121 @@ void dScMgSound_c::ResetRound()
         pop->pop.phase = 0;
         pop->pop.kind = 0;
         pop->pop.dir = 0;
-        b += 0x24;
+        cursor += 0x24;
     }
 
-    this->mSpriteB.active = 0;
-    this->mSpriteB.visible = 1;
-    this->mSpriteB.x = 0xbd000;
-    this->mSpriteB.y = 0x97000;
-    this->mSpriteB.frame = 0;
-    this->mSpriteA.active = 0;
-    this->mSpriteA.visible = 1;
-    this->mSpriteA.x = 0xa0000;
-    this->mSpriteA.y = 0x9d000;
-    this->mSpriteA.frame = 0;
+    mSpriteB.active = 0;
+    mSpriteB.visible = 1;
+    mSpriteB.x = 0xbd000;
+    mSpriteB.y = 0x97000;
+    mSpriteB.frame = 0;
+    mSpriteA.active = 0;
+    mSpriteA.visible = 1;
+    mSpriteA.x = 0xa0000;
+    mSpriteA.y = 0x9d000;
+    mSpriteA.frame = 0;
 
-    this->mQueue[1] = 0;
-    this->mQueue[0] = this->mQueue[1];
-    this->mQueueTimer = 0;
-    this->mQueueLen = 0;
-    this->mTouchCount = 0;
-    this->mResultTimer = 0;
+    mQueue[1] = 0;
+    mQueue[0] = mQueue[1];
+    mQueueTimer = 0;
+    mQueueLen = 0;
+    mTouchCount = 0;
+    mResultTimer = 0;
 
-    Presenter_ResetPose((char *)&this->mTable);
+    Presenter_ResetPose((char *)&mTable);
 }
 
 // @symbol _ZN12dScMgSound_c9DealNotesEv
+/* Choose distinct pitches, make one pair of each, then deal the pairs
+ * into the selected screen layout with exactly two uses per pair. */
 void dScMgSound_c::DealNotes()
 {
-        int sel;
-    int k;
-    int count;
-    int n;
-    int half;
-    int speed;
-    int i;
+    int selectedPattern;
+    int pattern;
+    int noteCount;
+    int noteIndex;
+    int pairCount;
+    int pitchCount;
+    int pairIndex;
 
-    sel = this->mLevel;
-    this->mPrevPattern = this->mPattern;
-    if (sel >= 5) {
-        sel = (u32)(RND * 5) >> 15;
-        if (sel == this->mPrevPattern) {
-            sel += ((u32)(RND << 2) >> 15) + 1;
-            if (sel >= 5)
-                sel -= 5;
+    selectedPattern = mLevel;
+    mPrevPattern = mPattern;
+    if (selectedPattern >= 5) {
+        selectedPattern = (u32)(RND * 5) >> 15;
+        if (selectedPattern == mPrevPattern) {
+            selectedPattern += ((u32)(RND << 2) >> 15) + 1;
+            if (selectedPattern >= 5)
+                selectedPattern -= 5;
         }
     }
-    this->mPattern = sel;
-    k = this->mPattern;
-    count = data_ov006_0212ee18[k];
-    speed = data_ov006_0212ee10[k];
-    if (k == 3) {
-        int a = (u32)(RND << 2) >> 15;
-        int b = (u32)(RND * 3) >> 15;
-        this->mPairNotes[0] = b;
-        this->mPairNotes[1] = this->mPairNotes[0] + 1;
-        if (this->mPairNotes[1] >= 3)
-            this->mPairNotes[1] -= 3;
-        this->mPairNotes[2] = this->mPairNotes[1] + 1;
-        if (this->mPairNotes[2] >= 3)
-            this->mPairNotes[2] -= 3;
-        this->mPairNotes[0] += a * 3;
-        this->mPairNotes[1] += a * 3;
-        this->mPairNotes[2] += a * 3;
+    mPattern = selectedPattern;
+    pattern = mPattern;
+    noteCount = data_ov006_0212ee18[pattern];
+    pitchCount = data_ov006_0212ee10[pattern];
+    if (pattern == 3) {
+        int pitchGroup = (u32)(RND << 2) >> 15;
+        int firstPitch = (u32)(RND * 3) >> 15;
+        mPairNotes[0] = firstPitch;
+        mPairNotes[1] = mPairNotes[0] + 1;
+        if (mPairNotes[1] >= 3)
+            mPairNotes[1] -= 3;
+        mPairNotes[2] = mPairNotes[1] + 1;
+        if (mPairNotes[2] >= 3)
+            mPairNotes[2] -= 3;
+        mPairNotes[0] += pitchGroup * 3;
+        mPairNotes[1] += pitchGroup * 3;
+        mPairNotes[2] += pitchGroup * 3;
     } else {
-        half = count >> 1;
-        for (i = 0; i < half; i++) {
-            int v = (u32)(RND * speed) >> 15;
-            this->mPairNotes[i] = v;
-            if (i != 0) {
-                int dup;
-                int j;
+        pairCount = noteCount >> 1;
+        for (pairIndex = 0; pairIndex < pairCount; pairIndex++) {
+            int pitch = (u32)(RND * pitchCount) >> 15;
+            mPairNotes[pairIndex] = pitch;
+            if (pairIndex != 0) {
+                int duplicate;
+                int previousPair;
                 for (;;) {
-                    dup = 0;
-                    j = 0;
-                    for (; j < i; j++) {
-                        if (this->mPairNotes[i] == this->mPairNotes[j]) {
-                            dup = 1;
+                    duplicate = 0;
+                    previousPair = 0;
+                    for (; previousPair < pairIndex; previousPair++) {
+                        if (mPairNotes[pairIndex] == mPairNotes[previousPair]) {
+                            duplicate = 1;
                             break;
                         }
                     }
-                    if (dup == 0)
+                    if (duplicate == 0)
                         break;
-                    this->mPairNotes[i] = (u32)(RND * speed) >> 15;
+                    mPairNotes[pairIndex] = (u32)(RND * pitchCount) >> 15;
                 }
             }
         }
     }
-    k = this->mPattern;
-    if (k == 1 || k == 4) {
-        this->mBank = data_ov006_0212efb0[((u32)this->mLevel >> 2) & 3];
+    pattern = mPattern;
+    if (pattern == 1 || pattern == 4) {
+        mBank = data_ov006_0212efb0[((u32)mLevel >> 2) & 3];
     }
-    half = count >> 1;
-    for (i = 0; i < half; i++) {
-        this->mPairNotes[i] += data_ov006_0212ef9c[this->mPattern];
+    pairCount = noteCount >> 1;
+    for (pairIndex = 0; pairIndex < pairCount; pairIndex++) {
+        mPairNotes[pairIndex] += data_ov006_0212ef9c[mPattern];
     }
     {
-        int xi;
-        char *p;
-        int zi;
-        char *q;
-        u8 *slot;
-        int t;
+        int xIndex;
+        char *noteCursor;
+        int yIndex;
+        char *pairBase;
+        u8 *pairUses;
+        int layout;
 
-        n = 0;
-        if (count <= 0)
+        noteIndex = 0;
+        if (noteCount <= 0)
             return;
-        zi = 1;
-        xi = 0;
-        p = (char *)this;
+        yIndex = 1;
+        xIndex = 0;
+        noteCursor = (char *)this;
         do {
-            dMgSoundNoteCur *note = (dMgSoundNoteCur *)p;
-            t = data_ov006_0212ee20[this->mPattern];
-            note->note.x = data_ov006_0213f6fc[t][xi] << 12;
-            note->note.y = (*(u16 * volatile *)&data_ov006_0213f6fc[t])[zi] << 12;
+            dMgSoundNoteCur *note = (dMgSoundNoteCur *)noteCursor;
+            layout = data_ov006_0212ee20[mPattern];
+            note->note.x = data_ov006_0213f6fc[layout][xIndex] << 12;
+            note->note.y = (*(u16 *volatile *)&data_ov006_0213f6fc[layout])[yIndex] << 12;
             note->note.timer = 0;
             note->note.state = 0;
             note->note.alive = 1;
@@ -676,16 +678,16 @@ void dScMgSound_c::DealNotes()
             note->note.frame = 0;
             note->note.checked = 0;
             do {
-                q = (char *)this + ((u32)(RND * half) >> 15);
-                slot = (u8 *)LAUNDER(q + 0x561a);
-            } while (*slot >= 2);
-            note->note.note = *(u8 *)(q + 0x561f);
-            (*slot)++;
-            xi += 2;
-            p += 0x14;
-            zi += 2;
-            n++;
-        } while (n < count);
+                pairBase = (char *)this + ((u32)(RND * pairCount) >> 15);
+                pairUses = (u8 *)LAUNDER(pairBase + 0x561a);
+            } while (*pairUses >= 2);
+            note->note.note = *(u8 *)(pairBase + 0x561f);
+            (*pairUses)++;
+            xIndex += 2;
+            noteCursor += 0x14;
+            yIndex += 2;
+            noteIndex++;
+        } while (noteIndex < noteCount);
     }
 }
 
@@ -694,31 +696,31 @@ void dScMgSound_c::Note_StateWait(int slot)
 {
     u8 player;
     int offset;
-    int active;
+    int touchPressed;
     int dx;
     int dy;
 
-    if (this->mState != 1) {
+    if (mState != 1) {
         return;
     }
-    if (this->mTouchCount >= 2) {
+    if (mTouchCount >= 2) {
         return;
     }
 
     player = gActivePlayerSlot;
     offset = player * 4;
-    active = 0;
+    touchPressed = 0;
     if (gTouchHeld[offset] != 0) {
         if (gTouchEdge[offset] != 0) {
-            active = 1;
+            touchPressed = 1;
         }
     }
-    if (active == 0) {
+    if (touchPressed == 0) {
         return;
     }
 
-    dx = gTouchX[player * 4] - (this->mNotes[slot].x >> 12);
-    dy = gTouchY[player * 4] - (this->mNotes[slot].y >> 12);
+    dx = gTouchX[player * 4] - (mNotes[slot].x >> 12);
+    dy = gTouchY[player * 4] - (mNotes[slot].y >> 12);
 
     if (dx > 0x18) {
         return;
@@ -733,10 +735,10 @@ void dScMgSound_c::Note_StateWait(int slot)
         return;
     }
 
-    this->mNotes[slot].state = 1;
-    this->mNotes[slot].timer = 0;
-    this->mNotes[slot].frame = 0;
-    this->mTouchCount++;
+    mNotes[slot].state = 1;
+    mNotes[slot].timer = 0;
+    mNotes[slot].frame = 0;
+    mTouchCount++;
     Sound::PlayBank2_2D(0x201);
 }
 
@@ -750,77 +752,86 @@ void dScMgSound_c::Note_StateWait(int slot)
 void dScMgSound_c::Note_StateOpening(int idx)
 {
     u8 note;
-    u8 instrument;
+    u8 pattern;
 
-    this->mNotes[idx].timer = this->mNotes[idx].timer + 1;
-    if (this->mNotes[idx].timer < data_ov006_0212ef3c[this->mNotes[idx].frame]) return;
-    this->mNotes[idx].timer = 0;
-    this->mNotes[idx].frame = this->mNotes[idx].frame + 1;
-    if (this->mNotes[idx].frame <= 6) return;
-    this->mNotes[idx].frame = 6;
-    this->mNotes[idx].state = 2;
+    mNotes[idx].timer = mNotes[idx].timer + 1;
+    if (mNotes[idx].timer < data_ov006_0212ef3c[mNotes[idx].frame])
+        return;
+    mNotes[idx].timer = 0;
+    mNotes[idx].frame = mNotes[idx].frame + 1;
+    if (mNotes[idx].frame <= 6)
+        return;
+    mNotes[idx].frame = 6;
+    mNotes[idx].state = 2;
 
-    this->mQueue[this->mQueueLen] = this->mNotes[idx].note + 1;
-    this->mQueue[this->mQueueLen] |= idx << 8;
-    this->mQueueLen++;
-    this->mQueueTimer = 0x20;
+    mQueue[mQueueLen] = mNotes[idx].note + 1;
+    mQueue[mQueueLen] |= idx << 8;
+    mQueueLen++;
+    mQueueTimer = 0x20;
 
     SpawnPops(idx);
-    note = this->mNotes[idx].note;
+    note = mNotes[idx].note;
 
-    if (this->IsAltVariant()) {
-        instrument = this->mPattern;
-        if (instrument == 0 || instrument == 2) {
+    if (IsAltVariant()) {
+        pattern = mPattern;
+        if (pattern == 0 || pattern == 2) {
             if (data_ov006_0213f794[note] == 2) {
                 func_02012790(data_ov006_0213f7e8[note]);
             } else {
-                func_02012174(this->mBank, data_ov006_0213f7e8[note]);
+                func_02012174(mBank, data_ov006_0213f7e8[note]);
             }
-        } else if (instrument == 1) {
-            int n = note - 0x1a;
-            int k = 0;
-            while (n >= 4) { n -= 4; k++; }
-            func_02012174(n, data_ov006_0213f7e8[0x1a + k * 4]);
+        } else if (pattern == 1) {
+            int bankIndex = note - 0x1a;
+            int soundGroup = 0;
+            while (bankIndex >= 4) {
+                bankIndex -= 4;
+                soundGroup++;
+            }
+            func_02012174(bankIndex, data_ov006_0213f7e8[0x1a + soundGroup * 4]);
         } else {
             Sound::PlayBank2_2D(data_ov006_0213f7e8[note]);
         }
     } else {
-        instrument = this->mPattern;
-        if (instrument == 0 || instrument == 2) {
+        pattern = mPattern;
+        if (pattern == 0 || pattern == 2) {
             func_02012790(data_ov006_0213f7e8[note]);
-        } else if (instrument == 1) {
-            func_02012174(this->mBank, data_ov006_0213f7e8[note]);
-        } else if (instrument == 4) {
+        } else if (pattern == 1) {
+            func_02012174(mBank, data_ov006_0213f7e8[note]);
+        } else if (pattern == 4) {
             if (data_ov006_0213f794[note] == 2) {
                 Sound::PlayBank2_2D(data_ov006_0213f7e8[note]);
             } else {
-                func_02012174(this->mBank, data_ov006_0213f7e8[note]);
+                func_02012174(mBank, data_ov006_0213f7e8[note]);
             }
         } else {
             Sound::PlayBank2_2D(data_ov006_0213f7e8[note]);
         }
     }
 
-    if (this->mTouchCount == 1)
-        Presenter_PlayCheerLoop((char *)&this->mTable);
+    if (mTouchCount == 1)
+        Presenter_PlayCheerLoop((char *)&mTable);
 }
 
 // @symbol _ZN12dScMgSound_c14Note_StateOpenEi
-void dScMgSound_c::Note_StateOpen(int slot) {
-    if (this->mTouchCount == 0) {
-        this->mNotes[slot].state = 3;
+void dScMgSound_c::Note_StateOpen(int slot)
+{
+    if (mTouchCount == 0) {
+        mNotes[slot].state = 3;
     }
 }
 
 // @symbol _ZN12dScMgSound_c17Note_StateClosingEi
-void dScMgSound_c::Note_StateClosing(int slot){
-    unsigned char b;
-    this->mNotes[slot].timer = (unsigned short)(this->mNotes[slot].timer + 1);
-    b = this->mNotes[slot].frame;
-    if (this->mNotes[slot].timer < data_ov006_0212ef4c[b]) return;
-    this->mNotes[slot].timer = 0;
-    this->mNotes[slot].frame = (unsigned char)(this->mNotes[slot].frame - 1);
-    if (this->mNotes[slot].frame == 0) this->mNotes[slot].state = 0;
+void dScMgSound_c::Note_StateClosing(int slot)
+{
+    unsigned char frame;
+    mNotes[slot].timer = (unsigned short)(mNotes[slot].timer + 1);
+    frame = mNotes[slot].frame;
+    if (mNotes[slot].timer < data_ov006_0212ef4c[frame])
+        return;
+    mNotes[slot].timer = 0;
+    mNotes[slot].frame = (unsigned char)(mNotes[slot].frame - 1);
+    if (mNotes[slot].frame == 0)
+        mNotes[slot].state = 0;
 }
 
 // @symbol _ZN12dScMgSound_c16Note_StateScrollEi
@@ -829,166 +840,180 @@ void dScMgSound_c::Note_StateClosing(int slot){
    data_ov006_0212ef5c and data_ov006_0212ef6c. */
 void dScMgSound_c::Note_StateScroll(int slot)
 {
-    int n;
-    int i;
-    int limit;
+    int column;
+    int previousOffset;
+    int rowSize;
 
-    this->mNotes[slot].x -= 0x10000;
+    mNotes[slot].x -= 0x10000;
 
-    if (this->IsAltVariant() != 0) {
-        limit = data_ov006_0212ef5c[this->mPattern];
+    if (IsAltVariant() != 0) {
+        rowSize = data_ov006_0212ef5c[mPattern];
     } else {
-        limit = data_ov006_0212ef6c[this->mPattern];
+        rowSize = data_ov006_0212ef6c[mPattern];
     }
 
-    if (this->mNotes[slot].checked == 0) {
-        n = slot;
-        if (slot >= limit) {
+    if (mNotes[slot].checked == 0) {
+        column = slot;
+        if (slot >= rowSize) {
             do {
-                n = n - limit;
-            } while (n >= limit);
+                column = column - rowSize;
+            } while (column >= rowSize);
         }
-        if (n == 0) {
-            this->mNotes[slot].checked = 1;
+        if (column == 0) {
+            mNotes[slot].checked = 1;
             return;
         }
-        for (i = 0; i < n; i++) {
-            int prev = slot - i - 1;
-            if (this->mNotes[prev].alive != 0) {
-                if ((this->mNotes[slot].x - this->mNotes[prev].x) >> 0xc <= 4) {
-                    this->mNotes[slot].checked = 1;
-                    this->mNotes[prev].state = 4;
+        for (previousOffset = 0; previousOffset < column; previousOffset++) {
+            int previousSlot = slot - previousOffset - 1;
+            if (mNotes[previousSlot].alive != 0) {
+                if ((mNotes[slot].x - mNotes[previousSlot].x) >> 0xc <= 4) {
+                    mNotes[slot].checked = 1;
+                    mNotes[previousSlot].state = 4;
                 }
             }
         }
     }
 
-    if (this->mNotes[slot].x >> 0xc > -0x18) return;
+    if (mNotes[slot].x >> 0xc > -0x18)
+        return;
 
-    this->mNotes[slot].alive = 0;
-    this->mNotes[slot].shown = 0;
+    mNotes[slot].alive = 0;
+    mNotes[slot].shown = 0;
 }
 
 // @symbol _ZN12dScMgSound_c15RevealUnmatchedEv
-void dScMgSound_c::RevealUnmatched() {
-        int lr;
-    int ip;
-    int found;
-    int off;
-    if (this->IsAltVariant()) {
-        lr = data_ov006_0212ef7c[this->mPattern];
+/* Start scrolling from the last surviving note in each row. Earlier
+ * notes follow through Note_StateScroll once their neighbour reaches them. */
+void dScMgSound_c::RevealUnmatched()
+{
+    int rowSize;
+    int row;
+    int lastAliveSlot;
+    int rowOffset;
+    if (IsAltVariant()) {
+        rowSize = data_ov006_0212ef7c[mPattern];
     } else {
-        lr = data_ov006_0212ef8c[this->mPattern];
+        rowSize = data_ov006_0212ef8c[mPattern];
     }
-    for (ip = 0, off = 0; ip < 2; ip++) {
-        int sb;
-        found = -1;
-        for (sb = 0; sb < lr; sb++) {
-            int e = sb + off;
-            if (this->mNotes[e].alive != 0)
-                found = e;
+    for (row = 0, rowOffset = 0; row < 2; row++) {
+        int column;
+        lastAliveSlot = -1;
+        for (column = 0; column < rowSize; column++) {
+            int slot = column + rowOffset;
+            if (mNotes[slot].alive != 0)
+                lastAliveSlot = slot;
         }
-        if (found != -1) {
-            this->mNotes[found].state = 4;
+        if (lastAliveSlot != -1) {
+            mNotes[lastAliveSlot].state = 4;
         }
-        off += lr;
+        rowOffset += rowSize;
     }
 }
 
 // @symbol _ZN12dScMgSound_c11UpdateNotesEv
-void dScMgSound_c::UpdateNotes(){
-  int i=0;
-  char *r5 = (char *)this;
-  do{
-    dMgSoundNoteCur *note = (dMgSoundNoteCur *)r5;
-    if(note->note.alive != 0){
-      int idx=note->note.state;
-      (this->*data_ov006_02142df8[idx].pmf)(i);
-    }
-    i++;
-    r5+=0x14;
-  }while(i<10);
+void dScMgSound_c::UpdateNotes()
+{
+    int slot = 0;
+    char *noteCursor = (char *)this;
+    do {
+        dMgSoundNoteCur *note = (dMgSoundNoteCur *)noteCursor;
+        if (note->note.alive != 0) {
+            int state = note->note.state;
+            (this->*data_ov006_02142df8[state].pmf)(slot);
+        }
+        slot++;
+        noteCursor += 0x14;
+    } while (slot < 10);
 }
 
 // @symbol _ZN12dScMgSound_c9CheckPairEv
-void dScMgSound_c::CheckPair(){
-    if(this->mQueueLen < 2) return;
-  if(this->mQueueTimer != 0){
-    this->mQueueTimer -= 1;
-    if((short)this->mQueueTimer <= 0) this->mQueueTimer = 0;
-    return;
-  }
-  if((this->mQueue[0] & 0xff) == (this->mQueue[1] & 0xff)){
-    this->mNotes[this->mQueue[0] >> 8].alive = 0;
-    this->mNotes[this->mQueue[1] >> 8].alive = 0;
-    func_02012790(0x26);
-    Presenter_PlayMatch(&this->mTable);
-  } else {
-    this->mNotes[this->mQueue[0] >> 8].state = 3;
-    this->mNotes[this->mQueue[1] >> 8].state = 3;
-    func_02012790(0xe);
-    this->mTries--;
-    func_02012790(0x12f);
-    Presenter_PlayMiss((char *)&this->mTable);
-  }
-  this->mQueue[1] = 0;
-  this->mQueue[0] = this->mQueue[1];
-  this->mQueueLen = 0;
-  this->mTouchCount = 0;
+/* Queue entries pack the note slot in the high byte and pitch + 1 in
+ * the low byte. Compare pitches after the reveal delay. */
+void dScMgSound_c::CheckPair()
+{
+    if (mQueueLen < 2)
+        return;
+    if (mQueueTimer != 0) {
+        mQueueTimer -= 1;
+        if ((short)mQueueTimer <= 0)
+            mQueueTimer = 0;
+        return;
+    }
+    if ((mQueue[0] & 0xff) == (mQueue[1] & 0xff)) {
+        mNotes[mQueue[0] >> 8].alive = 0;
+        mNotes[mQueue[1] >> 8].alive = 0;
+        func_02012790(0x26);
+        Presenter_PlayMatch(&mTable);
+    } else {
+        mNotes[mQueue[0] >> 8].state = 3;
+        mNotes[mQueue[1] >> 8].state = 3;
+        func_02012790(0xe);
+        mTries--;
+        func_02012790(0x12f);
+        Presenter_PlayMiss((char *)&mTable);
+    }
+    mQueue[1] = 0;
+    mQueue[0] = mQueue[1];
+    mQueueLen = 0;
+    mTouchCount = 0;
 }
 
 // @symbol _ZN12dScMgSound_c14CheckRoundOverEv
 void dScMgSound_c::CheckRoundOver()
 {
-        if (this->mTries == 0) {
-        this->mState = 2;
-        this->mResultTimer = 0x50;
+    if (mTries == 0) {
+        mState = 2;
+        mResultTimer = 0x50;
         return;
     }
     {
-        int count = 0;
-        int i = 0;
-        char *p = (char *)this;
+        int hasAliveNote = 0;
+        int slot = 0;
+        char *noteCursor = (char *)this;
         do {
-            if (((dMgSoundNoteCur *)p)->note.alive != 0) {
-                count++;
+            if (((dMgSoundNoteCur *)noteCursor)->note.alive != 0) {
+                hasAliveNote++;
                 break;
             }
-            i++;
-            p += 0x14;
-        } while (i < 0xa);
-        if (count != 0) return;
-        this->mResultTimer = 0x50;
-        this->mState = 2;
+            slot++;
+            noteCursor += 0x14;
+        } while (slot < 0xa);
+        if (hasAliveNote != 0)
+            return;
+        mResultTimer = 0x50;
+        mState = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c9SpawnPopsEi
-void dScMgSound_c::SpawnPops(int n)
+void dScMgSound_c::SpawnPops(int noteSlot)
 {
-    int k;
-    int i;
-    u8* g = data_ov006_0212ee30;
+    int spawnIndex;
+    int popSlot;
+    u8 *spriteEntry = data_ov006_0212ee30;
 
-    for (k = 0; k < 3; g++, k++) {
-        for (i = 0; i < 30; i++) {
-            if (this->mPops[i].active == 0) {
-                this->mPops[i].active = 1;
-                this->mPops[i].x = this->mNotes[n].x;
-                this->mPops[i].y = this->mNotes[n].y - 0x8000;
-                this->mPops[i].startY = this->mPops[i].y;
-                this->mPops[i].sprite = *g;
-                this->mPops[i].kind = *g;
-                this->mPops[i].timer = 0;
-                if (this->mNotes[n].note == 7) {
-                    if (k >= 3) { this->mPops[i].timer = 0x10; }
-                    else { this->mPops[i].timer = 8; }
+    for (spawnIndex = 0; spawnIndex < 3; spriteEntry++, spawnIndex++) {
+        for (popSlot = 0; popSlot < 30; popSlot++) {
+            if (mPops[popSlot].active == 0) {
+                mPops[popSlot].active = 1;
+                mPops[popSlot].x = mNotes[noteSlot].x;
+                mPops[popSlot].y = mNotes[noteSlot].y - 0x8000;
+                mPops[popSlot].startY = mPops[popSlot].y;
+                mPops[popSlot].sprite = *spriteEntry;
+                mPops[popSlot].kind = *spriteEntry;
+                mPops[popSlot].timer = 0;
+                if (mNotes[noteSlot].note == 7) {
+                    if (spawnIndex >= 3) {
+                        mPops[popSlot].timer = 0x10;
+                    } else {
+                        mPops[popSlot].timer = 8;
+                    }
                 }
-                this->mPops[i].scale = 0x1000;
-                this->mPops[i].velX = 0;
-                this->mPops[i].velY = 0;
-                this->mPops[i].state = 0;
-                this->mPops[i].phase = 0;
+                mPops[popSlot].scale = 0x1000;
+                mPops[popSlot].velX = 0;
+                mPops[popSlot].velY = 0;
+                mPops[popSlot].state = 0;
+                mPops[popSlot].phase = 0;
                 break;
             }
         }
@@ -996,36 +1021,37 @@ void dScMgSound_c::SpawnPops(int n)
 }
 
 // @symbol _ZN12dScMgSound_c10UpdatePopsEv
-void dScMgSound_c::UpdatePops(){
-  int i=0;
-  char *r5 = (char *)this;
-  do{
-    dMgSoundPopCur *pop = (dMgSoundPopCur *)r5;
-    if(pop->pop.active != 0){
-      int idx=pop->pop.state;
-      (this->*data_ov006_02142e20[idx].pmf)(i);
-    }
-    i++;
-    r5+=0x24;
-  }while(i<30);
+void dScMgSound_c::UpdatePops()
+{
+    int slot = 0;
+    char *popCursor = (char *)this;
+    do {
+        dMgSoundPopCur *pop = (dMgSoundPopCur *)popCursor;
+        if (pop->pop.active != 0) {
+            int state = pop->pop.state;
+            (this->*data_ov006_02142e20[state].pmf)(slot);
+        }
+        slot++;
+        popCursor += 0x24;
+    } while (slot < 30);
 }
 
 // @symbol _ZN12dScMgSound_c12Pop00_UpdateEi
 void dScMgSound_c::Pop00_Update(int slot)
 {
-    unsigned char idx = this->mPops[slot].phase;
-    (this->*data_ov006_02142d38[idx])(slot);
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d38[phase])(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop00_StartEi
 void dScMgSound_c::Pop00_Start(int slot)
 {
-    this->mPops[slot].visible = 1;
-    this->mPops[slot].x += data_ov006_0212eeb8[this->mPops[slot].kind];
-    this->mPops[slot].velY = 0;
-    this->mPops[slot].velX = data_ov006_0212eea0[this->mPops[slot].kind];
-    this->mPops[slot].dir = data_ov006_0212ee0c[this->mPops[slot].kind];
-    this->mPops[slot].phase = 1;
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212eeb8[mPops[slot].kind];
+    mPops[slot].velY = 0;
+    mPops[slot].velX = data_ov006_0212eea0[mPops[slot].kind];
+    mPops[slot].dir = data_ov006_0212ee0c[mPops[slot].kind];
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop00_FlyEi
@@ -1033,29 +1059,29 @@ void dScMgSound_c::Pop00_Fly(int slot)
 {
     int dir;
 
-    this->mPops[slot].x += this->mPops[slot].velX;
+    mPops[slot].x += mPops[slot].velX;
 
-    dir = this->mPops[slot].dir;
+    dir = mPops[slot].dir;
     if (dir == 0) {
-        this->mPops[slot].velX -= 0x100;
-        if (this->mPops[slot].velX < -0xc00) {
-            this->mPops[slot].velX = -0xc00;
-            this->mPops[slot].dir = 1;
+        mPops[slot].velX -= 0x100;
+        if (mPops[slot].velX < -0xc00) {
+            mPops[slot].velX = -0xc00;
+            mPops[slot].dir = 1;
         }
     } else if (dir != 0) {
-        this->mPops[slot].velX += 0x100;
-        if (this->mPops[slot].velX > 0xc00) {
-            this->mPops[slot].velX = 0xc00;
-            this->mPops[slot].dir = 0;
+        mPops[slot].velX += 0x100;
+        if (mPops[slot].velX > 0xc00) {
+            mPops[slot].velX = 0xc00;
+            mPops[slot].dir = 0;
         }
     }
 
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY -= 0xc0;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY -= 0xc0;
 
-    if ((this->mPops[slot].startY - this->mPops[slot].y) >> 12 >= 0x40) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    if ((mPops[slot].startY - mPops[slot].y) >> 12 >= 0x40) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
@@ -1067,158 +1093,168 @@ void dScMgSound_c::Pop00_Finish()
 // @symbol _ZN12dScMgSound_c12Pop01_UpdateEi
 void dScMgSound_c::Pop01_Update(int slot)
 {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142d50[state].pmf)(slot);
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d50[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop01_StartEi
 void dScMgSound_c::Pop01_Start(int slot)
 {
-  this->mPops[slot].visible = 1;
-  this->mPops[slot].x += data_ov006_0212eed0[this->mPops[slot].kind];
-  this->mPops[slot].velY = -0x2800;
-  this->mPops[slot].velX = data_ov006_0212eec4[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212eed0[mPops[slot].kind];
+    mPops[slot].velY = -0x2800;
+    mPops[slot].velX = data_ov006_0212eec4[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop01_FlyEi
-void dScMgSound_c::Pop01_Fly(int slot){
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x200;
-    if (this->mPops[slot].velY > 0) {
-        this->mPops[slot].velY = 0;
-        this->mPops[slot].phase = 2;
+void dScMgSound_c::Pop01_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].velY = 0;
+        mPops[slot].phase = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop01_FinishEi
-void dScMgSound_c::Pop01_Finish(int slot){
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x100;
-  if (((this->mPops[slot].startY - this->mPops[slot].y) >> 0xc) > 0x18)
-    return;
-  if (this->mPops[slot].velY > 0) {
-    this->mPops[slot].active = 0;
-    this->mPops[slot].visible = 0;
-  }
+void dScMgSound_c::Pop01_Finish(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x100;
+    if (((mPops[slot].startY - mPops[slot].y) >> 0xc) > 0x18)
+        return;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
+    }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop02_UpdateEi
-void dScMgSound_c::Pop02_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142d80[state].pmf)(slot);
+void dScMgSound_c::Pop02_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d80[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop02_StartEi
 void dScMgSound_c::Pop02_Start(int slot)
 {
-    this->mPops[slot].visible = 1;
-    this->mPops[slot].x += data_ov006_0212eef4[this->mPops[slot].kind];
-    this->mPops[slot].velY = -0x2000;
-    this->mPops[slot].velX = data_ov006_0212eee8[this->mPops[slot].kind];
-    this->mPops[slot].timer = 0;
-    this->mPops[slot].phase = 1;
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212eef4[mPops[slot].kind];
+    mPops[slot].velY = -0x2000;
+    mPops[slot].velX = data_ov006_0212eee8[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop02_FlyEi
-void dScMgSound_c::Pop02_Fly(int slot){
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x100;
-    if (this->mPops[slot].velY > 0) {
-        this->mPops[slot].velY = 0;
-        this->mPops[slot].phase = 2;
+void dScMgSound_c::Pop02_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x100;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].velY = 0;
+        mPops[slot].phase = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop02_FinishEi
-void dScMgSound_c::Pop02_Finish(int slot){
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x100;
-  if (((this->mPops[slot].startY - this->mPops[slot].y) >> 0xc) > 0x10)
-    return;
-  if (this->mPops[slot].velY > 0) {
-    this->mPops[slot].active = 0;
-    this->mPops[slot].visible = 0;
-  }
+void dScMgSound_c::Pop02_Finish(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x100;
+    if (((mPops[slot].startY - mPops[slot].y) >> 0xc) > 0x10)
+        return;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
+    }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop03_UpdateEi
-void dScMgSound_c::Pop03_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142dc8[state].pmf)(slot);
+void dScMgSound_c::Pop03_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142dc8[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop03_StartEi
 void dScMgSound_c::Pop03_Start(int slot)
 {
-  this->mPops[slot].visible = 1;
-  this->mPops[slot].x += data_ov006_0212ef18[this->mPops[slot].kind];
-  this->mPops[slot].velY = -0x4800;
-  this->mPops[slot].velX = data_ov006_0212ef24[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212ef18[mPops[slot].kind];
+    mPops[slot].velY = -0x4800;
+    mPops[slot].velX = data_ov006_0212ef24[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop03_FlyEi
-void dScMgSound_c::Pop03_Fly(int slot){
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x400;
-    if (this->mPops[slot].velY > 0) {
-        this->mPops[slot].velY = 0;
-        this->mPops[slot].phase = 2;
+void dScMgSound_c::Pop03_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x400;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].velY = 0;
+        mPops[slot].phase = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop03_FinishEi
-void dScMgSound_c::Pop03_Finish(int slot){
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x200;
-  if (((this->mPops[slot].startY - this->mPops[slot].y) >> 0xc) > 0x20)
-    return;
-  if (this->mPops[slot].velY > 0) {
-    this->mPops[slot].active = 0;
-    this->mPops[slot].visible = 0;
-  }
+void dScMgSound_c::Pop03_Finish(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (((mPops[slot].startY - mPops[slot].y) >> 0xc) > 0x20)
+        return;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
+    }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop04_UpdateEi
-void dScMgSound_c::Pop04_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142de0[state].pmf)(slot);
+void dScMgSound_c::Pop04_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142de0[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop04_StartEi
-void dScMgSound_c::Pop04_Start(int slot) {
-    this->mPops[slot].scale = 0x3000;
-    this->mPops[slot].visible = 1;
-    this->mPops[slot].velY = -0x1000;
-    this->mPops[slot].velX = data_ov006_0212ee40[this->mPops[slot].kind];
-    this->mPops[slot].phase = 1;
+void dScMgSound_c::Pop04_Start(int slot)
+{
+    mPops[slot].scale = 0x3000;
+    mPops[slot].visible = 1;
+    mPops[slot].velY = -0x1000;
+    mPops[slot].velX = data_ov006_0212ee40[mPops[slot].kind];
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop04_FlyEi
 void dScMgSound_c::Pop04_Fly(int slot)
 {
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    if (this->mPops[slot].scale > 0x800) {
-        this->mPops[slot].scale -= 0x100;
-        if (this->mPops[slot].scale < 0x800)
-            this->mPops[slot].scale = 0x800;
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    if (mPops[slot].scale > 0x800) {
+        mPops[slot].scale -= 0x100;
+        if (mPops[slot].scale < 0x800)
+            mPops[slot].scale = 0x800;
     }
-    this->mPops[slot].velY -= 0x20;
+    mPops[slot].velY -= 0x20;
     {
-        int d = (this->mPops[slot].startY - this->mPops[slot].y) >> 12;
-        if (d >= 0x38) {
-            this->mPops[slot].active = 0;
-            this->mPops[slot].visible = 0;
+        int risePixels = (mPops[slot].startY - mPops[slot].y) >> 12;
+        if (risePixels >= 0x38) {
+            mPops[slot].active = 0;
+            mPops[slot].visible = 0;
         }
     }
 }
@@ -1229,143 +1265,149 @@ void dScMgSound_c::Pop04_Finish()
 }
 
 // @symbol _ZN12dScMgSound_c12Pop05_UpdateEi
-void dScMgSound_c::Pop05_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142cd8[state].pmf)(slot);
+void dScMgSound_c::Pop05_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142cd8[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop05_StartEi
-void dScMgSound_c::Pop05_Start(int slot) {
-    unsigned char k;
-    this->mPops[slot].visible = 1;
-    k = this->mPops[slot].kind;
-    this->mPops[slot].x += data_ov006_0212ee7c[k];
-    this->mPops[slot].velY = -0x4000;
-    this->mPops[slot].phase = 1;
+void dScMgSound_c::Pop05_Start(int slot)
+{
+    unsigned char kind;
+    mPops[slot].visible = 1;
+    kind = mPops[slot].kind;
+    mPops[slot].x += data_ov006_0212ee7c[kind];
+    mPops[slot].velY = -0x4000;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop05_FlyEi
 void dScMgSound_c::Pop05_Fly(int slot)
 {
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x400;
-    if (this->mPops[slot].velY > 0) {
-        this->mPops[slot].velY = 0;
-        this->mPops[slot].phase = 2;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x400;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].velY = 0;
+        mPops[slot].phase = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop05_FinishEi
-void dScMgSound_c::Pop05_Finish(int slot) {
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x100;
-    if (((this->mPops[slot].startY - this->mPops[slot].y) >> 12) <= 0x18) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+void dScMgSound_c::Pop05_Finish(int slot)
+{
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x100;
+    if (((mPops[slot].startY - mPops[slot].y) >> 12) <= 0x18) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop06_UpdateEi
-void dScMgSound_c::Pop06_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142cf0[state].pmf)(slot);
+void dScMgSound_c::Pop06_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142cf0[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop06_StartEi
 /* Arms one pop: visible, no vertical speed, horizontal speed from its kind. */
 void dScMgSound_c::Pop06_Start(int slot)
 {
-    this->mPops[slot].visible = 1;
-    this->mPops[slot].velY = 0;
-    this->mPops[slot].velX = data_ov006_0212ee70[this->mPops[slot].kind];
-    this->mPops[slot].phase = 1;
-    this->mPops[slot].timer = 0;
+    mPops[slot].visible = 1;
+    mPops[slot].velY = 0;
+    mPops[slot].velX = data_ov006_0212ee70[mPops[slot].kind];
+    mPops[slot].phase = 1;
+    mPops[slot].timer = 0;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop06_FlyEi
 void dScMgSound_c::Pop06_Fly(int slot)
 {
-    int v;
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    v = this->mPops[slot].velX;
-    if (v > 0x20) {
-        this->mPops[slot].velX = v - 0x20;
-    } else if (v < -0x20) {
-        this->mPops[slot].velX = v + 0x20;
+    int velocityX;
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    velocityX = mPops[slot].velX;
+    if (velocityX > 0x20) {
+        mPops[slot].velX = velocityX - 0x20;
+    } else if (velocityX < -0x20) {
+        mPops[slot].velX = velocityX + 0x20;
     }
-    this->mPops[slot].velY -= 0x40;
-    this->mPops[slot].timer += 1;
-    if (this->mPops[slot].timer >= 0x28) {
-        this->mPops[slot].timer = 0;
-        this->mPops[slot].phase = 2;
-        this->mPops[slot].dir = 0;
-        this->mPops[slot].velX = 0xc00;
+    mPops[slot].velY -= 0x40;
+    mPops[slot].timer += 1;
+    if (mPops[slot].timer >= 0x28) {
+        mPops[slot].timer = 0;
+        mPops[slot].phase = 2;
+        mPops[slot].dir = 0;
+        mPops[slot].velX = 0xc00;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop06_FinishEi
 void dScMgSound_c::Pop06_Finish(int slot)
 {
-    int f;
-    this->mPops[slot].x += this->mPops[slot].velX;
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY -= 0x40;
-    f = this->mPops[slot].dir;
-    if (f == 0) {
-        this->mPops[slot].velX -= 0x100;
-        if (this->mPops[slot].velX < -0xc00) {
-            this->mPops[slot].velX = -0xc00;
-            this->mPops[slot].dir = 1;
+    int direction;
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY -= 0x40;
+    direction = mPops[slot].dir;
+    if (direction == 0) {
+        mPops[slot].velX -= 0x100;
+        if (mPops[slot].velX < -0xc00) {
+            mPops[slot].velX = -0xc00;
+            mPops[slot].dir = 1;
         }
-    } else if (f != 0) {
-        this->mPops[slot].velX += 0x100;
-        if (this->mPops[slot].velX > 0xc00) {
-            this->mPops[slot].velX = 0xc00;
-            this->mPops[slot].dir = 0;
+    } else if (direction != 0) {
+        mPops[slot].velX += 0x100;
+        if (mPops[slot].velX > 0xc00) {
+            mPops[slot].velX = 0xc00;
+            mPops[slot].dir = 0;
         }
     }
-    if ((this->mPops[slot].startY - this->mPops[slot].y) >> 12 >= 0x30) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    if ((mPops[slot].startY - mPops[slot].y) >> 12 >= 0x30) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop07_UpdateEi
-void dScMgSound_c::Pop07_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142d20[state].pmf)(slot);
+void dScMgSound_c::Pop07_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d20[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop07_StartEi
-void dScMgSound_c::Pop07_Start(int slot) {
-  unsigned short v = this->mPops[slot].timer;
-  if (v != 0) {
-    this->mPops[slot].timer = v - 1;
-    if (*(short *)&this->mPops[slot].timer < 0)
-      this->mPops[slot].timer = 0;
-    return;
-  }
-  this->mPops[slot].visible = 1;
-  this->mPops[slot].x += data_ov006_0212ee94[this->mPops[slot].kind];
-  this->mPops[slot].velY = -0x4000;
-  this->mPops[slot].phase = 1;
+void dScMgSound_c::Pop07_Start(int slot)
+{
+    unsigned short delay = mPops[slot].timer;
+    if (delay != 0) {
+        mPops[slot].timer = delay - 1;
+        if (*(short *)&mPops[slot].timer < 0)
+            mPops[slot].timer = 0;
+        return;
+    }
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212ee94[mPops[slot].kind];
+    mPops[slot].velY = -0x4000;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop07_FlyEi
 void dScMgSound_c::Pop07_Fly(int slot)
 {
-    int a = this->mPops[slot].velY;
-    int b = this->mPops[slot].y;
-    this->mPops[slot].y = b + a;
-    a = this->mPops[slot].velY;
-    this->mPops[slot].velY = a + 0x400;
+    int velocityY = mPops[slot].velY;
+    int positionY = mPops[slot].y;
+    mPops[slot].y = positionY + velocityY;
+    velocityY = mPops[slot].velY;
+    mPops[slot].velY = velocityY + 0x400;
     {
-        int d = this->mPops[slot].startY - this->mPops[slot].y;
-        d >>= 12;
-        if (d >= 0x20) {
-            this->mPops[slot].active = 0;
-            this->mPops[slot].visible = 0;
+        int rise = mPops[slot].startY - mPops[slot].y;
+        rise >>= 12;
+        if (rise >= 0x20) {
+            mPops[slot].active = 0;
+            mPops[slot].visible = 0;
         }
     }
 }
@@ -1376,337 +1418,359 @@ void dScMgSound_c::Pop07_Finish()
 }
 
 // @symbol _ZN12dScMgSound_c12Pop08_UpdateEi
-void dScMgSound_c::Pop08_Update(int slot) {
-    unsigned char state = this->mPops[slot].phase;
-    (this->*data_ov006_02142d68[state].pmf)(slot);
+void dScMgSound_c::Pop08_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d68[phase].pmf)(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop08_StartEi
-void dScMgSound_c::Pop08_Start(int slot) {
-    unsigned char k;
-    this->mPops[slot].visible = 1;
-    k = this->mPops[slot].kind;
-    this->mPops[slot].x += data_ov006_0212eedc[k];
-    this->mPops[slot].velY = -0x4000;
-    this->mPops[slot].phase = 1;
+void dScMgSound_c::Pop08_Start(int slot)
+{
+    unsigned char kind;
+    mPops[slot].visible = 1;
+    kind = mPops[slot].kind;
+    mPops[slot].x += data_ov006_0212eedc[kind];
+    mPops[slot].velY = -0x4000;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop08_FlyEi
 void dScMgSound_c::Pop08_Fly(int slot)
 {
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY += 0x400;
-    if (this->mPops[slot].velY > 0) {
-        this->mPops[slot].velY = 0;
-        this->mPops[slot].phase = 2;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x400;
+    if (mPops[slot].velY > 0) {
+        mPops[slot].velY = 0;
+        mPops[slot].phase = 2;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop08_FinishEi
-void dScMgSound_c::Pop08_Finish(int slot) {
-    this->mPops[slot].y += this->mPops[slot].velY;
-    this->mPops[slot].velY -= 0x60;
-    if ((this->mPops[slot].startY - this->mPops[slot].y) >> 0xc >= 0x3c) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+void dScMgSound_c::Pop08_Finish(int slot)
+{
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY -= 0x60;
+    if ((mPops[slot].startY - mPops[slot].y) >> 0xc >= 0x3c) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop09_UpdateEi
 void dScMgSound_c::Pop09_Update(int slot)
 {
-    unsigned char idx = this->mPops[slot].phase;
-    (this->*data_ov006_02142d98[idx])(slot);
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142d98[phase])(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop09_StartEi
 void dScMgSound_c::Pop09_Start(int slot)
 {
-  unsigned char idx;
-  this->mPops[slot].visible = 1;
-  idx = this->mPops[slot].kind;
-  this->mPops[slot].x += data_ov006_0212ee64[idx];
-  this->mPops[slot].velY = -0x3800;
-  this->mPops[slot].velX = data_ov006_0212ef00[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    unsigned char kind;
+    mPops[slot].visible = 1;
+    kind = mPops[slot].kind;
+    mPops[slot].x += data_ov006_0212ee64[kind];
+    mPops[slot].velY = -0x3800;
+    mPops[slot].velX = data_ov006_0212ef00[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop09_FlyEi
-void dScMgSound_c::Pop09_Fly(int slot) {
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x200;
-  if (this->mPops[slot].velY <= 0) return;
-  this->mPops[slot].velY = 0;
-  this->mPops[slot].phase = 2;
-  this->mPops[slot].timer = 0;
+void dScMgSound_c::Pop09_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (mPops[slot].velY <= 0)
+        return;
+    mPops[slot].velY = 0;
+    mPops[slot].phase = 2;
+    mPops[slot].timer = 0;
 }
 
 // @symbol _ZN12dScMgSound_c12Pop09_FinishEi
 void dScMgSound_c::Pop09_Finish(int slot)
 {
-    int v = this->mPops[slot].scale;
-    if (v > 0x800) {
-        this->mPops[slot].scale = v - 0x60;
-        if (this->mPops[slot].scale < 0x800)
-            this->mPops[slot].scale = 0x800;
+    int scale = mPops[slot].scale;
+    if (scale > 0x800) {
+        mPops[slot].scale = scale - 0x60;
+        if (mPops[slot].scale < 0x800)
+            mPops[slot].scale = 0x800;
     }
-    this->mPops[slot].timer += 1;
-    if (this->mPops[slot].timer >= 0x20) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    mPops[slot].timer += 1;
+    if (mPops[slot].timer >= 0x20) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop10_UpdateEi
-void dScMgSound_c::Pop10_Update(int slot){
-  unsigned char sel = this->mPops[slot].phase;
-  (this->*data_ov006_02142cc0[sel])(slot);
+void dScMgSound_c::Pop10_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*data_ov006_02142cc0[phase])(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop10_StartEi
 void dScMgSound_c::Pop10_Start(int slot)
 {
-  unsigned char idx;
-  this->mPops[slot].visible = 1;
-  idx = this->mPops[slot].kind;
-  this->mPops[slot].x += data_ov006_0212ee58[idx];
-  this->mPops[slot].velY = -0x3200;
-  this->mPops[slot].velX = data_ov006_0212ee4c[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    unsigned char kind;
+    mPops[slot].visible = 1;
+    kind = mPops[slot].kind;
+    mPops[slot].x += data_ov006_0212ee58[kind];
+    mPops[slot].velY = -0x3200;
+    mPops[slot].velX = data_ov006_0212ee4c[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop10_FlyEi
-void dScMgSound_c::Pop10_Fly(int slot) {
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x200;
-  if (this->mPops[slot].velY <= 0) return;
-  this->mPops[slot].velY = 0;
-  this->mPops[slot].phase = 2;
-  this->mPops[slot].timer = 0;
+void dScMgSound_c::Pop10_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (mPops[slot].velY <= 0)
+        return;
+    mPops[slot].velY = 0;
+    mPops[slot].phase = 2;
+    mPops[slot].timer = 0;
 }
 
 // @symbol _ZN12dScMgSound_c12Pop10_FinishEi
 void dScMgSound_c::Pop10_Finish(int slot)
 {
-    int v = this->mPops[slot].scale;
-    if (v > 0x800) {
-        this->mPops[slot].scale = v - 0x70;
-        if (this->mPops[slot].scale < 0x800)
-            this->mPops[slot].scale = 0x800;
+    int scale = mPops[slot].scale;
+    if (scale > 0x800) {
+        mPops[slot].scale = scale - 0x70;
+        if (mPops[slot].scale < 0x800)
+            mPops[slot].scale = 0x800;
     }
-    this->mPops[slot].timer += 1;
-    if (this->mPops[slot].timer >= 0x20) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    mPops[slot].timer += 1;
+    if (mPops[slot].timer >= 0x20) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop11_UpdateEi
-void dScMgSound_c::Pop11_Update(int slot){
-  unsigned char phase = this->mPops[slot].phase;
-  (this->*(data_ov006_02142d08[phase].pmf))(slot);
+void dScMgSound_c::Pop11_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*(data_ov006_02142d08[phase].pmf))(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop11_StartEi
 void dScMgSound_c::Pop11_Start(int slot)
 {
-  this->mPops[slot].visible = 1;
-  this->mPops[slot].x += data_ov006_0212eeac[this->mPops[slot].kind];
-  this->mPops[slot].velY = -0x2800;
-  this->mPops[slot].velX = data_ov006_0212ee88[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    mPops[slot].visible = 1;
+    mPops[slot].x += data_ov006_0212eeac[mPops[slot].kind];
+    mPops[slot].velY = -0x2800;
+    mPops[slot].velX = data_ov006_0212ee88[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop11_FlyEi
-void dScMgSound_c::Pop11_Fly(int slot) {
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x200;
-  if (this->mPops[slot].velY <= 0) return;
-  this->mPops[slot].velY = 0;
-  this->mPops[slot].phase = 2;
-  this->mPops[slot].timer = 0;
+void dScMgSound_c::Pop11_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (mPops[slot].velY <= 0)
+        return;
+    mPops[slot].velY = 0;
+    mPops[slot].phase = 2;
+    mPops[slot].timer = 0;
 }
 
 // @symbol _ZN12dScMgSound_c12Pop11_FinishEi
 void dScMgSound_c::Pop11_Finish(int slot)
 {
-    int v = this->mPops[slot].scale;
-    if (v > 0xa80) {
-        this->mPops[slot].scale = v - 0x60;
-        if (this->mPops[slot].scale < 0xa80)
-            this->mPops[slot].scale = 0xa80;
+    int scale = mPops[slot].scale;
+    if (scale > 0xa80) {
+        mPops[slot].scale = scale - 0x60;
+        if (mPops[slot].scale < 0xa80)
+            mPops[slot].scale = 0xa80;
     }
-    this->mPops[slot].timer += 1;
-    if (this->mPops[slot].timer >= 0x18) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    mPops[slot].timer += 1;
+    if (mPops[slot].timer >= 0x18) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c12Pop12_UpdateEi
-void dScMgSound_c::Pop12_Update(int slot){
-  unsigned char phase = this->mPops[slot].phase;
-  (this->*(data_ov006_02142db0[phase].pmf))(slot);
+void dScMgSound_c::Pop12_Update(int slot)
+{
+    unsigned char phase = mPops[slot].phase;
+    (this->*(data_ov006_02142db0[phase].pmf))(slot);
 }
 
 // @symbol _ZN12dScMgSound_c11Pop12_StartEi
 void dScMgSound_c::Pop12_Start(int slot)
 {
-  unsigned char idx;
-  this->mPops[slot].visible = 1;
-  idx = this->mPops[slot].kind;
-  this->mPops[slot].x += data_ov006_0212ef30[idx];
-  this->mPops[slot].velY = -0x2400;
-  this->mPops[slot].velX = data_ov006_0212ef0c[this->mPops[slot].kind];
-  this->mPops[slot].timer = 0;
-  this->mPops[slot].phase = 1;
+    unsigned char kind;
+    mPops[slot].visible = 1;
+    kind = mPops[slot].kind;
+    mPops[slot].x += data_ov006_0212ef30[kind];
+    mPops[slot].velY = -0x2400;
+    mPops[slot].velX = data_ov006_0212ef0c[mPops[slot].kind];
+    mPops[slot].timer = 0;
+    mPops[slot].phase = 1;
 }
 
 // @symbol _ZN12dScMgSound_c9Pop12_FlyEi
-void dScMgSound_c::Pop12_Fly(int slot) {
-  this->mPops[slot].x += this->mPops[slot].velX;
-  this->mPops[slot].y += this->mPops[slot].velY;
-  this->mPops[slot].velY += 0x200;
-  if (this->mPops[slot].velY <= 0) return;
-  this->mPops[slot].velY = 0;
-  this->mPops[slot].phase = 2;
-  this->mPops[slot].timer = 0;
+void dScMgSound_c::Pop12_Fly(int slot)
+{
+    mPops[slot].x += mPops[slot].velX;
+    mPops[slot].y += mPops[slot].velY;
+    mPops[slot].velY += 0x200;
+    if (mPops[slot].velY <= 0)
+        return;
+    mPops[slot].velY = 0;
+    mPops[slot].phase = 2;
+    mPops[slot].timer = 0;
 }
 
 // @symbol _ZN12dScMgSound_c12Pop12_FinishEi
 void dScMgSound_c::Pop12_Finish(int slot)
 {
-    int v = this->mPops[slot].scale;
-    if (v > 0xd80) {
-        this->mPops[slot].scale = v - 0x60;
-        if (this->mPops[slot].scale < 0xd80)
-            this->mPops[slot].scale = 0xd80;
+    int scale = mPops[slot].scale;
+    if (scale > 0xd80) {
+        mPops[slot].scale = scale - 0x60;
+        if (mPops[slot].scale < 0xd80)
+            mPops[slot].scale = 0xd80;
     }
-    this->mPops[slot].timer += 1;
-    if (this->mPops[slot].timer >= 0x18) {
-        this->mPops[slot].active = 0;
-        this->mPops[slot].visible = 0;
+    mPops[slot].timer += 1;
+    if (mPops[slot].timer >= 0x18) {
+        mPops[slot].active = 0;
+        mPops[slot].visible = 0;
     }
 }
 
 // @symbol _ZN12dScMgSound_c8DrawPopsEv
-extern "C" void Mg_RenderSpriteBothPalMtx(void* a0, int a1, int a2, int a3, void* a4);
+extern "C" void Mg_RenderSpriteBothPalMtx(void *a0, int a1, int a2, int a3, void *a4);
 
 void dScMgSound_c::DrawPops()
 {
-    char *p = (char *)this;
-    int i;
-    int tb = data_02082214[0];
-    long long ta = data_02082214[1];
+    char *popCursor = (char *)this;
+    int slot;
+    int sinAngle = data_02082214[0];
+    long long cosAngle = data_02082214[1];
 
-    for (i = 0; i < 30; i++) {
-        dMgSoundPopCur *pop = (dMgSoundPopCur *)p;
+    for (slot = 0; slot < 30; slot++) {
+        dMgSoundPopCur *pop = (dMgSoundPopCur *)popCursor;
         if (pop->pop.visible) {
-            int m[4];
-            long long vv = pop->pop.scale;
+            int matrix[4];
+            long long scale = pop->pop.scale;
             int x = pop->pop.x;
             int y = pop->pop.y;
-            int a = (int)((ta * vv + 0x800) >> 12);
-            int b = (int)(((long long)tb * (int)vv + 0x800) >> 12);
-            m[0] = a;
-            m[3] = a;
-            m[1] = b;
-            m[2] = -b;
-            Mg_RenderSpriteBothPalMtx(data_ov006_0213f6f0[pop->pop.sprite],
-                                (x >> 12) - 8, (y >> 12) - 0x10, -1, m);
+            int scaledCos = (int)((cosAngle * scale + 0x800) >> 12);
+            int scaledSin = (int)(((long long)sinAngle * (int)scale + 0x800) >> 12);
+            matrix[0] = scaledCos;
+            matrix[3] = scaledCos;
+            matrix[1] = scaledSin;
+            matrix[2] = -scaledSin;
+            Mg_RenderSpriteBothPalMtx(data_ov006_0213f6f0[pop->pop.sprite], (x >> 12) - 8,
+                                      (y >> 12) - 0x10, -1, matrix);
         }
-        tb = data_02082214[0];
-        p += 0x24;
+        sinAngle = data_02082214[0];
+        popCursor += 0x24;
     }
 }
 
 // @symbol _ZN12dScMgSound_c9DrawNotesEv
-extern void* data_ov006_0213f730[];
-void dScMgSound_c::DrawNotes() {
-  char *c = (char *)this;
-  int i;
-  char* o = c;
-  for (i = 0; i < 10; i++) {
-    dMgSoundNoteCur *note = (dMgSoundNoteCur *)o;
-    if (note->note.shown != 0 && note->note.alive != 0) {
-      int a1 = note->note.x >> 12;
-      int a2 = note->note.y >> 12;
-      int a4 = 0;
-      if (*(int*)(c + 0x5608) != 1) a4 = 1;
-      unsigned char sel = note->note.frame;
-      Hud_RenderSprite((int)data_ov006_0213f730[sel], a1, a2, -1, a4);
+extern void *data_ov006_0213f730[];
+void dScMgSound_c::DrawNotes()
+{
+    char *sceneBytes = (char *)this;
+    int slot;
+    char *noteCursor = sceneBytes;
+    for (slot = 0; slot < 10; slot++) {
+        dMgSoundNoteCur *note = (dMgSoundNoteCur *)noteCursor;
+        if (note->note.shown != 0 && note->note.alive != 0) {
+            int screenX = note->note.x >> 12;
+            int screenY = note->note.y >> 12;
+            int priority = 0;
+            if (*(int *)(sceneBytes + 0x5608) != 1)
+                priority = 1;
+            unsigned char frame = note->note.frame;
+            Hud_RenderSprite((int)data_ov006_0213f730[frame], screenX, screenY, -1, priority);
+        }
+        noteCursor += 0x14;
     }
-    o += 0x14;
-  }
 }
 
 // @symbol _ZN12dScMgSound_c9DrawTriesEv
 void dScMgSound_c::DrawTries()
 {
-    Mg_DrawStockCounter(this->mTries, 1);
+    Mg_DrawStockCounter(mTries, 1);
 }
 
 // @symbol _ZN12dScMgSound_c15StartWinSpriteAEv
 void dScMgSound_c::StartWinSpriteA()
 {
-        this->mSpriteA.active = 1;
-    this->mSpriteA.timer = 0;
-    this->mSpriteA.frame = 0;
+    mSpriteA.active = 1;
+    mSpriteA.timer = 0;
+    mSpriteA.frame = 0;
 }
 
 // @symbol _ZN12dScMgSound_c16UpdateWinSpriteAEv
 void dScMgSound_c::UpdateWinSpriteA()
 {
-        if (this->mSpriteA.active == 0)
+    if (mSpriteA.active == 0)
         return;
-    if (this->mSpriteA.frame >= 2)
+    if (mSpriteA.frame >= 2)
         return;
-    (*(u16 *)(int)&this->mSpriteA.timer)++;
-    if (this->mSpriteA.timer < data_ov006_0212ee28[this->mSpriteA.frame])
+    (*(u16 *)(int)&mSpriteA.timer)++;
+    if (mSpriteA.timer < data_ov006_0212ee28[mSpriteA.frame])
         return;
-    this->mSpriteA.timer = 0;
-    (*(u8 *)(int)&this->mSpriteA.frame)++;
+    mSpriteA.timer = 0;
+    (*(u8 *)(int)&mSpriteA.frame)++;
 }
 
 // @symbol _ZN12dScMgSound_c14DrawWinSpriteAEv
-void dScMgSound_c::DrawWinSpriteA(){
-    if (this->mSpriteA.visible == 0) return;
-  Hud_RenderSprite(data_ov006_02138d28[this->mSpriteA.frame],
-    this->mSpriteA.x >> 0xc, this->mSpriteA.y >> 0xc, -1, -1);
+void dScMgSound_c::DrawWinSpriteA()
+{
+    if (mSpriteA.visible == 0)
+        return;
+    Hud_RenderSprite(data_ov006_02138d28[mSpriteA.frame], mSpriteA.x >> 0xc, mSpriteA.y >> 0xc, -1,
+                     -1);
 }
 
 // @symbol _ZN12dScMgSound_c15StartWinSpriteBEv
 void dScMgSound_c::StartWinSpriteB()
 {
-        this->mSpriteB.active = 1;
-    this->mSpriteB.timer = 0;
-    this->mSpriteB.frame = 0;
+    mSpriteB.active = 1;
+    mSpriteB.timer = 0;
+    mSpriteB.frame = 0;
 }
 
 // @symbol _ZN12dScMgSound_c16UpdateWinSpriteBEv
 void dScMgSound_c::UpdateWinSpriteB()
 {
-        if (this->mSpriteB.active == 0) return;
-    if (this->mSpriteB.frame >= 3) return;
-    (*(u16 *)(int)&this->mSpriteB.timer) += 1;
-    if (this->mSpriteB.timer < data_ov006_0212ee38[this->mSpriteB.frame]) return;
-    this->mSpriteB.timer = 0;
-    (*(u8 *)(int)&this->mSpriteB.frame) += 1;
+    if (mSpriteB.active == 0)
+        return;
+    if (mSpriteB.frame >= 3)
+        return;
+    (*(u16 *)(int)&mSpriteB.timer) += 1;
+    if (mSpriteB.timer < data_ov006_0212ee38[mSpriteB.frame])
+        return;
+    mSpriteB.timer = 0;
+    (*(u8 *)(int)&mSpriteB.frame) += 1;
 }
 
 // @symbol _ZN12dScMgSound_c14DrawWinSpriteBEv
-void dScMgSound_c::DrawWinSpriteB(){
-    if (this->mSpriteB.visible == 0) return;
-  Hud_RenderSprite(data_ov006_02137ae8[this->mSpriteB.frame],
-    this->mSpriteB.x >> 0xc, this->mSpriteB.y >> 0xc, -1, -1);
+void dScMgSound_c::DrawWinSpriteB()
+{
+    if (mSpriteB.visible == 0)
+        return;
+    Hud_RenderSprite(data_ov006_02137ae8[mSpriteB.frame], mSpriteB.x >> 0xc, mSpriteB.y >> 0xc, -1,
+                     -1);
 }
-
 // @symbol _ZN12dScMgSound_cD1Ev
 // @symbol _ZN12dScMgSound_cD0Ev
 /* Both destructor variants come from the inline body in dScMgSound_c.h.
