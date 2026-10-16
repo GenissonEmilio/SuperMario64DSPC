@@ -28,9 +28,9 @@
  * (head data_ov006_02142500, tail data_ov006_02142504; data_ov006_021424fc /
  * _02142508 are the first/second pick).
  *
- * OWN TAIL, 0x60a8..0x60b0: three fields carried over verbatim from this
- * header's previous auto-generated form, real matched access out of
- * dScMgMCarlo_c's own methods, and the last of them closes exactly on the
+ * OWN TAIL, 0x60a8..0x60b0: the round state, timer and progress counter,
+ * named from dScMgMCarlo_c's own methods. Progress counts dealer signals
+ * during play and hidden cards during exit. The last field closes on the
  * factory's allocation literal. The two fields the old header declared
  * below 0x4f38 (0x0a8, 0x0ac) are dropped: both are dScMgBase_c's own and
  * are already declared there.
@@ -137,6 +137,17 @@ typedef char dMgMCarloCardObj_c_size_must_be_0x30[sizeof(dMgMCarloCardObj_c) == 
 #endif
 
 struct dScMgMCarlo_c : dScMgSingle3DBase_c {
+    enum RoundState {
+        STATE_START_PROMPT = 1,
+        STATE_INITIAL_DEAL,
+        STATE_PLAY,
+        STATE_FREE_GFX,
+        STATE_WAIT_DEALER,
+        STATE_HIDE_CARDS,
+        STATE_FLIP_CARDS,
+        STATE_EXIT_DELAY
+    };
+
     virtual ~dScMgMCarlo_c() {}
 
     /* This class's own override, read off the ROM's vtable: the one slot where
@@ -171,10 +182,10 @@ struct dScMgMCarlo_c : dScMgSingle3DBase_c {
 
     dMgMCarloSharedState_c mShared; /* 0x4f38..0x51a8 */
     dMgMCarloCardObj_c mArray[0x50]; /* 0x51a8..0x60a8 */
-    s16 unk_60a8;          /* 0x60a8 */
-    s16 unk_60aa;          /* 0x60aa */
+    s16 mRoundState;       /* 0x60a8 - shared by play and exit handlers */
+    s16 mRoundTimer;       /* 0x60aa - card-hide interval / final delay */
     u8  pad_60ac[0x2];     /* 0x60ac */
-    s16 unk_60ae;          /* 0x60ae */
+    s16 mRoundProgress;    /* 0x60ae - dealer signals, then exit hide index */
 };
 
 #ifndef SM64DS_PLATFORM_PC
