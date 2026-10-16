@@ -83,6 +83,7 @@ struct dScStage_c : dScene_c {
     /* --- static: reached with no object. The pause-screen and menu group all
            take their first declared argument in r0. --- */
     static void CheckInput();
+    static void UpdateMessage();
     static void LoadClsnAndObjects(LVL_Overlay &ovl, u32 param, dBgW_Kc &mc);
     static void RenderVsModeNewStar();
     static void RenderVsModeCountdown();
@@ -92,8 +93,7 @@ struct dScStage_c : dScene_c {
     static void LC_Render();
     static void LC_Update();
     static void CheckCameraInput();
-    /* PS_Init is deliberately NOT declared here; it uses its own local shadow
-       of dScStage_c instead. See notes/scene-provenance.md before wiring it up. */
+    static void PS_Init();
     static void PS_Render();
     static void PS_Cleanup();
     static void PS_UpdateSaveMenu(bool held);

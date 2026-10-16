@@ -1,28 +1,12 @@
 //cpp
 #include "Sound.h"
 // @symbol _ZN10dScStage_c7PS_InitEv
-/* recovered: real C++ method -- named members, local shadow class
- *
- * Called as a bare `PS_Init()` from dScStage_c::Behavior (src/_ZN10dScStage_c8BehaviorEv.cpp),
- * with no `this` placed in r0 at the call site -- static, matching every other
- * member of the pause-screen/menu family dScStage_c.h already declares static.
- *
- * NOT declared in the real dScStage_c.h on purpose. include/dScStage_c.h documents why:
- * there is an untracked second file for this same symbol, src/_ZN10dScStage_c7PS_InitEv.cpp,
- * that delinks.txt never named and nothing has ever compiled, whose private
- * `struct G2x` mangles SetBlendBrightness's middle parameter as `int` instead of
- * the real `...EPVtts` and resolves to nothing. This file avoids that landmine by
- * not declaring a G2x type at all -- SetBlendBrightness is reached through its
- * already-mangled extern symbol directly, exactly as the .c file it replaces did.
- */
-#include "types.h"
-
-class dScStage_c {
-public:
-    static void PS_Init();
-};
+#include "dScStage_c.h"
+#include "G2x.h"
 
 extern "C" {
+// local extern: the typed u16 call inserts narrowing shifts absent from the ROM.
+extern void _ZN3G2x18SetBlendBrightnessEPVtts(volatile u16 *reg, int targets, int amount);
 extern u8 data_0209d454;
 extern u8 data_0209d45c;
 extern u8 data_0209f1ec;
@@ -47,29 +31,27 @@ extern u16 data_0209f300;
 extern s32 data_0209fc68;
 
 extern int SublevelToLevel(int i);
-extern void _ZN3G2x18SetBlendBrightnessEPVtts(volatile u16 *p, int a, int b);
 }
 
 void dScStage_c::PS_Init()
 {
-    int sl;
-    u8 r7;
-    u8 r8;
-    u8 sb;
-    int r5;
-    int r4;
+    int isVsMode;
+    u8 specialPauseState;
+    u8 mainLayers;
+    u8 subLayers;
+    int mainBlendTargets;
+    int subBlendTargets;
 
-    sb = data_0209d454;
-    if (sb & 4) {
-        data_0209d454 = sb & ~4;
-        sb = data_0209d454;
-        *(volatile s32 *)0x04001000 =
-            (*(volatile s32 *)0x04001000 & ~0x1f00) | (sb << 8);
+    subLayers = data_0209d454;
+    if (subLayers & 4) {
+        data_0209d454 = subLayers & ~4;
+        subLayers = data_0209d454;
+        *(volatile s32 *)0x04001000 = (*(volatile s32 *)0x04001000 & ~0x1f00) | (subLayers << 8);
     }
 
-    r7 = data_0209f218;
-    r8 = data_0209d45c;
-    sl = 0;
+    specialPauseState = data_0209f218;
+    mainLayers = data_0209d45c;
+    isVsMode = 0;
 
     data_0209f248 = 0;
     data_0209f2e0 = 0;
@@ -87,15 +69,15 @@ void dScStage_c::PS_Init()
     data_0209f29c = 0;
     data_0209f280 = 0;
 
-    r5 = r8 ^ 0x10;
-    r4 = sb ^ 0x10;
+    mainBlendTargets = mainLayers ^ 0x10;
+    subBlendTargets = subLayers ^ 0x10;
 
-    if (r7 != 0) {
+    if (specialPauseState != 0) {
         data_0209f1ec = 7;
     } else {
         if (data_0209f2d8 == 1)
-            sl = 1;
-        if (sl != 0 && data_0209fc68 == 0) {
+            isVsMode = 1;
+        if (isVsMode != 0 && data_0209fc68 == 0) {
             data_0209f1ec = 4;
         } else {
             if (SublevelToLevel(data_0209f2f8) == 0x1d)
@@ -106,6 +88,6 @@ void dScStage_c::PS_Init()
     }
 
     Sound::PauseMusic();
-    _ZN3G2x18SetBlendBrightnessEPVtts((volatile u16 *)0x04000050, r5 | 0x20, -7);
-    _ZN3G2x18SetBlendBrightnessEPVtts((volatile u16 *)0x04001050, r4 | 0x20, -7);
+    _ZN3G2x18SetBlendBrightnessEPVtts((volatile u16 *)0x04000050, mainBlendTargets | 0x20, -7);
+    _ZN3G2x18SetBlendBrightnessEPVtts((volatile u16 *)0x04001050, subBlendTargets | 0x20, -7);
 }
