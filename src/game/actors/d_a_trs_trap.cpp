@@ -89,8 +89,10 @@ enum d_a_trs_trap_AssetId {
    collision-mesh handle, the CLPS block, and the bookshelf's six book-switch
    spawn offsets (x/y pairs). Symbols keep their data_ov063_* names; only the
    entry types are recovered. */
-extern SharedFilePtr *data_ov063_0211e27c[];
-extern SharedFilePtr *data_ov063_0211e28c[];
+extern "C" {
+extern SharedFilePtr *const data_ov063_0211e27c[];
+extern SharedFilePtr *const data_ov063_0211e28c[];
+}
 extern CLPS_Block *data_ov063_0211e9e8[];
 extern s32 data_ov063_0211e9f8[];
 
@@ -611,6 +613,19 @@ TrsTrapCollisionFilePtr gThHondanaCollisionFile(ASSET_TH_HONDANA_KCL);
 TrsTrapCollisionFilePtr gThKaidanCollisionFile(ASSET_TH_KAIDAN_KCL);
 TrsTrapCollisionFilePtr gThMeryGoCollisionFile(ASSET_TH_MERY_GO_KCL);
 TrsTrapCollisionFilePtr gThTrapCollisionFile(ASSET_TH_TRAP_KCL);
+
+extern "C" SharedFilePtr *const data_ov063_0211e27c[4] = {
+    &data_ov063_0211eeb0,
+    &data_ov063_0211eea8,
+    &data_ov063_0211eeb8,
+    &data_ov063_0211ee98,
+};
+extern "C" SharedFilePtr *const data_ov063_0211e28c[4] = {
+    &data_ov063_0211eea0,
+    &data_ov063_0211eed0,
+    &data_ov063_0211eec0,
+    &data_ov063_0211eec8,
+};
 
 PMF data_ov063_0211ef38[] = {
     &daTrsTrap_c::func_ov063_0211cc18,
