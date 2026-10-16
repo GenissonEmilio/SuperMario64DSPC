@@ -10,3 +10,5 @@ void MulVec3Mat3x3(const int *in, const int *m, int *out)
     out[1] = (int)(((s64)x * m[1] + (s64)y * m[4] + (s64)z * m[7]) >> 12);
     out[2] = (int)(((s64)x * m[2] + (s64)y * m[5] + (s64)z * m[8]) >> 12);
 }
+
+unsigned char data_020a608c[2];

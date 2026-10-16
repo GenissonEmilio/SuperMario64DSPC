@@ -21,6 +21,11 @@
       "end": "0x020b8c18"
     },
     {
+      "name": ".data",
+      "start": "0x020bc860",
+      "end": "0x020bc864"
+    },
+    {
       "name": ".bss",
       "start": "0x020bfd04",
       "end": "0x020bfda8"

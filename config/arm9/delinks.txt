@@ -539,6 +539,7 @@ src/unnamed/arm9/0200/func_0200f0bc.c:
 src/unnamed/arm9/0200/func_0200f13c.cpp:
     complete
     .text start:0x0200f13c end:0x0200f220
+    .bss start:0x0209b300 end:0x0209b304
 
 src/unnamed/arm9/0200/func_0200f220.c:
     complete
@@ -1068,6 +1069,7 @@ src/unnamed/arm9/0201/func_02018a40.c:
 src/unnamed/arm9/0201/func_02018a58.cpp:
     complete
     .text start:0x02018a58 end:0x02018aa4
+    .bss start:0x0209d460 end:0x0209d464
 
 src/unnamed/arm9/0201/func_02018aa4.c:
     complete
@@ -1781,14 +1783,17 @@ src/game/stages/d_s_mb.cpp:
 src/unnamed/arm9/0203/func_02035354.c:
     complete
     .text start:0x02035354 end:0x02035394
+    .bss start:0x0209f288 end:0x0209f28c
 
 src/unnamed/arm9/0203/func_02035394.c:
     complete
     .text start:0x02035394 end:0x020353b0
+    .bss start:0x0209f2ac end:0x0209f2b0
 
 src/unnamed/arm9/0203/func_020353b0.c:
     complete
     .text start:0x020353b0 end:0x020353d4
+    .bss start:0x0209f33c end:0x0209f340
 
 src/func_020353d4.c:
     complete
@@ -2926,6 +2931,7 @@ src/func_02049018.c:
 src/unnamed/arm9/0204/func_020490b0.cpp:
     complete
     .text start:0x020490b0 end:0x0204921c
+    .rodata start:0x02082414 end:0x02082614
 
 src/unnamed/arm9/0204/func_0204921c.c:
     complete
@@ -3169,6 +3175,7 @@ src/unnamed/arm9/0205/func_02052550.c:
 src/MulVec3Mat3x3.c:
     complete
     .text start:0x020525a0 end:0x02052624
+    .bss start:0x020a608c end:0x020a608e
 
 src/MulMat3x3Mat3x3.c:
     complete
@@ -3198,6 +3205,7 @@ src/cstd.cpp:
 src/unnamed/arm9/0205/func_02053320.c:
     complete
     .text start:0x02053320 end:0x02053380
+    .bss start:0x020a60a0 end:0x020a60a4
 
 src/func_02053380.c:
     complete

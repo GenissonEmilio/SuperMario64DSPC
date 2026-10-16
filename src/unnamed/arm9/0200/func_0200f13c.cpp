@@ -12,6 +12,9 @@ namespace GXS { void LoadOBJPltt(void const *, unsigned int, unsigned int); }
 extern unsigned int data_0208a148[];
 extern unsigned int data_0208a15c[];
 extern unsigned int data_0208a120[];
+extern "C" {
+unsigned int gMgSaveDirty;
+}
 extern "C" void func_0200f13c(void) {
     s32 i = func_0200f0bc();
     LoadCompressedFileAt(data_0208a148[i], G2::GetBG2CharPtr());
