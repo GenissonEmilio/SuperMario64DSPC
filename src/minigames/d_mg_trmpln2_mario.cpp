@@ -28,17 +28,19 @@
 // module's .data; only Vector3's trivial D1 is compiler-only output). The
 // per-shard namespaces stay (independent decl shapes would collide). r5v/r4v
 // hold the +0x10/+0x14 words the vector helpers consume; their class slots
-// are unnamed without a header.
+// are unnamed without a header. Shared resource, model, frame-controller and
+// sound calls use their genuine API headers. The embedded ModelAnim members
+// stay at the constructor-proven +0x78/+0x6c offsets until the owners have layouts.
 #pragma defer_codegen off
 #include "types.h"
 #include "common.h"
 #include "decl_common.h"
 #include "decl_ModelAnim.h"
+#include "SharedFilePtr.h"
+#include "ModelAnim.h"
+#include "dExtFrameCtrl_c.h"
+#include "Sound.h"
 struct W2 { int w[2]; };
-struct SharedFilePtr { void Release(); };
-struct ModelAnim { ~ModelAnim(); };
-struct dExtFrameCtrl_c { void Advance(); int WillHitFrame(int) const; };
-struct Sound { static void PlayBank2_2D(unsigned int); };
 bool ApproachLinear(short &value, short target, short step);
 int ApproachLinear(int &r, int b, int c);
 
@@ -121,12 +123,13 @@ int Trmp2Mario_GetPos(int p)
 namespace ns_020c8e90 {
 extern "C" {
 extern int data_ov006_0212e02c[];
-struct C { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void f(void*); };
 // @symbol Trmp2Mario_Render
-void Trmp2Mario_Render(char *o) {
-  if(*(short*)(o+0x6e)==0) return;
-  struct C *p = (struct C*)(o+0x78);
-  p->f((void*)data_ov006_0212e02c);
+void Trmp2Mario_Render(char *self)
+{
+    if (*(short *)(self + 0x6e) == 0)
+        return;
+    ModelAnim *model = (ModelAnim *)(self + 0x78);
+    model->Render((const Vector3 *)data_ov006_0212e02c);
 }
 }
 }
@@ -139,10 +142,12 @@ extern struct Matrix4x3 data_020a0e68;
 void Matrix4x3_FromTranslation(struct Matrix4x3 *mF, int x, int y, int z);
 void Matrix4x3_ApplyInPlaceToRotationY(struct Matrix4x3 *mF, short angY);
 // @symbol Trmp2Mario_UpdateMatrix
-void Trmp2Mario_UpdateMatrix(char *o) {
-  Matrix4x3_FromTranslation(&data_020a0e68, *(int*)(o+0x24), *(int*)(o+0x28), *(int*)(o+0x2c));
-  Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, *(short*)(o+0x52));
-  *(struct Matrix4x3*)(o+0x94) = data_020a0e68;
+void Trmp2Mario_UpdateMatrix(char *self)
+{
+    Matrix4x3_FromTranslation(&data_020a0e68,
+        *(int *)(self + 0x24), *(int *)(self + 0x28), *(int *)(self + 0x2c));
+    Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, *(short *)(self + 0x52));
+    ((ModelAnim *)(self + 0x78))->mat4x3 = data_020a0e68;
 }
 }
 }
@@ -1269,7 +1274,8 @@ extern "C" void* Trmp2Mario_Destruct(int* c)
     data_ov006_0214059c = 0;
     data_ov006_02140540 = 0;
     data_ov006_021405c4 = 0;
-    ((ModelAnim*)((char*)c+0x78))->~ModelAnim();
+    // Destroy the embedded member directly, without virtual dispatch.
+    ((ModelAnim *)((char *)c + 0x78))->ModelAnim::~ModelAnim();
     *c = (int)&data_ov006_0213b3e0;
     *c = (int)&data_ov006_0213b3c4;
     return c;
@@ -1665,11 +1671,11 @@ int Trmp3DMario_GetPos(int p)
 namespace ns_020cafb4 {
 extern "C" {
 extern int data_ov006_0212e038[];
-struct C { virtual void a0(); virtual void a1(); virtual void a2(); virtual void a3(); virtual void a4(); virtual void f(void*); };
 // @symbol Trmp3DMario_Render
-void Trmp3DMario_Render(char *o) {
-  struct C *p = (struct C*)(o+0x6c);
-  p->f((void*)data_ov006_0212e038);
+void Trmp3DMario_Render(char *self)
+{
+    ModelAnim *model = (ModelAnim *)(self + 0x6c);
+    model->Render((const Vector3 *)data_ov006_0212e038);
 }
 }
 }
@@ -1682,10 +1688,12 @@ extern struct Matrix4x3 data_020a0e68;
 void Matrix4x3_FromTranslation(struct Matrix4x3 *mF, int x, int y, int z);
 void Matrix4x3_ApplyInPlaceToRotationY(struct Matrix4x3 *mF, short angY);
 // @symbol Trmp3DMario_UpdateMatrix
-void Trmp3DMario_UpdateMatrix(char *o) {
-  Matrix4x3_FromTranslation(&data_020a0e68, *(int*)(o+0x1c), *(int*)(o+0x20), *(int*)(o+0x24));
-  Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, *(short*)(o+0x4a));
-  *(struct Matrix4x3*)(o+0x88) = data_020a0e68;
+void Trmp3DMario_UpdateMatrix(char *self)
+{
+    Matrix4x3_FromTranslation(&data_020a0e68,
+        *(int *)(self + 0x1c), *(int *)(self + 0x20), *(int *)(self + 0x24));
+    Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, *(short *)(self + 0x4a));
+    ((ModelAnim *)(self + 0x6c))->mat4x3 = data_020a0e68;
 }
 }
 }
@@ -3272,7 +3280,8 @@ extern "C" void* Trmp3DMario_Destruct(int* c)
     data_ov006_02140568 = 0;
     data_ov006_0214059c = 0;
     data_ov006_02140540 = 0;
-    ((ModelAnim*)((char*)c+0x6c))->~ModelAnim();
+    // Destroy the embedded member directly, without virtual dispatch.
+    ((ModelAnim *)((char *)c + 0x6c))->ModelAnim::~ModelAnim();
     *c = (int)&data_ov006_0213b3c4;
     return c;
 }
