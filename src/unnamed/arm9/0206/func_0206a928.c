@@ -28,7 +28,12 @@ struct Stream;
 
 extern u16 data_0209a0a0[][9];
 extern u16 data_0209a130[];
-extern char data_02086894[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+char data_02086894[8] = {
+    40, 110, 117, 108, 108, 41, 0, 0
+};
+#pragma section forcerodata end
 extern char data_0208689c[];
 
 extern int func_0206ca44(const char *s);

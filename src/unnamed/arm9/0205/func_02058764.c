@@ -1,7 +1,10 @@
 extern int func_02058690(void);
 extern int func_020587dc(void);
 extern int func_0205865c(void);
-extern int data_0209a040;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_0209a040 = -1;
+#pragma section forcedata end
 
 int func_02058764(void) {
     if (data_0209a040 == -1) {

@@ -6,7 +6,7 @@ extern char data_0209fc64[];
 extern u8 data_0209fc50[];
 extern u8 data_0209fc58[];
 extern int data_0209fc68;
-extern int data_0209fc60;
+int data_0209fc60;
 extern u8 data_0209fc54;
 extern u8 data_0209f1d8;
 

@@ -14,7 +14,7 @@ extern void WaitByLoop(int n);
 
 extern int data_020a9de4;
 extern unsigned short data_020a9de0;
-extern int data_020a9e00;
+int data_020a9e00;
 extern int data_020a9e04;
 
 #pragma opt_strength_reduction off

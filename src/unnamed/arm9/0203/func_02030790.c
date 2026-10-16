@@ -8,7 +8,10 @@ extern void func_0201ffcc(void);
 extern void func_020199a4(void);
 extern unsigned char data_02092778;
 extern int data_0209fc68;
-extern int data_0209277c;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_0209277c = 1;
+#pragma section forcedata end
 extern unsigned char data_0209e64c;
 extern unsigned char data_0209b480;
 

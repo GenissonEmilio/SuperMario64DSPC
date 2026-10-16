@@ -3,11 +3,18 @@
 extern u16 data_020a4c48[];
 extern int data_020a4c4c[];
 extern int data_020a4c54[];
-extern int data_02082200;
-extern int data_02082204;
-extern int data_02082208;
-extern int data_0208220c;
-extern int data_02082210;
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_0208220c = 0x1451;
+
+int data_02082208 = 0x1451;
+
+int data_02082204 = 0xa28;
+
+int data_02082200 = 0x1451;
+
+int data_02082210 = 0xcb33;
+#pragma section forcerodata end
 
 void func_020494cc(void *a, int mode)
 {

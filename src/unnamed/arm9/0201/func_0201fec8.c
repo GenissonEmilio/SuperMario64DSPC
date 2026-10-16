@@ -1,7 +1,17 @@
 extern unsigned char data_0209e64c;
 extern char data_0209d574[];
 extern unsigned char data_0208f274;
-extern char data_02075358[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+char data_02075358[64] = {
+    0, 0, 0, 0, 0, 0, 0, 0, -128, 0, 0, 0,
+    1, 0, 3, 0, 0, 0, 0, 0, 1, 0, -56, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 2, 32, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0
+};
+#pragma section forcerodata end
 extern char data_02075320[];
 extern char data_0207533c[];
 extern char data_020752cc[];
