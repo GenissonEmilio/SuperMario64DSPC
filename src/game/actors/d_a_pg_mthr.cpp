@@ -139,7 +139,11 @@ typedef void (daPgMthr_c::*PMF)();
 extern void func_ov018_02112398(daPgMthr_c *self);
 extern void func_ov018_0211235c(daPgMthr_c *self);
 extern PgMthrModelFileHandle data_ov018_02113c00;
-extern SharedFilePtr *data_ov018_02112c04[2];
+/* Two pointers. symbols.txt names the second word data_ov018_02112c08.
+   extern keeps them global; const keeps them in .rodata. High address first
+   so mwcc lays that .rodata down low address first. */
+extern SharedFilePtr * const data_ov018_02112c08[1] = { &data_ov018_02113be8 };
+extern SharedFilePtr * const data_ov018_02112c04[1] = { &data_ov018_02113bf8 };
 extern void _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(void *self, void *act, int a, int b, unsigned int c2, unsigned int d);
 extern void _ZN10dBgCh_Actr4InitEP8dActor_c5Fix12IiES3_P10Vector3_16S5_(void *self, void *act, int a, int b, void *c2, void *d);
 }
