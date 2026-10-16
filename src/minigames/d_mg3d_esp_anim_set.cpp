@@ -144,12 +144,9 @@ void _ZN3GXS11LoadOBJPlttEPKvjj(const void* p, unsigned int a, unsigned int b);
 void func_02056374(const void*, u32, u32);
 
 extern int data_ov006_0213c7f4;
-extern int pmf_dMg3DEspModel_c_Idle_2[];
-extern dMg3DEspModel_c::State pmf_dMg3DEspModel_c_Idle;
-extern dMg3DEspModel_c::State pmf_dMg3DEspModel_c_Hit;
-extern dMg3DEspModel_c::State pmf_dMg3DEspModel_c_Intro;
-extern dMg3DEspModel_c::State pmf_dMg3DEspModel_c_Wait;
-extern dMg3DEspModel_c::State pmf_dMg3DEspModel_c_Idle_3;
+extern int data_ov006_0213c744[];
+extern dMg3DEspModel_c::State data_ov006_0213c704;
+extern dMg3DEspModel_c::State data_ov006_0213c754;
 extern void *data_ov006_0213c844;
 extern s16 data_02082214[];
 extern unsigned char data_0209d45c;
@@ -164,6 +161,21 @@ extern Matrix4x3 data_ov006_0213c85c;
    dScMg3DEsp_c::InitResources, and copying it without the stack temporary
    removes 32. */
 extern volatile Matrix4x3 data_ov006_0213c88c;
+
+/* A State initializer is copied from __sinit and grows .init. Retail stores
+   the function and a zero adjustment, contiguous from 0x0213c764. */
+struct dMg3DEspModelStateWords {
+    void (*function)();
+    int adjustment;
+};
+
+extern "C" void _ZN15dMg3DEspModel_c5IntroEv();
+extern "C" void _ZN15dMg3DEspModel_c4WaitEv();
+extern "C" void _ZN15dMg3DEspModel_c4IdleEv();
+
+dMg3DEspModelStateWords data_ov006_0213c764 = { _ZN15dMg3DEspModel_c5IntroEv, 0 };
+dMg3DEspModelStateWords data_ov006_0213c76c = { _ZN15dMg3DEspModel_c4WaitEv, 0 };
+dMg3DEspModelStateWords data_ov006_0213c774 = { _ZN15dMg3DEspModel_c4IdleEv, 0 };
 
 /* ---- dScMg3DEsp_c: the destructor (key function) ---------------------- */
 
@@ -440,7 +452,7 @@ void dMg3DEspModel_c::StartIntro()
     mAnimSet.SetRepeats(3);
     if (mMuted == 0)
         Sound::PlayBank2_2D(0x18e);
-    mState = pmf_dMg3DEspModel_c_Intro;
+    mState = *(dMg3DEspModel_c::State *)&data_ov006_0213c764;
 }
 
 // @symbol _ZN15dMg3DEspModel_c4WaitEv
@@ -463,7 +475,7 @@ void dMg3DEspModel_c::StartWait()
 {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim,
         ((BCA_File**)&data_ov006_02141e7c)[1], 0, 0x800, 0);
-    mState = pmf_dMg3DEspModel_c_Wait;
+    mState = *(dMg3DEspModel_c::State *)&data_ov006_0213c76c;
 }
 
 // @symbol _ZN15dMg3DEspModel_c4IdleEv
@@ -476,7 +488,7 @@ void dMg3DEspModel_c::Reset()
 {
     mAnimSet.Reset();
     mShowSparks = 0;
-    mState = pmf_dMg3DEspModel_c_Idle_3;
+    mState = *(dMg3DEspModel_c::State *)&data_ov006_0213c774;
 }
 
 // @symbol _ZN15dMg3DEspModel_c13InitResourcesEv
