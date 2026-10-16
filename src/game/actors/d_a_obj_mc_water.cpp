@@ -175,3 +175,8 @@ extern "C" void func_ov009_02111b1c(daObjMcWater_c *self)
    body out of line here instead flips them to D0-before-D1 and the isolation
    step rejects the object.
  */
+
+/* .bss 0x02113cd4..0x02113cd8 */
+extern "C" {
+int data_ov009_02113cd4[1];
+}
