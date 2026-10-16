@@ -6,8 +6,8 @@
     "extern_vtable": 35,
     "extern_vtable_classes": 53,
     "inline_asm": 10,
-    "launder_or_forced": 88,
-    "launder_sites": 303
+    "launder_or_forced": 86,
+    "launder_sites": 300
   },
   "exclusions": {
     "by_value_class_param": 53
