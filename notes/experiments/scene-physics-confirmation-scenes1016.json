@@ -1,0 +1,127 @@
+{
+  "base_commit": "b18b6e407f8cde4c77436dd0662e038aa870da59",
+  "scope": "Boot erase-confirmation and game-over scene state-machine readability.",
+  "changes": [
+    "Introduce descriptive TU-local enum constants for the eight boot states, two game-over cursor states and three intro phases.",
+    "Separate the boot frame-step and touch-start locals while preserving emitted output, and name its touch tests and button palette calculations.",
+    "Name game-over player slots, touch events, confirmation labels, palette fields and glyph-animation variables.",
+    "Remove the redundant outer boot-menu scope while retaining the volatile timer reads, address expressions and required optimization pragmas.",
+    "Correct boot button actions, highlight timing, tile rectangle geometry and the game-over choices vertical arrangement."
+  ],
+  "evidence": {
+    "boot_states": {
+      "0": "Initial countdown and optional entry to the erase confirmation",
+      "1": "First confirmation input",
+      "2": "Display the final confirmation and enter state 3",
+      "3": "Final confirmation input",
+      "4": "Start erase status display and countdown",
+      "5": "Erase at the 0x3c threshold and finish the effect",
+      "6": "Cancel, restore layers, and return to initial countdown",
+      "7": "Post-erase countdown"
+    },
+    "boot_buttons": "Selection 0 advances first confirmation to state 2 and final confirmation to state 4; selection 1 enters cancellation state 6.",
+    "boot_palette": "func_02005348 selects palette 0x2000 only when button equals mSelectedButton and mButtonFlashTimer is zero; otherwise 0x1000.",
+    "boot_tile_geometry": "buttonMap + button*0x10 selects adjacent 16-column rectangles; offsets 0,0x20,0x40,0x60 select four rows of a 32-column tilemap.",
+    "game_over_choices": "Both touch rectangles span x=8..247; the continue choice spans y=0x38..0x57 and the other choice y=0x68..0x87.",
+    "glyph_lifetimes": "Only identifiers and enum constants change in the constrained glyph routine; the address-expression tree, repeated pointer reads and goto skeleton remain.",
+    "name_provenance": "New state names describe the observed control flow; original names are unknown.",
+    "runtime_validation": "Not needed for these names: established members and complete matching bodies show the roles. No erase workflow or new runtime test was executed."
+  },
+  "verification": {
+    "complete_output_comparison": {
+      "base_commit": "b18b6e407f8cde4c77436dd0662e038aa870da59",
+      "header": "include/dScBoot_c.h",
+      "header_before_sha256": "21b335e820750beb16bd8d4238bc9b8dc40ee89d260320933632fa414343954f",
+      "header_after_sha256": "12495166937d069bfdc9db9d52308cc81bd030cbccf11f58ea57ac042b2e4b68",
+      "consumers": [
+        {
+          "file": "src/game/stages/d_s_boot.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "e40d7cc99bb9d1e94ed070340eb5da2fbfdcdf27c499a66e1cdd76d823d34699",
+          "source_after_sha256": "e40d7cc99bb9d1e94ed070340eb5da2fbfdcdf27c499a66e1cdd76d823d34699",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 15,
+          "sections_after": 15,
+          "before_output_sha256": "4ee6d8d3f1c95d8ca4dfec8e12f0dc4d67d80bc875adfddc8aaaad9f76a19dbf",
+          "after_output_sha256": "4ee6d8d3f1c95d8ca4dfec8e12f0dc4d67d80bc875adfddc8aaaad9f76a19dbf"
+        },
+        {
+          "file": "src/game/stages/d_s_boot_methods.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "130701d4a8a8f08b976946975881a08d43ef3ba16d429f0c0e713c7169d7fa2f",
+          "source_after_sha256": "18542a61d9f8fcb8bab409a4ca2aaa3b733ab71021bcc1f5a9e1f55c8df440ac",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 4,
+          "sections_after": 4,
+          "before_output_sha256": "d5840fc327a0e3f6e32f510bd980144fb3f1d487d0c916cdf713f08a318c412c",
+          "after_output_sha256": "d5840fc327a0e3f6e32f510bd980144fb3f1d487d0c916cdf713f08a318c412c"
+        },
+        {
+          "file": "src/game/stages/d_s_game_over.cpp",
+          "compiler": "2004/b56",
+          "source_before_sha256": "d85617c3f51891f18d3a77c16af93396dc5628d911504778a01657085dbde3a2",
+          "source_after_sha256": "1447e5e54539ad405174f8f065e66fc217c00b50279513c81963389066fc9b60",
+          "before_compiled": true,
+          "after_compiled": true,
+          "identical_allocated_sections_and_relocations": true,
+          "sections_before": 21,
+          "sections_after": 21,
+          "before_output_sha256": "06ee1988ebd6df8bf82129e1512c2a2be6f69b03d1f760002b36dd114d9c3d73",
+          "after_output_sha256": "06ee1988ebd6df8bf82129e1512c2a2be6f69b03d1f760002b36dd114d9c3d73"
+        }
+      ]
+    },
+    "comparison_scope": "Both dScBoot_c.h consumers plus the separately edited game-over source; three translation units total.",
+    "comparison_method": "All allocated section metadata/bytes and named relocation records compare exactly; no masking or canonicalization.",
+    "focused_linkcheck": {
+      "checked": 17,
+      "verified": 17,
+      "blind": 0,
+      "blocking": 0,
+      "exit_code": 0
+    },
+    "declaration_agreement": {
+      "files_in_scope": 1643,
+      "new_disagreements": 0,
+      "new_local_header_redeclarations": 0,
+      "exit_code": 0
+    },
+    "rombuild": {
+      "command": "python -u tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "exact_modules": 106,
+      "total_modules": 106,
+      "reproducing_source_functions": 11334,
+      "mismatching_source_functions": 0,
+      "reproducing_source_data_claims": 338,
+      "mismatching_source_data_claims": 0,
+      "bss_claims": 245,
+      "intact_tu_gates": "PASS",
+      "separate_data_advisory": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "log_sha256": "6d04f91b6f5f9d726d013c4ad07285ec1f8f9d936753c2ac9876f45aa866f7bb"
+    },
+    "diff_check": "PASS",
+    "comparison_script": {
+      "path": "build/scene-physics9-control.py",
+      "sha256": "9772181b5f5d5692c9a7bf6fa5b93abd382b5e9f7573d5037851c9c0ea21c398"
+    },
+    "focused_report": {
+      "path": "build/scene-physics9-linkcheck.json",
+      "sha256": "7748a9386f2aab954abffcb93b3e99f05614000bd4fb9b9615aede7b3401483d"
+    },
+    "declaration_log": {
+      "path": "build/scene-physics9-declarations.log",
+      "sha256": "86b971adf2364ebe5e82db2557196a5dda0850bba641a31e95ff7a6712c9fb15"
+    }
+  },
+  "review_status": "Producer checkpoint; independent source review and publication remain pending. Broader scene/physics goal remains active."
+}
