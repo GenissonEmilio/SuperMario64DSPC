@@ -270,6 +270,7 @@ src/game/actors/d_a_star_star.c:
 src/game/actors/d_a_tree.cpp:
     complete
     .text start:0x020ebf8c end:0x020ec388
+    .bss start:0x02110a48 end:0x02110a5c
 
 src/game/actors/d_a_warpkun.cpp:
     complete
