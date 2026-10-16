@@ -447,6 +447,7 @@ src/unnamed/arm9/0200/func_0200bb28.c:
 src/engine/view/d_camera.cpp:
     complete
     .text start:0x0200bec4 end:0x0200e494
+    .data start:0x02086f20 end:0x02086f38
 
 src/unnamed/arm9/0200/func_0200e494.c:
     complete
