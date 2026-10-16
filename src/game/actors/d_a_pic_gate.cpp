@@ -738,3 +738,8 @@ SharedFilePtr *const data_ov080_0212775c[19] = {
     (SharedFilePtr *)gForExWarioModelFile,  (SharedFilePtr *)gForVsCrossModelFile,
     (SharedFilePtr *)gForVsIslandModelFile,
 };
+
+extern "C" {
+unsigned char data_ov080_02128688[20];
+unsigned char data_ov080_0212869c[444];
+}
