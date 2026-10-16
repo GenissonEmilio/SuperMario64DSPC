@@ -122,7 +122,8 @@ struct dScMgPanel_c : dScMgBase_c {
     u8  mFlipAt[0x30];       /* 0x4fae panels the deal flipped */
     u8  mFlipCount;          /* 0x4fde */
     u8  mClear;              /* 0x4fdf set once every mKind is back to 0 */
-    u8  pad_4fe0[0x2];
+    u8  mInputState;         /* 0x4fe0 indexes the four input handlers */
+    u8  mMovesUsed;          /* 0x4fe1 accepted touches since the last reset */
     u8  mCredits;              /* 0x4fe2 starts at 3; a miss takes one */
     u8  pad_4fe3[0x6];
     u8  mBusy;               /* 0x4fe9 a flip is still playing */
