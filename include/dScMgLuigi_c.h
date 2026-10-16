@@ -91,6 +91,45 @@ struct dScMgLuigi_c : dScMgBase_c {
     virtual s32 Render();                 /* slot 9 */
     virtual void StartRound(int arg);  /* slot 18 */
 
+    /* Numeric order follows the existing pointer-to-member tables. */
+    enum SceneState {
+        STATE_SETUP = 0,
+        STATE_PLACE,
+        STATE_PLAY,
+        STATE_CATCH
+    };
+
+    enum PictureState {
+        PICTURE_RESTART = 0,
+        PICTURE_STOP,
+        PICTURE_DRIFT_FIXED,
+        PICTURE_DRIFT_BY_LEVEL,
+        PICTURE_DRIFT_BY_COLUMN,
+        PICTURE_DRIFT_BY_ROW,
+        PICTURE_DRIFT_RANDOM,
+        PICTURE_SWAY,
+        PICTURE_BOUNCE,
+        PICTURE_FLASH
+    };
+
+    enum CurtainState {
+        CURTAIN_START = 0,
+        CURTAIN_UPDATE,
+        CURTAIN_SLOW
+    };
+
+    enum CurtainPhase {
+        CURTAIN_BOUNCE = 0,
+        CURTAIN_HOLD,
+        CURTAIN_FAST
+    };
+
+    enum IrisState {
+        IRIS_HOLD = 0,
+        IRIS_GROW,
+        IRIS_STOP
+    };
+
     /* Non-virtual members, in ROM address order. Each is a member because a
        zero-adjustment pointer-to-member record in ov006 .data names it (the
        run at 0x0213cd8c..0x0213ce4c), or because it is only ever reached
@@ -176,8 +215,8 @@ struct dScMgLuigi_c : dScMgBase_c {
     u16 mBoard;              /* 0x5174 -- which layout and mover set */
     u16 mPrevBoard;          /* 0x5176 -- last board, so the next one differs */
     u8  mGrid[13][9];        /* 0x5178 -- cells already used while placing */
-    u8  mColDir[8];          /* 0x51ed -- 0/1, drift left or right per column */
-    u8  mRowDir[6];          /* 0x51f5 -- 0/1, drift up or down per row */
+    u8  mColDir[8];          /* 0x51ed -- 0/1, drift up or down per column */
+    u8  mRowDir[6];          /* 0x51f5 -- 0/1, drift left or right per row */
     u8  mTimeTick;           /* 0x51fb -- counts to 60, then mTime drops */
     u8  pad_51fc;
     u8  mKind[120];          /* 0x51fd -- mover id; 9 means a fresh miss */
