@@ -19,7 +19,7 @@ extern char data_ov084_02130dfc[];
 extern char data_ov084_02130e44[];
 extern char data_ov084_02130e14[];
 extern char data_ov084_02130e50[];
-extern char data_ov084_02130e24[];
+char data_ov084_02130e24[8];
 extern char data_ov084_02130e68[];
 extern char data_ov084_02130e0c[];
 extern char data_ov084_02130e74[];

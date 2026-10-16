@@ -54,7 +54,7 @@ extern s16 data_02082214[];
 
 extern u8 data_0209d45c;
 extern u8 data_0209d454;
-extern void *data_0209d4a8;
+void *data_0209d4a8;
 extern int data_0208ee44;
 extern u8 func_0201a2f8[];
 

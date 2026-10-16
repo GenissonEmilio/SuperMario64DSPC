@@ -1,4 +1,4 @@
-extern void *data_020aa3f0;
+void *data_020aa3f0;
 void func_020731dc(void *object, void *destructor, void **node)
 {
     node[0] = data_020aa3f0;

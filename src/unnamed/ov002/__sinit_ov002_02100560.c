@@ -58,7 +58,7 @@ extern void* data_ov002_0210d9e8;
 extern void* data_ov002_0210db08;
 extern void* data_ov002_0210da08;
 extern void* data_ov002_0210db5c;
-extern void* data_ov002_0210da38;
+void *data_ov002_0210da38;
 extern void* data_ov002_0210dab4;
 extern void* data_ov002_0210da10;
 extern void* data_ov002_0210db68;

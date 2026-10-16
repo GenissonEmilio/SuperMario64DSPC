@@ -2,7 +2,7 @@
 extern char data_0208ee14;
 extern char data_02092188;
 extern char data_0209f388;
-extern void *volatile data_0209f3c4;
+void *volatile data_0209f3c4;
 extern char data_0209f43c;
 extern "C" void *_ZN8dClipperC1Ev(void *object);
 extern "C" void *_ZN8dClipperD1Ev(void *object);

@@ -269,6 +269,7 @@ src/unnamed/ov006/__sinit_ov006_0212f660.c:
 src/unnamed/ov006/__sinit_ov006_0212f6b4.c:
     complete
     .init start:0x0212f6b4 end:0x0212fc7c
+    .bss start:0x021405a8 end:0x021405ac
 
 src/unnamed/ov006/__sinit_ov006_0212fc7c.c:
     complete
