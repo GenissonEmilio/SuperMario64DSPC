@@ -16,6 +16,7 @@ src/game/stages/d_s_entry.cpp:
     complete
     .text start:0x02115ab8 end:0x02116128
 
+    .bss start:0x0211d72e end:0x0211d730
 src/unnamed/ov075/func_ov075_02116128.cpp:
     complete
     .text start:0x02116128 end:0x0211621c
