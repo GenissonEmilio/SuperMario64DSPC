@@ -462,6 +462,10 @@ src/unnamed/ov009/__sinit_ov009_02112524.c:
     complete
     .init start:0x02112524 end:0x02112a5c
 
+src/data/ov009/rodata_02112228.c:
+    complete
+    .rodata start:0x02112228 end:0x02112230
+
 src/data/ov009/rodata_02112230.c:
     complete
     .rodata start:0x02112230 end:0x02112234
