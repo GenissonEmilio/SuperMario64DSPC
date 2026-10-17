@@ -62,19 +62,26 @@ def _overlay_id_constants(config):
     These are linker values, not ROM addresses. Read the configured numeric IDs,
     never infer an arbitrary constant from an unresolved import's spelling.
     """
-    import yaml
     config = pathlib.Path(config)
     if not config.is_file():
         return {}
-    data = yaml.safe_load(config.read_text(encoding="utf-8"))
-    overlays = data.get("overlays", [])
-    if not isinstance(overlays, list):
-        raise ValueError("configured overlays must be a list")
+    # Line-parsed, not yaml.safe_load: the private validator has no PyYAML, and
+    # dsd's config writes each overlay as a `- id: <decimal>` list item.
     out = {}
-    for row in overlays:
-        ident = row.get("id") if isinstance(row, dict) else None
-        if type(ident) is not int or not 0 <= ident <= 0xffffffff:
-            raise ValueError(f"invalid configured overlay ID: {ident!r}")
+    in_overlays = False
+    for line in config.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if not line[0].isspace():
+            in_overlays = line.rstrip() == "overlays:"
+            continue
+        m = re.match(r"\s*(?:-\s+)?id:\s*(.*?)\s*$", line)
+        if not in_overlays or not m:
+            continue
+        text = m.group(1)
+        ident = int(text) if re.fullmatch(r"[0-9]+", text) else None
+        if ident is None or not 0 <= ident <= 0xffffffff:
+            raise ValueError(f"invalid configured overlay ID: {text!r}")
         name = f"OVERLAY_{ident}_ID"
         if name in out:
             raise ValueError(f"duplicate configured overlay ID: {ident}")

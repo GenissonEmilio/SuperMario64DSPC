@@ -592,6 +592,12 @@ class OverlayLinkerConstants(unittest.TestCase):
         for name in ("OVERLAY_98_ID", "OVERLAY_060_ID", "OVERLAY_60_ID_extra", "overlay_60"):
             self.assertIsNone(RA.resolve_candidate(name, index))
 
+    def test_reads_ids_without_pyyaml(self):
+        # The private validator has no PyYAML; #4010's yaml import failed every PR there.
+        with mock.patch.dict(sys.modules, {"yaml": None}):
+            index = self.constants("main:\n  name: main\noverlays:\n  - id: 0\n    name: ov000\n  - id: 103\n")
+        self.assertEqual(index, {"OVERLAY_0_ID": ("arm9", 0), "OVERLAY_103_ID": ("arm9", 103)})
+
     def test_absent_config_does_not_invent_constants(self):
         import tempfile
         with tempfile.TemporaryDirectory() as directory:
