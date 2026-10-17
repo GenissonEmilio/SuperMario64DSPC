@@ -12,3 +12,99 @@ src/game/actors/d_a_obj_ks_water.cpp:
     .ctor start:0x021119f8 end:0x021119fc
     .data start:0x02111a00 end:0x02111b74
     .bss start:0x02111c80 end:0x02111ca8
+src/data/ov017/rodata_0211150c.c:
+    complete
+    .rodata start:0x0211150c end:0x0211153c
+
+src/data/ov017/rodata_0211153c.c:
+    complete
+    .rodata start:0x0211153c end:0x0211155c
+
+src/data/ov017/rodata_0211155c.c:
+    complete
+    .rodata start:0x0211155c end:0x0211159c
+
+src/data/ov017/rodata_0211159c.c:
+    complete
+    .rodata start:0x0211159c end:0x021115e0
+
+src/data/ov017/rodata_021115e0.c:
+    complete
+    .rodata start:0x021115e0 end:0x02111624
+
+src/data/ov017/rodata_02111624.c:
+    complete
+    .rodata start:0x02111624 end:0x02111640
+
+src/data/ov017/rodata_02111640.c:
+    complete
+    .rodata start:0x02111640 end:0x02111660
+
+src/data/ov017/rodata_02111660.c:
+    complete
+    .rodata start:0x02111660 end:0x02111680
+
+src/data/ov017/rodata_02111680.c:
+    complete
+    .rodata start:0x02111680 end:0x021116a0
+
+src/data/ov017/rodata_021116a0.c:
+    complete
+    .rodata start:0x021116a0 end:0x021116c0
+
+src/data/ov017/rodata_021116c0.c:
+    complete
+    .rodata start:0x021116c0 end:0x021116e0
+
+src/data/ov017/rodata_021116e0.c:
+    complete
+    .rodata start:0x021116e0 end:0x02111700
+
+src/data/ov017/rodata_02111700.c:
+    complete
+    .rodata start:0x02111700 end:0x02111720
+
+src/data/ov017/rodata_02111720.c:
+    complete
+    .rodata start:0x02111720 end:0x02111740
+
+src/data/ov017/rodata_02111740.c:
+    complete
+    .rodata start:0x02111740 end:0x02111760
+
+src/data/ov017/rodata_02111760.c:
+    complete
+    .rodata start:0x02111760 end:0x02111834
+
+src/data/ov017/rodata_02111834.c:
+    complete
+    .rodata start:0x02111834 end:0x0211190c
+
+src/data/ov017/rodata_0211190c.c:
+    complete
+    .rodata start:0x0211190c end:0x02111928
+
+src/data/ov017/rodata_02111928.c:
+    complete
+    .rodata start:0x02111928 end:0x0211198c
+
+src/data/ov017/data_02111b74.c:
+    complete
+    .data start:0x02111b74 end:0x02111bb4
+
+src/data/ov017/data_02111bb4.c:
+    complete
+    .data start:0x02111bb4 end:0x02111bd4
+
+src/data/ov017/data_02111bd4.c:
+    complete
+    .data start:0x02111bd4 end:0x02111c54
+
+src/data/ov017/data_02111c54.c:
+    complete
+    .data start:0x02111c54 end:0x02111c80
+
+src/data/ov017/bss_02111ca8.c:
+    complete
+    .bss start:0x02111ca8 end:0x02111cc0
+
