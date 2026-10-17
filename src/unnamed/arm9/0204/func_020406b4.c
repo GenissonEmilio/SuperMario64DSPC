@@ -1,6 +1,5 @@
 extern int func_02062df0(int a, int b, int c);
 
-int data_020a0f74;
 
 extern int data_020a0f74;
 extern unsigned short *data_020a0f80;

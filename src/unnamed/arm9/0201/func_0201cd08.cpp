@@ -12,6 +12,7 @@ extern u8 data_0209d660;
 extern u8 data_0209d668;
 extern u8 data_0209d6a8;
 extern s16 data_0209d6d4;
+int data_0208ee44 = 1;
 void func_0201cd08(int arg)
 {
     volatile int li;

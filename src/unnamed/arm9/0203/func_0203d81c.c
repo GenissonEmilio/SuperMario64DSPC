@@ -8,3 +8,5 @@ int func_0203d81c(void){
     }
     return 0;
 }
+
+short data_020a0f18;

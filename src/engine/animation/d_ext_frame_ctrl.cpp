@@ -195,3 +195,7 @@ void dExtFrameCtrl_c::Copy(const dExtFrameCtrl_c &anim)
     currFrame         = anim.currFrame;
     speed             = anim.speed;
 }
+
+extern "C" {
+unsigned char data_0209cae4[0x10];
+}

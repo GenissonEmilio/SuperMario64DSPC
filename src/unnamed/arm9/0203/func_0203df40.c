@@ -76,3 +76,5 @@ void func_0203df40(void)
 
     data_020a0f98 = data_020a0f04;
 }
+
+int data_020a0f74;

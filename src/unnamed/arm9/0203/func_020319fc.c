@@ -1,5 +1,5 @@
 extern unsigned char data_0209fc94;
-unsigned char data_0209fcb0;
+extern unsigned char data_0209fcb0;
 extern unsigned char data_0209fc78;
 extern unsigned char data_0209fc7c;
 extern unsigned char data_0209fcd8;

@@ -38,7 +38,7 @@ extern dFdBrightness_c *data_0209f5bc;
 extern u8 data_0209f1e8;
 extern u16 data_020a0e58[];
 extern u16 data_020a0e5a[];
-int data_0208ee44 = 1;
+extern int data_0208ee44;
 
 extern u8 data_0209d454;
 extern u8 data_0209d45c;

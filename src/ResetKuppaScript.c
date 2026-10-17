@@ -1,4 +1,4 @@
-int data_0209b284[4];
+extern int data_0209b284[4];
 
 extern unsigned char data_0209f21c[];
 extern unsigned char data_0209b270[];

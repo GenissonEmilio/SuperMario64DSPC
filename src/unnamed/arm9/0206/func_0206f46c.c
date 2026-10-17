@@ -46,9 +46,7 @@ extern char data_0209a5ec[]; /* "-INF" */
 extern char data_0209a5f4[]; /* "-inf" */
 extern char data_0209a5fc[]; /* "INF" */
 extern char data_0209a600[]; /* "inf" */
-char data_0209a604[8] = {
-    0x2d, 0x4e, 0x41, 0x4e, 0x00, 0x00, 0x00, 0x00
-};
+extern char data_0209a604[8];
  /* "-NAN" */
 extern char data_0209a60c[]; /* "-nan" */
 extern char data_0209a614[]; /* "NAN" */

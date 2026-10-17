@@ -11,10 +11,6 @@
 // @symbol _ZNSt9type_infoD2Ev
 // @symbol _ZNSt9type_infoD0Ev
 // @symbol _ZNSt9type_infoD1Ev
-extern "C" {
-unsigned char data_0209cae4[0x10];
-}
-
 std::type_info::~type_info()
 {
 }
