@@ -23,7 +23,7 @@
 #include "PlayerInput.h"
 #include "Message.h"
 extern "C" {
-unsigned char data_0209fc78;
+extern unsigned char data_0209fc78;
 }
 
 struct OamAttr;

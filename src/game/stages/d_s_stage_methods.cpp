@@ -170,7 +170,7 @@ extern u8 data_0208ee40;
 extern s8 data_02092124;
 extern s16 data_02092144[];
 extern unsigned int data_0209b454;
-unsigned int data_0209b464;
+extern unsigned int data_0209b464;
 extern u8 data_020755b8[];
 extern volatile int data_02075610[];
 extern u16 data_020755cc[];

@@ -1,5 +1,5 @@
 extern unsigned char data_0209e64c;
-char data_0209d574[68];
+extern char data_0209d574[68];
 unsigned char data_0208f274 = 0x1;
 extern unsigned char func_0201a9ec(char *c);
 extern void func_0203df40(void);

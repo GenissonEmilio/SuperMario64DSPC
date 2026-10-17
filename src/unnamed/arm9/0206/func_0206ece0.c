@@ -46,7 +46,7 @@ extern char data_0209a600[]; /* "inf" */
 extern char data_0209a604[]; /* "-NAN" */
 extern char data_0209a60c[]; /* "-nan" */
 extern char data_0209a614[]; /* "NAN" */
-char data_0209a618[4] = "nan"; /* "nan" */
+extern char data_0209a618[4]; /* "nan" */
 
 #define ISUPPER(c) (((c) < 0 || (c) >= 0x80) ? 0 : (data_02086a58[c] & 0x200))
 

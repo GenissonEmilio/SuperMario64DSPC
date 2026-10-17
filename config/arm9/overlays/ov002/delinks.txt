@@ -53,7 +53,6 @@ src/game/actors/d_a_coin.cpp:
 src/game/actors/d_a_feather.cpp:
     complete
     .text start:0x020b2ba0 end:0x020b3298
-    .bss start:0x0210da58 end:0x0210da60
 
 src/game/actors/d_a_obj_abuku.cpp:
     complete
@@ -378,13 +377,14 @@ src/game/actors/d_a_sound_obj.cpp:
 src/ui/hud/d_map.cpp:
     complete
     .text start:0x020f975c end:0x020fb8f8
+    .data start:0x0210c3a8 end:0x0210c3b0
     .bss start:0x02111150 end:0x02111178
 
 src/ui/hud/d_meter.cpp:
     complete
     .text start:0x020fb8f8 end:0x020fe190
     .data start:0x0210d290 end:0x0210d378
-    .bss start:0x02111188 end:0x0211118a
+    .bss start:0x02111188 end:0x0211118c
 
 src/game/stages/LevelObjects.cpp:
     complete
@@ -393,7 +393,6 @@ src/game/stages/LevelObjects.cpp:
 src/engine/collision/d_m3d_g_lin.cpp:
     complete
     .text start:0x020fea4c end:0x020feabc
-    .data start:0x0210c3a8 end:0x0210c3a9
 
 src/game/actors/d_a_propeller_heyho_fire.cpp:
     complete
@@ -405,7 +404,6 @@ src/game/actors/d_a_propeller_heyho_fire.cpp:
 src/unnamed/ov002/__sinit_ov002_02100560.c:
     complete
     .init start:0x02100560 end:0x02100938
-    .bss start:0x0210da10 end:0x0210da14
 
 
 src/unnamed/ov002/__sinit_ov002_02100f84.c:

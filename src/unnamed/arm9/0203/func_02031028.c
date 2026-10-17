@@ -65,3 +65,5 @@ void func_02031028(int arg)
   }
   while (i < n);
 }
+
+unsigned char data_0209fc78;

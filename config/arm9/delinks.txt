@@ -46,7 +46,6 @@ src/unnamed/arm9/0200/func_02005110.c:
 src/game/stages/d_s_boot_methods.cpp:
     complete
     .text start:0x02005324 end:0x02005d94
-    .bss start:0x020a0dea end:0x020a0deb
 
 src/runtime/actor/d_cap_enemy_arm9.cpp:
     complete
@@ -348,7 +347,6 @@ src/unnamed/arm9/0200/func_020095c4.c:
 src/unnamed/arm9/0200/func_020095e4.c:
     complete
     .text start:0x020095e4 end:0x020097ec
-    .bss start:0x0209f4a0 end:0x0209f4a2
 
 src/unnamed/arm9/0200/func_020097ec.c:
     complete
@@ -547,7 +545,7 @@ src/unnamed/arm9/0200/func_0200f2cc.c:
 src/SetNumPlayers.c:
     complete
     .text start:0x0200f450 end:0x0200f468
-    .data start:0x0208a0e0 end:0x0208a0e1
+    .data start:0x0208a0e0 end:0x0208a0e4
 
 src/unnamed/arm9/0200/func_0200f468.c:
     complete
@@ -556,6 +554,7 @@ src/unnamed/arm9/0200/func_0200f468.c:
 src/unnamed/arm9/0200/func_0200f46c.c:
     complete
     .text start:0x0200f46c end:0x0200f470
+    .bss start:0x0209b2e8 end:0x0209b2ec
 
 src/_Z13CopyToViewMatPK9Matrix4x3.cpp:
     complete
@@ -577,7 +576,6 @@ src/Initialise3dGraphics.cpp:
 src/runtime/actor/d_actor.cpp:
     complete
     .text start:0x0200f658 end:0x020112c8
-    .bss start:0x0209f2f8 end:0x0209f2fc
 
 src/_ZN8dActor_cD2Ev.cpp:
     complete
@@ -602,6 +600,7 @@ src/_ZN8Vector3sD1Ev.cpp:
 src/_ZN8dActor_cC2Ev.cpp:
     complete
     .text start:0x0201150c end:0x02011654
+    .bss start:0x0209b464 end:0x0209b468
 
 src/engine/sound/Sound.cpp:
     complete
@@ -1135,6 +1134,7 @@ src/SetSubBg3Offset.c:
 src/SetSubBg2Offset.c:
     complete
     .text start:0x02018f54 end:0x02018f70
+    .bss start:0x0209d468 end:0x0209d46c
 
 src/SetSubBg1Offset.c:
     complete
@@ -1161,7 +1161,6 @@ src/SetBg1Offset.c:
 src/SetBg0Offset.c:
     complete
     .text start:0x02018ffc end:0x02019018
-    .bss start:0x0209d468 end:0x0209d46c
 
 src/unnamed/arm9/0201/func_02019018.c:
     complete
@@ -1267,7 +1266,7 @@ src/unnamed/arm9/0201/func_02019ebc.c:
 src/unnamed/arm9/0201/func_02019ed0.c:
     complete
     .text start:0x02019ed0 end:0x02019f10
-    .bss start:0x0209d4e4 end:0x0209d4e5
+    .bss start:0x0209d4e4 end:0x0209d4e8
 
 src/unnamed/arm9/0201/func_02019f10.c:
     complete
@@ -1332,7 +1331,7 @@ src/unnamed/arm9/0201/func_0201a4d0.c:
 src/IRQ2.cpp:
     complete
     .text start:0x0201a4e4 end:0x0201a5cc
-    .bss start:0x0209d500 end:0x0209d502
+    .bss start:0x0209d500 end:0x0209d504
 
 src/unnamed/arm9/0201/func_0201a5cc.c:
     complete
@@ -1405,16 +1404,18 @@ src/unnamed/arm9/0201/func_0201aac8.c:
 src/unnamed/arm9/0201/func_0201aad4.c:
     complete
     .text start:0x0201aad4 end:0x0201aaec
+    .bss start:0x0209d574 end:0x0209d5b8
 
 src/unnamed/arm9/0201/func_0201aaec.c:
     complete
     .text start:0x0201aaec end:0x0201ab04
+    .bss start:0x0209d65c end:0x0209d660
 
 src/Message2.cpp:
     complete
     .text start:0x0201ab04 end:0x0201cb2c
     .data start:0x0208ee8c end:0x0208eeac
-    .bss start:0x0209d68c end:0x0209d68d
+    .bss start:0x0209d68c end:0x0209d690
 
 src/ui/messages/func_0201cb2c.c:
     complete
@@ -1431,12 +1432,11 @@ src/unnamed/arm9/0201/func_0201cd08.cpp:
 src/Message.cpp:
     complete
     .text start:0x0201ce10 end:0x0201fcd4
-    .bss start:0x0209d65c end:0x0209d65d
 
 src/LoadFont.cpp:
     complete
     .text start:0x0201fcd4 end:0x0201fe08
-    .bss start:0x0209d6d4 end:0x0209d6d6
+    .bss start:0x0209d6d4 end:0x0209d6d8
 
 src/ui/messages/func_0201fe08.c:
     complete
@@ -1449,8 +1449,7 @@ src/unnamed/arm9/0201/func_0201fec8.c:
 src/unnamed/arm9/0201/func_0201ffcc.c:
     complete
     .text start:0x0201ffcc end:0x02020028
-    .data start:0x0208f274 end:0x0208f275
-    .bss start:0x0209d574 end:0x0209d5b8
+    .data start:0x0208f274 end:0x0208f278
 
 src/unnamed/arm9/0202/func_02020028.c:
     complete
@@ -1600,21 +1599,22 @@ src/unnamed/arm9/0202/func_02023498.c:
 src/unnamed/arm9/0202/func_02023544.c:
     complete
     .text start:0x02023544 end:0x02023598
-    .bss start:0x0209f1e0 end:0x0209f1e1
+    .bss start:0x0209f1e0 end:0x0209f1e4
 
 src/game/stages/d_s_boot.cpp:
     complete
     .text start:0x02023598 end:0x02023688
+    .bss start:0x0209f2f8 end:0x0209f2fc
 
 src/game/stages/d_s_stage_methods.cpp:
     complete
     .text start:0x02023688 end:0x0202e118
-    .bss start:0x0209b464 end:0x0209b468
     .rodata start:0x020756f0 end:0x02075720
 
 src/unnamed/arm9/0202/func_0202e118.c:
     complete
     .text start:0x0202e118 end:0x0202e140
+    .bss start:0x0209f4a0 end:0x0209f4a2
 
 src/game/stages/d_scene.cpp:
     complete
@@ -1728,7 +1728,7 @@ src/unnamed/arm9/0203/func_02030dac.c:
 src/unnamed/arm9/0203/func_02030e4c.c:
     complete
     .text start:0x02030e4c end:0x02030fa8
-    .bss start:0x0209fc58 end:0x0209fc59
+    .bss start:0x0209fc58 end:0x0209fc5c
 
 src/unnamed/arm9/0203/func_02030fa8.c:
     complete
@@ -1737,11 +1737,12 @@ src/unnamed/arm9/0203/func_02030fa8.c:
 src/unnamed/arm9/0203/func_02031028.c:
     complete
     .text start:0x02031028 end:0x02031154
+    .bss start:0x0209fc78 end:0x0209fc7c
 
 src/unnamed/arm9/0203/func_02031154.c:
     complete
     .text start:0x02031154 end:0x0203128c
-    .bss start:0x0209fcd0 end:0x0209fcd1
+    .bss start:0x0209fcd0 end:0x0209fcd4
 
 src/unnamed/arm9/0203/func_0203128c.c:
     complete
@@ -1772,7 +1773,6 @@ src/unnamed/arm9/0203/func_020319fc.c:
 src/Message3.cpp:
     complete
     .text start:0x02031b84 end:0x02034a78
-    .bss start:0x0209fc78 end:0x0209fc79
 
 src/game/stages/d_s_mb.cpp:
     complete
@@ -2052,6 +2052,7 @@ src/unnamed/arm9/0203/func_0203c178.c:
 src/Matrix4x3_ApplyInPlaceToTranslation.c:
     complete
     .text start:0x0203c184 end:0x0203c1b4
+    .bss start:0x020a0dea end:0x020a0deb
 
 src/engine/heap/Heap.cpp:
     complete
@@ -2330,22 +2331,27 @@ src/unnamed/arm9/0203/func_0203dae4.c:
 src/unnamed/arm9/0203/func_0203dafc.c:
     complete
     .text start:0x0203dafc end:0x0203db0c
+    .bss start:0x020a0ebc end:0x020a0ec8
 
 src/unnamed/arm9/0203/func_0203db0c.c:
     complete
     .text start:0x0203db0c end:0x0203db24
+    .bss start:0x020a0f0c end:0x020a0f10
 
 src/GetAngleToCamera.c:
     complete
     .text start:0x0203db24 end:0x0203db3c
+    .bss start:0x020a0f24 end:0x020a0f28
 
 src/unnamed/arm9/0203/func_0203db3c.c:
     complete
     .text start:0x0203db3c end:0x0203db4c
+    .bss start:0x020a0f40 end:0x020a0f44
 
 src/GetPlayerFlagByte.c:
     complete
     .text start:0x0203db4c end:0x0203db64
+    .bss start:0x020a0f90 end:0x020a0f94
 
 src/unnamed/arm9/0203/func_0203db64.c:
     complete
@@ -2359,17 +2365,14 @@ src/unnamed/arm9/0203/func_0203df40.c:
 src/unnamed/arm9/0203/func_0203e0ac.c:
     complete
     .text start:0x0203e0ac end:0x0203e20c
-    .bss start:0x020a11c4 end:0x020a11cc
 
 src/unnamed/arm9/0203/func_0203e20c.c:
     complete
     .text start:0x0203e20c end:0x0203e978
-    .bss start:0x020a0f40 end:0x020a0f44
 
 src/unnamed/arm9/0203/func_0203e978.c:
     complete
     .text start:0x0203e978 end:0x0203e9a8
-    .bss start:0x020a0f0c end:0x020a0f0d
 
 src/unnamed/arm9/0203/func_0203e9a8.c:
     complete
@@ -2423,7 +2426,6 @@ src/unnamed/arm9/0203/func_0203f920.c:
 src/unnamed/arm9/0203/func_0203f9d4.c:
     complete
     .text start:0x0203f9d4 end:0x0203fa50
-    .bss start:0x020a0f90 end:0x020a0f94
 
 src/unnamed/arm9/0203/func_0203fa50.c:
     complete
@@ -2552,7 +2554,6 @@ src/unnamed/arm9/0204/func_02040820.c:
 src/unnamed/arm9/0204/func_020408b0.c:
     complete
     .text start:0x020408b0 end:0x02040a5c
-    .bss start:0x020a0f24 end:0x020a0f26
 
 src/unnamed/arm9/0204/func_02040a5c.c:
     complete
@@ -2741,11 +2742,12 @@ src/unnamed/arm9/0204/func_02043060.c:
 src/unnamed/arm9/0204/func_02043098.c:
     complete
     .text start:0x02043098 end:0x02043180
+    .bss start:0x020a11c4 end:0x020a11e4
 
 src/unnamed/arm9/0204/func_02043180.c:
     complete
     .text start:0x02043180 end:0x020431c4
-    .bss start:0x020a4b48 end:0x020a4b49
+    .bss start:0x020a4b48 end:0x020a4b4c
 
 src/unnamed/arm9/0204/func_020431c4.c:
     complete
@@ -2891,7 +2893,7 @@ src/unnamed/arm9/0204/func_02048c30.c:
 src/unnamed/arm9/0204/func_02048d80.c:
     complete
     .text start:0x02048d80 end:0x02048e54
-    .data start:0x02099fa4 end:0x02099fa6
+    .data start:0x02099fa4 end:0x02099fa8
 
 src/unnamed/arm9/0204/func_02048e54.c:
     complete
@@ -2908,6 +2910,7 @@ src/unnamed/arm9/0204/func_02048e94.c:
 src/engine/sound/Sound2.cpp:
     complete
     .text start:0x02048eb4 end:0x02048f34
+    .bss start:0x020a4b98 end:0x020a4ba8
 
 src/unnamed/arm9/0204/func_02048f34.c:
     complete
@@ -3243,7 +3246,7 @@ src/unnamed/arm9/0205/func_02053a8c.c:
 src/engine/gx/GX_Init.cpp:
     complete
     .text start:0x02053a90 end:0x02053d9c
-    .data start:0x02099fcc end:0x02099fce
+    .data start:0x02099fcc end:0x02099fd0
 
 src/unnamed/arm9/0205/func_02053d9c.c:
     complete
@@ -4091,6 +4094,7 @@ src/unnamed/arm9/0205/func_0205b1a4.c:
 src/unnamed/arm9/0205/func_0205b1d8.c:
     complete
     .text start:0x0205b1d8 end:0x0205b274
+    .bss start:0x020a6488 end:0x020a648c
 
 src/unnamed/arm9/0205/func_0205b274.c:
     complete
@@ -4100,7 +4104,6 @@ src/unnamed/arm9/0205/func_0205b274.c:
 src/unnamed/arm9/0205/func_0205b358.c:
     complete
     .text start:0x0205b358 end:0x0205b470
-    .bss start:0x020a6488 end:0x020a648c
 
 src/unnamed/arm9/0205/func_0205b470.c:
     complete
@@ -4391,10 +4394,12 @@ src/unnamed/arm9/0205/func_0205db24.c:
 src/unnamed/arm9/0205/func_0205db2c.c:
     complete
     .text start:0x0205db2c end:0x0205db78
+    .data start:0x0209a5f4 end:0x0209a5fc
 
 src/unnamed/arm9/0205/func_0205db78.c:
     complete
     .text start:0x0205db78 end:0x0205db88
+    .data start:0x0209a618 end:0x0209a61c
 
 src/unnamed/arm9/0205/func_0205db88.c:
     complete
@@ -5562,7 +5567,7 @@ src/unnamed/arm9/0206/func_0206a6d0.c:
 src/unnamed/arm9/0206/func_0206a88c.c:
     complete
     .text start:0x0206a88c end:0x0206a928
-    .bss start:0x020a9dec end:0x020a9df0
+    .bss start:0x020a9dec end:0x020a9e00
 
 src/unnamed/arm9/0206/func_0206a928.c:
     complete
@@ -5643,7 +5648,7 @@ src/unnamed/arm9/0206/func_0206cf98.c:
 src/unnamed/arm9/0206/func_0206d32c.c:
     complete
     .text start:0x0206d32c end:0x0206d868
-    .rodata start:0x0208698c end:0x0208698d
+    .rodata start:0x0208698c end:0x020869bc
 
 src/unnamed/arm9/0206/func_0206d868.c:
     complete
@@ -5681,7 +5686,6 @@ src/cstd4.cpp:
 src/unnamed/arm9/0206/func_0206ece0.c:
     complete
     .text start:0x0206ece0 end:0x0206f338
-    .data start:0x0209a618 end:0x0209a61c
 
 src/unnamed/arm9/0206/func_0206f338.c:
     complete
@@ -5690,7 +5694,6 @@ src/unnamed/arm9/0206/func_0206f338.c:
 src/unnamed/arm9/0206/func_0206f46c.c:
     complete
     .text start:0x0206f46c end:0x0206f820
-    .data start:0x0209a5f4 end:0x0209a5fc
 
 src/unnamed/arm9/0206/func_0206f820.c:
     complete
@@ -5923,7 +5926,6 @@ src/unnamed/arm9/0207/func_02073534.cpp:
 src/typeinfo.cpp:
     complete
     .text start:0x0207359c end:0x020736f4
-    .bss start:0x0209b2e8 end:0x0209b2ec
 
 src/unnamed/arm9/0207/__sinit_02073a24.c:
     complete
@@ -6000,7 +6002,6 @@ src/unnamed/arm9/0207/__sinit_020750b4.c:
 src/unnamed/arm9/0207/__sinit_020750b8.c:
     complete
     .init start:0x020750b8 end:0x020750ec
-    .bss start:0x020a0ebc end:0x020a0ec8
 
 src/unnamed/arm9/0207/__sinit_020750ec.c:
     complete
@@ -6017,4 +6018,3 @@ src/unnamed/arm9/0207/__sinit_02075150.c:
 src/unnamed/arm9/0207/__sinit_02075154.c:
     complete
     .init start:0x02075154 end:0x02075230
-    .bss start:0x020a4b98 end:0x020a4ba8

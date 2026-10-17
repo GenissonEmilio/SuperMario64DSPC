@@ -9,7 +9,7 @@ enum sinit_ov079_02127a10_AssetId {
 extern void func_02017acc();
 extern void func_020731dc();
 extern void func_02017b4c();
-int data_ov079_021282f0[2];
+extern int data_ov079_021282f0[2];
 extern int func_02017ab4[];
 extern int data_ov079_0212831c[];
 extern int data_ov079_02128300[];

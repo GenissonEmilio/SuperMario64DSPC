@@ -3,3 +3,5 @@ extern struct E19 data_020a1164[];
 void func_0203db0c(int idx, unsigned short val) {
     data_020a1164[idx].h = val;
 }
+
+unsigned char data_020a0f0c;

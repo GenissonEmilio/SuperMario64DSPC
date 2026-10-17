@@ -1064,3 +1064,7 @@ extern "C" dMap_c *dMap_c_classInit()
 {
     return new dMap_c();
 }
+
+extern "C" {
+unsigned char data_ov002_0210c3a8 = 0xf8;
+}

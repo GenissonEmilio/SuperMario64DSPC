@@ -26,3 +26,5 @@ void *func_0205b1d8(int arg)
     } while (p == 0);
     return p;
 }
+
+int data_020a6488;

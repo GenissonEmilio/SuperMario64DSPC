@@ -4,7 +4,7 @@ extern void func_020616e8(void *p, int a1);
 
 extern unsigned short data_020a0f14;
 extern int data_020a0f94;
-short data_020a0f24;
+extern short data_020a0f24;
 extern short data_020a0f2c;
 extern void *data_020a0f4c;
 extern void *data_020a0f44;

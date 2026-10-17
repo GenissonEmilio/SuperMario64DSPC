@@ -3,6 +3,7 @@ char* func_0204a4c8(char* (*alloc)(int), int a, int b, int c, unsigned short arg
 int func_ov007_020b3f20(int a);
 void func_0204a17c(int a, int b);
 
+void *data_ov007_0210342c;
 extern char data_ov007_02102dd0[];
 extern void* data_ov007_02103448;
 extern int data_ov007_02103444;

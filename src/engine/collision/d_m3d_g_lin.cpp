@@ -12,9 +12,6 @@
  */
 
 #include "dM3dGLin.h"
-extern "C" {
-unsigned char data_ov002_0210c3a8 = 0xf8;
-}
 
 // @symbol _ZN8dM3dGLinD2Ev
 dM3dGLin::~dM3dGLin()
