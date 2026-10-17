@@ -28,7 +28,9 @@ src/game/actors/d_a_iwante.cpp:
     .text start:0x02115ee0 end:0x0211a418
     .init start:0x0211a418 end:0x0211abc0
     .ctor start:0x0211abc0 end:0x0211abc4
-    .bss start:0x0211ae14 end:0x0211b0fcsrc/data/ov066/data_0211abe0.c:
+    .bss start:0x0211ae14 end:0x0211b0fc
+
+src/data/ov066/data_0211abe0.c:
     complete
     .data start:0x0211abe0 end:0x0211abe4
 
