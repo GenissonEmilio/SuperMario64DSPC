@@ -23,6 +23,10 @@ src/ui/hud/d_th_icon.cpp:
     complete
     .text start:0x020ab54c end:0x020ab5f8
 
+src/data/ov001/rodata_020ab5f8.c:
+    complete
+    .rodata start:0x020ab5f8 end:0x020ab610
+
 src/data/ov001/rodata_020ab610.c:
     complete
     .rodata start:0x020ab610 end:0x020ab618
