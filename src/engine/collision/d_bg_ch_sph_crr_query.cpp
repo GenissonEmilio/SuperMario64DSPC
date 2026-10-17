@@ -807,3 +807,5 @@ int func_02037dc4(int p)
     return p + 8;
 }
 }
+
+volatile u32 data_0209f608;

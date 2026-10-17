@@ -29,7 +29,6 @@ src/unnamed/arm9/0200/func_02005000.c:
 src/unnamed/arm9/0200/func_02005060.c:
     complete
     .text start:0x02005060 end:0x02005098
-    .data start:0x020874cc end:0x020874f4
 
 src/unnamed/arm9/0200/func_02005098.c:
     complete
@@ -348,7 +347,6 @@ src/unnamed/arm9/0200/func_020095c4.c:
 src/unnamed/arm9/0200/func_020095e4.c:
     complete
     .text start:0x020095e4 end:0x020097ec
-    .bss start:0x0209f4ae end:0x0209f4f8
 
 src/unnamed/arm9/0200/func_020097ec.c:
     complete
@@ -417,7 +415,6 @@ src/unnamed/arm9/0200/func_02009e50.c:
 src/unnamed/arm9/0200/func_02009e70.cpp:
     complete
     .text start:0x02009e70 end:0x0200af0c
-    .data start:0x02086fcc end:0x02086ff4
 
 src/unnamed/arm9/0200/func_0200af0c.c:
     complete
@@ -447,7 +444,6 @@ src/unnamed/arm9/0200/func_0200b990.c:
 src/unnamed/arm9/0200/func_0200bb28.c:
     complete
     .text start:0x0200bb28 end:0x0200bec4
-    .bss start:0x0209f49c end:0x0209f49e
 
 src/engine/view/d_camera.cpp:
     complete
@@ -477,7 +473,6 @@ src/unnamed/arm9/0200/func_0200e5fc.c:
 src/unnamed/arm9/0200/func_0200e6d8.c:
     complete
     .text start:0x0200e6d8 end:0x0200e728
-    .bss start:0x0209f250 end:0x0209f251
 
 src/unnamed/arm9/0200/func_0200e728.c:
     complete
@@ -650,16 +645,18 @@ src/engine/save/SaveData.cpp:
 src/runtime/actor/ActorDerived.cpp:
     complete
     .text start:0x02013e80 end:0x02013f4c
+    .data start:0x02086fcc end:0x02086ff4
 
 
 src/func_02013f4c.c:
     complete
     .text start:0x02013f4c end:0x02014150
+    .data start:0x020874cc end:0x020874f4
 
 src/InitCrashScreen.c:
     complete
     .text start:0x02014150 end:0x02014214
-    .data start:0x0208c178 end:0x0208c179
+    .data start:0x0208c178 end:0x0208c378
 
 src/ResetCrashScreen.c:
     complete
@@ -1150,7 +1147,6 @@ src/SetSubBg0Offset.c:
 src/SetBg3Offset.c:
     complete
     .text start:0x02018fa8 end:0x02018fc4
-    .bss start:0x0209d490 end:0x0209d494
 
 src/SetBg2Offset.c:
     complete
@@ -1252,15 +1248,17 @@ src/unnamed/arm9/0201/func_02019a58.c:
 src/unnamed/arm9/0201/func_02019ac4.c:
     complete
     .text start:0x02019ac4 end:0x02019dfc
+    .bss start:0x0209d490 end:0x0209d494
 
 src/unnamed/arm9/0201/func_02019dfc.c:
     complete
     .text start:0x02019dfc end:0x02019e60
+    .bss start:0x0209d4a8 end:0x0209d4ac
 
 src/unnamed/arm9/0201/func_02019e60.c:
     complete
     .text start:0x02019e60 end:0x02019ebc
-    .bss start:0x0209d4d4 end:0x0209d4d5
+    .bss start:0x0209d4d4 end:0x0209d4d8
 
 src/unnamed/arm9/0201/func_02019ebc.c:
     complete
@@ -1297,12 +1295,11 @@ src/unnamed/arm9/0201/func_0201a054.c:
 src/unnamed/arm9/0201/func_0201a1bc.c:
     complete
     .text start:0x0201a1bc end:0x0201a244
-    .bss start:0x0209d518 end:0x0209d51c
 
 src/unnamed/arm9/0201/func_0201a244.c:
     complete
     .text start:0x0201a244 end:0x0201a2f8
-    .bss start:0x0209d4f8 end:0x0209d4f9
+    .bss start:0x0209d4f8 end:0x0209d4fc
 
 src/func_0201a2f8.c:
     complete
@@ -1416,7 +1413,6 @@ src/unnamed/arm9/0201/func_0201aaec.c:
 src/Message2.cpp:
     complete
     .text start:0x0201ab04 end:0x0201cb2c
-    .bss start:0x0209d66c end:0x0209d66d
 
 src/ui/messages/func_0201cb2c.c:
     complete
@@ -1429,11 +1425,12 @@ src/_ZN10dScStage_c13UpdateMessageEv.cpp:
 src/unnamed/arm9/0201/func_0201cd08.cpp:
     complete
     .text start:0x0201cd08 end:0x0201ce10
+    .bss start:0x0209d518 end:0x0209d51c
 
 src/Message.cpp:
     complete
     .text start:0x0201ce10 end:0x0201fcd4
-    .bss start:0x0209d654 end:0x0209d655
+    .bss start:0x0209d654 end:0x0209d658
 
 src/LoadFont.cpp:
     complete
@@ -1446,11 +1443,12 @@ src/ui/messages/func_0201fe08.c:
 src/unnamed/arm9/0201/func_0201fec8.c:
     complete
     .text start:0x0201fec8 end:0x0201ffcc
+    .bss start:0x0209d66c end:0x0209d670
 
 src/unnamed/arm9/0201/func_0201ffcc.c:
     complete
     .text start:0x0201ffcc end:0x02020028
-    .bss start:0x0209e64c end:0x0209e64d
+    .bss start:0x0209e64c end:0x0209e650
 
 src/unnamed/arm9/0202/func_02020028.c:
     complete
@@ -1609,7 +1607,7 @@ src/game/stages/d_s_boot.cpp:
 src/game/stages/d_s_stage_methods.cpp:
     complete
     .text start:0x02023688 end:0x0202e118
-    .bss start:0x0209f1f4 end:0x0209f1f5
+    .bss start:0x0209f1f4 end:0x0209f1f8
 
 src/unnamed/arm9/0202/func_0202e118.c:
     complete
@@ -1618,12 +1616,12 @@ src/unnamed/arm9/0202/func_0202e118.c:
 src/game/stages/d_scene.cpp:
     complete
     .text start:0x0202e140 end:0x0202ec9c
+    .data start:0x0208f074 end:0x0208f174
 
 src/runtime/graphics/fader/d_wipe.cpp:
     complete
     .text start:0x0202ec9c end:0x0202fc98
     .data start:0x020926d0 end:0x02092718
-    .bss start:0x0209f608 end:0x0209f60c
 
 src/engine/view/d_view.cpp:
     complete
@@ -1719,12 +1717,10 @@ src/unnamed/arm9/0203/func_02030c38.c:
 src/unnamed/arm9/0203/func_02030ca0.c:
     complete
     .text start:0x02030ca0 end:0x02030dac
-    .bss start:0x0209fc68 end:0x0209fc6c
 
 src/unnamed/arm9/0203/func_02030dac.c:
     complete
     .text start:0x02030dac end:0x02030e4c
-    .bss start:0x0209fc50 end:0x0209fc51
 
 src/unnamed/arm9/0203/func_02030e4c.c:
     complete
@@ -1742,7 +1738,6 @@ src/unnamed/arm9/0203/func_02031028.c:
 src/unnamed/arm9/0203/func_02031154.c:
     complete
     .text start:0x02031154 end:0x0203128c
-    .bss start:0x0209fcbc end:0x0209fcbd
 
 src/unnamed/arm9/0203/func_0203128c.c:
     complete
@@ -1755,7 +1750,6 @@ src/unnamed/arm9/0203/func_020313d8.c:
 src/unnamed/arm9/0203/func_02031428.c:
     complete
     .text start:0x02031428 end:0x020316d8
-    .bss start:0x0209fd00 end:0x0209fd04
 
 src/unnamed/arm9/0203/func_020316d8.c:
     complete
@@ -1772,13 +1766,11 @@ src/unnamed/arm9/0203/func_020319fc.c:
 src/Message3.cpp:
     complete
     .text start:0x02031b84 end:0x02034a78
-    .data start:0x0208f074 end:0x0208f174
-    .bss start:0x0209fc88 end:0x0209fc89
 
 src/game/stages/d_s_mb.cpp:
     complete
     .text start:0x02034a78 end:0x02035354
-    .bss start:0x0209d4a8 end:0x0209d4ac
+    .bss start:0x0209f250 end:0x0209f254
 
 src/unnamed/arm9/0203/func_02035354.c:
     complete
@@ -1836,41 +1828,50 @@ src/engine/collision/d_bg_ch_gnd.cpp:
     complete
     .text start:0x02037464 end:0x020375d0
     .data start:0x02099224 end:0x0209927c
+    .bss start:0x0209f3c4 end:0x0209f3c8
 
 src/engine/collision/d_bg_ch_lin.cpp:
     complete
     .text start:0x020375d0 end:0x0203782c
     .data start:0x02099290 end:0x020992e4
+    .bss start:0x0209f49c end:0x0209f49e
 
 src/engine/collision/d_bg_ch_sph_crr.cpp:
     complete
     .text start:0x0203782c end:0x02037dc4
     .data start:0x020992f8 end:0x02099360
+    .bss start:0x0209f4ae end:0x0209f4f8
 
 src/engine/collision/d_bg_ch_sph_crr_query.cpp:
     complete
     .text start:0x02037dc4 end:0x02039140
+    .bss start:0x0209f608 end:0x0209f60c
 
 src/engine/collision/d_bg_w.cpp:
     complete
     .text start:0x02039140 end:0x020396d8
     .data start:0x02099370 end:0x020993bc
+    .bss start:0x0209fc50 end:0x0209fc54
 
 src/engine/collision/d_bg_w_kc.cpp:
     complete
     .text start:0x020396d8 end:0x020398fc
+    .bss start:0x0209fc68 end:0x0209fc6c
 
 src/engine/collision/d_bg_w_kc_mbg.cpp:
     complete
     .text start:0x020398fc end:0x0203a4dc
+    .bss start:0x0209fc88 end:0x0209fc8c
 
 src/engine/collision/d_bg_w_kc_mbg_scl_y.cpp:
     complete
     .text start:0x0203a4dc end:0x0203abb0
+    .bss start:0x0209fcbc end:0x0209fcc0
 
 src/engine/collision/d_m3d_g_sph.cpp:
     complete
     .text start:0x0203abb0 end:0x0203ac80
+    .bss start:0x0209fd00 end:0x0209fd04
 
 src/engine/path/PathPtr.cpp:
     complete
@@ -1997,7 +1998,7 @@ src/unnamed/arm9/0203/func_0203bc50.c:
 src/unnamed/arm9/0203/func_0203bc7c.c:
     complete
     .text start:0x0203bc7c end:0x0203bd24
-    .bss start:0x020a0e44 end:0x020a0e45
+    .bss start:0x020a0e44 end:0x020a0e48
 
 src/unnamed/arm9/0203/func_0203bd24.c:
     complete
@@ -2236,7 +2237,6 @@ src/unnamed/arm9/0203/func_0203d7b8.c:
 src/unnamed/arm9/0203/func_0203d7d4.c:
     complete
     .text start:0x0203d7d4 end:0x0203d81c
-    .bss start:0x020a0f1c end:0x020a0f1e
 
 src/unnamed/arm9/0203/func_0203d81c.c:
     complete
@@ -2261,7 +2261,7 @@ src/unnamed/arm9/0203/func_0203d890.c:
 src/unnamed/arm9/0203/func_0203d8a0.c:
     complete
     .text start:0x0203d8a0 end:0x0203d8d4
-    .bss start:0x020a0f04 end:0x020a0f05
+    .bss start:0x020a0f04 end:0x020a0f08
 
 src/unnamed/arm9/0203/func_0203d8d4.c:
     complete
@@ -2362,19 +2362,22 @@ src/unnamed/arm9/0203/func_0203db64.c:
 src/unnamed/arm9/0203/func_0203df40.c:
     complete
     .text start:0x0203df40 end:0x0203e0ac
+    .bss start:0x020a0f1c end:0x020a0f20
 
 src/unnamed/arm9/0203/func_0203e0ac.c:
     complete
     .text start:0x0203e0ac end:0x0203e20c
+    .bss start:0x020a0f34 end:0x020a0f38
 
 src/unnamed/arm9/0203/func_0203e20c.c:
     complete
     .text start:0x0203e20c end:0x0203e978
-    .bss start:0x020a117c end:0x020a1184
+    .bss start:0x020a0f5c end:0x020a0f60
 
 src/unnamed/arm9/0203/func_0203e978.c:
     complete
     .text start:0x0203e978 end:0x0203e9a8
+    .bss start:0x020a0f80 end:0x020a0f84
 
 src/unnamed/arm9/0203/func_0203e9a8.c:
     complete
@@ -2421,7 +2424,6 @@ src/unnamed/arm9/0203/func_0203f818.c:
 src/unnamed/arm9/0203/func_0203f8a4.c:
     complete
     .text start:0x0203f8a4 end:0x0203f920
-    .bss start:0x020a0f34 end:0x020a0f36
 
 src/unnamed/arm9/0203/func_0203f920.c:
     complete
@@ -2554,12 +2556,10 @@ src/unnamed/arm9/0204/func_02040790.c:
 src/unnamed/arm9/0204/func_02040820.c:
     complete
     .text start:0x02040820 end:0x020408b0
-    .bss start:0x020a0f5c end:0x020a0f60
 
 src/unnamed/arm9/0204/func_020408b0.c:
     complete
     .text start:0x020408b0 end:0x02040a5c
-    .bss start:0x020a0f80 end:0x020a0f84
 
 src/unnamed/arm9/0204/func_02040a5c.c:
     complete
@@ -2914,6 +2914,7 @@ src/unnamed/arm9/0204/func_02048e94.c:
 src/engine/sound/Sound2.cpp:
     complete
     .text start:0x02048eb4 end:0x02048f34
+    .bss start:0x020a117c end:0x020a11a0
 
 src/unnamed/arm9/0204/func_02048f34.c:
     complete
@@ -2964,7 +2965,7 @@ src/unnamed/arm9/0204/func_02049c48.c:
 src/unnamed/arm9/0204/func_02049cd8.c:
     complete
     .text start:0x02049cd8 end:0x02049d60
-    .bss start:0x020a4c64 end:0x020a4c68
+    .bss start:0x020a4c64 end:0x020a4c70
 
 src/unnamed/arm9/0204/func_02049d60.c:
     complete
@@ -3739,7 +3740,7 @@ src/unnamed/arm9/0205/func_020593f4.c:
 src/unnamed/arm9/0205/func_0205947c.c:
     complete
     .text start:0x0205947c end:0x0205950c
-    .bss start:0x020a63ac end:0x020a63ad
+    .bss start:0x020a63ac end:0x020a642c
 
 src/unnamed/arm9/0205/func_0205950c.c:
     complete
@@ -4394,10 +4395,12 @@ src/unnamed/arm9/0205/func_0205db24.c:
 src/unnamed/arm9/0205/func_0205db2c.c:
     complete
     .text start:0x0205db2c end:0x0205db78
+    .data start:0x0209a074 end:0x0209a078
 
 src/unnamed/arm9/0205/func_0205db78.c:
     complete
     .text start:0x0205db78 end:0x0205db88
+    .data start:0x0209a60c end:0x0209a614
 
 src/unnamed/arm9/0205/func_0205db88.c:
     complete
@@ -5180,7 +5183,6 @@ src/unnamed/arm9/0206/func_02065a74.c:
 src/unnamed/arm9/0206/func_02065a84.c:
     complete
     .text start:0x02065a84 end:0x02065a94
-    .data start:0x0209a074 end:0x0209a078
 
 src/unnamed/arm9/0206/func_02065a94.c:
     complete
@@ -5409,7 +5411,7 @@ src/unnamed/arm9/0206/func_020684a8.c:
 src/unnamed/arm9/0206/func_020684d0.c:
     complete
     .text start:0x020684d0 end:0x02068514
-    .bss start:0x020a9d2c end:0x020a9d30
+    .bss start:0x020a9d2c end:0x020a9d40
 
 src/unnamed/arm9/0206/func_02068514.c:
     complete
@@ -5647,7 +5649,7 @@ src/unnamed/arm9/0206/func_0206cf98.c:
 src/unnamed/arm9/0206/func_0206d32c.c:
     complete
     .text start:0x0206d32c end:0x0206d868
-    .rodata start:0x0208692c end:0x0208692d
+    .rodata start:0x0208692c end:0x0208696c
 
 src/unnamed/arm9/0206/func_0206d868.c:
     complete
@@ -5693,7 +5695,6 @@ src/unnamed/arm9/0206/func_0206f338.c:
 src/unnamed/arm9/0206/func_0206f46c.c:
     complete
     .text start:0x0206f46c end:0x0206f820
-    .data start:0x0209a60c end:0x0209a614
 
 src/unnamed/arm9/0206/func_0206f820.c:
     complete
@@ -5971,7 +5972,6 @@ src/unnamed/arm9/0207/__sinit_02074e80.c:
 src/unnamed/arm9/0207/__sinit_02074e84.cpp:
     complete
     .init start:0x02074e84 end:0x02074edc
-    .bss start:0x0209f3c4 end:0x0209f3c8
 
 src/unnamed/arm9/0207/__sinit_02074edc.c:
     complete

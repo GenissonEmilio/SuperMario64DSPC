@@ -66,7 +66,7 @@ extern signed char data_0209f2f8;
 extern s32 data_0209f32c;
 extern s32 data_0209b000;
 
-struct CamMode data_02086fcc = { 0, 0x7ffffff, 0xfffff0f7, 0xf09, 0x60000, 0, 0x7ffffff, 0xdfe60, 0x131d00, 0x105b, 0xa2 };
+extern struct CamMode data_02086fcc;
 extern struct CamMode data_02086ff4;
 extern struct CamMode data_0208706c;
 extern struct CamMode data_02087094;

@@ -7,7 +7,8 @@ struct dActor_c {
 };
 
 extern struct dActor_c* _ZN8dActor_c10FindWithIDEj(u32 id);
-u8 data_0209f250;
+extern u8 data_0209f250;
+
 extern struct dActor_c* data_0209f394[];
 extern u32 data_0209b284[];
 

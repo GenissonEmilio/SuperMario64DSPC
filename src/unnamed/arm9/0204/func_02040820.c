@@ -1,7 +1,8 @@
 extern int func_0203fd28(void);
 extern int Wireless_Reset(void);
 extern int data_020a0f94;
-int data_020a0f5c;
+extern int data_020a0f5c;
+
 
 void func_02040820(void)
 {

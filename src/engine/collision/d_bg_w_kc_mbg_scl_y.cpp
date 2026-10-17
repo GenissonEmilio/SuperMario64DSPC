@@ -265,3 +265,7 @@ void dBgW_KcMbgSclY::GetNormal(s16 triID, Vector3 &res)
     NormalizeVec3(&tmp, &tmp);
     func_02039db8(this, &tmp, &res);
 }
+
+extern "C" {
+u8 data_0209fcbc;
+}

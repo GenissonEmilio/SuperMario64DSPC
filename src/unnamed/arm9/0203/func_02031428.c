@@ -3,7 +3,8 @@
 extern int func_02054d88(void);
 extern void MultiCopy_Int(int *dst, int *src, int len);
 
-int data_0209fd00;
+extern int data_0209fd00;
+
 extern u8 data_0209fc78;
 extern u8 data_0209fc7c;
 extern u8 data_0209fcd8;

@@ -73,3 +73,5 @@ void func_0203e0ac(void)
         p1154 += 1;
     } while (i < 0x11);
 }
+
+short data_020a0f34;

@@ -57,3 +57,7 @@ void dM3dGSph::GetCentre(Vector3 &out) const
 {
     out = centre;
 }
+
+extern "C" {
+int data_0209fd00;
+}

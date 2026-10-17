@@ -47,7 +47,8 @@ void func_0202f2c4(void);
 extern dWipe_c      data_0209f61c;   /* the wipe singleton */
 extern u8           data_0209f5f8;   /* which display engine the wipe covers */
 extern volatile u8  data_0209f5fc;   /* the next HBlank has a fresh line */
-volatile u32 data_0209f608;
+extern volatile u32 data_0209f608;
+
 extern volatile u32 data_0209f60c;   /* table index the CPU fills */
 extern u8           data_0209f648[]; /* two 0x300-byte scanline tables */
 extern short        data_023c0000[];

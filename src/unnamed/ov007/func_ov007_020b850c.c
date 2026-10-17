@@ -1,4 +1,5 @@
 extern int data_ov007_020d7a44[];
+int data_ov007_02103470;
 extern int _ZN2GX10LoadBGPlttEPKvjj(const void*, unsigned int, unsigned int);
 extern int _ZN3GXS10LoadBGPlttEPKvjj(const void*, unsigned int, unsigned int);
 void func_ov007_020b850c(void){

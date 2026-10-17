@@ -11,3 +11,5 @@ int func_0205db2c(int a, int b, int c, int d)
     func_02060918(data_020a8060, c, b, d, (void *)&func_0205db78, a, 1);
     return 6;
 }
+
+int data_0209a074 = -1;

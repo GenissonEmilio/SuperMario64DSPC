@@ -70,3 +70,7 @@ void Func_02048eb4()
 }
 
 }
+
+extern "C" {
+u16 data_020a117c[4];
+}

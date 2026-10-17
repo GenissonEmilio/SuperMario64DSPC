@@ -89,3 +89,5 @@ void func_02013f4c(void)
     while ((int)*(volatile u16*)0x4000006 >= 0xc0) {}
     while ((int)*(volatile u16*)0x4000006 < 0xc0) {}
 }
+
+int data_020874cc[10] = { 0, 0x7ffffff, 852, 852, 0x94780, 0x1b4e0, 0, 0x120000, 0x130000, 0x60105b };

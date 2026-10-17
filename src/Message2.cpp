@@ -40,7 +40,7 @@ extern u8 data_0209d65c;
 extern u8 data_0209d660;
 extern u8 data_0209d664; /* nonzero while a dialogue box is up */
 extern u8 data_0209d668;
-u8 data_0209d66c;
+extern u8 data_0209d66c;
 extern u8 data_0209d670;
 extern u8 data_0209d674;
 extern u8 data_0209d678;
