@@ -50,7 +50,7 @@ void func_ov075_021192bc(char* self)
             unsigned char v;
             int r;
             func_ov075_0211a100(self, data_ov075_0211d768);
-extern v ;
+            v = data_0208f274;
             r = func_0203d890();
             if (v == r) {
                 func_02012790(0x11f);

@@ -1,3 +1,9 @@
+
+/* bss 0x0209e664..0x0209e668 */
+#pragma force_active on
+unsigned char data_0209e664[4];
+#pragma force_active off
+
 extern int func_0202044c(char *thiz, int idx);
 extern void func_0202043c(char *thiz);
 

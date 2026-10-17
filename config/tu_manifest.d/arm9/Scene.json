@@ -20,6 +20,11 @@
       "name": ".text",
       "start": "0x0202e140",
       "end": "0x0202ec9c"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209f1e4",
+      "end": "0x0209f1e8"
     }
   ],
   "functions": [
@@ -172,7 +177,15 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "data_0209f1e4",
+      "address": "0x0209f1e4",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "ROM bss 0x209f1e4..0x209f1e8"
+    }
+  ],
   "notes": [
     "HAND-ASSEMBLED. `tubuild.py create` has no candidate for this TU (see boundary_evidence item 1) and would refuse these sources anyway, several being extern \"C\"-wrapped. Written against notes/tu-reconstruction-pilot-report.md and src_tu/actors/daObjKm2_Ami_Bou_c.cpp; the manifest entry itself is built by tubuild.build_manifest_entry so the schema stays the tool's own.",
     "The two functions at 0x0202e73c and 0x0202e78c carry other classes' names (dScStage_c::SetVramBanks, GX::DisableAllBanks) and are admitted on the data-attribution reading in boundary_evidence, not on their names. dScStage_c and GX are project coinages. Where the cartridge's RTTI does name a class this tree now uses that name, which is why this TU's own class is dScene_c.",

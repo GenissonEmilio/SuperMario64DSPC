@@ -1,3 +1,7 @@
+
+/* bss 0x0209b270..0x0209b274 */
+unsigned char data_0209b270[4];
+
 extern int data_0209b284[];
 extern unsigned char data_0209f21c[];
 extern unsigned char data_0209b270[];

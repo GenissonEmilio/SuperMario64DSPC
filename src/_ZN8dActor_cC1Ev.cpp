@@ -2,6 +2,16 @@
 // @symbol _ZN8dActor_cC1Ev
 #include "decl_common.h"
 #include "dActor_c.h"
+
+extern "C" {
+/* data 0x02087404..0x0208742c */
+#pragma force_active on
+#pragma explicit_zero_data on
+unsigned char data_02087404[40] = { 0, 0, 0, 248, 0, 236, 10, 0, 0, 248, 255, 255, 0, 8, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 96, 254, 13, 0, 0, 29, 19, 0, 91, 16, 17, 0 };
+#pragma explicit_zero_data off
+#pragma force_active off
+}
+
 extern "C" {
 void func_0203b244(void* l, void* n);
 void _ZN8dActor_c9SetRangesE5Fix12IiES1_S1_S1_(void* self, int a, int b, int c, int d);

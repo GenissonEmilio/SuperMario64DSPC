@@ -12,7 +12,7 @@ void func_ov075_021196d0(char* c)
 {
     _ZN9dEntObj_c19func_ov075_02115134Ev(*(void**)(c + 0x50));
     data_0209d454 &= ~5;
-extern func_ov075_02116030(data_ov075_0211d71c, data_0209b2e8);
+    func_ov075_02116030(data_ov075_0211d71c, data_0209b2e8);
     data_0209b2e8 = 0;
     func_020338b0(0x225, 0xb0, 0x1d, -1);
     data_0209d454 |= 5;

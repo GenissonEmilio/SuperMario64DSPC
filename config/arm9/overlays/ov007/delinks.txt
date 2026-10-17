@@ -244,12 +244,17 @@ src/unnamed/ov007/func_ov007_020b2bd4.c:
 src/data/merge/rodata_020ccc50.c:
     complete
     .rodata start:0x020ccc50 end:0x020ccc68
+src/data/merge/rodata_020ccc50.c:
+    complete
 src/unnamed/ov007/func_ov007_020b2cdc.c:
     complete
     .text start:0x020b2cdc end:0x020b2cf0
 src/data/ov007/data_ov007_020ccc68.c:
     complete
     .rodata start:0x020ccc68 end:0x020ccc80
+src/data/merge/rodata_020ccc80.c:
+    complete
+    .rodata start:0x020ccc80 end:0x020ccca4
 src/data/merge/rodata_020ccc68.c:
     complete
 src/unnamed/ov007/func_ov007_020b2cf0.c:
@@ -264,6 +269,7 @@ src/unnamed/ov007/func_ov007_020b3050.c:
 src/unnamed/ov007/func_ov007_020b30b0.c:
     complete
     .text start:0x020b30b0 end:0x020b3190
+    .bss start:0x02103360 end:0x02103364
 src/unnamed/ov007/func_ov007_020b3190.c:
     complete
     .text start:0x020b3190 end:0x020b3360
@@ -455,6 +461,9 @@ src/unnamed/ov007/func_ov007_020b782c.c:
     complete
     .text start:0x020b782c end:0x020b78d0
     .bss start:0x0210342c end:0x02103430
+src/data/merge/bss_02103430.c:
+    complete
+    .bss start:0x02103430 end:0x02103434
 src/unnamed/ov007/func_ov007_020b78d0.c:
     complete
     .text start:0x020b78d0 end:0x020b7914
@@ -468,6 +477,9 @@ src/unnamed/ov007/func_ov007_020b7948.c:
 src/data/merge/bss_02103444.c:
     complete
     .bss start:0x02103444 end:0x02103448
+src/data/merge/bss_02103448.c:
+    complete
+    .bss start:0x02103448 end:0x0210344c
 src/unnamed/ov007/func_ov007_020b797c.c:
     complete
     .text start:0x020b797c end:0x020b79c8
@@ -520,6 +532,9 @@ src/unnamed/ov007/func_ov007_020b8548.c:
 src/data/merge/bss_02103460.c:
     complete
     .bss start:0x02103460 end:0x02103464
+src/data/merge/bss_02103464.c:
+    complete
+    .bss start:0x02103464 end:0x02103468
 src/unnamed/ov007/func_ov007_020b8690.c:
     complete
     .text start:0x020b8690 end:0x020b8714
@@ -541,6 +556,7 @@ src/unnamed/ov007/func_ov007_020b8860.c:
 src/unnamed/ov007/func_ov007_020b88c0.c:
     complete
     .text start:0x020b88c0 end:0x020b8a78
+    .bss start:0x02103484 end:0x02103998
 src/unnamed/ov007/func_ov007_020b8a78.c:
     complete
     .text start:0x020b8a78 end:0x020b8b00
@@ -752,6 +768,7 @@ src/unnamed/ov007/func_ov007_020bdeb0.c:
 src/unnamed/ov007/func_ov007_020bdebc.c:
     complete
     .text start:0x020bdebc end:0x020bdf60
+    .bss start:0x02104bac end:0x02104bb0
 src/unnamed/ov007/func_ov007_020bdf60.c:
     complete
     .text start:0x020bdf60 end:0x020be00c
@@ -803,6 +820,7 @@ src/unnamed/ov007/func_ov007_020bea44.cpp:
 src/unnamed/ov007/func_ov007_020beaa0.c:
     complete
     .text start:0x020beaa0 end:0x020beb80
+    .rodata start:0x020d7c5c end:0x020d7c6c
     .bss start:0x02104bc4 end:0x02104bd4
 src/unnamed/ov007/func_ov007_020beb80.c:
     complete
@@ -822,6 +840,7 @@ src/unnamed/ov007/func_ov007_020bf304.c:
 src/unnamed/ov007/func_ov007_020bf428.c:
     complete
     .text start:0x020bf428 end:0x020bf57c
+    .bss start:0x02104bd4 end:0x02104bd8
 src/unnamed/ov007/func_ov007_020bf57c.c:
     complete
     .text start:0x020bf57c end:0x020bf630
@@ -1018,6 +1037,7 @@ src/unnamed/ov007/func_ov007_020c1d78.c:
 src/unnamed/ov007/func_ov007_020c1d8c.c:
     complete
     .text start:0x020c1d8c end:0x020c1da0
+    .bss start:0x02104bec end:0x02104c14
 src/unnamed/ov007/func_ov007_020c1da0.c:
     complete
     .text start:0x020c1da0 end:0x020c1db0

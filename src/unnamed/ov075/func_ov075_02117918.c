@@ -11,7 +11,12 @@ extern void _ZN3G2x18SetBlendBrightnessEPVtts(void *p, unsigned short a, s16 b);
 extern void func_02020304(void);
 
 extern unsigned char data_0209f4ae[];
-extern s16 data_ov075_0211b5d4[];
+
+/* rodata 0x0211b5d4..0x0211b5e0 */
+#pragma force_active on
+const short data_ov075_0211b5d4[6] = { 86, 86, 78, 86, 70, 0 };
+#pragma force_active off
+
 extern unsigned char data_0209d454[];
 extern int data_ov075_0211c9b8[];
 extern int data_ov075_0211d71c[];

@@ -13,7 +13,11 @@ extern void func_02046234(void* a, void* b);
 extern void func_ov007_020bbf98(void* a, int b);
 extern int data_ov007_020ccc48[];
 extern const char data_ov007_020ccc68[];
-extern char data_ov007_020ccc80[];
+const char data_ov007_020ccc80[36] = { 4, 0, 0, 0, 5, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0, 10, 0, 0, 0, 4, 0, 0, 0, 6, 0, 0, 0, 7, 0, 0, 0 };
+
+/* rodata 0x020ccc80..0x020ccca4 */
+#pragma force_active on
+#pragma force_active off
 extern int data_ov007_02103348[];
 extern int data_ov007_02103354[];
 extern char data_ov007_020d7ee8[];

@@ -5,6 +5,12 @@ static unsigned char data_0209d6a0_pad[3];
 
 }
 /* Runtime asset handles resolved through the overlay 0 file table. */
+
+/* bss 0x0209d660..0x0209d664 */
+extern "C" {
+unsigned char data_0209d660[4];
+}
+
 enum LoadFont_AssetId {
     ASSET_D_2D_MARIO_3DFONT_NCL_BIN = 0x0237
 };
@@ -54,5 +60,5 @@ extern "C" void LoadFont(unsigned char arg)
     }
     Deallocate((void *)r4);
     data_0209d660 = 0;
-extern data_0209d6d4 ;
+    data_0209d6d4 = -1;
 }

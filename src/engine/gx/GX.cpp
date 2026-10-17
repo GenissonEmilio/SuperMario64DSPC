@@ -12,7 +12,14 @@
 
 #include "types.h"
 
-extern int data_02099fd0;  // RENDER_DMA_CHANNEL: DMA channel number, -1 if none
+
+/* data 0x02099fd0..0x02099fd4 */
+#pragma explicit_zero_data on
+extern "C" {
+int data_02099fd0 = 3;
+}
+#pragma explicit_zero_data off
+
 extern u32 data_020a60ac;  // texture upload window: base address
 extern u32 data_020a60b0;  // texture-palette VRAM base address
 extern u32 data_020a60b4;  // texture-palette bank selector (BeginLoadTexPltt result)

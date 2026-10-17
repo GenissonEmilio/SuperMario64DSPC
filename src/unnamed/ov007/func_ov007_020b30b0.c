@@ -8,7 +8,10 @@ typedef struct {
     int field14;
     int field18;
 } Obj;
-extern Obj *data_ov007_02103360;
+
+/* bss 0x02103360..0x02103364 */
+Obj * data_ov007_02103360;
+
 extern int func_ov007_020c3df4(int a, int b);
 extern int func_ov007_020c9388(int v);
 extern int func_ov007_020c44e4(int v);

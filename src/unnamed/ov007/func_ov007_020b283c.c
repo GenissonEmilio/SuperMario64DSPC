@@ -42,7 +42,7 @@ void func_ov007_020b283c(void)
   for (i = 0; i < 3; i++)
   {
     func_ov007_020b3edc(data_ov007_020ccc80[idx][i]);
-extern func_ov007_020b3edc(data_ov007_020ccc68[idx][i]);
+    func_ov007_020b3edc(data_ov007_020ccc68[idx][i]);
   }
 
   if (data_ov007_0210342c->f_f4 != 0)

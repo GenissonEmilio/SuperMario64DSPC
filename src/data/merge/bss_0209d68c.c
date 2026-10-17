@@ -1,1 +1,1 @@
-    data_0209d68c = 0;
+unsigned char data_0209d68c[4];

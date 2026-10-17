@@ -26,6 +26,18 @@
 #include "types.h"
 #include "Sound.h"
 
+
+/* data 0x0208e434..0x0208e438 */
+#pragma explicit_zero_data on
+extern "C" {
+int data_0208e434 = -1;
+}
+#pragma explicit_zero_data off
+/* bss 0x0209b53c..0x0209baa0 */
+extern "C" {
+char data_0209b53c[1380];
+}
+
 extern "C" {
 
 /* Foreign callees. */

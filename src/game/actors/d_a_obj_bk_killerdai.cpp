@@ -50,8 +50,12 @@
 
 /* Launcher model, mesh, and the two shared files the bill itself uses.
  * The table is three pointers: model, collision, CLPS block. */
-extern SharedFilePtr data_ov079_02128300;
+SharedFilePtr data_ov079_02128300;
 SharedFilePtr data_ov079_021282f0;
+
+/* bss 0x02128300..0x02128308 */
+extern "C" {
+}
 extern void *data_ov079_02127f64[];
 
 extern "C" {

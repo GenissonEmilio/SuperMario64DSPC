@@ -17,6 +17,11 @@
       "name": ".text",
       "start": "0x0203a4dc",
       "end": "0x0203abb0"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209fcd8",
+      "end": "0x0209fcdc"
     }
   ],
   "functions": [
@@ -113,7 +118,15 @@
     }
   ],
   "data": [],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "data_0209fcd8",
+      "address": "0x0209fcd8",
+      "size": "0x4",
+      "binding": "STB_GLOBAL",
+      "evidence": "ROM bss 0x209fcd8..0x209fcdc"
+    }
+  ],
   "notes": [
     "Cartridge RTTI names the class dBgW_KcMbgSclY (_ZTS14dBgW_KcMbgSclY at arm9 0x02099474, _ZTI at 0x02099468, vtable address point 0x02099490). The licensed run is .text 0x0203a4dc..0x0203abb0 (13 functions): the override set, the three scale-space helpers, the scaleY read, SetScaleY, SetFile and the three lifecycle variants -- one TU the way the original engine file was almost certainly shaped.",
     "Deferred codegen emits the destructor group then the constructor group, and plain members in reverse source order, so the promoted file defines ctor and dtor first and then walks the ROM run backwards. Only D0, D1 and C1 are cartridge-retained: nothing derives from dBgW_KcMbgSclY, so the D2/C2 vague-linkage siblings are discarded by the linker.",

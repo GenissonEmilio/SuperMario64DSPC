@@ -9,7 +9,8 @@ extern unsigned char data_020a0e44;
 
 void func_02023498(void)
 {
-extern if (data_0209f1e0 !;
+    if (data_0209f1e0 != 0) {
+        func_0203bc50();
         func_0203bb14();
         ResetInput();
         return;

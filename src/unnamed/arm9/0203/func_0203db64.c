@@ -1,4 +1,8 @@
 #include "types.h"
+
+/* bss 0x020a1040..0x020a1044 */
+u16 data_020a1040[2];
+
 extern void CpuCopy8(void *dst, void *src, int n);
 extern void func_0205a588(void *dst, int c, int n);
 extern void func_02042778(void);

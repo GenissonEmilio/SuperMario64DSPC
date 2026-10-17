@@ -5,7 +5,7 @@
  * table and registers this on IRQ 0x40000; func_0205ba64 registers one
  * callback per channel. On a fifo error the handler clears it and retries;
  * an empty read returns; a command word dispatches through
-extern * data_020a7fc8[channel], and an unhandled non-reply command is echoed
+ * data_020a7fc8[channel], and an unhandled non-reply command is echoed
  * back to the ARM7 with its reply bit set.
  *
  * leftovers: none.

@@ -32,14 +32,20 @@
  *   their contents are unrecovered, so they keep linker names. */
 #include "PathPtr.h"
 
-extern char *PATH_NODES;    /* flat node records, six bytes each */
-PathDef *PATH_DEFS;         /* the level's PathDef table; the BSS word is 0 */
-extern int NUM_PATHS;       /* entries in PATH_DEFS */
+
+/* bss 0x020a0d84..0x020a0db0 */
+static int NUM_PATHS;
+static char * PATH_NODES;
+static PathDef * PATH_DEFS;
+static char data_020a0d90[32];
+
+    /* flat node records, six bytes each */
+         /* the level's PathDef table; the BSS word is 0 */
+       /* entries in PATH_DEFS */
 
 extern "C" {
 void func_02018434(int a0, int a1, int a2);
 extern char data_020994d4[];
-extern char data_020a0d90[];
 }
 
 // @symbol func_0203ad84

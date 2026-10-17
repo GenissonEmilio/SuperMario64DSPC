@@ -10,6 +10,10 @@ const char data_0208696c[32] = {
 #define EB(t, n) ((struct Arr *)((char *)(t) + ((n) << 4)))
 #define LM2(x) ((int*)(long long)(unsigned)(x))
 
+
+/* bss 0x020a9ec0..0x020a9ec8 */
+struct Arr * data_020a9ec0[2];
+
 struct Elem {
     u32 a, b, c, d;
 };

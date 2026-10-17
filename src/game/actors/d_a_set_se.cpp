@@ -18,7 +18,7 @@
  * Leftover: the data_* externs keep their linker spellings; the verified
  *   names (LEVEL_ID, STAR_ID, CURRENT_GAMEMODE, CAMERA, SAVE_DATA,
  *   RUNNING_KUPPA_SCRIPT, WATERFALL_SOUNDS_DISABLED) live in
-extern *   symbols/verified.tsv and renaming is symbols.txt. data_0209b4ac is
+ *   symbols/verified.tsv and renaming is symbols.txt. data_0209b4ac is
  *   the current music ID, written by Sound::SetMusic/LoadAndSetMusic
  *   and cleared by StopLoadedMusic.
  * Leftover: g_profile_SET_SE is ov002 gap data outside this TU (S14), as

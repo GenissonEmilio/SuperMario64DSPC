@@ -18,7 +18,8 @@ struct W2 { int a, b; };
 
 void func_ov075_02117e84(void* c)
 {
-extern if (data_0209fc58 !;
+    if (data_0209fc58 != 0) {
+        func_02020190();
         func_ov075_02119dc4(c, data_ov075_0211d870);
         return;
     }

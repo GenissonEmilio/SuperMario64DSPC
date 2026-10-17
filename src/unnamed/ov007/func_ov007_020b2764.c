@@ -16,7 +16,7 @@ void func_ov007_020b2764(int sl)
     do {
         obj = *(char**)(data_ov007_0210342c + sb * 4 + 0x108);
         *(unsigned short*)(obj + 0x4c) =
-extern func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].a, data_ov007_020ccc5c[sb].a);
+            func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].a, data_ov007_020ccc5c[sb].a);
         *(unsigned short*)(obj + 0x46) = *(unsigned short*)(obj + 0x4c);
         *(unsigned short*)(obj + 0x4a) =
             func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].b, data_ov007_020ccc5c[sb].b);

@@ -5,7 +5,7 @@ extern int data_020a6498;
 extern void **data_020a64a8[];
 extern void **data_020a6494;
 extern void **data_020a6484;
-int data_020a64a0;
+extern int data_020a64a0;
 
 void **func_0205b274(int flag)
 {

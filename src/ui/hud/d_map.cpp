@@ -107,6 +107,13 @@ extern int data_0208ee44;
 extern void *_ZN3OAM15MM_STAR_MARKERSE[];
 extern u8 data_0209f288;
 extern char _ZN3OAM11MM_RED_COINE[];
+
+/* bss 0x02111154..0x02111178 */
+extern "C" {
+unsigned char data_ov002_02111160[12];
+unsigned char data_ov002_02111154[12];
+struct Vec3 data_ov002_0211116c;
+}
 extern u8 data_0209f370[];
 extern void *data_ov002_0210cac8[];
 extern void *data_ov002_0210c748[];

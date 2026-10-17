@@ -1,2 +1,1 @@
-    if (data_0209f1e0 != 0) {
-        func_0203bc50();
+unsigned char data_0209f1e0[4];

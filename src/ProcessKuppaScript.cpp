@@ -89,7 +89,8 @@ extern "C" void ProcessKuppaScript(void)
         } else if (end < 0 || end >= t) {
             u8 cmd = s[1];
             if (cmd == 5) {
-extern if (data_0209f5bc->u7() ;
+                if (data_0209f5bc->u7() == 0) {
+                    u32 i = gActivePlayerSlot;
                     u32 off = i * 4;
                     if (*(u16*)(data_020a0e58 + i * 4 + 2) != 0 ||
                         ((gTouchHeld[off] != 0 && *(gTouchHeld + off + 1) != 0) ? 1 : 0)) {
@@ -121,7 +122,7 @@ extern if (data_0209f5bc->u7() ;
                 if (((data_0209f2d8 == 2) ? 1 : 0) == 0)
                     Sound::StopLoadedMusic_Layer1(0x3c);
                 dScene_c::SetAndStopColorFader();
-extern data_0209d4b0 ;
+                data_0209d4b0 = 0;
             } else if (cmd == 0xc) {
                 dFdBrightness_c* f = &data_0209b294;
                 f->SetToStart();

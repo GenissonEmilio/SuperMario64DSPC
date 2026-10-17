@@ -1,4 +1,12 @@
 //cpp
+
+extern "C" {
+/* bss 0x0209b41c..0x0209b44c */
+#pragma force_active on
+unsigned char data_0209b41c[48];
+#pragma force_active off
+}
+
 extern "C" {
 extern void func_0205583c(void);
 extern void func_020554bc(void);

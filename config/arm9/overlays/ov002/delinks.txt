@@ -7,12 +7,18 @@
 src/data/ov002/data_ov002_0210d9b8.c:
     complete
     .bss start:0x0210d9b8 end:0x0210d9c0
+src/data/merge/bss_0210d9c8.c:
+    complete
+    .bss start:0x0210d9c8 end:0x0210d9d0
 src/data/ov002/data_ov002_0210d9f0.c:
     complete
     .bss start:0x0210d9f0 end:0x0210d9f8
 src/data/merge/bss_0210da10.c:
     complete
     .bss start:0x0210da10 end:0x0210da18
+src/data/merge/bss_0210da18.c:
+    complete
+    .bss start:0x0210da18 end:0x0210da20
 src/data/ov002/data_ov002_0210da40.c:
     complete
     .bss start:0x0210da40 end:0x0210da48
@@ -204,6 +210,7 @@ src/unnamed/ov002/func_ov002_020e6bb0.c:
 src/game/player/d_a_ply.cpp:
     complete
     .text start:0x020e6c0c end:0x020e6c40
+    .bss start:0x0210e8d0 end:0x0210e8d8
 src/game/actors/d_a_star.cpp:
     complete
     .text start:0x020e6c40 end:0x020ebe5c
@@ -307,6 +314,9 @@ src/ui/hud/d_map.cpp:
     .text start:0x020f975c end:0x020fb8f8
     .data start:0x0210c3a8 end:0x0210c3b0
     .bss start:0x02111150 end:0x02111178
+src/data/merge/data_0210ca0c.c:
+    complete
+    .data start:0x0210ca0c end:0x0210ca18
 src/ui/hud/d_meter.cpp:
     complete
     .text start:0x020fb8f8 end:0x020fe190

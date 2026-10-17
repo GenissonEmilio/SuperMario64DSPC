@@ -1,6 +1,9 @@
+
+/* bss 0x020a63a0..0x020a63a4 */
+int data_020a63a0;
+
 extern int func_02058764(void);
 extern int data_020a63a8;
-extern int data_020a63a0;
 extern void func_020593f4(void);
 
 void func_02059594(void)

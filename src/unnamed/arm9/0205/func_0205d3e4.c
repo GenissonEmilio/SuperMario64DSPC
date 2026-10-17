@@ -5,4 +5,4 @@ void func_0205d3e4(void *a, int b, int c)
 }
 
 #pragma force_active on
-unsigned char data_020a649c[4];
+extern unsigned char data_020a649c[4];

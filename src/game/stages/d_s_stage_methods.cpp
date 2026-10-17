@@ -4730,7 +4730,7 @@ int dScStage_c::CleanupResources() {
     u32 i;
 
     for (i = 0; i < 12; i++)
-extern ((SharedFilePtr *)(data_020756f0[i]))->Release();
+        ((SharedFilePtr *)(data_020756f0[i]))->Release();
 
     {
         int atEnd = (data_0209f2d8 == 2);

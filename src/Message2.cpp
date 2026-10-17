@@ -30,6 +30,14 @@
 #include "PlayerInput.h"
 #include "SaveData.h"
 
+
+/* data 0x0208eeac..0x0208eecc */
+#pragma explicit_zero_data on
+extern "C" {
+int data_0208eeac[8] = { -1, -16, -256, -0x1000, -0x10000, -0x100000, -0x1000000, -0x10000000 };
+}
+#pragma explicit_zero_data off
+
 extern "C" {
 extern u8 data_0209d454;
 extern u8 data_0209d45c;

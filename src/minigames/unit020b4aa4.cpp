@@ -90,6 +90,16 @@ int data_ov004_020bc864 = 0xffffffa0;
 #include "dScMgBase_c.h"
 #include "nitro/fx/fx.h"
 
+
+extern "C" {
+/* data 0x020bc898..0x020bc89c */
+#pragma force_active on
+#pragma explicit_zero_data on
+unsigned char data_ov004_020bc898[4] = { 108, 0, 0, 0 };
+#pragma explicit_zero_data off
+#pragma force_active off
+}
+
 struct Vec2i { int x, y; };
 
 /* One of the twenty records at sMgCoins. Positions are Fix12

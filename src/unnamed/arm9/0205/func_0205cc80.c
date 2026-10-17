@@ -9,7 +9,10 @@ typedef struct Node {
     struct Node *field_8;
 } Node;
 
-extern Node *data_020a8048;
+
+/* bss 0x020a8048..0x020a804c */
+Node * data_020a8048;
+
 
 typedef struct {
     void *field_0;

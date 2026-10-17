@@ -1,3 +1,7 @@
+
+/* bss 0x02103430..0x02103434 */
+int data_ov007_02103430;
+
 extern void func_ov007_020b6c54(void);
 extern void func_ov007_020c3e3c(int v);
 extern void func_ov007_020c3e2c(int v);
@@ -49,7 +53,6 @@ struct S {
 };
 
 extern struct S *data_ov007_0210342c;
-extern int data_ov007_02103430;
 
 int func_ov007_020b7138(struct Arg *a, int *b)
 {
