@@ -1,0 +1,15 @@
+/* .data 0x0213a0f4..0x0213a13c */
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned char data_ov006_0213a0f4[72] = {
+    237, 64, 220, 129, 204, 52, 0, 0, 211, 0, 221, 129,
+    136, 52, 0, 0, 212, 0, 227, 129, 16, 5, 0, 0,
+    212, 128, 3, 128, 20, 5, 0, 0, 244, 64, 227, 129,
+    144, 5, 0, 0, 244, 0, 3, 64, 148, 5, 0, 0,
+    234, 0, 0, 128, 28, 37, 0, 0, 249, 64, 230, 65,
+    24, 37, 0, 0, 1, 64, 224, 65, 56, 37, 255, 255
+};
+#pragma section forcedata end
+#pragma pop

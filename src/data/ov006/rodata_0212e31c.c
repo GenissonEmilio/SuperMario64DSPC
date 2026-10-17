@@ -1,0 +1,7 @@
+/* .rodata 0x0212e31c..0x0212e324 */
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned char data_ov006_0212e31c[8] = {
+    7, 8, 9, 8, 9, 8, 9, 8
+};
+#pragma section forcerodata end
