@@ -622,6 +622,30 @@ src/unnamed/arm9/0201/func_02013568.c:
     .text start:0x02013568 end:0x02013580
     .data start:0x02088388 end:0x02088610
 
+src/data/arm9/data_02088660.c:
+    complete
+    .data start:0x02088660 end:0x0208894c
+
+src/data/arm9/data_02088b14.c:
+    complete
+    .data start:0x02088b14 end:0x02088ba0
+
+src/data/arm9/data_02088c2c.c:
+    complete
+    .data start:0x02088c2c end:0x02088ccc
+
+src/data/arm9/data_02088d80.c:
+    complete
+    .data start:0x02088d80 end:0x02088ef0
+
+src/data/arm9/data_020891a8.c:
+    complete
+    .data start:0x020891a8 end:0x02089608
+
+src/data/arm9/data_0208e3a4.c:
+    complete
+    .data start:0x0208e3a4 end:0x0208e420
+
 src/unnamed/arm9/0201/func_02013580.c:
     complete
     .text start:0x02013580 end:0x02013598
@@ -779,6 +803,10 @@ src/engine/model/BlendModelAnim.cpp:
     complete
     .text start:0x020163e0 end:0x02016644
     .data start:0x0208e8c4 end:0x0208e90c
+
+src/data/arm9/data_0208e9e0.c:
+    complete
+    .data start:0x0208e9e0 end:0x0208ea50
 
 src/_ZN14BlendModelAnimD0Ev.cpp:
     complete
@@ -1571,6 +1599,46 @@ src/engine/particle/Particle_SysTracker_Contents.cpp:
     .text start:0x02021a04 end:0x02021e40
     .data start:0x02090200 end:0x02090208
 
+src/data/arm9/data_02090208.c:
+    complete
+    .data start:0x02090208 end:0x020907fc
+
+src/data/arm9/data_020907fc.c:
+    complete
+    .data start:0x020907fc end:0x02090864
+
+src/data/arm9/data_02091000.c:
+    complete
+    .data start:0x02091000 end:0x020914a0
+
+src/data/arm9/data_020914a8.c:
+    complete
+    .data start:0x020914a8 end:0x020914b0
+
+src/data/arm9/data_020914bc.c:
+    complete
+    .data start:0x020914bc end:0x020914d4
+
+src/data/arm9/data_02091528.c:
+    complete
+    .data start:0x02091528 end:0x02091570
+
+src/data/arm9/data_0209213c.c:
+    complete
+    .data start:0x0209213c end:0x02092144
+
+src/data/arm9/data_02092164.c:
+    complete
+    .data start:0x02092164 end:0x02092170
+
+src/data/arm9/data_02092198.c:
+    complete
+    .data start:0x02092198 end:0x020921c0
+
+src/data/arm9/data_020922d8.c:
+    complete
+    .data start:0x020922d8 end:0x02092584
+
 src/engine/particle/d_pa.cpp:
     complete
     .text start:0x02021e40 end:0x020226d4
@@ -1862,15 +1930,27 @@ src/engine/collision/d_bg_ch_gnd.cpp:
     .text start:0x02037464 end:0x020375d0
     .data start:0x02099224 end:0x0209927c
 
+src/data/arm9/data_0209927c.c:
+    complete
+    .data start:0x0209927c end:0x02099290
+
 src/engine/collision/d_bg_ch_lin.cpp:
     complete
     .text start:0x020375d0 end:0x0203782c
     .data start:0x02099290 end:0x020992e4
 
+src/data/arm9/data_020992e4.c:
+    complete
+    .data start:0x020992e4 end:0x020992ec
+
 src/engine/collision/d_bg_ch_sph_crr.cpp:
     complete
     .text start:0x0203782c end:0x02037dc4
     .data start:0x020992f8 end:0x02099360
+
+src/data/arm9/data_02099360.c:
+    complete
+    .data start:0x02099360 end:0x02099368
 
 src/engine/collision/d_bg_ch_sph_crr_query.cpp:
     complete
@@ -3173,6 +3253,10 @@ src/engine/heap/NestedHeapIterator.cpp:
     .text start:0x0204dcfc end:0x0204e084
     .bss start:0x020a4d38 end:0x020a4d44
     .data start:0x0209a700 end:0x0209a73c
+
+src/data/arm9/data_0209a73c.c:
+    complete
+    .data start:0x0209a73c end:0x0209a7d8
 
 src/engine/heap/ExpandingHeapAllocator.cpp:
     complete
