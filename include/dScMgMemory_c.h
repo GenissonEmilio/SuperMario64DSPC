@@ -26,44 +26,46 @@
 extern "C" int Dealer_Destruct(char *state);
 
 struct dMgMemorySharedState_c {
-    ~dMgMemorySharedState_c() { Dealer_Destruct((char *)this); }
+    ~dMgMemorySharedState_c() {
+        Dealer_Destruct((char *)this);
+    }
     u8 pad_000[0x1e6];
-    s16 ready;       /* 0x1e6 -- set when a new Memory Match round starts */
+    s16 ready; /* 0x1e6 -- set when a new Memory Match round starts */
     u8 pad_1e8[0x88];
 };
 
 struct dMgMemoryCard_c {
-    s32 x;              /* 0x00 */
-    s32 y;              /* 0x04 */
-    s32 speed;          /* 0x08 */
-    s16 angle;          /* 0x0c */
-    u16 animTimer;      /* 0x0e */
-    u8 value;           /* 0x10 */
-    u8 unk_11;          /* 0x11 */
-    u8 visible;         /* 0x12 */
-    u8 active;          /* 0x13 */
-    u8 state;           /* 0x14 */
-    u8 frame;           /* 0x15 */
-    u8 flyAwayStarted;  /* 0x16 */
-    u8 pad_17;          /* 0x17 */
+    s32 x;             /* 0x00 */
+    s32 y;             /* 0x04 */
+    s32 speed;         /* 0x08 */
+    s16 angle;         /* 0x0c */
+    u16 animTimer;     /* 0x0e */
+    u8 value;          /* 0x10 */
+    u8 unk_11;         /* 0x11 */
+    u8 visible;        /* 0x12 */
+    u8 active;         /* 0x13 */
+    u8 state;          /* 0x14 */
+    u8 frame;          /* 0x15 */
+    u8 flyAwayStarted; /* 0x16 */
+    u8 pad_17;         /* 0x17 */
 };
 
 struct dMgMemoryPlayer_c {
-    s32 x;          /* 0x00 */
-    s32 y;          /* 0x04 */
-    s32 speed;      /* 0x08 */
-    s16 angle;      /* 0x0c */
-    s16 delay;      /* 0x0e */
-    u8 active;      /* 0x10 */
-    u8 unk_11;      /* 0x11 */
-    u8 state;       /* 0x12 */
-    u8 pad_13;      /* 0x13 */
+    s32 x;     /* 0x00 */
+    s32 y;     /* 0x04 */
+    s32 speed; /* 0x08 */
+    s16 angle; /* 0x0c */
+    s16 delay; /* 0x0e */
+    u8 active; /* 0x10 */
+    u8 unk_11; /* 0x11 */
+    u8 state;  /* 0x12 */
+    u8 pad_13; /* 0x13 */
 };
 
 struct dMgMemoryCursor_c {
     s32 x;          /* 0x00 */
     s32 y;          /* 0x04 */
-    s16 blinkTimer; /* 0x08 -- toggles the cursor frame every 20 ticks */
+    u16 blinkTimer; /* 0x08 -- toggles the cursor frame every 20 ticks */
     u8 pad_0a[2];   /* 0x0a */
     u8 visible;     /* 0x0c */
     u8 frame;       /* 0x0d */
@@ -73,7 +75,8 @@ struct dMgMemoryCursor_c {
 
 #ifndef SM64DS_PLATFORM_PC
 /* ROM layout under mwccarm; host ABI divergence is tracked separately. */
-typedef char dMgMemorySharedState_c_size_must_be_0x270[sizeof(dMgMemorySharedState_c) == 0x270 ? 1 : -1];
+typedef char
+    dMgMemorySharedState_c_size_must_be_0x270[sizeof(dMgMemorySharedState_c) == 0x270 ? 1 : -1];
 typedef char dMgMemoryCard_c_size_must_be_0x18[sizeof(dMgMemoryCard_c) == 0x18 ? 1 : -1];
 typedef char dMgMemoryPlayer_c_size_must_be_0x14[sizeof(dMgMemoryPlayer_c) == 0x14 ? 1 : -1];
 typedef char dMgMemoryCursor_c_size_must_be_0x10[sizeof(dMgMemoryCursor_c) == 0x10 ? 1 : -1];
@@ -85,24 +88,14 @@ struct dScMgMemory_c : dScMgSingle3DBase_c {
     s32 InitResources();
     s32 Behavior();
     s32 Render();
-    virtual void StartRound(int arg);    /* slot 18 */
-    virtual int CanEndState(int mode);    /* slot 19 */
+    virtual void StartRound(int arg);  /* slot 18 */
+    virtual int CanEndState(int mode); /* slot 19 */
     virtual void OnDealDone();         /* slot 21 */
 
     /* Numeric order follows the scene, player, round and result PMF tables. */
-    enum SceneState {
-        STATE_SETUP = 0,
-        STATE_PLAY,
-        STATE_JUDGE_PAIRS,
-        STATE_RESULT,
-        STATE_EXIT
-    };
+    enum SceneState { STATE_SETUP = 0, STATE_PLAY, STATE_JUDGE_PAIRS, STATE_RESULT, STATE_EXIT };
 
-    enum PlayerState {
-        PLAYER_DROP = 0,
-        PLAYER_MOVE,
-        PLAYER_WAIT
-    };
+    enum PlayerState { PLAYER_DROP = 0, PLAYER_MOVE, PLAYER_WAIT };
 
     enum RoundState {
         ROUND_START = 0,
@@ -113,12 +106,7 @@ struct dScMgMemory_c : dScMgSingle3DBase_c {
         ROUND_REVEAL
     };
 
-    enum ResultState {
-        RESULT_WAIT = 0,
-        RESULT_REWARD,
-        RESULT_TURN_CARDS,
-        RESULT_FINISH
-    };
+    enum ResultState { RESULT_WAIT = 0, RESULT_REWARD, RESULT_TURN_CARDS, RESULT_FINISH };
 
     void DrawMessage();
     void DrawCursor();
@@ -150,7 +138,7 @@ struct dScMgMemory_c : dScMgSingle3DBase_c {
     void ResultFinish();
 
     void RoundReveal();
-    void* RoundWaitDeal();
+    void *RoundWaitDeal();
     void RoundDealHard();
     void RoundDealNormal();
     void RoundDealEasy();

@@ -38,6 +38,8 @@
 
 #include "common.h"
 #include "daBrq_c.h"
+#include "nitro/fx/fx.h"
+#include "SpawnInfo.h"
 #include "SharedFilePtr.h"
 
 /* Inferred eight-byte resource-family ABI views, not recovered original
@@ -86,19 +88,11 @@ daBrq_c::State data_ov070_02123668[3] = {
 
 Vector3 data_ov070_0212365c(0, -0x28000, 0);
 
-struct BrqSpawnInfo {
-    daBrq_c *(*classInit)();
-    s16 profileIDAndExecuteOrder;
-    s16 drawOrder;
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-
-typedef char BrqSpawnInfo_size_must_be_0x1c[
-    sizeof(BrqSpawnInfo) == 0x1c ? 1 : -1];
+/* Actor ID 0xbf is PLAYER. This int-returning predicate is what makes the
+ * ROM materialize 0/1 before testing it. */
+static inline int IsPlayerActor(dActor_c *actor) {
+    return actor->actorID == 0xbf;
+}
 
 // @symbol daBrq_c_classInit
 extern "C" daBrq_c *daBrq_c_classInit()
@@ -106,7 +100,7 @@ extern "C" daBrq_c *daBrq_c_classInit()
     return new daBrq_c();
 }
 
-extern "C" BrqSpawnInfo g_profile_BIRIKYU = {
+extern "C" SpawnInfo<daBrq_c> g_profile_BIRIKYU = {
     daBrq_c_classInit,
     0x010a,
     0x007d,
@@ -200,7 +194,7 @@ int daBrq_c::Render()
     if (mState != 0 && mState != 2) {
         mTextureSequence.Update(mModel.data);
         mTextureTransformer.Update(mModel.data);
-        mModel.Render((Vector3 *)&mScaleX);
+        mModel.Render(&mScale);
     }
 
     return 1;
@@ -341,17 +335,17 @@ s32 daBrq_c::UpdateActiveState()
     {
         int idx = ((unsigned short)mPrevAngleY) >> 4;
         int sinv = data_02082214[idx * 2];
-        mCylinderOffset.x = (int)(((s64)orbitRadius * sinv + 0x800) >> 0xc);
+        mCylinderOffset.x = FX_MUL(orbitRadius, sinv);
     }
     {
         int idx = ((unsigned short)mOrbitAngle) >> 4;
         int sinv = data_02082214[idx * 2];
-        mCylinderOffset.y = (int)(((s64)0x14000 * sinv + 0x800) >> 0xc);
+        mCylinderOffset.y = FX_MUL(0x14000, sinv);
     }
     {
         int idx = ((unsigned short)mPrevAngleY) >> 4;
         int cosv = data_02082214[idx * 2 + 1];
-        mCylinderOffset.z = (int)(((s64)orbitRadius * cosv + 0x800) >> 0xc);
+        mCylinderOffset.z = FX_MUL(orbitRadius, cosv);
     }
 
     AddVec3(&mOrbitCenter, &mCylinderOffset, &mOrbitCenter);
@@ -361,7 +355,7 @@ s32 daBrq_c::UpdateActiveState()
     {
         int idx = ((unsigned short)mSpinAngle) >> 4;
         int sinv = data_02082214[idx * 2];
-        int scale = (int)(((s64)0x555 * sinv + 0x800) >> 0xc) + 0x800;
+        int scale = FX_MUL(0x555, sinv) + 0x800;
         mScaleX = scale;
         mScaleY = scale;
         mScaleZ = scale;
@@ -371,8 +365,7 @@ s32 daBrq_c::UpdateActiveState()
     mTextureSequence.Advance();
     mTextureTransformer.Advance();
 
-    mSoundHandle = Sound::PlayLong(
-        mSoundHandle, 3, 0x183, *(Vector3 *)&mCamSpacePosX, 0);
+    mSoundHandle = Sound::PlayLong(mSoundHandle, 3, 0x183, mCamSpacePos, 0);
 
     if (DecIfAbove0_Byte(&mStateTimer) == 0) {
         HandlePlayerCollision();
@@ -389,7 +382,7 @@ extern "C" void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
 // @symbol _ZN7daBrq_c18EnterDefeatedStateEv
 s32 daBrq_c::EnterDefeatedState()
 {
-    Sound::PlayBank0(9, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank0(9, mCamSpacePos);
     mFlags &= ~1;
     mVertAccel = -0x2000;
     mTerminalVelocity = -0x3c000;
@@ -421,14 +414,10 @@ s32 daBrq_c::UpdateDefeatedState()
     UpdatePos(&mdCcAcPos_c);
     dBgCh_Actr_UpdateDiscreteNoLava_veneer(&mWithMeshClsn);
 
-    if (mWithMeshClsn.JustHitGround() == 0) {
-        if (DecIfAbove0_Byte(&mStateTimer) != 0)
-            goto done;
+    if (mWithMeshClsn.JustHitGround() != 0 || DecIfAbove0_Byte(&mStateTimer) == 0) {
+        PoofDust();
+        MarkForDestruction();
     }
-
-    PoofDust();
-    MarkForDestruction();
-done:
     return 1;
 }
 
@@ -497,26 +486,15 @@ s32 daBrq_c::HandlePlayerCollision()
         return 0;
 
     dActor_c *other = dActor_c::FindWithID(id);
-    if (other == 0)
-        goto notPlayer;
+    if (other == 0 || !IsPlayerActor(other))
+        return 0;
 
-    {
-        int isPlayer = (other->actorID == 0xbf);
-        if (isPlayer != 0)
-            goto foundPlayer;
-    }
-
-notPlayer:
-    return 0;
-
-foundPlayer:
     Player *player = (Player *)other;
     if (player->mIsVanish != 0)
         return 0;
 
     if (mdCcAcPos_c.hitFlags & 0x10) {
-        mPrevAngleY = Vec3_HorzAngle(
-            (Vector3 *)&player->mPosX, (Vector3 *)&mPosX);
+        mPrevAngleY = Vec3_HorzAngle(&player->mPos, &mPos);
         mAngleY = (short)(mPrevAngleY + 0x8000);
         player->IncMegaKillCount();
         SetState(2);

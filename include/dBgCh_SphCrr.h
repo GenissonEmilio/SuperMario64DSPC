@@ -38,9 +38,12 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
        words (their Actr +0x6c) as a Vector3 and feed them to the movement
        helpers; named when Actr's flat blob was typed out. */
     Vector3 disp;           /* 0x04c */
-    /* Broad-phase box the query methods maintain: func_02037a04 reads both
-       vectors out, func_02037a6c unions two points in, func_02037b1c clears
-       all six words, and func_02037a38 sums them into disp. */
+    /* Per-axis range of the push-out vectors the contacts produce, not a
+       spatial box: dBgW_Kc's sphere query tracks the lowest and highest push
+       per axis and hands both to func_02037a6c, which widens this range to
+       cover them. func_02037b1c clears all six words, func_02037a04 reads
+       them out, and func_02037a38 sums min + max into disp, so opposing
+       pushes on one axis cancel and same-sign ones keep the largest. */
     Vector3 aabbMin;        /* 0x058 */
     Vector3 aabbMax;        /* 0x064 */
     /* Result flags, read and OR-ed a bit at a time by the same function:
@@ -51,28 +54,34 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
     dBgPi mClsnResult1;     /* 0x074 */
     dBgPi mClsnResult2;     /* 0x09c */
     dBgPi mClsnResult3;     /* 0x0c4 */
-    /* Positive values reject wall triangles whose three axis projections lie
-       within [-(extent + radius), extent - radius]. The axis is the collider's
-       preferred-contact direction. Zero disables this test. This descriptive
-       name follows the retail comparison at 0x01ffcfa8; original spelling unknown. */
-    s32 mWallRejectHalfExtent; /* 0x0ec */
+    /* Wall-rejection half extent. When positive, dBgW_Kc's sphere query
+       rejects a wall triangle whose three axis projections all lie within
+       [-(extent + radius), extent - radius] (the retail comparison at
+       0x01ffcfa8); zero disables the test. dBgW_KcMbg rescales it into the
+       collider's frame with the radius. Its role name would be
+       mWallRejectHalfExtent; the unk_ spelling stays until the users in
+       d_bg_w_kc_itcm.cpp and d_bg_w_kc_mbg*.cpp move with it. */
+    s32 unk_0ec;            /* 0x0ec */
     u8  pad_0f0[0xc];
     /* Normal of the floor contact with the greatest Y component. The retail
        KCL query copies SurfaceInfo's normal at 0x01ffbe6c, then compares its
-       Y against +0x100 before saving all three words at 0x01ffd094..0x01ffd0a8.
-       Reset uses (0, -0x1000, 0), so the first accepted floor replaces it.
-       These component names describe that observed role; original names are
-       unknown. Keep scalar storage and the existing construction sequence. */
-    s32 mFloorNormalX;      /* 0x0fc */
-    s32 mFloorNormalY;      /* 0x100 */
-    s32 mFloorNormalZ;      /* 0x104 */
+       Y against the field at +0x100 before saving all three words at
+       0x01ffd094..0x01ffd0a8 through func_0203794c. Reset (func_02037b5c)
+       uses (0, -0x1000, 0), so the first accepted floor replaces it;
+       dBgCh_Actr copies it into its mGroundNormal on a grounded frame.
+       Their role names would be mFloorNormalX/Y/Z; the unk_ spellings stay
+       until the users in d_bg_w_kc_itcm.cpp, d_bg_w_kc_mbg*.cpp and
+       d_bg_ch_actr.cpp move with them. */
+    s32 unk_0fc;           /* 0x0fc - floor normal x */
+    s32 unk_100;           /* 0x100 - floor normal y (the compared word) */
+    s32 unk_104;           /* 0x104 - floor normal z */
     s32 mScale;            /* 0x108 - dBgCh_Actr's Update* copy its tail word
                                (Actr +0x128) here each update */
-    s32 unk_10c;            /* 0x10c - named 2026-08-24 when the size pin
-                               landed: dBgCh_Actr::Init stores its fourth
+    s32 mMotionAngPtr;     /* 0x10c - dBgCh_Actr::Init stores its fourth
                                argument, a Vector3_16 *, at Actr +0x12c = this
-                               +0x10c, and UpdateContinuous forwards both it
-                               and the next word to func_02038324 */
+                               +0x10c, and the Update* bodies forward it and
+                               Actr +0x130 to func_02038324, which hands them
+                               to dBgW::BeforeClsn as `motionAng` and `ang` */
 
     /* --- vtable, in ROM order. Do not reorder. --- */
     /* Defined as real C++ in separate D1/D0 source files. Dedicated TUs with
@@ -98,7 +107,7 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
     void operator delete(void *ptr) { _ZN6Memory16operator_delete2EPv(ptr); }
 
     /* methods */
-    void SetFloorResult(const dBgPi & src_);
+    void SetFloorResult(const dBgPi &result);
     void SetObjAndSphere(const Vector3 &pos, Fix12<int> radius, dActor_c *actor);
     int  DetectClsn();
 
@@ -110,8 +119,8 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
     dBgPi *GetFloorResult();
     dBgPi *GetWallResult();
     dBgPi *GetUnderResult();
-    void SetWallResult(const dBgPi &src_);
-    void SetUnderResult(const dBgPi &src_);
+    void SetWallResult(const dBgPi &result);
+    void SetUnderResult(const dBgPi &result);
 
     /* Members the ROM keeps unnamed; each takes the SphCrr object as its
        first argument in the cartridge call graph and drives the evidenced
@@ -136,8 +145,7 @@ struct dBgCh_SphCrr : dBgCh, dBgPi, dM3dGSph {
 /* SIZE PINNED AT 0x110 by dBgW_KcMbg::DetectClsn(dBgCh_SphCrr&): the ROM gives
    that function's local query object an exact 0x110 stack slot, and compiling
    it against a 0x10c declaration came out one word short of the frame. That
-   measurement is what let the byte stand-in there stay honest; growing this
-   class is what will eventually let the stand-in become the real type. */
+   local is now declared as this real type. */
 #ifndef SM64DS_PLATFORM_PC
 /* ROM layout under mwccarm; host ABI divergence is tracked separately. */
 typedef char dBgCh_SphCrr_size_must_be_0x110[
@@ -163,13 +171,13 @@ struct dBgCh_SphCrr {
     struct dBgPi mClsnResult1; /* 0x074 */
     struct dBgPi mClsnResult2; /* 0x09c */
     struct dBgPi mClsnResult3; /* 0x0c4 */
-    s32 mWallRejectHalfExtent; /* 0x0ec - same projection test as the C++ view */
-    u8  pad_0f0[0xc];
-    s32 mFloorNormalX;      /* 0x0fc */
-    s32 mFloorNormalY;      /* 0x100 */
-    s32 mFloorNormalZ;      /* 0x104 */
+    s32 unk_0ec;               /* 0x0ec - wall-rejection half extent, see C++ */
+    u8 pad_0f0[0xc];
+    s32 unk_0fc;           /* 0x0fc - floor normal x, see the C++ branch */
+    s32 unk_100;           /* 0x100 - floor normal y */
+    s32 unk_104;           /* 0x104 - floor normal z */
     s32 mScale;            /* 0x108 */
-    s32 unk_10c;            /* 0x10c - see the C++ branch: Init's Vector3_16 * */
+    s32 mMotionAngPtr;     /* 0x10c - see the C++ branch: Init's Vector3_16 * */
 };
 
 typedef struct dBgCh_SphCrr dBgCh_SphCrr;

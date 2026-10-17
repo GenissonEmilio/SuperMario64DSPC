@@ -78,6 +78,10 @@
 #include "dBgCh_Lin.h"
 #include "dBgCh_Gnd.h"
 #include "Sound.h"
+#include "Model.h"
+#include "SharedFilePtr.h"
+#include "dClipper.h"
+#include "nitro/fx/fx.h"
 
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN8dActor_c19BeforeInitResourcesEv
@@ -145,10 +149,9 @@ void dActor_c::AfterCleanupResources(u32 vfSuccess)
 extern "C" {
 u8 IsAreaShowing(int areaId);
 void MulVec3Mat4x3(Vector3 *v, Matrix4x3 *m, Vector3 *dst);
-int _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(char *thisp, Vector3 *v, int radius, u8 *out);
 extern int data_0209fc68; /* nonzero forces the actor to think anyway */
 extern Matrix4x3 data_0209b3ec; /* world -> camera */
-extern char data_0209f43c; /* the dClipper instance */
+extern dClipper data_0209f43c;  /* the dClipper instance */
 extern u8 data_0209f274; /* doubles the far-away threshold when set */
 extern u8 data_0209f2c4;
 extern u8 data_0209f20c;
@@ -176,14 +179,10 @@ int dActor_c::BeforeBehavior()
             tmp.x = mPosX >> 3;
             tmp.y = (mPosY + mClipOffsetY) >> 3;
             tmp.z = mPosZ >> 3;
-            MulVec3Mat4x3(&tmp, &data_0209b3ec, (Vector3 *)&mCamSpacePosX);
+            MulVec3Mat4x3(&tmp, &data_0209b3ec, &mCamSpacePos);
         }
         if (mFlags & 0x10003) {
-            int r = _ZN8dClipper13Func_020150E8ER7Vector35Fix12IiEPh(
-                        &data_0209f43c,
-                        (Vector3 *)&mCamSpacePosX,
-                        mClipRadius,
-                        &mClipResult);
+            int r = data_0209f43c.ClipSphere(mCamSpacePos, mClipRadius, &mClipResult);
             int thresh = mClipDistance;
             if (data_0209f274)
                 thresh <<= 1;
@@ -422,11 +421,11 @@ void dActor_c::UpdatePosWithHorzSpeedAndAng(){
         a8 = *(s32*)((char*)c+0xa8);
         v9c = *(s32*)((char*)c+0x9c);
         a0 = *(s32*)((char*)c+0xa0);
-        px = ((s64)v98 * sinv + 0x800) >> 12;
+        px = FX_MUL(v98, sinv);
         nx = a8 + v9c;
         if (nx >= a0) a0 = nx;
         cosv = data_02082214[j];
-        pz = ((s64)v98 * cosv + 0x800) >> 12;
+        pz = FX_MUL(v98, cosv);
         *(s32*)((char*)c+0xa4) = (s32)pz;
         *(s32*)((char*)c+0xa8) = a0;
         *(s32*)((char*)c+0xac) = (s32)px;
@@ -554,8 +553,7 @@ s16 Vec3_HorzAngle(const Vector3 *a, const Vector3 *b);
 s16 dActor_c::HorzAngleToCPlayer()
 {
     ClosestPlayer();
-    return Vec3_HorzAngle((Vector3 *)&mPosX,
-                          (Vector3 *)&((dActor_c *)data_0209b458)->mPosX);
+    return Vec3_HorzAngle(&mPos, &((dActor_c *)data_0209b458)->mPos);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -571,7 +569,7 @@ s16 dActor_c::HorzAngleToCPlayerOrAng()
     if (player == 0)
         return mAngleY;
 
-    return Vec3_HorzAngle((Vector3 *)&mPosX, (Vector3 *)&player->mPosX);
+    return Vec3_HorzAngle(&mPos, &player->mPos);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -591,8 +589,7 @@ Player *dActor_c::FarthestPlayer()
 s16 dActor_c::HorzAngleToFPlayer()
 {
     ClosestPlayer();
-    return Vec3_HorzAngle((Vector3 *)&mPosX,
-                          (Vector3 *)&((dActor_c *)data_0209b450)->mPosX);
+    return Vec3_HorzAngle(&mPos, &((dActor_c *)data_0209b450)->mPos);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -611,8 +608,7 @@ dActor_c *dActor_c::ClosestWithActorID(u32 actorID)
             break;
 
         if (actor != this) {
-            Fix12i dist = Vec3_Dist((const Vector3 *)&mPosX,
-                                    (const Vector3 *)&actor->mPosX);
+            Fix12i dist = Vec3_Dist(&mPos, &actor->mPos);
             if (dist < closestDist) {
                 closestDist = dist;
                 closest = actor;
@@ -639,9 +635,8 @@ extern "C" s32 func_02010844(void* unused, Vector3* v, s16 angle)
     dir = _ZN4cstd5atan2E5Fix12IiES1_(v->x, v->z);
     angle = (s16)(dir - angle);
     horzLen = Vec3_HorzLen(v);
-    return _ZN4cstd5atan2E5Fix12IiES1_(
-        (s32)(((s64)horzLen * data_02082214[((u16)angle >> 4) * 2 + 1] + 0x800) >> 12),
-        v->y);
+    return _ZN4cstd5atan2E5Fix12IiES1_(FX_MUL(horzLen, data_02082214[((u16)angle >> 4) * 2 + 1]),
+                                       v->y);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -722,9 +717,9 @@ void dActor_c::GivePlayerCoins(Player &player, u8 count, u32 coinKind)
         return;
 
     if (player.mIsUnderwater)
-        Sound::PlayBank3(0x12, *(const Vector3 *)&mCamSpacePosX);
+        Sound::PlayBank3(0x12, mCamSpacePos);
     else
-        Sound::PlayBank3(0x11, *(const Vector3 *)&mCamSpacePosX);
+        Sound::PlayBank3(0x11, mCamSpacePos);
 
     s32 amount = count * data_02075238[coinKind];
     GiveCoins(player.mPlayerNo, amount);
@@ -734,7 +729,7 @@ void dActor_c::GivePlayerCoins(Player &player, u8 count, u32 coinKind)
        `add r2, r5, #0x5c` once and loads [r2], [r2,#4], [r2,#8] off it.
        Reading player.mPosX/Y/Z directly costs one instruction less (0xf4, not
        0xf8) because the offsets fold into r5. */
-    const Vector3 *src = (const Vector3 *)&player.mPosX;
+    const Vector3 *src = &player.mPos;
     Vector3 spawnPos;
     spawnPos.x = src->x;
     spawnPos.y = src->y;
@@ -758,12 +753,12 @@ extern "C" void func_020105cc(struct dActor_c *thiz, u32 flags)
 {
     if (flags & 0x380)
     {
-        _ZN5Sound9PlayBank0EjRK7Vector3(0xa, (const Vector3 *)&thiz->mCamSpacePosX);
+        _ZN5Sound9PlayBank0EjRK7Vector3(0xa, &thiz->mCamSpacePos);
         return;
     }
     if (flags & 0x40)
     {
-        _ZN5Sound9PlayBank0EjRK7Vector3(9, (const Vector3 *)&thiz->mCamSpacePosX);
+        _ZN5Sound9PlayBank0EjRK7Vector3(9, &thiz->mCamSpacePos);
         return;
     }
 }
@@ -812,7 +807,7 @@ bool dActor_c::IsPlayerInRange(s32 maxDist)
 {
     Player *closest = ClosestPlayer();
 
-    return Vec3_Dist((Vector3 *)&mPosX, (Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&mPos, &closest->mPos) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -825,7 +820,7 @@ extern "C" int _ZN8dActor_c15IsPlayerInRangeE5Fix12IiES1_S1_i(struct dActor_c *s
     pos.y = posY;
     pos.z = posZ;
     struct dActor_c *closest = (struct dActor_c *)self->ClosestPlayer();
-    return Vec3_Dist(&pos, (struct Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&pos, &closest->mPos) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -836,7 +831,7 @@ bool dActor_c::IsPlayerInRange(const Vector3 &pos, s32 maxDist)
 {
     Player *closest = ClosestPlayer();
 
-    return Vec3_Dist(&pos, (Vector3 *)&closest->mPosX) < (maxDist << 12);
+    return Vec3_Dist(&pos, &closest->mPos) < (maxDist << 12);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -901,16 +896,14 @@ dActor_c *dActor_c::FindExplosionActor(dCc_c &clsn)
 /* ROM ordinal 49 -- func_02010304
  * 0x02010304  size 0x70 */
 extern "C" {
-extern void *_ZN8dActor_c10FindWithIDEj(unsigned);
-extern int _ZN6Player7TryGrabER8dActor_c(void *, void *);
 }
 extern "C" {
 void *func_02010304(void *target, char *p) {
     unsigned id = *(unsigned *)(p + 0x24);
     void *found;
-    if (id != 0 && (found = _ZN8dActor_c10FindWithIDEj(id)) != 0 && (*(int *)(p + 0x20) & 0x1000)) {
+    if (id != 0 && (found = dActor_c::FindWithID(id)) != 0 && (*(int *)(p + 0x20) & 0x1000)) {
         int t = *(unsigned short *)((char *)found + 0xc) == 0xbf;
-        if (t && _ZN6Player7TryGrabER8dActor_c(found, target))
+        if (t && ((Player *)found)->TryGrab(*(dActor_c *)target))
             return found;
     }
     return 0;
@@ -1225,26 +1218,21 @@ s32 dActor_c::GetWaterHeightWDW()
 extern "C" {
 extern SharedFilePtr data_ov002_0210da00; /* 0x0210da00 */
 extern SharedFilePtr data_ov002_0210d9c8; /* 0x0210d9c8 */
-extern void _ZN5Model8LoadFileER13SharedFilePtr(SharedFilePtr* ptr); /* 0x02017a3c */
 }
 extern "C" void LoadBlueCoinModel(void)
 {
-    _ZN5Model8LoadFileER13SharedFilePtr(&data_ov002_0210da00);
-    _ZN5Model8LoadFileER13SharedFilePtr(&data_ov002_0210d9c8);
+    Model::LoadFile(data_ov002_0210da00);
+    Model::LoadFile(data_ov002_0210d9c8);
 }
 
 /* -------------------------------------------------------------------------- */
 // @symbol UnloadBlueCoinModel
 /* ROM ordinal 26 -- UnloadBlueCoinModel
  * 0x0200fe70  size 0x2c */
-struct SharedFilePtr { u32 data[4]; };
-extern "C" {
-extern void _ZN13SharedFilePtr7ReleaseEv(struct SharedFilePtr *self);
-}
 extern "C" void UnloadBlueCoinModel(void)
 {
-    _ZN13SharedFilePtr7ReleaseEv(&data_ov002_0210da00);
-    _ZN13SharedFilePtr7ReleaseEv(&data_ov002_0210d9c8);
+    data_ov002_0210da00.Release();
+    data_ov002_0210d9c8.Release();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1340,8 +1328,6 @@ return func_0200fc44((int)s,(Vector3 *)&t,r1);
 typedef struct RaycastGroundPod { int filler[17]; int resultY; int pad[2]; } RaycastGroundPod;
 extern "C" {
 extern void _ZN9dBgCh_GndC1Ev(dBgCh_Gnd* c);
-extern void _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c(dBgCh_Gnd* c, const Vector3* pos, void* actor);
-extern int _ZN9dBgCh_Gnd10DetectClsnEv(RaycastGroundPod* c);
 extern void _ZN9dBgCh_GndD1Ev(dBgCh_Gnd* c);
 }
 extern "C" int func_0200fc44(int a, Vector3* pos, int flag) {
@@ -1350,8 +1336,8 @@ extern "C" int func_0200fc44(int a, Vector3* pos, int flag) {
         _ZN9dBgCh_GndC1Ev((dBgCh_Gnd*)&rg);
         int* yp = (int*)((int)pos + 4);
         *yp += 0x32000;
-        _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c((dBgCh_Gnd*)&rg, pos, 0);
-        if (_ZN9dBgCh_Gnd10DetectClsnEv(&rg))
+        ((dBgCh_Gnd *)&rg)->SetObjAndPos(*pos, 0);
+        if (((dBgCh_Gnd *)&rg)->DetectClsn())
             pos->y = rg.resultY;
         _ZN9dBgCh_GndD1Ev((dBgCh_Gnd*)&rg);
     }
@@ -1456,8 +1442,8 @@ extern "C" int func_0200fa04(int a, Vector3* pos, int flag)
     if (flag) {
         _ZN9dBgCh_GndC1Ev((dBgCh_Gnd*)&rc);
         *(int*)(((int)pos + 4)) += 0x32000;
-        _ZN9dBgCh_Gnd12SetObjAndPosERK7Vector3P8dActor_c((dBgCh_Gnd*)&rc, pos, 0);
-        if (_ZN9dBgCh_Gnd10DetectClsnEv(&rc))
+        ((dBgCh_Gnd *)&rc)->SetObjAndPos(*pos, 0);
+        if (((dBgCh_Gnd *)&rc)->DetectClsn())
             pos->y = rc.resultY;
         _ZN9dBgCh_GndD1Ev((dBgCh_Gnd*)&rc);
     }
@@ -1517,9 +1503,7 @@ void dActor_c::KillAndTrackInDeathTable()
  * 0x0200f97c  size 0x3c */
 void dActor_c::SpawnSoundObj(u32 soundObjParam)
 {
-    Spawn(
-        0x167, soundObjParam, *(const Vector3 *)&mPosX, 0,
-        mAreaId, -1);
+    Spawn(0x167, soundObjParam, mPos, 0, mAreaId, -1);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1629,15 +1613,12 @@ extern "C" void func_0200f760(void *self, char *actor)
 // @symbol _ZN8dActor_c22IsTooFarAwayFromPlayerE5Fix12IiE
 /* ROM ordinal 1 -- _ZN8dActor_c22IsTooFarAwayFromPlayerE5Fix12IiE
  * 0x0200f70c  size 0x54 */
-extern "C" {
-int _ZN8dActor_c13DistToCPlayerEv(dActor_c *self);
-}
 extern "C" int _ZN8dActor_c22IsTooFarAwayFromPlayerE5Fix12IiE(dActor_c *self, int threshold)
 {
     if (data_0209fc68 == 0) {
         int b = (self->mFlags & 8) != 0;
         if (b != 0) {
-            if (_ZN8dActor_c13DistToCPlayerEv(self) >= threshold)
+            if (self->DistToCPlayer() >= threshold)
                 return 1;
         }
     }

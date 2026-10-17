@@ -40,6 +40,7 @@ enum d_a_obj_hatena_switch_AssetId {
 };
 
 #include "daObjHatenaSwitch_c.h"
+#include "SpawnInfo.h"
 #include "Message.h"
 #include "Player.h"
 #include "SharedFilePtr.h"
@@ -50,19 +51,21 @@ enum d_a_obj_hatena_switch_AssetId {
 struct HatenaVector3Words { s32 x, y, z; };
 struct HatenaMatrixWords { s32 words[12]; };
 
-struct HatenaSwitchSpawnInfo {
-    daObjHatenaSwitch_c *(*classInit)();
-    s16 profileIDAndExecuteOrder;
-    s16 drawOrder;
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
+/* Actor ID 0xbf is PLAYER, 0xc2 is CRATE. dActor_c::mFlags bit 0x08 is
+ * written by the framework while the actor is off screen. These
+ * int-returning predicates are what make the ROM materialize 0/1 before
+ * testing it. */
+static inline int IsPlayerActor(dActor_c *actor) {
+    return actor->actorID == 0xbf;
+}
 
-typedef char HatenaSwitchSpawnInfo_size_must_be_0x1c[
-    sizeof(HatenaSwitchSpawnInfo) == 0x1c ? 1 : -1];
+static inline int IsCrateActor(dActor_c *actor) {
+    return actor->actorID == 0xc2;
+}
+
+static inline int IsOffScreen(dActor_c *actor) {
+    return (actor->mFlags & 8) != 0;
+}
 
 /* SetAnim / SetFile / PlaySub / NewSimple are measured Fix12-by-value seams
  * (wall 6az). func_020393c4 is the dBgW+0x1c store; naming belongs with dBgW. */
@@ -134,7 +137,7 @@ extern "C" daObjHatenaSwitch_c *daObjHatenaSwitch_c_classInit()
 
 /* HATENA_SWITCH is the literal ROM registry ID. The g_profile spelling is a
  * lineage-supported reconstruction; historical alias QuestionSwitch_SpawnInfo. */
-extern "C" HatenaSwitchSpawnInfo g_profile_HATENA_SWITCH = {
+extern "C" SpawnInfo<daObjHatenaSwitch_c> g_profile_HATENA_SWITCH = {
     daObjHatenaSwitch_c_classInit,
     0x001a,
     0x0126,
@@ -142,9 +145,8 @@ extern "C" HatenaSwitchSpawnInfo g_profile_HATENA_SWITCH = {
     0x00100000,
     0x00200000,
     0x01000000,
-    0
+    0,
 };
-
 
 // @symbol _ZN19daObjHatenaSwitch_c17AfterClsnCallbackEP4dBgWP8dActor_cS3_
 void daObjHatenaSwitch_c::AfterClsnCallback(
@@ -157,13 +159,8 @@ void daObjHatenaSwitch_c::AfterClsnCallback(
 // @symbol _ZN19daObjHatenaSwitch_c10HandleClsnER8dActor_c
 void daObjHatenaSwitch_c::HandleClsn(dActor_c &other)
 {
-    u16 actorID = other.actorID;
-    int isPlayer = (int)(actorID == 0xbf);
-    if (isPlayer == 0) {
-        int isCrate = (int)(actorID == 0xc2);
-        if (isCrate == 0)
-            return;
-    }
+    if (!IsPlayerActor(&other) && !IsCrateActor(&other))
+        return;
 
     if (other.mPosY > mPosY + 0x64000)
         mPressedThisFrame = 1;
@@ -307,7 +304,7 @@ s32 daObjHatenaSwitch_c::Behavior()
         } else if (mModelAnim.Finished() == 0) {
             mModelAnim.Advance();
             if (mModelAnim.Finished() != 0)
-                Sound::PlayBank3(0, *(Vector3 *)&mCamSpacePosX);
+                Sound::PlayBank3(0, mCamSpacePos);
         }
         UpdateModelTransform();
         UpdateClsnTransform();
@@ -371,9 +368,7 @@ void daObjHatenaSwitch_c::UpdateClsnTransform()
 // @symbol _ZN19daObjHatenaSwitch_c15UpdateClsnStateEv
 s32 daObjHatenaSwitch_c::UpdateClsnState()
 {
-    int shouldDisable = (int)((mFlags & 8) != 0);
-
-    if (shouldDisable) {
+    if (IsOffScreen(this)) {
         if (mActiveMeshCollider->IsEnabled())
             mActiveMeshCollider->Disable();
         return 1;

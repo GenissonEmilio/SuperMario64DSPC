@@ -16,6 +16,7 @@
 #include "dBgCh_Gnd.h"
 #include "dBgCh_SphCrr.h"
 #include "dBgPi.h"
+#include "nitro/fx/fx.h"
 
 extern "C" {
 /* This TU's own free helpers, called from the members below. */
@@ -33,86 +34,83 @@ int func_02053200(int v);
 void func_02035394(void *dst, void *src);
 
 /* local extern: the radius is Fix12 by value, so the call spells the symbol. */
-void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(
-    dBgCh_SphCrr *sphere, const Vector3 *pos, Fix12i radius, dActor_c *actor);
-void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-    void *thiz, void *f, const Matrix4x3 *m, int fix, short s, void *b);
+void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(dBgCh_SphCrr *sphere,
+                                                                      const Vector3 *localCentre,
+                                                                      Fix12i radius,
+                                                                      dActor_c *actor);
+/* local extern: the scale is Fix12 by value, so the call spells the symbol
+   with the scalar signature d_bg_w_kc_mbg.cpp defines. */
+void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(void *thiz, void *file,
+                                                                           const Matrix4x3 *mtx,
+                                                                           int scale, short angY,
+                                                                           void *clps);
 
-extern dBgCh_Lin data_020a0d0c;   /* the scratch line, in collider space */
-extern Vector3   data_020a0d60;   /* == data_020a0d0c.lineEnd  (+0x54) */
-extern dBgPi     data_020a0d1c;   /* == data_020a0d0c's dBgPi   (+0x10) */
+extern dBgCh_Lin data_020a0d0c; /* the scratch line, in collider space */
+extern Vector3 data_020a0d60;   /* == data_020a0d0c.lineEnd  (+0x54) */
+extern dBgPi data_020a0d1c;     /* == data_020a0d0c's dBgPi   (+0x10) */
 }
 
 // @symbol _ZN14dBgW_KcMbgSclYC1Ev
-dBgW_KcMbgSclY::dBgW_KcMbgSclY()
-{
-}
+dBgW_KcMbgSclY::dBgW_KcMbgSclY() {}
 
 // @symbol _ZN14dBgW_KcMbgSclYD0Ev
 // @symbol _ZN14dBgW_KcMbgSclYD1Ev
-dBgW_KcMbgSclY::~dBgW_KcMbgSclY()
-{
-}
+dBgW_KcMbgSclY::~dBgW_KcMbgSclY() {}
 
 // @symbol _ZN14dBgW_KcMbgSclY7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block
 extern "C" void _ZN14dBgW_KcMbgSclY7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
-    dBgW_KcMbgSclY *self, KCL_File *file, const Matrix4x3 *transform, Fix12i uniformScale, s16 angle, CLPS_Block *clps)
-{
-    _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(self, file, transform, uniformScale, angle, clps);
+    dBgW_KcMbgSclY *self, KCL_File *file, const Matrix4x3 *mtx, Fix12i scale, s16 angY,
+    CLPS_Block *clps) {
+    _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(self, file, mtx, scale,
+                                                                          angY, clps);
     self->scaleY = 0x1000;
     self->invScaleY = 0x1000;
 }
 
 // @symbol _ZN14dBgW_KcMbgSclY9SetScaleYE5Fix12IiE
-extern "C" void _ZN14dBgW_KcMbgSclY9SetScaleYE5Fix12IiE(dBgW_KcMbgSclY *self, Fix12i newScaleY)
-{
+extern "C" void _ZN14dBgW_KcMbgSclY9SetScaleYE5Fix12IiE(dBgW_KcMbgSclY *self, Fix12i newScaleY) {
     self->scaleY = newScaleY;
-    if (self->scaleY == 0) return;
+    if (self->scaleY == 0)
+        return;
     self->invScaleY = func_02053200(self->scaleY);
 }
 
 // @symbol func_0203aad0
-extern "C" s32 func_0203aad0(dBgW_KcMbgSclY *self)
-{
+extern "C" s32 func_0203aad0(dBgW_KcMbgSclY *self) {
     return self->scaleY;
 }
 
 /* World -> collider space: the parent's inverse-scale matrix, then a divide
  * out of the y stretch. */
 // @symbol func_0203aa74
-extern "C" void func_0203aa74(dBgW_KcMbgSclY *self, Vector3 *worldPos, Vector3 *localPos)
-{
+extern "C" void func_0203aa74(dBgW_KcMbgSclY *self, Vector3 *worldPos, Vector3 *localPos) {
     MulVec3Mat4x3(worldPos, &self->invScaledMat, localPos);
     Fix12i inverseVerticalScale = self->invScaleY;
     if (inverseVerticalScale == 0x1000)
         return;
-    localPos->y = (Fix12i)(((s64)localPos->y * inverseVerticalScale + 0x800) >> 12);
+    localPos->y = FX_MUL(localPos->y, inverseVerticalScale);
 }
 
 /* Collider -> world space: fold the y stretch in first, then the parent's
  * scaled matrix. */
 // @symbol func_0203aa10
-extern "C" void func_0203aa10(dBgW_KcMbgSclY *self, Vector3 *localPos, Vector3 *worldPos)
-{
+extern "C" void func_0203aa10(dBgW_KcMbgSclY *self, Vector3 *localPos, Vector3 *worldPos) {
     Vector3 scaledPos;
     scaledPos.x = localPos->x;
     scaledPos.y = localPos->y;
     scaledPos.z = localPos->z;
     if (self->scaleY != 0x1000) {
         Fix12i verticalScale = self->scaleY;
-        scaledPos.y = (Fix12i)(((s64)scaledPos.y * verticalScale + 0x800) >> 12);
+        scaledPos.y = FX_MUL(scaledPos.y, verticalScale);
     }
     MulVec3Mat4x3(&scaledPos, &self->newScaledMat, worldPos);
 }
 
 // @symbol _ZN14dBgW_KcMbgSclY9Virtual08Ev
-void dBgW_KcMbgSclY::Virtual08()
-{
-}
+void dBgW_KcMbgSclY::Virtual08() {}
 
 // @symbol _ZN14dBgW_KcMbgSclY10DetectClsnER9dBgCh_Gnd
-int dBgW_KcMbgSclY::DetectClsn(dBgCh_Gnd &ground)
-{
+int dBgW_KcMbgSclY::DetectClsn(dBgCh_Gnd &ground) {
     Vector3 localStart;
     Vector3 probePos;
     Vector3 localEnd;
@@ -151,16 +149,17 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_Gnd &ground)
 // @symbol _ZN14dBgW_KcMbgSclY10DetectClsnER12dBgCh_SphCrr
 #pragma opt_common_subs off
 
-#define FMUL(a, b) ((int)(((s64)(a) * (b) + 0x800) >> 12))
-
-int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
-{
+int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere) {
     Vector3 centre;
     Vector3 localCentre;
-    /* Keep the bounds in one plain workspace; Vector3 adds object lifetimes. */
-    struct CorrectionBounds {
-        s32 localMin[3], localMax[3];
-        s32 scaledMin[3], scaledMax[3];
+    /* The local query's broad-phase bounds, and the same bounds scaled back out.
+       Plain words: Vector3 declares a destructor. */
+    struct BoxCorner {
+        s32 x, y, z;
+    };
+    struct {
+        BoxCorner localMin, localMax;
+        BoxCorner scaledMin, scaledMax;
     } bounds;
     int inverseScale;
     int localRadius;
@@ -171,26 +170,26 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
     func_0203aa74(this, &centre, &localCentre);
 
     inverseScale = invScale;
-    localRadius = FMUL(sphere.radius, inverseScale);
-    localExtraExtent = FMUL(sphere.mWallRejectHalfExtent, inverseScale);
+    localRadius = FX_MUL(sphere.radius, inverseScale);
+    localExtraExtent = FX_MUL(sphere.unk_0ec, inverseScale);
 
     dBgCh_SphCrr localSphere;
-    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre, localRadius, 0);
-    localSphere.mWallRejectHalfExtent = localExtraExtent;
+    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre,
+                                                                     localRadius, 0);
+    localSphere.unk_0ec = localExtraExtent;
     localSphere.func_02037940(sphere.flags);
     func_02035394(&localSphere, &sphere);
     hit = dBgW_Kc::DetectClsn(localSphere);
     if (hit) {
-        /* Convert the local correction bounds back to the uniform scale. */
-        localSphere.func_02037a04((Vector3 *)bounds.localMin, (Vector3 *)bounds.localMax);
-        bounds.scaledMin[0] = FMUL(bounds.localMin[0], scale);
-        bounds.scaledMin[1] = FMUL(bounds.localMin[1], scale);
-        bounds.scaledMin[2] = FMUL(bounds.localMin[2], scale);
-        bounds.scaledMax[0] = FMUL(bounds.localMax[0], scale);
-        bounds.scaledMax[1] = FMUL(bounds.localMax[1], scale);
-        bounds.scaledMax[2] = FMUL(bounds.localMax[2], scale);
-        sphere.func_02037a6c(bounds.scaledMin[0], bounds.scaledMin[1], bounds.scaledMin[2],
-            bounds.scaledMax[0], bounds.scaledMax[1], bounds.scaledMax[2]);
+        localSphere.func_02037a04((Vector3 *)&bounds.localMin, (Vector3 *)&bounds.localMax);
+        bounds.scaledMin.x = FX_MUL(bounds.localMin.x, scale);
+        bounds.scaledMin.y = FX_MUL(bounds.localMin.y, scale);
+        bounds.scaledMin.z = FX_MUL(bounds.localMin.z, scale);
+        bounds.scaledMax.x = FX_MUL(bounds.localMax.x, scale);
+        bounds.scaledMax.y = FX_MUL(bounds.localMax.y, scale);
+        bounds.scaledMax.z = FX_MUL(bounds.localMax.z, scale);
+        sphere.func_02037a6c(bounds.scaledMin.x, bounds.scaledMin.y, bounds.scaledMin.z,
+                             bounds.scaledMax.x, bounds.scaledMax.y, bounds.scaledMax.z);
         (dBgPi &)sphere = (dBgPi &)localSphere;
         sphere.flags |= 1;
         if (localSphere.flags & 4) {
@@ -200,8 +199,8 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
                 sphere.SetFloorResult(*localSphere.GetFloorResult());
             }
             sphere.flags |= 4;
-            if (sphere.mFloorNormalY < localSphere.mFloorNormalY) {
-                sphere.func_0203794c(&localSphere.mFloorNormalX);
+            if (sphere.unk_100 < localSphere.unk_100) {
+                sphere.func_0203794c(&localSphere.unk_0fc);
             }
         }
         if (localSphere.flags & 8) {
@@ -224,8 +223,7 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_SphCrr &sphere)
  * point transforms back out. The qualified dBgW_Kc::DetectClsn call keeps
  * this override from dispatching back into itself. */
 // @symbol _ZN14dBgW_KcMbgSclY10DetectClsnER9dBgCh_Lin
-int dBgW_KcMbgSclY::DetectClsn(dBgCh_Lin &ray)
-{
+int dBgW_KcMbgSclY::DetectClsn(dBgCh_Lin &ray) {
     Vector3 start, end, worldPos;
 
     func_0203aa74(this, &ray.start, &start);
@@ -253,8 +251,7 @@ int dBgW_KcMbgSclY::DetectClsn(dBgCh_Lin &ray)
 /* The mesh only stretches in y, so the normal's x and z scale by scaleY
  * and the vector is re-normalized. The double scaleY read mirrors the ROM. */
 // @symbol _ZN14dBgW_KcMbgSclY9GetNormalEsR7Vector3
-void dBgW_KcMbgSclY::GetNormal(s16 triID, Vector3 &res)
-{
+void dBgW_KcMbgSclY::GetNormal(s16 triID, Vector3 &res) {
     KCL_File *mesh = kclFile;
     u16 normalIndex = mesh->tris[triID].normalIdx;
     s16 *packedNormal = mesh->normals[normalIndex];
@@ -264,9 +261,9 @@ void dBgW_KcMbgSclY::GetNormal(s16 triID, Vector3 &res)
     normal.y = packedNormal[1] << 2;
     normal.z = packedNormal[2] << 2;
     verticalScale = scaleY;
-    normal.x = (Fix12i)(((s64)normal.x * verticalScale + 0x800) >> 12);
+    normal.x = FX_MUL(normal.x, verticalScale);
     verticalScale = scaleY;
-    normal.z = (Fix12i)(((s64)normal.z * verticalScale + 0x800) >> 12);
+    normal.z = FX_MUL(normal.z, verticalScale);
     NormalizeVec3(&normal, &normal);
     func_02039db8(this, &normal, &res);
 }

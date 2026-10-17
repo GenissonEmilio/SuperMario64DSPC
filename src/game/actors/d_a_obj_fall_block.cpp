@@ -46,6 +46,7 @@
 #include "SharedFilePtr.h"
 #include "dBgCh_Gnd.h"
 #include "daStar_c.h"
+#include "nitro/fx/fx.h"
 
 #define U64 0xFFFFFFFFFFFFFFFFLL
 
@@ -136,8 +137,8 @@ void daObjFallBlock_c_LinkGroup(daObjFallBlock_c *c)
     dActor_c *r = dActor_c::FindWithActorID(c->actorID, 0);
     while (r) {
         if (r != (dActor_c *)c) {
-            Vector3 *b = (Vector3 *)&r->mPosX;
-            Vector3 *a = (Vector3 *)&c->mPosX;
+            Vector3 *b = &r->mPos;
+            Vector3 *a = &c->mPos;
             int ang = Vec3_HorzAngle(a, b);
             if (Vec3_Dist(a, b) < 0x96000) {
                 if (AngleDiff(ang, c->mAngleY) < 0x4000)
@@ -239,7 +240,7 @@ void daObjFallBlock_c::Kill()
     dustPos.y = pos.y;
     dustPos.z = pos.z;
     PoofDustAt(dustPos);
-    Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank3(0x41, mCamSpacePos);
     mStateTimer = 0x1e;
     mPosX = mRestPos.x;
     mPosY = mRestPos.y;
@@ -376,15 +377,13 @@ s32 daObjFallBlock_c::Behavior()
         if (DecIfAbove0_Short(&mStateTimer) == 0) {
             st = &mState;
             *st = (u8)(*st + 1);
-            Sound::PlayBank3(0x2d, *(Vector3 *)&mCamSpacePosX);
+            Sound::PlayBank3(0x2d, mCamSpacePos);
             mStateTimer = 0x5a;
         } else {
             sinv = data_02082214[(*(u16 *)&mBobPhase >> 4) << 1];
             /* (long long) is load-bearing: a plain int mul changes the code
                size. */
-            mPosY =
-                mRestPos.y
-                + (int)(((long long)sinv * 0x19000 + 0x800) >> 12);
+            mPosY = mRestPos.y + FX_MUL(sinv, 0x19000);
             {
                 s16 *bobPhase = &mBobPhase;
                 *bobPhase = (s16)(*bobPhase + 0x3000);

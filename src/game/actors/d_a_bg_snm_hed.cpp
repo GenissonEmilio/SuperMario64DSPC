@@ -24,7 +24,7 @@
 struct BMD_File;
 struct BTP_File;
 
-extern "C" daBgSnmHed_c::StateFunc data_ov072_02122c00[];
+extern "C" daBgSnmHed_c::StateEntry data_ov072_02122c00[];
 extern int gBigSnowmanSmileTextureSequenceFile[];
 extern int gBigSnowmanCryTextureSequenceFile[];
 
@@ -97,8 +97,7 @@ int daBgSnmHed_c::State3()
             unsigned int param = (*(int *)&param1) & 0xf;
             param = param & 0xff;
             param |= 0x40;
-            Spawn(0xb2, param, *(Vector3 *)&mPosX,
-                  0, mAreaId, -1);
+            Spawn(0xb2, param, mPos, 0, mAreaId, -1);
             mSubstate++;
         }
         break;
@@ -246,21 +245,19 @@ int daBgSnmHed_c::InitState0()
 // @symbol _ZN12daBgSnmHed_c17CallStateBehaviorEv
 void daBgSnmHed_c::CallStateBehavior()
 {
-    StateFunc *func = mStateFuncs + 1;
-    (this->**func)();
+    (this->*mState->behavior)();
 }
 
 // @symbol _ZN12daBgSnmHed_c13CallStateInitEv
 void daBgSnmHed_c::CallStateInit()
 {
-    StateFunc *func = mStateFuncs;
-    (this->**func)();
+    (this->*mState->init)();
 }
 
 // @symbol _ZN12daBgSnmHed_c8SetStateEi
 void daBgSnmHed_c::SetState(int state)
 {
-    mStateFuncs = data_ov072_02122c00 + state * 2;
+    mState = &data_ov072_02122c00[state];
     CallStateInit();
 }
 
@@ -285,7 +282,7 @@ void daBgSnmHed_c::OnPendingDestroy()
 int daBgSnmHed_c::Render()
 {
     mTextureSequence.Update(mModel.data);
-    mModel.Render((Vector3 *)&mScaleX);
+    mModel.Render(&mScale);
     return 1;
 }
 

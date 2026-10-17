@@ -44,6 +44,7 @@
 
 #include "common.h"
 #include "daObjPowerUpItem_c.h"
+#include "SpawnInfo.h"
 #include "SharedFilePtr.h"
 #include "SaveData.h"
 #include "fBase_c.h"
@@ -52,6 +53,7 @@
 #include "decl_common.h"
 #include "dBgCh_Gnd.h"
 #include "Player.h"
+#include "nitro/fx/fx.h"
 
 struct Vector3_16f;
 struct Callback;
@@ -179,16 +181,16 @@ void daObjPowerUpItem_c::StateOpening()
         unsigned short hw = mWobbleAngle;
         int idx = hw >> 4;
         signed short odd = data_02082214[idx * 2 + 1];
-        int t1 = (int)(((long long)odd * fdivResult + 0x800) >> 12);
-        int u1 = (int)(((long long)t1 * 0x332 + 0x800) >> 12);
+        int t1 = FX_MUL(odd, fdivResult);
+        int u1 = FX_MUL(t1, 0x332);
         int v1 = u1 + 0xffa;
-        int w1 = (int)(((long long)v1 * 0xfa0 + 0x800) >> 12);
+        int w1 = FX_MUL(v1, 0xfa0);
         mScaleY = w1;
         signed short even = data_02082214[idx * 2];
-        int t2 = (int)(((long long)even * fdivResult + 0x800) >> 12);
-        int u2 = (int)(((long long)t2 * 0x332 + 0x800) >> 12);
+        int t2 = FX_MUL(even, fdivResult);
+        int u2 = FX_MUL(t2, 0x332);
         int v2 = u2 + 0xffa;
-        int w2 = (int)(((long long)v2 * 0xfa0 + 0x800) >> 12);
+        int w2 = FX_MUL(v2, 0xfa0);
         mScaleX = w2;
         // materialized base for halfword at offset >= 0x100
         short* p = (short*)(((int)this + 0x3c8));
@@ -216,7 +218,7 @@ void daObjPowerUpItem_c::BeginOpening()
     ((int *)&pos)[2] = z;
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
         0x102, ((int *)&pos)[0], ((int *)&pos)[1], ((int *)&pos)[2]);
-    func_02012694(0x7d, (const Vector3 *)&mCamSpacePosX);
+    func_02012694(0x7d, &mCamSpacePos);
     mEffectHandle = 0;
     mAngleY = *(short *)((char *)data_0209f318 + 0x17c);
     mWobbleTimer = 0x1b;
@@ -245,7 +247,7 @@ void daObjPowerUpItem_c::StateLaunched()
 
     a = mVertSpeed;
     mag = (a < 0) ? -a : a;
-    y = (int)(((s64)mag * 0x120000 + 0x800) >> 12);
+    y = FX_MUL(mag, 0x120000);
     X = (s16)(y / 4096);
     delta = 0x250;
     if (X > 0)
@@ -298,7 +300,7 @@ void daObjPowerUpItem_c::StateLaunched()
 // @symbol _ZN18daObjPowerUpItem_c13BeginLaunchedEv
 void daObjPowerUpItem_c::BeginLaunched()
 {
-    func_02012694(0x7c, (const Vector3*)&mCamSpacePosX);
+    func_02012694(0x7c, &mCamSpacePos);
     mEffectHandle = 0;
     mVertAccel = 0xfffff998;
     mTerminalVelocity = -0xf000;
@@ -407,7 +409,7 @@ int daObjPowerUpItem_c::DropShadow()
     if (mState == FLOWER_STATE_LAUNCHED) {
         int d = mPosY - mGroundY;
         if (d <= 0x1000) d = 0x1000;
-        r3 = 0x64000 - (int)(((s64)d * 0x180 + 0x800) >> 12);
+        r3 = 0x64000 - FX_MUL(d, 0x180);
         if (r3 < 0x3c000) r3 = 0x3c000;
     }
     return _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_j((char*)this, &mShadowModel, &mShadowMat, r3, 0x3c000, 0xf);
@@ -441,9 +443,15 @@ int daObjPowerUpItem_c::Render()
   unsigned char st = mLifeTimer;
   if (st < 0x2d && (st & 1)) return 1;
   switch (mState) {
-  case FLOWER_STATE_LAUNCHED: mCloseModel.Render((const Vector3 *)&mScaleX); break;
-  case FLOWER_STATE_OPENING: mOpenModel.Render((const Vector3 *)&mScaleX); break;
-  case FLOWER_STATE_RESTING: mOpenModel.Render((const Vector3 *)&mScaleX); break;
+  case FLOWER_STATE_LAUNCHED:
+      mCloseModel.Render(&mScale);
+      break;
+  case FLOWER_STATE_OPENING:
+      mOpenModel.Render(&mScale);
+      break;
+  case FLOWER_STATE_RESTING:
+      mOpenModel.Render(&mScale);
+      break;
   }
   return 1;
 }
@@ -536,23 +544,16 @@ extern "C" daObjPowerUpItem_c *daObjPowerUpItem_c_classInit()
     return new daObjPowerUpItem_c();
 }
 
-struct PowerUpItemSpawnInfo {
-    daObjPowerUpItem_c *(*classInit)();
-    s16 executePriority; /* +4: also POWER_UP_ITEM registry id 0x0132 = 306 */
-    s16 renderPriority;  /* +6 */
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-typedef char PowerUpItemSpawnInfo_size_must_be_0x1c[
-    sizeof(PowerUpItemSpawnInfo) == 0x1c ? 1 : -1];
-
 // @symbol g_profile_POWER_UP_ITEM
-extern "C" PowerUpItemSpawnInfo g_profile_POWER_UP_ITEM = {
-    daObjPowerUpItem_c_classInit, 0x0132, 0x0125, 2,
-    0x00060000, 0x00200000, 0x01000000, 0x01000000
+extern "C" SpawnInfo<daObjPowerUpItem_c> g_profile_POWER_UP_ITEM = {
+    daObjPowerUpItem_c_classInit,
+    0x0132, /* POWER_UP_ITEM registry id 306 */
+    0x0125,
+    2,
+    0x00060000,
+    0x00200000,
+    0x01000000,
+    0x01000000,
 };
 
 /* -------------------------------------------------------------------------- */

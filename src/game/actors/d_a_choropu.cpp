@@ -204,8 +204,10 @@ void daChoropu_c::func_ov080_02123924()
         v.x = q[0];
         v.y = q[1];
         v.z = q[2];
-        if ((short)AngleDiff(mAngleY, Vec3_HorzAngle((Vector3 *)&mPosX, &v)) >= 0x4000) return;
-        if (Vec3_HorzDist((Vector3 *)&mPosX, &v) >= 0x1f4000) return;
+        if ((short)AngleDiff(mAngleY, Vec3_HorzAngle(&mPos, &v)) >= 0x4000)
+            return;
+        if (Vec3_HorzDist(&mPos, &v) >= 0x1f4000)
+            return;
         mState = daChoropu_ST_LEAP;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov080_021283e8.filePtr, 0x40000000, 0x1000, 0);
     }
@@ -376,7 +378,7 @@ void daChoropu_c::func_ov080_02123c24()
             pos.x = pb[0];
             pos.y = pb[1];
             pos.z = pb[2];
-            horz = Vec3_HorzAngle((Vector3 *)&mPosX, &pos);
+            horz = Vec3_HorzAngle(&mPos, &pos);
             diff = (short)AngleDiff(mAngleY, horz);
             if (diff < 0x4000) {
                 mState = daChoropu_ST_THROW_ROCK;
@@ -404,14 +406,15 @@ void daChoropu_c::func_ov080_02123ecc()
     Player *p = ClosestPlayer();
     int dist;
     if (p == 0) dist = 0x5dc000;
-    else dist = Vec3_HorzDist((Vector3 *)&mPosX, (Vector3 *)&p->mPosX);
+    else
+        dist = Vec3_HorzDist(&mPos, &p->mPos);
     if (dist >= 0x5dc000) return;
     if (*(signed char *)&mHasTurn != 1) return;   /* read signed, as the ROM does (ldrsb) */
     if (dist >= 0xfa000) {
         mState = daChoropu_ST_EMERGE;
         _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, data_ov080_021283d8.filePtr, 0x40000000, 0x1000, 0);
         Player *p2 = ClosestPlayer();
-        mAngleY = Vec3_HorzAngle((Vector3 *)&mPosX, (Vector3 *)&p2->mPosX);
+        mAngleY = Vec3_HorzAngle(&mPos, &p2->mPos);
         {
             u32 *a = (u32 *)((int)&mdCcAc_c.flags);
             u32 *b = (u32 *)((int)&mFlags);
@@ -522,22 +525,23 @@ void daChoropu_c::func_ov080_02124088()
         }
     }
 
-    if (acc < 7) goto tail_inc;
-    if (acc != 7) return;
+    if (acc >= 7) {
+        if (acc != 7)
+            return;
 
-    v3.x = mPosX;
-    {
-        int y3 = mPosY;
-        v3.y = y3;
-        v3.z = mPosZ;
-        v3.y = y3 + 0x64000;
+        v3.x = mPosX;
+        {
+            int y3 = mPosY;
+            v3.y = y3;
+            v3.z = mPosZ;
+            v3.y = y3 + 0x64000;
+        }
+        dActor_c::Spawn(daChoropu_ACTOR_ONEUPKINOKO, 0, v3, 0, mAreaId, -1);
+
+        mTimesHit = 8;
+        return;
     }
-    dActor_c::Spawn(daChoropu_ACTOR_ONEUPKINOKO, 0, v3, 0, mAreaId, -1);
 
-    mTimesHit = 8;
-    return;
-
-tail_inc:
     {
         u8 *p184 = (u8 *)LAUND(&mTimesHit);
         (*p184)++;
@@ -699,7 +703,7 @@ s32 daChoropu_c::Render()
 s32 daChoro_Rock_c::Render()
 {
     Model *m = &mModel;
-    m->Render((const Vector3 *)&mScaleX);
+    m->Render(&mScale);
     return 1;
 }
 
@@ -761,7 +765,7 @@ s32 daChoro_Rock_c::Behavior()
             dActor_c *s;
             int r;
 
-            s = dActor_c::Spawn(daChoro_Rock_ACTOR_ID, 1, *(Vector3 *)&mPosX, 0, mAreaId, -1);
+            s = dActor_c::Spawn(daChoro_Rock_ACTOR_ID, 1, mPos, 0, mAreaId, -1);
             r = RandomIntInternal(&data_0209e650);
             s->mPrevAngleX = 0;
             s->mPrevAngleY = (short)((unsigned int)r >> 8);
@@ -771,7 +775,7 @@ s32 daChoro_Rock_c::Behavior()
             s->mVertSpeed = 0x5000;
             s->unk_0ac = 0;
 
-            s = dActor_c::Spawn(daChoro_Rock_ACTOR_ID, 1, *(Vector3 *)&mPosX, 0, mAreaId, -1);
+            s = dActor_c::Spawn(daChoro_Rock_ACTOR_ID, 1, mPos, 0, mAreaId, -1);
             r = RandomIntInternal(&data_0209e650);
             s->mPrevAngleX = 0;
             s->mPrevAngleY = (short)((unsigned int)r >> 8);

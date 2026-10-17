@@ -7,10 +7,8 @@
  * InitResources the key function that emits the vtable.
  *
  * leftovers:
- * - mLevel (dScMgBase_c) and unk_4664 (dScMgD3DBase_c) stay placeholders:
- *   they are read here as the `mLevel % 5` egg check and the Render flag
- *   test, but naming them is the shared header's change -- every minigame
- *   scene reads them under the placeholder spellings.
+ * - mLevel (dScMgBase_c) and mDrawSubScreen (dScMgD3DBase_c) are read here
+ *   as the `mLevel % 5` egg check and the Render flag test.
  * - `base + 0x466c` / `base + 0x4728` still address the two per-minigame
  *   cameras by offset: include/dScMgD3DBase_c.h already calls them camera
  *   elements and records "typing it as a real array is its own change".
@@ -67,15 +65,15 @@ struct Base {
 };
 
 /* The two model file handles InitResources swaps between through
- * data_ov006_02142184; a declared-only subclass so the static initializer
+ * sJumpBackFile; a declared-only subclass so the static initializer
  * names the real entry points. */
 struct MgJumpModelFilePtr : SharedFilePtr {
     u32 words[2];
     MgJumpModelFilePtr(u32 fileID);
     ~MgJumpModelFilePtr();
 };
-extern MgJumpModelFilePtr data_ov006_02142188;
-extern MgJumpModelFilePtr data_ov006_02142190;
+extern MgJumpModelFilePtr gJumpBack02ModelFile;
+extern MgJumpModelFilePtr gJumpBack01ModelFile;
 
 /* Everything below that decl_common.h does not declare. Keep it above the
  * first function: tools/tiers.py charges text between two functions to the
@@ -109,12 +107,12 @@ int  RandomIntInternal(int *seed);
 
 extern int  data_020a0e68;
 extern int  data_0209e650;
-extern int  data_ov006_0213cb48;
+extern int sJumpLastPick;
 extern u8   data_0209d45c;
 extern s16  data_02082614;
-extern int  data_ov006_02140418;
-extern int  data_ov006_02140304;
-extern int  data_ov006_02140434;
+extern int sJump3DMarioCount;
+extern int sHeyhoUnsettledCount;
+extern int sJump3DRisenOutCount;
 extern dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Result;
 extern dScMgJump_c::StatePmf pmf_dScMgJump_c_State_Intro;
 extern dScMgJump_c::StatePmf pmf_dScMgJump_c_State_End;
@@ -171,20 +169,20 @@ void dScMgJump_c::StartRound(int arg)
     } else {
         do {
             idx = (int)((u32)(RandomIntInternal(&data_0209e650) & 0x7fffffff) >> 0x13) * 0xa >> 0xc;
-        } while (idx == (u32)data_ov006_0213cb48);
-        data_ov006_0213cb48 = idx;
+        } while (idx == (u32)sJumpLastPick);
+        sJumpLastPick = idx;
     }
 
     Jump3D_Arrange(mLevel, idx);
 
     if (mLevel < 0xf)
-        data_ov006_02140328 = 3;
+        sHeyhoCount = 3;
     else if (mLevel < 0x14)
-        data_ov006_02140328 = 4;
+        sHeyhoCount = 4;
     else if (mLevel < 0x19)
-        data_ov006_02140328 = 5;
+        sHeyhoCount = 5;
     else
-        data_ov006_02140328 = 6;
+        sHeyhoCount = 6;
 
     Heyho_SpawnAll((void *)mLevel, idx);
     BeginIntro();
@@ -197,7 +195,7 @@ int dScMgJump_c::CanEndState(int sel)
     if (sel == 0) {
         if (mLevel % 5 == 4) {
             if (ApproachLinear2(mStateTimer, 0, 1) != 0) {
-                if (data_ov006_02140428 < 3) {
+                if (sJump3DMariosLeft < 3) {
                     Jump3D_RestoreCount();
                     func_02012790(0x26);
                     mStateTimer = 0x3c;
@@ -226,7 +224,7 @@ s32 dScMgJump_c::InitResources()
     int r;
 
     idx = GetGameLanguage();
-    buf1 = LoadFile(data_ov006_0213cbc8[idx]);
+    buf1 = LoadFile(sJumpNcgByLanguage[idx]);
     buf2 = LoadFile(0xd1);
     DecompressLZ16((void *)buf1, (void *)0x6400000);
     GX::LoadOBJPltt((void *)buf2, 0, 0x80);
@@ -263,11 +261,11 @@ s32 dScMgJump_c::InitResources()
         return 0;
 
     if (param1 & 1) {
-        data_ov006_02142184 = &data_ov006_02142188;
+        sJumpBackFile = &gJumpBack02ModelFile;
     } else {
-        data_ov006_02142184 = &data_ov006_02142190;
+        sJumpBackFile = &gJumpBack01ModelFile;
     }
-    modelFile = Model::LoadFile(*(SharedFilePtr *)data_ov006_02142184);
+    modelFile = Model::LoadFile(*(SharedFilePtr *)sJumpBackFile);
     r = mModel.SetFile((BMD_File *)modelFile, 1, -1);
     if (r == 0) {
         Matrix4x3_FromTranslation(&data_020a0e68, 0, 0, 0);
@@ -334,11 +332,11 @@ void dScMgJump_c::State_Play()
     }
     Heyho_SeparateAll();
     Jump3D_UpdateAll();
-    if(data_ov006_02140428 == 0){
+    if (sJump3DMariosLeft == 0) {
         BeginEnd();
         return;
     }
-    if(data_ov006_02140304 != 0)
+    if (sHeyhoUnsettledCount != 0)
         return;
     BeginFinal();
 }
@@ -402,7 +400,7 @@ void dScMgJump_c::State_Final()
   mAccum += mAccumStep >> 12;
   mAccumStep += 0x600;
   Jump3D_UpdateAll();
-  int same = (int)(data_ov006_02140434 == data_ov006_02140418);
+  int same = (int)(sJump3DRisenOutCount == sJump3DMarioCount);
   if(same == 0) return;
   dScMgBase_c *shared = gMgScene;
   if(shared != 0){
@@ -436,28 +434,29 @@ s32 dScMgJump_c::Behavior()
 }
 
 // @symbol _ZN11dScMgJump_c6RenderEv
-/* Slot 9. Draws the instruction rows while unk_4664 == 1, then programs the
+/* Slot 9. Draws the instruction rows while mDrawSubScreen == 1, then programs the
  * light vector and light color registers at 0x040004c8 and 0x040004cc
  * (lights 0 and 1, hence volatile) and renders the model. The row
  * sprites and the ov006 draw helpers are unnamed in symbols.txt. */
 s32 dScMgJump_c::Render()
 {
 
-    if (unk_4664 == 1) {
+    if (mDrawSubScreen == 1) {
         int count;
         int y;
         int i;
 
         Mg_DrawScoreTally(this, 0xe0, 0x14, 1);
 
-        count = data_ov006_02140428;
+        count = sJump3DMariosLeft;
         y = 0x6e;
         for (i = 0; i < 3; i++) {
             if (i >= count) {
                 int idx = GetGameLanguage();
-                DrawOamSprite((void *)data_ov006_0213cbb4[idx][1], (void *)y, 0xc, (void *)0);
+                DrawOamSprite((void *)sJumpTextSpritesByLanguage[idx][1], (void *)y, 0xc,
+                              (void *)0);
             } else {
-                RenderOamMainScreen(data_ov006_02134cf8, y, 0xc, -1, -1);
+                RenderOamMainScreen(sJumpLifeIconSprite, y, 0xc, -1, -1);
             }
             y += 0x12;
         }
@@ -496,7 +495,7 @@ s32 dScMgJump_c::Render()
         void *obj;
         void *p;
 
-        t = *(V3 *)data_ov006_0213cb8c;
+        t = *(V3 *)sJumpRenderScale;
 
         obj = &mModel.data;
         p = *(void **)((char *)obj + 4);
@@ -519,8 +518,8 @@ s32 dScMgJump_c::Render()
 /* Slot 3. Releases the model file; `this` is never read. */
 s32 dScMgJump_c::CleanupResources()
 {
-    ((SharedFilePtr *)data_ov006_02142184)->Release();
-    data_ov006_02142184 = 0;
+    ((SharedFilePtr *)sJumpBackFile)->Release();
+    sJumpBackFile = 0;
     Mg_CommitRecords();
     return 1;
 }
@@ -531,5 +530,5 @@ s32 dScMgJump_c::CleanupResources()
 
 /* The scene's model file handles, registered in file-ID order; file 0x203
  * sits at 0x02142190, file 0x204 at 0x02142188. */
-MgJumpModelFilePtr data_ov006_02142190(0x203);
-MgJumpModelFilePtr data_ov006_02142188(0x204);
+MgJumpModelFilePtr gJumpBack01ModelFile(0x203);
+MgJumpModelFilePtr gJumpBack02ModelFile(0x204);

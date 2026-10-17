@@ -80,10 +80,14 @@
 
 #include "daYegg_c.h"
 #include "types.h"
+#include "nitro/fx/fx.h"
 #include "common.h"
 #include "SharedFilePtr.h"
 #include "Player.h"
 #include "dBgCh_Gnd.h"
+#include "dActor_c.h"
+#include "dBgCh_Actr.h"
+#include "dCc_c.h"
 
 struct dBgPi;
 
@@ -138,10 +142,6 @@ extern int func_02035638(u8 *p);
 extern void _ZN8daStar_c19func_ov002_020e7218EPci(char *a, char *b, int c);
 extern char *data_ov002_021000a0[];
 extern void Matrix4x3_FromRotationZXYExt(void *m, int x, int y, int z);
-extern int _ZNK5dBgPi9GetClsnIDEv(struct dBgPi *thiz);
-extern char *_ZN8dActor_c10FindWithIDEj(u32 id);
-extern char *_ZN8dActor_c4NextEPKS_(const void *prev);
-extern char *_ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as(unsigned int a, unsigned int b, const void *v, const void *w, int e, int f);
 /* Was spelled `func_02123804`, a name no symbols.txt defines. ov002's relocs
    record the call at 0x020ec718 as `overlays(77,78,79,80)`: four same-base
    overlays each put a function at 0x02123804. The call is gated on actor
@@ -162,14 +162,6 @@ extern void _Z15ApproachLinear2Rsss(s16 *p, short a, short b);
    destinations (measured). */
 extern int func_ov002_020d5f98(void *c, unsigned char *a, unsigned char *b);
 extern int func_ov002_020d6048(void *c);
-extern void _ZN7fBase_c18MarkForDestructionEv(void *c);
-extern void _ZN5dCc_c5ClearEv(void *p);
-extern void _ZN5dCc_c6UpdateEv(void *p);
-extern int _ZNK10dBgCh_Actr10IsOnGroundEv(void *p);
-extern s32 _ZNK10dBgCh_Actr8IsOnWallEv(void *self);
-extern s32 _ZNK10dBgCh_Actr14GetResultFlag1Ev(void *self);
-extern void *_ZNK10dBgCh_Actr14GetFloorResultEv(void *self);
-extern void _ZN8dActor_c9UpdatePosEP5dCc_c(void *c, void *cc);
 extern void dBgCh_Actr_UpdateContinuous_Veneer(void *p);
 extern void dBgCh_Actr_UpdateDiscreteNoLava_veneer(void *self);
 extern s32 _ZN8Particle6System3NewEjj5Fix12IiES2_S2_PK11Vector3_16fPNS_8CallbackE(u32 a, u32 b, s32 x, s32 y, s32 z, struct Vec3_16f *rot, void *cb);
@@ -192,7 +184,6 @@ extern void Math_Function_0203b14c(void *ptr, int target, int rate, int limit, i
 extern void ApproachAngle(void *cur, short target, int divisor, int band, int maxStep);
 extern void _Z11UpdateAngleRssis(short *a, int b, int c, short d);
 extern int func_02010844(void *unused, void *v, short angle);
-extern void _ZNK11SurfaceInfo12CopyNormalToER7Vector3(void *self, void *out);
 extern void Matrix4x3_FromRotationY(void *m, int angle);
 extern void Matrix4x3_FromTranslation(M48 *m, int x, int y, int z);
 extern void Matrix4x3_ApplyInPlaceToTranslation(M48 *m, int x, int y, int z);
@@ -202,8 +193,6 @@ extern int func_ov002_020cf700(void *g);
 extern int func_ov002_020d0d2c(void *g);
 extern void _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_j(void *self, void *shadow, void *mtx, int fix, int t, unsigned int n);
 extern void _ZN8dActor_c18DropShadowScaleXYZER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_S5_j(void *self, void *shadow, void *mtx, int fix, int t1, int t2, unsigned int n);
-extern void _ZN8dActor_c11UntrackStarERa(void *self, signed char *r);
-extern unsigned char _ZN8dActor_c9TrackStarEjj(void *self, u32 star, u32 kind);
 extern void _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(void *self, const void *pos, u32 a, int fix, u32 b, u32 c, u32 d);
 extern void LoadBlueCoinModel(void *self);
 extern void UnloadBlueCoinModel(void *self);
@@ -303,9 +292,10 @@ void daYegg_c::func_ov002_020ec670(int arg)
     u16 type;
 
     cr = (struct dBgPi*)func_0203567c(arg);
-    if (_ZNK5dBgPi9GetClsnIDEv(cr) == -1) return;
+    if (cr->GetClsnID() == -1)
+        return;
 
-    actor = (struct dActor_c*)_ZN8dActor_c10FindWithIDEj(_ZNK5dBgPi9GetClsnIDEv(cr));
+    actor = dActor_c::FindWithID(cr->GetClsnID());
     if (actor == 0) return;
 
     type = actor->actorID;
@@ -403,7 +393,7 @@ void daYegg_c::func_ov002_020ec80c(void* b, int count, int sl, short arg5)
         if (count <= 0) return;
         zero = i;
         do {
-            coin = (dActor_c*)_ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as(ACTOR_BLUE_COIN, 2, b, 0, mAreaId, -1);
+            coin = dActor_c::Spawn(ACTOR_BLUE_COIN, 2, *(const Vector3 *)b, 0, mAreaId, -1);
             if (coin != 0) {
                 do {
                     rv = (int)(((unsigned int)RandomIntInternal(&data_0209e650) >> 16) << 27) >> 16;
@@ -429,11 +419,11 @@ void daYegg_c::func_ov002_020ec80c(void* b, int count, int sl, short arg5)
  * if it is on the ground, then runs the ground collision and clears the
  * cylinder's hit record. */
 void daYegg_c::func_ov002_020ec938(){
-    _ZN8dActor_c9UpdatePosEP5dCc_c(this, &mdCcAc_c);
-    if (_ZNK10dBgCh_Actr10IsOnGroundEv(&mWithMeshClsn))
+    UpdatePos(&mdCcAc_c);
+    if (mWithMeshClsn.IsOnGround())
         func_ov002_020edca4(this);
     dBgCh_Actr_UpdateContinuous_Veneer(&mWithMeshClsn);
-    _ZN5dCc_c5ClearEv(&mdCcAc_c);
+    mdCcAc_c.Clear();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -482,11 +472,11 @@ void daYegg_c::func_ov002_020ec9c4(){
     }
   }
   if (!mPlayer->func_ov002_020d6048())
-    _ZN7fBase_c18MarkForDestructionEv(this);
-  _ZN5dCc_c5ClearEv(&mdCcAc_c);
-  _ZN5dCc_c6UpdateEv(&mdCcAc_c);
-  if (!_ZNK10dBgCh_Actr10IsOnGroundEv(&mWithMeshClsn))
-    _ZN8dActor_c9UpdatePosEP5dCc_c(this, &mdCcAc_c);
+      MarkForDestruction();
+  mdCcAc_c.Clear();
+  mdCcAc_c.Update();
+  if (!mWithMeshClsn.IsOnGround())
+      UpdatePos(&mdCcAc_c);
   dBgCh_Actr_UpdateContinuous_Veneer(&mWithMeshClsn);
 }
 
@@ -537,7 +527,7 @@ void daYegg_c::func_ov002_020ecb0c()
     id = mTargetId;
     o = 0;
     if (id != 0)
-        o = (dActor_c *)_ZN8dActor_c10FindWithIDEj(id);
+        o = dActor_c::FindWithID(id);
     if (o != 0) {
         b = (s32)((o->mFlags & 0x10000000) != 0);
         if (b == 0) {
@@ -579,7 +569,7 @@ void daYegg_c::func_ov002_020ecb0c()
                 func_ov002_020ed738();
                 if (func_ov002_020eddc4() != 0)
                     return;
-                onwall = _ZNK10dBgCh_Actr8IsOnWallEv(&mWithMeshClsn);
+                onwall = mWithMeshClsn.IsOnWall();
                 if ((onwall | func_02035638((u8 *)&mWithMeshClsn)) != 0) {
                     func_ov002_020edca4(this);
                     return;
@@ -591,10 +581,10 @@ void daYegg_c::func_ov002_020ecb0c()
         func_ov002_020edca4(this);
         return;
     }
-    _ZN5dCc_c5ClearEv(&mdCcAc_c);
+    mdCcAc_c.Clear();
     if (flag == 1)
-        _ZN5dCc_c6UpdateEv(&mdCcAc_c);
-    _ZN8dActor_c9UpdatePosEP5dCc_c(this, &mdCcAc_c);
+        mdCcAc_c.Update();
+    UpdatePos(&mdCcAc_c);
     dBgCh_Actr_UpdateContinuous_Veneer(&mWithMeshClsn);
 }
 
@@ -625,7 +615,7 @@ void daYegg_c::func_ov002_020ecd18()
 
     o = 0;
     if (mTargetId != 0)
-        o = (dActor_c *)_ZN8dActor_c10FindWithIDEj(mTargetId);
+        o = dActor_c::FindWithID(mTargetId);
     if (o != 0) {
         b = (s32)((o->mFlags & 0x10000000) != 0);
         if (b == 0) {
@@ -647,7 +637,7 @@ void daYegg_c::func_ov002_020ecd18()
         } else {
             b = (s32)((fb0 & daYegg_FLAG_FLYING) != 0);
             if (b != 0) {
-                if (_ZNK10dBgCh_Actr14GetResultFlag1Ev(&mWithMeshClsn) != 0) {
+                if (mWithMeshClsn.GetResultFlag1() != 0) {
                     func_ov002_020ec670((int)&mWithMeshClsn);
                     func_ov002_020edca4(this);
                     return;
@@ -685,11 +675,11 @@ void daYegg_c::func_ov002_020ecd18()
         func_ov002_020edca4(this);
         return;
     }
-    _ZN5dCc_c5ClearEv(&mdCcAc_c);
+    mdCcAc_c.Clear();
     if (flag == 1)
-        _ZN5dCc_c6UpdateEv(&mdCcAc_c);
+        mdCcAc_c.Update();
     if (o == 0)
-        _ZN8dActor_c9UpdatePosEP5dCc_c(this, &mdCcAc_c);
+        UpdatePos(&mdCcAc_c);
     dBgCh_Actr_UpdateContinuous_Veneer(&mWithMeshClsn);
 }
 
@@ -723,29 +713,30 @@ void daYegg_c::func_ov002_020ecf94()
  * cylinder is re-initialised with radius 0x64000 (100 units), height 0xc8000
  * (200 units), own flags 0x202000 and hit mask 0 -- in dCc_c.h's bit table
  * that is the enemy and egg bits, with nothing able to hit it. */
-void daYegg_c::func_ov002_020ecfc8(){
-  dActor_c* r5;
-  mTargetId = 0;
-  _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, *(void **)(data_ov002_0210e6b0 + 4), 0, 0x1000, 0);
-  mHorzSpeed = 0x64000;
-  if (!func_ov002_020ec654()){
-    mVertAccel = 0;
-    r5 = (dActor_c*)func_ov002_020edb3c(0, 0x7d0000);
-    func_0203568c(&mWithMeshClsn, 0x2a000);
-  } else {
-    mVertAccel = -0xa000;
-    r5 = (dActor_c*)func_ov002_020edb3c(0, 0xfa0000);
-  }
-  if (r5){
-    mAngleY = Vec3_HorzAngle((struct Vector3*)&mPosX, (struct Vector3*)&r5->mPosX);
-  } else {
-    if (mTargetedCount){
-      if (!func_ov002_020ec654())
-        func_ov002_020edca4(this);
+void daYegg_c::func_ov002_020ecfc8() {
+    dActor_c *r5;
+    mTargetId = 0;
+    _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, *(void **)(data_ov002_0210e6b0 + 4), 0,
+                                                0x1000, 0);
+    mHorzSpeed = 0x64000;
+    if (!func_ov002_020ec654()) {
+        mVertAccel = 0;
+        r5 = (dActor_c *)func_ov002_020edb3c(0, 0x7d0000);
+        func_0203568c(&mWithMeshClsn, 0x2a000);
+    } else {
+        mVertAccel = -0xa000;
+        r5 = (dActor_c *)func_ov002_020edb3c(0, 0xfa0000);
     }
-  }
-  _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(&mdCcAc_c, this, 0x64000, 0xc8000, 0x202000, 0);
-  mPrevAngleY = mAngleY;
+    if (r5) {
+        mAngleY = Vec3_HorzAngle(&mPos, &r5->mPos);
+    } else {
+        if (mTargetedCount) {
+            if (!func_ov002_020ec654())
+                func_ov002_020edca4(this);
+        }
+    }
+    _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(&mdCcAc_c, this, 0x64000, 0xc8000, 0x202000, 0);
+    mPrevAngleY = mAngleY;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -813,7 +804,7 @@ void daYegg_c::func_ov002_020ed0d4()
         if (*(int*)&mPlayer->unk_37c != 0
             || func_ov002_020cf700(mPlayer) != 0
             || func_ov002_020d0d2c(mPlayer) != 0) {
-            if (_ZNK10dBgCh_Actr10IsOnGroundEv(&mWithMeshClsn) != 0) {
+            if (mWithMeshClsn.IsOnGround() != 0) {
                 mGoalAngleX = mPlayer->mAngleX;
                 mGoalAngleZ = mPlayer->mAngleZ;
                 pt1 = &com->mPrevPosX;
@@ -901,14 +892,14 @@ void daYegg_c::func_ov002_020ed0d4()
         a4 = unk_0a4;
         {
             int fd1 = _ZN4cstd4fdivEii(a4, 0x20000);
-            int r1 = (int)(((long long)fd1 * 0xe39 + 0x800) >> 12);
+            int r1 = FX_MUL(fd1, 0xe39);
             short a4ang = (short)(-r1);
             ac = unk_0ac;
             if (ac > 0x20000) { ac = 0x20000; unk_0ac = ac; }
             ac = unk_0ac;
             {
                 int fd2 = _ZN4cstd4fdivEii(ac, 0x20000);
-                int r2 = (int)(((long long)fd2 * 0xe39 + 0x800) >> 12);
+                int r2 = FX_MUL(fd2, 0xe39);
                 mAngleX = a4ang;
                 mAngleZ = (short)r2;
             }
@@ -917,7 +908,7 @@ void daYegg_c::func_ov002_020ed0d4()
         func_ov002_020ed738();
     }
 
-    _ZN5dCc_c5ClearEv(&mdCcAc_c);
+    mdCcAc_c.Clear();
     {
         int dist = Vec3_Dist(&mPosX, &com->mPosX);
         if (mPlayer->mIsNoControl != 0) return;
@@ -989,17 +980,19 @@ void daYegg_c::func_ov002_020ed684() { int j = mState; (this->*data_ov002_02110a
  * after 15 shorter moves in a row; it stays 1 while the egg stays put), else
  * 0. */
 int daYegg_c::func_ov002_020ed6cc() {
-  Fix12i d = Vec3_HorzDist((struct Vector3*)&mLastPosX, (struct Vector3*)&mPosX);
-  mLastPosX = mPosX;
-  mLastPosY = mPosY;
-  mLastPosZ = mPosZ;
-  if (d >= 0x32000) goto fail;
-  if (DecIfAbove0_Byte(&mStallTimer)) goto ret0;
-  return 1;
+    Fix12i d = Vec3_HorzDist((struct Vector3 *)&mLastPosX, &mPos);
+    mLastPosX = mPosX;
+    mLastPosY = mPosY;
+    mLastPosZ = mPosZ;
+    if (d >= 0x32000)
+        goto fail;
+    if (DecIfAbove0_Byte(&mStallTimer))
+        goto ret0;
+    return 1;
 fail:
-  mStallTimer = 0xf;
+    mStallTimer = 0xf;
 ret0:
-  return 0;
+    return 0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1016,10 +1009,10 @@ ret0:
 void daYegg_c::func_ov002_020ed738() {
     int e4 = 0;
     int e6 = 0;
-    if (_ZNK10dBgCh_Actr10IsOnGroundEv(&mWithMeshClsn)) {
+    if (mWithMeshClsn.IsOnGround()) {
         struct Vector3 n;
-        void* fr = _ZNK10dBgCh_Actr14GetFloorResultEv(&mWithMeshClsn);
-        _ZNK11SurfaceInfo12CopyNormalToER7Vector3((char*)fr+4, &n);
+        void *fr = mWithMeshClsn.GetFloorResult();
+        ((SurfaceInfo *)((char *)fr + 4))->CopyNormalTo(n);
         e4 = func_02010844(this, &n, mAngleY);
         e6 = func_02010844(this, &n, (short)(mAngleY - 0x4000));
     } else {
@@ -1071,7 +1064,7 @@ void daYegg_c::func_ov002_020ed7f8()
         r4 = rg.clsnY;
     r5 = mPosY - r4;
     if (r5 <= 0x1000) r5 = 0x1000;
-    r4 = 0x50000 - (int)(((long long)r5 * 0x180 + 0x800) >> 12);
+    r4 = 0x50000 - FX_MUL(r5, 0x180);
     if (r4 < 0xa000) r4 = 0xa000;
     Matrix4x3_FromRotationY(mShadowMtx, mAngleY);
     mShadowMtx[9] = mPosX >> 3;
@@ -1130,10 +1123,9 @@ void daYegg_c::func_ov002_020ed998()
         mPosZ = v.z << 3;
         return;
     }
-    Matrix4x3_FromTranslation(&data_020a0e68,
-        (int)((((long long)mPosX << 9) + 0x800) >> 12),
-        (int)((((long long)(mPosY + 0x14000) * 0x200) + 0x800) >> 12),
-        (int)((((long long)mPosZ << 9) + 0x800) >> 12));
+    Matrix4x3_FromTranslation(&data_020a0e68, (int)((((long long)mPosX << 9) + 0x800) >> 12),
+                              FX_MUL(mPosY + 0x14000, 0x200),
+                              (int)((((long long)mPosZ << 9) + 0x800) >> 12));
     Matrix4x3_ApplyInPlaceToRotationXYZExt(&data_020a0e68,
         mAngleX, mAngleY, mAngleZ);
     *(M48 *)&mModelAnim.mat4x3 = data_020a0e68;
@@ -1171,7 +1163,7 @@ int daYegg_c::func_ov002_020edb3c(int a1, int best)
     }
 
     found = 0;
-    actor = (dActor_c *)_ZN8dActor_c4NextEPKS_(0);
+    actor = dActor_c::Next(0);
     if (actor == 0) goto end;
 
 loop:
@@ -1198,7 +1190,7 @@ loop:
         }
     }
 next:
-    actor = (dActor_c *)_ZN8dActor_c4NextEPKS_(actor);
+    actor = dActor_c::Next(actor);
     if (actor != 0) goto loop;
 
 end:
@@ -1245,10 +1237,10 @@ void func_ov002_020edca4(daYegg_c* self)
     pos.y = sy;
     pos.z = zv;
     if (self->func_ov002_020ec610() != 0) {
-        _ZN8dActor_c11UntrackStarERa((struct dActor_c*)self, (signed char*)&self->mStarSlot);
+        self->UntrackStar(*(s8 *)&self->mStarSlot);
 
-        spawned = _ZN8dActor_c5SpawnEjjRK7Vector3PK10Vector3_16as(ACTOR_SILVER_STAR, 0x10,
-            &pos, 0, self->mPlayer->mAreaId, -1);
+        spawned =
+            (char *)dActor_c::Spawn(ACTOR_SILVER_STAR, 0x10, pos, 0, self->mPlayer->mAreaId, -1);
         if (spawned != 0) {
             _ZN8daStar_c19func_ov002_020e7218EPci((char*)spawned, (char*)self->mPlayer, 1);
         }
@@ -1258,8 +1250,8 @@ void func_ov002_020edca4(daYegg_c* self)
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x40, self->mPosX, self->mPosY, self->mPosZ);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x41, self->mPosX, self->mPosY, self->mPosZ);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x42, self->mPosX, self->mPosY, self->mPosZ);
-    _ZN7fBase_c18MarkForDestructionEv((struct dActor_c*)self);
-    _ZN5Sound13PlayCharVoiceEjjRK7Vector3(0, 0x103, (const struct Vector3*)&self->mCamSpacePosX);
+    self->MarkForDestruction();
+    _ZN5Sound13PlayCharVoiceEjjRK7Vector3(0, 0x103, &self->mCamSpacePos);
 
     self->mBurstDone = 1;
 }
@@ -1298,7 +1290,7 @@ int daYegg_c::func_ov002_020eddc4()
     id = mdCcAc_c.otherOwner;
     if (id == 0) goto fail;
 
-    actor = (struct dActor_c*)_ZN8dActor_c10FindWithIDEj(id);
+    actor = dActor_c::FindWithID(id);
     if (actor == 0) goto fail;
 
     if (actor == (struct dActor_c*)mPlayer) goto fail;
@@ -1336,7 +1328,7 @@ int daYegg_c::func_ov002_020eddc4()
     other = 0;
     id = mTargetId;
     if (id != 0) {
-        other = (struct dActor_c*)_ZN8dActor_c10FindWithIDEj(id);
+        other = dActor_c::FindWithID(id);
     }
     if (other != actor) goto fail;
 
@@ -1549,7 +1541,7 @@ int daYegg_c::InitResources()
     if (func_ov002_020ec628() != 0)
         LoadBlueCoinModel((char *)this);
     if (func_ov002_020ec610() != 0)
-        mStarSlot = _ZN8dActor_c9TrackStarEjj(this, 0, 1);
+        mStarSlot = TrackStar(0, 1);
     return 1;
 }
 #pragma opt_strength_reduction on

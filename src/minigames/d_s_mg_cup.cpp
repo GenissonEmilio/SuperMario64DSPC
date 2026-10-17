@@ -28,24 +28,33 @@ enum dScMgCup_c_AssetId {
 #include "decl_common.h"
 #include "OamAttr.h"
 #include "PlayerInput.h"
+#include "nitro/fx/fx.h"
 
-/* data_ov006_0213c094: swap count, then two speed-row nibbles.
+/* sCupRoundTable: swap count, then two speed-row nibbles.
    StateSetup reads byte [kind * 2]. df024 reads .lo / .hi. */
-typedef struct { u8 swaps; u8 lo:4; u8 hi:4; } RoundRow;
+typedef struct {
+    u8 swaps;
+    u8 lo : 4;
+    u8 hi : 4;
+} RoundRow;
 
-/* data_ov006_0213c0a8 is the three rest positions. 0213c0ac is one word
+/* sCupHomePositions is the three rest positions. 0213c0ac is one word
    later, so [i].x there is cup i's y. */
-struct RestPos { s32 x, y; };
+struct RestPos {
+    s32 x, y;
+};
 
-/* data_ov006_0213c0c0 is the three swap pairs. 0213c0c4 is one word later,
+/* sCupSwapFirst is the three swap pairs. 0213c0c4 is one word later,
    so [i].a there is the second cup. */
-struct IdxPair { s32 a, b; };
+struct IdxPair {
+    s32 a, b;
+};
 
 /* The eight-entry Cup PMF table at 0x02141870, defined at the end of this
  * file (folded sinit 0x021303d0). */
 typedef void (dScMgCup_c::*PMF)();
 
-/* One step of data_ov006_0213c0d8. list is an OamAttr run ending at attr3
+/* One step of sCupAnimTable. list is an OamAttr run ending at attr3
    0xffff (Cup_DrawOamList). ticks == 0 means Behavior does not advance. */
 struct AnimStep {
     OamAttr *list;
@@ -53,18 +62,18 @@ struct AnimStep {
 };
 
 namespace Sound {
-    void PlayBank2_2D(unsigned int id);
+void PlayBank2_2D(unsigned int id);
 }
 
 namespace G2S {
-    int GetBG2CharPtr();
-    int GetBG0ScrPtr();
-    int GetBG2ScrPtr();
+int GetBG2CharPtr();
+int GetBG0ScrPtr();
+int GetBG2ScrPtr();
 }
 
 namespace GXS {
-    void LoadBGPltt(const void *data, unsigned int offset, unsigned int size);
-    void LoadOBJPltt(const void *data, unsigned int offset, unsigned int size);
+void LoadBGPltt(const void *data, unsigned int offset, unsigned int size);
+void LoadOBJPltt(const void *data, unsigned int offset, unsigned int size);
 }
 
 extern "C" {
@@ -74,20 +83,22 @@ extern void CupFx_Init(char *p, int a, int b, int c, signed char e);
 extern void CupFx_Draw(char *a);
 extern void CupFx_Update(int p);
 struct OamAttr;
-extern int data_ov006_0213c114[];
-extern unsigned char data_ov006_0213c064[];
-extern int data_ov006_0213c074[];
-extern int _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int show, struct OamAttr* attr, int a, int b, int c, int d, int e, int f);
+extern int sCupFxScales[];
+extern unsigned char sCupFxFrameSprites[];
+extern int sCupFxSprites[];
+extern int _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int show, struct OamAttr *attr, int a, int b,
+                                                   int c, int d, int e, int f);
 extern unsigned char DecIfAbove0_Byte(unsigned char *counter);
 extern int func_02053200(int x);
-extern int Mg_RenderSubSpriteScaled(int a0, int a1, int a2, int a3, int a4, int a5, unsigned short a6);
+extern int Mg_RenderSubSpriteScaled(int a0, int a1, int a2, int a3, int a4, int a5,
+                                    unsigned short a6);
 extern int data_0209e650;
-extern RoundRow data_ov006_0213c094[];
-extern s16 data_ov006_0213c0f4[];
-extern IdxPair data_ov006_0213c0c0[];
-extern IdxPair data_ov006_0213c0c4[];
-extern RestPos data_ov006_0213c0a8[];
-extern RestPos data_ov006_0213c0ac[];
+extern RoundRow sCupRoundTable[];
+extern s16 sCupShuffleSpeeds[];
+extern IdxPair sCupSwapFirst[];
+extern IdxPair sCupSwapSecond[];
+extern RestPos sCupHomePositions[];
+extern RestPos sCupSlots[];
 extern int RandomIntInternal(int *seed);
 extern void Mg_SetSharedState(int c);
 extern void Cup_UpdateAnim(char *self, int i);
@@ -99,22 +110,25 @@ extern void func_02012790(int x);
 extern void Mg_SubmitScore(int self);
 extern void FreeGfxSlotsById(int arg);
 extern int func_02012468(int a, int b, int c, int d, int e, int f, int g, short h);
-extern void CupFx_MoveForCup(char* p, int key, int a, int b);
+extern void CupFx_MoveForCup(char *p, int key, int a, int b);
 extern int CupFx_Spawn(char *c, int a, int b, int d, signed char e);
 extern short data_02082214[];
-extern signed char data_ov006_0213c084[];
-extern signed char data_ov006_0213c085[];
+extern signed char sCupShuffleOffsets[];
+extern signed char sCupShuffleOffsetsY[];
 extern void Cup_PickShuffleSpeed(char *o);
 extern void Presenter_ResetPose(char *c);
 /* Render spells cup y as this view. mCup[cup].y changes that call. */
-struct P8 { int a; int b; };
+struct P8 {
+    int a;
+    int b;
+};
 void CupFx_DrawForCup(char *a, int b);
 void Cup_DrawOamList(int a0, void *a1, int a2, int a3, int a4, int a5);
 void Hud_RenderSprite(void *a0, int a1, int a2, int a3, int a4);
 void Mg_DrawStockCounter(int arg0, int arg1);
 void Mg_DrawScoreTally(void *a, int b, int c, int d);
 extern char data_ov006_02139df4[];
-extern PMF data_ov006_02141870[];
+extern PMF sCupStateTable[];
 /* The ROM PMF constants the table copies from (unlicensed .data). */
 extern PMF pmf_dScMgCup_c_StateSetup;
 extern PMF pmf_dScMgCup_c_StatePrepareShuffle;
@@ -124,7 +138,7 @@ extern PMF pmf_dScMgCup_c_StateSelect;
 extern PMF pmf_dScMgCup_c_StateResult;
 extern PMF pmf_dScMgCup_c_StateFinish;
 extern PMF pmf_dScMgCup_c_StateIdle;
-extern AnimStep *data_ov006_0213c0d8[];
+extern AnimStep *sCupAnimTable[];
 extern u8 data_0209d45c;
 extern u8 data_0209d454;
 extern int data_0208ee44;
@@ -147,19 +161,15 @@ extern void *_ZTV10dScMgCup_c[];
 // @symbol _ZN10dScMgCup_cD1Ev
 /* Reverse of the factory: cups, effects, then the model. The tracker and
    the base chain are the inlined dScMgSingle3DBase_c destructor. */
-dScMgCup_c::~dScMgCup_c()
-{
+dScMgCup_c::~dScMgCup_c() {
     __cxa_vec_cleanup(mCup, 3, 8, (void *)NullDestructor_0203d47c);
     __cxa_vec_cleanup(mFx, 0x20, 0x18, (void *)CupFx_ElemDtor);
     Presenter_Destruct((char *)&mModel);
 }
 
-extern "C" void CupFx_ElemDtor(void)
-{
-}
+extern "C" void CupFx_ElemDtor(void) {}
 
-extern "C" int CupFx_FindFree(char *sprite, int, int, int)
-{
+extern "C" int CupFx_FindFree(char *sprite, int, int, int) {
     CupFx *fx = (CupFx *)sprite;
     int slot = 0;
     do {
@@ -171,8 +181,7 @@ extern "C" int CupFx_FindFree(char *sprite, int, int, int)
     return slot;
 }
 
-extern "C" void CupFx_MoveForCup(char *sprite, int cup, int dx, int dy)
-{
+extern "C" void CupFx_MoveForCup(char *sprite, int cup, int dx, int dy) {
     CupFx *fx = (CupFx *)sprite;
     int i;
     for (i = 0; i < 0x20; i++) {
@@ -185,8 +194,7 @@ extern "C" void CupFx_MoveForCup(char *sprite, int cup, int dx, int dy)
     }
 }
 
-extern "C" int CupFx_Spawn(char *sprites, int kind, int x, int y, signed char cup)
-{
+extern "C" int CupFx_Spawn(char *sprites, int kind, int x, int y, signed char cup) {
     int slot = CupFx_FindFree(sprites, kind, x, y);
     if (slot >= 0 && slot < 0x20) {
         CupFx_Init((char *)((CupFx *)sprites + slot), kind, x, y, cup);
@@ -195,8 +203,7 @@ extern "C" int CupFx_Spawn(char *sprites, int kind, int x, int y, signed char cu
     return -1;
 }
 
-extern "C" void CupFx_DrawForCup(char *sprite, int cup)
-{
+extern "C" void CupFx_DrawForCup(char *sprite, int cup) {
     CupFx *fx = (CupFx *)sprite;
     int i = 0;
     do {
@@ -207,8 +214,7 @@ extern "C" void CupFx_DrawForCup(char *sprite, int cup)
     } while (i < 0x20);
 }
 
-extern "C" void CupFx_UpdateAll(char *sprites)
-{
+extern "C" void CupFx_UpdateAll(char *sprites) {
     CupFx *fx = (CupFx *)sprites;
     int i;
     for (i = 0; i < 0x20; i++) {
@@ -218,8 +224,7 @@ extern "C" void CupFx_UpdateAll(char *sprites)
     }
 }
 
-extern "C" void CupFx_ClearAll(char *sprite)
-{
+extern "C" void CupFx_ClearAll(char *sprite) {
     CupFx *fx = (CupFx *)sprite;
     int i;
     for (i = 0; i < 0x20; i++) {
@@ -228,8 +233,7 @@ extern "C" void CupFx_ClearAll(char *sprite)
     }
 }
 
-extern "C" void CupFx_Move(char *sprite, int dx, int dy)
-{
+extern "C" void CupFx_Move(char *sprite, int dx, int dy) {
     CupFx *fx = (CupFx *)sprite;
     if (fx->kind != 1)
         return;
@@ -237,19 +241,17 @@ extern "C" void CupFx_Move(char *sprite, int dx, int dy)
     fx->y += dy;
 }
 
-extern "C" void CupFx_Draw(char *sprite)
-{
+extern "C" void CupFx_Draw(char *sprite) {
     CupFx *fx = (CupFx *)sprite;
     int frameIndex = fx->frame + fx->row * 6;
     /* Fix12 overload. OAM.h does not declare it: a by-value Fix12 homes
        r0-r3 on the stack. */
     _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(
-        1, (struct OamAttr *)data_ov006_0213c074[data_ov006_0213c064[frameIndex]], fx->x >> 12,
-        fx->y >> 12, -1, -1, data_ov006_0213c114[frameIndex], 0);
+        1, (struct OamAttr *)sCupFxSprites[sCupFxFrameSprites[frameIndex]], fx->x >> 12,
+        fx->y >> 12, -1, -1, sCupFxScales[frameIndex], 0);
 }
 
-extern "C" void CupFx_Update(int sprite)
-{
+extern "C" void CupFx_Update(int sprite) {
     CupFx *fx = (CupFx *)sprite;
     fx->x += fx->vx;
     fx->y += fx->vy;
@@ -265,8 +267,7 @@ extern "C" void CupFx_Update(int sprite)
         fx->active = 0;
 }
 
-extern "C" void CupFx_Init(char *sprite, int kind, int x, int y, signed char cup)
-{
+extern "C" void CupFx_Init(char *sprite, int kind, int x, int y, signed char cup) {
     CupFx *fx = (CupFx *)sprite;
     if (kind == 2) {
         fx->kind = 0;
@@ -288,8 +289,7 @@ extern "C" void CupFx_Init(char *sprite, int kind, int x, int y, signed char cup
     fx->delay = 3;
 }
 
-extern "C" void Cup_PlayAnimSound(char *raw, int anim, int frame, int cup)
-{
+extern "C" void Cup_PlayAnimSound(char *raw, int anim, int frame, int cup) {
     dScMgCup_c *self = (dScMgCup_c *)raw;
     if (anim == 6) {
         if (frame == 4) {
@@ -308,8 +308,7 @@ extern "C" void Cup_PlayAnimSound(char *raw, int anim, int frame, int cup)
     Sound::PlayBank2_2D(0x1cc);
 }
 
-extern "C" void Cup_DrawOamList(int scene, void *list, int x, int y, int scale, int cupContent)
-{
+extern "C" void Cup_DrawOamList(int scene, void *list, int x, int y, int scale, int cupContent) {
     OamAttr *entry;
     int content;
     int screenX;
@@ -338,8 +337,7 @@ extern "C" void Cup_DrawOamList(int scene, void *list, int x, int y, int scale, 
     }
 }
 
-extern "C" void Cup_UpdateAnim(char *raw, int cupIndex)
-{
+extern "C" void Cup_UpdateAnim(char *raw, int cupIndex) {
     unsigned char flag;
     char *cupByteBase = raw + cupIndex;
     int resetCupIndex;
@@ -389,8 +387,7 @@ epilogue: {
 }
 }
 
-extern "C" void Cup_PickShuffleSpeed(char *raw)
-{
+extern "C" void Cup_PickShuffleSpeed(char *raw) {
     dScMgCup_c *self = (dScMgCup_c *)raw;
     u32 rnd = (u32)RandomIntInternal(&data_0209e650);
     u32 bits = rnd >> 0x10;
@@ -398,26 +395,25 @@ extern "C" void Cup_PickShuffleSpeed(char *raw)
     int swapPair;
 
     if (bits & 1) {
-        speedIndex = data_ov006_0213c094[self->mRoundRow].hi;
+        speedIndex = sCupRoundTable[self->mRoundRow].hi;
     } else {
-        speedIndex = data_ov006_0213c094[self->mRoundRow].lo;
+        speedIndex = sCupRoundTable[self->mRoundRow].lo;
     }
 
     speedIndex = speedIndex * 2;
     if (bits & 2)
         speedIndex += 1;
 
-    self->mShuffleSpeed = data_ov006_0213c0f4[speedIndex];
+    self->mShuffleSpeed = sCupShuffleSpeeds[speedIndex];
 
     swapPair = (rnd >> 0x18) % 3;
-    self->mSwapSlotA = data_ov006_0213c0c0[swapPair].a;
-    self->mSwapSlotB = data_ov006_0213c0c4[swapPair].a;
+    self->mSwapSlotA = sCupSwapFirst[swapPair].a;
+    self->mSwapSlotB = sCupSwapSecond[swapPair].a;
 
     self->mMidX =
-        (data_ov006_0213c0a8[self->mSwapSlotB].x + data_ov006_0213c0a8[self->mSwapSlotA].x) / 2;
-    self->mMidY =
-        (data_ov006_0213c0ac[self->mSwapSlotB].x + data_ov006_0213c0ac[self->mSwapSlotA].x) / 2;
-    self->mHalfX = self->mMidX - data_ov006_0213c0a8[self->mSwapSlotA].x;
+        (sCupHomePositions[self->mSwapSlotB].x + sCupHomePositions[self->mSwapSlotA].x) / 2;
+    self->mMidY = (sCupSlots[self->mSwapSlotB].x + sCupSlots[self->mSwapSlotA].x) / 2;
+    self->mHalfX = self->mMidX - sCupHomePositions[self->mSwapSlotA].x;
     self->mShuffleAngle = 0;
 
     {
@@ -446,13 +442,10 @@ extern "C" void Cup_PickShuffleSpeed(char *raw)
 }
 
 // @symbol _ZN10dScMgCup_c9StateIdleEv
-void dScMgCup_c::StateIdle()
-{
-}
+void dScMgCup_c::StateIdle() {}
 
 // @symbol _ZN10dScMgCup_c11StateFinishEv
-void dScMgCup_c::StateFinish()
-{
+void dScMgCup_c::StateFinish() {
     mTimer -= 1;
     if (mTimer > 0)
         return;
@@ -476,8 +469,7 @@ void dScMgCup_c::StateFinish()
 // @symbol _ZN10dScMgCup_c11StateResultEv
 #pragma push
 #pragma opt_strength_reduction off
-void dScMgCup_c::StateResult()
-{
+void dScMgCup_c::StateResult() {
     int score;
     int i;
 
@@ -516,8 +508,7 @@ void dScMgCup_c::StateResult()
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_strength_reduction off
-void dScMgCup_c::StateSelect()
-{
+void dScMgCup_c::StateSelect() {
     char *raw = (char *)this;
     int touchPressed = 0;
     unsigned int playerSlot = gActivePlayerSlot;
@@ -571,8 +562,7 @@ void dScMgCup_c::StateSelect()
 #pragma pop
 
 // @symbol _ZN10dScMgCup_c17StateWaitForInputEv
-void dScMgCup_c::StateWaitForInput()
-{
+void dScMgCup_c::StateWaitForInput() {
     mTimer -= 1;
     if (mTimer > 0)
         return;
@@ -583,8 +573,7 @@ void dScMgCup_c::StateWaitForInput()
 // @symbol _ZN10dScMgCup_c12StateShuffleEv
 #pragma push
 #pragma opt_common_subs off
-void dScMgCup_c::StateShuffle()
-{
+void dScMgCup_c::StateShuffle() {
     char *raw = (char *)this;
     int oldX, oldY;
 
@@ -613,7 +602,7 @@ void dScMgCup_c::StateShuffle()
         int cosine = data_02082214[(mShuffleAngle >> 4) * 2 + 1];
         oldX = mCup[slot].x;
         oldY = mCup[slot].y;
-        mCup[slot].x = mMidX - (int)(((long long)cosine * mHalfX + 0x800) >> 12);
+        mCup[slot].x = mMidX - FX_MUL(cosine, mHalfX);
     }
     {
         int slot = mCupAtSlot[mSwapSlotA];
@@ -634,7 +623,7 @@ void dScMgCup_c::StateShuffle()
         int cosine = data_02082214[(mShuffleAngle >> 4) * 2 + 1];
         oldX = mCup[slot].x;
         oldY = mCup[slot].y;
-        mCup[slot].x = mMidX + (int)(((long long)cosine * mHalfX + 0x800) >> 12);
+        mCup[slot].x = mMidX + FX_MUL(cosine, mHalfX);
     }
     {
         int slot = mCupAtSlot[mSwapSlotB];
@@ -693,15 +682,15 @@ void dScMgCup_c::StateShuffle()
                 int slot = mCupAtSlot[mSwapSlotA];
                 effectOffsetIndex = (effectTick >> 2) & 7;
                 CupFx_Spawn((char *)mFx, 2,
-                            mCup[slot].x + (data_ov006_0213c084[effectOffsetIndex * 2] << 12),
-                            mCup[slot].y + (data_ov006_0213c085[effectOffsetIndex * 2] << 12),
+                            mCup[slot].x + (sCupShuffleOffsets[effectOffsetIndex * 2] << 12),
+                            mCup[slot].y + (sCupShuffleOffsetsY[effectOffsetIndex * 2] << 12),
                             slot);
             }
             {
                 int slot = mCupAtSlot[mSwapSlotB];
                 CupFx_Spawn((char *)mFx, 2,
-                            mCup[slot].x + (data_ov006_0213c084[effectOffsetIndex * 2] << 12),
-                            mCup[slot].y + (data_ov006_0213c085[effectOffsetIndex * 2] << 12),
+                            mCup[slot].x + (sCupShuffleOffsets[effectOffsetIndex * 2] << 12),
+                            mCup[slot].y + (sCupShuffleOffsetsY[effectOffsetIndex * 2] << 12),
                             slot);
             }
         }
@@ -713,15 +702,15 @@ void dScMgCup_c::StateShuffle()
                 int slot = mCupAtSlot[mSwapSlotA];
                 effectOffsetIndex = (effectTick >> 1) & 7;
                 CupFx_Spawn((char *)mFx, 1,
-                            mCup[slot].x + (data_ov006_0213c084[effectOffsetIndex * 2] << 12),
-                            mCup[slot].y + (data_ov006_0213c085[effectOffsetIndex * 2] << 12),
+                            mCup[slot].x + (sCupShuffleOffsets[effectOffsetIndex * 2] << 12),
+                            mCup[slot].y + (sCupShuffleOffsetsY[effectOffsetIndex * 2] << 12),
                             slot);
             }
             {
                 int slot = mCupAtSlot[mSwapSlotB];
                 CupFx_Spawn((char *)mFx, 1,
-                            mCup[slot].x + (data_ov006_0213c084[effectOffsetIndex * 2] << 12),
-                            mCup[slot].y + (data_ov006_0213c085[effectOffsetIndex * 2] << 12),
+                            mCup[slot].x + (sCupShuffleOffsets[effectOffsetIndex * 2] << 12),
+                            mCup[slot].y + (sCupShuffleOffsetsY[effectOffsetIndex * 2] << 12),
                             slot);
             }
         }
@@ -742,8 +731,7 @@ void dScMgCup_c::StateShuffle()
 #pragma pop
 
 // @symbol _ZN10dScMgCup_c19StatePrepareShuffleEv
-void dScMgCup_c::StatePrepareShuffle()
-{
+void dScMgCup_c::StatePrepareShuffle() {
     char *raw = (char *)this;
     int *countdown = &mTimer;
     *countdown = *countdown - 1;
@@ -758,8 +746,7 @@ void dScMgCup_c::StatePrepareShuffle()
 }
 
 // @symbol _ZN10dScMgCup_c10StateSetupEv
-void dScMgCup_c::StateSetup()
-{
+void dScMgCup_c::StateSetup() {
     int cupIndex;
     int score;
     unsigned int rnd;
@@ -787,7 +774,7 @@ void dScMgCup_c::StateSetup()
         mRoundRow = (unsigned char)roundRow;
     }
 
-    mSwapsRemaining = ((unsigned char *)data_ov006_0213c094)[mRoundRow * 2];
+    mSwapsRemaining = ((unsigned char *)sCupRoundTable)[mRoundRow * 2];
 
     if (score > 3) {
         rnd = (unsigned int)RandomIntInternal(&data_0209e650);
@@ -821,16 +808,14 @@ void dScMgCup_c::StateSetup()
 
 // @symbol _ZN10dScMgCup_c11OnNewRecordEv
 /* Slot 20: the win animation on mModel. */
-void dScMgCup_c::OnNewRecord()
-{
+void dScMgCup_c::OnNewRecord() {
     Presenter_PlayCheer(&mModel);
 }
 
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
-void dScMgCup_c::StartRound(int msg)
-{
+void dScMgCup_c::StartRound(int msg) {
     int i;
 
     if (msg == 3 || msg == 0x12) {
@@ -886,8 +871,7 @@ void dScMgCup_c::StartRound(int msg)
 // @symbol _ZN10dScMgCup_c6RenderEv
 /* Slot 9: submits cups in descending screen-y order. The animation frame
  * index follows draw order, while position/content follow the cup index. */
-s32 dScMgCup_c::Render()
-{
+s32 dScMgCup_c::Render() {
     char *raw = (char *)this;
     int order[3];
     int initialSlot;
@@ -916,7 +900,7 @@ s32 dScMgCup_c::Render()
     for (drawIndex = 0; drawIndex < 3; drawIndex++) {
         cup = order[drawIndex];
         CupFx_DrawForCup((char *)mFx, (char)cup);
-        Cup_DrawOamList((int)raw, (void *)data_ov006_0213c0d8[mAnim[cup]][mFrame[drawIndex]].list,
+        Cup_DrawOamList((int)raw, (void *)sCupAnimTable[mAnim[cup]][mFrame[drawIndex]].list,
                         mCup[cup].x, ((struct P8 *)raw + cup)[0xa7d].b, mCupScale[cup],
                         mCupContents[cup]);
     }
@@ -936,13 +920,12 @@ s32 dScMgCup_c::Render()
    according to the duration stored in its current frame. */
 #pragma push
 #pragma opt_strength_reduction off
-s32 dScMgCup_c::Behavior()
-{
+s32 dScMgCup_c::Behavior() {
     char *raw = (char *)this;
     int cupIndex;
-    (this->*data_ov006_02141870[mState])();
+    (this->*sCupStateTable[mState])();
     for (cupIndex = 0; cupIndex < 3; cupIndex++) {
-        AnimStep *frame = &data_ov006_0213c0d8[mAnim[cupIndex]][mFrame[cupIndex]];
+        AnimStep *frame = &sCupAnimTable[mAnim[cupIndex]][mFrame[cupIndex]];
         int frameDuration = frame->ticks;
         if (frameDuration != 0) {
             mTick[cupIndex] += 1;
@@ -962,8 +945,7 @@ s32 dScMgCup_c::Behavior()
 // @symbol _ZN10dScMgCup_c13InitResourcesEv
 /* Slot 0: sets up the sub-screen backgrounds, loads the board graphics,
    places the three cups and starts a game through StartRound(3). */
-s32 dScMgCup_c::InitResources()
-{
+s32 dScMgCup_c::InitResources() {
     void *file;
 
     data_0209d45c = 0x11;
@@ -1003,18 +985,18 @@ s32 dScMgCup_c::InitResources()
 
     data_0208ee44 = 1;
     Mg_ResetRecordBannerPos();
-    data_ov004_020bc880 = 0x80;
-    data_ov004_020bc884 = 0x88;
-    data_ov004_020bc8a8 = 0x40;
-    data_ov004_020bc898 = 0xa0;
-    data_ov004_020bc86c = 0xc0;
-    data_ov004_020bc8a4 = 0xa0;
+    sMgClearBannerX = 0x80;
+    sMgClearBannerY = 0x88;
+    sMgPlayAgainX = 0x40;
+    sMgPlayAgainY = 0xa0;
+    sMgQuitX = 0xc0;
+    sMgQuitY = 0xa0;
 
     {
         int i;
         for (i = 0; i < 3; i++) {
-            mCup[i].x = data_ov006_0213c0a8[i].x;
-            mCup[i].y = data_ov006_0213c0a8[i].y;
+            mCup[i].x = sCupHomePositions[i].x;
+            mCup[i].y = sCupHomePositions[i].y;
             mCupScale[i] = 0x1000;
             mCupAtSlot[i] = i;
             mRevealRequested[i] = 1;
@@ -1028,8 +1010,7 @@ s32 dScMgCup_c::InitResources()
 // @symbol dScMgCup_c_classInit
 /* No dScMgCup_c constructor. Base ctor, intermediate vtable, the tracker,
    then this vtable, the model, the effects, the cups. */
-extern "C" void *dScMgCup_c_classInit()
-{
+extern "C" void *dScMgCup_c_classInit() {
     dScMgCup_c *scene = (dScMgCup_c *)_ZN7fBase_cnwEj(sizeof(dScMgCup_c));
     if (scene) {
         _ZN11dScMgBase_cC2Ev(scene);
@@ -1037,32 +1018,22 @@ extern "C" void *dScMgCup_c_classInit()
         _ZN8Particle10SysTrackerC1Ev(&scene->mSysTracker);
         *(void **)scene = _ZTV10dScMgCup_c + 2;
         Presenter_Construct(&scene->mModel);
-        __cxa_vec_ctor(scene->mFx, 0x20, 0x18,
-                      (void *)Cup_Nothing,
-                      (void *)CupFx_ElemDtor);
-        __cxa_vec_ctor(scene->mCup, 3, 8,
-                      (void *)func_0203d738,
-                      (void *)NullDestructor_0203d47c);
+        __cxa_vec_ctor(scene->mFx, 0x20, 0x18, (void *)Cup_Nothing, (void *)CupFx_ElemDtor);
+        __cxa_vec_ctor(scene->mCup, 3, 8, (void *)func_0203d738, (void *)NullDestructor_0203d47c);
     }
     return scene;
 }
 
 // @symbol Cup_Nothing
-extern "C" void Cup_Nothing()
-{
-}
+extern "C" void Cup_Nothing() {}
 
 /* Static-init globals (was the handwritten __sinit_ov006_021303d0 shard).
  * The eight Cup state records plain-copied from the ROM PMF constants;
  * Behavior indexes this table by mState. Definition order is the retail
  * initializer's copy order. */
-PMF data_ov006_02141870[8] = {
-    pmf_dScMgCup_c_StateSetup,
-    pmf_dScMgCup_c_StatePrepareShuffle,
-    pmf_dScMgCup_c_StateShuffle,
-    pmf_dScMgCup_c_StateWaitForInput,
-    pmf_dScMgCup_c_StateSelect,
-    pmf_dScMgCup_c_StateResult,
-    pmf_dScMgCup_c_StateFinish,
-    pmf_dScMgCup_c_StateIdle,
+PMF sCupStateTable[8] = {
+    pmf_dScMgCup_c_StateSetup,   pmf_dScMgCup_c_StatePrepareShuffle,
+    pmf_dScMgCup_c_StateShuffle, pmf_dScMgCup_c_StateWaitForInput,
+    pmf_dScMgCup_c_StateSelect,  pmf_dScMgCup_c_StateResult,
+    pmf_dScMgCup_c_StateFinish,  pmf_dScMgCup_c_StateIdle,
 };

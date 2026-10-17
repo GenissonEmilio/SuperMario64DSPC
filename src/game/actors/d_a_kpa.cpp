@@ -133,6 +133,7 @@ enum daKpa_c_AssetId {
 #include "dExtFrameCtrl_c.h"
 #include "Sound.h"
 #include "Message.h"
+#include "nitro/fx/fx.h"
 
 /* -------------------------------------------------------------------------- */
 /* Names for the numbers this file uses. The values are the ROM's; the names are
@@ -732,10 +733,12 @@ int daKpa_c::InitResources()
     /* Spawn takes the three position words as one Vector3. dActor_c stores them as
      * mPosX/Y/Z at 0x5c, so the argument is the vector, not a pointer to the first
      * scalar. */
-    fire = (daKpaFire_c *)dActor_c::Spawn(BOWSER_ACTOR_KOOPAFIRE, 0, *((Vector3 *)&this->mPosX), 0, this->mAreaId, -1);
+    fire =
+        (daKpaFire_c *)dActor_c::Spawn(BOWSER_ACTOR_KOOPAFIRE, 0, this->mPos, 0, this->mAreaId, -1);
     fire->mKpaUniqueID = this->uniqueID;
 
-    tail = (daKpaTail_c *)dActor_c::Spawn(BOWSER_ACTOR_KOOPATAIL, 0, *((Vector3 *)&this->mPosX), 0, this->mAreaId, -1);
+    tail =
+        (daKpaTail_c *)dActor_c::Spawn(BOWSER_ACTOR_KOOPATAIL, 0, this->mPos, 0, this->mAreaId, -1);
     this->mTailUniqueID = tail->uniqueID;
     tail->mBowserUniqueID = this->uniqueID;
     this->mVanishChance = 5;
@@ -814,8 +817,8 @@ int daKpa_c::Behavior()
     RandomIntInternal(&data_0209e650);
     mTargetPlayer = (dActor_c *)ClosestPlayer();
     if (mTargetPlayer != 0) {
-        mAngleToTarget = Vec3_HorzAngle((Vector3 *)&mPosX, (Vector3*)&mTargetPlayer->mPosX);
-        mDistToTarget = Vec3_HorzDist((Vector3 *)&mPosX, (Vector3*)&mTargetPlayer->mPosX);
+        mAngleToTarget = Vec3_HorzAngle(&mPos, &mTargetPlayer->mPos);
+        mDistToTarget = Vec3_HorzDist(&mPos, &mTargetPlayer->mPos);
     } else {
         mAngleToTarget = mAngleY;
         mDistToTarget = ~0x80000000;
@@ -867,7 +870,7 @@ int daKpa_c::Render()
     mTextureSequence.Update(mModelAnim.data);
     /* ModelAnim's slot-5 Render(const Vector3 *) takes the scale vector;
      * daKpa2Bg_c::Render makes the same call on its mModel2. */
-    mModelAnim.Render((const Vector3 *)&mScaleX);
+    mModelAnim.Render(&mScale);
     return 1;
 }
 
@@ -1845,7 +1848,8 @@ void daKpa_c::func_ov060_02114858(){
             this->mSoundHandle = 0;
         }
         this->mSoundID = BOWSER_SND_FIRE_LOOP;
-        this->mSoundHandle = Sound::PlayLong(this->mSoundHandle, 3, this->mSoundID, *(const Vector3 *)&this->mCamSpacePosX, 0);
+        this->mSoundHandle =
+            Sound::PlayLong(this->mSoundHandle, 3, this->mSoundID, this->mCamSpacePos, 0);
         u16 t = this->mFireTimer;
         if ((t % 5) == 0)
         {
@@ -2822,8 +2826,8 @@ int daKpa_c::func_ov060_021132a4(){
         if (this->mSoundID != BOWSER_SND_SHRINK_LOOP)
             this->mSoundHandle = 0;
         this->mSoundID = BOWSER_SND_SHRINK_LOOP;
-        this->mSoundHandle = Sound::PlayLong(
-            this->mSoundHandle, 3, this->mSoundID, *(const Vector3 *)&this->mCamSpacePosX, 0);
+        this->mSoundHandle =
+            Sound::PlayLong(this->mSoundHandle, 3, this->mSoundID, this->mCamSpacePos, 0);
     }
     return done;
 }
@@ -3179,10 +3183,10 @@ void daKpa_c::func_ov060_021128c0(){
             if (this->mVertSpeed >= 0x14000)
                 this->mVertSpeed = 0x14000;
         } else if (this->mGroundNormalY != 0) {
-            this->mVertSpeed = -(_ZN4cstd4fdivEii(
-                (int)(((s64)this->mGroundNormalX * this->unk_0a4 + 0x800) >> 12)
-              + (int)(((s64)this->mGroundNormalZ * this->unk_0ac + 0x800) >> 12),
-                this->mGroundNormalY) + 0x8000);
+            this->mVertSpeed = -(_ZN4cstd4fdivEii(FX_MUL(this->mGroundNormalX, this->unk_0a4) +
+                                                      FX_MUL(this->mGroundNormalZ, this->unk_0ac),
+                                                  this->mGroundNormalY) +
+                                 0x8000);
         }
     }
 
@@ -3267,7 +3271,7 @@ void daKpa_c::func_ov060_02112724(){
     this->mAngleX = -v;
     this->mAngleY = a;
 
-    s = (Vector3 *)&this->mGrabbedPlayer->mPosX;
+    s = &this->mGrabbedPlayer->mPos;
     this->mPosX = s->x;
     this->mPosY = s->y;
     this->mPosZ = s->z;
@@ -3343,8 +3347,8 @@ void daKpa_c::func_ov060_02112434(){
     zero.x = 0;
     zero.y = 0;
     zero.z = 0;
-    this->mDistToCenter = Vec3_HorzDist((Vector3*)&this->mPosX, &zero);
-    this->mAngleToCenter = Vec3_HorzAngle((Vector3*)&this->mPosX, &zero);
+    this->mDistToCenter = Vec3_HorzDist(&this->mPos, &zero);
+    this->mAngleToCenter = Vec3_HorzAngle(&this->mPos, &zero);
 
     int toTarget = this->GetSubtraction(this->mAngleY, this->mAngleToTarget);
     int toCenter = this->GetSubtraction(this->mAngleY, this->mAngleToCenter);
@@ -3497,10 +3501,10 @@ int daKpa_c::func_ov060_02111f08(){
         this->mCamLookAtZ = sp.z;
         dist = Vec3_HorzDist((struct Vector3*)(&this->mPosX), &sp);
         k = (unsigned short)(short)(Vec3_HorzAngle((struct Vector3*)(&this->mPosX), &sp) - 0x2000) >> 4;
-        v = (int)(((long long)dist * 0xA00 + 0x800) >> 12);
-        this->mCamPosX = this->mPosX + (int)(((long long)v * data_02082214[k * 2] + 0x800) >> 12);
+        v = FX_MUL(dist, 0xA00);
+        this->mCamPosX = this->mPosX + FX_MUL(v, data_02082214[k * 2]);
         this->mCamPosY = this->mPosY + 0xc8000;
-        this->mCamPosZ = this->mPosZ + (int)(((long long)v * data_02082214[k * 2 + 1] + 0x800) >> 12);
+        this->mCamPosZ = this->mPosZ + FX_MUL(v, data_02082214[k * 2 + 1]);
         cam->SetPos(*(const Vector3 *)(&this->mCamPosX));
         this->mCutsceneStep++;
         break;
@@ -3519,12 +3523,12 @@ int daKpa_c::func_ov060_02111f08(){
         sp.y = pv->y;
         sp.z = pv->z;
         dist = Vec3_HorzDist((struct Vector3*)(&this->mPosX), &sp);
-        d = (int)(((long long)dist * 0x600 + 0x800) >> 12);
+        d = FX_MUL(dist, 0x600);
         if (d < 0x1f4000)
             d = 0x1f4000;
         k = (unsigned short)(short)(Vec3_HorzAngle((struct Vector3*)(&this->mPosX), &sp) - 0x1000) >> 4;
-        sp.x = this->mPosX + (int)(((long long)d * data_02082214[k * 2] + 0x800) >> 12);
-        sp.z = this->mPosZ + (int)(((long long)d * data_02082214[k * 2 + 1] + 0x800) >> 12);
+        sp.x = this->mPosX + FX_MUL(d, data_02082214[k * 2]);
+        sp.z = this->mPosZ + FX_MUL(d, data_02082214[k * 2 + 1]);
         ApproachLinear(this->mCamPosX, sp.x, 0x4000);
         ApproachLinear(this->mCamPosZ, sp.z, 0x4000);
         ApproachLinear(this->mCamLookAtX, this->mPosX, 0x1e000);
@@ -3708,7 +3712,7 @@ void daKpa_c::func_ov060_02111a28(){
         dust.z = this->mFootPosBZ;
         this->HugeLandingDustAt(dust, 0);
     }
-    Sound::Play(3, BOWSER_SND_FOOTFALL, *(Vector3 *)&this->mCamSpacePosX);
+    Sound::Play(3, BOWSER_SND_FOOTFALL, this->mCamSpacePos);
     {
         Vector3 quake;
         quake.x = this->mPosX;

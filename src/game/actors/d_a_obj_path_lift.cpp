@@ -32,6 +32,7 @@
 #include "daObjPathLift_c.h"
 #include "dBgCh_Gnd.h"
 #include "SharedFilePtr.h"
+#include "nitro/fx/fx.h"
 
 extern "C" {
 extern CLPS_Block data_ov002_0210d7d4;
@@ -168,10 +169,9 @@ int daObjPathLift_c::Behavior()
 {
     UpdatePathModels();
     BaseBehavior();
-    if (Vec3_Dist((Vector3 *)&mPosX, (Vector3 *)&mPrevPosX) != 0) {
+    if (Vec3_Dist(&mPos, &mPrevPos) != 0) {
         if (DecIfAbove0_Byte(&mTimer) == 0) {
-            mSoundHandle = Sound::PlayLong(
-                mSoundHandle, 3, 0x82, *(Vector3 *)&mCamSpacePosX, 0);
+            mSoundHandle = Sound::PlayLong(mSoundHandle, 3, 0x82, mCamSpacePos, 0);
         }
     }
     func_ov100_0214700c(this);
@@ -250,11 +250,11 @@ extern "C" void func_ov100_02146e70(daObjPathLift_c *self)
 
     idx = (unsigned short)self->mAngleX >> 4;
     sinVal = data_02082214[idx << 1];
-    yOff = (int)(((long long)sinVal * 0x17c000 + 0x800) >> 12);
+    yOff = FX_MUL(sinVal, 0x17c000);
     if (yOff < 0)
         yOff = -yOff;
     cosVal = data_02082214[(idx << 1) + 1];
-    scaleZ = (int)(((long long)cosVal * 0x17c000 + 0x800) >> 12);
+    scaleZ = FX_MUL(cosVal, 0x17c000);
     if (scaleZ < 0)
         scaleZ = -scaleZ;
 

@@ -49,6 +49,7 @@ enum dScMgCurling2_c_AssetId {
 #include "types.h"
 #include "dScMgCurling2_c.h"
 #include "PlayerInput.h"
+#include "nitro/fx/fx.h"
 
 /* The receiver for the pointer-to-member tables. It must stay incomplete:
  * mwccarm picks the pointer-to-member layout from whether the class is
@@ -62,33 +63,33 @@ typedef void (C::*PMF1)(int);
  * Keep it above the first function. */
 extern "C" {
 
-extern int  Mg_GetSubmittedScore(void);
+extern int Mg_GetSubmittedScore(void);
 extern void Mg_SubmitScore(int self);
-extern int  Mg_IsNewRecord(void);
-extern int  Mg_GetTopRecord(void);
+extern int Mg_IsNewRecord(void);
+extern int Mg_GetTopRecord(void);
 extern void *Ov004_LoadFileByPath(const char *p);
 extern void Mg_RenderSubSpriteMtx(int a, int b, int c, int d);
 extern void Mg_SetTopScreenYOffset(int a);
 extern void Mg_SetSharedState(s32 state);
-extern int  Mg_DrawTopLeftCounter(void *self);
+extern int Mg_DrawTopLeftCounter(void *self);
 extern void Mg_DrawTopRightCounter(int a, int b);
 extern void Mg_DrawNumber(int a, int b, int c, int d, int e, int f, int g);
 extern void Mg_DrawBigNumber(int a, int b, int c, int d, int e, int f, int g);
-extern int  Mg_RenderSpriteBoth(int a, int b, int c, int d, int e);
+extern int Mg_RenderSpriteBoth(int a, int b, int c, int d, int e);
 extern void func_02012718(int id, int v);
-extern int  func_020126e8(int a);
-extern int  func_02012468(int a, int b, int c, int d, int e, int f, int g, s16 h);
+extern int func_020126e8(int a);
+extern int func_02012468(int a, int b, int c, int d, int e, int f, int g, s16 h);
 extern void func_020126ac(int a0, int a1, int a2, int a3, int s0);
 extern void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int idx);
 extern void DrawOamSprite(int a, int b, int c, int d);
 extern void RenderOamBothScreens(void *a0, int a1, int a2, int a3, int a4, void *a5);
-extern int  RandomIntInternal(int *seed);
-extern int  GetGameLanguage(void);
-extern int  _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
+extern int RandomIntInternal(int *seed);
+extern int GetGameLanguage(void);
+extern int _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
 extern void SetBg2Offset(int a, int b);
 extern void SetBg0Offset(int a, int b);
 extern void DecompressLZ16(const void *src, void *dst);
-extern int  LoadFile(int handle);
+extern int LoadFile(int handle);
 extern void Deallocate(void *p);
 extern void Ov004_Deallocate(void *p);
 extern void MultiStore16(u16 val, char *dst, int nbytes);
@@ -96,7 +97,7 @@ extern void func_02056554(const void *src, int offset, int count);
 extern void func_02056314(void *a, u32 b, u32 c);
 extern void func_020563d4(const void *a, u32 b, u32 c);
 extern void func_02056374(const void *a, u32 b, u32 c);
-extern int  func_02054d88(void);
+extern int func_02054d88(void);
 extern void _ZN2GX10LoadBGPlttEPKvjj(const void *p, u32 a, u32 b);
 extern void _ZN2GX11LoadOBJPlttEPKvjj(const void *p, u32 a, u32 b);
 extern void *_ZN2G212GetBG2ScrPtrEv(void);
@@ -106,36 +107,36 @@ extern void _ZN3GXS10LoadBGPlttEPKvjj(const void *p, u32 a, u32 b);
 extern void _ZN3GXS11LoadOBJPlttEPKvjj(const void *p, u32 a, u32 b);
 extern void _ZN3G2x13SetBlendAlphaEPVttttj(volatile u16 *p, u16 a, u16 b, u16 c, u32 d);
 
-extern int            data_0209d4b8;
-extern u8             data_0209d45c;
-extern u8             data_0209d454;
-extern s16            data_02082214[];
-extern unsigned char  data_ov006_0212e4f4[];
-extern unsigned char  data_ov006_0212e4f8[];
-extern int            data_ov006_0212e4fc[];
-extern int            data_ov006_0212e504[];
-extern int            data_ov006_0212e51c[];
-extern int            data_ov006_0212e534[];
-extern int            data_ov006_0212e554[];
-extern int            data_ov006_0213a5e0[];
-extern int            data_ov006_0213c3fc;
-extern int            data_ov006_0213c44c;
-extern int            data_ov006_0213c454;
-extern int           *data_ov006_0213c4dc[];
-extern int            data_ov006_0213c4f0[];
-extern char           data_ov006_0213c5a0;
+extern int data_0209d4b8;
+extern u8 data_0209d45c;
+extern u8 data_0209d454;
+extern s16 data_02082214[];
+extern unsigned char sCurling2StepXPicks[];
+extern unsigned char sCurling2StepXFastPicks[];
+extern int sCurling2StepModes[];
+extern int data_ov006_0212e504[];
+extern int data_ov006_0212e51c[];
+extern int sCurling2ScrollX[];
+extern int sCurling2ScrollY[];
+extern int sCurlingBitSprites[];
+extern int sCurling2StoneSprite;
+extern int sCurling2TargetStoneSprite;
+extern int sCurling2StonesSprites;
+extern int *sCurling2CounterSprites[];
+extern int sCurling2CursorSprites[];
+extern char sCurling2BgJokyuNcgPath;
 
 /* The seven pointer-to-member state tables this file's functions dispatch
  * through. __sinit_ov006_02130758 fills them from the 8-byte {code
  * pointer, zero adjustment} records in ov006 .data; their definitions are
  * the tail of this file. */
-extern PMF0 data_ov006_02141978[];
-extern PMF  data_ov006_02141988[];
-extern PMF  data_ov006_021419a0[];
-extern PMF  data_ov006_021419b8[];
-extern PMF1 data_ov006_021419d8[];
-extern PMF  data_ov006_021419f8[];
-extern PMF0 data_ov006_02141a18[];
+extern PMF0 sCurling2DragTable[];
+extern PMF sCurling2StepModeTable[];
+extern PMF sCurling2StepYTable[];
+extern PMF sCurling2StepXFastTable[];
+extern PMF1 sCurling2StoneTable[];
+extern PMF sCurling2StepXTable[];
+extern PMF0 sCurling2BehaviorTable[];
 /* The ROM PMF constants all seven state tables copy from (unlicensed
  * .data), grouped by destination table in retail copy order. */
 extern PMF0 pmf_dScMgCurling2_c_BeginRound;
@@ -164,26 +165,25 @@ extern PMF pmf_dScMgCurling2_c_StepYRestart;
 extern PMF pmf_dScMgCurling2_c_StepYRampUp;
 extern PMF pmf_dScMgCurling2_c_StepYRampDown;
 
-}  /* extern "C" */
+} /* extern "C" */
 
-namespace cstd  { s32 sqrt(u64 value); }
-namespace Sound { void PlayBank2_2D(unsigned int id); }
-
+namespace cstd {
+s32 sqrt(u64 value);
+}
+namespace Sound {
+void PlayBank2_2D(unsigned int id);
+}
 
 // @symbol _ZN15dScMgCurling2_cD1Ev
 // @symbol _ZN15dScMgCurling2_cD0Ev
 /* One out-of-line definition; with codegen not deferred it emits D1, then
  * D0, as in the ROM. The body is only the compiler-generated vtable store
  * and base destructor call. */
-dScMgCurling2_c::~dScMgCurling2_c()
-{
-}
-
+dScMgCurling2_c::~dScMgCurling2_c() {}
 
 // @symbol _ZN15dScMgCurling2_c10DrawValuesEv
 /* Draw every live mValue. mode 1 and mode 2 pick the last argument. */
-void dScMgCurling2_c::DrawValues()
-{
+void dScMgCurling2_c::DrawValues() {
     int i;
     for (i = 0; i < 0x3c; i++) {
         unsigned char mode = mValue[i].mode;
@@ -200,32 +200,24 @@ void dScMgCurling2_c::DrawValues()
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c9AgeValuesEv
 /* Age mValue one frame: count lifetime down, apply yInc and decay it
  * by 0x40, and clear the entry when the lifetime expires. */
-void dScMgCurling2_c::AgeValues()
-{
+void dScMgCurling2_c::AgeValues() {
     int i;
-    for (i = 0; i < 0x3c; i++)
-    {
-        if (mValue[i].live != 0)
-        {
-            if (mValue[i].lifetime != 0)
-            {
+    for (i = 0; i < 0x3c; i++) {
+        if (mValue[i].live != 0) {
+            if (mValue[i].lifetime != 0) {
                 mValue[i].lifetime -= 1;
                 mValue[i].y += mValue[i].yInc;
                 mValue[i].yInc -= 0x40;
-            }
-            else
-            {
+            } else {
                 mValue[i].live = 0;
                 mValue[i].mode = 0;
             }
         }
     }
 }
-
 
 // @symbol _ZN15dScMgCurling2_c10SpawnValueEii
 /* Take the first free mValue and place it midway between the two
@@ -237,8 +229,7 @@ void dScMgCurling2_c::AgeValues()
  * `raw + stone * 0x30 + 0x4660` on the other operand. Folding the split
  * base into one constant changes the code: the ROM shares raw + 0x4000
  * across the `other` reads. Do not tidy. */
-void dScMgCurling2_c::SpawnValue(int stone, int other)
-{
+void dScMgCurling2_c::SpawnValue(int stone, int other) {
     char *raw = (char *)this;
     int i;
     int sx;
@@ -246,7 +237,8 @@ void dScMgCurling2_c::SpawnValue(int stone, int other)
     unsigned char *count;
 
     for (i = 0; i < 0x3c; i++) {
-        if (mValue[i].live != 0) continue;
+        if (mValue[i].live != 0)
+            continue;
 
         sx = mStone[stone].x + mStone[other].x;
         sy = mStone[stone].y + mStone[other].y;
@@ -272,17 +264,16 @@ void dScMgCurling2_c::SpawnValue(int stone, int other)
 
         count = (unsigned char *)(raw + 0x55bf);
         *count = *count + 1;
-        if (combo >= 0x17) combo = 0x17;
+        if (combo >= 0x17)
+            combo = 0x17;
         Mg_SubmitScore(mValue[i].value + Mg_GetSubmittedScore());
         return;
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c11ClearValuesEv
 /* Clear every collision value. */
-void dScMgCurling2_c::ClearValues()
-{
+void dScMgCurling2_c::ClearValues() {
     int i;
     for (i = 0; i < 0x3c; i++) {
         mValue[i].live = 0;
@@ -290,28 +281,24 @@ void dScMgCurling2_c::ClearValues()
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10DrawPiecesEv
 /* Draw every piece whose drawEnable is set, as two stacked sprites
- * from data_ov006_0213a5e0. */
-void dScMgCurling2_c::DrawPieces()
-{
+ * from sCurlingBitSprites. */
+void dScMgCurling2_c::DrawPieces() {
     int i;
     for (i = 0; i < 0x32; i++) {
         if (mPiece[i].drawEnable) {
             int x = mPiece[i].x >> 0xc;
             int y = mPiece[i].y >> 0xc;
-            Mg_RenderSubSpriteMtx(data_ov006_0213a5e0[mPiece[i].sprite0], x, y, 0);
-            DrawOamSprite(data_ov006_0213a5e0[mPiece[i].sprite1], x, y, 0);
+            Mg_RenderSubSpriteMtx(sCurlingBitSprites[mPiece[i].sprite0], x, y, 0);
+            DrawOamSprite(sCurlingBitSprites[mPiece[i].sprite1], x, y, 0);
         }
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c13StepYRampDownEi
 /* countdown3, else ease yInc back toward 0x100, else clear yIndex. */
-void dScMgCurling2_c::StepYRampDown(int entry)
-{
+void dScMgCurling2_c::StepYRampDown(int entry) {
     if (mPiece[entry].countdown3 != 0) {
         short *p = (short *)&mPiece[entry].countdown3;
         *p = (short)(*(unsigned short *)p - 1);
@@ -327,12 +314,10 @@ void dScMgCurling2_c::StepYRampDown(int entry)
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c11StepYRampUpEi
 /* Ramp yInc up toward yTarget, then run countdown3 down. When it
  * expires, set yIndex to 2 and reseed the countdown. */
-void dScMgCurling2_c::StepYRampUp(int entry)
-{
+void dScMgCurling2_c::StepYRampUp(int entry) {
     if (mPiece[entry].yTarget > mPiece[entry].yInc) {
         mPiece[entry].yInc += 0x10;
         if (mPiece[entry].yTarget > mPiece[entry].yInc)
@@ -340,18 +325,22 @@ void dScMgCurling2_c::StepYRampUp(int entry)
     }
     if (mPiece[entry].countdown3 != 0) {
         mPiece[entry].countdown3 = mPiece[entry].countdown3 - 1;
-        if (*(short *)&mPiece[entry].countdown3 < 0) *(short *)&mPiece[entry].countdown3 = 0;
+        if (*(short *)&mPiece[entry].countdown3 < 0)
+            *(short *)&mPiece[entry].countdown3 = 0;
     } else {
         mPiece[entry].yIndex = 2;
-        *(short *)&mPiece[entry].countdown3 = (short)(unsigned char)((((0x20 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)) >> 0xf)) + 0x20);
+        *(short *)&mPiece[entry].countdown3 =
+            (short)(unsigned char)((((0x20 *
+                                      (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) &
+                                       0x7fff)) >>
+                                     0xf)) +
+                                   0x20);
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c12StepYRestartEi
 /* Zero yInc, pick a fresh yTarget and countdown3, set yIndex to 1. */
-void dScMgCurling2_c::StepYRestart(int entry)
-{
+void dScMgCurling2_c::StepYRestart(int entry) {
     unsigned int rnd;
 
     mPiece[entry].yInc = 0;
@@ -363,12 +352,10 @@ void dScMgCurling2_c::StepYRestart(int entry)
     *(short *)&mPiece[entry].countdown3 = (unsigned char)rnd;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c11StepXSettleEi
 /* Step the piece, hold while countdown is set (the hold decrements
  * countdown2, not countdown), then bleed xInc toward zero 8 a frame. */
-void dScMgCurling2_c::StepXSettle(int entry)
-{
+void dScMgCurling2_c::StepXSettle(int entry) {
     /* xInc, x, y: the ROM loads those bases in that order. */
     s32 *xInc = &mPiece[entry].xInc;
     s32 *x = &mPiece[entry].x;
@@ -378,29 +365,30 @@ void dScMgCurling2_c::StepXSettle(int entry)
     if (mPiece[entry].countdown != 0) {
         u16 *timer = &mPiece[entry].countdown2;
         *timer = *timer - 1;
-        if (*(s16 *)timer < 0) *(s16 *)timer = 0;
+        if (*(s16 *)timer < 0)
+            *(s16 *)timer = 0;
         return;
     }
     if (*xInc > 0) {
         *xInc = *xInc - 8;
-        if ((s16)*xInc < 0) *xInc = 0;
+        if ((s16)*xInc < 0)
+            *xInc = 0;
         return;
     }
     if (*xInc < 0) {
         *xInc = *xInc + 8;
-        if (*xInc > 0) *xInc = 0;
+        if (*xInc > 0)
+            *xInc = 0;
         return;
     }
     mPiece[entry].xIndex = 0;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c12StepXPushNegEi
 /* Step the piece, hold for countdown, push xInc down to a -0x300
  * floor (the store at the floor is +0x300), hold for countdown2, then
  * hand xIndex to 3. */
-void dScMgCurling2_c::StepXPushNeg(int entry)
-{
+void dScMgCurling2_c::StepXPushNeg(int entry) {
     unsigned short count;
 
     mPiece[entry].x = mPiece[entry].x + mPiece[entry].xInc;
@@ -428,15 +416,16 @@ void dScMgCurling2_c::StepXPushNeg(int entry)
     }
 
     mPiece[entry].xIndex = 3;
-    mPiece[entry].countdown2 = (unsigned char)(((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5 >> 0xf) + 0x20);
+    mPiece[entry].countdown2 =
+        (unsigned char)(((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5 >>
+                         0xf) +
+                        0x20);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c12StepXPushPosEi
 /* The mirror of StepXPushNeg: same shape, x increment pushed the
  * other way to a +0x300 ceiling. */
-void dScMgCurling2_c::StepXPushPos(int entry)
-{
+void dScMgCurling2_c::StepXPushPos(int entry) {
     unsigned short count;
 
     mPiece[entry].x += mPiece[entry].xInc;
@@ -465,44 +454,51 @@ void dScMgCurling2_c::StepXPushPos(int entry)
     }
 
     *(char *)&mPiece[entry].xIndex = 3;
-    *(short *)&mPiece[entry].countdown2 = (((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5) >> 0xf) + 0x20 & 0xff;
+    *(short *)&mPiece[entry].countdown2 =
+        (((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5) >> 0xf) + 0x20 &
+        0xff;
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9StepXPickEi
 /* Hold for countdown, then zero xInc, pick xIndex from
- * data_ov006_0212e4f4 and reseed both countdowns. */
-void dScMgCurling2_c::StepXPick(int entry)
-{
+ * sCurling2StepXPicks and reseed both countdowns. */
+void dScMgCurling2_c::StepXPick(int entry) {
     if (mPiece[entry].countdown != 0) {
         mPiece[entry].countdown = mPiece[entry].countdown - 1;
-        if (*(short *)&mPiece[entry].countdown < 0) *(short *)&mPiece[entry].countdown = 0;
+        if (*(short *)&mPiece[entry].countdown < 0)
+            *(short *)&mPiece[entry].countdown = 0;
         return;
     }
     mPiece[entry].xInc = 0;
-    mPiece[entry].xIndex = data_ov006_0212e4f4[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 1 >> 15];
-    mPiece[entry].countdown = (short)(unsigned char)((0x10 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)) >> 0xf);
-    mPiece[entry].countdown2 = (short)(unsigned char)(((0x40 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)) >> 0xf) + 0x60);
+    mPiece[entry].xIndex =
+        sCurling2StepXPicks[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
+                                << 1 >>
+                            15];
+    mPiece[entry].countdown =
+        (short)(unsigned char)((0x10 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) &
+                                        0x7fff)) >>
+                               0xf);
+    mPiece[entry].countdown2 =
+        (short)(unsigned char)(((0x40 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) &
+                                         0x7fff)) >>
+                                0xf) +
+                               0x60);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9StepXAndYEi
 /* Run one piece's xIndex callback, then its yIndex callback.
  * yIndex is re-read through the pointer-to-member receiver. */
-void dScMgCurling2_c::StepXAndY(int entry)
-{
+void dScMgCurling2_c::StepXAndY(int entry) {
     C *self = (C *)this;
     unsigned char k0 = mPiece[entry].xIndex;
-    (self->*data_ov006_021419f8[k0])(entry);
+    (self->*sCurling2StepXTable[k0])(entry);
     unsigned char k1 = ((dScMgCurling2_c *)self)->mPiece[entry].yIndex;
-    (self->*data_ov006_021419a0[k1])(entry);
+    (self->*sCurling2StepYTable[k1])(entry);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c15StepXSettleFastEi
 /* Step the piece, then bleed xInc toward zero 0x20 a frame. */
-void dScMgCurling2_c::StepXSettleFast(int entry)
-{
+void dScMgCurling2_c::StepXSettleFast(int entry) {
     /* x, xInc, y -- the ROM's load order, not a tidy one. */
     int *x = &mPiece[entry].x;
     int *xInc = &mPiece[entry].xInc;
@@ -511,27 +507,26 @@ void dScMgCurling2_c::StepXSettleFast(int entry)
     *y += mPiece[entry].yInc;
     if (*xInc > 0) {
         *xInc -= 0x20;
-        if ((int)(short)*xInc < 0) *xInc = 0;
+        if ((int)(short)*xInc < 0)
+            *xInc = 0;
     } else if (*xInc < 0) {
         *xInc += 0x20;
-        if (*xInc > 0) *xInc = 0;
+        if (*xInc > 0)
+            *xInc = 0;
     } else {
         mPiece[entry].xIndex = 0;
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c16StepXPushNegFastEi
 /* As StepXPushNeg, 0x20 a frame and a -0x400 floor. The store at the
  * floor is +0x400, and xIndex goes to 3 with no new countdown. */
-void dScMgCurling2_c::StepXPushNegFast(int entry)
-{
+void dScMgCurling2_c::StepXPushNegFast(int entry) {
     mPiece[entry].x = mPiece[entry].x + mPiece[entry].xInc;
     mPiece[entry].y = mPiece[entry].y + mPiece[entry].yInc;
 
     if (mPiece[entry].countdown != 0) {
-        *(s16 *)&mPiece[entry].countdown =
-            (s16)(mPiece[entry].countdown - 1);
+        *(s16 *)&mPiece[entry].countdown = (s16)(mPiece[entry].countdown - 1);
         if (*(s16 *)&mPiece[entry].countdown < 0)
             *(s16 *)&mPiece[entry].countdown = 0;
         return;
@@ -544,8 +539,7 @@ void dScMgCurling2_c::StepXPushNegFast(int entry)
     }
 
     if (mPiece[entry].countdown2 != 0) {
-        *(s16 *)&mPiece[entry].countdown2 =
-            (s16)(mPiece[entry].countdown2 - 1);
+        *(s16 *)&mPiece[entry].countdown2 = (s16)(mPiece[entry].countdown2 - 1);
         if (*(s16 *)&mPiece[entry].countdown2 < 0)
             *(s16 *)&mPiece[entry].countdown2 = 0;
         return;
@@ -554,12 +548,10 @@ void dScMgCurling2_c::StepXPushNegFast(int entry)
     mPiece[entry].xIndex = 3;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c16StepXPushPosFastEi
 /* The mirror of StepXPushNegFast, x increment pushed to a +0x400
  * ceiling. */
-void dScMgCurling2_c::StepXPushPosFast(int entry)
-{
+void dScMgCurling2_c::StepXPushPosFast(int entry) {
     mPiece[entry].x += mPiece[entry].xInc;
     mPiece[entry].y += mPiece[entry].yInc;
 
@@ -595,60 +587,70 @@ void dScMgCurling2_c::StepXPushPosFast(int entry)
     mPiece[entry].xIndex = 3;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c13StepXPickFastEi
 /* Hold for countdown, then zero xInc, pick a fresh yInc and an xIndex
- * from data_ov006_0212e4f8, and reseed both countdowns. */
-void dScMgCurling2_c::StepXPickFast(int entry)
-{
+ * from sCurling2StepXFastPicks, and reseed both countdowns. */
+void dScMgCurling2_c::StepXPickFast(int entry) {
     if (mPiece[entry].countdown != 0) {
         mPiece[entry].countdown = mPiece[entry].countdown - 1;
-        if (*(short *)&mPiece[entry].countdown < 0) *(short *)&mPiece[entry].countdown = 0;
+        if (*(short *)&mPiece[entry].countdown < 0)
+            *(short *)&mPiece[entry].countdown = 0;
         return;
     }
     mPiece[entry].xInc = 0;
-    mPiece[entry].yInc = ((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5) >> 0xf) << 4) + 0x600;
-    mPiece[entry].xIndex = data_ov006_0212e4f8[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 1 >> 15];
-    mPiece[entry].countdown = (unsigned short)((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 4) >> 0xf) & 0xff);
-    mPiece[entry].countdown2 = (unsigned short)(((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 0x30) >> 0xf) + 0x30) & 0xff);
+    mPiece[entry].yInc =
+        ((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5) >> 0xf) << 4) +
+        0x600;
+    mPiece[entry].xIndex =
+        sCurling2StepXFastPicks[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
+                                    << 1 >>
+                                15];
+    mPiece[entry].countdown =
+        (unsigned short)((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
+                           << 4) >>
+                          0xf) &
+                         0xff);
+    mPiece[entry].countdown2 =
+        (unsigned short)(((((((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) *
+                            0x30) >>
+                           0xf) +
+                          0x30) &
+                         0xff);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9StepXOnlyEi
-/* Run one piece's data_ov006_021419b8 callback, indexed by xIndex. */
-void dScMgCurling2_c::StepXOnly(int entry)
-{
+/* Run one piece's sCurling2StepXFastTable callback, indexed by xIndex. */
+void dScMgCurling2_c::StepXOnly(int entry) {
     unsigned char idx = mPiece[entry].xIndex;
-    (((C *)this)->*data_ov006_021419b8[idx])(entry);
+    (((C *)this)->*sCurling2StepXFastTable[idx])(entry);
 }
 
-
 // @symbol _ZN15dScMgCurling2_c12PickStepModeEi
-/* Pick modeIndex from data_ov006_0212e4fc (1 on one roll in eight)
+/* Pick modeIndex from sCurling2StepModes (1 on one roll in eight)
  * and clear xIndex. */
-void dScMgCurling2_c::PickStepMode(int entry)
-{
+void dScMgCurling2_c::PickStepMode(int entry) {
     unsigned rnd = (unsigned)RandomIntInternal(&data_0209d4b8);
     int pick = 0;
     unsigned roll = ((rnd >> 16) & 0x7fff) << 3 >> 0xf;
-    if (roll == 5) pick = 1;
-    mPiece[entry].modeIndex = data_ov006_0212e4fc[pick];
+    if (roll == 5)
+        pick = 1;
+    mPiece[entry].modeIndex = sCurling2StepModes[pick];
     mPiece[entry].xIndex = 0;
 }
-
 
 // @symbol _ZN15dScMgCurling2_c10StepPiecesEv
 /* Step every piece whose updateEnable is set, and wrap the ones whose
  * y has passed 0xc8 back to a random x at y = -0x8000. */
-void dScMgCurling2_c::StepPieces()
-{
+void dScMgCurling2_c::StepPieces() {
     int i;
     for (i = 0; i < 0x32; i++) {
         if (mPiece[i].updateEnable != 0) {
             unsigned char idx = mPiece[i].modeIndex;
-            (((C *)this)->*data_ov006_02141988[idx])(i);
+            (((C *)this)->*sCurling2StepModeTable[idx])(i);
             if ((mPiece[i].y >> 0xc) >= 0xc8) {
-                mPiece[i].x = (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) << 5 >> 0xf << 0xf;
+                mPiece[i].x = (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
+                                  << 5 >>
+                              0xf << 0xf;
                 mPiece[i].y = -0x8000;
                 mPiece[i].xIndex = 0;
                 mPiece[i].modeIndex = 0;
@@ -658,15 +660,13 @@ void dScMgCurling2_c::StepPieces()
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10SeedPiecesEv
 /* Clear every piece, then seed it: enabled, a random x, two sprite
  * indices (the second is the first plus one to four, modulo five) and a
  * y spread over the screen. The first x, the y at -0x8000 and the first
  * countdown store are overwritten a few lines later; those dead stores
  * are the ROM's. */
-void dScMgCurling2_c::SeedPieces()
-{
+void dScMgCurling2_c::SeedPieces() {
     int i;
     unsigned int rnd;
     unsigned int v;
@@ -674,8 +674,7 @@ void dScMgCurling2_c::SeedPieces()
     unsigned int m;
 
     i = 0;
-    for (; i < 0x32; i++)
-    {
+    for (; i < 0x32; i++) {
         mPiece[i].x = 0;
         mPiece[i].y = 0;
         mPiece[i].xInc = 0;
@@ -693,8 +692,7 @@ void dScMgCurling2_c::SeedPieces()
     }
 
     i = 0;
-    for (; i < 0x32; i++)
-    {
+    for (; i < 0x32; i++) {
         rnd = (unsigned int)RandomIntInternal(&data_0209d4b8);
         m = ((rnd >> 16) & 0x7fff) << 5;
         mPiece[i].x = (int)((m >> 0xf)) << 0xf;
@@ -730,7 +728,6 @@ void dScMgCurling2_c::SeedPieces()
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c9DrawMarksEv
 /* Draw the five score marks whose drawn flag is set, each with its
  * value as the caption.
@@ -738,8 +735,7 @@ void dScMgCurling2_c::SeedPieces()
  * `(i & 0xFFFFFFFF)` stays: 0xFFFFFFFF is unsigned, so the mask makes this
  * subscript unsigned, and deleting it changes the code. The records stay
  * at raw offsets -- &mMark[i] folds the base differently. */
-void dScMgCurling2_c::DrawMarks()
-{
+void dScMgCurling2_c::DrawMarks() {
     int x;
     int i;
     unsigned char *raw = (unsigned char *)this;
@@ -749,12 +745,11 @@ void dScMgCurling2_c::DrawMarks()
         unsigned char *rec = raw + (i & 0xFFFFFFFF) * 0x10;
         if (*(unsigned char *)(rec + 0x487d)) {
             x = *(int *)(rec + 0x4870) >> 12;
-            Mg_DrawBigNumber(x, *(int *)(rec + 0x4874) >> 12,
-                                *(unsigned short *)(rec + 0x4878), -1, -1, 0, 0);
+            Mg_DrawBigNumber(x, *(int *)(rec + 0x4874) >> 12, *(unsigned short *)(rec + 0x4878), -1,
+                             -1, 0, 0);
         }
     }
 }
-
 
 /* Age the five score marks: run the countdown down
  * and, on the frame it reaches zero, set the flag that DrawMarks draws on and
@@ -764,38 +759,38 @@ void dScMgCurling2_c::DrawMarks()
 #pragma push
 #pragma opt_strength_reduction off
 // @symbol _ZN15dScMgCurling2_c8AgeMarksEv
-void dScMgCurling2_c::AgeMarks()
-{
+void dScMgCurling2_c::AgeMarks() {
     char *raw = (char *)this;
     int i;
 
     for (i = 0; i < 5; i++) {
         char *rec = raw + (i << 4);
         unsigned short *timer;
-        if (*(unsigned char *)(rec + 0x487c) == 0) continue;
-        if (*(unsigned short *)(rec + 0x487a) == 0) continue;
+        if (mMark[i].enable == 0)
+            continue;
+        if (mMark[i].countdown == 0)
+            continue;
         timer = (unsigned short *)(rec + 0x487a);
         *timer = *timer - 1;
-        if (*timer != 0) continue;
-        *(unsigned char *)(rec + 0x487d) = 1;
+        if (*timer != 0)
+            continue;
+        mMark[i].drawn = 1;
         Sound::PlayBank2_2D(0x1bc);
     }
 }
 #pragma pop
 
-
 // @symbol _ZN15dScMgCurling2_c10DrawCursorEv
 /* Draw the drag cursor at the mDragX/mDragY drag point,
  * offset up and left, while the mCursorVisible flag is set. */
-void dScMgCurling2_c::DrawCursor()
-{
-    if (mCursorVisible == 0) return;
+void dScMgCurling2_c::DrawCursor() {
+    if (mCursorVisible == 0)
+        return;
 
     int x = mDragX;
     int y = mDragY;
-    Mg_RenderSpriteBoth((int)data_ov006_0213c4f0, (x >> 12) - 0x20, (y >> 12) - 8, -1, 0);
+    Mg_RenderSpriteBoth((int)sCurling2CursorSprites, (x >> 12) - 0x20, (y >> 12) - 8, -1, 0);
 }
-
 
 /* Stylus drag update. Runs while the player drags a stone before the throw. With no touch in
  * the current input record it just drops the drag flags. Otherwise it moves
@@ -823,8 +818,7 @@ void dScMgCurling2_c::DrawCursor()
 #pragma opt_common_subs off
 #pragma opt_propagation off
 // @symbol _ZN15dScMgCurling2_c10DragUpdateEv
-void dScMgCurling2_c::DragUpdate()
-{
+void dScMgCurling2_c::DragUpdate() {
     dScMgCurling2_c *self = this;
     u8 idx;
     int dx;
@@ -849,10 +843,14 @@ void dScMgCurling2_c::DragUpdate()
         oldy = self->mDragY;
         self->mDragX = self->mGrabOffsetX + (bx << 12);
         self->mDragY = self->mGrabOffsetY + (by << 12);
-        if (self->mDragY <= 0x94000) self->mDragY = 0x94000;
-        if (self->mDragX <= 0x20000) self->mDragX = 0x20000;
-        if (self->mDragX >= 0xe0000) self->mDragX = 0xe0000;
-        if (self->mDragY >= 0xb8000) self->mDragY = 0xb8000;
+        if (self->mDragY <= 0x94000)
+            self->mDragY = 0x94000;
+        if (self->mDragX <= 0x20000)
+            self->mDragX = 0x20000;
+        if (self->mDragX >= 0xe0000)
+            self->mDragX = 0xe0000;
+        if (self->mDragY >= 0xb8000)
+            self->mDragY = 0xb8000;
         dx = (self->mDragX - oldx) >> 12;
         dy = (self->mDragY - oldy) >> 12;
         dy2 = dy * dy;
@@ -869,14 +867,17 @@ void dScMgCurling2_c::DragUpdate()
             self->mSwingReferenceY = self->mDragY;
         } else if (self->mSwingState == 1) {
             if (self->mLastSwingDeltaY * diff > 0) {
-                if (diff < 0) diff = -diff;
-                if (diff >= 0xa) self->mSwingState = 0;
+                if (diff < 0)
+                    diff = -diff;
+                if (diff >= 0xa)
+                    self->mSwingState = 0;
             } else {
                 self->mLastSwingDeltaY = diff;
                 self->mSwingReferenceY = self->mDragY;
             }
         } else {
-            if (self->mLastSwingDeltaY * diff < 0) self->mSwingState = 1;
+            if (self->mLastSwingDeltaY * diff < 0)
+                self->mSwingState = 1;
             self->mLastSwingDeltaY = (self->mDragY - self->mSwingReferenceY) >> 12;
             self->mSwingReferenceY = self->mDragY;
         }
@@ -894,9 +895,12 @@ void dScMgCurling2_c::DragUpdate()
         self->mThrowAngle = (self->mThrowAngle + oldAng) >> 1;
         mag = cstd::sqrt((u64)((dx >> 1) * (dx >> 1) + dy2)) * 9;
         mag = (mag << 12) >> 4;
-        if (mag >= 0xc000) mag = 0xc000;
-        if (mag > self->mThrowSpeed) self->mThrowSpeed = mag;
-        if (self->mThrowSpeed > mag) self->mThrowSpeed -= (self->mThrowSpeed - mag) >> 1;
+        if (mag >= 0xc000)
+            mag = 0xc000;
+        if (mag > self->mThrowSpeed)
+            self->mThrowSpeed = mag;
+        if (self->mThrowSpeed > mag)
+            self->mThrowSpeed -= (self->mThrowSpeed - mag) >> 1;
         {
             int j = gActivePlayerSlot;
             int ay = (self->mDragY >> 12) - gTouchY[j * 4];
@@ -912,12 +916,10 @@ void dScMgCurling2_c::DragUpdate()
 }
 #pragma pop
 
-
 // @symbol _ZN15dScMgCurling2_c9DragBeginEv
 /* Begin a drag: latch the grab offset and the first angle. Entry 0 of
- * data_ov006_02141978; DragUpdate is entry 1. */
-void dScMgCurling2_c::DragBegin()
-{
+ * sCurling2DragTable; DragUpdate is entry 1. */
+void dScMgCurling2_c::DragBegin() {
     int idx;
     int flag = 0;
     int x;
@@ -927,8 +929,7 @@ void dScMgCurling2_c::DragBegin()
     /* `4 & 0xFFFFFFFF` is not decoration: 0xFFFFFFFF is unsigned, so the mask
        makes this one subscript unsigned where the next is signed, and that is
        what the ROM's index arithmetic does.  Deleting it costs 20 words. */
-    if (gTouchHeld[idx * (4 & 0xFFFFFFFF)] != 0)
-    {
+    if (gTouchHeld[idx * (4 & 0xFFFFFFFF)] != 0) {
         if (gTouchEdge[idx * 4] != 0)
             flag = 1;
     }
@@ -943,60 +944,58 @@ void dScMgCurling2_c::DragBegin()
     mDragState = 1;
     mThrowAngle = 0xc000;
 
-    if (sndCooldown == 0)
-    {
+    if (sndCooldown == 0) {
         func_02012718(0x1d2, mDragX);
         sndCooldown = 6;
     }
 
     unk_55a0 = 0;
     unk_55a4 = 0;
-    unk_558c = mDragX + mGrabOffsetX;
+    mGrabX = mDragX + mGrabOffsetX;
     mSwingReferenceY = mDragY + mGrabOffsetY;
     mLastSwingDeltaY = 0xff;
     mSwingState = 0;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c11DrawCounterEv
 /* Draw the counter at the bottom of the screen: a fixed
- * sprite, a language-dependent label out of data_ov006_0213c4dc, and 5 minus
+ * sprite, a language-dependent label out of sCurling2CounterSprites, and 5 minus
  * the thrown count, floored at zero. */
-void dScMgCurling2_c::DrawCounter()
-{
+void dScMgCurling2_c::DrawCounter() {
     int left;
     if (mCounterVisible == 0)
         return;
     left = 5 - thrown;
     if (left < 0)
         left = 0;
-    Mg_RenderSubSpriteMtx((int)&data_ov006_0213c3fc, 0xd0, 0xb4, 0);
-    Mg_RenderSubSpriteMtx(data_ov006_0213c4dc[GetGameLanguage()][1], 0xe8, 0xb4, 0);
+    Mg_RenderSubSpriteMtx((int)&sCurling2StoneSprite, 0xd0, 0xb4, 0);
+    Mg_RenderSubSpriteMtx(sCurling2CounterSprites[GetGameLanguage()][1], 0xe8, 0xb4, 0);
     Mg_DrawBigNumber(0xf8, 0xb4, left, 0, 0, 0, 0);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c10DrawStonesEv
 /* Draw each live, visible stone on both screens: the body
  * sprite, picked by the stone's target flag, and a shadow eight pixels down. */
-void dScMgCurling2_c::DrawStones()
-{
+void dScMgCurling2_c::DrawStones() {
     int x, y;
     int i;
 
     for (i = 0; i < 0xb; i++) {
         void *tex;
-        if (mStone[i].active == 0) continue;
-        if (mStone[i].visible == 0) continue;
+        if (mStone[i].active == 0)
+            continue;
+        if (mStone[i].visible == 0)
+            continue;
         x = mStone[i].x >> 12;
         y = mStone[i].y >> 12;
-        if (mStone[i].target != 0) tex = &data_ov006_0213c44c;
-        else tex = &data_ov006_0213c3fc;
+        if (mStone[i].target != 0)
+            tex = &sCurling2TargetStoneSprite;
+        else
+            tex = &sCurling2StoneSprite;
         RenderOamBothScreens(tex, x, y, -1, 1, 0);
-        RenderOamBothScreens(&data_ov006_0213c454, x, y + 8, -1, 2, 0);
+        RenderOamBothScreens(&sCurling2StonesSprites, x, y + 8, -1, 2, 0);
     }
 }
-
 
 // @symbol _ZN15dScMgCurling2_c14SeparateStonesEi
 /* Stone separation. The two-player rink's twin of SeparateStones in
@@ -1004,8 +1003,7 @@ void dScMgCurling2_c::DrawStones()
  * and after the bump sound the pushed pair gets a SpawnValue. Keep separate temporaries
  * for the rotated offsets and the inner scan's locals declared in the loop body; both
  * shapes are needed, as in the Curling version. */
-void dScMgCurling2_c::SeparateStones(int stoneIndex)
-{
+void dScMgCurling2_c::SeparateStones(int stoneIndex) {
     int hitIndex;
     int nextIndex;
     int dx;
@@ -1015,13 +1013,16 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
     int angleIndex;
 
     for (hitIndex = 0; hitIndex < 11; hitIndex++) {
-        if (mStone[hitIndex].active == 0) continue;
-        if (stoneIndex == hitIndex) continue;
+        if (mStone[hitIndex].active == 0)
+            continue;
+        if (stoneIndex == hitIndex)
+            continue;
         dx = (mStone[hitIndex].x - mStone[stoneIndex].x) >> 12;
         dy = (mStone[hitIndex].y - mStone[stoneIndex].y) >> 12;
         distance = cstd::sqrt((u64)(dx * dx + dy * dy));
         contactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy, dx);
-        if (distance > 0x18) continue;
+        if (distance > 0x18)
+            continue;
         {
             int contactCos;
             int contactSin;
@@ -1030,10 +1031,10 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
 
             angleIndex = (contactAngle >> 4) * 2;
             contactCos = data_02082214[angleIndex + 1];
-            separationX = (int)(((long long)contactCos * 0x1a + 0x800) >> 12);
+            separationX = FX_MUL(contactCos, 0x1a);
             mStone[hitIndex].x = mStone[stoneIndex].x + (separationX << 12);
             contactSin = data_02082214[angleIndex];
-            separationY = (int)(((long long)contactSin * 0x1a + 0x800) >> 12);
+            separationY = FX_MUL(contactSin, 0x1a);
             mStone[hitIndex].y = mStone[stoneIndex].y + (separationY << 12);
             for (nextIndex = 0; nextIndex < 11; nextIndex++) {
                 int dx2;
@@ -1041,13 +1042,16 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
                 int nextDistance;
                 u16 nextContactAngle;
 
-                if (mStone[nextIndex].active == 0) continue;
-                if (hitIndex == nextIndex) continue;
+                if (mStone[nextIndex].active == 0)
+                    continue;
+                if (hitIndex == nextIndex)
+                    continue;
                 dx2 = (mStone[nextIndex].x - mStone[hitIndex].x) >> 12;
                 dy2 = (mStone[nextIndex].y - mStone[hitIndex].y) >> 12;
                 nextDistance = cstd::sqrt((u64)(dx2 * dx2 + dy2 * dy2));
                 nextContactAngle = _ZN4cstd5atan2E5Fix12IiES1_(dy2, dx2);
-                if (nextDistance > 0x18) continue;
+                if (nextDistance > 0x18)
+                    continue;
                 {
                     int nextContactCos;
                     int nextContactSin;
@@ -1056,10 +1060,10 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
 
                     angleIndex = (nextContactAngle >> 4) * 2;
                     nextContactCos = data_02082214[angleIndex + 1];
-                    nextSeparationX = (int)(((long long)nextContactCos * 0x1a + 0x800) >> 12);
+                    nextSeparationX = FX_MUL(nextContactCos, 0x1a);
                     mStone[nextIndex].x = mStone[hitIndex].x + (nextSeparationX << 12);
                     nextContactSin = data_02082214[angleIndex];
-                    nextSeparationY = (int)(((long long)nextContactSin * 0x1a + 0x800) >> 12);
+                    nextSeparationY = FX_MUL(nextContactSin, 0x1a);
                     mStone[nextIndex].y = mStone[hitIndex].y + (nextSeparationY << 12);
                     func_02012718(0xe8, mStone[stoneIndex].x);
                     SpawnValue(stoneIndex, hitIndex);
@@ -1070,8 +1074,6 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
         }
     }
 }
-
-#define FMUL(a, b) ((int)(((long long)(a) * (b) + 0x800) >> 12))
 
 // @symbol Curling2_ResolveStoneCollision
 /* Stone collision: find the first active stone within 0x18, excluding
@@ -1090,8 +1092,7 @@ void dScMgCurling2_c::SeparateStones(int stoneIndex)
  * and sine/cosine temporaries, pointers to fields written after a call,
  * and hitAngle reference are
  * described in notes/mwccarm-codegen.md 6cz. */
-extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneIndex)
-{
+extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneIndex) {
     long long wideContactSin;
     long long wideContactCos;
     int hitIndex;
@@ -1099,14 +1100,19 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneI
     int dy;
 
     for (hitIndex = 0; hitIndex < 11; hitIndex++) {
-        if (self->mStone[hitIndex].active == 0) continue;
-        if (stoneIndex == hitIndex) continue;
-        if (self->mStone[hitIndex].state == 0) continue;
-        if (self->mStone[hitIndex].state == 3) continue;
+        if (self->mStone[hitIndex].active == 0)
+            continue;
+        if (stoneIndex == hitIndex)
+            continue;
+        if (self->mStone[hitIndex].state == 0)
+            continue;
+        if (self->mStone[hitIndex].state == 3)
+            continue;
         dy = self->mStone[hitIndex].y;
         dx = self->mStone[hitIndex].x - self->mStone[stoneIndex].x;
         dy -= self->mStone[stoneIndex].y;
-        if ((cstd::sqrt((u64)((long long)dx * dx + (long long)dy * dy)) >> 12) >= 0x18) continue;
+        if ((cstd::sqrt((u64)((long long)dx * dx + (long long)dy * dy)) >> 12) >= 0x18)
+            continue;
         {
             int hitVelocityX;
             int hitVelocityY;
@@ -1140,27 +1146,32 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneI
             relativeAngleIndex = (relativeAngle >> 4) * 2;
             relativeCos = data_02082214[relativeAngleIndex + 1];
             relativeSin = data_02082214[relativeAngleIndex];
-            movingNormal = FMUL(relativeCos, self->mStone[stoneIndex].speed);
-            movingTangent = FMUL(relativeSin, self->mStone[stoneIndex].speed);
+            movingNormal = FX_MUL(relativeCos, self->mStone[stoneIndex].speed);
+            movingTangent = FX_MUL(relativeSin, self->mStone[stoneIndex].speed);
             relativeAngle = self->mStone[hitIndex].angle - contactAngle;
             relativeAngleIndex = (relativeAngle >> 4) * 2;
             relativeCos = data_02082214[relativeAngleIndex + 1];
             relativeSin = data_02082214[relativeAngleIndex];
-            hitNormal = FMUL(relativeCos, self->mStone[hitIndex].speed);
+            hitNormal = FX_MUL(relativeCos, self->mStone[hitIndex].speed);
             contactSin = data_02082214[contactAngleIndex];
             contactCos = data_02082214[contactAngleIndex + 1];
-            hitTangent = FMUL(relativeSin, self->mStone[hitIndex].speed);
+            hitTangent = FX_MUL(relativeSin, self->mStone[hitIndex].speed);
             /* Reuse dy/dx for the moving stone's resulting x/y velocity. */
             wideContactCos = (long long)contactCos;
-            dy = (int)((wideContactCos * hitNormal + 0x800) >> 12) - FMUL(contactSin, movingTangent);
+            dy = (int)((wideContactCos * hitNormal + 0x800) >> 12) -
+                 FX_MUL(contactSin, movingTangent);
             wideContactSin = (long long)contactSin;
-            dx = (int)((wideContactSin * hitNormal + 0x800) >> 12) + FMUL(contactCos, movingTangent);
-            hitVelocityX = FMUL(contactCos, movingNormal) - FMUL(contactSin, hitTangent);
-            hitVelocityY = (int)((wideContactSin * movingNormal + 0x800) >> 12) + FMUL(contactCos, hitTangent);
+            dx = (int)((wideContactSin * hitNormal + 0x800) >> 12) +
+                 FX_MUL(contactCos, movingTangent);
+            hitVelocityX = FX_MUL(contactCos, movingNormal) - FX_MUL(contactSin, hitTangent);
+            hitVelocityY = (int)((wideContactSin * movingNormal + 0x800) >> 12) +
+                           FX_MUL(contactCos, hitTangent);
             self->mStone[stoneIndex].angle = _ZN4cstd5atan2E5Fix12IiES1_(dx, dy);
-            self->mStone[stoneIndex].speed = cstd::sqrt((u64)((long long)dy * dy + (long long)dx * dx));
-            self->mStone[stoneIndex].x = self->mStone[hitIndex].x - FMUL(contactCos, 0x1b000);
-            self->mStone[stoneIndex].y = self->mStone[hitIndex].y - (int)((wideContactSin * 0x1b000 + 0x800) >> 12);
+            self->mStone[stoneIndex].speed =
+                cstd ::sqrt((u64)((long long)dy * dy + (long long)dx * dx));
+            self->mStone[stoneIndex].x = self->mStone[hitIndex].x - FX_MUL(contactCos, 0x1b000);
+            self->mStone[stoneIndex].y =
+                self->mStone[hitIndex].y - (int)((wideContactSin * 0x1b000 + 0x800) >> 12);
             xi = self->mStone[stoneIndex].x >> 12;
             pixelY = self->mStone[stoneIndex].y >> 12;
             if (xi - 0xc < 0) {
@@ -1177,7 +1188,9 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneI
                 *pHitY = self->mStone[stoneIndex].y + 0x18000;
             }
             hitAngle = _ZN4cstd5atan2E5Fix12IiES1_(hitVelocityY, hitVelocityX);
-            self->mStone[hitIndex].speed = cstd::sqrt((u64)((long long)hitVelocityX * hitVelocityX + (long long)hitVelocityY * hitVelocityY));
+            self->mStone[hitIndex].speed =
+                cstd::sqrt((u64)((long long)hitVelocityX * hitVelocityX +
+                                 (long long)hitVelocityY * hitVelocityY));
             self->mStone[stoneIndex].state = 1;
             self->mStone[hitIndex].state = 1;
             if (self->mStone[hitIndex].speed >= 0x3800) {
@@ -1192,15 +1205,12 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneI
     }
 }
 
-#undef FMUL
-
 // @symbol _ZN15dScMgCurling2_c9StoneSpinEi
 /* Spin-rate update for the stone sprite: -cos(heading) * speed, scaled.
  * The offsets stay raw this + i * 0x30 + 0x46xx, like SpawnValue's
  * 0x4000 base in the lower TU: folding them through &mStone[i] changes
  * the base rematerialization. */
-void dScMgCurling2_c::StoneSpin(int stoneIndex)
-{
+void dScMgCurling2_c::StoneSpin(int stoneIndex) {
     char *stoneBase = (char *)this + stoneIndex * 0x30;
     int heading = *(unsigned short *)(stoneBase + 0x4686);
     int tableOffset = (((heading >> 4) << 1) + 1) << 1;
@@ -1211,21 +1221,21 @@ void dScMgCurling2_c::StoneSpin(int stoneIndex)
     *(short *)(stoneBase + 0x4682) = (short)((-velocityX) >> 2);
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10StoneSteerEi
 /* Stone state 3: while the touch is down, the stone follows the stylus
  * plus grabX/grabY (x clamped to the rink); once it lifts, the
  * stone is armed again and, when the drag point is close, snaps above it. */
-void dScMgCurling2_c::StoneSteer(int stoneIndex)
-{
+void dScMgCurling2_c::StoneSteer(int stoneIndex) {
     u8 playerSlot = gActivePlayerSlot;
     int touchOffset = playerSlot * 4;
     if (gTouchHeld[playerSlot * 4] != 0) {
         int grabX = mStone[stoneIndex].grabX;
         mStone[stoneIndex].x = grabX + (gTouchX[touchOffset] << 12);
         int stoneXPixels = mStone[stoneIndex].x >> 12;
-        if (stoneXPixels < 0xe) mStone[stoneIndex].x = 0xe000;
-        if (stoneXPixels > 0xf2) mStone[stoneIndex].x = 0xf2000;
+        if (stoneXPixels < 0xe)
+            mStone[stoneIndex].x = 0xe000;
+        if (stoneXPixels > 0xf2)
+            mStone[stoneIndex].x = 0xf2000;
         int stoneX = mStone[stoneIndex].x >> 12;
         int grabXPixels = stoneX - gTouchX[playerSlot * 4];
         int stoneY = mStone[stoneIndex].y >> 12;
@@ -1237,30 +1247,30 @@ void dScMgCurling2_c::StoneSteer(int stoneIndex)
         int dx = (mDragX - mStone[stoneIndex].x) >> 12;
         int stoneY = mStone[stoneIndex].y;
         int dy = (mDragY - stoneY) >> 12;
-        if (dx < -0x2e) return;
-        if (dx > 0x2e) return;
-        if (dy < -0x14) return;
-        if (dy > 0x14) return;
+        if (dx < -0x2e)
+            return;
+        if (dx > 0x2e)
+            return;
+        if (dy < -0x14)
+            return;
+        if (dy > 0x14)
+            return;
         mDragY = stoneY + 0x15000;
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c9StoneRestEi
 /* Stone state 2: run the shared collision step. */
-void dScMgCurling2_c::StoneRest(int i)
-{
+void dScMgCurling2_c::StoneRest(int i) {
     Curling2_ResolveStoneCollision(this, i);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c10StoneSlideEi
 /* Stone state 1: integrate by speed at the heading, bounce off the rink
  * walls (the bounce flips the heading and plays 0x1d4), decay speed to a
  * stop, run the collision step and the spin update, then feed the rolling
  * sound from speed and position. */
-void dScMgCurling2_c::StoneSlide(int stoneIndex)
-{
+void dScMgCurling2_c::StoneSlide(int stoneIndex) {
     char *sceneBytes = (char *)this;
     int stoneOffset;
     int zi;
@@ -1286,9 +1296,9 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex)
     pY = (int *)(sceneBytes + 0x4664 + stoneOffset);
 
     cosAngle = data_02082214[((*pHeading) >> 4) * 2 + 1];
-    *pX += (int)(((long long)cosAngle * *pSpeed + 0x800) >> 12);
+    *pX += FX_MUL(cosAngle, *pSpeed);
     sinAngle = data_02082214[((*pHeading) >> 4) * 2];
-    *pY += (int)(((long long)sinAngle * *pSpeed + 0x800) >> 12);
+    *pY += FX_MUL(sinAngle, *pSpeed);
     *(u16 *)(sceneBytes + 0x4684 + stoneOffset) += *(u16 *)(sceneBytes + stoneOffset + 0x4682);
 
     x = *pX;
@@ -1336,34 +1346,36 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex)
     p = v >> 7;
     if (p >= 0x7f)
         p = 0x7f;
-    *(int *)(sceneBytes + 0x467c + stoneOffset) = func_02012468(*(int *)(sceneBytes + 0x467c + stoneOffset), 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
+    *(int *)(sceneBytes + 0x467c + stoneOffset) = func_02012468(
+        *(int *)(sceneBytes + 0x467c + stoneOffset), 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9StoneWaitEi
 /* Stone state 0: armed, waiting. While a drag is on (mDragState == 1) and
  * the drag point overlaps the stone, throw it at the latched angle and
  * power (clamped to the legal cone), mark it fast when the power is high,
  * then re-arm the spawn slot and separate it from any stone it landed on. */
-void dScMgCurling2_c::StoneWait(int idx)
-{
-    if (mDragState != 1) return;
+void dScMgCurling2_c::StoneWait(int idx) {
+    if (mDragState != 1)
+        return;
 
     int v = (mDragX - mStone[idx].x) >> 12;
     int w = (mDragY - mStone[idx].y) >> 12;
-    if (v < -0x2e) return;
-    if (v > 0x2e) return;
-    if (w < -0x14) return;
-    if (w > 0x14) return;
+    if (v < -0x2e)
+        return;
+    if (v > 0x2e)
+        return;
+    if (w < -0x14)
+        return;
+    if (w > 0x14)
+        return;
 
     mStone[idx].state = 1;
     mStone[idx].angle = mThrowAngle;
     mStone[idx].speed = mThrowSpeed;
 
-    if (mThrowAngle < 0x9800u ||
-        mThrowAngle > 0xe800u) {
-        if (mThrowAngle >= 0x4000u &&
-            mThrowAngle <= 0x9800u) {
+    if (mThrowAngle < 0x9800u || mThrowAngle > 0xe800u) {
+        if (mThrowAngle >= 0x4000u && mThrowAngle <= 0x9800u) {
             mThrowAngle = 0x9800;
         } else {
             mThrowAngle = 0xe800;
@@ -1385,121 +1397,103 @@ void dScMgCurling2_c::StoneWait(int idx)
     SeparateStones(idx);
 
     int vol = 0x7f;
-    if (mStone[idx].fast == 0) vol = 0x3f;
-    func_020126ac(0x1d3, 5, vol, 0,
-                  func_020126e8(mStone[idx].x));
+    if (mStone[idx].fast == 0)
+        vol = 0x3f;
+    func_020126ac(0x1d3, 5, vol, 0, func_020126e8(mStone[idx].x));
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9NextStoneEv
 /* Queue and deal the next stone: while spawning is set and the timer has
  * run out, activate stone[thrown] at the top of the rink, seed the house
  * stones on the first deal (the later deals play 0x1d7), then re-arm the
  * drag point and the draw flags. */
-void dScMgCurling2_c::NextStone()
-{
+void dScMgCurling2_c::NextStone() {
     char *self = (char *)this;
-    if ((*((unsigned char *) (self + 0x55bb))) == 0)
-    {
+    if ((spawning) == 0) {
         return;
     }
-    if ((*((unsigned short *) ((self + 0x5500) + 0xb4))) != 0)
-    {
+    if ((*((unsigned short *)((self + 0x5500) + 0xb4))) != 0) {
         mSpawnTimer -= 1;
-        if (*((short *) ((self + 0x5500) + 0xb4)) <= 0)
-        {
-            *((unsigned short *) ((self + 0x5500) + 0xb4)) = 0;
+        if (*((short *)((self + 0x5500) + 0xb4)) <= 0) {
+            *((unsigned short *)((self + 0x5500) + 0xb4)) = 0;
         }
         return;
     }
-    *((unsigned char *) (self + 0x55bb)) = 0;
+    spawning = 0;
     {
-        int n = *((unsigned char *) (self + 0x55ba));
+        int n = thrown;
         char *ip;
         char *p;
         char *q;
-        if (n >= 5)
-        {
+        if (n >= 5) {
             return;
         }
         ip = self + (n * 0x30);
         p = ip + 0x4000;
-        *((unsigned char *) ((ip + 0x4000) + 0x689)) = 1;
-        *((unsigned char *) ((ip + 0x4000) + 0x68a)) = 1;
-        *((int *) (p + 0x660)) = 0x80000;
-        *((int *) ((ip + 0x4000) + 0x664)) = 0x80000;
+        *((unsigned char *)((ip + 0x4000) + 0x689)) = 1;
+        *((unsigned char *)((ip + 0x4000) + 0x68a)) = 1;
+        *((int *)(p + 0x660)) = 0x80000;
+        *((int *)((ip + 0x4000) + 0x664)) = 0x80000;
         q = ip + 0x4600;
-        *((unsigned short *) (q + 0x80)) = 0;
-        *((unsigned char *) ((ip + 0x4000) + 0x68b)) = 0;
-        *((unsigned char *) ((ip + 0x4000) + 0x688)) = 0;
-        *((unsigned char *) ((ip + 0x4000) + 0x68d)) = 0;
-        *((unsigned char *) ((ip + 0x4000) + 0x68c)) = 0;
-        if ((*((unsigned char *) (self + 0x55ba))) == 0)
-        {
+        *((unsigned short *)(q + 0x80)) = 0;
+        *((unsigned char *)((ip + 0x4000) + 0x68b)) = 0;
+        *((unsigned char *)((ip + 0x4000) + 0x688)) = 0;
+        *((unsigned char *)((ip + 0x4000) + 0x68d)) = 0;
+        *((unsigned char *)((ip + 0x4000) + 0x68c)) = 0;
+        if ((thrown) == 0) {
             SeedStones();
-        }
-        else
-        {
+        } else {
             Sound::PlayBank2_2D(0x1d7);
         }
-        *((unsigned char *) ((int)self + 0x55ba)) += 1;
+        *((unsigned char *)((int)self + 0x55ba)) += 1;
         mDragX = 0x80000;
         mDragY = 0xb0000;
-        *((unsigned char *) (self + 0x55b8)) = 0;
-        *((unsigned char *) (self + 0x55b9)) = 1;
+        mDragState = 0;
+        mCursorVisible = 1;
         ClearStoneFlags();
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10SeedStonesEv
 /* Place the six house stones (mStone[5]..mStone[10]) at their fixed
  * positions, already at rest. */
-void dScMgCurling2_c::SeedStones()
-{
-    struct E
-    {
+void dScMgCurling2_c::SeedStones() {
+    struct E {
         char p[0x30];
     };
     int i;
-    for (i = 0; i < 6; i++)
-    {
-        char *e = ((char *) (&((struct E *) this)[i + 5])) + 0x4000;
-        *((unsigned char *) (e + 0x689)) = 1;
-        *((unsigned char *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x68a)) = 1;
-        *((int *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x660)) = data_ov006_0212e504[i] << 0xc;
-        *((int *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x664)) = (-(data_ov006_0212e51c[i] + 0x20)) << 0xc;
-        *((unsigned char *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x688)) = 2;
-        *((int *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x668)) = 0;
-        *((unsigned char *) ((((char *) (&((struct E *) this)[i + 5])) + 0x4000) + 0x68d)) = 1;
+    for (i = 0; i < 6; i++) {
+        char *e = ((char *)(&((struct E *)this)[i + 5])) + 0x4000;
+        *((unsigned char *)(e + 0x689)) = 1;
+        *((unsigned char *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x68a)) = 1;
+        *((int *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x660)) =
+            data_ov006_0212e504[i] << 0xc;
+        *((int *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x664)) =
+            (-(data_ov006_0212e51c[i] + 0x20)) << 0xc;
+        *((unsigned char *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x688)) = 2;
+        *((int *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x668)) = 0;
+        *((unsigned char *)((((char *)(&((struct E *)this)[i + 5])) + 0x4000) + 0x68d)) = 1;
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c15ClearStoneFlagsEv
 /* Clear the +0x2c flag on every stone. */
-void dScMgCurling2_c::ClearStoneFlags()
-{
+void dScMgCurling2_c::ClearStoneFlags() {
     int i;
     for (i = 0; i < 0xb; i++) {
         mStone[i].unk2c = 0;
     }
 }
 
-
 // @symbol _ZN15dScMgCurling2_c4IdleEv
 /* Behavior state 4: terminal. */
-void dScMgCurling2_c::Idle()
-{
-}
-
+void dScMgCurling2_c::Idle() {}
 
 // @symbol _ZN15dScMgCurling2_c8EndRoundEv
 /* Behavior state 3: the last stone has settled. Wait out the state timer,
  * clear the round flags, hide the stones, drop the prompt, hand the scene
  * to Mg_SetSharedState and park in state 4. */
-void dScMgCurling2_c::EndRound()
-{
+void dScMgCurling2_c::EndRound() {
     int i;
     if (mStateTimer != 0) {
         mStateTimer -= 1;
@@ -1524,20 +1518,19 @@ void dScMgCurling2_c::EndRound()
     mCounterVisible = 0;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c9NextThrowEv
 /* Behavior state 2, reached once every stone rests. Age the score marks,
  * then either go back to Play after dealing the next stone or -- with all
  * five thrown -- set gameOver, sound the horn and advance to EndRound. */
 #pragma push
 #pragma opt_strength_reduction off
-void dScMgCurling2_c::NextThrow()
-{
+void dScMgCurling2_c::NextThrow() {
     int i;
     AgeMarks();
     if (mStateTimer != 0) {
         mStateTimer -= 1;
-        if (*(s16 *)&mStateTimer <= 0) mStateTimer = 0;
+        if (*(s16 *)&mStateTimer <= 0)
+            mStateTimer = 0;
         return;
     }
     mState = 1;
@@ -1559,18 +1552,16 @@ void dScMgCurling2_c::NextThrow()
 }
 #pragma pop
 
-
 // @symbol _ZN15dScMgCurling2_c4PlayEv
 /* Behavior state 1: one frame of play. Enable the prompt on the first
  * pass, tick the sound throttle, run the drag-state handler, then step
  * every live stone through its own state handler (prev position latched
  * first, hit timer ticked). When all eleven are at rest, hand off to
  * NextThrow with the usual 0x40 delay. */
-void dScMgCurling2_c::Play()
-{
+void dScMgCurling2_c::Play() {
     char *c = (char *)this;
     if (mStateTimer != 0) {
-        u16* q = &mStateTimer;
+        u16 *q = &mStateTimer;
         *q = *q - 1;
         return;
     }
@@ -1580,39 +1571,39 @@ void dScMgCurling2_c::Play()
         mPromptBlinkTimer = 0;
     }
     if (sndCooldown != 0) {
-        u8* q = (u8*)(c + 0x55bd);
+        u8 *q = (u8 *)(c + 0x55bd);
         *q = *q - 1;
     }
-    (((C*)c)->*data_ov006_02141978[mDragState])();
+    (((C *)c)->*sCurling2DragTable[mDragState])();
 
     {
         int count = 0;
         int i = 0;
-        char* p = c;
+        char *p = c;
         for (; i < 0xb; i++, p += 0x30) {
-            if (*(u8*)(p + 0x4689) != 0) {
-                *(int*)(p + 0x466c) = *(int*)(p + 0x4660);
-                *(int*)(p + 0x4670) = *(int*)(p + 0x4664);
-                if (*(u16*)(p + 0x4680) != 0) {
-                    u16* q = (u16*)(p + 0x4680);
+            if (*(u8 *)(p + 0x4689) != 0) {
+                *(int *)(p + 0x466c) = *(int *)(p + 0x4660);
+                *(int *)(p + 0x4670) = *(int *)(p + 0x4664);
+                if (*(u16 *)(p + 0x4680) != 0) {
+                    u16 *q = (u16 *)(p + 0x4680);
                     *q = *q - 1;
                 }
-                (((C*)c)->*data_ov006_021419d8[*(u8*)(p + 0x4688)])(i);
-                if (*(u8*)(p + 0x4688) != 2) count++;
+                (((C *)c)->*sCurling2StoneTable[*(u8 *)(p + 0x4688)])(i);
+                if (*(u8 *)(p + 0x4688) != 2)
+                    count++;
             }
         }
-        if (count != 0) return;
+        if (count != 0)
+            return;
     }
     mState = 2;
     mStateTimer = 0x40;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10BeginRoundEv
 /* Behavior state 0: (re)start a round -- full game reset, arm the spawn
  * slot, deal the first stone, then play. */
-void dScMgCurling2_c::BeginRound()
-{
+void dScMgCurling2_c::BeginRound() {
     ResetGame();
     spawning = 1;
     mSpawnTimer = 0;
@@ -1621,13 +1612,11 @@ void dScMgCurling2_c::BeginRound()
     mState = 1;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c6ScrollEv
 /* Pick the rink's scroll mode: 0xff in scrollIdx forces mode 0, otherwise
  * a random mode different from the current one. Apply the mode's BG2/BG0
  * offsets and set the BG0 flag in data_0209d45c unless the mode is 0. */
-void dScMgCurling2_c::Scroll()
-{
+void dScMgCurling2_c::Scroll() {
     int idx;
 
     if (scrollIdx == 0xff) {
@@ -1638,15 +1627,16 @@ void dScMgCurling2_c::Scroll()
             int t = ((u32)RandomIntInternal(&data_0209d4b8) >> 16 & 0x7fff) * 3 >> 15;
             t += 1;
             idx += t;
-            if (idx >= 4) idx -= 4;
+            if (idx >= 4)
+                idx -= 4;
         }
         scrollIdx = idx;
     }
 
-    bg2x = data_ov006_0212e534[scrollIdx * 2];
-    bg2y = data_ov006_0212e554[scrollIdx * 2];
-    bg0x = data_ov006_0212e534[scrollIdx * 2 + 1];
-    bg0y = data_ov006_0212e554[scrollIdx * 2 + 1];
+    bg2x = sCurling2ScrollX[scrollIdx * 2];
+    bg2y = sCurling2ScrollY[scrollIdx * 2];
+    bg0x = sCurling2ScrollX[scrollIdx * 2 + 1];
+    bg0y = sCurling2ScrollY[scrollIdx * 2 + 1];
 
     SetBg2Offset(0x80 - bg2x, 0x80 - bg2y);
 
@@ -1658,76 +1648,68 @@ void dScMgCurling2_c::Scroll()
     data_0209d45c |= 1;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c11ResetScrollEv
 /* Mark the scroll mode unset so Scroll repicks it. */
-void dScMgCurling2_c::ResetScroll()
-{
+void dScMgCurling2_c::ResetScroll() {
     scrollIdx = 0xff;
 }
-
 
 // @symbol _ZN15dScMgCurling2_c9ResetGameEv
 /* Clear the stones, the score marks and every game variable back to a
  * fresh round, then clear the collision values. */
-void dScMgCurling2_c::ResetGame()
-{
+void dScMgCurling2_c::ResetGame() {
     char *c = (char *)this;
     int i;
     char *r = c;
-    for (i = 0; i < 0xb; i++)
-    {
-        *((int *) (r + 0x4660)) = 0;
-        *((int *) (r + 0x4664)) = 0;
-        *((int *) (r + 0x4668)) = 0;
-        *((int *) (r + 0x466c)) = 0;
-        *((int *) (r + 0x4670)) = 0;
-        *((int *) (r + 0x467c)) = 0;
-        *((short *) (r + 0x4682)) = 0;
-        *((short *) (r + 0x4684)) = 0;
-        *((short *) (r + 0x4686)) = 0;
-        *((unsigned char *) (r + 0x4688)) = 0;
-        *((unsigned char *) (r + 0x4689)) = 0;
-        *((unsigned char *) (r + 0x468a)) = 0;
+    for (i = 0; i < 0xb; i++) {
+        *((int *)(r + 0x4660)) = 0;
+        *((int *)(r + 0x4664)) = 0;
+        *((int *)(r + 0x4668)) = 0;
+        *((int *)(r + 0x466c)) = 0;
+        *((int *)(r + 0x4670)) = 0;
+        *((int *)(r + 0x467c)) = 0;
+        *((short *)(r + 0x4682)) = 0;
+        *((short *)(r + 0x4684)) = 0;
+        *((short *)(r + 0x4686)) = 0;
+        *((unsigned char *)(r + 0x4688)) = 0;
+        *((unsigned char *)(r + 0x4689)) = 0;
+        *((unsigned char *)(r + 0x468a)) = 0;
         r += 0x30;
     }
 
-    for (i = 0; i < 5; i++)
-    {
-        char *q = c + (i * ((unsigned long) 0x10));
-        *((int *) (q + 0x4870)) = 0;
-        *((int *) (q + 0x4874)) = 0;
-        *((short *) (q + 0x4878)) = 0;
-        *((short *) (q + 0x487a)) = 0;
-        *((unsigned char *) (q + 0x487c)) = 0;
-        *((unsigned char *) (q + 0x487d)) = 0;
+    for (i = 0; i < 5; i++) {
+        char *q = c + (i * ((unsigned long)0x10));
+        *((int *)(q + 0x4870)) = 0;
+        *((int *)(q + 0x4874)) = 0;
+        *((short *)(q + 0x4878)) = 0;
+        *((short *)(q + 0x487a)) = 0;
+        *((unsigned char *)(q + 0x487c)) = 0;
+        *((unsigned char *)(q + 0x487d)) = 0;
     }
 
-    *((short *) (c + 0x55b4)) = 0;
-    *((unsigned char *) (c + 0x55ba)) = 0;
+    *((short *)(c + 0x55b4)) = 0;
+    thrown = 0;
     mDragX = 0;
     mDragY = 0;
     mGrabOffsetX = 0;
     mGrabOffsetY = 0;
     mThrowSpeed = 0;
-    *((short *) (c + 0x55b2)) = 0;
-    *((unsigned char *) (c + 0x55b8)) = 0;
-    *((unsigned char *) (c + 0x55b9)) = 0;
-    *((unsigned char *) (c + 0x55bb)) = 0;
-    *((unsigned char *) (c + 0x55bc)) = 0;
-    *((short *) (c + 0x55b6)) = 0;
-    *((short *) (c + 0x55b0)) = 0;
-    *((unsigned char *) (c + 0x55bd)) = 0;
+    *((short *)(c + 0x55b2)) = 0;
+    mDragState = 0;
+    mCursorVisible = 0;
+    spawning = 0;
+    gameOver = 0;
+    *((short *)(c + 0x55b6)) = 0;
+    *((short *)(c + 0x55b0)) = 0;
+    sndCooldown = 0;
     Mg_SubmitScore(0);
     ClearValues();
 }
 
-
 // @symbol _ZN15dScMgCurling2_c10StartRoundEi
 /* Slot 18. Yoshi ate the puck: restart the round and re-arm the screen
  * blend and the frame counter. */
-void dScMgCurling2_c::StartRound(int /* arg */)
-{
+void dScMgCurling2_c::StartRound(int /* arg */) {
     mState = 0;
     ResetGame();
     Scroll();
@@ -1736,12 +1718,10 @@ void dScMgCurling2_c::StartRound(int /* arg */)
     mTopRecord = Mg_GetTopRecord();
 }
 
-
 // @symbol _ZN15dScMgCurling2_c6RenderEv
 /* Slot 9. Per-frame draw: score marks, the throws counter, stones,
  * collision values, pieces and the drag cursor. */
-s32 dScMgCurling2_c::Render()
-{
+s32 dScMgCurling2_c::Render() {
     Mg_DrawTopLeftCounter((void *)Mg_GetTopRecord());
     DrawMarks();
     DrawCounter();
@@ -1752,34 +1732,31 @@ s32 dScMgCurling2_c::Render()
     return 1;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c8BehaviorEv
-/* Slot 6. One state-handler call through data_ov006_02141a18, then the
+/* Slot 6. One state-handler call through sCurling2BehaviorTable, then the
  * falling pieces and the collision values. */
-s32 dScMgCurling2_c::Behavior()
-{
+s32 dScMgCurling2_c::Behavior() {
     C *c = (C *)this;
-    (c->*data_ov006_02141a18[mState])();
+    (c->*sCurling2BehaviorTable[mState])();
     StepPieces();
     AgeValues();
     return 1;
 }
 
-
 // @symbol _ZN15dScMgCurling2_c13InitResourcesEv
 /* Slot 0. Load the rink and stone graphics for both engines, decompress
  * the board layouts, set up the blends, then reset into the first round
  * with a 0x40 state delay. */
-s32 dScMgCurling2_c::InitResources()
-{
-    char *r6 = (char *)Ov004_LoadFileByPath(&data_ov006_0213c5a0);
+s32 dScMgCurling2_c::InitResources() {
+    char *r6 = (char *)Ov004_LoadFileByPath(&sCurling2BgJokyuNcgPath);
     void *f;
     void *c7;
     void *c8;
     volatile u16 sp4;
     volatile u16 sp6;
 
-    if (r6 == 0) return 0;
+    if (r6 == 0)
+        return 0;
 
     data_0209d45c |= 8;
     *(volatile u16 *)0x400000e = (*(volatile u16 *)0x400000e & ~3) | 2;
@@ -1859,56 +1836,50 @@ s32 dScMgCurling2_c::InitResources()
     return 1;
 }
 
-
 /* Reconstructed source-style name: SM64DS proves the dScMgCurling2_c RTTI
  * identity, MG_CURLING_J registry ID, base-profile/factory relationship,
  * allocation size, and vtable identity; later EAD lineage supplies the
  * classInit spelling prior. Exact original SM64DS spelling is not preserved.
  * Historical project alias: func_ov006_020e6bf4. */
-extern "C" void *dScMgCurling2_c_classInit()
-{
+extern "C" void *dScMgCurling2_c_classInit() {
     return new dScMgCurling2_c;
 }
-
 
 /* Static-init globals (was the handwritten __sinit_ov006_02130758 shard).
  * All seven PMF state tables plain-copied from the ROM PMF constants, in
  * retail copy order. */
-PMF0 data_ov006_02141a18[5] = {
-    pmf_dScMgCurling2_c_BeginRound,
-    pmf_dScMgCurling2_c_Play,
-    pmf_dScMgCurling2_c_NextThrow,
-    pmf_dScMgCurling2_c_EndRound,
-    pmf_dScMgCurling2_c_Idle,
+PMF0 sCurling2BehaviorTable[5] = {
+    pmf_dScMgCurling2_c_BeginRound, pmf_dScMgCurling2_c_Play, pmf_dScMgCurling2_c_NextThrow,
+    pmf_dScMgCurling2_c_EndRound,   pmf_dScMgCurling2_c_Idle,
 };
-PMF1 data_ov006_021419d8[4] = {
+PMF1 sCurling2StoneTable[4] = {
     pmf_dScMgCurling2_c_StoneWait,
     pmf_dScMgCurling2_c_StoneSlide,
     pmf_dScMgCurling2_c_StoneRest,
     pmf_dScMgCurling2_c_StoneSteer,
 };
-PMF0 data_ov006_02141978[2] = {
+PMF0 sCurling2DragTable[2] = {
     pmf_dScMgCurling2_c_DragBegin,
     pmf_dScMgCurling2_c_DragUpdate,
 };
-PMF data_ov006_02141988[3] = {
+PMF sCurling2StepModeTable[3] = {
     pmf_dScMgCurling2_c_PickStepMode,
     pmf_dScMgCurling2_c_StepXOnly,
     pmf_dScMgCurling2_c_StepXAndY,
 };
-PMF data_ov006_021419b8[4] = {
+PMF sCurling2StepXFastTable[4] = {
     pmf_dScMgCurling2_c_StepXPickFast,
     pmf_dScMgCurling2_c_StepXPushPosFast,
     pmf_dScMgCurling2_c_StepXPushNegFast,
     pmf_dScMgCurling2_c_StepXSettleFast,
 };
-PMF data_ov006_021419f8[4] = {
+PMF sCurling2StepXTable[4] = {
     pmf_dScMgCurling2_c_StepXPick,
     pmf_dScMgCurling2_c_StepXPushPos,
     pmf_dScMgCurling2_c_StepXPushNeg,
     pmf_dScMgCurling2_c_StepXSettle,
 };
-PMF data_ov006_021419a0[3] = {
+PMF sCurling2StepYTable[3] = {
     pmf_dScMgCurling2_c_StepYRestart,
     pmf_dScMgCurling2_c_StepYRampUp,
     pmf_dScMgCurling2_c_StepYRampDown,

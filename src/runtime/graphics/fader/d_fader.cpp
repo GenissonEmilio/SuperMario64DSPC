@@ -25,9 +25,11 @@
  *   header owns them.
  */
 #include "types.h"
+#include "nitro/fx/fx.h"
 #include "dFdWipe_c.h"
 #include "dFdDummy_c.h"
 #include "decl_common.h"
+#include "ModelBase.h"
 
 extern "C" {
 Fix12i _ZN4cstd4fdivEii(Fix12i a, Fix12i b);
@@ -40,7 +42,6 @@ void _ZN3G2x18SetBlendBrightnessEPVtts(volatile u16 *p, u16 a, int b);
 void Matrix4x3_FromTranslation(void *m, int x, int y, int z);
 void Matrix4x3_ApplyInPlaceToScale(void *m, Fix12i x, Fix12i y, Fix12i z);
 void Matrix4x3_ApplyInPlaceToRotationX(void *m, short ang);
-void _ZN15ModelComponents6RenderEP9Matrix4x3P7Vector3(void *thiz, void *mtx, void *vec);
 }
 struct Matrix4x3;
 extern Matrix4x3 data_020a0e68;
@@ -222,11 +223,11 @@ void dFdWipe_c::AdvanceFade()
             if (old != 0x1000) *(u16*)0x4000050 = 0;
         }
         if (*(Fix12i*)((char*)&currInterp) != 0) {
-            Fix12i scale = (Fix12i)(((long long)(0x1000 - *(Fix12i*)((char*)&currInterp)) * 0x20000 + 0x800) >> 12);
+            Fix12i scale = FX_MUL(0x1000 - *(Fix12i *)((char *)&currInterp), 0x20000);
             Matrix4x3_FromTranslation(&data_020a0e68, 0, 0, -0x1000);
             Matrix4x3_ApplyInPlaceToScale(&data_020a0e68, scale, scale, scale);
             Matrix4x3_ApplyInPlaceToRotationX(&data_020a0e68, 0x4000);
-            _ZN15ModelComponents6RenderEP9Matrix4x3P7Vector3(((char*)this) + 0x18, &data_020a0e68, 0);
+            ((ModelComponents *)(((char *)this) + 0x18))->Render(&data_020a0e68, 0);
         }
     }
     if (*(Fix12i*)((char*)&currInterp) == old) return;

@@ -33,26 +33,11 @@ enum daObjCtMecha05_c_AssetId {
 
 #include "common.h"
 #include "daObjCtMecha05_c.h"
+#include "SpawnInfo.h"
 #include "dBgCh_Gnd.h"
 #include "SharedFilePtr.h"
 #include "dBgW.h"
-
-/* Actor/process profile descriptor at ov065:0x0211d290. Field roles are
- * recovered from fBase_c/dActor_c consumers; exact original member spellings
- * are not preserved. */
-struct CtMecha05SpawnInfo {
-    daObjCtMecha05_c *(*classInit)();
-    s16 profileIDAndExecuteOrder;
-    s16 drawOrder;
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-
-typedef char CtMecha05SpawnInfo_size_must_be_0x1c[
-    sizeof(CtMecha05SpawnInfo) == 0x1c ? 1 : -1];
+#include "nitro/fx/fx.h"
 
 /* File-scope objects at the end of this file construct the two resource
  * handles (model file 0x5c2, collision file 0x5c3). mwcc emits
@@ -112,9 +97,9 @@ extern CLPS_Block data_ov035_02112258;
 }
 
 /* CT_MECHA05 is the literal ROM registry ID. The g_profile spelling is a
- * lineage-supported reconstruction. */
+ * lineage-supported reconstruction. The descriptor is at ov065:0x0211d290. */
 extern "C" daObjCtMecha05_c *daObjCtMecha05_c_classInit();
-extern "C" CtMecha05SpawnInfo g_profile_CT_MECHA05 = {
+extern "C" SpawnInfo<daObjCtMecha05_c> g_profile_CT_MECHA05 = {
     daObjCtMecha05_c_classInit,
     0x0071,
     0x00ec,
@@ -182,11 +167,9 @@ int daObjCtMecha05_c::Behavior()
         int ang;
         /* ldrh, not the ldrsh a plain s16 mPrevAngleY read would emit. */
         ang = *(u16 *)&mPrevAngleY;
-        mPosX = mHomePosX +
-            (int)(((long long)data_02082214[(ang >> 4) << 1] * 0xfa000 + 0x800) >> 12);
+        mPosX = mHomePosX + FX_MUL(data_02082214[(ang >> 4) << 1], 0xfa000);
         ang = *(u16 *)&mPrevAngleY;
-        mPosZ = mHomePosZ +
-            (int)(((long long)data_02082214[((ang >> 4) << 1) + 1] * 0xfa000 + 0x800) >> 12);
+        mPosZ = mHomePosZ + FX_MUL(data_02082214[((ang >> 4) << 1) + 1], 0xfa000);
         UpdateModelPosAndRotY();
         func_ov065_0211ac0c(this);
         if (_ZN10dBgActor_c13IsClsnInRangeE5Fix12IiES1_(this, 0, 0) != 0)
@@ -225,7 +208,7 @@ int daObjCtMecha05_c::Behavior()
     case 2: {
         int d = mTravel;
         if (d != 0xfa000) {
-            int val = (int)(((long long)(0xfa000 - d) * (0xfa000 - mPrevTravel) + 0x800) >> 12);
+            int val = FX_MUL((0xfa000 - d), (0xfa000 - mPrevTravel));
             if (val >= 0) goto L280;
         }
         {
@@ -242,17 +225,19 @@ int daObjCtMecha05_c::Behavior()
             int m = (mTravel < 0xfa000) ? 0x6666 : -0x6666;
             int sp = mHorzSpeed;
             int delta;
-            if ((int)(((long long)sp * m + 0x800) >> 12) >= 0)
+            if (FX_MUL(sp, m) >= 0)
                 delta = m;
             else
-                delta = (int)(((long long)m * 0x2599 + 0x800) >> 12);
+                delta = FX_MUL(m, 0x2599);
             mHorzSpeed += delta;
             if (data_0209f2c0 != 2) goto Lend;
         }
-        if ((int)(((long long)mTravel * mPrevTravel + 0x800) >> 12) >= 0) goto Lend;
-        if ((RandomIntInternal(&data_0209e650) & 3) != 0) goto Lend;
-        func_ov065_0211ad70(this);
-        goto Lend;
+            if (FX_MUL(mTravel, mPrevTravel) >= 0)
+                goto Lend;
+            if ((RandomIntInternal(&data_0209e650) & 3) != 0)
+                goto Lend;
+            func_ov065_0211ad70(this);
+            goto Lend;
     }
 
     case 3:
@@ -341,7 +326,7 @@ void func_ov065_0211ac0c(daObjCtMecha05_c *actor)
 
     Matrix4x3_FromRotationY(&actor->mShadowMatrix, actor->mAngleY);
     MulVec3Mat4x3(&offset, &actor->mShadowMatrix, &shadowPos);
-    AddVec3(&shadowPos, (Vector3 *)&actor->mPosX, &shadowPos);
+    AddVec3(&shadowPos, &actor->mPos, &shadowPos);
 
     actor->mShadowMatrix.m[9] = shadowPos.x >> 3;
     actor->mShadowMatrix.m[10] = actor->mGroundY >> 3;

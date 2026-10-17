@@ -14,6 +14,7 @@
 #include "dBgCh_Gnd.h"
 #include "dBgCh_SphCrr.h"
 #include "dBgPi.h"
+#include "nitro/fx/fx.h"
 
 extern "C" {
 /* This TU's own free helpers, called from the members below. */
@@ -42,8 +43,10 @@ void func_020396d0(int *p, int v);
 /* Collision-query plumbing shared with the SphCrr/Gnd/Lin checkers. */
 void func_02035394(void *dst, void *src);
 /* local extern: the radius is Fix12 by value, so the call spells the symbol. */
-void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(
-    dBgCh_SphCrr *sphere, const Vector3 *pos, Fix12i radius, dActor_c *actor);
+void _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(dBgCh_SphCrr *sphere,
+                                                                      const Vector3 *localCentre,
+                                                                      Fix12i radius,
+                                                                      dActor_c *actor);
 
 extern dBgCh_Lin data_020a0d0c;
 extern Vector3 data_020a0d60;
@@ -58,7 +61,6 @@ extern Matrix4x3 data_020a0e68;
 struct RawMatrix4x3 {
     s32 m[12];
 };
-typedef struct RawMatrix4x3 RawMatrix4x3;
 
 struct RawVector3 {
     s32 x, y, z;
@@ -66,25 +68,20 @@ struct RawVector3 {
 
 // @symbol _ZN10dBgW_KcMbgC1Ev
 // @symbol _ZN10dBgW_KcMbgC2Ev
-dBgW_KcMbg::dBgW_KcMbg()
-{
-}
+dBgW_KcMbg::dBgW_KcMbg() {}
 
 // @symbol _ZN10dBgW_KcMbgD2Ev
 // @symbol _ZN10dBgW_KcMbgD0Ev
 // @symbol _ZN10dBgW_KcMbgD1Ev
-dBgW_KcMbg::~dBgW_KcMbg()
-{
-}
+dBgW_KcMbg::~dBgW_KcMbg() {}
 
 // @symbol _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block
 /* Scalar ABI boundary: the shared SetFile declaration takes Fix12<int> by
  * value. This C++ body retains its existing scalar entry and C symbol.
  * The scratch aggregate holds two complete matrices and the local up axis.
  */
-extern "C" void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(void *collider, void *file, const Matrix4x3 *transform, int uniformScale, short angle, void *clps)
-{
-    char *colliderBytes = (char *) collider;
+extern "C" void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
+    void *collider, void *file, const Matrix4x3 *mtx, int scale, short angY, void *clps) {
     dBgW_KcMbg *self = (dBgW_KcMbg *)collider;
     struct Scratch {
         RawMatrix4x3 rotation;
@@ -92,47 +89,44 @@ extern "C" void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_
         RawVector3 up;
     } scratch;
     self->dBgW_Kc::SetFile((KCL_File *)file, *(CLPS_Block *)clps);
-    func_02039624(colliderBytes);
-    self->scale = uniformScale;
-    *(RawMatrix4x3 *) &self->mat = *(RawMatrix4x3 *) transform;
-    *(RawMatrix4x3 *) &self->invMat = *(RawMatrix4x3 *) &self->mat;
+    func_02039624((char *)collider);
+    self->scale = scale;
+    *(RawMatrix4x3 *)&self->mat = *(RawMatrix4x3 *)mtx;
+    *(RawMatrix4x3 *)&self->invMat = *(RawMatrix4x3 *)&self->mat;
     InvMat4x3(&self->invMat, &self->invMat);
-    self->angY = angle;
+    self->angY = angY;
     self->angVelY = 0;
-    self->pos.x = transform->t.x;
-    self->pos.y = transform->t.y;
-    self->pos.z = transform->t.z;
-    self->velocity.x = (self->velocity.y = (self->velocity.z = 0));
+    self->pos.x = mtx->t.x;
+    self->pos.y = mtx->t.y;
+    self->pos.z = mtx->t.z;
+    self->velocity.x = self->velocity.y = self->velocity.z = 0;
     scratch.rotation = *(RawMatrix4x3 *)&self->mat;
     scratch.rotation.m[9] = 0;
     scratch.rotation.m[10] = 0;
     scratch.rotation.m[11] = 0;
-    *(RawMatrix4x3 *) &self->invRotMat = scratch.rotation;
+    *(RawMatrix4x3 *)&self->invRotMat = scratch.rotation;
     InvMat4x3(&self->invRotMat, &self->invRotMat);
-    self->invScale = func_02053200(uniformScale);
-    *(RawMatrix4x3 *) &data_020a0e68 = *(RawMatrix4x3 *) transform;
+    self->invScale = func_02053200(scale);
+    *(RawMatrix4x3 *)&data_020a0e68 = *(RawMatrix4x3 *)mtx;
     Matrix4x3_ApplyInPlaceToScale(&data_020a0e68, self->scale, self->scale, self->scale);
-    scratch.scaled = *(RawMatrix4x3 *) &data_020a0e68;
-    *(RawMatrix4x3 *) &self->newScaledMat = *(RawMatrix4x3 *) &data_020a0e68;
-    *(RawMatrix4x3 *) &self->invScaledMat = scratch.scaled;
+    scratch.scaled = *(RawMatrix4x3 *)&data_020a0e68;
+    *(RawMatrix4x3 *)&self->newScaledMat = *(RawMatrix4x3 *)&data_020a0e68;
+    *(RawMatrix4x3 *)&self->invScaledMat = scratch.scaled;
     InvMat4x3(&self->invScaledMat, &self->invScaledMat);
-    *(RawMatrix4x3 *) &self->prevInvScaledMat = *(RawMatrix4x3 *) &self->invScaledMat;
-    *(RawMatrix4x3 *) &self->scaledMat = scratch.scaled;
+    *(RawMatrix4x3 *)&self->prevInvScaledMat = *(RawMatrix4x3 *)&self->invScaledMat;
+    *(RawMatrix4x3 *)&self->scaledMat = scratch.scaled;
     scratch.up.x = 0;
     scratch.up.y = 0x1000;
     scratch.up.z = 0;
     func_02039e18(self, (Vector3 *)&scratch.up, (Vector3 *)&self->unk_28);
-    *(u8 *)&self->unk_130 = 0;
+    self->filterByMoveDir = false;
 }
 
 // @symbol _ZN10dBgW_KcMbg9Virtual08Ev
-void dBgW_KcMbg::Virtual08()
-{
-}
+void dBgW_KcMbg::Virtual08() {}
 
 // @symbol _ZN10dBgW_KcMbg9TransformERK9Matrix4x3s
-void dBgW_KcMbg::Transform(const Matrix4x3 &mtx, s16 angle)
-{
+void dBgW_KcMbg::Transform(const Matrix4x3 &mtx, s16 angle) {
     *(RawMatrix4x3 *)&invMat = *(RawMatrix4x3 *)&mat;
     InvMat4x3(&invMat, &invMat);
 
@@ -167,24 +161,27 @@ void dBgW_KcMbg::Transform(const Matrix4x3 &mtx, s16 angle)
     InvMat4x3(&invScaledMat, &invScaledMat);
 
     RawVector3 up;
-    up.x = 0; up.y = 0x1000; up.z = 0;
+    up.x = 0;
+    up.y = 0x1000;
+    up.z = 0;
     func_02039e18(this, (Vector3 *)&up, (Vector3 *)&unk_28);
 
-    /* The ROM treats the first byte at 0x130 as the enable flag. Keep the
-     * shared header's layout-neutral u32 spelling until its 800+ consumers can
-     * be migrated as a dedicated header change. */
-    if (*(u8 *)&unk_130 == 0) return;
+    if (!filterByMoveDir)
+        return;
 
-    RawVector3 horizontalVelocity;
-    GetVelocity(*(Vector3 *)&horizontalVelocity);
-    horizontalVelocity.y = 0;
-    if (LenVec3((Vector3 *)&horizontalVelocity) != 0) {
+    /* Aim dBgW_Kc's face filter along the horizontal motion: unk_35 on,
+       unk_38 the direction in collider space, unk_44 its threshold. A
+       collider that is not moving sideways sets unk_34 instead. */
+    RawVector3 moveDir;
+    GetVelocity(*(Vector3 *)&moveDir);
+    moveDir.y = 0;
+    if (LenVec3((Vector3 *)&moveDir) != 0) {
         func_01ffb0a4(this);
-        NormalizeVec3((Vector3 *)&horizontalVelocity, (Vector3 *)&horizontalVelocity);
-        RawVector3 localDirection;
-        func_02039e18(this, (Vector3 *)&horizontalVelocity, (Vector3 *)&localDirection);
-        func_01ffb07c(this, (Vector3 *)&localDirection);
-        func_020396d0((int*)this, 0xe66);
+        NormalizeVec3((Vector3 *)&moveDir, (Vector3 *)&moveDir);
+        RawVector3 localDir;
+        func_02039e18(this, (Vector3 *)&moveDir, (Vector3 *)&localDir);
+        func_01ffb07c(this, (Vector3 *)&localDir);
+        func_020396d0((int *)this, 0xe66);
         func_01ffb0b0(this);
     } else {
         func_01ffb0bc(this);
@@ -192,8 +189,7 @@ void dBgW_KcMbg::Transform(const Matrix4x3 &mtx, s16 angle)
 }
 
 // @symbol _ZN10dBgW_KcMbg9GetNormalEsR7Vector3
-void dBgW_KcMbg::GetNormal(s16 triID, Vector3 &res)
-{
+void dBgW_KcMbg::GetNormal(s16 triID, Vector3 &res) {
     KCL_File *mesh = kclFile;
     u16 normalIndex = mesh->tris[triID].normalIdx;
     s16 *packedNormal = mesh->normals[normalIndex];
@@ -205,8 +201,7 @@ void dBgW_KcMbg::GetNormal(s16 triID, Vector3 &res)
 }
 
 // @symbol _ZN10dBgW_KcMbg17GetTriangleOriginEsR7Vector3
-void dBgW_KcMbg::GetTriangleOrigin(s16 triID, Vector3 &res)
-{
+void dBgW_KcMbg::GetTriangleOrigin(s16 triID, Vector3 &res) {
     KCL_File *mesh = kclFile;
     u16 positionIndex = mesh->tris[triID].posIdx;
     s32 *packedPosition = mesh->positions[positionIndex];
@@ -218,27 +213,23 @@ void dBgW_KcMbg::GetTriangleOrigin(s16 triID, Vector3 &res)
 }
 
 // @symbol func_02039e48
-extern "C" void func_02039e48(dBgW_KcMbg *self, Vector3 *position, Vector3 *result)
-{
+extern "C" void func_02039e48(dBgW_KcMbg *self, Vector3 *position, Vector3 *result) {
     MulVec3Mat4x3(position, &self->invScaledMat, result);
 }
 
 // @symbol func_02039e30
-extern "C" void func_02039e30(dBgW_KcMbg *self, Vector3 *position, Vector3 *result)
-{
+extern "C" void func_02039e30(dBgW_KcMbg *self, Vector3 *position, Vector3 *result) {
     MulVec3Mat4x3(position, &self->newScaledMat, result);
 }
 
 // @symbol func_02039e18
-extern "C" void func_02039e18(dBgW_KcMbg *self, Vector3 *direction, Vector3 *result)
-{
+extern "C" void func_02039e18(dBgW_KcMbg *self, Vector3 *direction, Vector3 *result) {
     MulVec3Mat4x3(direction, &self->invRotMat, result);
 }
 
 // @symbol func_02039db8
 /* Transform a direction by mat, leaving out the translation. */
-extern "C" void func_02039db8(dBgW_KcMbg *collider, Vector3 *direction, Vector3 *result)
-{
+extern "C" void func_02039db8(dBgW_KcMbg *collider, Vector3 *direction, Vector3 *result) {
     Matrix4x3 rotation;
     *(RawMatrix4x3 *)&rotation = *(RawMatrix4x3 *)&collider->mat;
     rotation.t.x = 0;
@@ -248,8 +239,7 @@ extern "C" void func_02039db8(dBgW_KcMbg *collider, Vector3 *direction, Vector3 
 }
 
 // @symbol _ZN10dBgW_KcMbg10DetectClsnER9dBgCh_Gnd
-int dBgW_KcMbg::DetectClsn(dBgCh_Gnd &ray)
-{
+int dBgW_KcMbg::DetectClsn(dBgCh_Gnd &ray) {
     Vector3 localStart;
     Vector3 probePos;
     Vector3 localEnd;
@@ -285,37 +275,33 @@ int dBgW_KcMbg::DetectClsn(dBgCh_Gnd &ray)
 // @symbol _ZN10dBgW_KcMbg10DetectClsnER12dBgCh_SphCrr
 #pragma opt_common_subs off
 
-#define FMUL(a, b) ((int)(((s64)(a) * (b) + 0x800) >> 12))
-
-int dBgW_KcMbg::DetectClsn(dBgCh_SphCrr &sphere)
-{
+int dBgW_KcMbg::DetectClsn(dBgCh_SphCrr &sphere) {
     Vector3 localCentre;
-    /* Keep the bounds in one plain workspace; Vector3 adds object lifetimes. */
-    struct CorrectionBounds {
-        s32 localMin[3], localMax[3];
-        s32 scaledMin[3], scaledMax[3];
+    /* The local query's broad-phase bounds, and the same bounds scaled back out. */
+    struct {
+        RawVector3 localMin, localMax;
+        RawVector3 scaledMin, scaledMax;
     } bounds;
     dBgCh_SphCrr localSphere;
     int hit;
 
     func_02039e48(this, &sphere.centre, &localCentre);
-    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(&localSphere, &localCentre,
-        FMUL(sphere.radius, invScale), 0);
-    localSphere.mWallRejectHalfExtent = FMUL(sphere.mWallRejectHalfExtent, invScale);
+    _ZN12dBgCh_SphCrr15SetObjAndSphereERK7Vector35Fix12IiEP8dActor_c(
+        &localSphere, &localCentre, FX_MUL(sphere.radius, invScale), 0);
+    localSphere.unk_0ec = FX_MUL(sphere.unk_0ec, invScale);
     localSphere.func_02037940(sphere.flags);
     func_02035394(&localSphere, &sphere);
     hit = dBgW_Kc::DetectClsn(localSphere);
     if (hit) {
-        /* Convert the local correction bounds back to the uniform scale. */
-        localSphere.func_02037a04((Vector3 *)bounds.localMin, (Vector3 *)bounds.localMax);
-        bounds.scaledMin[0] = FMUL(bounds.localMin[0], scale);
-        bounds.scaledMin[1] = FMUL(bounds.localMin[1], scale);
-        bounds.scaledMin[2] = FMUL(bounds.localMin[2], scale);
-        bounds.scaledMax[0] = FMUL(bounds.localMax[0], scale);
-        bounds.scaledMax[1] = FMUL(bounds.localMax[1], scale);
-        bounds.scaledMax[2] = FMUL(bounds.localMax[2], scale);
-        sphere.func_02037a6c(bounds.scaledMin[0], bounds.scaledMin[1], bounds.scaledMin[2],
-            bounds.scaledMax[0], bounds.scaledMax[1], bounds.scaledMax[2]);
+        localSphere.func_02037a04((Vector3 *)&bounds.localMin, (Vector3 *)&bounds.localMax);
+        bounds.scaledMin.x = FX_MUL(bounds.localMin.x, scale);
+        bounds.scaledMin.y = FX_MUL(bounds.localMin.y, scale);
+        bounds.scaledMin.z = FX_MUL(bounds.localMin.z, scale);
+        bounds.scaledMax.x = FX_MUL(bounds.localMax.x, scale);
+        bounds.scaledMax.y = FX_MUL(bounds.localMax.y, scale);
+        bounds.scaledMax.z = FX_MUL(bounds.localMax.z, scale);
+        sphere.func_02037a6c(bounds.scaledMin.x, bounds.scaledMin.y, bounds.scaledMin.z,
+                             bounds.scaledMax.x, bounds.scaledMax.y, bounds.scaledMax.z);
         (dBgPi &)sphere = (dBgPi &)localSphere;
         sphere.flags |= 1;
         if (localSphere.flags & 4) {
@@ -325,8 +311,8 @@ int dBgW_KcMbg::DetectClsn(dBgCh_SphCrr &sphere)
                 sphere.SetFloorResult(localSphere.mClsnResult1);
             }
             sphere.flags |= 4;
-            if (sphere.mFloorNormalY < localSphere.mFloorNormalY) {
-                sphere.func_0203794c(&localSphere.mFloorNormalX);
+            if (sphere.unk_100 < localSphere.unk_100) {
+                sphere.func_0203794c(&localSphere.unk_0fc);
             }
         }
         if (localSphere.flags & 8) {
@@ -344,8 +330,7 @@ int dBgW_KcMbg::DetectClsn(dBgCh_SphCrr &sphere)
 #pragma opt_common_subs on
 
 // @symbol _ZN10dBgW_KcMbg10DetectClsnER9dBgCh_Lin
-int dBgW_KcMbg::DetectClsn(dBgCh_Lin &ray)
-{
+int dBgW_KcMbg::DetectClsn(dBgCh_Lin &ray) {
     Vector3 start;
     Vector3 end;
     Vector3 worldPos;
@@ -373,23 +358,20 @@ int dBgW_KcMbg::DetectClsn(dBgCh_Lin &ray)
 
 // @symbol _ZN10dBgW_KcMbg12TransformPosERK7Vector3RS0_
 /* Out of the previous frame's space, into the current one. */
-int dBgW_KcMbg::TransformPos(const Vector3 &pos, Vector3 &res)
-{
+int dBgW_KcMbg::TransformPos(const Vector3 &localCentre, Vector3 &res) {
     Vector3 localPos;
-    MulVec3Mat4x3((Vector3 *)&pos, &invMat, &localPos);
+    MulVec3Mat4x3((Vector3 *)&localCentre, &invMat, &localPos);
     MulVec3Mat4x3(&localPos, &mat, &res);
     return 1;
 }
 
 // @symbol _ZN10dBgW_KcMbg14GetAngularVelYEv
-s16 dBgW_KcMbg::GetAngularVelY()
-{
+s16 dBgW_KcMbg::GetAngularVelY() {
     return angVelY;
 }
 
 // @symbol _ZN10dBgW_KcMbg11GetVelocityER7Vector3
-void dBgW_KcMbg::GetVelocity(Vector3 &res)
-{
+void dBgW_KcMbg::GetVelocity(Vector3 &res) {
     res.x = velocity.x;
     res.y = velocity.y;
     res.z = velocity.z;
@@ -400,7 +382,6 @@ void dBgW_KcMbg::GetVelocity(Vector3 &res)
  * velocity feedback. Called by actor code (Eyerok) once the collider starts
  * moving. Its address name and C linkage do not establish whether the
  * original source declared a free helper or a member. */
-extern "C" void func_020398fc(dBgW_KcMbg *self)
-{
-    *(u8 *)&self->unk_130 = 1;
+extern "C" void func_020398fc(dBgW_KcMbg *self) {
+    self->filterByMoveDir = true;
 }

@@ -58,6 +58,7 @@ enum d_a_obj_ice_block_AssetId {
 #include "SharedFilePtr.h"
 #include "dBgW.h"
 #include "Particle__System.h"
+#include "nitro/fx/fx.h"
 
 struct KCL_File;
 struct CLPS_Block;
@@ -154,7 +155,7 @@ s32 daObjIceBlock_c::Behavior()
             pos.x = mPosX;
             pos.y = mPosY;
             pos.z = mPosZ;
-            pos.y += (int)(((long long)mScale * kShardHeight + 0x800) >> 12);
+            pos.y += FX_MUL(mScale, kShardHeight);
 
             mParticleHandle1 = _ZN8Particle6System3NewEjj5Fix12IiES2_S2_PK11Vector3_16fPNS_8CallbackE(
                 mParticleHandle1, 0x77, pos.x, pos.y, pos.z, 0, 0);
@@ -180,7 +181,7 @@ s32 daObjIceBlock_c::Behavior()
     if (mCollider.otherOwner != 0) {
         if (mCollider.hitFlags & 0x40000) {       /* fire: start melting */
             mMeltTimer = kMeltFrames;
-            func_02012694(0x7a, (Vector3 *)&mCamSpacePosX);
+            func_02012694(0x7a, &mCamSpacePos);
             func_ov081_02127be0(this);
         }
         if (mCollider.hitFlags & 0x4000)          /* explosion: shatter */
@@ -225,7 +226,7 @@ void daObjIceBlock_c::Kill()
 {
     Vector3 pos;
     Vector3 dustPos;
-    Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank3(0x41, mCamSpacePos);
     int x = mPosX;
     int y = mPosY + kShardHeight;
     int z = mPosZ;
@@ -266,13 +267,13 @@ extern "C" void func_ov081_02127be0(daObjIceBlock_c *self)
         return;
 
     Vector3 pos;
-    Vector3 *starPos = (Vector3 *)&star->mPosX;
+    Vector3 *starPos = &star->mPos;
     u32 param1 = star->param1;
     pos.x = starPos->x;
     pos.y = starPos->y;
     pos.z = starPos->z;
 
-    Vector3_16 rot = *(Vector3_16 *)&self->mContainedActor->mAngleX;
+    Vector3_16 rot = self->mContainedActor->mAngle;
 
     self->mContainedActor->MarkForDestruction();
 

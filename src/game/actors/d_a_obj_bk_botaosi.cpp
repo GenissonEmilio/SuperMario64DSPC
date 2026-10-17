@@ -67,6 +67,7 @@ enum daObjBk_Botaosi_c_AssetId {
 #include "SharedFilePtr.h"
 #include "dBgW.h"
 #include "dBgCh_Gnd.h"
+#include "nitro/fx/fx.h"
 
 /* SharedFilePtr has no fields; the two words are the handle's 8 bytes. The
  * constructors and destructors are the ROM resource-family veneers, aliased
@@ -177,8 +178,7 @@ extern "C" void func_ov015_02111414(daObjBk_Botaosi_c *plank, dActor_c *other)
     if (plank->mState == 0)
         plank->mState++;
 
-    angle = Vec3_HorzAngle((const Vector3 *)&plank->mPosX,
-                           (const Vector3 *)&other->mPosX);
+    angle = Vec3_HorzAngle(&plank->mPos, &other->mPos);
     diff = AngleDiff(angle, plank->mAngleY);
     if (diff < 0x2000) {
         plank->mKnockDir = -1;
@@ -216,7 +216,7 @@ extern "C" void func_ov015_021114f0(daObjBk_Botaosi_c *plank)
     int lean = 0;
     int idx = (u16)plank->mAngleX >> 4;
     int sine = data_02082214[idx * 2];
-    int tilt = (int)(((s64)sine * 0x7d0000 + 0x800) >> 12);
+    int tilt = FX_MUL(sine, 0x7d0000);
     yaw = 0x8000;
     if (tilt <= 0) { yaw = yaw + 0x8000; tilt = -tilt; }
     lean = lean + tilt;
@@ -224,13 +224,13 @@ extern "C" void func_ov015_021114f0(daObjBk_Botaosi_c *plank)
     {
         int front = plank->mFrontPosX;
         int cosine = data_02082214[((u16)(s16)(plank->mAngleY + yaw) >> 4) * 2 + 1];
-        plank->mShadowMat.t.x = (front + (int)(((s64)cosine * (lean >> 1) + 0x800) >> 12)) >> 3;
+        plank->mShadowMat.t.x = (front + FX_MUL(cosine, (lean >> 1))) >> 3;
     }
     plank->mShadowMat.t.y = plank->mFrontPosY >> 3;
     {
         int front = plank->mFrontPosZ;
         int sine2 = data_02082214[((u16)(s16)(plank->mAngleY + yaw) >> 4) * 2];
-        plank->mShadowMat.t.z = (front + (int)(((s64)sine2 * (lean >> 1) + 0x800) >> 12)) >> 3;
+        plank->mShadowMat.t.z = (front + FX_MUL(sine2, (lean >> 1))) >> 3;
     }
     if (plank->mState >= 2)
         plank->mShadowMat.t.y = plank->mFrontFloorY >> 3;
@@ -285,7 +285,7 @@ int daObjBk_Botaosi_c::Behavior()
         int s = data_02082214[idx * 2];
         int amp = mKnockDir;
         int prod = amp * s;
-        int d = (int)(((long long)prod * mWobbleTimer + 0x800) >> 0xc);
+        int d = FX_MUL(prod, mWobbleTimer);
         mAngleX = d;
         if (mWobbleTimer <= 0) {
             mAngleX = 0;
@@ -313,7 +313,7 @@ int daObjBk_Botaosi_c::Behavior()
                 pos.z = mPosZ;
                 _ZN8dActor_c10EarthquakeERK7Vector35Fix12IiE(
                     this, &pos, 0x2000000);
-                Sound::PlayBank3(0x44, *(Vector3 *)&mCamSpacePosX);
+                Sound::PlayBank3(0x44, mCamSpacePos);
             }
         } else {
             mJumpSpeed += 0x2000;
@@ -333,7 +333,7 @@ int daObjBk_Botaosi_c::Behavior()
                 pos.z = mPosZ;
                 _ZN8dActor_c10EarthquakeERK7Vector35Fix12IiE(
                     this, &pos, 0x2000000);
-                Sound::PlayBank3(0x44, *(Vector3 *)&mCamSpacePosX);
+                Sound::PlayBank3(0x44, mCamSpacePos);
             }
         }
         break;
@@ -384,7 +384,7 @@ int daObjBk_Botaosi_c::InitResources()
 
     Matrix4x3_FromRotationY(&data_020a0e68, mAngleY);
     MulVec3Mat4x3(&a, &data_020a0e68, &b);
-    Vec3_Add(&c, &b, (Vector3 *)&mPosX);
+    Vec3_Add(&c, &b, &mPos);
     c.y += 0x14000;
     _ZN9dBgCh_GndC1Ev((dBgCh_Gnd *)rg);
     ((dBgCh_Gnd *)rg)->SetObjAndPos(c, 0);
@@ -397,7 +397,7 @@ int daObjBk_Botaosi_c::InitResources()
 
     Matrix4x3_FromRotationY(&data_020a0e68, mAngleY);
     MulVec3Mat4x3(&a, &data_020a0e68, &b);
-    Vec3_Add(&d, &b, (Vector3 *)&mPosX);
+    Vec3_Add(&d, &b, &mPos);
 
     one = 1;
     mFrontPosX = d.x;

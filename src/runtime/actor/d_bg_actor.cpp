@@ -23,7 +23,6 @@
  * - dActor_c::Earthquake / Particle::System::NewSimple stay TU-local mangled
  *   calls: Fix12<int> by value (6az); typed shared-header decls of them are
  *   overload poison (S13).
- * - (Vector3 *)&mPosX puns stay: dActor_c::Pos() does not exist yet (#2513).
  * - Player+0x5c stays an offset: Player is only forward-declared here, and
  *   naming three words is not worth pulling Player.h into a TU that has no
  *   other use for it.
@@ -93,11 +92,6 @@ extern Matrix4x3 data_020a0e68;
 extern "C" {
 int func_02035638(void *c);       /* ceiling hit */
 int func_0203567c(int c);         /* &mSphereClsn + 0x10: the hit record */
-int _ZNK10dBgCh_Actr8IsOnWallEv(void *c);
-int _ZNK10dBgCh_Actr10IsOnGroundEv(void *c);
-void *_ZNK10dBgCh_Actr13GetWallResultEv(void *c);
-void *_ZNK10dBgCh_Actr14GetFloorResultEv(void *c);
-int _ZNK5dBgPi9GetClsnIDEv(void *r);
 void _ZN5dBgPiD1Ev(void *r);
 void func_ov002_020d8838(void *actor);
 extern int data_02099368[];   /* dBgPi's vtable */
@@ -115,10 +109,10 @@ struct ClsnHitCopy {
 // @symbol func_ov002_020ef2a4
 extern "C" int func_ov002_020ef2a4(void *c, int arg)
 {
-    if (_ZNK10dBgCh_Actr10IsOnGroundEv(c)) {
-        void *res = _ZNK10dBgCh_Actr14GetFloorResultEv(c);
-        if (_ZNK5dBgPi9GetClsnIDEv(res) != -1) {
-            dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(res));
+    if (((dBgCh_Actr *)c)->IsOnGround()) {
+        void *res = ((dBgCh_Actr *)c)->GetFloorResult();
+        if (((dBgPi *)res)->GetClsnID() != -1) {
+            dActor_c *a = dActor_c::FindWithID(((dBgPi *)res)->GetClsnID());
             if (a != 0) {
                 a->OnGroundPounded(*(dActor_c *)arg);
                 return 1;
@@ -131,10 +125,10 @@ extern "C" int func_ov002_020ef2a4(void *c, int arg)
 // @symbol func_ov002_020ef228
 extern "C" int func_ov002_020ef228(void *c, int arg)
 {
-    if (_ZNK10dBgCh_Actr8IsOnWallEv(c)) {
-        void *res = _ZNK10dBgCh_Actr13GetWallResultEv(c);
-        if (_ZNK5dBgPi9GetClsnIDEv(res) != -1) {
-            dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(res));
+    if (((dBgCh_Actr *)c)->IsOnWall()) {
+        void *res = ((dBgCh_Actr *)c)->GetWallResult();
+        if (((dBgPi *)res)->GetClsnID() != -1) {
+            dActor_c *a = dActor_c::FindWithID(((dBgPi *)res)->GetClsnID());
             if (a != 0) {
                 a->OnAttacked1(*(dActor_c *)arg);
                 return 1;
@@ -190,8 +184,8 @@ extern "C" int func_ov002_020ef070(void *unused, char *actor)
             tmp.f1c = *(int *)((char *)&line + 0x2c);
             tmp.f20 = *(int *)((char *)&line + 0x30);
             tmp.f24 = *(int *)((char *)&line + 0x34);
-            if (_ZNK5dBgPi9GetClsnIDEv(&tmp) != -1) {
-                dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(&tmp));
+            if (((dBgPi *)&tmp)->GetClsnID() != -1) {
+                dActor_c *a = dActor_c::FindWithID(((dBgPi *)&tmp)->GetClsnID());
                 if (a) {
                     a->OnAttacked2(*(dActor_c *)actor);
                     _ZN5dBgPiD1Ev(&tmp);
@@ -261,9 +255,8 @@ extern "C" int func_ov002_020eeeb8(void *unused, char *actor)
             tmp.f20 = *(int *)((char *)&line + 0x30);
             tmp.f24 = *(int *)((char *)&line + 0x34);
 
-            if (_ZNK5dBgPi9GetClsnIDEv(&tmp) != -1) {
-                dActor_c *a = dActor_c::FindWithID(
-                    _ZNK5dBgPi9GetClsnIDEv(&tmp));
+            if (((dBgPi *)&tmp)->GetClsnID() != -1) {
+                dActor_c *a = dActor_c::FindWithID(((dBgPi *)&tmp)->GetClsnID());
                 if (a) {
                     a->OnKicked(*(dActor_c *)actor);
                     _ZN5dBgPiD1Ev(&tmp);
@@ -280,10 +273,10 @@ extern "C" int func_ov002_020eeeb8(void *unused, char *actor)
 // @symbol func_ov002_020eee3c
 extern "C" int func_ov002_020eee3c(void *c, int arg)
 {
-    if (_ZNK10dBgCh_Actr8IsOnWallEv(c)) {
-        void *res = _ZNK10dBgCh_Actr13GetWallResultEv(c);
-        if (_ZNK5dBgPi9GetClsnIDEv(res) != -1) {
-            dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(res));
+    if (((dBgCh_Actr *)c)->IsOnWall()) {
+        void *res = ((dBgCh_Actr *)c)->GetWallResult();
+        if (((dBgPi *)res)->GetClsnID() != -1) {
+            dActor_c *a = dActor_c::FindWithID(((dBgPi *)res)->GetClsnID());
             if (a != 0) {
                 a->OnPushed(*(dActor_c *)arg);
                 return 1;
@@ -296,10 +289,10 @@ extern "C" int func_ov002_020eee3c(void *c, int arg)
 // @symbol func_ov002_020eedc0
 extern "C" int func_ov002_020eedc0(void *c, int arg)
 {
-    if (_ZNK10dBgCh_Actr8IsOnWallEv(c)) {
-        void *res = _ZNK10dBgCh_Actr13GetWallResultEv(c);
-        if (_ZNK5dBgPi9GetClsnIDEv(res) != -1) {
-            dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(res));
+    if (((dBgCh_Actr *)c)->IsOnWall()) {
+        void *res = ((dBgCh_Actr *)c)->GetWallResult();
+        if (((dBgPi *)res)->GetClsnID() != -1) {
+            dActor_c *a = dActor_c::FindWithID(((dBgPi *)res)->GetClsnID());
             if (a != 0) {
                 a->OnHitByCannonBlastedChar(*(dActor_c *)arg);
                 return 1;
@@ -314,12 +307,10 @@ extern "C" int func_ov002_020eed24(void *c, void *arg)
 {
     void *r;
     dActor_c *a;
-    if (_ZNK10dBgCh_Actr8IsOnWallEv(c)
-        || _ZNK10dBgCh_Actr10IsOnGroundEv(c)
-        || func_02035638(c)) {
+    if (((dBgCh_Actr *)c)->IsOnWall() || ((dBgCh_Actr *)c)->IsOnGround() || func_02035638(c)) {
         r = (void *)func_0203567c((int)c);
-        if (_ZNK5dBgPi9GetClsnIDEv(r) != -1) {
-            a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(r));
+        if (((dBgPi *)r)->GetClsnID() != -1) {
+            a = dActor_c::FindWithID(((dBgPi *)r)->GetClsnID());
             if (a) {
                 a->OnHitByMegaChar(*(Player *)arg);
                 return 1;
@@ -334,8 +325,8 @@ extern "C" int func_ov002_020eeca8(void *c, int arg)
 {
     if (func_02035638(c)) {
         void *res = (void *)func_0203567c((int)c);
-        if (_ZNK5dBgPi9GetClsnIDEv(res) != -1) {
-            dActor_c *a = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(res));
+        if (((dBgPi *)res)->GetClsnID() != -1) {
+            dActor_c *a = dActor_c::FindWithID(((dBgPi *)res)->GetClsnID());
             if (a != 0) {
                 a->OnHitFromUnderneath(*(dActor_c *)arg);
                 return 1;
@@ -385,8 +376,8 @@ int func_ov002_020eea84(char *self, char *player)
         res.f1c = *(int *)(r + 0x1c);
         res.f20 = *(int *)(r + 0x20);
         res.f24 = *(int *)(r + 0x24);
-        if (_ZNK5dBgPi9GetClsnIDEv(&res) != -1) {
-            actor = dActor_c::FindWithID(_ZNK5dBgPi9GetClsnIDEv(&res));
+        if (((dBgPi *)&res)->GetClsnID() != -1) {
+            actor = dActor_c::FindWithID(((dBgPi *)&res)->GetClsnID());
             if (actor != 0 && (b = (int)(actor->actorID == 0x3a)) != 0) {
                 { int *s = (int *)(&((dActor_c *)player)->mPosX); v.x = s[0]; v.y = s[1]; v.z = s[2]; }
                 _ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(player, &v, 3, 0xc000, 1, 0, 1);
@@ -404,7 +395,7 @@ int func_ov002_020eea84(char *self, char *player)
             if (actor != 0 && (b = (int)(actor->actorID == 0x139)) != 0) {
                 { int *s = (int *)(&actor->mPosX); v2.x = s[0]; v2.y = s[1]; v2.z = s[2]; }
                 if (_ZN6Player4HurtERK7Vector3j5Fix12IiEjjj(player, &v2, 1, 0xc000, 1, 0, 1) != 0)
-                    Sound::PlayBank0(0xb5, *(Vector3 *)&actor->mCamSpacePosX);
+                    Sound::PlayBank0(0xb5, actor->mCamSpacePos);
                 return 1;
             }
         }
@@ -535,11 +526,11 @@ int dBgActor_c::UpdateKillByMegaChar(s16 angStepX, s16 angStepY, s16 angStepZ, F
     rayEnd.z = 0;
     Matrix4x3_FromRotationY(&data_020a0e68, mPrevAngleY);
     MulVec3Mat4x3(&probe, &data_020a0e68, &rayEnd);
-    Vec3_Add(&sum, (Vector3 *)&mPosX, &rayEnd);
+    Vec3_Add(&sum, &mPos, &rayEnd);
     rayEnd = sum;
 
     dBgCh_Lin ray;
-    ray.SetObjAndLine(*(Vector3 *)&mPosX, rayEnd, this);
+    ray.SetObjAndLine(mPos, rayEnd, this);
     if (ray.DetectClsn())
         mPrevAngleY += 0x8000;
     mAngleX += angStepX;
@@ -559,7 +550,7 @@ extern "C" {
 void func_ov002_020ee5d0(dBgActor_c *self, int pivotY)
 {
     Vector3 modelPos;
-    Vec3_Asr(&modelPos, (Vector3 *)&self->mPosX, 3);
+    Vec3_Asr(&modelPos, &self->mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, modelPos.x, modelPos.y, modelPos.z);
     Matrix4x3_ApplyInPlaceToTranslation(&data_020a0e68, 0, pivotY >> 3, 0);
     Matrix4x3_ApplyInPlaceToRotationZXYExt(&data_020a0e68,
@@ -592,7 +583,7 @@ void dBgActor_c::Kill()
     dustPos.y = pos.y;
     dustPos.z = pos.z;
     PoofDustAt(dustPos);
-    Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank3(0x41, mCamSpacePos);
     MarkForDestruction();
 }
 
@@ -612,7 +603,7 @@ void dBgActor_c::KillByMegaChar(Player &player)
     mTerminalVelocity = -0x3c000;
     mHorzSpeed = 0x14000;
     mVertSpeed = 0x1e000;
-    mPrevAngleY = Vec3_HorzAngle((Vector3 *)((char *)&player + 0x5c), (Vector3 *)&mPosX);
+    mPrevAngleY = Vec3_HorzAngle((Vector3 *)((char *)&player + 0x5c), &mPos);
     unk_31d = 0x1e;
     if (mMeshCollider.IsEnabled() == 0)
         return;

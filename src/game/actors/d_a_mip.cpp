@@ -216,6 +216,26 @@ extern daMip_cStateFn data_ov085_021300ac;
 extern daMip_cStateFn data_ov085_021300a4;
 extern int data_ov085_021305ac;
 
+/* Actor ID 0xbf is PLAYER. In dActor_c::mFlags, bit 0x100 is set while a
+ * player holds the actor, 0x4000 while it is carried and 0x40000 while it
+ * sits in Yoshi's mouth. These int-returning predicates are what make the
+ * ROM materialize 0/1 before testing it. */
+static inline int IsPlayerActor(dActor_c *actor) {
+    return actor->actorID == 0xbf;
+}
+
+static inline int IsInYoshiMouth(dActor_c *actor) {
+    return (actor->mFlags & 0x40000) != 0;
+}
+
+static inline int IsFlagSet(dActor_c *actor, u32 flag) {
+    return (actor->mFlags & flag) != 0;
+}
+
+static inline int IsBitSet(u32 flags, u32 bit) {
+    return (flags & bit) != 0;
+}
+
 #pragma defer_codegen off
 
 // @symbol _ZN7daMip_cD1Ev
@@ -271,8 +291,8 @@ void daMip_c::UpdateGrab()
     if (id == 0) return;
     dActor_c *o = dActor_c::FindWithID(id);
     if (o == 0) return;
-    int b = (o->actorID == 0xbf);
-    if (b == 0) return;
+    if (!IsPlayerActor(o))
+        return;
     if ((mdCcAc_c.hitFlags & 0x1000) == 0) return;
     if (((Player *)o)->TryGrab(*this) == 0) return;
     mTalkingPlayer = (Player *)o;
@@ -428,10 +448,8 @@ int daMip_c::StateReleasedMain()
     extern MipStatePair data_ov085_021306dc;
 
     unsigned short h;
-    int ok;
     dActor_c *o;
     Player *cp;
-    int b;
     int a;
     int flags;
     Player *obj;
@@ -439,25 +457,18 @@ int daMip_c::StateReleasedMain()
     obj = mTalkingPlayer;
     if (obj != 0) {
         flags = mFlags;
-        a = (flags & 0x400) ? 1 : 0;
-        if (a == 0) {
-            b = (flags & 0x2000) ? 1 : 0;
-            if (b == 0)
-                goto after_clear;
-        }
-        if (a != 0) {
-            if (obj != 0) {
+        /* A plain int, not IsBitSet: the inline swaps obj's and flags'
+           registers here. */
+        a = (flags & 0x400) != 0;
+        if (a || IsBitSet(flags, 0x2000)) {
+            /* obj is known non-null here; the ROM still re-tests it. */
+            if (a && obj != 0)
                 mPrevAngleY = obj->mAngleY;
-            }
-        }
-        b = 0;
-        mdCcAc_c.flags = mdCcAc_c.flags & ~2;
-        mTalkingPlayer = (Player *)b;
-    after_clear:
-        a = (mFlags & 0x100) ? 1 : 0;
-        if (a == 0) {
+            mdCcAc_c.flags = mdCcAc_c.flags & ~2;
             mTalkingPlayer = 0;
         }
+        if (!IsFlagSet(this, 0x100))
+            mTalkingPlayer = 0;
         obj = mTalkingPlayer;
         if (obj != 0) {
             if (obj->mIsUnderwater != 0) {
@@ -477,8 +488,7 @@ int daMip_c::StateReleasedMain()
     if ((mdCcAc_c.hitFlags & 0x8000000) != 0) {
         o = dActor_c::FindWithID(mdCcAc_c.otherOwner);
         if (o != 0) {
-            ok = (int)(o->actorID == (unsigned short)0xbf);
-            if (ok != 0) {
+            if (IsPlayerActor(o)) {
                 mSaveTalkPlayer = (Player *)o;
                 o = mSaveTalkPlayer;
                 if (((Player *)o)->StartTalk(*this, 0) != 0) {
@@ -550,77 +560,65 @@ int daMip_c::StateCaughtMain()
         }
 
         if (unk_426 != 0) {
-            s16 ang = Vec3_HorzAngle((Vector3 *)&mPosX, &pv);
+            s16 ang = Vec3_HorzAngle(&mPos, &pv);
             ApproachLinear(mPrevAngleY, ang, 0x800);
             if (AngleDiff(mPrevAngleY, ang) > 0x200)
                 return 1;
         }
 
-        {
-            int guard = (mFlags & 0x4000) ? 1 : 0;
-            if (guard == 0) {
-                if (unk_426 != 2)
-                    goto after_first_section;
-            }
-            {
-                if (pl->StartTalk(*this, 1) != 0) {
-                    pos.x = mPosX;
-                    soundId = 0;
-                    pos.y = mPosY;
-                    pos.z = mPosZ;
+        if ((IsFlagSet(this, 0x4000) || unk_426 == 2) && pl->StartTalk(*this, 1) != 0) {
+            pos.x = mPosX;
+            soundId = 0;
+            pos.y = mPosY;
+            pos.z = mPosZ;
 
-                    if (mRabbitId == 7)
-                        goto msg_13c;
-                    if (func_02013890(mRabbitId, (s32)pl->param1) == 0) {
-                        if ((s32)pl->param1 != 3) {
-                            Message::PrepareTalk();
-                            {
-                                int z = soundId;
-                                _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, 0x7f, 0x15ccc, z);
-                            }
-                            if (mRabbitId == 6)
-                                goto msg_123a;
+            if (mRabbitId != 7) {
+                if (func_02013890(mRabbitId, (s32)pl->param1) == 0) {
+                    if ((s32)pl->param1 != 3) {
+                        Message::PrepareTalk();
+                        {
+                            int z = soundId;
+                            _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, 0x7f, 0x15ccc, z);
+                        }
+                        if (mRabbitId != 6) {
                             msg = (s16)((s32)pl->param1 + 0x11b);
                             soundId = 0x163;
-                            goto have_msg;
-                        msg_123a:
+                        } else {
                             msg = (s16)((s32)pl->param1 + 0x123);
                             soundId = 0x161;
-                            goto have_msg;
                         }
+                    } else {
                         if (mRabbitId != 6)
                             msg = 0x12b;
                         else
                             msg = 0x12c;
-                        goto have_msg;
-                    } else {
-                        if ((s32)pl->param1 != 3) {
-                            Message::PrepareTalk();
-                            if (mIsGlowing == 0) {
-                                {
-                                    int z = soundId;
-                                    _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x26, 0x12, 0x7f, 0x15ccc, z);
-                                }
-                                if (mRabbitId == 6)
-                                    goto msg_127a;
+                    }
+                } else {
+                    if ((s32)pl->param1 != 3) {
+                        Message::PrepareTalk();
+                        if (mIsGlowing == 0) {
+                            {
+                                int z = soundId;
+                                _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x26, 0x12, 0x7f, 0x15ccc, z);
+                            }
+                            if (mRabbitId != 6) {
                                 msg = (s16)((s32)pl->param1 + 0x11f);
                                 soundId = 0x163;
-                                goto have_msg;
-                            msg_127a:
+                            } else {
                                 msg = (s16)((s32)pl->param1 + 0x127);
                                 soundId = 0x161;
-                            } else {
-                                _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, 0x7f, 0x15ccc, soundId);
-                                if (SaveData::NumGlowingRabbitsFound() == 7) {
-                                    msg = 0x143;
-                                    soundId = 0x160;
-                                } else {
-                                    soundId = 0x162;
-                                    msg = 0x142;
-                                }
                             }
-                            goto have_msg;
+                        } else {
+                            _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, 0x7f, 0x15ccc, soundId);
+                            if (SaveData::NumGlowingRabbitsFound() == 7) {
+                                msg = 0x143;
+                                soundId = 0x160;
+                            } else {
+                                soundId = 0x162;
+                                msg = 0x142;
+                            }
                         }
+                    } else {
                         if (mIsGlowing == 0) {
                             if (mRabbitId != 6)
                                 msg = 0x12d;
@@ -633,46 +631,35 @@ int daMip_c::StateCaughtMain()
                                 msg = 0x146;
                         }
                     }
-                    goto have_msg;
-                    msg_13c:
-                        msg = 0x13c;
-                    have_msg:
-                    {
-                        int y = pos.y;
-                        int zero = 0;
-                        y = y + 0x64000;
-                        pos.y = y;
-                        if (pl->ShowMessage(*this, (u32)msg, (::Vector3 *)&pos, zero, zero) == 1) {
-                            mActionStep = 1;
-                            if (soundId != 0)
-                                func_02012694(soundId, (const ::Vector3 *)&mCamSpacePosX);
-                        }
-                    }
-                    return 1;
+                }
+            } else {
+                msg = 0x13c;
+            }
+
+            {
+                int y = pos.y;
+                int zero = 0;
+                y = y + 0x64000;
+                pos.y = y;
+                if (pl->ShowMessage(*this, (u32)msg, (::Vector3 *)&pos, zero, zero) == 1) {
+                    mActionStep = 1;
+                    if (soundId != 0)
+                        func_02012694(soundId, &mCamSpacePos);
                 }
             }
+            return 1;
         }
     }
-    after_first_section:
+
     if (*(volatile s32 *)&mActionStep != 1)
         return 1;
 
     if (pl->GetTalkState() != -1) {
-        if (data_0209d660 != 0) {
-            if (data_0209d6bc == 9) {
-                if (mRabbitId != 7) {
-                    if (func_02013890(mRabbitId, (s32)pl->param1) != 0) {
-                        if (mIsGlowing == 0)
-                            goto talk_active_done;
-                    }
-                }
-                {
-                    int z = 0;
-                    _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, z, 0x8777, z);
-                }
-            }
+        if (data_0209d660 != 0 && data_0209d6bc == 9 &&
+            (mRabbitId == 7 || func_02013890(mRabbitId, (s32)pl->param1) == 0 || mIsGlowing != 0)) {
+            int z = 0;
+            _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x27, 0x12, z, 0x8777, z);
         }
-    talk_active_done:
         return 1;
     }
 
@@ -688,7 +675,8 @@ int daMip_c::StateCaughtMain()
         {
             s8 cc = mAreaId;
             int m1 = -1;
-            dActor_c *spawned = dActor_c::Spawn(0xe5, mRabbitId, *(::Vector3 *)&pos7, (Vector3_16 *)&mAngleX, cc, m1);
+            dActor_c *spawned =
+                dActor_c::Spawn(0xe5, mRabbitId, *(::Vector3 *)&pos7, &mAngle, cc, m1);
             if (spawned != 0)
                 ((daObj_Mip_Key_c *)spawned)->unk_190 = uniqueID;
         }
@@ -699,13 +687,8 @@ int daMip_c::StateCaughtMain()
         return 1;
     }
 
-    if (func_02013890(mRabbitId, (s32)pl->param1) != 0) {
-        if (mIsGlowing == 0)
-            goto no_spawn;
-        if (SaveData::NumGlowingRabbitsFound() != 7)
-            goto no_spawn;
-    }
-    {
+    if (func_02013890(mRabbitId, (s32)pl->param1) == 0 ||
+        (mIsGlowing != 0 && SaveData::NumGlowingRabbitsFound() == 7)) {
         posR.x = mPosX;
         posR.y = mPosY;
         posR.z = mPosZ;
@@ -730,40 +713,32 @@ int daMip_c::StateCaughtMain()
                 *pf = (u16)(*pf | 0x800);
             }
         }
-        goto after_spawn;
-    }
-no_spawn:
-    if (mTalkState == 2) {
-        {
-            u16 *pf = (u16 *)((char *)pl + 0x6ce);
-            *pf = (u16)(*pf & ~0x800);
+    } else {
+        if (mTalkState == 2) {
+            {
+                u16 *pf = (u16 *)((char *)pl + 0x6ce);
+                *pf = (u16)(*pf & ~0x800);
+            }
+            mTalkState = 0;
         }
-        mTalkState = 0;
+        if (mIsGlowing == 0) {
+            _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x26, 0x7f, 0, 0x7444, 0);
+            Message::EndTalk();
+        }
     }
-    if (mIsGlowing == 0) {
-        _ZN5Sound7PlaySubEjjj5Fix12IiEb(0x26, 0x7f, 0, 0x7444, 0);
-        Message::EndTalk();
-    }
-after_spawn:
-    ;
 
     mTalkingPlayer = 0;
 
-    if (mIsGlowing == 0)
-        goto do_306bc;
-    if (SaveData::NumGlowingRabbitsFound() != 8)
-        goto flag_path;
-do_306bc:
-    SetState(&data_ov085_021306bc);
-    goto final_return;
-flag_path:
-    {
-        u16 *pf = (u16 *)((char *)pl + 0x6ce);
-        *pf = (u16)(*pf | 0x800);
+    if (mIsGlowing == 0 || SaveData::NumGlowingRabbitsFound() == 8) {
+        SetState(&data_ov085_021306bc);
+    } else {
+        {
+            u16 *pf = (u16 *)((char *)pl + 0x6ce);
+            *pf = (u16)(*pf | 0x800);
+        }
+        mSaveTalkPlayer = pl;
+        SetState(&data_ov085_0213068c);
     }
-    mSaveTalkPlayer = pl;
-    SetState(&data_ov085_0213068c);
-final_return:
     return 1;
 }
 
@@ -802,12 +777,15 @@ int daMip_c::StateRestInit()
 // @symbol _ZN7daMip_c13StateFleeMainEv
 /* Runs the path away from the player. Dust or splash at a node, steps
    mPathDir, and falls back to Rest past 0x4b0000. */
-int daMip_c::StateFleeMain()
-{
+int daMip_c::StateFleeMain() {
     /* POD triples. V3Blk's array member is what makes the player-position
        copy a block move; a three-scalar struct scalarises. */
-    struct Vector3 { s32 x, y, z; };
-    struct V3Blk   { s32 w[3]; };
+    struct Vector3 {
+        s32 x, y, z;
+    };
+    struct V3Blk {
+        s32 w[3];
+    };
     extern MipStatePair data_ov085_0213069c;
 
     Player *pl;
@@ -824,115 +802,97 @@ int daMip_c::StateFleeMain()
     int idx;
     int ysave;
     pl = ClosestPlayer();
-    if (pl != 0)
-    {
-      v = *((struct V3Blk *)&pl->mPosX);
-      if (Vec3_Dist((struct Vector3 *)&mPosX, &v) > 0x4b0000)
-      {
-        SetState(&data_ov085_0213069c);
-        return 1;
-      }
+    if (pl != 0) {
+        v = *((struct V3Blk *)&pl->mPosX);
+        if (Vec3_Dist(&mPos, &v) > 0x4b0000) {
+            SetState(&data_ov085_0213069c);
+            return 1;
+        }
     }
     {
-      s32 t = mModelAnim.currFrame >> 12;
-      if (((u16) t) == 0)
-      {
-        if (TestWaterBelow() == 1)
-        {
-          func_02012694(0x124, (const ::Vector3 *)&mCamSpacePosX);
-          func_02022a4c(mPosX, mFloorY + 0x3000, mPosZ);
+        s32 t = mModelAnim.currFrame >> 12;
+        if (((u16)t) == 0) {
+            if (TestWaterBelow() == 1) {
+                func_02012694(0x124, &mCamSpacePos);
+                func_02022a4c(mPosX, mFloorY + 0x3000, mPosZ);
+            } else {
+                func_02012694(0x123, &mCamSpacePos);
+            }
         }
-        else
-        {
-          func_02012694(0x123, (const ::Vector3 *)&mCamSpacePosX);
-        }
-      }
     }
 
-    if (TestWaterBelow() == 1)
-    {
-      s32 pair[2];
-      pair[0] = mPosX;
-      pair[1] = mFloorY;
-      {
-        s32 z = mPosZ;
-        s32 y = pair[1] + 0x3000;
-        s32 x = pair[0];
-        *((volatile s32 *)(&pos.x)) = x;
-        *((volatile s32 *)(&pos.y)) = y;
-        *((volatile s32 *)(&pos.z)) = z;
-        mDustParticle = func_02022cbc(mDustParticle, 0xe8, *((volatile s32 *)(&pos.x)), *(&pos.y), z, 0);
-      }
+    if (TestWaterBelow() == 1) {
+        s32 pair[2];
+        pair[0] = mPosX;
+        pair[1] = mFloorY;
+        {
+            s32 z = mPosZ;
+            s32 y = pair[1] + 0x3000;
+            s32 x = pair[0];
+            *((volatile s32 *)(&pos.x)) = x;
+            *((volatile s32 *)(&pos.y)) = y;
+            *((volatile s32 *)(&pos.z)) = z;
+            mDustParticle =
+                func_02022cbc(mDustParticle, 0xe8, *((volatile s32 *)(&pos.x)), *(&pos.y), z, 0);
+        }
     }
 
     _ZN7PathPtrC1Ev(pathptr);
     ((PathPtr *)pathptr)->FromID(mPathId);
     ((PathPtr *)pathptr)->GetNode(*(::Vector3 *)&node, mPathNodeIndex);
-    ang = Vec3_HorzAngle((struct Vector3 *)&mPosX, &node);
+    ang = Vec3_HorzAngle(&mPos, &node);
     ApproachAngle(&mPrevAngleY, ang, 1, 0x1000, 0x1000);
     idx = mPathNodeIndex + mPathDir;
-    if (idx < 0)
-    {
-      idx = mNumPathNodes - 1;
+    if (idx < 0) {
+        idx = mNumPathNodes - 1;
     }
-    if (idx >= mNumPathNodes)
-    {
-      idx = 0;
+    if (idx >= mNumPathNodes) {
+        idx = 0;
     }
     ((PathPtr *)pathptr)->GetNode(*(::Vector3 *)&node2, (u32)idx);
     lim = 0x26000;
-    if (mRabbitId == 7)
-    {
-      lim = lim >> 1;
+    if (mRabbitId == 7) {
+        lim = lim >> 1;
     }
     {
-      s32 y = mPosY;
-      node.y = y;
-      Vec3_Sub(&delta, (struct Vector3 *)&mPosX, &node);
-      len = LenVec3(&delta);
+        s32 y = mPosY;
+        node.y = y;
+        Vec3_Sub(&delta, &mPos, &node);
+        len = LenVec3(&delta);
     }
-    if ((len == 0) || (len <= lim))
-    {
-      mPosX = node.x;
-      mPosY = node.y;
-      mPosZ = node.z;
-      {
-        s32 *p = &mPathNodeIndex;
-        *p = (*p) + mPathDir;
-      }
-      if (mPathNodeIndex >= mNumPathNodes)
-      {
-        mPathNodeIndex = 0;
-      }
-      if (mPathNodeIndex < 0)
-      {
-        mPathNodeIndex = mNumPathNodes - 1;
-      }
-    }
-    else
-    {
-      ang = Vec3_HorzAngle((struct Vector3 *)&mPosX, &node);
-      if (AngleDiff(ang, mPrevAngleY) < 0x2000)
-      {
-        ysave = mPosY;
+    if ((len == 0) || (len <= lim)) {
+        mPosX = node.x;
+        mPosY = node.y;
+        mPosZ = node.z;
         {
-          int s = _ZN4cstd4fdivEii(lim, len);
-          Vec3_MulScalar(&scaled, &delta, s);
-          SubVec3((struct Vector3 *)&mPosX, &scaled, (struct Vector3 *)&mPosX);
+            s32 *p = &mPathNodeIndex;
+            *p = (*p) + mPathDir;
         }
-        if (mVertSpeed > 0)
-        {
-          mPosY = ysave;
+        if (mPathNodeIndex >= mNumPathNodes) {
+            mPathNodeIndex = 0;
         }
-        if (mActionStep == 0)
-        {
-          if (mWithMeshClsn.IsOnWall() != 0)
-          {
-            mVertSpeed = 0xa000;
-            mActionStep = 1;
-          }
+        if (mPathNodeIndex < 0) {
+            mPathNodeIndex = mNumPathNodes - 1;
         }
-      }
+    } else {
+        ang = Vec3_HorzAngle(&mPos, &node);
+        if (AngleDiff(ang, mPrevAngleY) < 0x2000) {
+            ysave = mPosY;
+            {
+                int s = _ZN4cstd4fdivEii(lim, len);
+                Vec3_MulScalar(&scaled, &delta, s);
+                SubVec3(&mPos, &scaled, &mPos);
+            }
+            if (mVertSpeed > 0) {
+                mPosY = ysave;
+            }
+            if (mActionStep == 0) {
+                if (mWithMeshClsn.IsOnWall() != 0) {
+                    mVertSpeed = 0xa000;
+                    mActionStep = 1;
+                }
+            }
+        }
     }
     return 1;
 }
@@ -1039,14 +999,14 @@ int daMip_c::StateIdleMain()
     }
 
     Vector3 pp;
-    Vector3* ppp = (Vector3*)&player->mPosX;
+    const ::Vector3 *ppp = &player->mPos;
     pp.x = ppp->x;
     pp.y = ppp->y;
     pp.z = ppp->z;
     int lim = 0x3e8000;
     if (mRabbitId == 7) lim = 0x2ee000;
 
-    if (Vec3_HorzDist((Vector3*)&mPosX, &pp) < lim) {
+    if (Vec3_HorzDist(&mPos, &pp) < lim) {
         int t = mRabbitId;
         int cond = 0;
         if (t == 7 || t == 1 ||
@@ -1063,8 +1023,8 @@ int daMip_c::StateIdleMain()
 
     u32 r = (u32)RandomIntInternal(data_0209e650) >> 8;
     if (mRabbitId == 1) {
-        if (Vec3_HorzDist((Vector3*)&mPosX, &pp) < 0x4b0000) {
-            mTargetAngY = Vec3_HorzAngle((Vector3*)&mPosX, &pp) + 0x8000;
+        if (Vec3_HorzDist(&mPos, &pp) < 0x4b0000) {
+            mTargetAngY = Vec3_HorzAngle(&mPos, &pp) + 0x8000;
             mStateTimer = 0x1e;
         }
     }
@@ -1090,7 +1050,7 @@ int daMip_c::StateIdleMain()
     }
 
     if (mActionStep == 0 && *(u16 *)&mStateTimer == 0) {
-        mTargetAngY = Vec3_HorzAngle((Vector3*)&mPosX, (Vector3*)&mIdlePosX);
+        mTargetAngY = Vec3_HorzAngle(&mPos, (Vector3 *)&mIdlePosX);
         {
             s16 *ang = &mTargetAngY;
             *ang = *ang + (0x1800 - ((r & 3) << 12));
@@ -1138,7 +1098,7 @@ void daMip_c::UpdateMatrixAndShadow()
 
     char tmp[0x30];
     struct Vector3 t;
-    Vec3_Asr(&t, (struct Vector3*)&mPosX, 3);
+    Vec3_Asr(&t, &mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, t.x, t.y, t.z);
     Matrix4x3_ApplyInPlaceToRotationXYZExt(&data_020a0e68, mAngleX, mAngleY, mAngleZ);
     *(struct Mtx43 *)&mModelAnim.mat4x3 = data_020a0e68;
@@ -1267,10 +1227,8 @@ int daMip_c::Render()
 
     if (mIsDisabled == 1) return 1;
 
-    {
-        int b = (mFlags & 0x40000) != 0;
-        if (b) return 1;
-    }
+    if (IsInYoshiMouth(this))
+        return 1;
 
     mScaleX = 0x1500;
     mScaleZ = mScaleX;
@@ -1293,7 +1251,7 @@ int daMip_c::Render()
         RenderMirrorImage();
     }
 
-    mModelAnim.Render((Vector3 *)&mScaleX);
+    mModelAnim.Render(&mScale);
     return 1;
 }
 
@@ -1314,7 +1272,7 @@ void daMip_c::RenderMirrorImage()
     MulMat3x3Mat3x3(&mModelAnim.mat4x3, &data_020a0e68, &mModelAnim.mat4x3);
     func_02016acc(&mModelAnim, 0x80);
     func_02016b24(&mModelAnim, 0x40);
-    mModelAnim.ModelAnim::Render((const Vector3 *)&mScaleX);
+    mModelAnim.ModelAnim::Render(&mScale);
     mModelAnim.ApplyOpacity(0xff, 0);
     func_02016b24(&mModelAnim, 0x80);
     func_02016acc(&mModelAnim, 0x40);
@@ -1403,8 +1361,7 @@ int daMip_c::Behavior()
     {
         u32 talkStep = mTalkState;
         if (talkStep < 2) {
-            int v = (mFlags & 0x40000) ? 1 : 0;
-            if (v == 1) {
+            if (IsInYoshiMouth(this) == 1) {
                 void* talker = *(void**)&mTalkingPlayer;
                 if (talker != 0) {
                     if (talkStep == 0) {
@@ -1437,7 +1394,7 @@ int daMip_c::Behavior()
                         }
                         pos.y += 0x64000;
                         if (((Player *)talker)->ShowMessage(*(fBase_c *)c, messageId, 0, 0, 0) == 1) {
-                            func_02012694(soundId, (const ::Vector3 *)(&mCamSpacePosX));
+                            func_02012694(soundId, &mCamSpacePos);
                             mTalkState = 1;
                         }
                     } else if (talkStep == 1 && ((Player *)talker)->GetTalkState() == -1) {
@@ -1503,29 +1460,23 @@ int daMip_c::Behavior()
 
     mModelAnim.Advance();
 
-    {
-        int v = (mFlags & 0x4000) ? 1 : 0;
-        if (v != 0)
-            UpdateCarriedMatrix();
-        else
-            UpdateMatrixAndShadow();
-    }
+    if (IsFlagSet(this, 0x4000))
+        UpdateCarriedMatrix();
+    else
+        UpdateMatrixAndShadow();
 
     if (data_0209f2f8 == 5 && data_02092120 == 3)
         UpdateMirrorShadow();
 
-    {
-        int v = (mFlags & 0x4000) ? 1 : 0;
-        if (v == 0) {
-            if (*(void**)&mState != (void*)&data_ov085_021306ac || unk_426 != 0)
-                UpdatePos(&mdCcAc_c);
-            mAngleX = mPrevAngleX;
-            mAngleY = mPrevAngleY;
-            mAngleZ = mPrevAngleZ;
-            UpdateWMClsn(mWithMeshClsn, 0);
-            if (*(void**)&mState != (void*)&data_ov085_021306ac)
-                UpdateGrab();
-        }
+    if (!IsFlagSet(this, 0x4000)) {
+        if (*(void **)&mState != (void *)&data_ov085_021306ac || unk_426 != 0)
+            UpdatePos(&mdCcAc_c);
+        mAngleX = mPrevAngleX;
+        mAngleY = mPrevAngleY;
+        mAngleZ = mPrevAngleZ;
+        UpdateWMClsn(mWithMeshClsn, 0);
+        if (*(void **)&mState != (void *)&data_ov085_021306ac)
+            UpdateGrab();
     }
 
     if (*(void**)&mState != (void*)&data_ov085_021306ac) {
@@ -1588,20 +1539,12 @@ int daMip_c::InitResources()
             return 0;
     }
 
-    if (rabbitId == 5 && mCharacterId == 0)
-        goto check18;
-    if (rabbitId == 1 && mCharacterId == 1)
-        goto check18;
-    if (rabbitId != 6)
-        goto skip17;
-    if (mCharacterId != 3)
-        goto skip17;
+    if ((rabbitId == 5 && mCharacterId == 0) || (rabbitId == 1 && mCharacterId == 1) ||
+        (rabbitId == 6 && mCharacterId == 3)) {
+        if (!(data_0209caa0[2] & 0x80000))
+            return 0;
+    }
 
-check18:
-    if (!(data_0209caa0[2] & 0x80000))
-        return 0;
-
-skip17:
     mVertAccel = -0x1000;
     mTerminalVelocity = -0x1e000;
     _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(&mdCcAc_c, this, 0x50000, 0x64000, 0xb00004, 0x9000);
@@ -1612,7 +1555,7 @@ skip17:
         PathPtr path;
         path.FromID(mPathId);
         mPathNodeIndex = 1;
-        path.GetNode(*(Vector3 *)&mPosX, mPathNodeIndex);
+        path.GetNode(mPos, mPathNodeIndex);
         mNumPathNodes = path.NumNodes();
     }
     UpdateMatrixAndShadow();
@@ -1625,63 +1568,56 @@ skip17:
         if (data_0209caa0[1] & 0x40)
             return 0;
         mIsDisabled = 1;
-        goto block_26;
-    }
-
-    player = ClosestPlayer();
-    if (player == 0)
-        return 0;
-    if (data_0209f2f8 != 0x32) {
-        if (mCharacterId != ((Player *)player)->mCharacter)
+    } else {
+        player = ClosestPlayer();
+        if (player == 0)
             return 0;
+        if (data_0209f2f8 != 0x32) {
+            if (mCharacterId != ((Player *)player)->mCharacter)
+                return 0;
+        }
     }
 
-block_26:
     mColorVariant = mCharacterId + 1;
     if (mCharacterId == 3)
         mColorVariant = 0;
 
     if (mRabbitId == 7) {
         mColorVariant = 0;
-        goto block_out;
-    }
-
-    closest = ClosestPlayer();
-    if (closest == 0)
-        goto block_out;
-
-    {
-        int v;
-        v = (s32)((Player *)closest)->param1;
-        if (data_0209f2f8 == 0x32)
-            v = 1;
-        if (func_02013890(mRabbitId, v) != 0 && data_ov085_021305ac < 8) {
-            u32 rnd = RandomIntInternal(&data_0209e650) >> 8;
-            if (NumStars() >= 0x51) {
-                if ((s32)((Player *)closest)->param1 == 3) {
-                    if ((rnd & 0xf) == 0)
-                        mColorVariant = 5;
-                } else {
-                    if ((rnd & 7) == 0)
-                        mColorVariant = 5;
+    } else {
+        closest = ClosestPlayer();
+        if (closest != 0) {
+            int v;
+            v = (s32)((Player *)closest)->param1;
+            if (data_0209f2f8 == 0x32)
+                v = 1;
+            if (func_02013890(mRabbitId, v) != 0 && data_ov085_021305ac < 8) {
+                u32 rnd = RandomIntInternal(&data_0209e650) >> 8;
+                if (NumStars() >= 0x51) {
+                    if ((s32)((Player *)closest)->param1 == 3) {
+                        if ((rnd & 0xf) == 0)
+                            mColorVariant = 5;
+                    } else {
+                        if ((rnd & 7) == 0)
+                            mColorVariant = 5;
+                    }
+                } else if (NumStars() >= 0x28) {
+                    if ((s32)((Player *)closest)->param1 == 3) {
+                        if ((rnd & 0x1f) == 0)
+                            mColorVariant = 5;
+                    } else {
+                        if ((rnd & 0xf) == 0)
+                            mColorVariant = 5;
+                    }
                 }
-            } else if (NumStars() >= 0x28) {
-                if ((s32)((Player *)closest)->param1 == 3) {
-                    if ((rnd & 0x1f) == 0)
-                        mColorVariant = 5;
-                } else {
-                    if ((rnd & 0xf) == 0)
-                        mColorVariant = 5;
+                if (mColorVariant == 5) {
+                    data_ov085_021305ac += 1;
+                    mIsGlowing = 1;
                 }
-            }
-            if (mColorVariant == 5) {
-                data_ov085_021305ac += 1;
-                mIsGlowing = 1;
             }
         }
     }
 
-block_out:
     if (data_0209f2f8 == 5) {
         if (mAreaId == 3)
             mFlags = 0x8280;

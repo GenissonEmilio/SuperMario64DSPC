@@ -47,6 +47,7 @@
 #include "SharedFilePtr.h"
 #include "dBgW.h"
 #include "dBgCh_Gnd.h"
+#include "nitro/fx/fx.h"
 
 /* Actor IDs this TU compares. No header vocabulary exists (cleaned callers
  * pass raw hex), so they live here, cited to the ROM's own debug table. */
@@ -196,8 +197,7 @@ int daDsnBase_c::func_ov091_02132dc0()
         aimPos.y = mPosY;
         aimPos.z = mPosZ;
         aimPos.y = aimPos.y + OnAimedAtWithEgg();
-        if (Vec3_Dist((const Vector3 *)&mPosX,
-                      (const Vector3 *)&egg->mPosX) < (mClipRadius << 3)) {
+        if (Vec3_Dist(&mPos, &egg->mPos) < (mClipRadius << 3)) {
             if (!mMeshCollider.IsEnabled()) {
                 mMeshCollider.Enable(this);
                 return 1;
@@ -312,7 +312,7 @@ void daDsnBase_c::func_ov091_02133098()
         heightAboveGround = 0x14000;
         shadowDrop = 0;
     }
-    int radius = (int)(((long long)heightAboveGround * 0x60 + 0x800) >> 12);
+    int radius = FX_MUL(heightAboveGround, 0x60);
     s32 *clipRadius = &mClipRadius;
     DsnBaseFileTable *files = (DsnBaseFileTable *)mFileTable;
     int scaleX = files->shadowExtentX - radius;

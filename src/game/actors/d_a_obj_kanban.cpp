@@ -27,6 +27,7 @@ enum daObjKanban_c_AssetId {
 #include "daObjKanban_c.h"
 #include "SharedFilePtr.h"
 #include "Player.h"
+#include "nitro/fx/fx.h"
 
 bool ApproachLinear(short &value, short target, short step);
 
@@ -108,8 +109,8 @@ int daObjKanban_c::Behavior()
         pos.y = mPosY;
         pos.z = mPosZ;
 
-        pos.x += (int)(((s64)data_02082214[(*(u16 *)&mAngleY >> 4) << 1] * 0x5a000 + 0x800) >> 12);
-        pos.z += (int)(((s64)data_02082214[((*(u16 *)&mAngleY >> 4) << 1) + 1] * 0x5a000 + 0x800) >> 12);
+        pos.x += FX_MUL(data_02082214[(*(u16 *)&mAngleY >> 4) << 1], 0x5a000);
+        pos.z += FX_MUL(data_02082214[((*(u16 *)&mAngleY >> 4) << 1) + 1], 0x5a000);
 
         {
             int *p = (int *)&tgt->mPosX;
@@ -130,7 +131,7 @@ int daObjKanban_c::Behavior()
                 }
                 break;
             case 1:
-                if (Vec3_ApproachHorz((Vector3 *)&tgt->mPosX, &pos, 0xa000)) {
+                if (Vec3_ApproachHorz(&tgt->mPos, &pos, 0xa000)) {
                     func_ov002_020bec9c(tgt, 0, 0, 0x1000, 0);
                     mState += 1;
                 }
@@ -169,7 +170,7 @@ int daObjKanban_c::Behavior()
                     opos.x = pO[0];
                     opos.y = pO[1];
                     opos.z = pO[2];
-                    if (AngleDiff(Vec3_HorzAngle((Vector3 *)&mPosX, &opos), mAngleY) < 0x4000) {
+                    if (AngleDiff(Vec3_HorzAngle(&mPos, &opos), mAngleY) < 0x4000) {
                         if (((Player *)other)->StartTalk(*this, 0))
                             mTalkingPlayer = (Player *)other;
                     }

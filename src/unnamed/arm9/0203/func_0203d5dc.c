@@ -6,7 +6,7 @@ typedef unsigned long long u64;
 
 extern Fix12i _ZN4cstd4sqrtEy(u64 val);
 
-Fix12i func_0203d5dc(const int* a, const int* b) {
+Fix12i func_0203d5dc(const int *a, const int *b) {
     Fix12i dx = a[0] - b[0];
     Fix12i dy = a[1] - b[1];
     long long sq = (long long)dx * dx;

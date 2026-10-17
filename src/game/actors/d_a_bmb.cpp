@@ -10,8 +10,8 @@
  *   header is Fix12i (mangles as i); this TU's call is Fix12<int>.
  *   The 4-arg KillByInvincibleChar stays a scalar extern; Behavior already
  *   calls the 3-arg method.
- * - GetFloorResult is not on dBgCh_Actr. Behavior skips 4 bytes to the
- *   SurfaceInfo and tests CLPS bit 0x20 (water).
+ * - Behavior skips 4 bytes past GetFloorResult's dBgPi to the SurfaceInfo
+ *   and tests CLPS bit 0x20 (water).
  * - States 0, 1 and 3 advance the dExtFrameCtrl_c base of mModelAnim
  *   explicitly. The qualified base call preserves the ROM entry point
  *   without a byte-offset pointer or a ModelAnim forwarding call.
@@ -36,10 +36,12 @@
 
 #include "common.h"
 #include "daBmb_c.h"
+#include "SpawnInfo.h"
 #include "Player.h"
 #include "Sound.h"
 #include "SharedFilePtr.h"
 #include "dBgCh_Gnd.h"
+#include "dBgCh_Actr.h"
 
 bool ApproachLinear(short &value, short target, short step);
 
@@ -80,8 +82,6 @@ int   SurfaceInfo_TestFlag0x20(int *si);
 void  _ZN12dEnemyBase_c20KillByInvincibleCharERK10Vector3_16R6Player5Fix12IiE(void *, void *, void *, unsigned int);
 
 
-
-void *_ZNK10dBgCh_Actr14GetFloorResultEv(void *);
 
 /* dCcAc_c::Init / dBgCh_Actr::Init stay scalar: they carry Fix12<int> BY
    VALUE (6az). dBgCh_Actr::Init's header is Fix12i, which mangles as i;
@@ -134,29 +134,16 @@ daBmb_c *daBmb_c_classInit(void)
 
 }
 
-struct BmbSpawnInfo {
-    daBmb_c *(*classInit)();
-    s16 executePriority; /* +4: also BOMBHEI registry id 0x00ce = 206 */
-    s16 renderPriority;  /* +6 */
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-typedef char BmbSpawnInfo_size_must_be_0x1c[
-    sizeof(BmbSpawnInfo) == 0x1c ? 1 : -1];
-
 // @symbol g_profile_BOMBHEI
-extern "C" BmbSpawnInfo g_profile_BOMBHEI = {
+extern "C" SpawnInfo<daBmb_c> g_profile_BOMBHEI = {
     daBmb_c_classInit,
-    0x00ce,
+    0x00ce, /* BOMBHEI registry id 206 */
     0x002d,
     0x10008083,
     0x00032000,
     0x00046000,
     0x01000000,
-    0x01000000
+    0x01000000,
 };
 
 /* ==========================================================================
@@ -305,7 +292,7 @@ int daBmb_c::Behavior()
             }
 
             if (mWithMeshClsn.IsOnGround()) {
-                if (SurfaceInfo_TestFlag0x20((int*)((char*)_ZNK10dBgCh_Actr14GetFloorResultEv((char *)&mWithMeshClsn)+4))) {
+                if (SurfaceInfo_TestFlag0x20((int *)((char *)mWithMeshClsn.GetFloorResult() + 4))) {
                     func_ov102_0214ae1c(this);
                     return 1;
                 }
@@ -360,7 +347,7 @@ int daBmb_c::Render()
         int flags = mFlags;
         int b = (flags & 0x40000) != 0;
         if (!b) {
-            mModelAnim.Render((Vector3 *)&mScaleX);
+            mModelAnim.Render(&mScale);
         }
     }
     return result;
@@ -433,11 +420,12 @@ void func_ov102_0214bf64(void *ov)
                 o->mState = 2;
             } else {
                 if (o->mVariant == 5) {
-                    s16 ang = Vec3_HorzAngle((const Vector3 *)&o->mPosX, (const Vector3 *)&o->mHomePosX);
+                    s16 ang = Vec3_HorzAngle(&o->mPos, (const Vector3 *)&o->mHomePosX);
                     ApproachLinear(o->mPrevAngleY, ang, 0x200);
                     o->mAngleY = o->mPrevAngleY;
                 } else {
-                    if (o->mTurnTimer == 0 || Vec3_Dist((const Vector3 *)&o->mPosX, (const Vector3 *)&o->mHomePosX) >= 0x500000) {
+                    if (o->mTurnTimer == 0 ||
+                        Vec3_Dist(&o->mPos, (const Vector3 *)&o->mHomePosX) >= 0x500000) {
                         o->mHorzSpeed = 0x5000;
                         func_ov102_0214beb4(o);
                     }
@@ -445,7 +433,7 @@ void func_ov102_0214bf64(void *ov)
             }
         } else {
             _Z14ApproachLinearRiii(o->mHorzSpeed, 0x10000, 0x1000);
-            s16 target = Vec3_HorzAngle((const Vector3 *)&o->mPosX, (const Vector3 *)&o->mChasePlayer->mPosX);
+            s16 target = Vec3_HorzAngle(&o->mPos, &o->mChasePlayer->mPos);
             if (o->mVariant == 3) {
                 /* Player::mGrabbedByActor: stop turning toward a held player. */
                 int b = (o->mChasePlayer->mGrabbedByActor != 0);
@@ -764,14 +752,16 @@ void func_ov102_0214b988(void *thiz)
     self->mChasePlayer = 0;
     pl = self->ClosestPlayer();
     if (!pl) return;
-    if (Vec3_Dist((struct Vector3 *)&self->mPosX, (struct Vector3 *)&pl->mPosX) > 0x190000) return;
+    if (Vec3_Dist(&self->mPos, &pl->mPos) > 0x190000)
+        return;
     {
         int *src = (int *)&pl->mPosX;
         v.x = src[0];
         v.y = src[1];
         v.z = src[2];
     }
-    if (AngleDiff(Vec3_HorzAngle((struct Vector3 *)&self->mPosX, &v), self->mAngleY) >= self->mNoticeAngle) return;
+    if (AngleDiff(Vec3_HorzAngle(&self->mPos, &v), self->mAngleY) >= self->mNoticeAngle)
+        return;
     self->mChasePlayer = pl;
     func_ov102_0214b384(self, 0x96);
 }
@@ -977,7 +967,7 @@ void func_ov102_0214b444(void *cv)
     v = self->mPosY;
     if (self->mWithMeshClsn.IsOnGround() == 0) {
         dBgCh_Gnd rg;
-        rg.SetObjAndPos(*(const Vector3 *)&self->mPosX, (dActor_c *)0);
+        rg.SetObjAndPos(self->mPos, (dActor_c *)0);
         if (rg.DetectClsn() != 0)
             v = rg.clsnY;
     }
@@ -1080,8 +1070,7 @@ int func_ov102_0214b248(void *cv)
     daBmb_c *self = (daBmb_c *)cv;
 
     if (DecIfAbove0_Short(&self->mFuse)) {
-        self->mFuseSound = Sound::PlayLong(
-            self->mFuseSound, 3, 0x188, *(Vector3 *)&self->mCamSpacePosX, 0);
+        self->mFuseSound = Sound::PlayLong(self->mFuseSound, 3, 0x188, self->mCamSpacePos, 0);
     }
 
     {
@@ -1167,21 +1156,33 @@ void func_ov102_0214b128(void *cv) {
  * ======================================================================== */
 
 // @symbol _ZN7daBmb_c19func_ov102_0214b03cEv
-void daBmb_c::func_ov102_0214b03c(){
-  if(mState < 2 && mModelAnim.file == *((BCA_File **)((char *)&data_ov102_0214e9c0 + 4))){
-    if(((dExtFrameCtrl_c *)((char *)this + 0x350))->WillHitFrame(0) != 0
-       || ((dExtFrameCtrl_c *)((char *)this + 0x350))->WillHitFrame(0x10) != 0){
-      func_0201267c(0x132, (const Vector3 *)&mCamSpacePosX);
+void daBmb_c::func_ov102_0214b03c() {
+    if (mState < 2 && mModelAnim.file == *((BCA_File **)((char *)&data_ov102_0214e9c0 + 4))) {
+        if (((dExtFrameCtrl_c *)((char *)this + 0x350))->WillHitFrame(0) != 0 ||
+            ((dExtFrameCtrl_c *)((char *)this + 0x350))->WillHitFrame(0x10) != 0) {
+            func_0201267c(0x132, &mCamSpacePos);
+        }
     }
-  }
-  switch(mState){
-  case 0: func_ov102_0214bf64(this); return;
-  case 1: State1(); return;
-  case 2: func_ov102_0214bd90(); return;
-  case 3: State3(); return;
-  case 4: State4(); return;
-  case 5: State5(); return;
-  }
+    switch (mState) {
+    case 0:
+        func_ov102_0214bf64(this);
+        return;
+    case 1:
+        State1();
+        return;
+    case 2:
+        func_ov102_0214bd90();
+        return;
+    case 3:
+        State3();
+        return;
+    case 4:
+        State4();
+        return;
+    case 5:
+        State5();
+        return;
+    }
 }
 
 /* ==========================================================================
@@ -1264,7 +1265,7 @@ void func_ov102_0214ae1c(void *cv) {
 void daBmb_c::OnTurnIntoEgg(Player &player)
 {
     if (unk_108 == 1) {
-        Sound::PlayBank3(0x11, *(Vector3 *)&mCamSpacePosX);
+        Sound::PlayBank3(0x11, mCamSpacePos);
         GiveCoins(player.mPlayerNo, 1);
         player.Heal(0x100);
     }

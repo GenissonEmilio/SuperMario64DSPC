@@ -1,8 +1,8 @@
 //cpp
 /* dScGameOver_c -- the game-over screen, ov003.
  *
- * Mario is out of lives: eight "GAME OVER" glyphs slide in from off screen,
- * then a yes/no continue prompt (stylus or button; the upper choice is yes). 10
+ * Mario is out of lives: eight "GAME OVER" glyphs drop in from off screen,
+ * then a yes/no continue prompt (stylus or button; left is yes). 10
  * functions, .text 0x020b0580..0x020b117c: the seven dScene_c slots every
  * direct child overrides (0, 3, 6, 9, 12, 16, 17 -- the class adds no new
  * virtual), two non-virtual helpers that share the TU, and the factory
@@ -17,7 +17,7 @@
  * deslop leftovers:
  * - func_ov003_020b060c and func_ov003_020b0730 are non-virtual methods.
  *   The address stays the method name. 060c keeps the GO_OFF pointer
- *   arithmetic and the goto/case skeleton; member indexing does not match.
+ *   arithmetic; member indexing does not match.
  * - `#pragma opt_strength_reduction off` is file-global last-wins;
  *   func_ov003_020b060c needs it (glyph-loop induction) and the other nine
  *   members verify with it set, so it costs nothing. No narrower form.
@@ -32,6 +32,13 @@
  *   spelling for 0730's pointer arithmetic (typing ergonomics, not a codegen
  *   wall -- void* compiles identically, see
  *   notes/experiments/gameover-2711-bg1scrptr-u16.md).
+ * - data_0209f5bc (the active scene) gates Behavior through a plain virtual
+ *   call on slot 5; the tree's spellings disagree with each other
+ *   (SceneVCall6, UnkObj, ...) and none has a ROM RTTI identity. The
+ *   TU-local shadow vtable this file used to spell out to slot 5 was
+ *   measured inert and dropped for the plain call, so it is no longer a
+ *   retained substitution
+ *   (notes/experiments/gameover-2711-scenegate-virtual-call.md).
  * - unk_080[8]: zeroed by InitResources, never read back.
  */
 
@@ -52,17 +59,6 @@ enum dScGameOver_c_AssetId {
 #include "PlayerInput.h"
 #include "dFdBrightness_c.h"
 
-enum GameOverCursorState {
-    CURSOR_SELECT = 0,
-    CURSOR_COMMIT = 1
-};
-
-enum GameOverIntroPhase {
-    INTRO_SLIDING = 0,
-    INTRO_SETTLING = 1,
-    INTRO_READY = 2
-};
-
 /* File scope is the only place this pragma works. 0x020b060c needs
  * `#pragma opt_strength_reduction off`: it walks the eight glyphs with an
  * `i << 1` index into s16 arrays plus a second `ip` induction variable,
@@ -74,8 +70,7 @@ enum GameOverIntroPhase {
  * here, all 10 members verify, so it costs the other nine nothing. */
 #pragma opt_strength_reduction off
 
-/* SetFaders stores the scene fade controller in data_0209f5bc.
- * Slot 5 is IsAtStart: input waits until the entrance fade reaches zero. */
+/* SetFaders stores the fade controller here; slot 5 waits for the entrance fade. */
 
 /* ROM symbols this TU references that no header in the tree declares yet.
  * Spelt by their exact final names under C linkage, the way decl_common.h
@@ -109,14 +104,24 @@ void _ZN2GX16SetBankForSubOBJEt(u16 v);
 void _ZN2GX10LoadBGPlttEPKvjj(const void *p, u32 a, u32 b);
 void _ZN2GX11LoadOBJPlttEPKvjj(const void *p, u32 a, u32 b);
 void _ZN3GXS10LoadBGPlttEPKvjj(const void *p, u32 a, u32 b);
-void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-s32 sub, OamAttr *data, s32 x, s32 y,
-s32 palette, s32 priority, Fix12i scaleX, Fix12i scaleY,
-s32 rotation, s32 mode);
+void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(s32 sub, OamAttr *data, s32 x, s32 y, s32 palette,
+                                                 s32 priority, Fix12i scaleX, Fix12i scaleY,
+                                                 s32 rotation, s32 mode);
 void _ZN5Sound22StopLoadedMusic_Layer1Ej(unsigned int);
 int LoadFile(int handle);
 void DecompressLZ16(int src, void *dst);
 void func_02012790(int se);
+}
+
+/* The stylus went down this frame: held, with the held state just changed
+ * (see PlayerInput.h). Int-returning, so the ROM materializes the 0/1 it
+ * tests. */
+static inline int IsTouchStarted() {
+    int started = 0;
+    unsigned char slot = gActivePlayerSlot;
+    if (gTouchHeld[slot * 4] != 0)
+        started = gTouchEdge[slot * 4] != 0;
+    return started;
 }
 
 /* Reconstructed source-style name: SM64DS proves dScGameOver_c through RTTI,
@@ -130,19 +135,17 @@ void func_02012790(int se);
  * vptrs, ORs pauseFlags 1 and 4 (dScene_c::dScene_c), then stores this
  * class's vptr. The null check is the one `new` itself emits. */
 // @symbol dScGameOver_c_classInit
-extern "C" dScGameOver_c *dScGameOver_c_classInit(void)
-{
+extern "C" dScGameOver_c *dScGameOver_c_classInit(void) {
     return new dScGameOver_c();
 }
 
 /* [8] 0x020b0b3c -- vtable slot 0, KEY FUNCTION */
- // @symbol _ZN13dScGameOver_c13InitResourcesEv
+// @symbol _ZN13dScGameOver_c13InitResourcesEv
 /* Brings both engines up for the game-over screen, loads the
  * language-specific "GAME OVER" art (five language variants on both
  * screens), then zeroes the cursor FSM and lays the eight glyphs out along
  * mGlyphX/mGlyphY with a fixed scale and no rotation. */
-s32 dScGameOver_c::InitResources()
-{
+s32 dScGameOver_c::InitResources() {
     int f;
 
     func_02019028();
@@ -265,11 +268,11 @@ s32 dScGameOver_c::InitResources()
     func_0201cebc(0x27d);
     func_ov003_020b0730(1);
 
-    mCursorState = CURSOR_SELECT;
+    mCursorState = 0;
     mSelection = 0;
     mCommitTimer = 0;
     mFlashTimer = 0;
-    mIntroPhase = INTRO_SLIDING;
+    mIntroPhase = 0;
     for (f = 0; f < 8; f++) {
         mGlyphX[f] = data_ov003_020b1764[f];
         mGlyphY[f] = 0x60;
@@ -289,9 +292,8 @@ s32 dScGameOver_c::InitResources()
 
 /* [7] 0x020b0b34 -- vtable slot 3. Owns no allocation: everything drawn is
  * OAM data belonging to the overlay, so there is nothing to release. */
- // @symbol _ZN13dScGameOver_c16CleanupResourcesEv
-s32 dScGameOver_c::CleanupResources()
-{
+// @symbol _ZN13dScGameOver_c16CleanupResourcesEv
+s32 dScGameOver_c::CleanupResources() {
     return 1;
 }
 
@@ -299,161 +301,120 @@ s32 dScGameOver_c::CleanupResources()
  * prompt: state 0 reads the stylus box and the button, state 1 runs the two
  * countdowns down and commits -- continue (func_0202ae74) on "yes", or a
  * scene fade back out on "no". mIntroPhase gates all of it until the intro
- * is in. The goto skeleton preserves the matched branch shape. */
- // @symbol _ZN13dScGameOver_c8BehaviorEv
-s32 dScGameOver_c::Behavior()
-{
-    if (data_0209f5bc->IsAtStart() == 0)
-        goto done;
+ * is in. */
+// @symbol _ZN13dScGameOver_c8BehaviorEv
+s32 dScGameOver_c::Behavior() {
+    if (data_0209f5bc->IsAtStart() != 0) {
+        func_ov003_020b060c();
 
-    func_ov003_020b060c();
+        if (mIntroPhase < 2)
+            return 1;
 
-    if (mIntroPhase < INTRO_READY)
-        return 1;
-
-    switch (mCursorState) {
-        case CURSOR_SELECT: goto selectChoice;
-        case CURSOR_COMMIT: goto commitChoice;
-        default: goto done;
-    }
-
-selectChoice:
-        {
-            unsigned char playerSlot = gActivePlayerSlot;
-            int touchStarted = 0;
-            if (gTouchHeld[playerSlot * 4] != 0)
-                touchStarted = (gTouchEdge[playerSlot * 4] != 0);
-            if (!touchStarted) {
-                if (!IsButtonInputValid())
-                    goto done;
-            }
-        }
-        {
-            unsigned char playerSlot = gActivePlayerSlot;
-            if ((unsigned char)(gTouchX[playerSlot * 4] - 8) < 0xf0) {
-                if ((unsigned char)(gTouchY[playerSlot * 4] - 0x38) < 0x20)
-                    goto chooseContinue;
-            }
-        }
-        if (mSelection != 0)
-            goto checkQuitChoice;
-        if (!IsButtonInputValid())
-            goto checkQuitChoice;
-    chooseContinue:
-        if (mSelection == 0)
-            mFlashTimer = (unsigned char)(data_0208ee44 << 3);
-        mSelection = 0;
-        func_ov003_020b0730(0);
-        mCommitTimer = (unsigned char)(data_0208ee44 << 4);
-        func_02012790(0x9a);
-        mCursorState = CURSOR_COMMIT;
-        goto done;
-
-    checkQuitChoice:
-        {
-            unsigned char playerSlot = gActivePlayerSlot;
-            if ((unsigned char)(gTouchX[playerSlot * 4] - 8) < 0xf0) {
-                if ((unsigned char)(gTouchY[playerSlot * 4] - 0x68) < 0x20)
-                    goto chooseQuit;
-            }
-        }
-        if (mSelection != 1)
-            goto done;
-        if (!IsButtonInputValid())
-            goto done;
-    chooseQuit:
-        if (mSelection == 1)
-            mFlashTimer = (unsigned char)(data_0208ee44 << 3);
-        mSelection = 1;
-        func_ov003_020b0730(0);
-        mCommitTimer = (unsigned char)(data_0208ee44 << 4);
-        func_02012790(0x9b);
-        mCursorState = CURSOR_COMMIT;
-        goto done;
-
-commitChoice:
-        if (mFlashTimer != 0) {
-            mFlashTimer -= data_0208ee44;
-            if (mFlashTimer == 0)
-                func_ov003_020b0730(0);
-        }
-        if (mCommitTimer != 0) {
-            mCommitTimer -= data_0208ee44;
-            if (mCommitTimer == 0) {
+        switch (mCursorState) {
+        case 0: {
+            unsigned char idx;
+            if (!IsTouchStarted() && !IsButtonInputValid())
+                break;
+            idx = gActivePlayerSlot;
+            if (((unsigned char)(gTouchX[idx * 4] - 8) < 0xf0 &&
+                 (unsigned char)(gTouchY[idx * 4] - 0x38) < 0x20) ||
+                (mSelection == 0 && IsButtonInputValid())) {
                 if (mSelection == 0)
-                    func_0202ae74();
-                else
-                    dScene_c::StartSceneFade(1, 0, 0);
-                _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
+                    mFlashTimer = (unsigned char)(data_0208ee44 << 3);
+                mSelection = 0;
+                func_ov003_020b0730(0);
+                mCommitTimer = (unsigned char)(data_0208ee44 << 4);
+                func_02012790(0x9a);
+                mCursorState = 1;
+                break;
             }
+            idx = gActivePlayerSlot;
+            if (((unsigned char)(gTouchX[idx * 4] - 8) < 0xf0 &&
+                 (unsigned char)(gTouchY[idx * 4] - 0x68) < 0x20) ||
+                (mSelection == 1 && IsButtonInputValid())) {
+                if (mSelection == 1)
+                    mFlashTimer = (unsigned char)(data_0208ee44 << 3);
+                mSelection = 1;
+                func_ov003_020b0730(0);
+                mCommitTimer = (unsigned char)(data_0208ee44 << 4);
+                func_02012790(0x9b);
+                mCursorState = 1;
+            }
+            break;
         }
-
-done:
+        case 1:
+            if (mFlashTimer != 0) {
+                mFlashTimer -= data_0208ee44;
+                if (mFlashTimer == 0)
+                    func_ov003_020b0730(0);
+            }
+            if (mCommitTimer != 0) {
+                mCommitTimer -= data_0208ee44;
+                if (mCommitTimer == 0) {
+                    if (mSelection == 0)
+                        func_0202ae74();
+                    else
+                        dScene_c::StartSceneFade(1, 0, 0);
+                    _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
+                }
+            }
+            break;
+        }
+    }
     return 1;
 }
 
 /* [5] 0x020b0814 -- vtable slot 9. Draws the eight "GAME OVER" glyph
  * sprites from the per-glyph x/y arrays InitResources laid out, then lets
  * dScStage_c draw the yes/no bouncing arrows once the cursor is live. */
- // @symbol _ZN13dScGameOver_c6RenderEv
-s32 dScGameOver_c::Render()
-{
-    int glyphIndex;
-    for (glyphIndex = 0; glyphIndex < 8; glyphIndex++) {
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, data_ov003_020b1824[glyphIndex],
-            mGlyphX[glyphIndex], mGlyphY[glyphIndex],
-            -1, -1, 0x1000, 0x1000, 0, -1);
+// @symbol _ZN13dScGameOver_c6RenderEv
+s32 dScGameOver_c::Render() {
+    int i;
+    for (i = 0; i < 8; i++) {
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov003_020b1824[i], mGlyphX[i],
+                                                    mGlyphY[i], -1, -1, 0x1000, 0x1000, 0, -1);
     }
-    if (mIntroPhase >= INTRO_READY)
+    if (mIntroPhase >= 2)
         dScStage_c::RenderBouncingArrows();
     return 1;
 }
 
 /* [4] 0x020b0810 -- vtable slot 12. Nothing to unwind; the slot exists only
  * so dScene_c's teardown has something to call. */
- // @symbol _ZN13dScGameOver_c16OnPendingDestroyEv
-void dScGameOver_c::OnPendingDestroy()
-{
-}
+// @symbol _ZN13dScGameOver_c16OnPendingDestroyEv
+void dScGameOver_c::OnPendingDestroy() {}
 
 /* [3] 0x020b0730 -- repaints the sub-screen BG1 palette bank over the two
  * yes/no boxes: two 0x20-by-4 rectangles whose screen-map origins come from
- * data_ov003_020b174c. `clearHighlight` non-zero forces both back to the unselected
+ * data_ov003_020b174c. `arg` non-zero forces both back to the unselected
  * bank; zero picks the highlighted bank for whichever box mSelection names,
  * and only while the mFlashTimer has run out. */
- // @symbol _ZN13dScGameOver_c19func_ov003_020b0730Ei
-void dScGameOver_c::func_ov003_020b0730(int clearHighlight)
-{
-  int button;
-  for (button = 0; button < 2; button++)
-  {
-    unsigned int paletteBits;
-    int column;
-    unsigned short *tiles = _ZN3G2S12GetBG1ScrPtrEv();
-    tiles += data_ov003_020b174c[button];
-    if (clearHighlight)
-    {
-      paletteBits = 0x1000;
+// @symbol _ZN13dScGameOver_c19func_ov003_020b0730Ei
+void dScGameOver_c::func_ov003_020b0730(int arg) {
+    int i;
+    for (i = 0; i < 2; i++) {
+        unsigned int v;
+        int j;
+        unsigned short *p = _ZN3G2S12GetBG1ScrPtrEv();
+        p += data_ov003_020b174c[i];
+        if (arg) {
+            v = 0x1000;
+        } else {
+            unsigned int w;
+            if ((mSelection == i) && (mFlashTimer == 0))
+                w = 0x2000;
+            else
+                w = 0x1000;
+            v = (unsigned short)w;
+        }
+        for (j = 0; j < 0x20; j++) {
+            p[0] = (p[0] & 0x3ff) | v;
+            p[0x20] = (p[0x20] & 0x3ff) | v;
+            p[0x40] = (p[0x40] & 0x3ff) | v;
+            p[0x60] = (p[0x60] & 0x3ff) | v;
+            p += 1;
+        }
     }
-    else
-    {
-      unsigned int selectedPalette;
-      if ((mSelection == button) && (mFlashTimer == 0))
-        selectedPalette = 0x2000;
-      else
-        selectedPalette = 0x1000;
-      paletteBits = (unsigned short) selectedPalette;
-    }
-    for (column = 0; column < 0x20; column++)
-    {
-      tiles[0] = (tiles[0] & 0x3ff) | paletteBits;
-      tiles[0x20] = (tiles[0x20] & 0x3ff) | paletteBits;
-      tiles[0x40] = (tiles[0x40] & 0x3ff) | paletteBits;
-      tiles[0x60] = (tiles[0x60] & 0x3ff) | paletteBits;
-      tiles += 1;
-    }
-  }
 }
 
 /* [2] 0x020b060c -- the glyph drop-in step, one frame per call. */
@@ -472,7 +433,7 @@ void dScGameOver_c::func_ov003_020b0730(int clearHighlight)
  * Behavior's cursor FSM and Render's bouncing arrows, and enables the two
  * BG layers the prompt lives on.
  *
- * The glyph loop skeleton is load-bearing, not leftover. MEASURED and pinned
+ * The `e` loop skeleton is load-bearing, not leftover. MEASURED and pinned
  * in notes/experiments/gameover-2711-glyph-loop-skeleton.md: spelling the
  * loop with member indexing (o->mGlyphX[i] / o->mGlyphDelay[i]) reschedules
  * the whole member (69 words differ), and a surgical variant that changes
@@ -480,70 +441,68 @@ void dScGameOver_c::func_ov003_020b0730(int clearHighlight)
  * in-place "costs 3 words" figure is NOT reproduced by either pinned
  * spelling: the constraint holds, that number does not. The reading -- and
  * it is a reading, not a second measurement -- is that the ROM computes
- * glyphBase = base + (glyphIndex << 1) once per iteration and reaches both rows as small
- * constant offsets off glyphBase, while the member-index form makes mwccarm compute
+ * e = base + (i << 1) once per iteration and reaches both rows as small
+ * constant offsets off e, while the member-index form makes mwccarm compute
  * two separate base+i*2 addresses. GO_OFF names those offsets after their
- * fields without changing the tree the compiler sees. The goto/case
- * skeleton, the glyph-X pointer re-reads, the (long long)(int) launders on the
- * decrement, and case1's `(char *)o + GO_OFF` spelling (the member-index
- * form perturbs the tail: 999 words differ, size 0x124 vs 0x11c, pinned in
+ * fields without changing the tree the compiler sees. The `short *q`
+ * re-reads, the (long long)(int) launders on the decrement, and case 1's
+ * `(char *)o + GO_OFF` spelling (the member-index form perturbs the tail:
+ * 999 words differ, size 0x124 vs 0x11c, pinned in
  * notes/experiments/gameover-2711-case1-gooff-spelling.md) are the ROM's own
- * matched shape too. */
- // @symbol _ZN13dScGameOver_c19func_ov003_020b060cEv
-void dScGameOver_c::func_ov003_020b060c()
-{
-    unsigned char phase = this->mIntroPhase;
-    int glyphIndex;
-    int settleDelay;
-    if (phase == INTRO_SLIDING)
-        goto slideGlyphs;
-    if (phase == INTRO_SETTLING)
-        goto settleGlyphs;
-    return;
-
-slideGlyphs:
-    glyphIndex = 0;
-    settleDelay = 0xa;
-    do {
-        char *glyphBase = (char *)this + (glyphIndex << 1);
-        if (*(unsigned short *)(glyphBase + GO_OFF(mGlyphDelay)) != 0) {
-            *(unsigned short *)((long long)(int)(glyphBase + GO_OFF(mGlyphDelay))) =
-                (unsigned short)(*(unsigned short *)((long long)(int)(glyphBase + GO_OFF(mGlyphDelay))) - 1);
-        } else {
-            short targetX = data_ov003_020b1774[glyphIndex];
-            if (*(short *)(glyphBase + GO_OFF(mGlyphX)) != targetX) {
-                if (glyphIndex < 4) {
-                    short *glyphX = (short *)(glyphBase + GO_OFF(mGlyphX));
-                    *glyphX = (short)(*glyphX + 0xc);
-                    if (*(short *)(glyphBase + GO_OFF(mGlyphX)) >= targetX) {
-                        *(short *)(glyphBase + GO_OFF(mGlyphX)) = targetX;
-                        *(unsigned short *)(glyphBase + GO_OFF(mGlyphDelay)) = (unsigned short)settleDelay;
-                    }
-                } else {
-                    short *glyphX = (short *)(glyphBase + GO_OFF(mGlyphX));
-                    *glyphX = (short)(*glyphX - 0xc);
-                    if (*(short *)(glyphBase + GO_OFF(mGlyphX)) <= targetX) {
-                        *(short *)(glyphBase + GO_OFF(mGlyphX)) = targetX;
-                        *(unsigned short *)(glyphBase + GO_OFF(mGlyphDelay)) = (unsigned short)settleDelay;
-                        this->mIntroPhase = INTRO_SETTLING;
+ * shape too. */
+// @symbol _ZN13dScGameOver_c19func_ov003_020b060cEv
+void dScGameOver_c::func_ov003_020b060c() {
+    unsigned char s = this->mIntroPhase;
+    int i;
+    int ip;
+    switch (s) {
+    case 0:
+        i = 0;
+        ip = 0xa;
+        do {
+            char *e = (char *)this + (i << 1);
+            if (*(unsigned short *)(e + GO_OFF(mGlyphDelay)) != 0) {
+                *(unsigned short *)((long long)(int)(e + GO_OFF(mGlyphDelay))) =
+                    (unsigned short)(*(unsigned short *)((long long)(int)(e +
+                                                                          GO_OFF(mGlyphDelay))) -
+                                     1);
+            } else {
+                short tgt = data_ov003_020b1774[i];
+                if (*(short *)(e + GO_OFF(mGlyphX)) != tgt) {
+                    if (i < 4) {
+                        short *q = (short *)(e + GO_OFF(mGlyphX));
+                        *q = (short)(*q + 0xc);
+                        if (*(short *)(e + GO_OFF(mGlyphX)) >= tgt) {
+                            *(short *)(e + GO_OFF(mGlyphX)) = tgt;
+                            *(unsigned short *)(e + GO_OFF(mGlyphDelay)) = (unsigned short)ip;
+                        }
+                    } else {
+                        short *q = (short *)(e + GO_OFF(mGlyphX));
+                        *q = (short)(*q - 0xc);
+                        if (*(short *)(e + GO_OFF(mGlyphX)) <= tgt) {
+                            *(short *)(e + GO_OFF(mGlyphX)) = tgt;
+                            *(unsigned short *)(e + GO_OFF(mGlyphDelay)) = (unsigned short)ip;
+                            this->mIntroPhase = 1;
+                        }
                     }
                 }
             }
-        }
-        glyphIndex = glyphIndex + 1;
-        settleDelay = settleDelay + 4;
-    } while (glyphIndex < 8);
-    return;
+            i = i + 1;
+            ip = ip + 4;
+        } while (i < 8);
+        break;
 
-settleGlyphs:
-    if (*(unsigned short *)((char *)this + GO_OFF(mGlyphDelay)) != 0) {
-        unsigned short *delay = (unsigned short *)((char *)this + GO_OFF(mGlyphDelay));
-        *delay = (unsigned short)(*delay - 1);
-        return;
+    case 1:
+        if (*(unsigned short *)((char *)this + GO_OFF(mGlyphDelay)) != 0) {
+            unsigned short *p = (unsigned short *)((char *)this + GO_OFF(mGlyphDelay));
+            *p = (unsigned short)(*p - 1);
+            return;
+        }
+        this->mIntroPhase = 2;
+        data_0209d45c |= 1;
+        data_0209d454 |= 3;
+        break;
     }
-    this->mIntroPhase = INTRO_READY;
-    data_0209d45c |= 1;
-    data_0209d454 |= 3;
 }
 
 /* [1] [0] 0x020b05bc (D0) and 0x020b0580 (D1) -- neither is written here.

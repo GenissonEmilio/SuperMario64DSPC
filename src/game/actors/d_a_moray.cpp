@@ -35,9 +35,9 @@
  *   func_020167a4, which is that wrapper.
  * - Sound::Play(3, 0xfa, pos) grows 02111860. func_02012694 is Play
  *   with bank 3.
- * - Behavior's star gotos stay. Deleting the dead mVariant == 0xff
- *   and mPathID < 0 tests, or the unused second PathPtr::FromID,
- *   shrinks InitResources. mwcc still emits those tests.
+ * - Deleting the dead mVariant == 0xff and mPathID < 0 tests, or the
+ *   unused second PathPtr::FromID, shrinks InitResources. mwcc still
+ *   emits those tests.
  * - The held actor's matrix is the word at dActor_c+0xc8, inside
  *   pad_0c5. unk_400 is zeroed by the two idle inits and read nowhere
  *   in this file. Sound 0xfa has no name here.
@@ -375,16 +375,16 @@ int daMoray_c::func_ov016_021115c0()
     path.FromID(this->mPathID);
     path.GetNode(node, this->mPathNodeIndex);
 
-    headingToNode = Vec3_HorzAngle((Vector3 *)&this->mPosX, &node);
+    headingToNode = Vec3_HorzAngle(&this->mPos, &node);
     {
         int turn = AngleDiff(headingToNode, this->mPrevAngleY);
         this->mSegmentAngle[7] = turn / 2;
     }
     ApproachLinear(this->mPrevAngleY, headingToNode, 0x80);
 
-    ApproachLinear(this->mPrevAngleX, Vec3_VertAngle((Vector3 *)&this->mPosX, &node), 0x80);
+    ApproachLinear(this->mPrevAngleX, Vec3_VertAngle(&this->mPos, &node), 0x80);
 
-    Vec3_Sub(&diff, (Vector3 *)&this->mPosX, &node);
+    Vec3_Sub(&diff, &this->mPos, &node);
     len = LenVec3(&diff);
     if (len == 0 || len <= 0xa000) {
         if (this->mVariant == 1 && this->mPathNodeIndex == 0) {
@@ -395,10 +395,10 @@ int daMoray_c::func_ov016_021115c0()
         this->mPathNodeIndex++;
         if (this->mPathNodeIndex >= this->mPathNodeCount)
             this->mPathNodeIndex = 0;
-        func_02012694(0xfa, (const Vector3 *)&this->mCamSpacePosX);
+        func_02012694(0xfa, &this->mCamSpacePos);
     } else {
         Vec3_MulScalar(&scaled, &diff, cstd::fdiv(0xa000, len));
-        SubVec3((Vector3 *)&this->mPosX, &scaled, (Vector3 *)&this->mPosX);
+        SubVec3(&this->mPos, &scaled, &this->mPos);
     }
     return 1;
 }
@@ -436,7 +436,7 @@ int daMoray_c::func_ov016_02111758()
         worldTarget.x += this->mHomePosX;
         worldTarget.y += this->mHomePosY;
         worldTarget.z += this->mHomePosZ;
-        _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(*(Vector3 *)&this->mPosX, worldTarget, 0x14000);
+        _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(this->mPos, worldTarget, 0x14000);
     }
     if (this->mBlendModelAnim.Finished()) {
         this->mHorzSpeed = 0;
@@ -450,7 +450,7 @@ int daMoray_c::func_ov016_02111758()
 int daMoray_c::func_ov016_02111860()
 {
     _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov016_02114d20.filePtr, 8, 0x40000000, 0x1000, 0);
-    func_02012694(0xfa, (const Vector3 *)&this->mCamSpacePosX);
+    func_02012694(0xfa, &this->mCamSpacePos);
     return 1;
 }
 
@@ -471,9 +471,9 @@ int daMoray_c::func_ov016_021118b4()
     worldTarget.x += this->mHomePosX;
     worldTarget.y += this->mHomePosY;
     worldTarget.z += this->mHomePosZ;
-    _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(*(Vector3 *)&this->mPosX, worldTarget, 0x14000);
-    if (Vec3_Dist((Vector3 *)&this->mPosX, &worldTarget) < 0x14000) {
-        func_02012694(0xfa, (const Vector3 *)&this->mCamSpacePosX);
+    _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(this->mPos, worldTarget, 0x14000);
+    if (Vec3_Dist(&this->mPos, &worldTarget) < 0x14000) {
+        func_02012694(0xfa, &this->mCamSpacePos);
         func_ov016_02111bf0(&data_ov016_02114dbc);
     }
     return 1;
@@ -484,7 +484,7 @@ int daMoray_c::func_ov016_021118b4()
 int daMoray_c::func_ov016_02111994()
 {
     this->unk_400 = 0;
-    func_02012694(0xfa, (const Vector3 *)&this->mCamSpacePosX);
+    func_02012694(0xfa, &this->mCamSpacePos);
     _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&this->mBlendModelAnim, data_ov016_02114d28.filePtr, 8, 0, 0x1000, 0);
     return 1;
 }
@@ -515,8 +515,9 @@ int daMoray_c::func_ov016_021119ec()
     int zero;
     int dy;
 
-    if (Vec3_Dist((const Vector3 *)&this->mPosX, (const Vector3 *)&this->mHomePosX) > 0xa000) {
-        _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(*(Vector3 *)&this->mPosX, *(const Vector3 *)&this->mHomePosX, 0x5000);
+    if (Vec3_Dist(&this->mPos, (const Vector3 *)&this->mHomePosX) > 0xa000) {
+        _Z14ApproachLinearR7Vector3RKS_5Fix12IiE(this->mPos, *(const Vector3 *)&this->mHomePosX,
+                                                 0x5000);
         return 1;
     }
 
@@ -527,7 +528,7 @@ int daMoray_c::func_ov016_021119ec()
     player = this->ClosestPlayer();
     if (player != 0) {
         /* ACDB order: x,y,z then entrance -- colors y/z as r2 and entrance as r1 */
-        const Vector3 *pos = (const Vector3 *)&player->mPosX;
+        const Vector3 *pos = &player->mPos;
         playerPos.x = pos->x;
         playerPos.y = pos->y;
         playerPos.z = pos->z;
@@ -560,7 +561,7 @@ int daMoray_c::func_ov016_021119ec()
         }
 
         if (AngleDiff(this->HorzAngleToCPlayer(), this->mAngleY) < thrAng) {
-            if (Vec3_HorzDist((Vector3 *)&this->mPosX, &playerPos) < thrHorz) {
+            if (Vec3_HorzDist(&this->mPos, &playerPos) < thrHorz) {
                 dy = this->mPosY - playerPos.y;
                 if (dy < 0)
                     dy = -dy;
@@ -611,7 +612,7 @@ void daMoray_c::func_ov016_02111c40()
     dActor_c *star;
     u32 starUniqueID;
 
-    Vec3_Asr(&asr, (Vector3 *)&this->mPosX, 3);
+    Vec3_Asr(&asr, &this->mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, asr.x, asr.y, asr.z);
     localOffset.z = 0;
     localOffset.z = -0x190000;
@@ -740,24 +741,19 @@ s32 daMoray_c::Behavior()
     starUniqueID = mStarUniqueID;
     if (starUniqueID != 0) {
         star = FindWithID(starUniqueID);
-        if (star == 0)
-            goto clear_id;
-        if (mVariant == 1) {
-            Player *player = ClosestPlayer();
-            if (player != 0) {
-                if (Vec3_Dist(&mStarPos, (const Vector3 *)&player->mPosX) < 0xfa000) {
+        if (star != 0) {
+            if (mVariant == 1) {
+                Player *player = ClosestPlayer();
+                if (player != 0 && Vec3_Dist(&mStarPos, &player->mPos) < 0xfa000) {
                     star->MarkForDestruction();
                     /* 0x40 releases the STAR; InitResources spawned it held (| 0x50). */
                     Spawn(ACTOR_STAR, mStarParam | 0x40, mStarPos, 0, mAreaId, -1);
                     mStarUniqueID = 0;
-                    goto after_first;
                 }
             }
+        } else {
+            mStarUniqueID = 0;
         }
-        goto after_first;
-    clear_id:
-        mStarUniqueID = 0;
-    after_first:
         if (mStarUniqueID != 0) {
             star->mPosX = mStarPos.x;
             star->mPosY = mStarPos.y;
@@ -830,67 +826,51 @@ s32 daMoray_c::InitResources()
     mStarUniqueID = 0;
     mBlendModelAnim.speed = 0x1000;
 
-    /* Entrance 1, or star 1 still uncollected: only variant 2. */
-    if (data_0209f220 == 1)
-        goto check_param2;
-    if (IsStarCollected(SublevelToLevel(8), 1) != 0)
-        goto stage2_path;
-
-check_param2:
-    if (mVariant != 2)
-        goto ret0_a;
-    mHomePosY -= 0x80000;
-    mPathNodeIndex = 8;
-    if (mPathNodeIndex >= mPathNodeCount)
-        mPathNodeIndex = 4;
-    mPosY = mHomePosY;
-    func_ov016_02111bf0(&data_ov016_02114d8c);
-    goto tail;
-ret0_a:
-    return 0;
-
-stage2_path:
-    /* Entrance 2, or star 2 still uncollected: only variant 1. */
-    if (data_0209f220 == 2)
-        goto check_param1;
-    if (IsStarCollected(SublevelToLevel(8), 2) != 0)
-        goto check_param0;
-
-check_param1:
-    if (mVariant != 1)
-        goto ret0_b;
-    /* Held (| 0x50). Behavior releases it with | 0x40. */
-    spawned = Spawn(ACTOR_STAR, mStarParam | 0x50, *(Vector3 *)&mPosX, 0, mAreaId, -1);
-    if (spawned != 0) {
-        mStarUniqueID = spawned->uniqueID;
-        spawned->mFlags = 0;
-        _ZN8dActor_c9SetRangesE5Fix12IiES1_S1_S1_(spawned, 0, 0x3e8000, 0x1f40000, 0x1f40000);
+    if (data_0209f220 == 1 || IsStarCollected(SublevelToLevel(8), 1) == 0) {
+        /* Entrance 1, or star 1 still uncollected: only variant 2. */
+        if (mVariant == 2) {
+            mHomePosY -= 0x80000;
+            mPathNodeIndex = 8;
+            if (mPathNodeIndex >= mPathNodeCount)
+                mPathNodeIndex = 4;
+            mPosY = mHomePosY;
+            func_ov016_02111bf0(&data_ov016_02114d8c);
+        } else {
+            return 0;
+        }
+    } else if (data_0209f220 == 2 || IsStarCollected(SublevelToLevel(8), 2) == 0) {
+        /* Entrance 2, or star 2 still uncollected: only variant 1. */
+        if (mVariant == 1) {
+            /* Held (| 0x50). Behavior releases it with | 0x40. */
+            spawned = Spawn(ACTOR_STAR, mStarParam | 0x50, mPos, 0, mAreaId, -1);
+            if (spawned != 0) {
+                mStarUniqueID = spawned->uniqueID;
+                spawned->mFlags = 0;
+                _ZN8dActor_c9SetRangesE5Fix12IiES1_S1_S1_(spawned, 0, 0x3e8000, 0x1f40000,
+                                                          0x1f40000);
+            }
+            func_ov016_02111bf0(&data_ov016_02114d8c);
+        } else {
+            return 0;
+        }
+    } else {
+        /* Otherwise both stars are collected: only variant 0. */
+        if (mVariant == 0) {
+            PathPtr path;
+            path.FromID(mPathID);
+            /* Both nodes are written to mPos; the second sticks. The facing
+               below is against `node`, which this block does not fill. Sending
+               node 0 there is a one-word DIFF. */
+            path.GetNode(mPos, 0);
+            path.GetNode(mPos, 1);
+            mPrevAngleY = Vec3_HorzAngle(&mPos, &node);
+            mAngleY = mPrevAngleY;
+            func_ov016_02111bf0(&data_ov016_02114dbc);
+        } else {
+            return 0;
+        }
     }
-    func_ov016_02111bf0(&data_ov016_02114d8c);
-    goto tail;
-ret0_b:
-    return 0;
 
-check_param0:
-    if (mVariant != 0)
-        goto ret0_c;
-    {
-        PathPtr path;
-        path.FromID(mPathID);
-        /* Both nodes are written to mPos; the second sticks. The facing
-           below is against `node`, which this block does not fill. Sending
-           node 0 there is a one-word DIFF. */
-        path.GetNode(*(Vector3 *)&mPosX, 0);
-        path.GetNode(*(Vector3 *)&mPosX, 1);
-    }
-    mPrevAngleY = Vec3_HorzAngle((Vector3 *)&mPosX, &node);
-    mAngleY = mPrevAngleY;
-    func_ov016_02111bf0(&data_ov016_02114dbc);
-    goto tail;
-ret0_c:
-    return 0;
-
-tail:
     for (i = 0; i < 7; i++) {
         /* array index form -> add r0,r4,ip,lsl#1 (not strength-reduced i*2) */
         mSegmentAngle[i] = 0;

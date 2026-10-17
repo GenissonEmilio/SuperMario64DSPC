@@ -66,6 +66,12 @@ void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
     void *clps);
 }
 
+/* data_0209f2d8 (CURRENT_GAMEMODE) is 1 in VS mode: PrepareVsMode stores it.
+   Both gates below skip in VS. Same predicate as CapIconMgr and d_meter. */
+static inline int IsVsMode(void) {
+    return data_0209f2d8 == 1;
+}
+
 // @symbol daObjMc_Metalnet_c_classInit
 /* Reconstructed source-style name. Historical alias: MetalNet_Spawn.
  *
@@ -106,16 +112,12 @@ s32 daObjMc_Metalnet_c::InitResources()
         &data_ov009_02112bf8);
 
     if ((param1 & 0xff) == 0xff) {
-        int b = (int)(data_0209f2d8 == 1);
-        if (b != 0) goto keep;
-        if ((data_0209caa0[2] & 0x80000) == 0) goto keep;
-        return 0;
+        if (!IsVsMode() && (data_0209caa0[2] & 0x80000) != 0)
+            return 0;
     } else {
-        int b = (int)(data_0209f2d8 == 1);
-        if (b != 0) goto keep;
-        if (NumStars() >= 0x96) return 0;
+        if (!IsVsMode() && NumStars() >= 0x96)
+            return 0;
     }
-keep:
     return 1;
 }
 
@@ -128,13 +130,10 @@ keep:
  * enable the mesh near the player and switch it off again far away. */
 s32 daObjMc_Metalnet_c::Behavior()
 {
-    int b;
-
     UpdateModelPosAndRotY();
     UpdateClsnPosAndRot();
 
-    b = (int)(data_0209f2d8 == 1);
-    if (b != 0) {
+    if (IsVsMode()) {
         if (mMeshCollider.IsEnabled() == 0)
             mMeshCollider.Enable(this);
     } else {

@@ -29,6 +29,7 @@ enum daBgSnwmn_c_AssetId {
 };
 
 #include "daBgSnwmn_c.h"
+#include "SpawnInfo.h"
 #include "SharedFilePtr.h"
 #include "dBgCh_Gnd.h"
 
@@ -77,24 +78,6 @@ extern "C" SnwmnModelFilePtr gdaBgSnwmnBigSnowmanHeadModelFile;
 extern "C" SnwmnTexSequenceFilePtr gdaBgSnwmnBigSnowmanSmileTextureSequenceFile;
 extern "C" SnwmnCylOffset data_ov072_02122c70;
 
-/* The typed 0x1c actor profile: fBase_c reads the halfwords at +4/+6 as
- * behavior/render priorities. dActor_c reads actor flags at +8 and passes
- * the words at +0xc/+0x10/+0x14/+0x18 to SetRanges as clip offset Y, clip
- * radius, clip distance and far distance. */
-struct SnwmnProfile {
-    daBgSnwmn_c *(*classInit)();
-    s16 behaviorPriority;
-    s16 renderPriority;
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    u32 clipDistance;
-    u32 farDistance;
-};
-
-typedef char SnwmnProfile_size_must_be_0x1c[
-    sizeof(SnwmnProfile) == 0x1c ? 1 : -1];
-
 /* Reconstructed source-style names. SM64DS directly preserves the class RTTI,
  * BIG_SNOWMAN ID, descriptor relationship, and factory behavior. */
 // @symbol daBgSnwmn_c_classInit
@@ -103,7 +86,7 @@ extern "C" daBgSnwmn_c *daBgSnwmn_c_classInit()
     return new daBgSnwmn_c();
 }
 
-extern "C" SnwmnProfile g_profile_BIG_SNOWMAN = {
+extern "C" SpawnInfo<daBgSnwmn_c> g_profile_BIG_SNOWMAN = {
     daBgSnwmn_c_classInit,
     0x0110,
     0x0083,
@@ -127,8 +110,7 @@ s32 daBgSnwmn_c::InitResources()
     void *model;
 
     if (IsStarCollectedInLevel(0xa, 5) == 0) {
-        dActor_c::Spawn(0x111, 0, *(Vector3 *)&mPosX, (Vector3_16 *)&mAngleX,
-                        mAreaId, -1);
+        dActor_c::Spawn(0x111, 0, mPos, &mAngle, mAreaId, -1);
         MarkForDestruction();
     }
 
@@ -184,8 +166,8 @@ s32 daBgSnwmn_c::Behavior()
 s32 daBgSnwmn_c::Render()
 {
     mTexSeq.Update(mModel1.data);
-    mModel1.Render((Vector3 *)&mScaleX);
-    mModel2.Render((Vector3 *)&mScaleX);
+    mModel1.Render(&mScale);
+    mModel2.Render(&mScale);
     return 1;
 }
 

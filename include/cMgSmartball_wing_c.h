@@ -60,25 +60,27 @@ struct cMgSmartball_wing_c : cMgSmartball_object_c {
        angle at its 0x3000 limit); Trigger is the piranha's feed bump;
        RebuildVerts rewrites the 0x48..0x87 fan from the 0x32 angle;
        HitTest is the ball-vs-wing collision routine. */
-    int  IsSettled();
+    int IsSettled();
     void Trigger();
     void RebuildVerts();
-    int  HitTest(int *pos);
+    int HitTest(int *pos);
 
-    s32 unk_034;       /* 0x034 -- set to 0x14 on the first trigger and 0 on
+    s32 mTriggerTime;  /* 0x034 -- set to 0x14 on the first trigger and 0 on
                            every later one by Trigger; no reader */
-    s32 unk_038;       /* 0x038 -- zeroed by the same call; no reader */
-    u8  unk_03c;       /* 0x03c -- set to 1 by the same call; no reader */
-    u8  pad_03d[0x3];  /* explicit: the compiler inserts this either way, but
+    s32 mTriggerPhase; /* 0x038 -- zeroed by the same call; no reader */
+    u8 mTriggerFlag;   /* 0x03c -- set to 1 by the same call; no reader */
+    u8 pad_03d[0x3];   /* explicit: the compiler inserts this either way, but
                           an implicit gap is a gap nobody has looked at */
     s32 mTriggerCount; /* 0x040 -- how many times the piranha has fed this
                            wing; see the header comment for its three
                            readers */
-    u8  mAngleSettled; /* 0x044 -- the angle has finished easing. Raised by
+    u8 mAngleSettled;  /* 0x044 -- the angle has finished easing. Raised by
                            IsTableAtRest; while set, SaveSnapshot leaves
                            the angle alone */
-    u8  pad_045[3];    /* align the collision vertices */
-    struct CollisionVertex { s32 x, y; };
+    u8 pad_045[3];     /* align the collision vertices */
+    struct CollisionVertex {
+        s32 x, y;
+    };
     CollisionVertex mVertices[8]; /* 0x048..0x087, rebuilt from the wing angle */
 };
 

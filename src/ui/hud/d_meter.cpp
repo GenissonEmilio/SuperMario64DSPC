@@ -91,7 +91,8 @@ enum dMeter_c_AssetId {
  * the sprite layer and a handful of globals the tree has not named yet; each
  * entry says why it cannot come from a shared header. */
 
-struct OamAttr; struct Matrix2x2;
+struct OamAttr;
+struct Matrix2x2;
 
 /* Stands in for include/OAM.h, which declares Render and the five-argument
  * RenderSub but none of these OamAttr statics. The legacy sources spelled the
@@ -114,13 +115,16 @@ public:
     static OamAttr S_CAM_ZOOM_BUTTON;
     static OamAttr S_CAM_ZOOM_BUTTON_PRESSED;
     static void RenderSub(OamAttr *attr, int x, int y, int a, int b);
-    static void Render(bool vis, OamAttr* attr, int x, int y, int a, int b, Matrix2x2* m);
+    static void Render(bool vis, OamAttr *attr, int x, int y, int a, int b, Matrix2x2 *m);
 };
 
+namespace GX {
+void LoadOBJPltt(const void *, u32, u32);
+}
 
-namespace GX { void LoadOBJPltt(const void*, u32, u32); }
-
-namespace GXS { void LoadOBJPltt(const void*, u32, u32); }
+namespace GXS {
+void LoadOBJPltt(const void *, u32, u32);
+}
 
 extern "C" {
 extern unsigned char data_ov002_02111184;
@@ -131,14 +135,15 @@ extern struct OamAttr _ZN3OAM7MINUTESE;
 extern struct OamAttr data_ov002_0210c6c0;
 /* ov001's OAM::NUMBERS, not ov000's -- ov000 shares this load window with ov002 and
 * so can never be the module this reaches. Sits with OAM::TIME and OAM::MINUTES above. */
-extern struct OamAttr* _ZN3OAM7NUMBERSE[];
-extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(int sub, struct OamAttr* attr, int x, int y, int a, int b, int sx, int sy, int c, int d);
+extern struct OamAttr *_ZN3OAM7NUMBERSE[];
+extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(int sub, struct OamAttr *attr, int x, int y,
+                                                        int a, int b, int sx, int sy, int c, int d);
 extern volatile unsigned short data_ov002_0210c208[];
 extern unsigned char data_0209f250;
 extern unsigned char data_ov002_02111178;
 extern signed char data_0209f2f4;
 struct OamAttr;
-extern OamAttr* _ZN3OAM10LIFE_ICONSE[];
+extern OamAttr *_ZN3OAM10LIFE_ICONSE[];
 extern OamAttr _ZN3OAM5TIMESE;
 extern void *data_0209f394[];
 extern u8 data_ov002_02111180;
@@ -171,23 +176,24 @@ extern struct OamAttr data_ov002_0210d2c0;
 extern struct OamAttr data_ov002_0210d300;
 extern struct OamAttr data_ov002_0210d338;
 extern struct OamAttr _ZN3OAM7VS_TIMEE;
-extern struct OamAttr* _ZN3OAM17VS_YELLOW_NUMBERSE[];
-extern struct OamAttr* data_ov002_0210ca0c[];
+extern struct OamAttr *_ZN3OAM17VS_YELLOW_NUMBERSE[];
+extern struct OamAttr *data_ov002_0210ca0c[];
 extern struct OamAttr data_ov002_0210d2a0;
 extern struct OamAttr data_ov002_0210d2d0;
 extern struct OamAttr data_ov002_0210d308;
 extern struct OamAttr data_ov002_0210d348;
 extern struct OamAttr _ZN3OAM10VS_TIME_UPE;
 extern int GetOwnerLanguage(void);
-extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int sub, struct OamAttr* attr, int x, int y, int a, int b, int s, int c);
+extern void _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int sub, struct OamAttr *attr, int x, int y,
+                                                    int a, int b, int s, int c);
 extern unsigned char data_0209f2bc;
 extern unsigned short data_ov002_02111188;
 extern unsigned char data_0209d454;
 void func_02012790(int);
 extern unsigned char data_ov002_0211117c[];
-extern struct OamAttr* data_ov002_0210c254[];
-extern struct OamAttr* data_ov002_0210c278[];
-extern struct OamAttr* data_ov002_0210c230[];
+extern struct OamAttr *data_ov002_0210c254[];
+extern struct OamAttr *data_ov002_0210c278[];
+extern struct OamAttr *data_ov002_0210c230[];
 extern struct OamAttr data_ov002_0210d5d0;
 extern struct OamAttr data_ov002_0210d4f0;
 extern struct OamAttr data_ov002_0210c690;
@@ -195,10 +201,28 @@ extern int _ZN5Event6GetBitEj(unsigned int bit);
 extern int data_0209caa0[];
 extern unsigned char data_0209f284;
 extern dFdBrightness_c *data_0209f5bc;
-void* LoadFile(int handle);
-void DecompressLZ16(void* handle, int addr);
-void Deallocate(void* handle);
+void *LoadFile(int handle);
+void DecompressLZ16(void *handle, int addr);
+void Deallocate(void *handle);
 void func_0203da4c(void);
+}
+
+/* Mode 1 is versus mode. This int-returning predicate is what makes the ROM
+   materialize 0/1 before testing it. */
+static inline int IsVsMode(void) {
+    return data_0209f2d8 == 1;
+}
+
+/* 0 on the off frames of the blink after a new star is collected
+   (data_0209f2ac is NEW_STAR_COLLECTED, data_020a0db0 is FRAME_TIMER).
+   Flattening the nested ifs into one && chain changes the ROM's code. */
+static inline int StarCountVisible(void) {
+    if (data_0209f2ac != 0) {
+        if (data_0209f2d4 == 3 && (data_020a0db0 & 0x18) == 0)
+            return 0;
+        return 1;
+    }
+    return 1;
 }
 
 /* ROM ordinal 19 -- dMeter_c_classInit, 0x020fe154, size 0x3c.
@@ -208,21 +232,18 @@ void func_0203da4c(void);
  * preserved. Historical alias: HUD_Spawn. It was once labelled
  * _ZN8dMeter_cC1Ev, but it takes no `this`: it is the registry factory. */
 // @symbol dMeter_c_classInit
-extern "C" dMeter_c *dMeter_c_classInit()
-{
+extern "C" dMeter_c *dMeter_c_classInit() {
     return new dMeter_c();
 }
 
 /* ROM ordinal 18 -- _ZN8dMeter_c13InitResourcesEv, 0x020fda04, size 0x750 */
 // @symbol _ZN8dMeter_c13InitResourcesEv
-int dMeter_c::InitResources()
-{
+int dMeter_c::InitResources() {
     /* Main and sub engine OBJ VRAM. */
-    char* objVramMain = (char*)0x6400000;
-    char* objVramSub = (char*)0x6600000;
-    int isVsMode = (data_0209f2d8 == 1);
-    if (isVsMode != 0) {
-        void* h;
+    char *objVramMain = (char *)0x6400000;
+    char *objVramSub = (char *)0x6600000;
+    if (IsVsMode()) {
+        void *h;
         if (GetOwnerLanguage() == 5) {
             h = LoadFile(0xB003);
             DecompressLZ16(h, 0x6400000);
@@ -278,30 +299,45 @@ int dMeter_c::InitResources()
         GXS::LoadOBJPltt(h, 0x120, 0xE0);
         Deallocate(h);
     } else {
-        void* h;
-        if (GetOwnerLanguage() == 5) h = LoadFile(ASSET_D_2D_CMN_ICON_S_NCG_BIN);
-        else if (GetOwnerLanguage() == 4) h = LoadFile(ASSET_D_2D_CMN_ICON_I_NCG_BIN);
-        else if (GetOwnerLanguage() == 3) h = LoadFile(ASSET_D_2D_CMN_ICON_G_NCG_BIN);
-        else if (GetOwnerLanguage() == 2) h = LoadFile(ASSET_D_2D_CMN_ICON_F_NCG_BIN);
-        else h = LoadFile(ASSET_D_2D_CMN_ICON_E_NCG_BIN);
+        void *h;
+        if (GetOwnerLanguage() == 5)
+            h = LoadFile(ASSET_D_2D_CMN_ICON_S_NCG_BIN);
+        else if (GetOwnerLanguage() == 4)
+            h = LoadFile(ASSET_D_2D_CMN_ICON_I_NCG_BIN);
+        else if (GetOwnerLanguage() == 3)
+            h = LoadFile(ASSET_D_2D_CMN_ICON_G_NCG_BIN);
+        else if (GetOwnerLanguage() == 2)
+            h = LoadFile(ASSET_D_2D_CMN_ICON_F_NCG_BIN);
+        else
+            h = LoadFile(ASSET_D_2D_CMN_ICON_E_NCG_BIN);
         DecompressLZ16(h, 0x6400000);
         DecompressLZ16(h, 0x6600000);
         Deallocate(h);
-        if (GetOwnerLanguage() == 5) h = LoadFile(0xB00E);
-        else if (GetOwnerLanguage() == 4) h = LoadFile(0xAC0E);
-        else if (GetOwnerLanguage() == 3) h = LoadFile(0xA80E);
-        else if (GetOwnerLanguage() == 2) h = LoadFile(0xA40E);
-        else h = LoadFile(0xA00E);
+        if (GetOwnerLanguage() == 5)
+            h = LoadFile(0xB00E);
+        else if (GetOwnerLanguage() == 4)
+            h = LoadFile(0xAC0E);
+        else if (GetOwnerLanguage() == 3)
+            h = LoadFile(0xA80E);
+        else if (GetOwnerLanguage() == 2)
+            h = LoadFile(0xA40E);
+        else
+            h = LoadFile(0xA00E);
         DecompressLZ16(h, (int)(objVramMain + 0x2000));
         Deallocate(h);
         h = LoadFile(ASSET_D_2D_BTM_ICON_NCG_BIN);
         DecompressLZ16(h, (int)(objVramSub + 0x2000));
         Deallocate(h);
-        if (GetOwnerLanguage() == 5) h = LoadFile(0xB00A);
-        else if (GetOwnerLanguage() == 4) h = LoadFile(0xAC0A);
-        else if (GetOwnerLanguage() == 3) h = LoadFile(0xA80A);
-        else if (GetOwnerLanguage() == 2) h = LoadFile(0xA40A);
-        else h = LoadFile(0xA00A);
+        if (GetOwnerLanguage() == 5)
+            h = LoadFile(0xB00A);
+        else if (GetOwnerLanguage() == 4)
+            h = LoadFile(0xAC0A);
+        else if (GetOwnerLanguage() == 3)
+            h = LoadFile(0xA80A);
+        else if (GetOwnerLanguage() == 2)
+            h = LoadFile(0xA40A);
+        else
+            h = LoadFile(0xA00A);
         GX::LoadOBJPltt(h, 0, 0x120);
         GXS::LoadOBJPltt(h, 0, 0x120);
         Deallocate(h);
@@ -313,15 +349,16 @@ int dMeter_c::InitResources()
         Deallocate(h);
     }
 
-    int isVsTimer = 0;
     unk62 = 0;
     unk64 = 0xB4;
     mVsTimerY = 0xA;
-    if (data_0209f2d8 == 1) isVsTimer = 1;
-    if (isVsTimer != 0) {
-        if (data_0209f2f8 == 0x33) mVsTimer = 0x1E;
-        else if (data_0209f2f8 == 0x2B) *(volatile u16 *)&mVsTimer = 0x1E;
-        else mVsTimer = 0x1E;
+    if (IsVsMode()) {
+        if (data_0209f2f8 == 0x33)
+            mVsTimer = 0x1E;
+        else if (data_0209f2f8 == 0x2B)
+            *(volatile u16 *)&mVsTimer = 0x1E;
+        else
+            mVsTimer = 0x1E;
     } else {
         mVsTimer = 0x1E;
     }
@@ -329,8 +366,10 @@ int dMeter_c::InitResources()
     data_ov002_02111188 = 0xB4;
     data_ov002_02111184 = 0;
     {
-        u8 idx = *(volatile u8*)&data_0209f250;
-        data_ov002_0211117c[0] = ((Player*)((idx ? (void* volatile*)data_0209f394 : (void* volatile*)data_0209f394)[idx]))->GetHealth();
+        u8 idx = *(volatile u8 *)&data_0209f250;
+        data_ov002_0211117c[0] = ((Player *)((idx ? (void *volatile *)data_0209f394
+                                                  : (void *volatile *)data_0209f394)[idx]))
+                                     ->GetHealth();
     }
     if (data_ov002_0211117c[0] == 8) {
         mHealthMeterY = -0x18;
@@ -343,18 +382,17 @@ int dMeter_c::InitResources()
 
     /* Nine pixels per digit of NumStars(). */
     int starDigitsWidth = 0;
-    int isVsStars;
-    if (data_0209f2d8 == 1) isVsStars = 1; else isVsStars = 0;
-    if (isVsStars == 0) {
+    if (!IsVsMode()) {
         int n = NumStars();
-        if (n > 0x63) starDigitsWidth = 0x1B;
-        else if (n > 9) starDigitsWidth = 0x12;
-        else starDigitsWidth = 9;
+        if (n > 0x63)
+            starDigitsWidth = 0x1B;
+        else if (n > 9)
+            starDigitsWidth = 0x12;
+        else
+            starDigitsWidth = 9;
     }
 
-    int isVsLayout;
-    if (data_0209f2d8 == 1) isVsLayout = 1; else isVsLayout = 0;
-    if (isVsLayout != 0) {
+    if (IsVsMode()) {
         data_ov002_02111178 = 0;
         mLifeCountX = 0x10;
         mStarCountX = 0xF0;
@@ -387,21 +425,14 @@ int dMeter_c::InitResources()
 
 /* ROM ordinal 17 -- _ZN8dMeter_c8BehaviorEv, 0x020fd7a4, size 0x260 */
 // @symbol _ZN8dMeter_c8BehaviorEv
-int dMeter_c::Behavior()
-{
-    int t;
+int dMeter_c::Behavior() {
+    int vs;
 
-    if (data_0209f5bc->IsAtStart() == 0)
-        goto ret;
-    t = (data_0209f2d8 == 1);
-    if (t != false)
-        goto body;
-    if ((data_0209caa0[2] & 0x80) != 0)
-        goto body;
-ret:
-    return 1;
-body:
-    if (t != false) {
+    /* vs is computed only once the first test passes and is reused below. */
+    if (data_0209f5bc->IsAtStart() == 0 ||
+        ((vs = IsVsMode()) == 0 && (data_0209caa0[2] & 0x80) == 0))
+        return 1;
+    if (vs != 0) {
         UpdateVsTimer();
     } else {
         int flags;
@@ -490,23 +521,21 @@ body:
 
 /* ROM ordinal 16 -- _ZN8dMeter_c6RenderEv, 0x020fd5e0, size 0x1c4 */
 // @symbol _ZN8dMeter_c6RenderEv
-int dMeter_c::Render()
-{
-    int b = (data_0209f2d8 == 1);
-    if (b) {
-        if (data_0209fc9c != 0) goto end;
-        if (((data_0209f2c4 | data_0209f20c | data_0209f294) & 0xff) == 0) {
-            RenderVsTimer();
-            RenderStarCount();
-            RenderCoinCount();
-            RenderCameraButtons();
-        } else {
-            if (data_0209f204 != 0) {
+int dMeter_c::Render() {
+    if (IsVsMode()) {
+        if (data_0209fc9c == 0) {
+            if (((data_0209f2c4 | data_0209f20c | data_0209f294) & 0xff) == 0) {
                 RenderVsTimer();
+                RenderStarCount();
+                RenderCoinCount();
+                RenderCameraButtons();
+            } else {
+                if (data_0209f204 != 0) {
+                    RenderVsTimer();
+                }
             }
         }
-    } else {
-        if ((data_0209caa0[2] & 0x80) == 0) goto end;
+    } else if ((data_0209caa0[2] & 0x80) != 0) {
         unsigned char v = data_0209f20c;
         if (((data_0209f2c4 | v | data_0209f294) & 0xff) == 0) {
             RenderHealthMeter();
@@ -526,15 +555,12 @@ int dMeter_c::Render()
             }
         }
         unsigned char v2 = data_0209f20c;
-        if ((data_0209f2c4 | v2 | data_0209f294) & 0xff) {
-            if (v2 == 0) goto end;
-            if (data_0209f2d4 >= 3) goto end;
+        if (((data_0209f2c4 | v2 | data_0209f294) & 0xff) == 0 || (v2 != 0 && data_0209f2d4 < 3)) {
+            RenderStarCount();
+            RenderCameraButtons();
+            RenderLifeCount();
         }
-        RenderStarCount();
-        RenderCameraButtons();
-        RenderLifeCount();
     }
-end:
     return 1;
 }
 
@@ -543,8 +569,7 @@ end:
 /* dMeter_c::OnPendingDestroy() at 0x020fd5dc (ov002) -- vtable slot 12.
  * Empty override; the dMeter_c does nothing when marked for destruction.
  */
-void dMeter_c::OnPendingDestroy()
-{
+void dMeter_c::OnPendingDestroy() {
     (void)this;
 }
 
@@ -554,16 +579,14 @@ void dMeter_c::OnPendingDestroy()
  * Returns VS_FAIL (1); the dMeter_c holds no SharedFilePtr/heap resources to
  * release on death. dMeter_c : dBase_c : fBase_c.
  */
-s32 dMeter_c::CleanupResources()
-{
+s32 dMeter_c::CleanupResources() {
     (void)this;
     return 1;
 }
 
 /* ROM ordinal 13 -- _ZN8dMeter_c17UpdateHealthMeterEv, 0x020fd218, size 0x3bc */
 // @symbol _ZN8dMeter_c17UpdateHealthMeterEv
-void dMeter_c::UpdateHealthMeter()
-{
+void dMeter_c::UpdateHealthMeter() {
     int chr = data_0209f250;
     Player *player = (Player *)data_0209f394[chr];
     unsigned int health = (data_02092144[chr] >> 8) & 0xff;
@@ -686,35 +709,36 @@ void dMeter_c::UpdateHealthMeter()
 
 /* ROM ordinal 12 -- _ZN8dMeter_c17RenderHealthMeterEv, 0x020fcfec, size 0x22c */
 // @symbol _ZN8dMeter_c17RenderHealthMeterEv
-void dMeter_c::RenderHealthMeter()
-{
-    if (((Player *)data_0209f394[data_0209f250])->IsInsideOfCannon()) return;
+void dMeter_c::RenderHealthMeter() {
+    if (((Player *)data_0209f394[data_0209f250])->IsInsideOfCannon())
+        return;
 
     if (GetOwnerLanguage() == 5) {
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, data_ov002_0210c254[data_ov002_0211117c[0]], 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, &data_ov002_0210d5d0, 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov002_0210c254[data_ov002_0211117c[0]],
+                                                    0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0,
+                                                    -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d5d0, 0x80, mHealthMeterY,
+                                                    -1, 1, 0x1000, 0x1000, 0, -1);
     } else if (GetOwnerLanguage() == 4 || GetOwnerLanguage() == 2) {
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, data_ov002_0210c278[data_ov002_0211117c[0]], 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, &data_ov002_0210d4f0, 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov002_0210c278[data_ov002_0211117c[0]],
+                                                    0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0,
+                                                    -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d4f0, 0x80, mHealthMeterY,
+                                                    -1, 1, 0x1000, 0x1000, 0, -1);
     } else {
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, data_ov002_0210c230[data_ov002_0211117c[0]], 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(
-            0, &data_ov002_0210c690, 0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0, -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, data_ov002_0210c230[data_ov002_0211117c[0]],
+                                                    0x80, mHealthMeterY, -1, 1, 0x1000, 0x1000, 0,
+                                                    -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210c690, 0x80, mHealthMeterY,
+                                                    -1, 1, 0x1000, 0x1000, 0, -1);
     }
 
-    GX::LoadOBJPltt(
-        &data_ov002_0210c310[data_ov002_0210c29c[data_ov002_0211117c[0]]], 0x60, 0x20);
+    GX::LoadOBJPltt(&data_ov002_0210c310[data_ov002_0210c29c[data_ov002_0211117c[0]]], 0x60, 0x20);
 }
 
 /* ROM ordinal 11 -- _ZN8dMeter_c13UpdateVsTimerEv, 0x020fce9c, size 0x150 */
 // @symbol _ZN8dMeter_c13UpdateVsTimerEv
-void dMeter_c::UpdateVsTimer()
-{
+void dMeter_c::UpdateVsTimer() {
     unsigned int v;
 
     if (data_0209f2bc != 0)
@@ -728,15 +752,13 @@ void dMeter_c::UpdateVsTimer()
     if (data_0209f204 != 0)
         return;
 
-    if (data_ov002_02111188 == 0)
-    {
+    if (data_ov002_02111188 == 0) {
         data_ov002_02111188 = 0xb4;
         mVsTimer -= 1;
         v = mVsTimer;
         if (v <= 3 && v != 0)
             func_02012790(0x28);
-        if (mVsTimer == 0)
-        {
+        if (mVsTimer == 0) {
             data_0209f204 = 1;
             data_ov002_02111188 = 0x3c;
             func_02012790(0x29);
@@ -746,12 +768,9 @@ void dMeter_c::UpdateVsTimer()
 
     if (mVsTimer > 3)
         return;
-    if (mVsTimerY < 0x30)
-    {
+    if (mVsTimerY < 0x30) {
         mVsTimerY += 4;
-    }
-    else
-    {
+    } else {
         mVsTimerY = 0x38;
     }
 }
@@ -777,21 +796,25 @@ void dMeter_c::UpdateVsTimer()
  * Only the caption is drawn when any of data_0209f2c4 / f20c / f294 is set;
  * they are OR-ed and tested as a single byte.
  */
-void dMeter_c::RenderVsTimer()
-{
+void dMeter_c::RenderVsTimer() {
     int t = mVsTimer;
 
     if ((unsigned char)(data_0209f2c4 | data_0209f20c | data_0209f294) == 0) {
         if (GetOwnerLanguage() == 5) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d290, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d290, 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 4) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2c0, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2c0, 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 3) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d300, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d300, 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d338, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d338, 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         } else {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM7VS_TIMEE, 0x84, 9, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM7VS_TIMEE, 0x84, 9, -1, -1,
+                                                        0x1000, 0x1000, 0, -1);
         }
     }
 
@@ -804,32 +827,36 @@ void dMeter_c::RenderVsTimer()
         } else {
             int ones = t % 10;
             if (ones > 3) {
-                _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(0, _ZN3OAM17VS_YELLOW_NUMBERSE[ones], 0x7c, mVsTimerY, -1, -1, 0x1000, 0);
+                _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(0, _ZN3OAM17VS_YELLOW_NUMBERSE[ones], 0x7c,
+                                                        mVsTimerY, -1, -1, 0x1000, 0);
             } else {
                 OAM::Render(false, data_ov002_0210ca0c[3 - ones], 0x84, mVsTimerY, -1, -1, 0);
             }
         }
     } else {
         if (GetOwnerLanguage() == 5) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2a0, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2a0, 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 4) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2d0, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d2d0, 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 3) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d308, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d308, 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else if (GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d348, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210d348, 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         } else {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM10VS_TIME_UPE, 0x80, mVsTimerY, -1, -1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM10VS_TIME_UPE, 0x80, mVsTimerY,
+                                                        -1, -1, 0x1000, 0x1000, 0, -1);
         }
     }
 }
 
 /* ROM ordinal 9 -- _ZN8dMeter_c15RenderCoinCountEv, 0x020fc81c, size 0x1fc */
 // @symbol _ZN8dMeter_c15RenderCoinCountEv
-void dMeter_c::RenderCoinCount()
-{
-    int t = (data_0209f2d8 == 1);
-    if (t != false) {
+void dMeter_c::RenderCoinCount() {
+    if (IsVsMode()) {
         int sb = 0xf0;
         CalculateDigits(data_0209f358[data_0209f250]);
         for (int i = 2; i >= 0; i--) {
@@ -877,15 +904,14 @@ void dMeter_c::RenderCoinCount()
  * TOUCHES NO FIELD; the ROM body takes no `this` and now ignores the one it is
  * passed. Byte-free.
  */
-void dMeter_c::RenderRedCoins()
-{
-  int idx = data_0209f250;
-  int flag = data_0209f310[idx];
-  int count = (unsigned char)data_0209f30c[idx];
-  int sl = flag ? 0x1c : 0xa;
-  for(int i=0;i<count;i++){
-    OAM::Render(false, &data_ov002_0210c6b8, 0x10 + i*0xb, sl, -1, 1, (Matrix2x2*)0);
-  }
+void dMeter_c::RenderRedCoins() {
+    int idx = data_0209f250;
+    int flag = data_0209f310[idx];
+    int count = (unsigned char)data_0209f30c[idx];
+    int sl = flag ? 0x1c : 0xa;
+    for (int i = 0; i < count; i++) {
+        OAM::Render(false, &data_ov002_0210c6b8, 0x10 + i * 0xb, sl, -1, 1, (Matrix2x2 *)0);
+    }
 }
 
 /* ROM ordinal 7 -- _ZN8dMeter_c15RenderStarCountEv, 0x020fc458, size 0x324 */
@@ -911,13 +937,11 @@ void dMeter_c::RenderRedCoins()
  * The digit loop runs i = 2 down to 0 -- least significant first -- which is
  * why the cursor moves left.
  */
-void dMeter_c::RenderStarCount()
-{
+void dMeter_c::RenderStarCount() {
     int x = mStarCountX;
-    int b = (data_0209f2d8 == 1);
     int i;
 
-    if (b) {
+    if (IsVsMode()) {
         CalculateDigits((unsigned short)data_0209f310[data_0209f250]);
         for (i = 2; i >= 0; i--) {
             if (mDigits[i] >= 0) {
@@ -936,17 +960,7 @@ void dMeter_c::RenderStarCount()
         unsigned char mode = data_0209f2fc;
         if ((mode != 2 && data_ov002_02111178 == 4) ||
             (mode == 1 && data_ov002_02111178 >= 3 && data_ov002_02111178 < 6)) {
-            int flag;
-            if (data_0209f2ac != 0) {
-                if (data_0209f2d4 == 3 && (data_020a0db0 & 0x18) == 0) {
-                    flag = 0;
-                } else {
-                    flag = 1;
-                }
-            } else {
-                flag = 1;
-            }
-            if (flag == 0) {
+            if (!StarCountVisible()) {
                 return;
             }
             for (i = 2; i >= 0; i--) {
@@ -984,15 +998,14 @@ void dMeter_c::RenderStarCount()
  * ROM says this was a static -- unlike OAM's methods, whose call sites pass no
  * `this` -- so it is left a normal member.
  */
-void dMeter_c::RenderSilverStars()
-{
+void dMeter_c::RenderSilverStars() {
     int sl = 0;
     unsigned short n = (unsigned short)(short)data_0209f310[data_0209f250];
     int sb;
     if (sl < n) {
         sb = 0x10;
         do {
-            OAM::Render(0, (OamAttr*)data_ov001_020abac8, sb, 0xa, -1, 1, (Matrix2x2*)0);
+            OAM::Render(0, (OamAttr *)data_ov001_020abac8, sb, 0xa, -1, 1, (Matrix2x2 *)0);
             sl++;
             sb += 0x11;
         } while (sl < n);
@@ -1003,8 +1016,7 @@ void dMeter_c::RenderSilverStars()
 // @symbol _ZN8dMeter_c19RenderCameraButtonsEv
 /* Takes the object only because its caller in this TU passes it; the body
  * never reads it, which is why the legacy source could spell it static. */
-void dMeter_c::RenderCameraButtons()
-{
+void dMeter_c::RenderCameraButtons() {
     int idx = gActivePlayerSlot;
     u8 mode = data_0209f4ae[idx * 0x18];
     dCamera_c *cam = (dCamera_c *)data_0209f318;
@@ -1069,14 +1081,14 @@ void dMeter_c::RenderCameraButtons()
 
 /* ROM ordinal 4 -- _ZN8dMeter_c15RenderLifeCountEv, 0x020fbe38, size 0x214 */
 // @symbol _ZN8dMeter_c15RenderLifeCountEv
-void dMeter_c::RenderLifeCount()
-{
+void dMeter_c::RenderLifeCount() {
     unsigned char idx = data_0209f250;
     Player *player = (Player *)data_0209f394[idx];
     unsigned char state = data_ov002_02111178;
 
     if (state >= 3 && state < 6) {
-        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, _ZN3OAM10LIFE_ICONSE[player->mCharacter], mLifeCountX, 0xa, -1, 1, 0x1000, 0x1000, 0, -1);
+        _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, _ZN3OAM10LIFE_ICONSE[player->mCharacter],
+                                                    mLifeCountX, 0xa, -1, 1, 0x1000, 0x1000, 0, -1);
         OAM::Render(false, &_ZN3OAM5TIMESE, mLifeCountX + 0x10, 0xa, -1, 1, 0);
         CalculateDigits((unsigned short)data_0209f2f4);
         int x = mLifeCountX + 0x18;
@@ -1116,8 +1128,7 @@ void dMeter_c::RenderLifeCount()
  * it forces the 100/10/1 loads to be re-read per iteration instead of folded
  * into immediates, which is what makes this a loop at all.
  */
-void dMeter_c::CalculateDigits(unsigned short value)
-{
+void dMeter_c::CalculateDigits(unsigned short value) {
     int flag = 0;
     int i;
     for (i = 0; i < 3; i++) {
@@ -1134,8 +1145,7 @@ void dMeter_c::CalculateDigits(unsigned short value)
 
 /* ROM ordinal 2 -- _ZN8dMeter_c15RenderTimeTimerEv, 0x020fb96c, size 0x440 */
 // @symbol _ZN8dMeter_c15RenderTimeTimerEv
-void dMeter_c::RenderTimeTimer()
-{
+void dMeter_c::RenderTimeTimer() {
     unsigned long long t;
     unsigned long long min;
     unsigned long long sec;
@@ -1158,16 +1168,20 @@ void dMeter_c::RenderTimeTimer()
 
     if (min / 10 != 0) {
         if (GetOwnerLanguage() == 5 || GetOwnerLanguage() == 4 || GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210ce80, 0xa4, 0x1e, -1, 1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210ce80, 0xa4, 0x1e, -1, 1,
+                                                        0x1000, 0x1000, 0, -1);
         } else {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM4TIMEE, 0xa4, 0x1e, -1, 1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM4TIMEE, 0xa4, 0x1e, -1, 1,
+                                                        0x1000, 0x1000, 0, -1);
         }
         OAM::Render(false, _ZN3OAM7NUMBERSE[min / 10], 0xb8, 0x16, -1, 1, 0);
     } else {
         if (GetOwnerLanguage() == 5 || GetOwnerLanguage() == 4 || GetOwnerLanguage() == 2) {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210ce80, 0xac, 0x1e, -1, 1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &data_ov002_0210ce80, 0xac, 0x1e, -1, 1,
+                                                        0x1000, 0x1000, 0, -1);
         } else {
-            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM4TIMEE, 0xac, 0x1e, -1, 1, 0x1000, 0x1000, 0, -1);
+            _ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii(0, &_ZN3OAM4TIMEE, 0xac, 0x1e, -1, 1,
+                                                        0x1000, 0x1000, 0, -1);
         }
     }
 

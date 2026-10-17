@@ -143,37 +143,37 @@ struct dScMgSlot1_c : dScMgBase_c {
     };
 
     virtual ~dScMgSlot1_c();
-    virtual s32 InitResources();                       /* slot  0 */
-    virtual s32 Behavior();     /* slot  6 -- ov006 0x0210c9e0, byte-exact */
-    virtual s32 Render();                               /* slot  9 */
+    virtual s32 InitResources(); /* slot  0 */
+    virtual s32 Behavior();      /* slot  6 -- ov006 0x0210c9e0, byte-exact */
+    virtual s32 Render();        /* slot  9 */
     /* All three override dScMgBase_c -- slots 18, 27 and 28 -- so the base
        fixes every index below and declaration order no longer decides any of
        them.  It decided 27 and 28 until the base declared them; see the banner
        for what that cost and how it was closed. */
-    virtual void StartRound(int arg);                 /* slot 18 */
-    virtual void OpenMenu();                     /* slot 27 */
-    virtual int  CloseMenu();                 /* slot 28 */
+    virtual void StartRound(int arg); /* slot 18 */
+    virtual void OpenMenu();          /* slot 27 */
+    virtual int CloseMenu();          /* slot 28 */
 
-    betIcon_c mBetIcon;      /* 0x4660 -- RTTI-proven nested touch icon */
-    u8  pad_4684[0xc];      /* 0x4684 -- embedded object, own type unknown */
-    u8  pad_4690[0xc];      /* 0x4690 -- embedded object, own type unknown */
-    u8  pad_469c[0x8];      /* 0x469c -- embedded object, own type unknown */
-    u32 mReelScroll[3];     /* 0x46a4 -- Fix12 distance to the next symbol */
-    s32 mSpinSoundHandle;   /* 0x46b0 -- returned by Sound_PlayIfNotActive */
-    s32 mState;             /* 0x46b4 -- Behavior's state-machine index */
-    s32 mPayoutMultiplier;  /* 0x46b8 -- matched-symbol and wild awards per bet */
-    s32 unk_46bc;           /* 0x46bc */
-    u8  mReelStrip[3][21];   /* 0x46c0 -- symbol strips, one 21-byte row per reel */
-    u8  mSymbolIndex[3];    /* 0x46ff -- current strip index, modulo 21 */
-    u8  mReelSpinning[3];   /* 0x4702 -- cleared by a touch on that reel */
-    u8  mStoppedReelCount;  /* 0x4705 -- reels stopped by touch this spin */
-    u8  pad_4706[0x2];      /* 0x4706 used by StartRound */
-    u8  mSpeedTableOffset;  /* 0x4708 -- added to reel index in the speed table */
-    u8  mMatchedSymbol;     /* 0x4709 -- common non-wild symbol, or 5 if all wild */
-    u8  mHasMatch;          /* 0x470a -- all three symbols agree, allowing wilds */
-    u8  mWildCount;         /* 0x470b -- number of symbol-5 wilds */
-    u8  mStateTimer;        /* 0x470c -- countdown via DecIfAbove0_Byte */
-    u8  pad_470d[0x3];
+    betIcon_c mBetIcon;    /* 0x4660 -- RTTI-proven nested touch icon */
+    u8 pad_4684[0xc];      /* 0x4684 -- embedded object, own type unknown */
+    u8 pad_4690[0xc];      /* 0x4690 -- embedded object, own type unknown */
+    u8 pad_469c[0x8];      /* 0x469c -- embedded object, own type unknown */
+    u32 mReelScroll[3];    /* 0x46a4 -- Fix12 distance to the next symbol */
+    s32 mSpinSoundHandle;  /* 0x46b0 -- returned by Sound_PlayIfNotActive */
+    s32 mState;            /* 0x46b4 -- Behavior's state-machine index */
+    s32 mPayoutMultiplier; /* 0x46b8 -- matched-symbol and wild awards per bet */
+    s32 mStartCredits;     /* 0x46bc */
+    u8 mReelStrip[3][21];  /* 0x46c0 -- symbol strips, one 21-byte row per reel */
+    u8 mSymbolIndex[3];    /* 0x46ff -- current strip index, modulo 21 */
+    u8 mReelSpinning[3];   /* 0x4702 -- cleared by a touch on that reel */
+    u8 mStoppedReelCount;  /* 0x4705 -- reels stopped by touch this spin */
+    u8 pad_4706[0x2];      /* 0x4706 used by StartRound */
+    u8 mSpeedTableOffset;  /* 0x4708 -- added to reel index in the speed table */
+    u8 mMatchedSymbol;     /* 0x4709 -- common non-wild symbol, or 5 if all wild */
+    u8 mHasMatch;          /* 0x470a -- all three symbols agree, allowing wilds */
+    u8 mWildCount;         /* 0x470b -- number of symbol-5 wilds */
+    u8 mStateTimer;        /* 0x470c -- countdown via DecIfAbove0_Byte */
+    u8 pad_470d[0x3];
 };
 
 #ifndef SM64DS_PLATFORM_PC

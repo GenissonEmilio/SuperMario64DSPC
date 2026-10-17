@@ -28,10 +28,10 @@ typedef struct Oam {
 extern "C" {
 
 /* ov006's own data. */
-extern void *data_ov006_02141a48;
-extern void *data_ov006_02141a50;
-extern Oam   data_ov006_02141a54[];
-extern unsigned char data_ov006_0212e574[];
+extern void *sD3DSubObjPalette;
+extern void *sMgSubCamera;
+extern Oam sD3DOamShadow[];
+extern unsigned char sD3DSoundPanOffsets[];
 
 /* arm9 / ov004 globals with no project header. */
 extern unsigned char data_0209d454;
@@ -149,8 +149,8 @@ extern "C" void D3D_DrawSpriteTable(void)
      * function grows from 0xe0 to 0xe8 bytes. */
     sprite = 0;
     for (entry = 0; entry < 0x80; entry++) {
-        data_ov006_02141a54[entry].attr01 = 0;
-        *(u32 *)&data_ov006_02141a54[(int)(((long long)entry))].attr2 = 0;
+        sD3DOamShadow[entry].attr01 = 0;
+        *(u32 *)&sD3DOamShadow[(int)(((long long)entry))].attr2 = 0;
     }
 
     y = 0;
@@ -159,22 +159,23 @@ extern "C" void D3D_DrawSpriteTable(void)
         x = 0;
         tileX = 0;
         for (; x < 0x100; x += 0x40) {
-            data_ov006_02141a54[sprite].attr01 = ((y & 0xff) | 0xc0000c00) | ((x & 0x1ff) << 16);
-            data_ov006_02141a54[sprite].attr2 = (u16)(((int)(((long long)tileX)) + ((int)(((long long)tileY)) << 5)) | 0xf000);
+            sD3DOamShadow[sprite].attr01 = ((y & 0xff) | 0xc0000c00) | ((x & 0x1ff) << 16);
+            sD3DOamShadow[sprite].attr2 =
+                (u16)(((int)(((long long)tileX)) + ((int)(((long long)tileY)) << 5)) | 0xf000);
             tileX += 8;
             sprite++;
         }
         tileY += 8;
     }
 
-    CP15::FlushAndInvalidateDataCache((u32)data_ov006_02141a54, 0x400);
-    func_02056674(data_ov006_02141a54, 0, 0x400);
+    CP15::FlushAndInvalidateDataCache((u32)sD3DOamShadow, 0x400);
+    func_02056674(sD3DOamShadow, 0, 0x400);
 }
 
 // @symbol D3D_ClearCaptureTable
 extern "C" void D3D_ClearCaptureTable(void)
 {
-    func_02056674(data_ov006_02141a54, 0, 0x400u);
+    func_02056674(sD3DOamShadow, 0, 0x400u);
 }
 
 // @symbol D3D_InitDualScreen
@@ -193,14 +194,14 @@ extern "C" void D3D_InitDualScreen(void)
  * constant changes the code. */
 int dScMgD3DBase_c::InitSubScreenBg()
 {
-    unk_4660 = func_02053ea0();
+    mSavedSubObjBank = func_02053ea0();
     GX::SetBankForSubOBJ(0x100);
-    LoadCompressedFileAt(data_ov006_0213c5fc[GetGameLanguage()], (void*)0x6600000);
+    LoadCompressedFileAt(sD3DCommonNcgByLanguage[GetGameLanguage()], (void *)0x6600000);
     {
         char *dst = (char*)0x6600000; dst += 0x2000;
-        DecompressLZ16((void*)data_ov006_0213c5e8[GetGameLanguage()], dst);
+        DecompressLZ16((void *)sD3DSubScreenBgByLanguage[GetGameLanguage()], dst);
     }
-    _ZN2GX16SetBankForSubOBJEt(unk_4660);
+    _ZN2GX16SetBankForSubOBJEt(mSavedSubObjBank);
     mSubBgBank = func_02053eb0();
     GX::SetBankForSubBG(0x80);
     {
@@ -213,7 +214,7 @@ int dScMgD3DBase_c::InitSubScreenBg()
     data_0209d454 &= ~2;
     {
         s32 language = GetGameLanguage();
-        LoadCompressedFileAt(data_ov006_0213c610[language], (void*)G2S::GetBG1CharPtr());
+        LoadCompressedFileAt(sD3DOptionNcgByLanguage[language], (void *)G2S::GetBG1CharPtr());
     }
     LoadCompressedFileAt(0x5b, (void*)G2S::GetBG1ScrPtr());
     _ZN2GX15SetBankForSubBGEt(mSubBgBank);
@@ -243,17 +244,17 @@ void dScMgD3DBase_c::InitEngines()
     func_02054748(0);
     GX::SetBankForOBJ(0x10);
     GX::SetBankForBG(2);
-    file = Ov004_LoadFile(data_ov006_0213c5fc[GetGameLanguage()]);
-    data_ov006_02141a4c = file;
+    file = Ov004_LoadFile(sD3DCommonNcgByLanguage[GetGameLanguage()]);
+    sD3DLanguageFile = file;
     {
         char *dst = (char *)0x6400000;
         dst += 0x4000;
         DecompressLZ16(file, dst);
     }
     file = Ov004_LoadFile(0xc3);
-    data_ov006_02141a48 = file;
+    sD3DSubObjPalette = file;
     GX::LoadOBJPltt(file, 0x100u, 0x100u);
-    GXS::LoadOBJPltt(data_ov006_02141a48, 0x100u, 0x100u);
+    GXS::LoadOBJPltt(sD3DSubObjPalette, 0x100u, 0x100u);
     InitialiseVramGlobals();
     Mg_ResetOverlays();
     D3D_DrawSpriteTable();
@@ -261,9 +262,9 @@ void dScMgD3DBase_c::InitEngines()
     GX::SetGraphicsMode(1, 0, 1);
     GXS::SetGraphicsMode(5);
     *(vu32 *)0x4000000u &= 0xffcfffefu;
-    data_ov006_02141a44 = (int)(raw + 0x466c);
-    data_ov006_02141a40 = raw + 0x466c;
-    data_ov006_02141a50 = raw + 0x4728;
+    sMgCurCamera = (int)(raw + 0x466c);
+    sMgMainCamera = raw + 0x466c;
+    sMgSubCamera = raw + 0x4728;
     sMgGraphCallback[1] = (int)raw;
     data_0209d4a8 = (void *)sMgGraphCallback;
 }
@@ -334,8 +335,8 @@ void dScMgD3DBase_c::AfterCleanupResources(unsigned int vfSuccess)
         *(int*)0x40004c8 = 0x696a5800;
         *(int*)0x40004cc = 0x40007fff;
         D3D_ReleaseSubBg1(this);
-        Ov004_Deallocate(data_ov006_02141a4c);
-        Ov004_Deallocate(data_ov006_02141a48);
+        Ov004_Deallocate(sD3DLanguageFile);
+        Ov004_Deallocate(sD3DSubObjPalette);
     }
     data_0209f5f8 = 0;
     dScMgBase_c::AfterCleanupResources(vfSuccess);
@@ -343,7 +344,7 @@ void dScMgD3DBase_c::AfterCleanupResources(unsigned int vfSuccess)
 
 // @symbol _ZN14dScMgD3DBase_c16OnGraphCallback2Ev
 /* Slot 24, inherited by Jump and Jump2: switches between the two
- * 0xbc-byte cameras. Keep the if/else toggle; `unk_4664 = unk_4664 == 0`
+ * 0xbc-byte cameras. Keep the if/else toggle; `mDrawSubScreen = mDrawSubScreen == 0`
  * compiles differently. */
 int dScMgD3DBase_c::OnGraphCallback2()
 {
@@ -352,14 +353,14 @@ int dScMgD3DBase_c::OnGraphCallback2()
     if (dScMgBase_c::OnGraphCallback2() == 0) return 0;
     if (mMenuOpen == 0) {
         if (data_0209d464 == 0) return 0;
-        if (unk_4664 == 0)
-            unk_4664 = 1;
+        if (mDrawSubScreen == 0)
+            mDrawSubScreen = 1;
         else
-            unk_4664 = 0;
-        int cameraAddress = (int)(raw + 0x466c + unk_4664 * 0xbc);
-        data_ov006_02141a44 = cameraAddress;
+            mDrawSubScreen = 0;
+        int cameraAddress = (int)(raw + 0x466c + mDrawSubScreen * 0xbc);
+        sMgCurCamera = cameraAddress;
         Camera_UpdateMatrices((dCamera_c *)cameraAddress);
-        if (unk_4664 == 1) {
+        if (mDrawSubScreen == 1) {
             D3D_CaptureToSub();
         } else {
             D3D_CaptureToMain();
@@ -396,7 +397,7 @@ extern "C" int D3D_PlaySeAtX(int a, int b)
 
 // @symbol Sound_PlayBank1Panned
 extern "C" void Sound_PlayBank1Panned(int a0, char *a1, void *a2) {
-    a1 += data_ov006_0212e574[a0];
+    a1 += sD3DSoundPanOffsets[a0];
     int pan = D3D_PanForX((int)a2);
     func_020127ec(1, (int)a1, 4, 0, 0, pan);
 }
@@ -433,11 +434,11 @@ int dScMgD3DBase_c::CloseMenu()
 int dScMgD3DBase_c::SaveScreenForMenu()
 {
     D3D_InitDualScreen();
-    GXS::LoadOBJPltt(data_ov006_02141a48, 0x100, 0x100);
+    GXS::LoadOBJPltt(sD3DSubObjPalette, 0x100, 0x100);
     data_0209e660 = 0;
     mSubBgBank = func_02053eb0();
     GX::SetBankForSubBG(0x80);
-    unk_4660 = func_02053ea0();
+    mSavedSubObjBank = func_02053ea0();
     GX::SetBankForSubOBJ(0x100);
     return dScMgBase_c::SaveScreenForMenu();
 }
@@ -447,11 +448,11 @@ int dScMgD3DBase_c::SaveScreenForMenu()
 void dScMgD3DBase_c::RestoreScreenFromMenu()
 {
     _ZN2GX15SetBankForSubBGEt(mSubBgBank);
-    _ZN2GX16SetBankForSubOBJEt(unk_4660);
+    _ZN2GX16SetBankForSubOBJEt(mSavedSubObjBank);
     data_0209e660 = 1;
     D3D_ClearCaptureTable();
     dScMgBase_c::RestoreScreenFromMenu();
-    if (unk_4664 == 1) {
+    if (mDrawSubScreen == 1) {
         D3D_CaptureToSub();
     } else {
         D3D_CaptureToMain();

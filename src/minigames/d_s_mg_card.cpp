@@ -45,26 +45,26 @@ typedef struct OamAttrTmpl {
 } OamAttrTmpl;
 
 extern "C" {
-extern int pmf_Dealer_StateCollect_2[2];
+extern int pmf_Dealer_StateDeal_2[2];
 extern int pmf_Dealer_StateReveal[2];
 /* The two element vtables are emitted here by their key functions. The four
    measured array-construction ABI callbacks reference the ROM address points;
    these names are already mangled, so C linkage means "use literally". */
-extern unsigned short data_ov006_0213bd64[];
-extern void *data_ov006_02141774[];
-extern int data_ov006_02133810[];
+extern unsigned short sCardFaceSprites[];
+extern void *sCardObjSprites[];
+extern int sMgCardSprites[];
 extern void Hud_RenderSprite(void *sprite, int x, int y, int a3, int a4);
-extern void **data_ov006_0213bd30[];
-extern void *data_ov006_0213406c[];
+extern void **sCardPayoutHighlightSprites[];
+extern void *sCardHudSprites[];
 unsigned int func_02012790(unsigned int a);
-extern int data_ov006_02141768;
-extern int data_ov006_0214176c;
+extern int sCardSelectLocked;
+extern int sCardSwapRequested;
 extern int data_ov006_02141770;
 extern "C" void Vec2_Sub(int* o, int* a, int* b);
 extern "C" void func_0203d680(int* out, int* in, int scale);
-extern const Five data_ov006_0213bcd8;
+extern const Five sCardHandOrder;
 extern int RandomIntInternal(int *seed);
-extern int data_ov006_0213bd18[];
+extern int sCardFaceWeights[];
 extern int data_0209e650;
 extern "C" void Camera_InitDealerView(void *c);
 extern "C" void RenderOamMainScreen(int a0, int a1, int a2, int a3, int a4);
@@ -76,7 +76,7 @@ void Dealer_Update(void *table);
 void MgCoins_Update(void);
 extern int Dealer_IsBusy(void *p);
 extern int Dealer_IsIdle(void *p);
-extern void Dealer_StartCollect(void *c, s16 arg1, void *arg2);
+extern void Dealer_StartDeal(void *c, s16 arg1, void *arg2);
 extern void Dealer_PlayLose(void *c);
 extern void Dealer_PlayWin(void *c);
 extern void Mg_SaveRecordPair(int a0, int a1);
@@ -84,13 +84,13 @@ extern void Mg_ShowBanner(int a0, int a1, int a2, int a3, int a4, s16 a5);
 extern void Mg_SubmitScore(int v);
 extern void Mg_SetSharedState(int v);
 extern int sMgCoinsBetPlaced;
-extern int data_ov006_0213bc44;
+extern int sCardDrawsLeft;
 extern int gMgCoinsInPlay;
-extern int data_ov006_0213bd48[];
+extern int sCardHandPayouts[];
 extern void FreeGfxSlotsById(int arg);
 extern void MgCoins_StartPayout(int a);
 extern s16 gMgCoinsStatus;
-extern "C" void Dealer_StartDeal(char *c, int unused, short a2, int a3);
+extern "C" void Dealer_StartShuffle(char *c, int unused, short a2, int a3);
 extern "C" void MgCoins_Reset(void);
 extern u8 data_0209d45c;
 extern u8 data_0209d454;
@@ -177,7 +177,7 @@ s32 dScMgCard_c::InitResources()
     data_0209d454 = 0x18;
     mainTiles = LoadFile(0xbd);
     mainPalette = LoadFile(0xbe);
-    subTiles = LoadFile(data_ov006_0213bcb0[GetGameLanguage()]);
+    subTiles = LoadFile(sCardNcgByLanguage[GetGameLanguage()]);
     subPalette = LoadFile(0xbb);
     DecompressLZ16(mainTiles, (void *)0x6400000);
     GX::LoadOBJPltt(mainPalette, 0, 0x20);
@@ -251,12 +251,12 @@ void dScMgCard_c::StartRound(int mode)
     int i;
     char *p1, *p2;
 
-    unk_538c = 0;
-    unk_538e = 6;
-    unk_5390 = 6;
-    unk_5392 = 6;
-    unk_5394 = 6;
-    Dealer_StartDeal((char *)&mShared, 4, 5, (int)&unk_538c);
+    mDealCount = 0;
+    mPlayerHandFace = 6;
+    mPlayerHandFace2 = 6;
+    mDealerHandFace = 6;
+    mDealerHandFace2 = 6;
+    Dealer_StartShuffle((char *)&mShared, 4, 5, (int)&mDealCount);
 
     mShared.unk_1e6 = 1;
     mShared.unk_01a = 2;
@@ -274,11 +274,11 @@ void dScMgCard_c::StartRound(int mode)
     MgCoins_Reset();
 
     gMgCoinsShowDelta = 1;
-    data_ov006_0214176c = 0;
-    data_ov006_02141768 = 0;
+    sCardSwapRequested = 0;
+    sCardSelectLocked = 0;
     data_ov006_02141770 = 0;
     unk_539a = 0;
-    data_ov006_0213bc44 = 1;
+    sCardDrawsLeft = 1;
     mState = 1;
 }
 
@@ -307,7 +307,8 @@ int dScMgCard_c::CanEndState(int mode)
                 MgCoins_StartLose();
                 mStateTimer = 0;
             } else if (r == 1) {
-                int v = data_ov006_0213bd48[dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray1, 0)];
+                int v =
+                    sCardHandPayouts[dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray1, 0)];
                 MgCoins_StartPayout(v * gMgCoinsInPlay);
                 mStateTimer = 0;
             } else {
@@ -431,7 +432,7 @@ void dScMgCard_c::UpdateState()
             mStateTimer = 0x10;
             mState++;
         } else {
-            cnt = unk_538c;
+            cnt = mDealCount;
             if (cnt > 0) {
                 idx = cnt - 1;
                 if (cnt != 0) {
@@ -455,7 +456,8 @@ void dScMgCard_c::UpdateState()
         idx = gActivePlayerSlot * 4;
         if (gTouchHeld[idx] != 0 && gTouchEdge[idx] != 0)
             ok = 1;
-        if (ok != 0 && dScMgCard_c::AllLifted((const dMgCardObj_c *)mArray1) != 0 && data_ov006_02141768 == 0) {
+        if (ok != 0 && dScMgCard_c::AllLifted((const dMgCardObj_c *)mArray1) != 0 &&
+            sCardSelectLocked == 0) {
             v5 = gTouchX[gActivePlayerSlot][0];
             v4 = gTouchY[gActivePlayerSlot][0];
             if (dScMgCard_c::AllInState((const dMgCardObj_c *)mArray1, 2) != 0) {
@@ -467,8 +469,8 @@ void dScMgCard_c::UpdateState()
                     if (r < 0)
                         r = -r;
                     if (r < 0x14) {
-                        data_ov006_0214176c = 1;
-                        data_ov006_02141768 = 1;
+                        sCardSwapRequested = 1;
+                        sCardSelectLocked = 1;
                         mState++;
                         sMgCoinsBetPlaced = 1;
                         Sound::PlayBank2_2D(0x151);
@@ -487,8 +489,8 @@ void dScMgCard_c::UpdateState()
                     if (r < 0)
                         r = -r;
                     if (r < 0x14) {
-                        data_ov006_0214176c = 1;
-                        data_ov006_02141768 = 1;
+                        sCardSwapRequested = 1;
+                        sCardSelectLocked = 1;
                         mState++;
                         sMgCoinsBetPlaced = 1;
                         Sound::PlayBank2_2D(0x151);
@@ -514,21 +516,22 @@ void dScMgCard_c::UpdateState()
         }
         break;
     case 5:
-        if (data_ov006_02141768 != 0 && dScMgCard_c::AllInState((const dMgCardObj_c *)mArray1, 2) != 0
-            && Dealer_IsIdle(&mShared) != 0) {
+        if (sCardSelectLocked != 0 &&
+            dScMgCard_c::AllInState((const dMgCardObj_c *)mArray1, 2) != 0 &&
+            Dealer_IsIdle(&mShared) != 0) {
             mState++;
         } else if (Dealer_IsIdle(&mShared) != 0) {
             r = dScMgCard_c::CountInState((const dMgCardObj_c *)mArray1, 6);
             if (r != 0) {
-                unk_538c = 0;
+                mDealCount = 0;
                 mShared.unk_1e6 = 0;
-                Dealer_StartCollect(&mShared, (s16)r, &unk_538c);
+                Dealer_StartDeal(&mShared, (s16)r, &mDealCount);
             }
         } else {
             r = dScMgCard_c::FindInState((const dMgCardObj_c *)mArray1, 6);
-            if (r > -1 && unk_538c != 0) {
+            if (r > -1 && mDealCount != 0) {
                 ((dMgCardObj_c *)mArray1)[r].mState = 5;
-                unk_538c--;
+                mDealCount--;
             }
         }
         break;
@@ -538,28 +541,28 @@ void dScMgCard_c::UpdateState()
         break;
     case 7:
         if (dScMgCard_c::AllInState((const dMgCardObj_c *)mArray2, 1) != 0 && Dealer_IsIdle(&mShared) != 0) {
-            r = data_ov006_0213bc44 - 1;
-            data_ov006_0213bc44 = r;
+            r = sCardDrawsLeft - 1;
+            sCardDrawsLeft = r;
             if (r == 0) {
                 mState++;
             } else {
                 mState = 4;
-                data_ov006_0214176c = 0;
-                data_ov006_02141768 = 0;
+                sCardSwapRequested = 0;
+                sCardSelectLocked = 0;
                 data_ov006_02141770 = 0;
             }
         } else if (Dealer_IsIdle(&mShared) != 0) {
             r = dScMgCard_c::CountInState((const dMgCardObj_c *)mArray2, 6);
             if (r != 0) {
-                unk_538c = 0;
+                mDealCount = 0;
                 mShared.unk_1e6 = 0;
-                Dealer_StartCollect(&mShared, (s16)r, &unk_538c);
+                Dealer_StartDeal(&mShared, (s16)r, &mDealCount);
             }
         } else {
             r = dScMgCard_c::FindInState((const dMgCardObj_c *)mArray2, 6);
-            if (r > -1 && unk_538c != 0) {
+            if (r > -1 && mDealCount != 0) {
                 ((dMgCardObj_c *)mArray2)[r].mState = 5;
-                unk_538c--;
+                mDealCount--;
             }
         }
         break;
@@ -604,20 +607,20 @@ void dScMgCard_c::UpdateState()
     case 12:
         mStateTimer--;
         if (mStateTimer == 0) {
-            t4 = dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray2, &unk_5392);
-            t5 = dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray1, &unk_538e);
-            if (data_ov006_02141768 != 0 && data_ov006_02141768 != 0) {
+            t4 = dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray2, &mDealerHandFace);
+            t5 = dScMgCard_c::EvaluateHand((const dMgCardObj_c *)mArray1, &mPlayerHandFace);
+            if (sCardSelectLocked != 0 && sCardSelectLocked != 0) {
                 /* the hand-value fanfares sit at sound bank 22 up */
                 Mg_ShowBanner(t4 + 22, 0x80, 0x48, 0, -1, 1);
                 Mg_ShowBanner(t5 + 22, 0x80, 0x78, 0, -1, 2);
                 if (t4 != t5) {
-                    unk_5392 = 6;
-                    unk_5394 = 6;
-                    unk_538e = 6;
-                    unk_5390 = 6;
-                } else if (unk_5392 != unk_538e) {
-                    unk_5394 = 6;
-                    unk_5390 = 6;
+                    mDealerHandFace = 6;
+                    mDealerHandFace2 = 6;
+                    mPlayerHandFace = 6;
+                    mPlayerHandFace2 = 6;
+                } else if (mDealerHandFace != mPlayerHandFace) {
+                    mDealerHandFace2 = 6;
+                    mPlayerHandFace2 = 6;
                 }
             }
             r = dScMgCard_c::CompareHands((const dMgCardObj_c *)mArray1, (const dMgCardObj_c *)mArray2);
@@ -630,7 +633,7 @@ void dScMgCard_c::UpdateState()
             } else if (r == 1) {
                 g = gMgScene;
                 {
-                    int *tbl = data_ov006_0213bd48;
+                    int *tbl = sCardHandPayouts;
                     int scale;
                     int prod;
                     a0 = g ? g->mCredits : 0;
@@ -696,7 +699,7 @@ void dScMgCard_c::UpdateState()
         p1 += 0x30;
         p2 += 0x30;
     } while (n < 5);
-    data_ov006_0214176c = 0;
+    sCardSwapRequested = 0;
 }
 
 // @symbol _ZN11dScMgCard_c8BehaviorEv
@@ -741,7 +744,7 @@ s32 dScMgCard_c::Render()
         y = 0xc;
         for (; i < 6; i++) {
             if (i != hiddenRank)
-                RenderOamMainScreen(data_ov006_02134010[i], 0x28, y, -1, -1);
+                RenderOamMainScreen(sCardPayoutRowSprites[i], 0x28, y, -1, -1);
             y += 0x10;
         }
 
@@ -771,9 +774,9 @@ s32 dScMgCard_c::Render()
         int k;
         for (k = 4; k >= 0; k--) {
             unsigned char face = mArray1[k].mValue;
-            if (this->unk_538e == face)
+            if (this->mPlayerHandFace == face)
                 goto chk1;
-            if (this->unk_5390 != face)
+            if (this->mPlayerHandFace2 != face)
                 goto docall1;
         chk1:
             if (!(this->mFrameCounter & 8))
@@ -789,9 +792,9 @@ s32 dScMgCard_c::Render()
         int k;
         for (k = 4; k >= 0; k--) {
             unsigned char face = mArray2[k].mValue;
-            if (this->unk_5392 == face)
+            if (this->mDealerHandFace == face)
                 goto chk2;
-            if (this->unk_5394 != face)
+            if (this->mDealerHandFace2 != face)
                 goto docall2;
         chk2:
             if (!(this->mFrameCounter & 8))
@@ -810,8 +813,8 @@ s32 dScMgCard_c::Render()
 /* Slot 3. Only clears three ov006 globals; `this` is never read. */
 s32 dScMgCard_c::CleanupResources()
 {
-    data_ov006_0214176c = 0;
-    data_ov006_02141768 = 0;
+    sCardSwapRequested = 0;
+    sCardSelectLocked = 0;
     data_ov006_02141770 = 0;
     return 1;
 }
@@ -824,7 +827,7 @@ s32 dScMgCard_c::CleanupResources()
 void dScMgCard_c::FillWeights(int v) {
     int i;
     for (i = 0; i < 6; i++) {
-        data_ov006_0213bd18[i] = v;
+        sCardFaceWeights[i] = v;
     }
 }
 
@@ -840,19 +843,18 @@ int dScMgCard_c::DrawCardValue(void)
   int i;
   for (i = 0; i < 6; i++)
   {
-    sum += data_ov006_0213bd18[i];
+      sum += sCardFaceWeights[i];
   }
 
   sum = (sum * ((int) ((((unsigned int) RandomIntInternal(&data_0209e650)) & 0x7fffffff) >> 0x13))) >> 0xc;
   for (i = 0; i < 6; i++)
   {
-    sum -= data_ov006_0213bd18[i];
-    if (sum < 0)
-    {
-      value = i & 0xff;
-      data_ov006_0213bd18[i] -= 1;
-      break;
-    }
+      sum -= sCardFaceWeights[i];
+      if (sum < 0) {
+          value = i & 0xff;
+          sCardFaceWeights[i] -= 1;
+          break;
+      }
   }
 
   return value;
@@ -1108,7 +1110,7 @@ void dScMgCard_c::MarkSingles(dMgCardObj_c *hand){
 /* dScMgCard_c::ArrangeHand -- the sort that pulls a scored hand together:
  * histogram the faces, decide the winning combination's two faces (the
  * stronger face first), then bubble the five cards by combination rank
- * through the order table at data_ov006_0213bcd8, stamp the combination
+ * through the order table at sCardHandOrder, stamp the combination
  * cards' mComboFlag, and SetHome every card to its sorted slot. Returns
  * whether the order changed at all. Coined name; the ROM's symbol is
  * address-only. */
@@ -1194,7 +1196,7 @@ int dScMgCard_c::ArrangeHand(dMgCardObj_c *hand)
       }
     }
   }
-  order = data_ov006_0213bcd8;
+  order = sCardHandOrder;
   n = 4;
   zero = 0;
   neg1 = -1;
@@ -1459,14 +1461,14 @@ void dMgCardObj_c::Update()
         }
     }
 
-    if (data_ov006_0214176c != 0) {
+    if (sCardSwapRequested != 0) {
         if (mState == 3) {
             mState = 4;
             mLiftFlag = 0;
         }
         return;
     }
-    if (data_ov006_02141768 != 0)
+    if (sCardSelectLocked != 0)
         return;
 
     {
@@ -1519,12 +1521,8 @@ void dMgCardObj_c::Render()
     unsigned short e;
     if (mState == 0) return;
     idx = (mValue + 1) * 5 + (mLift >> 12);
-    e = data_ov006_0213bd64[idx];
-    Hud_RenderSprite(
-        data_ov006_02141774[e],
-        (mX >> 12) + 24,
-        (mY >> 12) + 24,
-        -1, -1);
+    e = sCardFaceSprites[idx];
+    Hud_RenderSprite(sCardObjSprites[e], (mX >> 12) + 24, (mY >> 12) + 24, -1, -1);
 }
 
 // @symbol _ZN12dMgCardObj_c13GetOffscreenYEv
@@ -1539,8 +1537,8 @@ s32 dMgCardObj_c::GetOffscreenY()
 // @symbol _ZN11dScMgCard_c9RenderHudEv
 /* dScMgCard_c::RenderHud -- the hand-rank table and the hold prompt. States 4
  * through 0x10 stack six face sprites at x=0x14 from y=0xb0 down; the two
- * hands' highlight pairs (unk_538e/unk_5390 for the player's hand,
- * unk_5392/unk_5394 for the dealer's) name the rows drawn in a highlight
+ * hands' highlight pairs (mPlayerHandFace/mPlayerHandFace2 for the player's hand,
+ * mDealerHandFace/mDealerHandFace2 for the dealer's) name the rows drawn in a highlight
  * variant -- 1 for the player's values, 2 for the dealer's, and when both
  * hands name the same row the two variants alternate on mFrameCounter bit
  * 4. State 4, once the whole player hand is lifted, adds the prompt
@@ -1554,23 +1552,24 @@ void dScMgCard_c::RenderHud()
         int i;
         for (i = 0; i < 6; i++) {
             int highlight = 0;
-            if ((i == unk_5392 && i == unk_538e) || (i == unk_5394 && i == unk_5390)) {
+            if ((i == mDealerHandFace && i == mPlayerHandFace) ||
+                (i == mDealerHandFace2 && i == mPlayerHandFace2)) {
                 if (mFrameCounter & 0x10) highlight = 1; else highlight = 2;
-            } else if (i == unk_5392 || i == unk_5394) {
+            } else if (i == mDealerHandFace || i == mDealerHandFace2) {
                 if (mFrameCounter & 0x10) highlight = 2;
-            } else if (i == unk_538e || i == unk_5390) {
+            } else if (i == mPlayerHandFace || i == mPlayerHandFace2) {
                 if (mFrameCounter & 0x10) highlight = 1;
             }
-            Hud_RenderSprite(data_ov006_0213bd30[i][highlight], 0x14, y, -1, -1);
+            Hud_RenderSprite(sCardPayoutHighlightSprites[i][highlight], 0x14, y, -1, -1);
             y -= 0x10;
         }
     }
     if (mState != 4) return;
     if (dScMgCard_c::AllLifted((const dMgCardObj_c *)mArray1) == 0) return;
     if (dScMgCard_c::AllInState((const dMgCardObj_c *)mArray1, 2) == 0)
-        Hud_RenderSprite(data_ov006_0213406c[0], 0x80, 0x58, -1, -1);
+        Hud_RenderSprite(sCardHudSprites[0], 0x80, 0x58, -1, -1);
     else
-        Hud_RenderSprite(data_ov006_0213406c[1], 0x80, 0x58, -1, -1);
+        Hud_RenderSprite(sCardHudSprites[1], 0x80, 0x58, -1, -1);
 }
 
 // @symbol _ZN12dMgCardObj_c7SetHomeEi
@@ -1683,7 +1682,7 @@ void dMgDilarCardObj_c::Update()
 
 // @symbol _ZN17dMgDilarCardObj_c6RenderEv
 /* dMgDilarCardObj_c::Render -- vtable slot 0, the dealer's card face down.
- * The sprite bank table data_ov006_0213bd64 is indexed by the card's face
+ * The sprite bank table sCardFaceSprites is indexed by the card's face
  * (mValue + 1, the +1 skipping the card-back row) and its flip frame
  * (mLift >> 12), and Hud_RenderSprite takes the 1:4096 fixed-point mX/mY
  * back down to pixels, plus the 24-pixel hand margin. Kept compact -- one index
@@ -1694,12 +1693,8 @@ void dMgDilarCardObj_c::Render()
 {
   int k;
   if(mState==0) return;
-  k=data_ov006_0213bd64[(mValue+1)*5+(mLift>>12)];
-  Hud_RenderSprite(
-    data_ov006_02141774[k],
-    (mX>>12)+24,
-    (mY>>12)+24,
-    -1,-1);
+  k = sCardFaceSprites[(mValue + 1) * 5 + (mLift >> 12)];
+  Hud_RenderSprite(sCardObjSprites[k], (mX >> 12) + 24, (mY >> 12) + 24, -1, -1);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1729,14 +1724,10 @@ extern "C" void _ZN12dMgCardObj_cD1Ev(void *elem)
 
 /* The sprite-pointer table Render indexes by card kind: the elements are
  * not constant, so the cartridge fills it at load time from
- * data_ov006_02133810 in suit order. */
-void *data_ov006_02141774[15] = {
-    (void *)data_ov006_02133810[0], (void *)data_ov006_02133810[1],
-    (void *)data_ov006_02133810[2], (void *)data_ov006_02133810[5],
-    (void *)data_ov006_02133810[6], (void *)data_ov006_02133810[0xd],
-    (void *)data_ov006_02133810[0xe], (void *)data_ov006_02133810[0xb],
-    (void *)data_ov006_02133810[0xc], (void *)data_ov006_02133810[7],
-    (void *)data_ov006_02133810[8], (void *)data_ov006_02133810[9],
-    (void *)data_ov006_02133810[0xa], (void *)data_ov006_02133810[3],
-    (void *)data_ov006_02133810[4]
-};
+ * sMgCardSprites in suit order. */
+void *sCardObjSprites[15] = {
+    (void *)sMgCardSprites[0],   (void *)sMgCardSprites[1],   (void *)sMgCardSprites[2],
+    (void *)sMgCardSprites[5],   (void *)sMgCardSprites[6],   (void *)sMgCardSprites[0xd],
+    (void *)sMgCardSprites[0xe], (void *)sMgCardSprites[0xb], (void *)sMgCardSprites[0xc],
+    (void *)sMgCardSprites[7],   (void *)sMgCardSprites[8],   (void *)sMgCardSprites[9],
+    (void *)sMgCardSprites[0xa], (void *)sMgCardSprites[3],   (void *)sMgCardSprites[4]};

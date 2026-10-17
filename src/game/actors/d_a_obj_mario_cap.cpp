@@ -74,7 +74,7 @@
  *   The PMF stand-ins (CapStateSelf / CapStateRec / CapEnterSelf). A PMF on
  *   the real dEnemyBase_c makes mwccarm ICE rather than give a diagnostic.
  *
- *   The (long long)(int) 20.12 multiplies in Slide and the
+ *   FX_MUL's 64-bit product in Slide's 20.12 multiplies and the
  *   (unsigned long long)&vulnFlags or-into-vulnFlags in InitSlide
  *   are the matching forms; plain member addressing does not match.
  *
@@ -131,6 +131,7 @@ enum daObjMarioCap_c_AssetId {
 };
 
 #include "common.h"
+#include "nitro/fx/fx.h"
 #include "daObjMarioCap_c.h"
 #include "decl_common.h"
 #include "Player.h"
@@ -139,6 +140,7 @@ enum daObjMarioCap_c_AssetId {
 #include "Sound.h"
 #include "SurfaceInfo.h"
 #include "dBgCh_Gnd.h"
+#include "dBgCh_Actr.h"
 
 /* --------------------------------------------------------------------------
  * Local shapes the merged members need.
@@ -261,9 +263,6 @@ void  _Z14ApproachLinearRiii(int *x, int target, int step);
 short _ZN4cstd5atan2E5Fix12IiES1_(int y, int x);
 int   _ZN4cstd4fdivEii(int a, int b);
 
-
-void *_ZNK10dBgCh_Actr13GetWallResultEv(void *self);
-char *_ZNK10dBgCh_Actr14GetFloorResultEv(void *self);
 
 /* dCcAc_c::Init and dBgCh_Actr::Init take Fix12<int> by value, which has no
    implicit int conversion (notes/mwccarm-codegen.md 6az). */
@@ -633,10 +632,10 @@ int daObjMarioCap_c::Render()
     int t = mType;
     if (t == 4 || t == 17 || t == 5 || t == 18 || t == 16 || t == 11 || (unsigned)(t - 6) <= 3) {
         if (!(mBlinkHidden & 1) || mStateEntry == (int)&data_ov002_0210df54) {
-            mModelAnim.Model::Render((const Vector3 *)&mScaleX);
+            mModelAnim.Model::Render(&mScale);
         }
     } else {
-        mModelAnim.Model::Render((const Vector3 *)&mScaleX);
+        mModelAnim.Model::Render(&mScale);
     }
     return 1;
 }
@@ -841,7 +840,8 @@ int daObjMarioCap_c::InitWait()
 int daObjMarioCap_c::Wait() {
     if (CAP_OVERRIDE_MATRIX(this) == 0 && !SaveData::HasPlayerLostCap()) {
         if (CAP_TIMER(this) == 0 && mWithMeshClsn.IsOnGround()) {
-            if (dActor_c::Spawn(kActorMarioCap, param1 | 0x12, *(const Vector3 *)&mPosX, (const Vector3_16 *)0, mAreaId, -1)) {
+            if (dActor_c::Spawn(kActorMarioCap, param1 | 0x12, mPos, (const Vector3_16 *)0, mAreaId,
+                                -1)) {
                 CAP_TIMER(this) = 3;
             }
         }
@@ -1065,7 +1065,7 @@ int daObjMarioCap_c::Slide()
         mHorzSpeed = 0;
         return 1;
     }
-    fr = _ZNK10dBgCh_Actr14GetFloorResultEv(&mWithMeshClsn);
+    fr = (char *)mWithMeshClsn.GetFloorResult();
     ((SurfaceInfo *)(fr + 4))->CopyNormalTo(*(Vector3 *)&mFloorNormalX);
     surface = func_02037e58(fr + 4);
     mSlopeAngle = _ZN4cstd5atan2E5Fix12IiES1_(mFloorNormalX, mFloorNormalZ);
@@ -1076,17 +1076,17 @@ int daObjMarioCap_c::Slide()
     s = data_02082214[j];
     co = data_02082214[j + 1];
     /* Velocity in the plane: speed times {sin, cos} of the angle, fix12 multiply
-       rounded to nearest. (long long)(int) is the MATCH form; a plain 32-bit
-       mul DIFFs. */
-    ownVel.x = (int)(((long long)spd * s + 0x800) >> 12);
+       rounded to nearest. FX_MUL's 64-bit product is the MATCH form; a plain
+       32-bit mul DIFFs. */
+    ownVel.x = FX_MUL(spd, s);
     ownVel.y = 0;
-    ownVel.z = (int)(((long long)spd * co + 0x800) >> 12);
+    ownVel.z = FX_MUL(spd, co);
     j = (CAP_ANGLE(mSlopeAngle) >> 4) * 2;
     s = data_02082214[j];
     co = data_02082214[j + 1];
-    slopeVel.x = (int)(((long long)slopePush * s + 0x800) >> 12);
+    slopeVel.x = FX_MUL(slopePush, s);
     slopeVel.y = 0;
-    slopeVel.z = (int)(((long long)slopePush * co + 0x800) >> 12);
+    slopeVel.z = FX_MUL(slopePush, co);
     Vec3_MulScalarInPlace(&slopeVel, Vec3_HorzLen(&mFloorNormalX));
     Vec3_Add(&out, &ownVel, &slopeVel);
     ang = _ZN4cstd5atan2E5Fix12IiES1_(out.x, out.z);
@@ -1094,10 +1094,9 @@ int daObjMarioCap_c::Slide()
     if (mHorzSpeed > 0xf000)
         mHorzSpeed = 0xf000;
     mPrevAngleY = ang;
-    mVertSpeed = -(_ZN4cstd4fdivEii(
-        (int)(((long long)mFloorNormalX * unk_0a4 + 0x800) >> 12)
-      + (int)(((long long)mFloorNormalZ * unk_0ac + 0x800) >> 12),
-        mFloorNormalY) + 0x8000);
+    mVertSpeed = -(_ZN4cstd4fdivEii(FX_MUL(mFloorNormalX, unk_0a4) + FX_MUL(mFloorNormalZ, unk_0ac),
+                                    mFloorNormalY) +
+                   0x8000);
     pitch = func_02010844(this, &mFloorNormalX, mAngleY);
     roll = func_02010844(this, &mFloorNormalX, mAngleY - 0x4000);
     _Z11UpdateAngleRssis(&mAngleX, pitch, 4, 0x1000);
@@ -1140,7 +1139,7 @@ int daObjMarioCap_c::InitTaken()
             if (p->mCharacter == 3) {
                 if (mModelIndex == (int)p->param1) {
                     struct Vector3 v;
-                    Sound::PlayBank3(kSfx1Up, *(Vector3 *)&mCamSpacePosX);
+                    Sound::PlayBank3(kSfx1Up, mCamSpacePos);
                     GiveLives(1);
                     v.x = mPosX;
                     v.y = mPosY;
@@ -1384,7 +1383,7 @@ void daObjMarioCap_c::CheckTouch()
     int state;
 
     if (mWithMeshClsn.IsOnWall() != 0) {
-        void* wr = _ZNK10dBgCh_Actr13GetWallResultEv(&mWithMeshClsn);
+        void *wr = mWithMeshClsn.GetWallResult();
         ((SurfaceInfo *)((char*)wr + 4))->CopyNormalTo(*(Vector3 *)&normal[0]);
         mPrevAngleY = _ZN8dActor_c12ReflectAngleE5Fix12IiES1_s(
             this, normal[0], normal[2], mPrevAngleY);

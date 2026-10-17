@@ -54,10 +54,12 @@
  *     recovered.
  */
 #include "dEnemyBase_c.h"
+#include "nitro/fx/fx.h"
 #include "decl_dBgPi.h"
 #include "dBgCh_Lin.h"
 #include "Player.h"
 #include "SurfaceInfo.h"
+#include "dBgCh_Actr.h"
 
 /* Written as the real constructor, which is the form the legacy shard recovered
    and byte-matched. Two steps, and neither is spelled below: the dActor_c
@@ -106,9 +108,7 @@ extern void func_020383f0(dBgCh_Actr *);
 extern void dBgCh_Actr_UpdateDiscreteNoLava_veneer(dBgCh_Actr *);
 extern void func_02038414(dBgCh_Actr *);
 extern void dBgCh_Actr_UpdateContinuous_Veneer(dBgCh_Actr *);
-extern struct SurfaceInfo *_ZNK10dBgCh_Actr14GetFloorResultEv(dBgCh_Actr *);
 extern int _ZN4cstd4fdivEii(int, int);
-extern struct SurfaceInfo *_ZNK10dBgCh_Actr13GetWallResultEv(dBgCh_Actr *);
 }
 
 void dEnemyBase_c::UpdateWMClsn(dBgCh_Actr & clsn_, unsigned int sel)
@@ -123,7 +123,8 @@ void dEnemyBase_c::UpdateWMClsn(dBgCh_Actr & clsn_, unsigned int sel)
     }
     if (clsn->IsOnGround()) {
 
-        ((SurfaceInfo *)((char*)_ZNK10dBgCh_Actr14GetFloorResultEv(clsn)+4))->CopyNormalTo(*(Vector3*)&mFloorNormalX);
+        ((SurfaceInfo *)((char *)clsn->GetFloorResult() + 4))
+            ->CopyNormalTo(*(Vector3 *)&mFloorNormalX);
         if (clsn->GetLimMovFlag() == 0) {
             int dz = mFloorNormalY;
             if (dz != 0) {
@@ -131,16 +132,17 @@ void dEnemyBase_c::UpdateWMClsn(dBgCh_Actr & clsn_, unsigned int sel)
                 int vx = unk_0a4;
                 int nz = mFloorNormalZ;
                 int vz = unk_0ac;
-                long long a = (long long)nx * vx + 0x800;
-                long long b = (long long)nz * vz + 0x800;
-                int num = (int)(a >> 12) + (int)(b >> 12);
+                int a = FX_MUL(nx, vx);
+                int b = FX_MUL(nz, vz);
+                int num = a + b;
                 int q = _ZN4cstd4fdivEii(num, dz);
                 mVertSpeed = -(q + 0x8000);
             }
         }
     }
     if (clsn->IsOnWall()) {
-        ((SurfaceInfo *)((char*)_ZNK10dBgCh_Actr13GetWallResultEv(clsn)+4))->CopyNormalTo(*(Vector3*)&mWallNormalX);
+        ((SurfaceInfo *)((char *)clsn->GetWallResult() + 4))
+            ->CopyNormalTo(*(Vector3 *)&mWallNormalX);
     }
 
 }
@@ -688,15 +690,12 @@ int dEnemyBase_c::UpdateYoshiEat(dBgCh_Actr & clsn_)
                 *(int *)(self + 0x64) = *(int *)(o2 + 8);
                 *(int *)(self + 0x60) += 0x32000;
                 {
-                    long long rnd = 0x800;
                     char *o3 = *(char **)(self + 0xd0);
                     u16 ang = *(u16 *)(o3 + 0x8e);
                     int idx = (ang >> 4) << 1;
-                    *(int *)(self + 0x5c) =
-                        (int)(((long long)data_02082214[idx] * 0x32000 + rnd) >> 12) +
-                        *(int *)(self + 0x5c);
-                    *(int *)(self + 0x64) +=
-                        (int)(((long long)data_02082214[idx + 1] * 0x32000 + rnd) >> 12);
+                    int dist = 0x32000;
+                    *(int *)(self + 0x5c) += FX_MUL(data_02082214[idx], dist);
+                    *(int *)(self + 0x64) += FX_MUL(data_02082214[idx + 1], dist);
                 }
                 {
                     s16 *p = (s16 *)(*(char **)(self + 0xd0) + 0x8c);
@@ -711,8 +710,8 @@ int dEnemyBase_c::UpdateYoshiEat(dBgCh_Actr & clsn_)
             if (v >= 0x14000)
                 *(int *)(self + 0x98) = v + 0xa000;
             else
-                *(int *)(self + 0x98) = (int)(((long long)v * 0x800 + 0x800) >> 12) + 0x14000;
-            *(int *)(self + 0x98) = (int)(((long long)*(int *)(self + 0x98) * 0x14cc + 0x800) >> 12);
+                *(int *)(self + 0x98) = FX_MUL(v, 0x800) + 0x14000;
+            *(int *)(self + 0x98) = FX_MUL(*(int *)(self + 0x98), 0x14cc);
             *(int *)(self + 0xa8) = 0xc000;
             *(int *)(self + 0xd0) = 0;
         }
@@ -721,7 +720,7 @@ int dEnemyBase_c::UpdateYoshiEat(dBgCh_Actr & clsn_)
         UpdatePos(0);
         dBgCh_Actr_UpdateContinuous_Veneer((dBgCh_Actr *)clsn);
         if (((dBgCh_Actr *)clsn)->IsOnGround() != 0) {
-            char *fr = (char *)_ZNK10dBgCh_Actr14GetFloorResultEv((dBgCh_Actr *)clsn);
+            char *fr = (char *)((dBgCh_Actr *)clsn)->GetFloorResult();
             ((SurfaceInfo *)(fr + 4))->CopyNormalTo(*(Vector3 *)(self + 0xd4));
             if (((dBgCh_Actr *)clsn)->JustHitGround() == 0) {
                 *(int *)(self + 0xa8) = 0;
@@ -839,10 +838,10 @@ void dEnemyBase_c::SpawnMegaCharParticles(dActor_c &a, char *p)
         iX = (u16)aX >> 4;
         iY = (u16)aY >> 4;
 
-        s = (s32)(((long long)w * data_02082214[iY * 2 + 1] + 0x800) >> 12);
-        dst.x += (s32)(((long long)s * data_02082214[iX * 2] + 0x800) >> 12);
-        dst.y += (s32)(((long long)w * data_02082214[iY * 2] + 0x800) >> 12);
-        dst.z += (s32)(((long long)s * data_02082214[iX * 2 + 1] + 0x800) >> 12);
+        s = FX_MUL(w, data_02082214[iY * 2 + 1]);
+        dst.x += FX_MUL(s, data_02082214[iX * 2]);
+        dst.y += FX_MUL(w, data_02082214[iY * 2]);
+        dst.z += FX_MUL(s, data_02082214[iX * 2 + 1]);
 
         dst.y += (*(s32 *)(p + 8)) >> 1;
     } else {
@@ -883,8 +882,7 @@ extern void _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(unsigned int a, int x
 void dEnemyBase_c::KillByInvincibleChar(const Vector3_16 & vel_, Player & player_, Fix12<int>)
 {
     mFlags &= ~0x10000001;
-    mPrevAngleY = Vec3_HorzAngle((const Vector3 *)((char *)&player_ + 0x5c),
-                                 (const Vector3 *)&mPosX);
+    mPrevAngleY = Vec3_HorzAngle((const Vector3 *)((char *)&player_ + 0x5c), &mPos);
     mHorzSpeed = 0xa000;
     mVertSpeed = 0x28000;
     mDeathTimer = 0x1e;

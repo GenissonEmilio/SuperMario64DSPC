@@ -49,11 +49,11 @@ struct FileSaveData {
     u32 flags2;
     u32 minigameRabbits;
     u32 cannonUnlocked;
-    u8  stars[30];
-    u8  coinRecords[15];
-    u8  currentCharacter;
-    u8  controllerMode;
-    u8  unk43;
+    u8 stars[30];
+    u8 coinRecords[15];
+    u8 currentCharacter;
+    u8 controllerMode;
+    u8 unk43;
 };
 
 extern "C" {
@@ -107,8 +107,7 @@ void DisableAllBanks();
  * bits, graphCallback vptr pair, dFdDummy_c member). `new` would not spell
  * the same arm9 C1 call. */
 // @symbol dScDSMT_c_classInit
-extern "C" int *dScDSMT_c_classInit(void)
-{
+extern "C" int *dScDSMT_c_classInit(void) {
     int *p = (int *)_ZN7fBase_cnwEj(0x64);
     if (p) {
         unsigned char *f;
@@ -157,8 +156,7 @@ extern "C" void func_ov007_020cca68(void *p) {
 
 /* Client command dispatcher: sound/backlight/save-file/minigame codes. */
 // @symbol func_ov007_020cc600
-extern "C" u8 func_ov007_020cc600(s32 command)
-{
+extern "C" u8 func_ov007_020cc600(s32 command) {
     u8 failed = 0;
 
     if (command == 1) {
@@ -245,8 +243,7 @@ extern "C" u8 func_ov007_020cc600(s32 command)
 
 /* InitResources (key function): engines on, graph callback registered, session seeded. */
 // @symbol _ZN9dScDSMT_c13InitResourcesEv
-s32 dScDSMT_c::InitResources()
-{
+s32 dScDSMT_c::InitResources() {
     if (data_0209f1e0 != 0)
         data_0209b340[1] = 1;
 
@@ -259,8 +256,7 @@ s32 dScDSMT_c::InitResources()
         func_0201a428();
 
     data_0209b340[0x27] = data_0209d6fc;
-    *(volatile u16 *)0x4000304 =
-        (*(volatile u16 *)0x4000304 & 0xfffffdf1) | 0x20e;
+    *(volatile u16 *)0x4000304 = (*(volatile u16 *)0x4000304 & 0xfffffdf1) | 0x20e;
     GX::DispOn();
     *(volatile u32 *)0x4001000 |= 0x10000;
     Enable3dEngines();
@@ -278,8 +274,7 @@ s32 dScDSMT_c::InitResources()
 
 /* CleanupResources: unregister callback, record exit reason, release voice group. */
 // @symbol _ZN9dScDSMT_c16CleanupResourcesEv
-s32 dScDSMT_c::CleanupResources()
-{
+s32 dScDSMT_c::CleanupResources() {
     data_0209d4a8 = 0;
     dScene_c::SetAndStopColorFader();
     data_0209b340[0] = func_ov007_020b6f4c();
@@ -292,8 +287,7 @@ s32 dScDSMT_c::CleanupResources()
 
 /* Behavior: pump the session state machine and dispatch its return code. */
 // @symbol _ZN9dScDSMT_c8BehaviorEv
-s32 dScDSMT_c::Behavior()
-{
+s32 dScDSMT_c::Behavior() {
     int result;
 
     if (data_ov007_02103260 >= 0 && DecIfAbove0_Short(&data_ov007_02104c28) == 0) {
@@ -343,22 +337,18 @@ s32 dScDSMT_c::Behavior()
 
 /* Render: forward to the overlay's draw routine. */
 // @symbol _ZN9dScDSMT_c6RenderEv
-s32 dScDSMT_c::Render()
-{
+s32 dScDSMT_c::Render() {
     func_ov007_020b7040(this);
     return 1;
 }
 
 /* OnPendingDestroy: no unwind; the slot exists for dScene_c's teardown. */
 // @symbol _ZN9dScDSMT_c16OnPendingDestroyEv
-void dScDSMT_c::OnPendingDestroy()
-{
-}
+void dScDSMT_c::OnPendingDestroy() {}
 
 /* Fill the selected save slot's download-play summary in the byte-packed table. */
 // @symbol func_ov007_020cc168
-extern "C" void func_ov007_020cc168(u32 saveSlot)
-{
+extern "C" void func_ov007_020cc168(u32 saveSlot) {
     int highestUnlockedPlusOne;
     int character;
     int course;
@@ -373,22 +363,22 @@ extern "C" void func_ov007_020cc168(u32 saveSlot)
     }
 
     ((u8 *)data_0209b340)[9] = data_0208ee3c[0];
-    data_0209b34b[saveSlot] = (data_0209caa0[1] & 1) ? 1 : 0;
+    data_0209b34b[saveSlot] = (data_0209caa0[1] & 1) != 0;
 
     highestUnlockedPlusOne = 3;
     character = 2;
     do {
-        if (SaveData::IsCharacterUnlocked((u32)character)) break;
+        if (SaveData::IsCharacterUnlocked((u32)character))
+            break;
         highestUnlockedPlusOne--;
         character--;
     } while (character >= 0);
     data_0209b34e[saveSlot] = highestUnlockedPlusOne;
-
     courseBytes = &((u8 *)data_0209b340)[saveSlot * 0xf];
     for (course = 0; course < 0xf; course++) {
-        courseBytes[0x6b] = IsStarCollected(course, 0) ? 1 : 0;
+        courseBytes[0x6b] = IsStarCollected(course, 0) != 0;
         courseBytes[0x11] = CountStarsCollectedInLevelToDisplay(course) - courseBytes[0x6b];
-        courseBytes[0x3e] = SaveData::GetCoinRecord((u32)course);
+        courseBytes[0x3e] = SaveData ::GetCoinRecord((u32)course);
         courseBytes++;
     }
 
@@ -397,8 +387,7 @@ extern "C" void func_ov007_020cc168(u32 saveSlot)
 
 /* Arm the deferred music change Behavior commits. Declines if one is pending. */
 // @symbol func_ov007_020cc118
-extern "C" int func_ov007_020cc118(int musicId, unsigned int delayFrames)
-{
+extern "C" int func_ov007_020cc118(int musicId, unsigned int delayFrames) {
     if (data_ov007_02103260 >= 0) {
         return 0;
     }
@@ -410,29 +399,25 @@ extern "C" int func_ov007_020cc118(int musicId, unsigned int delayFrames)
 
 /* graphCallback_c slot 0: decline (`mov r0,#0`), against dGraph_c's default 1. */
 // @symbol _ZN9dScDSMT_c15graphCallback_c14GraphCallback0Ev
-int dScDSMT_c::graphCallback_c::GraphCallback0()
-{
+int dScDSMT_c::graphCallback_c::GraphCallback0() {
     return 0;
 }
 
 /* graphCallback_c slot 2: hand the callback object to the ov007 routine. */
 // @symbol _ZN9dScDSMT_c15graphCallback_c14GraphCallback2Ev
-int dScDSMT_c::graphCallback_c::GraphCallback2()
-{
+int dScDSMT_c::graphCallback_c::GraphCallback2() {
     func_ov007_020b6eb4(this);
     return 0;
 }
 
 /* Install the save-slot buffer pointer. */
 // @symbol func_ov007_020cc0e4
-extern "C" void func_ov007_020cc0e4(FileSaveData *files)
-{
+extern "C" void func_ov007_020cc0e4(FileSaveData *files) {
     data_0209b33c = files;
 }
 
 /* Address of save-slot record `idx` (0x44 stride is in the ROM's mla). */
 // @symbol func_ov007_020cc0cc
-extern "C" FileSaveData *func_ov007_020cc0cc(int idx)
-{
+extern "C" FileSaveData *func_ov007_020cc0cc(int idx) {
     return &data_0209b33c[idx];
 }

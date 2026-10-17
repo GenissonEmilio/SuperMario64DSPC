@@ -59,20 +59,20 @@
 struct dScMB_c : dScene_c {
 
     class graphCallback_c;
-    dFdColor_c fader;      /* 0x50 -- placement-constructed by InitResources,
+    dFdColor_c fader; /* 0x50 -- placement-constructed by InitResources,
                                destroyed by ~dScMB_c; see derivation above */
-    s32 mStep;              /* 0x60 -- Behavior state-machine step */
-    s32 mTimeout;           /* 0x064 -- Behavior frame-timeout counter */
+    s32 mStep;        /* 0x60 -- Behavior state-machine step */
+    s32 mTimeout;     /* 0x064 -- Behavior frame-timeout counter */
 
     /* Declared first -- key function. Defined out of line; that definition
        emits D1 then D0. */
-    virtual ~dScMB_c();                                 /* slots 16 (D1), 17 (D0) */
+    virtual ~dScMB_c(); /* slots 16 (D1), 17 (D0) */
 
     /* --- overrides, in _ZTV8dScene_c/_ZTV7fBase_c order. --- */
-    virtual s32 InitResources();                        /* slot  0 */
-    virtual s32 CleanupResources();                      /* slot  3 */
-    virtual s32 Behavior();                               /* slot  6 */
-    virtual s32 Render();                                 /* slot  9 */
+    virtual s32 InitResources();    /* slot  0 */
+    virtual s32 CleanupResources(); /* slot  3 */
+    virtual s32 Behavior();         /* slot  6 */
+    virtual s32 Render();           /* slot  9 */
 
     /* Not virtual. The global graph callback calls this on mOwner.
        The address stays the name. */
@@ -91,18 +91,18 @@ struct dScMB_c : dScene_c {
    not own. */
 class dScMB_c::graphCallback_c : public dGraph_c::callback_c {
 public:
-    void *mOwner;                                   /* 0x04 -- polled by slot 3 */
-    s32   mSpinAngle;                               /* 0x08 -- 20.12 sprite spin,
+    void *mOwner;   /* 0x04 -- polled by slot 3 */
+    s32 mSpinAngle; /* 0x08 -- 20.12 sprite spin,
                                 advanced by the global frame step and zeroed
                                 while the still frame is up */
-    u8    mStillTimer;                              /* 0x0c -- nonzero: draw the
+    u8 mStillTimer; /* 0x0c -- nonzero: draw the
                                 single unrotated sprite and count down */
-    u8    mEnabled;                                 /* 0x0d -- nothing draws while 0 */
-    u8    mAdvancing;                               /* 0x0e -- gates the spin advance */
+    u8 mEnabled;    /* 0x0d -- nothing draws while 0 */
+    u8 mAdvancing;  /* 0x0e -- gates the spin advance */
 
-    virtual int GraphCallback0();                           /* slot 0 */
-    virtual int GraphCallback2();                           /* slot 2 */
-    virtual int GraphCallback3();                           /* slot 3 */
+    virtual int GraphCallback0(); /* slot 0 */
+    virtual int GraphCallback2(); /* slot 2 */
+    virtual int GraphCallback3(); /* slot 3 */
 };
 
 #ifndef SM64DS_PLATFORM_PC

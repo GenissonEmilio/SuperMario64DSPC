@@ -16,9 +16,7 @@
  * and InitResources.
  */
 /* Runtime asset handles resolved through the overlay 0 file table. */
-enum dScBoot_c_AssetId {
-    ASSET_D_2D_FRAMEWORK_INITIALIZE_NSC_BIN = 0x022d
-};
+enum dScBoot_c_AssetId { ASSET_D_2D_FRAMEWORK_INITIALIZE_NSC_BIN = 0x022d };
 
 #include "dScBoot_c.h"
 
@@ -90,8 +88,7 @@ enum BootMenuState {
  * block: this tree has no register header, and the read-modify-write masks
  * are the ROM's own.
  */
-s32 dScBoot_c::InitResources()
-{
+s32 dScBoot_c::InitResources() {
     _ZN2GX15DisableAllBanksEv();
     _ZN2GX12SetBankForBGEt(1);
     _ZN2GX13SetBankForOBJEt(2);
@@ -166,8 +163,7 @@ s32 dScBoot_c::InitResources()
  * and run the "erase all save data" countdown (4/5). data_0208ee44 is the
  * frame step, so every countdown decrements by it rather than by one.
  */
-s32 dScBoot_c::Behavior()
-{
+s32 dScBoot_c::Behavior() {
     u16 keysHeld, keysPressed;
     int frameStep;
 
@@ -227,7 +223,8 @@ s32 dScBoot_c::Behavior()
                     palette = LoadFile(0x9807);
                     _ZN3GXS10LoadBGPlttEPKvjj((const void *)palette, 0, 0x1c0);
                     Deallocate((void *)palette);
-                    LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_INITIALIZE_NSC_BIN, (void *)_ZN3G2S12GetBG1ScrPtrEv());
+                    LoadCompressedFileAt(ASSET_D_2D_FRAMEWORK_INITIALIZE_NSC_BIN,
+                                         (void *)_ZN3G2S12GetBG1ScrPtrEv());
                     LoadCompressedFileAt(0x9803, (char *)_ZN3G2S12GetBG1ScrPtrEv() + 0x800);
                     func_0201cd08(0x29a);
                     mSelectedButton = 1;
@@ -242,8 +239,7 @@ s32 dScBoot_c::Behavior()
             break;
 
         case STATE_CONFIRM_ERASE:
-        case STATE_FINAL_CONFIRM:
-        {
+        case STATE_FINAL_CONFIRM: {
             int playerSlot = gActivePlayerSlot;
             u8 touchDown;
 
@@ -261,18 +257,17 @@ s32 dScBoot_c::Behavior()
                     leftTouchStarted = 0;
                 }
                 /* left button: touch x 0x28..0x78, y 0x98..0xb8, or Left */
-                if ((leftTouchStarted != 0
-                     && (u8)(gTouchX[playerSlot * 4] - 0x28) < 0x50
-                     && (u8)(gTouchY[playerSlot * 4] - 0x98) < 0x20)
-                    || (keysPressed & 0x20)) {
+                if ((leftTouchStarted != 0 && (u8)(gTouchX[playerSlot * 4] - 0x28) < 0x50 &&
+                     (u8)(gTouchY[playerSlot * 4] - 0x98) < 0x20) ||
+                    (keysPressed & 0x20)) {
                     if (mSelectedButton == 0) {
                         mButtonFlashTimer = 0x10;
                     }
                     mSelectedButton = 0;
                     func_02005348();
                     func_02012790(0);
-                    if ((u8)(gTouchX[gActivePlayerSlot * 4] - 0x28) < 0x50
-                        && (u8)(gTouchY[gActivePlayerSlot * 4] - 0x98) < 0x20) {
+                    if ((u8)(gTouchX[gActivePlayerSlot * 4] - 0x28) < 0x50 &&
+                        (u8)(gTouchY[gActivePlayerSlot * 4] - 0x98) < 0x20) {
                         mInputLockTimer = 0x20;
                         if (mState == STATE_CONFIRM_ERASE) {
                             mState = STATE_OPEN_FINAL_CONFIRM;
@@ -289,10 +284,9 @@ s32 dScBoot_c::Behavior()
                         rightTouchStarted = 0;
                     }
                     /* right button: touch x 0x88..0xd8, same rows, or Right */
-                    if ((rightTouchStarted != 0
-                         && (u8)(gTouchX[playerSlot * 4] - 0x88) < 0x50
-                         && (u8)(gTouchY[playerSlot * 4] - 0x98) < 0x20)
-                        || (keysPressed & 0x10)) {
+                    if ((rightTouchStarted != 0 && (u8)(gTouchX[playerSlot * 4] - 0x88) < 0x50 &&
+                         (u8)(gTouchY[playerSlot * 4] - 0x98) < 0x20) ||
+                        (keysPressed & 0x10)) {
                         if (mSelectedButton == 1) {
                             mButtonFlashTimer = 0x10;
                         }
@@ -374,30 +368,24 @@ s32 dScBoot_c::Behavior()
 /* Repaints two 16-by-4-tile buttons on the sub screen's BG1 map at +0x4c0.
  * They sit side by side in a 32-tile-wide map. The selected button uses
  * palette bank 2 when the flash timer is zero; all other tiles use bank 1. */
-void dScBoot_c::func_02005348()
-{
+void dScBoot_c::func_02005348() {
     int button;
     unsigned int paletteBits;
-    for (button = 0; button < 2; button++)
-    {
+    for (button = 0; button < 2; button++) {
         int selectedPaletteBits;
         unsigned short *buttonMap;
         unsigned short *tiles;
         int column;
-        if ((button == mSelectedButton) && (mButtonFlashTimer == 0))
-        {
+        if ((button == mSelectedButton) && (mButtonFlashTimer == 0)) {
             selectedPaletteBits = 0x2000;
-        }
-        else
-        {
+        } else {
             selectedPaletteBits = 0x1000;
         }
-        selectedPaletteBits = (unsigned short) selectedPaletteBits;
-        buttonMap = (unsigned short *) (((char *) _ZN3G2S12GetBG1ScrPtrEv()) + 0x4c0);
+        selectedPaletteBits = (unsigned short)selectedPaletteBits;
+        buttonMap = (unsigned short *)(((char *)_ZN3G2S12GetBG1ScrPtrEv()) + 0x4c0);
         paletteBits = selectedPaletteBits;
         tiles = buttonMap + (button * 0x10);
-        for (column = 0; column < 0x10; column++)
-        {
+        for (column = 0; column < 0x10; column++) {
             tiles[column] = selectedPaletteBits + (tiles[column] & 0x3ff);
             (&tiles[column])[0x20] = paletteBits + ((&tiles[column])[0x20] & 0x3ff);
             (&tiles[column])[0x40] = paletteBits + ((&tiles[column])[0x40] & 0x3ff);
@@ -413,8 +401,7 @@ void dScBoot_c::func_02005348()
  * source order, so the lead body lands at the run's left edge. The camera
  * call is spelled as the member it is (dCamera_c.h); func_0200cb58 comes
  * from decl_common.h. */
-extern "C" int func_02005324(void *p)
-{
+extern "C" int func_02005324(void *p) {
     ((dCamera_c *)p)->SaveCameraStateBeforeTalk();
     func_0200cb58(p, 0x19);
     return 1;

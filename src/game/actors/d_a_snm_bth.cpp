@@ -15,8 +15,8 @@
 //   the member struct.
 // - mInvModelMat stays flat words. A Matrix4x3 member reorders the
 //   destructor group to D2, D0, D1.
-// - IsPlayerInRange keeps its goto chain. Folding the six tests into one
-//   condition makes the function 4 bytes larger.
+// - IsPlayerInRange tests the box as one positive `&&` condition. The
+//   negated `||` form makes the function 4 bytes larger.
 
 #pragma defer_codegen off
 
@@ -73,6 +73,12 @@ extern SharedFilePtr data_ov002_0210d9c0;
 typedef struct { s32 words[12]; } MatrixWords;
 }
 
+/* Actor ID 0xbf is PLAYER. int-returning, so the ROM materializes the 0/1
+ * before testing it; a direct `!=` does not. */
+static inline int IsPlayerActor(dActor_c *actor) {
+    return actor->actorID == 0xbf;
+}
+
 // @symbol _ZN10daSnmBth_cD1Ev
 // @symbol _ZN10daSnmBth_cD0Ev
 daSnmBth_c::~daSnmBth_c()
@@ -93,7 +99,7 @@ void SnowmanBreathParticle::HitPlayer()
     dActor_c *actor = dActor_c::FindWithID(id);
     if (actor == 0)
         return;
-    if ((int)(actor->actorID == 0xbf) == 0)
+    if (!IsPlayerActor(actor))
         return;
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
         0x100, mPos.x, mPos.y, mPos.z);
@@ -113,8 +119,7 @@ void SnowmanBreathParticle::HitPlayer()
     if (player->mIsVanish)
         return;
 
-    s32 angle = Vec3_HorzAngle(&data_ov027_02113d10,
-                               (Vector3 *)&actor->mPosX);
+    s32 angle = Vec3_HorzAngle(&data_ov027_02113d10, &actor->mPos);
     Vector3_16 rotation;
     rotation.x = 0;
     rotation.y = (s16)angle;
@@ -151,7 +156,7 @@ void SnowmanBreathParticle::CheckSnowman()
 {
     dActor_c *snowman = dActor_c::FindWithActorID(0x102, 0);
     s32 threshold = mCollider.radius + 0x12b000;
-    s32 distance = Vec3_Dist(&mPos, (Vector3 *)&snowman->mPosX);
+    s32 distance = Vec3_Dist(&mPos, &snowman->mPos);
     if (distance >= threshold)
         return;
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
@@ -200,7 +205,7 @@ int SnowmanBreathParticle::TrySpawn(Player &player)
     if (mTimer != 0)
         return 0;
     mPos = data_ov027_02113d10;
-    angle = Vec3_HorzAngle(&mPos, (Vector3 *)&player.mPosX);
+    angle = Vec3_HorzAngle(&mPos, &player.mPos);
     if (angle > 0x2af8)
         angle = 0x2af8;
     if (angle < 0x9de)
@@ -231,27 +236,16 @@ int daSnmBth_c::IsPlayerInRange()
     mTalkPlayer = player;
 
     Vector3 playerPos;
-    Vec3_Asr(&playerPos, (Vector3 *)&player->mPosX, 3);
+    Vec3_Asr(&playerPos, &player->mPos, 3);
     *(MatrixWords *)&data_020a0e68 = *(MatrixWords *)&mInvModelMat;
 
     Vector3 localPos;
     MulVec3Mat4x3(&playerPos, &data_020a0e68, &localPos);
     Vec3_LslInPlace(&localPos, 3);
 
-    if (localPos.x < -0xe1000)
-        goto fail;
-    if (localPos.x > 0xe1000)
-        goto fail;
-    if (localPos.y < -0x5000)
-        goto fail;
-    if (localPos.y > 0x300000)
-        goto fail;
-    if (localPos.z < -0x430000)
-        goto fail;
-    if (localPos.z > 0x430000)
-        goto fail;
-    return 1;
-fail:
+    if (localPos.x >= -0xe1000 && localPos.x <= 0xe1000 && localPos.y >= -0x5000 &&
+        localPos.y <= 0x300000 && localPos.z >= -0x430000 && localPos.z <= 0x430000)
+        return 1;
     return 0;
 }
 
@@ -376,7 +370,7 @@ int daSnmBth_c::InitResources()
     mPosZ = 0x46988e;
     mAngleY = 0x5d30;
     Vector3 pos;
-    Vec3_Asr(&pos, (Vector3 *)&mPosX, 3);
+    Vec3_Asr(&pos, &mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, pos.x, pos.y, pos.z);
     Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, mAngleY);
     InvMat4x3(&data_020a0e68, &data_020a0e68);

@@ -26,9 +26,9 @@ extern void func_0203d738(void);
 }
 
 // @symbol Wiggler_Construct
-extern "C" void* Wiggler_Construct(char* elem)
-{
-    __cxa_vec_ctor(((dScMgHanachan_c::Wiggler *)elem)->seg, 5, 8, (void*)func_0203d738, (void*)NullDestructor_0203d47c);
+extern "C" void *Wiggler_Construct(char *elem) {
+    __cxa_vec_ctor(((dScMgHanachan_c::Wiggler *)elem)->seg, 5, 8, (void *)func_0203d738,
+                   (void *)NullDestructor_0203d47c);
     return elem;
 }
 
@@ -38,7 +38,8 @@ extern "C" void *dScMgHanachan_c_classInit(void) {
     if (scene != 0) {
         _ZN11dScMgBase_cC2Ev(scene);
         *(int *)scene = (int)data_ov006_0213cab8;
-        __cxa_vec_ctor(((dScMgHanachan_c *)scene)->mWiggler, 0xf, 0x98, (void *)Wiggler_Construct, (void *)Wiggler_Destroy);
+        __cxa_vec_ctor(((dScMgHanachan_c *)scene)->mWiggler, 0xf, 0x98, (void *)Wiggler_Construct,
+                       (void *)Wiggler_Destroy);
     }
     return scene;
 }

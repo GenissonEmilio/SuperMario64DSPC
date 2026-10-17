@@ -60,6 +60,7 @@ enum daObjSeesaw_c_AssetId {
 #include "dBgW.h"
 #include "Sound.h"
 #include "Player.h"
+#include "nitro/fx/fx.h"
 
 /* Profile actor ids (symbols/profile_reconstruction_registry.json).
  * param1 on a PLAYER (0xbf) is the character; the low two bits index it. */
@@ -167,12 +168,12 @@ void daObjSeesaw_c::OnGroundPounded(dActor_c &other)
     /* data_02082214 is interleaved cos, sin. (angle >> 4) * 2 + 1 is sine. */
     idx = ((u16)(s16)d >> 4) << 1;
 
-    prod = (int)(((s64)dist * n + 0x800) >> 12);
+    prod = FX_MUL(dist, n);
     idx = idx + 1;
 
     pitch = &mAngleX;
     cur = *pitch;
-    v = (int)(((s64)prod * data_02082214[idx] + 0x800) >> 12);
+    v = FX_MUL(prod, data_02082214[idx]);
     /* Signed divide by 4096, then narrow onto the s16 angle. */
     v = (v + ((unsigned)(v >> 11) >> 20)) << 4;
     *pitch = (s16)(cur + (v >> 16));
@@ -258,7 +259,7 @@ int daObjSeesaw_c::Behavior()
         if (s < 0)
             s = (short)-s;
         if (s > 0xa) {
-            mTiltSound = Sound::PlayLong(mTiltSound, 3, kTiltSound, *(Vector3 *)&mCamSpacePosX, 0);
+            mTiltSound = Sound::PlayLong(mTiltSound, 3, kTiltSound, mCamSpacePos, 0);
         }
     }
     if (mAngleX > kMaxPitch)
@@ -316,26 +317,26 @@ int daObjSeesaw_c::InitResources()
 // @symbol func_ov095_02135cdc
 extern "C" void func_ov095_02135cdc(daObjSeesaw_c *self, dActor_c *other)
 {
-    Vector3 *op = (Vector3 *)&other->mPosX;
-    int dist = Vec3_Dist((Vector3 *)&self->mPosX, op);
-    int ang = Vec3_HorzAngle((Vector3 *)&self->mPosX, op);
+    Vector3 *op = &other->mPos;
+    int dist = Vec3_Dist(&self->mPos, op);
+    int ang = Vec3_HorzAngle(&self->mPos, op);
     self->mPoundedThisFrame = 1;
     int r = func_ov095_0213579c(self, other);
 
     self->mAngleX += self->mAngleXSpeed;
-    int x = (int)(((s64)dist * r + 0x800) >> 12);
+    int x = FX_MUL(dist, r);
     s16 d = (s16)AngleDiff(ang, self->mAngleY);
-    int y = (int)(((s64)x * data_02082214[((u16)d >> 4) * 2 + 1] + 0x800) >> 12);
+    int y = FX_MUL(x, data_02082214[((u16)d >> 4) * 2 + 1]);
 
     int acc;
     if (self->mAngleXSpeed * x < 0)
-        acc = (int)(((s64)y * 0xa3LL + 0x800) >> 12);
+        acc = FX_MUL(y, 0xa3LL);
     else
-        acc = (int)(((s64)y * 0x51LL + 0x800) >> 12);
+        acc = FX_MUL(y, 0x51LL);
 
     s16 dv = acc / 4096;
     self->mAngleXSpeed += dv;
-    s16 lim = (int)(((s64)r * 0x32000LL + 0x800) >> 12) / 4096;
+    s16 lim = FX_MUL(r, 0x32000LL) / 4096;
     if (self->mAngleXSpeed > lim)
         self->mAngleXSpeed = lim;
     if (self->mAngleXSpeed < -lim)

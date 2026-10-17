@@ -37,6 +37,7 @@ enum daObjSm_Lift_c_AssetId {
 #include "Player.h"
 #include "SharedFilePtr.h"
 #include "PathPtr.h"
+#include "nitro/fx/fx.h"
 
 bool ApproachLinear(short &value, short target, short step);
 
@@ -117,7 +118,7 @@ void daObjSm_Lift_c::OnHitByMegaChar(Player &player)
 void daObjSm_Lift_c::func_ov018_02111278()
 {
     Vector3 t;
-    Vec3_Asr(&t, (Vector3 *)&mPosX, 3);
+    Vec3_Asr(&t, &mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, t.x, t.y, t.z);
     Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, mAngleY);
     Matrix4x3_ApplyInPlaceToRotationX(&data_020a0e68, mAngleX);
@@ -162,7 +163,12 @@ int daObjSm_Lift_c::Behavior()
     if (other != 0) {
         char *otherPos = other + 0x5c;
         int dist = Vec3_HorzDist(&mPosX, otherPos);
-        target = (s16)((int)(((s64)dist * data_02082214[((u16)(s16)AngleDiff(Vec3_HorzAngle(&mPosX, otherPos), mAngleY) >> 4) * 2 + 1] + 0x800) >> 12) / 256);
+        target = (s16)(FX_MUL(dist, data_02082214[((u16)(s16)AngleDiff(
+                                                       Vec3_HorzAngle(&mPosX, otherPos), mAngleY) >>
+                                                   4) *
+                                                      2 +
+                                                  1]) /
+                       256);
     } else {
         if (mNodeStep > 0 && mNodeIndex == 1) {
             if (Vec3_HorzDist(&mPosX, &mBasePosX) < 0x10000) {

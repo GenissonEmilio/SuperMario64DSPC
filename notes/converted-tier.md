@@ -82,7 +82,7 @@ It scored `real_name` 972 → 2,611 and CONVERTED → 1,087, and it is wrong fou
 An adversarial audit found all four with concrete cases:
 
 - **Misattribution.** `search()` takes the first match anywhere in the file.
-  `src/_ZN10dScStage_c13UpdateMessageEv.cpp` reports `Message::UpdateWindow` — a
+  The old `dScStage_c::UpdateMessage` shard (now in `src/Message.cpp`) reported `Message::UpdateWindow` — a
   one-line stub for a *dependency* class declared above the real function.
   The old `Coffin::InitResources` shard (now `daObjCasket_c::InitResources` in
   the promoted daObjCasket_c TU) matched a bare `MeshCollider::LoadFile`
@@ -171,7 +171,7 @@ had no alternative:
 
 ```sh
 src/game/stages/d_scene.cpp (ResetHardwareRegisters)  74 volatile hits, all 0x0400xxxx
-src/_ZN2GX13SetBankForTexEt.cpp                  25 volatile hits, all VRAM banks
+src/engine/gx/GX_VramCnt.cpp (SetBankForTex)     25 volatile hits, all VRAM banks
 src/engine/gx/G2x.cpp (SetBGyAffine)              the register block is a PARAMETER
 ```
 

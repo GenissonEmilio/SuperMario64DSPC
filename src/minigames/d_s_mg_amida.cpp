@@ -15,7 +15,7 @@
  * files. Their bodies are kept as they matched there, with these changes:
  *   - ShuffleGoals, CheckHurryButton, CheckEdgeBoost and StepWalkers
  *     called slot 36 through stand-in vtable structs; they now call
- *     Unk36().
+ *     IsVariant2().
  *   - ProbeRung took the two rung ends as int pointers; it now takes them
  *     as by-value Points, the way the pen handler already declared it,
  *     and uses the member names.
@@ -43,8 +43,8 @@
  *   emit a second vector cleanup.
  * - gTouchX/gTouchY stay 4-byte rows (flat indexing costs CheckHurryButton
  *   four words, measured at promotion), the pattern table is five separate
- *   data symbols, and unk_53e4 keeps its name -- its only use is as the
- *   sixth argument of the line-draw helper.
+ *   data symbols. mLineColor is named for its only use, the colour
+ *   argument of the line-draw helper (always 2).
  */
 
 /* Runtime asset handles resolved through the overlay 0 file table. */
@@ -76,31 +76,31 @@ enum dScMgAmida_c_AssetId {
 #include "types.h"
 #include "decl_common.h"
 #include "dScMgAmida_c.h"
-
+#include "nitro/fx/fx.h"
 
 extern "C" {
 /* --- shared ov004 and main helpers --- */
 extern void Mg_RenderSpriteBoth(void *a0, int a1, int a2, int a3, int a4);
 extern void Mg_DrawScoreTally(void *a0, int a1, int a2, int a3);
-extern int  Mg_DrawLine(void *a, int b, int c, int d, int e, int f, int g);
+extern int Mg_DrawLine(void *a, int b, int c, int d, int e, int f, int g);
 extern void MultiCopyHalf(void *dst, void *src, int nbytes);
-extern void *_ZN2G212GetBG3ScrPtrEv(void);  /* decl_common.h declares a data array named G2 */
+extern void *_ZN2G212GetBG3ScrPtrEv(void); /* decl_common.h declares a data array named G2 */
 extern void MultiStore16(u16 val, void *dst, int nbytes);
-extern int  RandomIntInternal(int *seed);
-extern int  Vec2_Len(int *v);
+extern int RandomIntInternal(int *seed);
+extern int Vec2_Len(int *v);
 extern void FreeGfxSlotsById(int a);
-extern u32  LoadCompressedFileAt(int fileID, void *target);
-extern int  LoadFile(int handle);
+extern u32 LoadCompressedFileAt(int fileID, void *target);
+extern int LoadFile(int handle);
 extern void _ZN3G2x13SetBlendAlphaEPVttttj(void *p, u16 a, u16 b, u16 c, u16 d);
 extern void SetSubBg2Offset(int a, int b);
 extern void __cxa_vec_ctor(void *obj, int a, int b, void *cb1, void *cb2);
 extern void func_0203d738(void *p);
 extern void func_02012dbc(int a);
-extern int  func_020126e8(int a);
+extern int func_020126e8(int a);
 extern void func_020126ac(int a0, int a1, int a2, int a3, int a4);
-extern int  func_02012468(int handle, int a, int sfx, int b, int c, int d, int pan, short e);
+extern int func_02012468(int handle, int a, int sfx, int b, int c, int d, int pan, short e);
 extern void func_02012790(int sfx);
-extern int  GetGameLanguage(void);
+extern int GetGameLanguage(void);
 extern unsigned int _ZN3G2S13GetBG1CharPtrEv(void);
 extern void *_ZN3G2S12GetBG1ScrPtrEv(void);
 
@@ -112,83 +112,87 @@ extern void *dScMgAmida_c_classInit(void);
 
 /* --- data --- */
 extern s16 data_02082214[];
-extern u8  data_0209d45c;
-extern u8  data_0209d454;
+extern u8 data_0209d45c;
+extern u8 data_0209d454;
 // local extern: this file needs a record-view spelling of one of the touch lanes (the ROM scales the slot in the addressing mode), which conflicts with PlayerInput.h; the header is not included and all five symbols are declared here.
-extern u8  gActivePlayerSlot;
+extern u8 gActivePlayerSlot;
 // local extern: see above.
-extern u8  gTouchHeld[];
+extern u8 gTouchHeld[];
 // local extern: see above.
-extern u8  gTouchEdge[];
+extern u8 gTouchEdge[];
 // local extern: see above.
-extern u8  gTouchX[][4];
+extern u8 gTouchX[][4];
 // local extern: see above.
-extern u8  gTouchY[][4];
-extern int data_ov006_0212e1c0[];
+extern u8 gTouchY[][4];
+extern int sAmidaPatternSpeedUp[];
 extern s32 data_0208ee44;
-extern char data_ov006_0212e1a8[];
-extern char data_ov006_0212e1ac[];
-extern char data_ov006_0212e1b0[];
-extern char data_ov006_0212e1b4[];
-extern char data_ov006_0212e1b8[];
+extern char sAmidaPatterns[];
+extern char sAmidaPatternGoalShuffle[];
+extern char sAmidaPatternSpeeds[];
+extern char sAmidaPatternRungSkip[];
+extern char sAmidaPatternExtraRungs[];
 extern void *data_ov006_0213a32c;
-extern void *data_ov006_0213a35c;
-extern int  data_ov006_0213a338[];
-extern void *data_ov006_0213a390[];
-extern void *data_ov006_0213a458[];
-extern void *data_ov006_0213a4b0[];
-extern int  data_ov006_0213a4c0[];
-extern int  data_ov006_0213a568[];
-extern int  data_ov006_0213b84c[13];
-extern s32  data_ov006_02141640[];
-extern s32  data_ov006_02141650[];
+extern void *sAmidaSideSprite;
+extern int data_ov006_0213a338[];
+extern void *sAmidaBoardAnimSprites[];
+extern void *sAmidaLaneAnimSprites[];
+extern void *sAmidaWalkerSprites[];
+extern int sAmidaLaneResultSprites[];
+extern int sAmidaLaneWantSprites[];
+extern int data_ov006_0213b84c[13];
+extern s32 sAmidaLaneTargets[];
+extern s32 sAmidaLaneSaved[];
 }
 
 namespace CP15 {
-    void FlushAndInvalidateDataCache(u32 addr, u32 size);
+void FlushAndInvalidateDataCache(u32 addr, u32 size);
 }
 
 namespace GX {
-    void LoadBGPltt(const void *data, u32 offset, u32 size);
-    void LoadOBJPltt(const void *data, u32 offset, u32 size);
+void LoadBGPltt(const void *data, u32 offset, u32 size);
+void LoadOBJPltt(const void *data, u32 offset, u32 size);
 }
 
 namespace GXS {
-    void LoadBGPltt(const void *data, u32 offset, u32 size);
-    void LoadOBJPltt(const void *data, u32 offset, u32 size);
+void LoadBGPltt(const void *data, u32 offset, u32 size);
+void LoadOBJPltt(const void *data, u32 offset, u32 size);
 }
 
 namespace G2S {
-    char *GetBG0CharPtr();
-    void *GetBG2ScrPtr();
-    void *GetBG3ScrPtr();
-    char *GetBG3CharPtr();
+char *GetBG0CharPtr();
+void *GetBG2ScrPtr();
+void *GetBG3ScrPtr();
+char *GetBG3CharPtr();
 }
 
 namespace Sound {
-    void PlayBank2_2D(unsigned int id);
+void PlayBank2_2D(unsigned int id);
 }
 
 namespace Memory {
-    void *Allocate(unsigned int size);
-    void Deallocate(void *ptr);
+void *Allocate(unsigned int size);
+void Deallocate(void *ptr);
 }
 
-typedef struct { int a; int b; } Pair;
+typedef struct {
+    int a;
+    int b;
+} Pair;
 extern Pair data_ov006_0213b8b8[11];
 
-typedef struct { int v[14]; } Buf14;
-extern Buf14 data_ov006_0213b880;
+typedef struct {
+    int v[14];
+} Buf14;
+extern Buf14 sAmidaRenderPeriods;
 
 #define PIECE_AT(p) ((dScMgAmida_c_Piece *)((p) + 0x4768))
 
 /* Launder helpers for Behavior's piece walk: AT makes the compiler
    materialise each address on its own instead of folding it into a
    neighbouring add, which is what the ROM does there. */
-#define AT(p,off) ((void*)(int)((char*)(p)+(off)))
-#define IP(p,o) (*(int*)((char*)(p)+(o)))
-#define IAP(p,o) (*(int*)AT(p,(o)))
-#define MULFX(a,b) ((int)(((s64)(a)*(b)+0x800)>>12))
+#define AT(p, off) ((void*)(int)((char*)(p)+(off)))
+#define IP(p, o) (*(int*)((char*)(p)+(o)))
+#define IAP(p, o) (*(int*)AT(p,(o)))
 
 #pragma defer_codegen off
 
@@ -198,8 +202,7 @@ extern Buf14 data_ov006_0213b880;
    the lane velocities, the lane positions and the cells. Both element
    destructors do nothing. D1 stores the vptr and ends in dScMgBase_c's D2;
    D0 repeats the same body and adds the delete. */
-dScMgAmida_c::~dScMgAmida_c()
-{
+dScMgAmida_c::~dScMgAmida_c() {
     __cxa_vec_cleanup((char *)this + 0x4768, 0x80, 0x18, (void *)AmidaPiece_ElemDtor);
     __cxa_vec_cleanup((char *)this + 0x4744, 4, 8, (void *)NullDestructor_0203d47c);
     __cxa_vec_cleanup((char *)this + 0x4724, 4, 8, (void *)NullDestructor_0203d47c);
@@ -213,8 +216,7 @@ dScMgAmida_c::~dScMgAmida_c()
  * D1 body, called qualified so it is a direct call, then the class-specific
  * operator delete. mwccarm never defines _MSC_VER, so nothing here reaches
  * the cartridge object. */
-extern "C" dScMgAmida_c *_ZN12dScMgAmida_cD0Ev(dScMgAmida_c *thiz)
-{
+extern "C" dScMgAmida_c *_ZN12dScMgAmida_cD0Ev(dScMgAmida_c *thiz) {
     thiz->dScMgAmida_c::~dScMgAmida_c();
     dScMgAmida_c::operator delete(thiz);
     return thiz;
@@ -223,26 +225,24 @@ extern "C" dScMgAmida_c *_ZN12dScMgAmida_cD0Ev(dScMgAmida_c *thiz)
 
 // @symbol AmidaPiece_ElemDtor
 /* Element destructor for the 0x80 falling pieces: nothing to undo. */
-extern "C" void AmidaPiece_ElemDtor(void)
-{
-}
+extern "C" void AmidaPiece_ElemDtor(void) {}
 
 // @symbol _ZN12dScMgAmida_c12IsAltVariantEv
 /* Slot 35, the family's only override of it. The base asks whether the low
    byte of fBase_c::param1 is nonzero; this asks whether it is exactly 1.
    Nothing in this class calls it; the callers are in dScMgCoin_c,
    dScMgPanel_c, dScMgSound_c and dScMgSnowball_c. */
-int dScMgAmida_c::IsAltVariant()
-{
+int dScMgAmida_c::IsAltVariant() {
     return (param1 & 0xff) == 1;
 }
 
-// @symbol _ZN12dScMgAmida_c5Unk36Ev
-/* Slot 36, this class's own: whether the low byte of the word at this+8,
-   a field from above dScMgBase_c, is 2. Left as a raw offset, as
-   dScMgSlot1_c.h does for the same word. */
-int dScMgAmida_c::Unk36()
-{
+// @symbol _ZN12dScMgAmida_c10IsVariant2Ev
+/* Slot 36, this class's own: whether the low byte of param1 (the menu
+   entry's sceneParam) is 2. The Rec Room lists Amida twice, and its second
+   entry (row 24) passes 2 (notes/minigames/runtime-checks.md, IsAltVariant),
+   so this picks that variant. IsAltVariant above is the == 1 test (the
+   base's own asks only for nonzero). */
+int dScMgAmida_c::IsVariant2() {
     return (((int)param1) & 0xff) == 2;
 }
 
@@ -250,9 +250,8 @@ int dScMgAmida_c::Unk36()
 /* Slot 31: the sub screen's BG1 set up for this game. Same shape as the
    base's, with 4 for the BG1CNT base bits and this class's own language
    table. Not a Kill; see the slot-31 block in include/dScMgBase_c.h. */
-int dScMgAmida_c::InitSubScreenBg()
-{
-    volatile unsigned short *reg = (volatile unsigned short*)0x400100a;
+int dScMgAmida_c::InitSubScreenBg() {
+    volatile unsigned short *reg = (volatile unsigned short *)0x400100a;
     int id;
     void *t;
     *reg = (unsigned short)((*reg & 0x43) | 4);
@@ -261,13 +260,13 @@ int dScMgAmida_c::InitSubScreenBg()
     SetSubBg1Offset(0, 0);
     data_0209d454 = (unsigned char)(data_0209d454 & ~2);
     id = GetGameLanguage();
-    t = (void*)_ZN3G2S13GetBG1CharPtrEv();
-    LoadCompressedFileAt(data_ov006_0213b838[id], t);
+    t = (void *)_ZN3G2S13GetBG1CharPtrEv();
+    LoadCompressedFileAt(sAmidaOptionNcgByLanguage[id], t);
     LoadCompressedFileAt(ASSET_D_2D_MG_BG_OPTION_NSC_BIN, _ZN3G2S12GetBG1ScrPtrEv());
 }
 
 // @symbol _ZN12dScMgAmida_c12ShuffleGoalsEi
-/* Refills and shuffles the four-entry table at 0x4714. When Unk36() holds,
+/* Refills and shuffles the four-entry table at 0x4714. When IsVariant2() holds,
    the entries come from the pattern index, are copied to 0x46a4, and the
    table is reshuffled until it differs somewhere from that copy as seen
    through 0x4694; otherwise the first arg1 entries (at most 4) are 1 and
@@ -278,8 +277,7 @@ int dScMgAmida_c::InitSubScreenBg()
 #define A46A4(i) (mLaneWants[i])
 #define A4694(i) (mLanePerm[i])
 
-void dScMgAmida_c::ShuffleGoals(int arg1)
-{
+void dScMgAmida_c::ShuffleGoals(int arg1) {
     int i;
     int k;
     int j;
@@ -287,7 +285,7 @@ void dScMgAmida_c::ShuffleGoals(int arg1)
     int u;
     int *pi;
 
-    if (Unk36()) {
+    if (IsVariant2()) {
         switch (mPatternIndex) {
         case 0:
             A714(0) = 0;
@@ -364,8 +362,7 @@ void dScMgAmida_c::ShuffleGoals(int arg1)
 #undef A4694
 
 // @symbol _ZN12dScMgAmida_c11ClearStrokeEv
-void dScMgAmida_c::ClearStroke()
-{
+void dScMgAmida_c::ClearStroke() {
     int row = 0;
     int col;
     int rowoff = 0;
@@ -375,7 +372,8 @@ void dScMgAmida_c::ClearStroke()
         for (col = 0; col < 0x158; col++) {
             unsigned char *base = mStrokeGrid;
             unsigned char *p = (unsigned char *)(rowoff + (int)base) + col;
-            if (*p != 0) *p = val;
+            if (*p != 0)
+                *p = val;
         }
         rowoff += 0x158;
     }
@@ -391,8 +389,7 @@ void dScMgAmida_c::ClearStroke()
 
    The fourth argument is unused: this override chooses a brush size of 2
    or 4 before calling the base implementation. */
-void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size */)
-{
+void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size */) {
 
     u8 lineEndSet;
     u8 setupInk;
@@ -409,7 +406,7 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
         if (brushX != prevX || brushY != mPrev.y) {
             prevXMinusOne = prevX - 1;
             if (brushX == prevXMinusOne && brushY == mPrev.y - 1) {
-                u8* ink = mInkGrid;
+                u8 *ink = mInkGrid;
                 if ((ink + (brushX + 1) * 0x158)[brushY + 0xc0] >= 3u) {
                     mProbeHit = 1;
                 } else if ((ink + brushX * 0x158)[brushY + 0xc1] >= 3u) {
@@ -418,21 +415,21 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
             } else {
                 prevXPlusOne = prevX + 1;
                 if (brushX == prevXPlusOne && brushY == mPrev.y - 1) {
-                    u8* ink = mInkGrid;
+                    u8 *ink = mInkGrid;
                     if ((ink + (brushX - 1) * 0x158)[brushY + 0xc0] >= 3u) {
                         mProbeHit = 1;
                     } else if ((ink + brushX * 0x158)[brushY + 0xc1] >= 3u) {
                         mProbeHit = 1;
                     }
                 } else if (brushX == prevXMinusOne && brushY == mPrev.y + 1) {
-                    u8* ink = mInkGrid;
+                    u8 *ink = mInkGrid;
                     if ((ink + (brushX + 1) * 0x158)[brushY + 0xc0] >= 3u) {
                         mProbeHit = 1;
                     } else if ((ink + brushX * 0x158)[brushY + 0xbf] >= 3u) {
                         mProbeHit = 1;
                     }
                 } else if (brushX == prevXPlusOne && brushY == mPrev.y + 1) {
-                    u8* ink = mInkGrid;
+                    u8 *ink = mInkGrid;
                     if ((ink + (brushX - 1) * 0x158)[brushY + 0xc0] >= 3u) {
                         mProbeHit = 1;
                     } else if ((ink + brushX * 0x158)[brushY + 0xbf] >= 3u) {
@@ -448,10 +445,14 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
 
     if (mLineCommit == 1) {
         dScMgBase_c::PaintSquare(brushX, brushY, colour, 4);
-        if (brushX < 0) return;
-        if (brushX >= 0x100) return;
-        if (brushY < -0xc0) return;
-        if (brushY >= 0x98) return;
+        if (brushX < 0)
+            return;
+        if (brushX >= 0x100)
+            return;
+        if (brushY < -0xc0)
+            return;
+        if (brushY >= 0x98)
+            return;
         (mInkGrid + brushX * 0x158)[brushY + 0xc0] = mLineCount;
         return;
     }
@@ -484,7 +485,8 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
                 mLineEnd.y = brushY;
                 return;
             }
-            if (lineEndSet != 0) return;
+            if (lineEndSet != 0)
+                return;
             if (brushX == mLineStart.x) {
                 mLineEnd.y = brushY;
             } else {
@@ -499,7 +501,8 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
             return;
         }
         mark = (mStrokeGrid + brushX * 0x158)[gridY];
-        if (mark != 0 && mLineCount != mark) goto fail;
+        if (mark != 0 && mLineCount != mark)
+            goto fail;
         mark = (mInkGrid + brushX * 0x158)[gridY];
         if (mark != 0 && mLineCount != mark) {
         fail:
@@ -514,41 +517,49 @@ void dScMgAmida_c::PaintSquare(int brushX, int brushY, int colour, int /* size *
 }
 
 // @symbol _ZN12dScMgAmida_c16CheckHurryButtonEv
-void dScMgAmida_c::CheckHurryButton()
-{
-    if (Unk36() == 0) return;
-    if (mHurry == 1) return;
+void dScMgAmida_c::CheckHurryButton() {
+    if (IsVariant2() == 0)
+        return;
+    if (mHurry == 1)
+        return;
     unsigned int pressed = 0;
     int playerSlot = gActivePlayerSlot;
     if (gTouchHeld[playerSlot << 2] != 0) {
         unsigned int touchOffset = playerSlot << 2;
-        if (gTouchEdge[touchOffset] != 0) pressed = 1;
+        if (gTouchEdge[touchOffset] != 0)
+            pressed = 1;
     }
-    if (pressed == 0) return;
+    if (pressed == 0)
+        return;
     int touchX = gTouchX[playerSlot][0];
     int touchY = gTouchY[playerSlot][0];
-    if (touchX < 0x60) return;
-    if (touchX >= 0xa0) return;
-    if (touchY < 0xa0) return;
-    if (touchY >= 0xc0) return;
+    if (touchX < 0x60)
+        return;
+    if (touchX >= 0xa0)
+        return;
+    if (touchY < 0xa0)
+        return;
+    if (touchY >= 0xc0)
+        return;
     mHurry = 1;
     Sound::PlayBank2_2D(0x151);
 }
 
 // @symbol _ZN12dScMgAmida_c14CheckEdgeBoostEv
-void dScMgAmida_c::CheckEdgeBoost()
-{
+void dScMgAmida_c::CheckEdgeBoost() {
     int playerSlot;
     int pressed;
     int touchX;
     int touchY;
 
-    if (Unk36()) return;
+    if (IsVariant2())
+        return;
 
     playerSlot = gActivePlayerSlot;
     pressed = 0;
     if (gTouchHeld[playerSlot * 4]) {
-        if (gTouchEdge[playerSlot * 4] != 0) pressed = 1;
+        if (gTouchEdge[playerSlot * 4] != 0)
+            pressed = 1;
     }
     if (pressed != 0) {
         mPenLocked = 0;
@@ -583,13 +594,14 @@ void dScMgAmida_c::CheckEdgeBoost()
    turns the stroke into a rung between two neighbouring lanes, probed with
    ProbeRung before it is painted. Point's special members are
    what shape the calls; see include/dScMgAmida_c.h. */
-void dScMgAmida_c::HandlePen()
-{
+void dScMgAmida_c::HandlePen() {
     int oldX;
     int oldY;
 
-    if (this->mLineCount >= 0xff) return;
-    if (this->mHurry == 1) return;
+    if (this->mLineCount >= 0xff)
+        return;
+    if (this->mHurry == 1)
+        return;
 
     oldX = this->mPen.x;
     oldY = this->mPen.y;
@@ -597,11 +609,16 @@ void dScMgAmida_c::HandlePen()
     if (gTouchHeld[gActivePlayerSlot * 4] != 0) {
         int newX = gTouchX[gActivePlayerSlot][0];
         int newY = gTouchY[gActivePlayerSlot][0];
-        if (newX < 0) return;
-        if (newX >= 0x100) return;
-        if (newY < 0) return;
-        if (newY >= this->mLineEndY) return;
-        if (this->mPenLocked != 0) return;
+        if (newX < 0)
+            return;
+        if (newX >= 0x100)
+            return;
+        if (newY < 0)
+            return;
+        if (newY >= this->mLineEndY)
+            return;
+        if (this->mPenLocked != 0)
+            return;
         this->mPen.x = newX;
         this->mPen.y = newY;
         if (this->mPenStart.x == -1 || this->mPenStart.y == -1) {
@@ -609,17 +626,20 @@ void dScMgAmida_c::HandlePen()
             this->mPenStart.y = newY;
             func_02012718(0xdc, this->mPenStart.x << 12);
         }
-        if (oldX == -1 && oldY == -1) return;
+        if (oldX == -1 && oldY == -1)
+            return;
         if (oldX == this->mPen.x && oldY == this->mPen.y) {
             this->mPenTapped = 1;
             return;
         }
-        Mg_DrawLine(this, oldX, oldY, this->mPen.x, this->mPen.y, this->unk_53e4, 1);
+        Mg_DrawLine(this, oldX, oldY, this->mPen.x, this->mPen.y, this->mLineColor, 1);
         if (this->mPenTapped == 1) {
-            this->mPenSoundHandle = func_02012468(this->mPenSoundHandle, 2, 0xde, 4, 0, 0, func_020126e8(this->mPen.x << 12), 0);
+            this->mPenSoundHandle = func_02012468(this->mPenSoundHandle, 2, 0xde, 4, 0, 0,
+                                                  func_020126e8(this->mPen.x << 12), 0);
             return;
         }
-        this->mPenSoundHandle = func_02012468(this->mPenSoundHandle, 2, 0xdd, 4, 0, 0, func_020126e8(this->mPen.x << 12), 0);
+        this->mPenSoundHandle = func_02012468(this->mPenSoundHandle, 2, 0xdd, 4, 0, 0,
+                                              func_020126e8(this->mPen.x << 12), 0);
         return;
     } else {
         int released;
@@ -632,11 +652,14 @@ void dScMgAmida_c::HandlePen()
             if (this->mPenStart.x != -1 && this->mPenStart.y != -1 && oldX != -1 && oldY != -1) {
                 if (this->mLineStartSet == 0) {
                     int d1 = oldX - this->mPenStart.x;
-                    if (d1 < 0) d1 = -d1;
+                    if (d1 < 0)
+                        d1 = -d1;
                     if (d1 < 0x10) {
                         int d2 = oldY - this->mPenStart.y;
-                        if (d2 < 0) d2 = -d2;
-                        if (d2 >= 0x10) goto classify;
+                        if (d2 < 0)
+                            d2 = -d2;
+                        if (d2 >= 0x10)
+                            goto classify;
                     } else {
                     classify:
                         if (oldX >= 0x21 && oldX <= 0x3f) {
@@ -726,7 +749,8 @@ void dScMgAmida_c::HandlePen()
             }
 
             if (this->mLineStartSet == 0 || this->mLineEndSet == 0) {
-                if (this->mPenLocked == 0 && this->mHurry == 0) func_02012790(0xe);
+                if (this->mPenLocked == 0 && this->mHurry == 0)
+                    func_02012790(0xe);
                 ClearStroke();
                 this->mLineStart.x = -1;
                 this->mLineStart.y = -1;
@@ -760,7 +784,8 @@ void dScMgAmida_c::HandlePen()
                 }
                 {
                     if (ProbeRung(a, b) == 1) {
-                        if (this->mPenLocked == 0 && this->mHurry == 0) func_02012790(0xe);
+                        if (this->mPenLocked == 0 && this->mHurry == 0)
+                            func_02012790(0xe);
                         ClearStroke();
                         this->mLineStart.x = -1;
                         this->mLineStart.y = -1;
@@ -773,32 +798,35 @@ void dScMgAmida_c::HandlePen()
                     u8 *row = this->mInkGrid + this->mLineEnd.x * 0x158;
                     hit = *(row + this->mLineEnd.y + 0x218);
                     if (hit == 0) {
-                        hit = *(this->mInkGrid + this->mLineStart.x * 0x158 + this->mLineStart.y - 0x98);
+                        hit = *(this->mInkGrid + this->mLineStart.x * 0x158 + this->mLineStart.y -
+                                0x98);
                     }
                 } else {
                     u8 *row = this->mInkGrid + this->mLineEnd.x * 0x158;
                     hit = *(row + this->mLineEnd.y - 0x98);
                     if (hit == 0) {
-                        hit = *(this->mInkGrid + this->mLineStart.x * 0x158 + this->mLineStart.y + 0x218);
+                        hit = *(this->mInkGrid + this->mLineStart.x * 0x158 + this->mLineStart.y +
+                                0x218);
                     }
                 }
                 if (hit == 0) {
                     ClearStroke();
                     this->mLineCommit = 1;
-                    Mg_DrawLine(this, a.x, a.y, b.x, b.y, this->unk_53e4, 1);
+                    Mg_DrawLine(this, a.x, a.y, b.x, b.y, this->mLineColor, 1);
                     if (a.x < b.x) {
-                        Mg_DrawLine(this, a.x - 1, a.y, a.x - 1, a.y, this->unk_53e4, 1);
-                        Mg_DrawLine(this, b.x + 1, b.y, b.x + 1, b.y, this->unk_53e4, 1);
+                        Mg_DrawLine(this, a.x - 1, a.y, a.x - 1, a.y, this->mLineColor, 1);
+                        Mg_DrawLine(this, b.x + 1, b.y, b.x + 1, b.y, this->mLineColor, 1);
                     } else {
-                        Mg_DrawLine(this, a.x + 1, a.y, a.x + 1, a.y, this->unk_53e4, 1);
-                        Mg_DrawLine(this, b.x - 1, b.y, b.x - 1, b.y, this->unk_53e4, 1);
+                        Mg_DrawLine(this, a.x + 1, a.y, a.x + 1, a.y, this->mLineColor, 1);
+                        Mg_DrawLine(this, b.x - 1, b.y, b.x - 1, b.y, this->mLineColor, 1);
                     }
                     this->mLineCommit = 0;
                     Amida_SaveBgChars(this);
                     this->mLineCount++;
                     Sound::PlayBank2_2D(0xdf);
                 } else {
-                    if (this->mPenLocked == 0 && this->mHurry == 0) func_02012790(0xe);
+                    if (this->mPenLocked == 0 && this->mHurry == 0)
+                        func_02012790(0xe);
                     ClearStroke();
                     this->mLineStart.x = -1;
                     this->mLineStart.y = -1;
@@ -821,8 +849,7 @@ void dScMgAmida_c::HandlePen()
 // @symbol _ZN12dScMgAmida_c9ProbeRungENS_5PointES0_
 /* Probes the rung from p1 to p2 without painting it: slot 34 runs in probe
    mode over the line and reports whether any cell it crosses is taken. */
-int dScMgAmida_c::ProbeRung(Point p1, Point p2)
-{
+int dScMgAmida_c::ProbeRung(Point p1, Point p2) {
     int startY, startX;
     this->mProbeHit = 0;
     this->mProbeMode = 1;
@@ -830,7 +857,7 @@ int dScMgAmida_c::ProbeRung(Point p1, Point p2)
     startX = p1.x;
     this->mPrev.x = startX;
     this->mPrev.y = startY;
-    Mg_DrawLine(this, p1.x, p1.y, p2.x, p2.y, this->unk_53e4, 1);
+    Mg_DrawLine(this, p1.x, p1.y, p2.x, p2.y, this->mLineColor, 1);
     this->mProbeMode = 0;
     return this->mProbeHit;
 }
@@ -838,8 +865,7 @@ int dScMgAmida_c::ProbeRung(Point p1, Point p2)
 // @symbol _ZN12dScMgAmida_c10StepWalkerEii
 #pragma push
 #pragma opt_common_subs off
-int dScMgAmida_c::StepWalker(int walker, int dir)
-{
+int dScMgAmida_c::StepWalker(int walker, int dir) {
     char *sceneBytes = (char *)this;
     int gridX, gridY;
     u8 lineMark;
@@ -850,15 +876,36 @@ int dScMgAmida_c::StepWalker(int walker, int dir)
 
     // Directions run across a 3x3 neighbourhood, skipping the centre.
     switch (dir) {
-        case 0: gridX--; gridY--; break;
-        case 1: gridY--; break;
-        case 2: gridX++; gridY--; break;
-        case 3: gridX--; break;
-        case 4: gridX++; break;
-        case 5: gridX--; gridY++; break;
-        case 6: gridY++; break;
-        case 7: gridX++; gridY++; break;
-        default: return 0;
+    case 0:
+        gridX--;
+        gridY--;
+        break;
+    case 1:
+        gridY--;
+        break;
+    case 2:
+        gridX++;
+        gridY--;
+        break;
+    case 3:
+        gridX--;
+        break;
+    case 4:
+        gridX++;
+        break;
+    case 5:
+        gridX--;
+        gridY++;
+        break;
+    case 6:
+        gridY++;
+        break;
+    case 7:
+        gridX++;
+        gridY++;
+        break;
+    default:
+        return 0;
     }
 
     {
@@ -887,8 +934,8 @@ int dScMgAmida_c::StepWalker(int walker, int dir)
         *(int *)(sceneBytes + walker * 8 + 0x4660) = gridX;
         *(int *)(sceneBytes + walker * 8 + 0x4664) = gridY - 0xc0;
 
-        progress500 = (*(int *)(sceneBytes + walker * 8 + 0x4664) + 0xd4) * 0x1f4 /
-            (mLineEndY + 0xd4);
+        progress500 =
+            (*(int *)(sceneBytes + walker * 8 + 0x4664) + 0xd4) * 0x1f4 / (mLineEndY + 0xd4);
         soundPosition = func_020126e8(*(int *)(sceneBytes + walker * 8 + 0x4660) << 0xc);
         func_020126ac(0x1bf, 6, 0, progress500, soundPosition);
         return 1;
@@ -909,14 +956,13 @@ int dScMgAmida_c::StepWalker(int walker, int dir)
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
-void dScMgAmida_c::StepWalkers()
-{
+void dScMgAmida_c::StepWalkers() {
     char *sceneBytes = (char *)this;
     s32 delayIndex;
     s32 walker;
     s32 walkerCount;
 
-    for (delayIndex = 0; delayIndex < (walkerCount = mWalkerCount); ) {
+    for (delayIndex = 0; delayIndex < (walkerCount = mWalkerCount);) {
         s32 *delaySlot = (s32 *)((int)sceneBytes + delayIndex * 4 + 0x46b8);
         s32 delay = *delaySlot;
         delayIndex++;
@@ -977,7 +1023,7 @@ void dScMgAmida_c::StepWalkers()
                         s32 *walkerX;
                         s32 x;
 
-                        if (Unk36() != 0) {
+                        if (IsVariant2() != 0) {
                             u32 wantedGoal = (u32)mLaneWants[walker];
                             walkerX = (s32 *)(sceneBytes + walker * 8 + 0x4660);
                             x = *walkerX;
@@ -1047,7 +1093,7 @@ void dScMgAmida_c::StepWalkers()
                         }
 
                         if (reachedGoal == 1) {
-                            if (Unk36() != 0) {
+                            if (IsVariant2() != 0) {
                                 if (mRoundFailed == 0) {
                                     func_02012718(v10, *walkerX << 0xc);
                                     u32 wantedGoal = (u32)mLaneWants[walker];
@@ -1100,7 +1146,8 @@ void dScMgAmida_c::StepWalkers()
                                 if (mScore > 0x270f) {
                                     mScore = 0x270f;
                                 }
-                                speedMode = *(s32 *)((char *)data_ov006_0212e1c0 + mPatternIndex * 0x1c);
+                                speedMode =
+                                    *(s32 *)((char *)sAmidaPatternSpeedUp + mPatternIndex * 0x1c);
                                 switch (speedMode) {
                                 case 0:
                                     break;
@@ -1127,12 +1174,14 @@ void dScMgAmida_c::StepWalkers()
                             return;
                         }
 
-                        if (Unk36() != 0) {
+                        if (IsVariant2() != 0) {
                             func_02012dbc(5);
                             if (mRoundFailed == 0) {
-                                func_02012718(0x1c2, *(s32 *)(sceneBytes + walker * 8 + 0x4660) << 0xc);
+                                func_02012718(0x1c2, *(s32 *)(sceneBytes + walker * 8 + 0x4660)
+                                                         << 0xc);
                             } else {
-                                func_02012718(0x1c3, *(s32 *)(sceneBytes + walker * 8 + 0x4660) << 0xc);
+                                func_02012718(0x1c3, *(s32 *)(sceneBytes + walker * 8 + 0x4660)
+                                                         << 0xc);
                             }
                             *done = 1;
                             mRoundFailed = 1;
@@ -1168,17 +1217,21 @@ void dScMgAmida_c::StepWalkers()
                         default:
                             break;
                         case 0:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX -= 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v28, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v28, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, v2c) == 0 && StepWalker(walker, c1) == 0 &&
-                                       StepWalker(walker, c3) == 0 && StepWalker(walker, v30) == 0) {
+                            } else if (StepWalker(walker, v2c) == 0 &&
+                                       StepWalker(walker, c1) == 0 && StepWalker(walker, c3) == 0 &&
+                                       StepWalker(walker, v30) == 0) {
                                 if (StepWalker(walker, v34) == 0) {
                                     *walkerDir = v38;
                                 }
@@ -1193,68 +1246,86 @@ void dScMgAmida_c::StepWalkers()
                             }
                             break;
                         case 2:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX += 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v40, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v40, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, v34) == 0 && StepWalker(walker, c1) == 0 &&
-                                       StepWalker(walker, c4) == 0 && StepWalker(walker, v44) == 0) {
+                            } else if (StepWalker(walker, v34) == 0 &&
+                                       StepWalker(walker, c1) == 0 && StepWalker(walker, c4) == 0 &&
+                                       StepWalker(walker, v44) == 0) {
                                 if (StepWalker(walker, v38) == 0) {
                                     *walkerDir = v30;
                                 }
                             }
                             break;
                         case 3:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX -= 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v48, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v48, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, c3) == 0 && StepWalker(walker, v4c) == 0 &&
-                                       StepWalker(walker, v30) == 0 && StepWalker(walker, c1) == 0) {
+                            } else if (StepWalker(walker, c3) == 0 &&
+                                       StepWalker(walker, v4c) == 0 &&
+                                       StepWalker(walker, v30) == 0 &&
+                                       StepWalker(walker, c1) == 0) {
                                 if (StepWalker(walker, c6) == 0) {
                                     *walkerDir = c4;
                                 }
                             }
                             break;
                         case 4:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX += 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v50, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v50, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, c4) == 0 && StepWalker(walker, v34) == 0 &&
-                                       StepWalker(walker, v38) == 0 && StepWalker(walker, c1) == 0) {
+                            } else if (StepWalker(walker, c4) == 0 &&
+                                       StepWalker(walker, v34) == 0 &&
+                                       StepWalker(walker, v38) == 0 &&
+                                       StepWalker(walker, c1) == 0) {
                                 if (StepWalker(walker, c6) == 0) {
                                     *walkerDir = c3;
                                 }
                             }
                             break;
                         case 5:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x21 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x61 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xa1 ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xe1) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX -= 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v54, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v54, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, v30) == 0 && StepWalker(walker, c6) == 0 &&
-                                       StepWalker(walker, c3) == 0 && StepWalker(walker, v58) == 0) {
+                            } else if (StepWalker(walker, v30) == 0 &&
+                                       StepWalker(walker, c6) == 0 && StepWalker(walker, c3) == 0 &&
+                                       StepWalker(walker, v58) == 0) {
                                 if (StepWalker(walker, v38) == 0) {
                                     *walkerDir = v34;
                                 }
@@ -1269,17 +1340,21 @@ void dScMgAmida_c::StepWalkers()
                             }
                             break;
                         case 7:
-                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
-                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f || *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
+                            if (*(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x1f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x5f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0x9f ||
+                                *(s32 *)(sceneBytes + walker * 8 + 0x4660) == 0xdf) {
                                 {
                                     s32 *walkerX = (s32 *)((int)(sceneBytes + walker * 8) + 0x4660);
                                     *walkerX += 1;
                                     *walkerDir = c6;
                                     *walkerMark = c1;
-                                    func_020126ac(v24, c6, v5c, progress500, func_020126e8(*walkerX << 0xc));
+                                    func_020126ac(v24, c6, v5c, progress500,
+                                                  func_020126e8(*walkerX << 0xc));
                                 }
-                            } else if (StepWalker(walker, v38) == 0 && StepWalker(walker, c6) == 0 &&
-                                       StepWalker(walker, c4) == 0 && StepWalker(walker, v30) == 0 &&
+                            } else if (StepWalker(walker, v38) == 0 &&
+                                       StepWalker(walker, c6) == 0 && StepWalker(walker, c4) == 0 &&
+                                       StepWalker(walker, v30) == 0 &&
                                        StepWalker(walker, v34) == 0) {
                                 *walkerDir = v60;
                             }
@@ -1295,24 +1370,23 @@ void dScMgAmida_c::StepWalkers()
 
 // @symbol Amida_RestoreBgChars
 extern "C" void Amida_RestoreBgChars(void *) {
-  char *mainChars = (char *)func_02054efc();
-  MultiCopyHalf((char *)func_02054efc() + 0xc000, mainChars, 0x6000);
-  char *subChars = G2S::GetBG0CharPtr();
-  MultiCopyHalf(G2S::GetBG0CharPtr() + 0x6000, subChars, 0x6000);
+    char *mainChars = (char *)func_02054efc();
+    MultiCopyHalf((char *)func_02054efc() + 0xc000, mainChars, 0x6000);
+    char *subChars = G2S::GetBG0CharPtr();
+    MultiCopyHalf(G2S::GetBG0CharPtr() + 0x6000, subChars, 0x6000);
 }
 
 // @symbol Amida_SaveBgChars
 /* The scene pointer its caller passes is never read. */
 extern "C" void Amida_SaveBgChars(void *) {
-  char *mainChars = (char *)func_02054efc() + 0xc000;
-  MultiCopyHalf((char *)func_02054efc(), mainChars, 0x6000);
-  char *subChars = G2S::GetBG0CharPtr() + 0x6000;
-  MultiCopyHalf(G2S::GetBG0CharPtr(), subChars, 0x6000);
+    char *mainChars = (char *)func_02054efc() + 0xc000;
+    MultiCopyHalf((char *)func_02054efc(), mainChars, 0x6000);
+    char *subChars = G2S::GetBG0CharPtr() + 0x6000;
+    MultiCopyHalf(G2S::GetBG0CharPtr(), subChars, 0x6000);
 }
 
 // @symbol _ZN12dScMgAmida_c11InitWalkersEv
-void dScMgAmida_c::InitWalkers()
-{
+void dScMgAmida_c::InitWalkers() {
     int i;
     int j;
     int k;
@@ -1324,7 +1398,7 @@ void dScMgAmida_c::InitWalkers()
     u8 seenBefore[4];
 
     this->mHurry = 0;
-    if (this->Unk36() != 0) {
+    if (this->IsVariant2() != 0) {
         again = 1;
         for (i = 0; i < 4; i++) {
             this->mLanePerm[i] = i;
@@ -1361,17 +1435,17 @@ void dScMgAmida_c::InitWalkers()
                     break;
                 }
                 for (j = 0; j < 4; j++) {
-                    data_ov006_02141640[this->mLanePerm[j]] = this->mLaneWants[j];
+                    sAmidaLaneTargets[this->mLanePerm[j]] = this->mLaneWants[j];
                 }
             } else {
                 for (i = 0; i < 4; i++) {
-                    data_ov006_02141650[i] = data_ov006_02141640[i];
+                    sAmidaLaneSaved[i] = sAmidaLaneTargets[i];
                 }
                 for (j = 0; j < 4; j++) {
-                    data_ov006_02141640[this->mLanePerm[j]] = this->mLaneWants[j];
+                    sAmidaLaneTargets[this->mLanePerm[j]] = this->mLaneWants[j];
                 }
                 for (j = 0; j < 4; j++) {
-                    if (data_ov006_02141650[j] != data_ov006_02141640[j]) {
+                    if (sAmidaLaneSaved[j] != sAmidaLaneTargets[j]) {
                         again = 0;
                         break;
                     }
@@ -1429,13 +1503,14 @@ void dScMgAmida_c::InitWalkers()
     }
 
     for (i = 0; i < 4; i++) {
-        if (this->Unk36() != 0) {
+        if (this->IsVariant2() != 0) {
             this->mWalkerDelay[i] = 0;
         } else {
-            this->mWalkerDelay[i] = i * *(s32 *)(data_ov006_0212e1a8 + this->mPatternIndex * 0x1c + 0x14) * 0x3c;
+            this->mWalkerDelay[i] =
+                i * *(s32 *)(sAmidaPatterns + this->mPatternIndex * 0x1c + 0x14) * 0x3c;
         }
         this->mWalkerCell[i][0] = (this->mLanePerm[i] << 6) + 0x20;
-        if (this->Unk36() != 0) {
+        if (this->IsVariant2() != 0) {
             this->mWalkerCell[i][1] = -0xcc;
         } else {
             this->mWalkerCell[i][1] = -0xd4;
@@ -1451,8 +1526,7 @@ void dScMgAmida_c::InitWalkers()
 // @symbol _ZN12dScMgAmida_c10SetupRoundEv
 #pragma push
 #pragma opt_strength_reduction off
-void dScMgAmida_c::SetupRound()
-{
+void dScMgAmida_c::SetupRound() {
     char *raw = (char *)this;
     int level;
     int shuffle;
@@ -1468,8 +1542,8 @@ void dScMgAmida_c::SetupRound()
     shuffle = 0;
 
     level = mLevel;
-    if (Unk36() != 0) {
-        if ((u32) mLevel >= 7) {
+    if (IsVariant2() != 0) {
+        if ((u32)mLevel >= 7) {
             level = 7;
             shuffle = 1;
         }
@@ -1482,13 +1556,13 @@ void dScMgAmida_c::SetupRound()
     }
     mPatternIndex = level;
 
-    if (Unk36() != 0) {
+    if (IsVariant2() != 0) {
         mWalkerCount = 4;
     } else {
-        mWalkerCount = *(int *)(data_ov006_0212e1a8 + mPatternIndex * 0x1c);
+        mWalkerCount = *(int *)(sAmidaPatterns + mPatternIndex * 0x1c);
     }
 
-    mScrollSpeed = ((*(int *)(data_ov006_0212e1b0 + mPatternIndex * 0x1c) - 1) * 5) + 0xb;
+    mScrollSpeed = ((*(int *)(sAmidaPatternSpeeds + mPatternIndex * 0x1c) - 1) * 5) + 0xb;
 
     {
         u32 stage = mLevel;
@@ -1537,7 +1611,7 @@ void dScMgAmida_c::SetupRound()
 
     mRoundCount = 0;
     InitWalkers();
-    ShuffleGoals( *(int *)(data_ov006_0212e1ac + mPatternIndex * 0x1c));
+    ShuffleGoals(*(int *)(sAmidaPatternGoalShuffle + mPatternIndex * 0x1c));
     Mg_SetTopScreenYOffset(0x20);
 
     mSetupInk = 1;
@@ -1554,21 +1628,23 @@ void dScMgAmida_c::SetupRound()
         }
     }
 
-    if (Unk36() != 0) {
-        Mg_DrawLine(this, 0x20, -0xb4, 0x20, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0x60, -0xb4, 0x60, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0xa0, -0xb4, 0xa0, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0xe0, -0xb4, 0xe0, mLineEndY, unk_53e4, 1);
+    if (IsVariant2() != 0) {
+        Mg_DrawLine(this, 0x20, -0xb4, 0x20, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0x60, -0xb4, 0x60, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0xa0, -0xb4, 0xa0, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0xe0, -0xb4, 0xe0, mLineEndY, mLineColor, 1);
     } else {
-        Mg_DrawLine(this, 0x20, -0xd4, 0x20, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0x60, -0xd4, 0x60, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0xa0, -0xd4, 0xa0, mLineEndY, unk_53e4, 1);
-        Mg_DrawLine(this, 0xe0, -0xd4, 0xe0, mLineEndY, unk_53e4, 1);
+        Mg_DrawLine(this, 0x20, -0xd4, 0x20, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0x60, -0xd4, 0x60, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0xa0, -0xd4, 0xa0, mLineEndY, mLineColor, 1);
+        Mg_DrawLine(this, 0xe0, -0xd4, 0xe0, mLineEndY, mLineColor, 1);
     }
 
     mLineCount++;
     {
-        typedef struct { Pair e[11]; } Blk88;
+        typedef struct {
+            Pair e[11];
+        } Blk88;
         *(Blk88 *)rungs = *(Blk88 *)data_ov006_0213b8b8;
     }
 
@@ -1580,7 +1656,7 @@ void dScMgAmida_c::SetupRound()
     }
 
     if (shuffle == 1) {
-        if (Unk36() != 0) {
+        if (IsVariant2() != 0) {
             int msk = 0x7fff;
             int cnt = 3;
             do {
@@ -1591,20 +1667,24 @@ void dScMgAmida_c::SetupRound()
                 }
             } while (cnt > 0);
         } else {
-            int sel = *(int *)(data_ov006_0212e1b4 + mPatternIndex * 0x1c);
+            int sel = *(int *)(sAmidaPatternRungSkip + mPatternIndex * 0x1c);
             switch (sel) {
             case 0:
                 break;
             case 1:
-                skip[((u32)(((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 5) >> 15] = 1;
+                skip[((u32)(((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 5) >> 15] =
+                    1;
                 break;
             case 2: {
-                int cnt = (((u32)(((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 3) >> 15) + 1;
+                int cnt =
+                    (((u32)(((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 3) >> 15) +
+                    1;
                 int j = 0;
                 if (cnt > 0) {
                     int *seedp2 = &data_0209d4b8;
                     do {
-                        skip[((u32)(((u32)RandomIntInternal(seedp2) >> 16) & 0x7fff) * 0xb) >> 15] = 1;
+                        skip[((u32)(((u32)RandomIntInternal(seedp2) >> 16) & 0x7fff) * 0xb) >> 15] =
+                            1;
                         j++;
                     } while (j < cnt);
                 }
@@ -1618,7 +1698,7 @@ void dScMgAmida_c::SetupRound()
 
     {
         int sel2;
-        if (Unk36() != 0) {
+        if (IsVariant2() != 0) {
             switch (mPatternIndex) {
             case 0:
             case 1:
@@ -1634,7 +1714,7 @@ void dScMgAmida_c::SetupRound()
                 break;
             }
         } else {
-            sel2 = *(int *)(data_ov006_0212e1b4 + mPatternIndex * 0x1c);
+            sel2 = *(int *)(sAmidaPatternRungSkip + mPatternIndex * 0x1c);
         }
 
         switch (sel2) {
@@ -1646,7 +1726,7 @@ void dScMgAmida_c::SetupRound()
                 if (skip[i] == 0) {
                     int x = rungs[i].a;
                     int y = rungs[i].b - 0x20;
-                    Mg_DrawLine(this, x, y, x + 0x40, y, unk_53e4, 1);
+                    Mg_DrawLine(this, x, y, x + 0x40, y, mLineColor, 1);
                 }
             }
             break;
@@ -1658,7 +1738,7 @@ void dScMgAmida_c::SetupRound()
                 if (skip[i] == 0) {
                     int x = rungs[i].a;
                     int y = rungs[i].b - 0x20;
-                    Mg_DrawLine(this, x, y, x + 0x40, y, unk_53e4, 1);
+                    Mg_DrawLine(this, x, y, x + 0x40, y, mLineColor, 1);
                 }
             }
             break;
@@ -1669,12 +1749,12 @@ void dScMgAmida_c::SetupRound()
     }
 
     mLineCount++;
-    if (Unk36() == 0) {
-        int v = *(int *)(data_ov006_0212e1b8 + mPatternIndex * 0x1c);
+    if (IsVariant2() == 0) {
+        int v = *(int *)(sAmidaPatternExtraRungs + mPatternIndex * 0x1c);
         if (v != 0 && v == 1) {
-            Mg_DrawLine(this, 0x60, 0x2d, 0xa0, 0x2d, unk_53e4, 1);
-            Mg_DrawLine(this, 0x20, 0x5a, 0x60, 0x5a, unk_53e4, 1);
-            Mg_DrawLine(this, 0xa0, 0x5a, 0xe0, 0x5a, unk_53e4, 1);
+            Mg_DrawLine(this, 0x60, 0x2d, 0xa0, 0x2d, mLineColor, 1);
+            Mg_DrawLine(this, 0x20, 0x5a, 0x60, 0x5a, mLineColor, 1);
+            Mg_DrawLine(this, 0xa0, 0x5a, 0xe0, 0x5a, mLineColor, 1);
         }
     }
 
@@ -1742,10 +1822,11 @@ void dScMgAmida_c::SetupRound()
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
-void dScMgAmida_c::RenderBoard()
-{
+void dScMgAmida_c::RenderBoard() {
     void *scene = (void *)this;
-    typedef struct { int a[13]; } T13;
+    typedef struct {
+        int a[13];
+    } T13;
     unsigned char *raw = (unsigned char *)scene;
     int noPalette = -1;
     int i;
@@ -1765,10 +1846,8 @@ void dScMgAmida_c::RenderBoard()
                 if (*animFrame >= 14)
                     *animFrame = 0;
             }
-            Mg_RenderSpriteBoth(data_ov006_0213a458[mLaneAnimFrame[i]],
-                                mLanePos[i][0] >> 12,
-                                (mLanePos[i][1] >> 12) - 4,
-                                noPalette, 0);
+            Mg_RenderSpriteBoth(sAmidaLaneAnimSprites[mLaneAnimFrame[i]], mLanePos[i][0] >> 12,
+                                (mLanePos[i][1] >> 12) - 4, noPalette, 0);
         } else {
             int *timer;
             int *frame;
@@ -1801,21 +1880,17 @@ void dScMgAmida_c::RenderBoard()
                 }
             }
             *(T13 *)frames = *(T13 *)data_ov006_0213b84c;
-            Mg_RenderSpriteBoth(data_ov006_0213a390[frames[*frame]],
-                                y, 0xb8, noPalette, 0);
+            Mg_RenderSpriteBoth(sAmidaBoardAnimSprites[frames[*frame]], y, 0xb8, noPalette, 0);
         }
     }
     {
         int j;
         for (j = 0; j < mWalkerCount; j++) {
-            Mg_RenderSpriteBoth(data_ov006_0213a32c,
-                                mWalkerCell[j][0],
-                                mWalkerCell[j][1],
-                                -1, 0);
+            Mg_RenderSpriteBoth(data_ov006_0213a32c, mWalkerCell[j][0], mWalkerCell[j][1], -1, 0);
         }
     }
-    Mg_RenderSpriteBoth(data_ov006_0213a35c, 8, 0x60, -1, 0);
-    Mg_RenderSpriteBoth(data_ov006_0213a35c, 0xf8, 0x60, -1, 0);
+    Mg_RenderSpriteBoth(sAmidaSideSprite, 8, 0x60, -1, 0);
+    Mg_RenderSpriteBoth(sAmidaSideSprite, 0xf8, 0x60, -1, 0);
 }
 #pragma pop
 
@@ -1823,26 +1898,23 @@ void dScMgAmida_c::RenderBoard()
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
-void dScMgAmida_c::RenderBoardAlt(){
-  int noPalette = -1;
-  int i;
-  int j;
-  int x;
-  if(mHurry==0){
-    Mg_RenderSpriteBoth((void*)data_ov006_0213a338[0],0x80,0xb0,noPalette,0);
-  }
-  for(i=0;i<4;i++){
-    Mg_RenderSpriteBoth((void*)data_ov006_0213a568[mLaneWants[i]],
-                        mWalkerCell[i][0],
-                        mWalkerCell[i][1],
-                        noPalette,0);
-  }
-  j = 0;
-  x = 0x20;
-  for(; j < 4; x += 0x40, j++){
-    Mg_RenderSpriteBoth((void*)data_ov006_0213a4c0[mLaneResult[j]],
-                        x,0x78,noPalette,0);
-  }
+void dScMgAmida_c::RenderBoardAlt() {
+    int noPalette = -1;
+    int i;
+    int j;
+    int x;
+    if (mHurry == 0) {
+        Mg_RenderSpriteBoth((void *)data_ov006_0213a338[0], 0x80, 0xb0, noPalette, 0);
+    }
+    for (i = 0; i < 4; i++) {
+        Mg_RenderSpriteBoth((void *)sAmidaLaneWantSprites[mLaneWants[i]], mWalkerCell[i][0],
+                            mWalkerCell[i][1], noPalette, 0);
+    }
+    j = 0;
+    x = 0x20;
+    for (; j < 4; x += 0x40, j++) {
+        Mg_RenderSpriteBoth((void *)sAmidaLaneResultSprites[mLaneResult[j]], x, 0x78, noPalette, 0);
+    }
 }
 #pragma pop
 
@@ -1852,8 +1924,7 @@ void dScMgAmida_c::RenderBoardAlt(){
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
-s32 dScMgAmida_c::Render()
-{
+s32 dScMgAmida_c::Render() {
     char *raw = (char *)this;
 
     mBgScrollPhase += 0xc0;
@@ -1868,27 +1939,23 @@ s32 dScMgAmida_c::Render()
     if (mState == 3 && mEndDelayTimer == 0) {
         data_0209d45c &= ~1;
         data_0209d454 &= ~1;
-        if (Unk36() == 0 && mFinished == 1) {
+        if (IsVariant2() == 0 && mFinished == 1) {
             int i;
             for (i = 0; i < 4; i++) {
                 if (mLaneResult[i] != 0) {
-                    int *counterA = (int*)(raw + i * 4 + 0x539c);
+                    int *counterA = (int *)(raw + i * 4 + 0x539c);
                     (*counterA)++;
-                    Buf14 periods = data_ov006_0213b880;
+                    Buf14 periods = sAmidaRenderPeriods;
                     if (*counterA >= periods.v[i]) {
                         int *counterB;
                         *counterA = 0;
-                        counterB = (int*)(raw + i * 4 + 0x53ac);
+                        counterB = (int *)(raw + i * 4 + 0x53ac);
                         (*counterB)++;
                         if (*counterB >= 0xe)
                             *counterB = 0;
                     }
-                    Mg_RenderSpriteBoth(
-                        data_ov006_0213a458[mLaneAnimFrame[i]],
-                        mLanePos[i][0] >> 12,
-                        (mLanePos[i][1] >> 12) - 4,
-                        -1,
-                        0);
+                    Mg_RenderSpriteBoth(sAmidaLaneAnimSprites[mLaneAnimFrame[i]],
+                                        mLanePos[i][0] >> 12, (mLanePos[i][1] >> 12) - 4, -1, 0);
                 }
             }
 
@@ -1896,21 +1963,21 @@ s32 dScMgAmida_c::Render()
             int zero = 0;
             int noPalette = -1;
             for (; piece < 0x80; piece++, raw += 0x18) {
-                if (*(u8*)(raw + 0x477c) != 0) {
-                    int age = *(int*)(raw + 0x4778);
-                    int x = *(int*)(raw + 0x4768);
+                if (*(u8 *)(raw + 0x477c) != 0) {
+                    int age = *(int *)(raw + 0x4778);
+                    int x = *(int *)(raw + 0x4768);
                     int idx = age / 4;
-                    int y = *(int*)(raw + 0x476c);
-                    Mg_RenderSpriteBoth(data_ov006_0213a4b0[idx], x >> 12, y >> 12, noPalette, zero);
+                    int y = *(int *)(raw + 0x476c);
+                    Mg_RenderSpriteBoth(sAmidaWalkerSprites[idx], x >> 12, y >> 12, noPalette,
+                                        zero);
                 }
             }
-
         }
         return 1;
     } else {
         data_0209d45c |= 1;
         data_0209d454 |= 1;
-        if (Unk36() != 0) {
+        if (IsVariant2() != 0) {
             RenderBoardAlt();
         } else {
             RenderBoard();
@@ -1923,8 +1990,7 @@ s32 dScMgAmida_c::Render()
 // @symbol _ZN12dScMgAmida_c8BehaviorEv
 #pragma push
 #pragma opt_strength_reduction off
-s32 dScMgAmida_c::Behavior()
-{
+s32 dScMgAmida_c::Behavior() {
     char *raw = (char *)this;
     int piece;
     char *piecePtr;
@@ -1959,7 +2025,7 @@ s32 dScMgAmida_c::Behavior()
         CheckEdgeBoost();
         CheckHurryButton();
         HandlePen();
-        if (Unk36() != 0) {
+        if (IsVariant2() != 0) {
             if (mHurry == 1) {
                 mScrollAccum += mRoundCount * 5 + 0x20;
             }
@@ -1971,7 +2037,7 @@ s32 dScMgAmida_c::Behavior()
         accum = mScrollAccum;
         mScrollAccum &= 0xf;
         steps = accum / 16;
-        if (Unk36() == 0 || mHurry != 0) {
+        if (IsVariant2() == 0 || mHurry != 0) {
             if (mRoundTimer > 0) {
                 mRoundTimer -= 1;
                 if (mRoundTimer == 0) {
@@ -2013,7 +2079,7 @@ s32 dScMgAmida_c::Behavior()
         break;
     case 2:
         mEdgeBoost = 0;
-        if (Unk36() != 0) {
+        if (IsVariant2() != 0) {
             if (mResultWaitTimer > 0)
                 mResultWaitTimer -= 1;
         } else {
@@ -2045,7 +2111,7 @@ s32 dScMgAmida_c::Behavior()
         }
         if (touched != 0)
             mEndDelayTimer = 0;
-        if (Unk36() != 0)
+        if (IsVariant2() != 0)
             break;
         if (mFinished != 1)
             break;
@@ -2067,7 +2133,7 @@ s32 dScMgAmida_c::Behavior()
                 speed = Vec2_Len(vel) * 7 / 8;
                 if (func_0203d434(vel) != 0)
                     func_0203d630(vel, speed);
-                *(int*)AT(piecePtr, 0x4778) = *(int*)AT(piecePtr, 0x4778) + 1;
+                *(int *)AT(piecePtr, 0x4778) = *(int *)AT(piecePtr, 0x4778) + 1;
                 {
                     if (PIECE_AT(piecePtr)->timer >= 0x10)
                         PIECE_AT(piecePtr)->active = 0;
@@ -2091,13 +2157,16 @@ s32 dScMgAmida_c::Behavior()
                         idxA = ((int)((av << 17) >> 16) >> 4) * 2;
                         cA = data_02082214[idxA + 1];
                         {
-                            mPieces[slot].posX = MULFX(cosB, (int)((0x8000LL * cA + 0x800) >> 12));
+                            mPieces[slot].posX = FX_MUL(cosB, (int)((0x8000LL * cA + 0x800) >> 12));
                             sinA = data_02082214[idxA];
-                            mPieces[slot].posY = MULFX(cosB, (int)((0x8000LL * sinA + 0x800) >> 12));
+                            mPieces[slot].posY =
+                                FX_MUL(cosB, (int)((0x8000LL * sinA + 0x800) >> 12));
                             mPieces[slot].posX += mLanePos[j][0];
                             mPieces[slot].posY += mLanePos[j][1];
-                            mPieces[slot].velX = MULFX(cosB, (int)((0x1000LL * (int)(cA) + 0x800) >> 12));
-                            mPieces[slot].velY = MULFX(cosB, (int)((0x1000LL * sinA + 0x800) >> 12));
+                            mPieces[slot].velX =
+                                FX_MUL(cosB, (int)((0x1000LL * (int)(cA) + 0x800) >> 12));
+                            mPieces[slot].velY =
+                                FX_MUL(cosB, (int)((0x1000LL * sinA + 0x800) >> 12));
                         }
                         mPieces[slot].velY -= 0x400;
                         mPieces[slot].active = 1;
@@ -2117,8 +2186,7 @@ s32 dScMgAmida_c::Behavior()
 
 // @symbol _ZN12dScMgAmida_c10StartRoundEi
 /* Slot 18: counts a win (arg 0) or resets the score, then sets up the next board. */
-void dScMgAmida_c::StartRound(int arg)
-{
+void dScMgAmida_c::StartRound(int arg) {
     if (arg == 0) {
         if (mLevel >= 0x7cf)
             goto final;
@@ -2138,8 +2206,7 @@ final:
 }
 
 // @symbol _ZN12dScMgAmida_c13InitResourcesEv
-s32 dScMgAmida_c::InitResources()
-{
+s32 dScMgAmida_c::InitResources() {
     volatile u16 zeroMain;
     volatile u16 zeroSub;
     void *file;
@@ -2147,12 +2214,12 @@ s32 dScMgAmida_c::InitResources()
     mStrokeGrid = (u8 *)Memory::Allocate(0x15800);
     mInkGrid = (u8 *)Memory::Allocate(0x15800);
 
-    if (Unk36() != 0) {
+    if (IsVariant2() != 0) {
         mLineEndY = 0x78;
-        unk_53e4 = 2;
+        mLineColor = 2;
     } else {
         mLineEndY = 0x98;
-        unk_53e4 = 2;
+        mLineColor = 2;
     }
 
     data_0208ee44 = 1;
@@ -2181,7 +2248,7 @@ s32 dScMgAmida_c::InitResources()
     *(volatile s32 *)0x400001c = 0;
     *(volatile u16 *)0x400000e = (*(volatile u16 *)0x400000e & ~3) | 3;
 
-    if (Unk36() != 0) {
+    if (IsVariant2() != 0) {
         LoadCompressedFileAt(ASSET_D_2D_MG_BG_AMIDA_FACE_UP_NCG_BIN, (void *)func_02054d88());
         file = (void *)LoadFile(ASSET_D_2D_MG_BG_AMIDA_FACE_UP_NCL_BIN);
         CP15::FlushAndInvalidateDataCache((u32)file, 0x1a0);
@@ -2206,7 +2273,7 @@ s32 dScMgAmida_c::InitResources()
     *(volatile s32 *)0x400101c = 0;
     *(volatile u16 *)0x400100e = (*(volatile u16 *)0x400100e & ~3) | 3;
 
-    if (Unk36() != 0) {
+    if (IsVariant2() != 0) {
         LoadCompressedFileAt(ASSET_D_2D_MG_BG_AMIDA_FACE_DOWN_NCG_BIN, G2S::GetBG3CharPtr());
         file = (void *)LoadFile(ASSET_D_2D_MG_BG_AMIDA_FACE_DOWN_NCL_BIN);
         GXS::LoadBGPltt(file, 0x60, 0x1a0);
@@ -2227,7 +2294,7 @@ s32 dScMgAmida_c::InitResources()
         data_0209d454 |= 0xd;
     }
 
-    if (Unk36() != 0) {
+    if (IsVariant2() != 0) {
         if (GetOwnerLanguage() == 5) {
             LoadCompressedFileAt(ASSET_D_2D_MG_AMIDA_FACE_S_NCG_BIN, (void *)0x6400000);
             LoadCompressedFileAt(ASSET_D_2D_MG_AMIDA_FACE_S_NCG_BIN, (void *)0x6600000);
@@ -2265,8 +2332,7 @@ s32 dScMgAmida_c::InitResources()
 
 // @symbol _ZN12dScMgAmida_c21AfterCleanupResourcesEj
 /* Returns before the base call too when vfSuccess != 2, as the ROM does. */
-void dScMgAmida_c::AfterCleanupResources(u32 vfSuccess)
-{
+void dScMgAmida_c::AfterCleanupResources(u32 vfSuccess) {
     if (vfSuccess != 2)
         return;
     Memory::Deallocate(mStrokeGrid);
@@ -2286,16 +2352,18 @@ extern "C" void *dScMgAmida_c_classInit(void) {
     if (scene != 0) {
         _ZN11dScMgBase_cC2Ev(scene);
         *(int *)scene = (int)&_ZTV12dScMgAmida_c[2];
-        __cxa_vec_ctor(scene + 0x4660, 4, 8, (void *)func_0203d738, (void *)NullDestructor_0203d47c);
-        __cxa_vec_ctor(scene + 0x4724, 4, 8, (void *)func_0203d738, (void *)NullDestructor_0203d47c);
-        __cxa_vec_ctor(scene + 0x4744, 4, 8, (void *)func_0203d738, (void *)NullDestructor_0203d47c);
-        __cxa_vec_ctor(scene + 0x4768, 0x80, 0x18, (void *)AmidaPiece_ElemCtor, (void *)AmidaPiece_ElemDtor);
+        __cxa_vec_ctor(scene + 0x4660, 4, 8, (void *)func_0203d738,
+                       (void *)NullDestructor_0203d47c);
+        __cxa_vec_ctor(scene + 0x4724, 4, 8, (void *)func_0203d738,
+                       (void *)NullDestructor_0203d47c);
+        __cxa_vec_ctor(scene + 0x4744, 4, 8, (void *)func_0203d738,
+                       (void *)NullDestructor_0203d47c);
+        __cxa_vec_ctor(scene + 0x4768, 0x80, 0x18, (void *)AmidaPiece_ElemCtor,
+                       (void *)AmidaPiece_ElemDtor);
     }
     return scene;
 }
 
 // @symbol AmidaPiece_ElemCtor
 /* Element constructor for the 0x80 falling pieces. */
-extern "C" void AmidaPiece_ElemCtor(void)
-{
-}
+extern "C" void AmidaPiece_ElemCtor(void) {}

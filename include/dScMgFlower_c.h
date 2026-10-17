@@ -132,60 +132,60 @@ struct dScMgFlower_c : dScMgSingle3DBase_c {
        holds. The destructor above is declared first and out of line, so it is
        this class's KEY FUNCTION and the TU that DEFINES it -- and only that one
        -- emits _ZTV13dScMgFlower_c. See the banner. */
-    s32 InitResources();   /* slot  0 */
-    virtual void StartRound(int arg);               /* slot 18 */
-    s32 Behavior();        /* slot  6 */
-    s32 Render();          /* slot  9 */
+    s32 InitResources();              /* slot  0 */
+    virtual void StartRound(int arg); /* slot 18 */
+    s32 Behavior();                   /* slot  6 */
+    s32 Render();                     /* slot  9 */
 
     /* scene helpers */
-    void UpdatePetals();           /* per-frame petal update */
-    void DealPetals();           /* round setup / restart */
+    void UpdatePetals(); /* per-frame petal update */
+    void DealPetals();   /* round setup / restart */
 
     /* A plain record: lifecycle callbacks are still explicit in the scene
        constructor/destructor. Using Vec2 here would add an implicit cleanup. */
     struct Petal {
-        u8 active;           /* 0x00 */
-        u8 released;         /* 0x01, detached from the flower */
-        u8 held;             /* 0x02, follows the stylus */
-        u8 counted;          /* 0x03, pull already counted in the round */
-        s32 x;               /* 0x04, Fix12 screen position */
-        s32 y;               /* 0x08 */
-        s32 driftX;          /* 0x0c */
-        s32 fallSpeed;       /* 0x10 */
-        s32 touchStartX;     /* 0x14, cursor position when picked up */
-        s32 touchStartY;     /* 0x18 */
-        s16 angle;           /* 0x1c */
+        u8 active;       /* 0x00 */
+        u8 released;     /* 0x01, detached from the flower */
+        u8 held;         /* 0x02, follows the stylus */
+        u8 counted;      /* 0x03, pull already counted in the round */
+        s32 x;           /* 0x04, Fix12 screen position */
+        s32 y;           /* 0x08 */
+        s32 driftX;      /* 0x0c */
+        s32 fallSpeed;   /* 0x10 */
+        s32 touchStartX; /* 0x14, cursor position when picked up */
+        s32 touchStartY; /* 0x18 */
+        s16 angle;       /* 0x1c */
         u8 pad_1e[2];
     };
-    Petal mPetals[22];     /* 0x4f38, 0x20-byte records */
-    u8  pad_51f8[0xdc0];   /* 0x51f8 -- opaque object, see file banner */
-    s32 mCursorX;          /* 0x5fb8 -- Fix12 stylus position, from the touch
+    Petal mPetals[22];  /* 0x4f38, 0x20-byte records */
+    u8 pad_51f8[0xdc0]; /* 0x51f8 -- opaque object, see file banner */
+    s32 mCursorX;       /* 0x5fb8 -- Fix12 stylus position, from the touch
                               sample gTouchX/gTouchY << 12 */
-    s32 mCursorY;          /* 0x5fbc */
-    s32 mPrevCursorX;      /* 0x5fc0 -- last tick's mCursor; the drag delta */
-    s32 mPrevCursorY;      /* 0x5fc4 */
-    s32 mHeldPetal;        /* 0x5fc8 -- mPetals index being dragged, -1 for none */
-    u8  mPetalToggle;      /* 0x5fcc -- flips on every petal pulled; picks the
+    s32 mCursorY;       /* 0x5fbc */
+    s32 mPrevCursorX;   /* 0x5fc0 -- last tick's mCursor; the drag delta */
+    s32 mPrevCursorY;   /* 0x5fc4 */
+    s32 mHeldPetal;     /* 0x5fc8 -- mPetals index being dragged, -1 for none */
+    u8 mPetalToggle;    /* 0x5fcc -- flips on every petal pulled; picks the
                               "loves me" or "loves me not" banner and sound */
-    u8  mPetalsSettled;    /* 0x5fcd, no attached, held or falling petals */
-    u8  pad_5fce[0x2];     /* 0x5fce */
-    s32 mHintTimer;        /* 0x5fd0 -- held at 0x3c while a petal is dragged,
+    u8 mPetalsSettled;  /* 0x5fcd, no attached, held or falling petals */
+    u8 pad_5fce[0x2];   /* 0x5fce */
+    s32 mHintTimer;     /* 0x5fd0 -- held at 0x3c while a petal is dragged,
                               counts down otherwise */
-    s32 mResultTimer;      /* 0x5fd4 -- 0x3c frames the banner stays up */
-    s32 mPetalsLeft;       /* 0x5fd8 -- petals still on the flower; one goes on
+    s32 mResultTimer;   /* 0x5fd4 -- 0x3c frames the banner stays up */
+    s32 mPetalsLeft;    /* 0x5fd8 -- petals still on the flower; one goes on
                               each pull, 0 ends the round */
-    s32 mWinStreak;        /* 0x5fdc -- consecutive "loves me" rounds; at 3 the
+    s32 mWinStreak;     /* 0x5fdc -- consecutive "loves me" rounds; at 3 the
                               round payout is 3 points instead of 1 */
-    s32 mLoseStreak;       /* 0x5fe0 -- the mirror count, pays nothing */
-    s32 mHoldTimer;        /* 0x5fe4 -- incremented by StartRound;
+    s32 mLoseStreak;    /* 0x5fe0 -- the mirror count, pays nothing */
+    s32 mHoldTimer;     /* 0x5fe4 -- incremented by StartRound;
                               above 0x14 triggers the special round */
-    s32 mState;            /* 0x5fe8 -- 0 playing, 1 over */
-    s32 mFaceSprite;       /* 0x5fec -- index into data_ov006_0213ab94, the
+    s32 mState;         /* 0x5fe8 -- 0 playing, 1 over */
+    s32 mFaceSprite;    /* 0x5fec -- index into sFlowerFaceSprites, the
                               flower's face */
-    s32 mScore;            /* 0x5ff0 -- clamped to 9999 */
-    u16 mBgScrollPhase;    /* 0x5ff4 -- += 0xc0 a frame; indexes the sine table
+    s32 mScore;         /* 0x5ff0 -- clamped to 9999 */
+    u16 mBgScrollPhase; /* 0x5ff4 -- += 0xc0 a frame; indexes the sine table
                               for both background layers */
-    u8  pad_5ff6[0x2];     /* 0x5ff6 -- rounds up to the 0x5ff8 boundary */
+    u8 pad_5ff6[0x2];   /* 0x5ff6 -- rounds up to the 0x5ff8 boundary */
 };
 
 #ifndef SM64DS_PLATFORM_PC

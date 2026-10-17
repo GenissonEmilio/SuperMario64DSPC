@@ -129,6 +129,7 @@ enum daKing_Donketu_c_AssetId {
 #include "Player.h"
 #include "dCamera_c.h"
 #include "dBgCh_Lin.h"
+#include "nitro/fx/fx.h"
 
 bool ApproachLinear(short &value, short target, short step);
 
@@ -287,9 +288,9 @@ void daKing_Donketu_c::func_ov073_0211f144() {
     y = c->mPosY;
     ((int*)&pos)[1] = y;
     ((int*)&pos)[2] = c->mPosZ;
-    ((int*)&pos)[1] = y + (int)(((long long)c->mScaleX * 0x1e000 + 0x800) >> 12);
+    ((int *)&pos)[1] = y + FX_MUL(c->mScaleX, 0x1e000);
 
-    Vec3_HorzAngle((Vector3*)&c->mPosX, (Vector3*)&c->mSpawnPosX);
+    Vec3_HorzAngle(&c->mPos, (Vector3 *)&c->mSpawnPosX);
     in.z = 0; in.z = 0xc8000; in.x = 0; in.y = 0;
     out.x = 0; out.y = 0; out.z = 0;
     Matrix4x3_FromRotationY(&data_020a0e68, c->mPrevAngleY);
@@ -451,12 +452,12 @@ void daKing_Donketu_c::func_ov073_0211f494(void *pb)
     ay = (int)((unsigned short)ay >> 4);
     cos_ax = data_02082214[ax * 2 + 1];
     sin_ax = data_02082214[ax * 2];
-    tmp = (int)(((long long)vx * cos_ax + 0x800) >> 12);
-    ry = (int)(((long long)vx * sin_ax + 0x800) >> 12);
+    tmp = FX_MUL(vx, cos_ax);
+    ry = FX_MUL(vx, sin_ax);
     sin_ay = data_02082214[ay * 2];
     cos_ay = data_02082214[ay * 2 + 1];
-    rx = (int)(((long long)tmp * sin_ay + 0x800) >> 12);
-    rz = (int)(((long long)tmp * cos_ay + 0x800) >> 12);
+    rx = FX_MUL(tmp, sin_ay);
+    rz = FX_MUL(tmp, cos_ay);
     p.x += rx; p.y += ry; p.z += rz;
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x84, p.x, p.y, p.z);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0x85, p.x, p.y, p.z);
@@ -716,7 +717,8 @@ int daKing_Donketu_c::func_ov073_0211fbec()
 int daKing_Donketu_c::func_ov073_0211fbf4() {
     daKing_Donketu_c *c = this;
   Player* pl = c->mTalkPlayer;
-  c->mSoundHandle = _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, (struct Vector3 *)&c->mCamSpacePosX, 0);
+  c->mSoundHandle =
+      _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, &c->mCamSpacePos, 0);
   ((dCamera_c *)data_0209f318)->SetFlag_3();
   c->func_ov073_0211f144();
   if(pl->GetTalkState() == -1){
@@ -747,7 +749,8 @@ int daKing_Donketu_c::func_ov073_0211fc78() {
     dCamera_c* cam;
 
     player = c->ClosestPlayer();
-    c->mSoundHandle = _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, (struct Vector3*)&c->mCamSpacePosX, 0);
+    c->mSoundHandle =
+        _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, &c->mCamSpacePos, 0);
     if (player == 0) return 1;
 
     c->func_ov073_0211f144();
@@ -825,7 +828,8 @@ int daKing_Donketu_c::func_ov073_0211fe8c() {
     Player* player;
     dCamera_c* cam;
 
-    c->mSoundHandle = _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, (struct Vector3*)&c->mCamSpacePosX, 0);
+    c->mSoundHandle =
+        _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x170, &c->mCamSpacePos, 0);
 
     player = c->ClosestPlayer();
     if (player != 0 && player->mIsAirborne == 0) {
@@ -943,7 +947,7 @@ int daKing_Donketu_c::func_ov073_021200e0()
         Vec3 rotated;
         s16 horz;
         ApproachLinear(thiz->mAngleX, 0, 0x2000);
-        horz = Vec3_HorzAngle((const Vector3 *)&thiz->mPosX, (const Vector3 *)&thiz->mSpawnPosX);
+        horz = Vec3_HorzAngle(&thiz->mPos, (const Vector3 *)&thiz->mSpawnPosX);
         Vec3_VertAngle((const void*)&thiz->mPosX, (const void*)&thiz->mSpawnPosX);
         ApproachLinear(thiz->mPrevAngleY, horz, 0x800);
         offset.x = 0;
@@ -1060,7 +1064,7 @@ mainblock:
         v[2] = src[2];
     }
     {
-        short hz = Vec3_HorzAngle((const Vector3 *)&c->mPosX, (const Vector3 *)v);
+        short hz = Vec3_HorzAngle(&c->mPos, (const Vector3 *)v);
         short vt = Vec3_VertAngle(&c->mPosX, v);
         int in[3];
         int out[3];
@@ -1145,7 +1149,7 @@ int daKing_Donketu_c::func_ov073_02120610()
             v[2] = src[2];
         }
         {
-            short hz = Vec3_HorzAngle((const Vector3 *)&c->mPosX, (const Vector3 *)v);
+            short hz = Vec3_HorzAngle(&c->mPos, (const Vector3 *)v);
             short vt = Vec3_VertAngle(&c->mPosX, v);
             int in[3];
             int out[3];
@@ -1199,7 +1203,8 @@ int daKing_Donketu_c::func_ov073_02120844()
 {
     daKing_Donketu_c *t = this;
     ApproachLinear(t->mAngleX, -0x4000, 0x400);
-    t->mSoundHandle = _ZN5Sound8PlayLongEjjjRK7Vector3s(t->mSoundHandle, 3, 0x170, (struct Vector3 *)&t->mCamSpacePosX, 0);
+    t->mSoundHandle =
+        _ZN5Sound8PlayLongEjjjRK7Vector3s(t->mSoundHandle, 3, 0x170, &t->mCamSpacePos, 0);
     if (t->mSpawnPosY > t->mPosY && t->mWithMeshClsn.IsOnGround()) {
         t->func_ov073_0211f2c0(0x7d0000);
         func_02012694(SND_BIG_LANDING, &t->mCamSpacePosX);
@@ -1252,7 +1257,8 @@ int daKing_Donketu_c::func_ov073_02120910()
         return 1;
     }
 
-    c->mSoundHandle = _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x16e, (Vector3 *)&c->mCamSpacePosX, 0);
+    c->mSoundHandle =
+        _ZN5Sound8PlayLongEjjjRK7Vector3s(c->mSoundHandle, 3, 0x16e, &c->mCamSpacePos, 0);
 
     in.z = 0;
     in.z = 0x78000;
@@ -1267,11 +1273,11 @@ int daKing_Donketu_c::func_ov073_02120910()
     in.y = c->unk_4ac;
     in.z = c->unk_4b0 + out.z;
     Vec3_ApproachHorz(&c->mPosX, &in, 0x14000);
-    c->mAngleY = Vec3_HorzAngle((const Vector3 *)&c->mPosX, (const Vector3 *)&c->mSpawnPosX);
+    c->mAngleY = Vec3_HorzAngle(&c->mPos, (const Vector3 *)&c->mSpawnPosX);
     c->mPrevAngleY = c->mAngleY + 0x8000;
     c->mStateScratch += 0x500;
     ApproachLinear(c->mAngleX,
-        ((s64)c->unk_4d0 * data_02082214[((unsigned short)(short)c->mStateScratch >> 4) * 2] + 0x800) >> 12,
+        FX_MUL(c->unk_4d0, data_02082214[((unsigned short)(short)c->mStateScratch >> 4) * 2]),
         0x400);
     if (c->func_ov073_0211f61c()) {
         ChiefChilly_ChangeState((C *)(c), (PMF *)&data_ov073_021233f0);
@@ -1317,7 +1323,7 @@ int daKing_Donketu_c::func_ov073_02120b78() {
         if(c->mWithMeshClsn.IsOnGround()){
             c->func_ov073_0211f2c0(0xfa0000);
             c->mHorzSpeed = 0;
-            c->mPrevAngleY = Vec3_HorzAngle((const Vector3 *)&c->mPosX, (const Vector3 *)&c->mSpawnPosX);
+            c->mPrevAngleY = Vec3_HorzAngle(&c->mPos, (const Vector3 *)&c->mSpawnPosX);
             c->mAngleY = c->mPrevAngleY;
             func_02012694(SND_BIG_LANDING, &c->mCamSpacePosX);
             ChiefChilly_ChangeState((C *)(c), (PMF *)&data_ov073_02123400);
@@ -1429,7 +1435,7 @@ int daKing_Donketu_c::func_ov073_02120e60() {
     daKing_Donketu_c *c = this;
   _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&c->mBlendModelAnim, gKingIceDonketuWalkAnimationFile.file, 4, 0, 0x1000, 0);
   c->mBlendModelAnim.speed = 0x2000;
-  c->mTargetAngle = Vec3_HorzAngle((const Vector3 *)&c->mPosX, (const Vector3 *)&c->mSpawnPosX);
+  c->mTargetAngle = Vec3_HorzAngle(&c->mPos, (const Vector3 *)&c->mSpawnPosX);
   c->mStateScratch = 0;
   c->mPrevAngleY = c->mAngleY;
   return 1;
@@ -1455,8 +1461,7 @@ int daKing_Donketu_c::func_ov073_02120e60() {
    In leg 0 the model hitting animation frame 0 or 0xe shakes the camera
    (0x3e8000) and plays SND_CHASE_STEP. */
 // @symbol _ZN16daKing_Donketu_c19func_ov073_02120ed0Ev
-int daKing_Donketu_c::func_ov073_02120ed0()
-{
+int daKing_Donketu_c::func_ov073_02120ed0() {
     daKing_Donketu_c *c = this;
 
     if (c->mNoGroundAhead == 1) {
@@ -1506,18 +1511,18 @@ int daKing_Donketu_c::func_ov073_02120ed0()
         break;
 
     case 1:
-    case 2:
-    {
+    case 2: {
         int d;
         int i;
         c->mStateScratch = 0;
         d = c->mHorzSpeed;
-        if (d < 0) d = -d;
+        if (d < 0)
+            d = -d;
         if (d > 0xa) {
             i = 0;
             do {
-                _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(
-                    c->unk_4d4[i].x, c->unk_4d4[i].y, c->unk_4d4[i].z);
+                _ZN8Particle20RunningSlidingDustAtE5Fix12IiES1_S1_(c->unk_4d4[i].x, c->unk_4d4[i].y,
+                                                                   c->unk_4d4[i].z);
                 i++;
             } while (i < 2);
         }
@@ -1527,19 +1532,24 @@ int daKing_Donketu_c::func_ov073_02120ed0()
             ApproachLinear(c->mAngleY, c->mTargetAngle, 0x500);
         }
         d = c->mHorzSpeed;
-        if (d < 0) d = -d;
-        if (d >= 0xa) break;
-        if ((unsigned short)c->mStateTimer != 0) break;
+        if (d < 0)
+            d = -d;
+        if (d >= 0xa)
+            break;
+        if ((unsigned short)c->mStateTimer != 0)
+            break;
         if (c->mPhase == 2) {
             Player *p = c->ClosestPlayer();
             if (p != 0) {
                 int t;
-                if (p->GetHurtState() == 4) goto hz;
-                if (p->GetHurtState() == 5) goto hz;
+                if (p->GetHurtState() == 4)
+                    goto hz;
+                if (p->GetHurtState() == 5)
+                    goto hz;
                 t = p->mIsNoControl ? 1 : 0;
                 if (t == 1) {
-hz:
-                    c->mTargetAngle = Vec3_HorzAngle((Vector3 *)&c->mPosX, (Vector3 *)&c->mSpawnPosX);
+                hz:
+                    c->mTargetAngle = Vec3_HorzAngle(&c->mPos, (Vector3 *)&c->mSpawnPosX);
                 } else {
                     c->mTargetAngle = c->HorzAngleToCPlayer();
                 }
@@ -1558,8 +1568,7 @@ hz:
     }
 
     if (c->mPhase == 0) {
-        if (c->mBlendModelAnim.WillHitFrame(0) != 0 ||
-            c->mBlendModelAnim.WillHitFrame(0xe) != 0) {
+        if (c->mBlendModelAnim.WillHitFrame(0) != 0 || c->mBlendModelAnim.WillHitFrame(0xe) != 0) {
             c->func_ov073_0211f2c0(0x3e8000);
             func_02012694(SND_CHASE_STEP, &c->mCamSpacePosX);
         }
@@ -1683,7 +1692,7 @@ int daKing_Donketu_c::func_ov073_02121388() {
     ((dCamera_c *)cam)->SetPos(ps);
 
     vmsg.y = vmsg.y + 0x64000;
-    ApproachLinear(c->mPrevAngleY, Vec3_HorzAngle((struct Vector3*)&c->mPosX, &vplayer), 0x800);
+    ApproachLinear(c->mPrevAngleY, Vec3_HorzAngle(&c->mPos, &vplayer), 0x800);
 
     c->mTalkPlayer = player;
     p = c->mTalkPlayer;

@@ -36,6 +36,7 @@
 #include "SolidHeapAllocator.h"
 #include "ExpandingHeap.h"
 #include "ExpandingHeapAllocator.h"
+#include "Memory.h"
 
 /* Placement new, as <new> declares it. The factories construct each heap
    in a block they have already carved out, and the null test the ROM
@@ -46,7 +47,6 @@ inline void* operator new(size_t, void* p) { return p; }
 
 /* 0x020a0eac, already named in config/arm9/symbols.txt. */
 extern "C" Heap* GAME_HEAP_PTR;
-namespace Memory { extern Heap* defaultHeapPtr; }   /* 0x020a0ea0 */
 /* 0x020a0ea8 -- where SetupSolidHeapAsDefault parks the outgoing default heap.
    Unnamed in config/arm9/symbols.txt; left as the address symbol rather than
    minted here, since naming it is a claim of its own. */
@@ -185,10 +185,10 @@ Heap_t* Heap_t::SetupRootHeap()
     int sz = top - ((lo + 0x1f) & ~0x1f);
 
     void* mem = func_02058cd0(ROOT_HEAP_ARENA_ID, sz, 0x20);
-    if (mem == 0)
-        goto fail;
-
-    {
+    /* The failure return stays last. The ROM branches (`beq') to a tail block
+       holding its own `mov r0,#0 / pop / bx'; an early `if (mem == 0) return 0;'
+       is predicated in place instead (`moveq/popeq/bxeq'), four bytes short. */
+    if (mem != 0) {
         Heap* heap = CreateRootHeap(mem, sz);
         if (heap != 0)
         {
@@ -197,14 +197,6 @@ Heap_t* Heap_t::SetupRootHeap()
         }
         return heap;
     }
-
-    /* The failure return sits at the END of the function, and that placement is
-       load-bearing rather than stylistic: the ROM emits `beq' to a tail block
-       holding its own `mov r0,#0 / pop / bx'. Written as a plain early
-       `return 0;' the compiler predicates it in place instead --
-       `moveq/popeq/bxeq' -- which is correct code and four bytes short of the
-       ROM. */
-fail:
     return 0;
 }
 

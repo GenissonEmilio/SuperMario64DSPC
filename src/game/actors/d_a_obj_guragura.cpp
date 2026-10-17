@@ -69,6 +69,13 @@ int func_ov002_020b60fc(daObjGuragura_c *self, ResourceDescriptor *descriptor);
 void func_ov002_020b6074(daObjGuragura_c *self);
 }
 
+/* dActor_c::mFlags bit 0x08 is written by the framework while the actor is
+ * off screen. This int-returning predicate is what makes the ROM
+ * materialize 0/1 before testing it. */
+static inline int IsOffScreen(dActor_c *actor) {
+    return (actor->mFlags & 8) != 0;
+}
+
 // @symbol _ZN15daObjGuragura_cD0Ev
 // @symbol _ZN15daObjGuragura_cD1Ev
 /* ROM ordinals 0 and 1 -- ov002 0x020b5fd8 (D0, 0x58) and 0x020b6030 (D1,
@@ -106,7 +113,7 @@ void func_ov002_020b6074(daObjGuragura_c *self)
     Matrix4x3 q;
     Vector3 v;
     Matrix4x3_FromQuaternion(self->mTilt, &q);
-    Vec3_Asr(&v, (Vector3 *)&self->mPosX, 3);
+    Vec3_Asr(&v, &self->mPos, 3);
     Matrix4x3_FromTranslation(&data_020a0e68, v.x, v.y, v.z);
     MulMat4x3Mat4x3(&q, &data_020a0e68, &data_020a0e68);
     Matrix4x3_ApplyInPlaceToRotationY(&data_020a0e68, self->mAngleY);
@@ -137,13 +144,11 @@ s32 daObjGuragura_c::Render()
     return 1;
 }
 
-/* ROM ordinal 5 -- vtable slot 6, ov002 0x020b616c.
- * The (int)((mFlags & 8) != 0) != 0 widening is kept: in C++ the inner
- * != 0 is a bool and the cast width steers the compare. */
+/* ROM ordinal 5 -- vtable slot 6, ov002 0x020b616c. */
 // @symbol _ZN15daObjGuragura_c8BehaviorEv
 s32 daObjGuragura_c::Behavior()
 {
-    if ((int)((mFlags & 8) != 0) != 0) {
+    if (IsOffScreen(this)) {
         if (mMeshCollider.IsEnabled()) {
             mMeshCollider.Disable();
         }

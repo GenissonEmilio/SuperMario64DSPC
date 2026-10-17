@@ -15,7 +15,6 @@
 //   Fix12<int> by value, grew func_ov080_02124acc (0x170 to 0x17c) and
 //   func_ov080_02124edc (0x110 to 0x11c). NewSimple has no header method.
 // - The carrier matrix is read at +0xc8. dActor_c::pad_0c5 covers that word.
-// - *(Vector3 *)&mCamSpacePosX: dActor_c stores the triple as three s32 fields.
 // - mShadowMtx stays u8[0x30] and is cast to Matrix4x3. The header names the
 //   array, not a Matrix4x3.
 // - func_ov080_02124e60 stores 0 through *(int *)pad_0d0, the pad in front of
@@ -36,6 +35,7 @@ enum daBttBk_c_AssetId {
 #include "SharedFilePtr.h"
 #include "Sound.h"
 #include "Player.h"
+#include "nitro/fx/fx.h"
 
 struct Mtx43 { int a[12]; };
 typedef char Mtx43_size_must_be_0x30[sizeof(Mtx43) == 0x30 ? 1 : -1];
@@ -129,7 +129,7 @@ void daBttBk_c::func_ov080_02124acc()
     v3.y = t;
     v3.z = v.z;
     _ZN8dActor_c10SpawnCoinsERK7Vector3j5Fix12IiEs(this, v3, 5, 0xf000, 0);
-    Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank3(0x41, mCamSpacePos);
     MarkForDestruction();
 }
 
@@ -160,7 +160,7 @@ void daBttBk_c::func_ov080_02124c3c()
                 mPosX = data_020a0e68.a[9];
                 mPosY = data_020a0e68.a[10];
                 mPosZ = data_020a0e68.a[11];
-                Vec3_LslInPlace((Vector3 *)&mPosX, 3);
+                Vec3_LslInPlace(&mPos, 3);
             }
         }
     }
@@ -186,7 +186,7 @@ void daBttBk_c::func_ov080_02124c3c()
         s16 a = mAngleX;
         int sv = data_02082214[((unsigned short)(short)(a << 1) >> 4) * 2];
         if (sv < 0) sv = -sv;
-        int result = (int)(((s64)sv * 0x28000 + 0x800) >> 12);
+        int result = FX_MUL(sv, 0x28000);
         _ZN8dActor_c18DropShadowScaleXYZER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_S5_j(
             this, &mShadowModel, mShadowMtx, 0x96000, 0x32000, result + 0x96000, 0xf);
     }
@@ -262,7 +262,7 @@ int daBttBk_c::func_ov080_02124edc()
                 _ZN8dActor_c10SpawnCoinsERK7Vector3j5Fix12IiEs(this, v3, 5, 0xf000, 0);
             }
 
-            Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+            Sound::PlayBank3(0x41, mCamSpacePos);
             MarkForDestruction();
         }
     }
@@ -420,7 +420,7 @@ void daBttBk_c::OnTurnIntoEgg(Player &player)
     vec2.z = vec.z;
     PoofDustAt(vec2);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(6, vec.x, vec.y, vec.z);
-    Sound::PlayBank3(0x41, *(Vector3 *)&mCamSpacePosX);
+    Sound::PlayBank3(0x41, mCamSpacePos);
     MarkForDestruction();
 }
 

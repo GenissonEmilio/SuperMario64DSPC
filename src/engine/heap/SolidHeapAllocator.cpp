@@ -75,7 +75,7 @@ struct H {
 
 inline struct FreeList *inline_fn(void *arg0)
 {
-    return (struct FreeList *)(((char *)arg0) + 0x24);
+    return (struct FreeList *)&((SolidHeapAllocator *)arg0)->mFreeRegion;
 }
 
 // @symbol _ZN18SolidHeapAllocatorC1EPvj
@@ -251,7 +251,8 @@ void SolidHeapAllocator::Reset(u32 params)
  * expression instead of reusing `aligned`, and the `(long long)(int)`
  * round-trips are all register-pressure steering: they are how this recovered
  * source reproduces the ROM's scheduling under -O4,p. Tidying any of them
- * changes the bytes. */
+ * changes the bytes. That includes reading begin as `mFreeRegion.begin`,
+ * plainly or through the launder as `&mFreeRegion.begin`: both change it. */
 int SolidHeapAllocator::MemoryLeft(int align)
 {
     u32 a;
@@ -265,7 +266,7 @@ int SolidHeapAllocator::MemoryLeft(int align)
 
     a = (u32)_ZN4cstd3absEi(align);
     mask = a - 1u;
-    fb = (int *)((char *)this + 0x24);
+    fb = (int *)&mFreeRegion;
     aligned = (mask + (u32)*(int *)((long long)(int)((char *)this + 0x24))) & ~(a - 1u);
     end = (u32)fb[1];
     if (!(a - 1u)) {
@@ -339,12 +340,12 @@ s32 SolidHeapAllocator::LoadState(u32 id)
  * returned -- a byte count measured from the object itself. */
 s32 SolidHeapAllocator::TryResizeToFit()
 {
-    struct H *base = (struct H *)((char *)this + 0x24);
-    void *cur = *(void **)((char *)this + 0x1c);
+    struct H *base = (struct H *)&mFreeRegion;
+    void *cur = mEnd;
     if ((s32)((char *)cur - (char *)base->end) != 0) return 0;
-    *(void **)((char *)this + 0x1c) = base->begin;
-    base->end = *(void **)((char *)this + 0x1c);
-    return (s32)(*(char **)((char *)this + 0x1c) - (char *)this);
+    mEnd = base->begin;
+    base->end = mEnd;
+    return (s32)((char *)mEnd - (char *)this);
 }
 
 // @symbol _ZN18SolidHeapAllocator10ReallocateEPvj
@@ -358,7 +359,7 @@ s32 SolidHeapAllocator::TryResizeToFit()
  * the newly exposed bytes are cleared. */
 u32 SolidHeapAllocator::Reallocate(void *ptr, u32 size)
 {
-    void **fl = (void **)((char *)this + 0x24);
+    void **fl = (void **)&mFreeRegion;
     if (size == 0) size = 1;
     size = (size + 3) & ~3;
     void *begin = fl[0];
@@ -371,7 +372,7 @@ u32 SolidHeapAllocator::Reallocate(void *ptr, u32 size)
         if ((s32)(newEnd - (u32)fl[1]) > 0) {
             return 0;
         }
-        u32 flags = *(u32 *)((char *)this + 0x20);
+        u32 flags = mFlags;
         if ((u16)(flags & 0xff) & 1) {
             volatile s32 zero = 0;
             MultiStore_Int(zero, (int *)begin, size - curSize);

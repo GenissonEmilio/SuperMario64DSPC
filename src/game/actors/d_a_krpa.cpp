@@ -45,26 +45,11 @@ enum d_a_krpa_AssetId {
 };
 
 #include "daKrpa_c.h"
+#include "SpawnInfo.h"
 #include "dBgCh_Gnd.h"
 #include "Player.h"
 #include "SharedFilePtr.h"
-
-/* Actor/process profile descriptor at ov070:0x0212334c. Field roles are
- * recovered from fBase_c/dActor_c consumers; exact original member spellings
- * are not preserved. */
-struct daKrpaSpawnInfo {
-    daKrpa_c *(*classInit)();
-    s16 profileIDAndExecuteOrder;
-    s16 drawOrder;
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-
-typedef char daKrpaSpawnInfo_size_must_be_0x1c[
-    sizeof(daKrpaSpawnInfo) == 0x1c ? 1 : -1];
+#include "nitro/fx/fx.h"
 
 // @symbol daKrpa_c_classInit
 /* `return new daKrpa_c()` emits 0x50; the leaf unsigned-long
@@ -79,8 +64,8 @@ extern "C" daKrpa_c *daKrpa_c_classInit()
  * KERONPA registry ID, descriptor/factory relationship, and object shape;
  * later EAD lineage supplies the spelling prior. Exact original SM64DS
  * spellings are not preserved. Historical aliases: daKrpa_c_Spawn and
- * daKrpa_c_SpawnInfo. */
-extern "C" daKrpaSpawnInfo g_profile_KERONPA = {
+ * daKrpa_c_SpawnInfo. The descriptor is at ov070:0x0212334c. */
+extern "C" SpawnInfo<daKrpa_c> g_profile_KERONPA = {
     daKrpa_c_classInit,
     0x010e,
     0x0081,
@@ -162,7 +147,7 @@ int daKrpa_c::InitResources()
     *(M48 *)&mMatrix = *(M48 *)IDENTITY_MATRIX4X3;
 
     dBgCh_Gnd ground;
-    ground.SetObjAndPos(*(Vector3 *)&mPosX, this);
+    ground.SetObjAndPos(mPos, this);
     if (ground.DetectClsn())
         groundDistance = (mPosY - ground.clsnY) + 0x1e000;
     else
@@ -183,7 +168,7 @@ int daKrpa_c::Behavior()
 // @symbol _ZN8daKrpa_c6RenderEv
 int daKrpa_c::Render()
 {
-    mModelAnim.Render((const Vector3 *)&mScaleX);
+    mModelAnim.Render(&mScale);
     return 1;
 }
 
@@ -287,17 +272,16 @@ int daKrpa_c::func_ov070_0212156c() {
         int idx = (int)(u16)this->mAngleY >> 4;
         int cosv = data_02082214[idx * 2 + 1];
         int sinv = data_02082214[idx * 2];
-        int offZ = (int)(((s64)cosv * 0x50000 + 0x800) >> 12);
-        int offX = (int)(((s64)sinv * 0x50000 + 0x800) >> 12);
+        int offZ = FX_MUL(cosv, 0x50000);
+        int offX = FX_MUL(sinv, 0x50000);
         int x = this->mPosX + offX;
         int z = this->mPosZ + offZ;
         int y = this->mPosY - 0x29000;
         firePos.x = x;
         firePos.z = z;
         firePos.y = y;
-        dActor_c::Spawn(0x10f, 0, firePos,
-            (Vector3_16 *)&this->mAngleX, this->mAreaId, -1);
-        func_0201267c(0x105, (Vector3 *)&this->mCamSpacePosX);
+        dActor_c::Spawn(0x10f, 0, firePos, &this->mAngle, this->mAreaId, -1);
+        func_0201267c(0x105, &this->mCamSpacePos);
     }
     if (this->mFrameController.cursor == this->mFrameController.count)
         this->func_ov070_02121880(0);
@@ -342,7 +326,7 @@ extern "C" u32 _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(
 
 int daKrpa_c::func_ov070_02121438()
 {
-    Sound::PlayBank0(9, *(Vector3 *)&this->mCamSpacePosX);
+    Sound::PlayBank0(9, this->mCamSpacePos);
     this->mFlags &= ~1;
     this->mVertAccel = -0x2000;
     this->mTerminalVelocity = -0x3c000;

@@ -18,8 +18,9 @@
  *   data_ov060_0211b1d8 is the four-state member-pointer table Behavior
  *   dispatches through.
  * - The state helpers keep their func_ov060_* address names.
- * - (Vector3 *)&mPosX / &mHomePosX: dActor_c has no Pos().
- * - isPlayer stays an int. A bool local misses in the armed state.
+ * - &mHomePosX stays punned: daKirai_c stores it as three scalars.
+ * - The armed state tests IsPlayerActor, an int-returning predicate: a bool
+ *   local there misses.
  * - The spent state keeps opt_strength_reduction and opt_common_subs off.
  * - func_02012694 plays sound 0x2f at mCamSpacePosX.
  */
@@ -72,6 +73,16 @@ extern void _ZN10dCcAcPos_c4InitEP8dActor_cRK7Vector35Fix12IiES6_jj(
     dCcAcPos_c *self, dActor_c *actor, const Vector3 &v, int radius, int height, unsigned flags, unsigned vulnFlags);
 extern KiraiModelFilePtr data_ov060_0211b1c4;
 extern KiraiState data_ov060_0211b1d8[4];
+}
+
+/* mFlags 0x08 is the framework's off-screen bit (dActor_c.h bit table). */
+static inline int IsOffScreen(dActor_c *actor) {
+    return (actor->mFlags & 8) != 0;
+}
+
+/* Actor 0xbf is the player. */
+static inline int IsPlayerActor(dActor_c *actor) {
+    return actor->actorID == 0xbf;
 }
 
 // @symbol _ZN9daKirai_cD1Ev
@@ -182,16 +193,17 @@ void daKirai_c::func_ov060_02118728()
     int i;
 
     player = ClosestPlayer();
-    if (((mFlags & 8) ? 1 : 0) == 0) return;
+    if (!IsOffScreen(this))
+        return;
     if (player == 0) return;
 
     {
-        Vector3 *pp = (Vector3 *)&player->mPosX;
+        Vector3 *pp = &player->mPos;
         v.x = pp->x;
         v.y = pp->y;
         v.z = pp->z;
     }
-    best = Vec3_Dist((Vector3 *)&mPosX, &v);
+    best = Vec3_Dist(&mPos, &v);
     bestActor = this;
 
     for (i = 0; i < 8; i++) {
@@ -200,9 +212,10 @@ void daKirai_c::func_ov060_02118728()
         actor = (daKirai_c *)dActor_c::FindWithID(id);
         if (actor != 0) {
             if (actor->mStateIndex != 3) return;
-            if (((actor->mFlags & 8) ? 1 : 0) == 0) continue;
+            if (!IsOffScreen(actor))
+                continue;
             {
-                int d = Vec3_Dist(&v, (Vector3 *)&actor->mPosX);
+                int d = Vec3_Dist(&v, &actor->mPos);
                 if (d < best) {
                     best = d;
                     bestActor = actor;
@@ -254,14 +267,13 @@ void daKirai_c::func_ov060_02118970()
 {
     dActor_c *a;
     Vector3 quakePos, hurtPos;
-    int isPlayer; /* int, not bool: measured, a bool local misses */
     unsigned int id;
     id = mdCcAcPos_c.otherOwner;
     if (id == 0) return;
     a = dActor_c::FindWithID(id);
     if (a == 0) return;
-    isPlayer = (a->actorID == 0xbf);
-    if (!isPlayer) return;
+    if (!IsPlayerActor(a))
+        return;
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0xa8, mPosX, mPosY, mPosZ);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0xa9, mPosX, mPosY, mPosZ);
     _ZN8Particle6System9NewSimpleEj5Fix12IiES2_S2_(0xaa, mPosX, mPosY, mPosZ);
@@ -329,13 +341,13 @@ int daKirai_c::InitResources()
     z.x = 0;
     z.y = 0;
     z.z = 0;
-    Vec3_HorzAngle(&z, (const Vector3 *)&mPosX);
+    Vec3_HorzAngle(&z, &mPos);
     mHomeYOffset = 0x2ee000;
     mHomePosX = mPosX;
     mHomePosY = mPosY;
     mHomePosZ = mPosZ;
     mHomePosY += mHomeYOffset >> 3;
-    mHomeHorzDist = Vec3_HorzLen((const Vector3 *)&mPosX);
+    mHomeHorzDist = Vec3_HorzLen(&mPos);
     mStateIndex = 0;
     mSlotIndex = AddSpikeBomb(this);
     return 1;

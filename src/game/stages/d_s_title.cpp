@@ -1,8 +1,8 @@
 //cpp
 /* dScTitle_c -- the title / level-select screen, ov003.
  *
- * A 0x36-entry level selector with a cursor the
- * D-pad moves backward (+0x35 modulo 0x36) or forward (+1), a confirm that either fades to
+ * The screen the game boots into: a 0x36-cell level grid with a cursor the
+ * D-pad walks by row (+0x35) or column (+1), a confirm that either fades to
  * the picked level or hands off to one of the two special entries, and a
  * scrolling window that keeps the cursor on screen. 11 functions,
  * .text 0x020ad660..0x020addfc: the seven dScene_c slots every direct child
@@ -30,9 +30,9 @@
  *   spelled `void *` -- the one spelling neither call site has to cast away
  *   from. Until the ownership is narrowed, the original form stays
  *   uncertain, and the free form is only what this TU reproduces.
- * - Render retains the extra stack-address argument passed to EnableSubOAM.
- *   The retail callee ignores r0; this is an ABI detail of the caller, not
- *   evidence of a by-value Fix12 parameter. See the declaration below.
+ * - OAM::EnableSubOAM keeps its legacy call-site declaration: Render
+ *   passes the address of a stack slot in r0 even though the canonical
+ *   static function takes no arguments. This is a call-site ABI leftover.
  * - The GX/G2 shadow namespaces have no header in the tree yet; they are
  *   carried from the legacy InitResources source unchanged.
  * - unk_050: the one own field, a repeat-delay counter. See dScTitle_c.h.
@@ -44,20 +44,18 @@
 #include "PlayerInput.h"
 #include "dFdBrightness_c.h"
 
-/* SetFaders stores the scene fade controller in data_0209f5bc.
- * Slot 5 is IsAtStart: input waits until the entrance fade reaches zero. */
+/* SetFaders stores the fade controller here; slot 5 waits for the entrance fade. */
 
-/* Render passes the address of a four-byte stack slot in r0 at
- * ov003:0x020ad7ac. EnableSubOAM (arm9:0x020219f0) only clears the sub-OAM
- * suppression byte through r1/r2 and returns without reading r0. Preserve
- * the caller's stack slot and argument; their original source role is unknown.
- */
-struct OamTmp { int x; };
+/* Stack slot whose address is retained by the matched Render call. */
+struct OamTmp {
+    int x;
+};
 
 namespace OAM {
-/* local extern: the retail caller supplies a stack address in r0, while
- * OAM.h declares static EnableSubOAM() with no arguments. */
-extern "C" void _ZN3OAM12EnableSubOAMEv(OamTmp*);
+void EnableSubOAM(OamTmp *);
+/* local extern: the matched Render passes &tmp in r0; the header's
+   static EnableSubOAM() takes no argument */
+extern "C" void _ZN3OAM12EnableSubOAMEv(OamTmp *);
 }
 
 /* No header in the tree declares this namespace yet. Carried from the
@@ -68,14 +66,14 @@ extern "C" void _ZN3OAM12EnableSubOAMEv(OamTmp*);
  * includes that header. G2::GetBG0ScrPtr is therefore spelt by its final
  * mangled name in the block below, the way the rest of the tree spells it. */
 namespace GX {
-    void DisableAllBanks();
-    void SetBankForBG(unsigned short);
-    void SetBankForOBJ(unsigned short);
-    void SetGraphicsMode(int, int, int);
-    void LoadBG0Char(void const *, unsigned int, unsigned int);
-    void LoadBGPltt(void const *, unsigned int, unsigned int);
-    void LoadOBJ(void const *, unsigned int, unsigned int);
-    void LoadOBJPltt(void const *, unsigned int, unsigned int);
+void DisableAllBanks();
+void SetBankForBG(unsigned short);
+void SetBankForOBJ(unsigned short);
+void SetGraphicsMode(int, int, int);
+void LoadBG0Char(void const *, unsigned int, unsigned int);
+void LoadBGPltt(void const *, unsigned int, unsigned int);
+void LoadOBJ(void const *, unsigned int, unsigned int);
+void LoadOBJPltt(void const *, unsigned int, unsigned int);
 }
 
 /* ROM symbols this TU references that no header in the tree declares yet,
@@ -122,6 +120,17 @@ void *_ZN2G212GetBG0ScrPtrEv(void);
 extern void func_ov003_020ad6ec(void *self);
 }
 
+/* The stylus went down this frame: held, with the held state just changed
+ * (see PlayerInput.h). Int-returning, so the ROM materializes the 0/1 it
+ * ORs into the confirm test. */
+static inline int IsTouchStarted() {
+    int started = 0;
+    u8 slot = gActivePlayerSlot;
+    if (gTouchHeld[slot * 4] != 0)
+        started = gTouchEdge[slot * 4] != 0;
+    return started;
+}
+
 /* [10] 0x020adcbc -- prints one row of the level grid into the BG0 screen
  * map at (row, col): the level number in two digits (a blank for a leading
  * zero), a blank, the level's name from data_ov003_020b117c, then blanks out
@@ -129,34 +138,33 @@ extern void func_ov003_020ad6ec(void *self);
  * through MultiStore16 from a volatile temporary, five of them; that is the
  * spelling the bytes need. */
 // @symbol func_ov003_020adcbc
-extern "C" void func_ov003_020adcbc(int level, int row, int col)
-{
-    volatile u16 tensTile, onesTile, separatorTile, nameTile, blankTile;
+extern "C" void func_ov003_020adcbc(int level, int row, int col) {
+    volatile u16 t0, t1, t2, t3, t4;
     int tens = level / 10;
     int ones = level % 10;
-    short *screenMap = (short *)_ZN2G212GetBG0ScrPtrEv();
-    short *tile = screenMap + (col + (row << 5));
-    tensTile = tens == 0 ? 0xff : tens + 0x30;
-    MultiStore16(tensTile, (char *)tile, 2);
-    onesTile = ones + 0x30;
-    MultiStore16(onesTile, (char *)(tile + 1), 2);
-    separatorTile = 0xff;
-    short *separator = tile + 2;
-    tile += 3;
-    MultiStore16(separatorTile, (char *)separator, 2);
-    int remainingColumns = 0x1d - col;
-    volatile signed char *name = data_ov003_020b117c[level].name;
-    while (*name != 0) {
-        nameTile = *name;
-        MultiStore16(nameTile, (char *)tile, 2);
-        name++;
-        tile++;
-        remainingColumns--;
+    short *scr = (short *)_ZN2G212GetBG0ScrPtrEv();
+    short *d = scr + (col + (row << 5));
+    t0 = tens == 0 ? 0xff : tens + 0x30;
+    MultiStore16(t0, (char *)d, 2);
+    t1 = ones + 0x30;
+    MultiStore16(t1, (char *)(d + 1), 2);
+    t2 = 0xff;
+    short *d2 = d + 2;
+    d += 3;
+    MultiStore16(t2, (char *)d2, 2);
+    int cnt = 0x1d - col;
+    volatile signed char *s = data_ov003_020b117c[level].name;
+    while (*s != 0) {
+        t3 = *s;
+        MultiStore16(t3, (char *)d, 2);
+        s++;
+        d++;
+        cnt--;
     }
-    for (int column = 0; column < remainingColumns; column++) {
-        blankTile = 0xff;
-        MultiStore16(blankTile, (char *)tile, 2);
-        tile++;
+    for (int i = 0; i < cnt; i++) {
+        t4 = 0xff;
+        MultiStore16(t4, (char *)d, 2);
+        d++;
     }
 }
 
@@ -164,13 +172,13 @@ extern "C" void func_ov003_020adcbc(int level, int row, int col)
  * at (row, col), one tile per character. Called only from
  * func_ov003_020ad6ec, for the caption. */
 // @symbol func_ov003_020adc74
-extern "C" void func_ov003_020adc74(signed char *text, int row, int col)
-{
-    short *tile = (short *)_ZN2G212GetBG0ScrPtrEv() + (col + (row << 5));
-    if (*text == 0) return;
+extern "C" void func_ov003_020adc74(signed char *s, int row, int col) {
+    short *p = (short *)_ZN2G212GetBG0ScrPtrEv() + (col + (row << 5));
+    if (*s == 0)
+        return;
     do {
-        *tile++ = (short)*text++;
-    } while (*text != 0);
+        *p++ = (short)*s++;
+    } while (*s != 0);
 }
 
 /* Reconstructed source-style name: SM64DS proves dScTitle_c through RTTI,
@@ -184,8 +192,7 @@ extern "C" void func_ov003_020adc74(signed char *text, int row, int col)
  * vptrs, ORs pauseFlags 1 and 4 (dScene_c::dScene_c), then stores this
  * class's vptr. The null check is the one `new` itself emits. */
 // @symbol dScTitle_c_classInit
-extern "C" dScTitle_c *dScTitle_c_classInit(void)
-{
+extern "C" dScTitle_c *dScTitle_c_classInit(void) {
     return new dScTitle_c();
 }
 
@@ -194,36 +201,38 @@ extern "C" dScTitle_c *dScTitle_c_classInit(void)
  * set, blanks the BG0 screen map, then seeds the scroll window from the
  * cursor and starts the title music. */
 // @symbol _ZN10dScTitle_c13InitResourcesEv
-s32 dScTitle_c::InitResources()
-{
+s32 dScTitle_c::InitResources() {
     UnloadArchives();
     Enable3dEngines();
     GX::DisableAllBanks();
     GX::SetBankForBG(8);
     GX::SetBankForOBJ(1);
-    *(volatile u32*)0x4000000 &= 0xffcfffef;
+    *(volatile u32 *)0x4000000 &= 0xffcfffef;
     GX::SetGraphicsMode(1, 0, 0);
-    *(volatile u32*)0x4001000 |= 0x10000;
+    *(volatile u32 *)0x4001000 |= 0x10000;
     func_020233f4();
-    *(volatile u16*)0x4000008 &= ~3;
-    *(volatile u16*)0x4000008 = (*(volatile u16*)0x4000008 & 0x43) | 0x1f00;
-    *(volatile u16*)0x4000008 &= ~0x40;
+    *(volatile u16 *)0x4000008 &= ~3;
+    *(volatile u16 *)0x4000008 = (*(volatile u16 *)0x4000008 & 0x43) | 0x1f00;
+    *(volatile u16 *)0x4000008 &= ~0x40;
     GX::LoadBG0Char(data_0208a178, 0, 0x2000);
     GX::LoadBGPltt(data_0208c178, 0, 0x200);
     {
-        u16 *screenMap = (u16 *)_ZN2G212GetBG0ScrPtrEv();
-        int tileIndex = 0;
-        do { *screenMap++ = 0xff; tileIndex++; } while (tileIndex < 0x1800);
+        u16 *scr = (u16 *)_ZN2G212GetBG0ScrPtrEv();
+        int i = 0;
+        do {
+            *scr++ = 0xff;
+            i++;
+        } while (i < 0x1800);
     }
     GX::LoadOBJ(data_0208c378, 0, 0x2000);
     GX::LoadOBJPltt(data_0208c178, 0, 0x200);
-    *(u8*)data_0209d45c = 0x11;
-    *(volatile u32*)0x4000000 = (*(volatile u32*)0x4000000 & ~0x1f00) | 0x1100;
-    *(int*)data_0208ee44 = 2;
+    *(u8 *)data_0209d45c = 0x11;
+    *(volatile u32 *)0x4000000 = (*(volatile u32 *)0x4000000 & ~0x1f00) | 0x1100;
+    *(int *)data_0208ee44 = 2;
     func_ov003_020ad6ec(this);
-    *(volatile u32*)0x4000010 = 0;
-    *(u8*)(data_0209ee90 + 0x340) = 0;
-    *(u8*)(data_0209ee90 + 0x341) = 0;
+    *(volatile u32 *)0x4000010 = 0;
+    *(u8 *)(data_0209ee90 + 0x340) = 0;
+    *(u8 *)(data_0209ee90 + 0x341) = 0;
     Sound::LoadInitialGroup(2);
     Sound::LoadAndSetMusic_Layer1(0x38);
     return 1;
@@ -232,81 +241,57 @@ s32 dScTitle_c::InitResources()
 /* [6] 0x020ada80 -- vtable slot 3. The title scene owns only its voice
  * group; releasing that is the whole teardown. */
 // @symbol _ZN10dScTitle_c16CleanupResourcesEv
-s32 dScTitle_c::CleanupResources()
-{
+s32 dScTitle_c::CleanupResources() {
     Sound::UnsetPlayerVoiceGroup();
     return 1;
 }
 
 /* [5] 0x020ad814 -- vtable slot 6. Level-select cursor update: on confirm
- * (A/Start or a new touch) starts the scene fade / loads the picked level
+ * (or minigame-active flag) starts the scene fade / loads the picked level
  * from the 8-byte entry table at data_ov003_020b1180; otherwise moves the
- * cursor backward or forward with repeat delay at unk_050,
+ * cursor by row (+0x35) or column (+1) with repeat delay at unk_050,
  * wrapping the index modulo 0x36. */
 // @symbol _ZN10dScTitle_c8BehaviorEv
-s32 dScTitle_c::Behavior()
-{
-    if (data_0209f5bc->IsAtStart()) {
-        int touchStarted = 0;
-        u8 playerSlot = gActivePlayerSlot;
-        if (gTouchHeld[playerSlot * 4] != 0)
-            touchStarted = gTouchEdge[playerSlot * 4] != 0;
-        if (((data_020a0e58[1] & 9) | touchStarted) != 0) {
-            u32 selection;
-            s8 levelId;
-            int touchConfirmed;
-            func_02012790(1);
-            selection = data_0209b2f4;
-            levelId = data_ov003_020b1180[selection * 8];
-            if (levelId == -1)
-                goto startScene5;
-            touchConfirmed = 0;
-            {
-                u8 playerSlot = gActivePlayerSlot;
-                if (gTouchHeld[playerSlot * 4] != 0)
-                    touchConfirmed = gTouchEdge[playerSlot * 4] != 0;
-            }
-            if (touchConfirmed == 0)
-                goto checkLevel;
-        startScene5:
+s32 dScTitle_c::Behavior() {
+    if (data_0209f5bc->IsAtStart() && ((data_020a0e58[1] & 9) | IsTouchStarted()) != 0) {
+        u32 i;
+        s8 t;
+        func_02012790(1);
+        i = data_0209b2f4;
+        t = data_ov003_020b1180[i * 8];
+        if (t == -1 || IsTouchStarted()) {
             dScene_c::StartSceneFade(5, 0, 0);
             _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
-            goto updateScroll;
-        checkLevel:
-            if (levelId == -2) {
-                dScene_c::StartSceneFade(6, 0, 0);
-                _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
-            } else {
-                data_0209f2d8 = 0;
-                LoadLevelNoReturn(levelId, data_ov003_020b1181[selection << 3], 1, 0);
-                SetPlayerGlobals();
-                SetNumPlayers(1);
-                dScene_c::StartSceneFade(4, 0, 0);
-                data_0209f5e8[6] = 0x7fff;
-            }
-            goto updateScroll;
+        } else if (t == -2) {
+            dScene_c::StartSceneFade(6, 0, 0);
+            _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
+        } else {
+            data_0209f2d8 = 0;
+            LoadLevelNoReturn(t, data_ov003_020b1181[i << 3], 1, 0);
+            SetPlayerGlobals();
+            SetNumPlayers(1);
+            dScene_c::StartSceneFade(4, 0, 0);
+            data_0209f5e8[6] = 0x7fff;
         }
-    }
-    {
-        u16 heldButtons = data_020a0e58[0];
-        if (heldButtons & 0x40) {
-            int pressedButton = data_020a0e58[1] & 0x40;
-            if (pressedButton != 0 || unk_050 == 0) {
-                unk_050 = pressedButton ? 8 : 2;
+    } else {
+        u16 v = data_020a0e58[0];
+        if (v & 0x40) {
+            int h = data_020a0e58[1] & 0x40;
+            if (h != 0 || unk_050 == 0) {
+                unk_050 = h ? 8 : 2;
                 data_0209b2f4 += 0x35;
                 func_02012790(0);
             }
-        } else if (heldButtons & 0x80) {
-            int pressedButton = data_020a0e58[1] & 0x80;
-            if (pressedButton != 0 || unk_050 == 0) {
-                unk_050 = pressedButton ? 8 : 2;
+        } else if (v & 0x80) {
+            int h = data_020a0e58[1] & 0x80;
+            if (h != 0 || unk_050 == 0) {
+                unk_050 = h ? 8 : 2;
                 data_0209b2f4 += 1;
                 func_02012790(0);
             }
         }
     }
 
-updateScroll:
     data_0209b2f4 = data_0209b2f4 % 0x36;
     DecIfAbove0_Short(&unk_050);
     func_ov003_020ad6ec(this);
@@ -316,16 +301,15 @@ updateScroll:
 /* [4] 0x020ad7a4 -- vtable slot 9. Real C++ method over the shared header;
  * this body never touches its own fields. */
 // @symbol _ZN10dScTitle_c6RenderEv
-s32 dScTitle_c::Render()
-{
-    OamTmp callScratch;
-    OAM::_ZN3OAM12EnableSubOAMEv(&callScratch);
+s32 dScTitle_c::Render() {
+    OamTmp tmp;
+    OAM::_ZN3OAM12EnableSubOAMEv(&tmp);
     {
-        int oamIndex = data_0209e664;
-        unsigned int cursorY = ((data_0209b2f4 - data_0209b2f8 + 2) << 3) & 0xff;
-        char* oamEntry = data_0209e674 + (oamIndex << 3);
-        *(int*)oamEntry = cursorY | 0x80000;
-        *(short*)(oamEntry + 4) = 0;
+        int idx = data_0209e664;
+        unsigned int v = ((data_0209b2f4 - data_0209b2f8 + 2) << 3) & 0xff;
+        char *p = data_0209e674 + (idx << 3);
+        *(int *)p = v | 0x80000;
+        *(short *)(p + 4) = 0;
     }
     return 1;
 }
@@ -333,9 +317,7 @@ s32 dScTitle_c::Render()
 /* [3] 0x020ad7a0 -- vtable slot 12. Nothing to unwind; the slot exists only
  * so dScene_c's teardown has something to call. */
 // @symbol _ZN10dScTitle_c16OnPendingDestroyEv
-void dScTitle_c::OnPendingDestroy()
-{
-}
+void dScTitle_c::OnPendingDestroy() {}
 
 /* [2] 0x020ad6ec -- scrolls the level-grid window so the cursor stays on
  * screen: clamps the origin at data_0209b2f8, redraws the visible rows
@@ -347,26 +329,27 @@ void dScTitle_c::OnPendingDestroy()
  * the legacy `int[]` spelling is dropped in favour of the header's scalar
  * and the `[0]` subscripts became scalar accesses. */
 // @symbol func_ov003_020ad6ec
-extern "C" {  /* Address-named scroll helper; original free/member form is unknown. */
-void func_ov003_020ad6ec(void *)
-{
-    int selection = data_0209b2f4;
-    int firstVisible = selection - 0xa;
-    data_0209b2f8 = firstVisible;
-    unsigned int windowEnd = (unsigned int)(selection + 0xb);
-    if (windowEnd > 0x36) {
-        data_0209b2f8 = firstVisible - (windowEnd - 0x36);
+extern "C" { /* .c-derived member: C linkage for the whole block */
+void func_ov003_020ad6ec(void *) {
+    int v = data_0209b2f4;
+    int nv = v - 0xa;
+    data_0209b2f8 = nv;
+    unsigned int t = (unsigned int)(v + 0xb);
+    if (t > 0x36) {
+        data_0209b2f8 = nv - (t - 0x36);
     }
-    if (data_0209b2f8 < 0) data_0209b2f8 = 0;
-    int firstLevel = data_0209b2f8;
-    int remainingLevels = 0x36 - firstLevel;
-    int lastRow = remainingLevels + 2;
-    if (lastRow > 0x17) lastRow = 0x17;
-    int row;
-    int level = firstLevel;
-    for (row = 2; row < lastRow; row++) {
-        func_ov003_020adcbc(level, row, 3);
-        level++;
+    if (data_0209b2f8 < 0)
+        data_0209b2f8 = 0;
+    int s = data_0209b2f8;
+    int cnt = 0x36 - s;
+    int end = cnt + 2;
+    if (end > 0x17)
+        end = 0x17;
+    int i;
+    int j = s;
+    for (i = 2; i < end; i++) {
+        func_ov003_020adcbc(j, i, 3);
+        j++;
     }
     func_ov003_020adc74((signed char *)data_020a0d90, 0, 0);
 }

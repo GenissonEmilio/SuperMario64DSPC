@@ -16,6 +16,7 @@
  */
 
 #include "daObjLava_c.h"
+#include "SpawnInfo.h"
 #include "Player.h"
 
 enum {
@@ -31,28 +32,16 @@ extern "C" daObjLava_c *daObjLava_c_classInit()
     return new daObjLava_c();
 }
 
-struct LavaSpawnInfo {
-    daObjLava_c *(*classInit)();
-    s16 executePriority; /* +4: also LAVA registry id 0x00c4 = 196 */
-    s16 renderPriority;  /* +6 */
-    u32 actorFlags;
-    Fix12i clipOffsetY;
-    Fix12i clipRadius;
-    Fix12i clipDistance;
-    Fix12i farDistance;
-};
-typedef char LavaSpawnInfo_size_must_be_0x1c[sizeof(LavaSpawnInfo) == 0x1c ? 1 : -1];
-
 // @symbol g_profile_LAVA
-extern "C" LavaSpawnInfo g_profile_LAVA = {
+extern "C" SpawnInfo<daObjLava_c> g_profile_LAVA = {
     daObjLava_c_classInit,
-    0x00c4,
+    0x00c4, /* LAVA registry id 196 */
     0x0014,
     0,
     0,
     0x1000,
     0,
-    0
+    0,
 };
 
 // @symbol _ZN11daObjLava_c13InitResourcesEv
@@ -66,9 +55,8 @@ s32 daObjLava_c::Behavior()
 {
     /* The ROM forms &player->mPosX once and loads all three words off it, which
      * is what taking the position as a Vector3 does; three separate member
-     * loads off the Player pointer keep the 0x5c/0x60/0x64 offsets instead.
-     * Keep this spelling until dActor_c::Pos() is on the shared header. */
-    Vector3 *pos = (Vector3 *)&ClosestPlayer()->mPosX;
+     * loads off the Player pointer keep the 0x5c/0x60/0x64 offsets instead. */
+    Vector3 *pos = &ClosestPlayer()->mPos;
     mEffectHandle = func_02022c3c(mEffectHandle, kLavaBubbleEffect,
         pos->x, pos->y, pos->z, 0);
     return 1;
