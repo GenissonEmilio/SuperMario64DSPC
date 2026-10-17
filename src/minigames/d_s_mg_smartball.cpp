@@ -561,7 +561,7 @@ void SmartballObj_ElemDtor(void) {}
 int cMgSmartball_wing_c::IsSettled() {
     if (mTriggerCount == 0)
         return 1;
-    return *(s16 *)((char *)this + 0x32) == 0x3000;
+    return GetAngle() == 0x3000;
 }
 
 // @symbol _ZN19cMgSmartball_wing_c7TriggerEv
@@ -599,14 +599,14 @@ void cMgSmartball_wing_c::RebuildVerts() {
     mVertices[7].x = 0x4000;
     mVertices[7].y = -0x18000;
 
-    func_0203d388((V2 *)&mVertices[0], (s16) - *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[1], (s16) - *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[2], (s16) - *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[3], (s16) - *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[4], *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[5], *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[6], *(s16 *)((char *)this + 0x32));
-    func_0203d388((V2 *)&mVertices[7], *(s16 *)((char *)this + 0x32));
+    func_0203d388((V2 *)&mVertices[0], (s16)-GetAngle());
+    func_0203d388((V2 *)&mVertices[1], (s16)-GetAngle());
+    func_0203d388((V2 *)&mVertices[2], (s16)-GetAngle());
+    func_0203d388((V2 *)&mVertices[3], (s16)-GetAngle());
+    func_0203d388((V2 *)&mVertices[4], GetAngle());
+    func_0203d388((V2 *)&mVertices[5], GetAngle());
+    func_0203d388((V2 *)&mVertices[6], GetAngle());
+    func_0203d388((V2 *)&mVertices[7], GetAngle());
 
     mVertices[0].x += mCurrent0 - 0x10000;
     mVertices[0].y += mCurrent1 + 0x28000;
