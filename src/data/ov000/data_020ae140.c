@@ -1,0 +1,22 @@
+/* .data 0x020ae140..0x020ae18c */
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned char data_ov000_020ae140[12] = {
+    117, 110, 95, 101, 100, 46, 98, 99, 97, 0, 0, 0
+};
+
+unsigned char data_ov000_020ae14c[32] = {
+    100, 97, 116, 97, 47, 101, 110, 101, 109, 121, 47, 109,
+    105, 112, 47, 109, 105, 112, 95, 114, 117, 110, 95, 115,
+    116, 46, 98, 99, 97, 0, 0, 0
+};
+
+unsigned char data_ov000_020ae16c[32] = {
+    77, 71, 47, 100, 95, 50, 100, 95, 116, 104, 117, 109,
+    95, 112, 97, 99, 104, 105, 110, 107, 111, 95, 110, 99,
+    103, 46, 98, 105, 110, 0, 0, 0
+};
+#pragma section forcedata end
+#pragma pop
