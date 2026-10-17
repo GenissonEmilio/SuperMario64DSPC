@@ -18,11 +18,303 @@ src/game/actors/d_a_obj_hatena_block.cpp:
     .ctor start:0x0214e0a4 end:0x0214e0a8
     .bss start:0x0214e7d0 end:0x0214e9c0
 
+src/data/ov102/data_0214e0c0.c:
+    complete
+    .data start:0x0214e0c0 end:0x0214e0cc
+
+src/data/ov102/data_0214e0cc.c:
+    complete
+    .data start:0x0214e0cc end:0x0214e0e0
+
+src/data/ov102/data_0214e0e0.c:
+    complete
+    .data start:0x0214e0e0 end:0x0214e0fc
+
+src/data/ov102/data_0214e0fc.c:
+    complete
+    .data start:0x0214e0fc end:0x0214e118
+
+src/data/ov102/data_0214e118.c:
+    complete
+    .data start:0x0214e118 end:0x0214e134
+
+src/data/ov102/data_0214e134.c:
+    complete
+    .data start:0x0214e134 end:0x0214e150
+
+src/data/ov102/data_0214e150.c:
+    complete
+    .data start:0x0214e150 end:0x0214e16c
+
+src/data/ov102/data_0214e16c.c:
+    complete
+    .data start:0x0214e16c end:0x0214e188
+
+src/data/ov102/data_0214e188.c:
+    complete
+    .data start:0x0214e188 end:0x0214e18c
+
+src/data/ov102/data_0214e18c.c:
+    complete
+    .data start:0x0214e18c end:0x0214e190
+
+src/data/ov102/data_0214e190.c:
+    complete
+    .data start:0x0214e190 end:0x0214e1d8
+
+src/data/ov102/data_0214e1d8.c:
+    complete
+    .data start:0x0214e1d8 end:0x0214e258
+
+src/data/ov102/data_0214e258.c:
+    complete
+    .data start:0x0214e258 end:0x0214e260
+
+src/data/ov102/data_0214e260.c:
+    complete
+    .data start:0x0214e260 end:0x0214e268
+
+src/data/ov102/data_0214e268.c:
+    complete
+    .data start:0x0214e268 end:0x0214e270
+
+src/data/ov102/data_0214e270.c:
+    complete
+    .data start:0x0214e270 end:0x0214e278
+
+src/data/ov102/data_0214e278.c:
+    complete
+    .data start:0x0214e278 end:0x0214e280
+
+src/data/ov102/data_0214e280.c:
+    complete
+    .data start:0x0214e280 end:0x0214e288
+
+src/data/ov102/data_0214e288.c:
+    complete
+    .data start:0x0214e288 end:0x0214e290
+
+src/data/ov102/data_0214e290.c:
+    complete
+    .data start:0x0214e290 end:0x0214e298
+
+src/data/ov102/data_0214e298.c:
+    complete
+    .data start:0x0214e298 end:0x0214e2a0
+
+src/data/ov102/data_0214e2a0.c:
+    complete
+    .data start:0x0214e2a0 end:0x0214e2a8
+
+src/data/ov102/data_0214e2a8.c:
+    complete
+    .data start:0x0214e2a8 end:0x0214e2b0
+
+src/data/ov102/data_0214e2b0.c:
+    complete
+    .data start:0x0214e2b0 end:0x0214e2b8
+
+src/data/ov102/data_0214e2b8.c:
+    complete
+    .data start:0x0214e2b8 end:0x0214e2c0
+
+src/data/ov102/data_0214e2c0.c:
+    complete
+    .data start:0x0214e2c0 end:0x0214e2c8
+
+src/data/ov102/data_0214e2c8.c:
+    complete
+    .data start:0x0214e2c8 end:0x0214e2d0
+
+src/data/ov102/data_0214e2d0.c:
+    complete
+    .data start:0x0214e2d0 end:0x0214e2d8
+
+src/data/ov102/data_0214e2d8.c:
+    complete
+    .data start:0x0214e2d8 end:0x0214e2e0
+
+src/data/ov102/data_0214e2e0.c:
+    complete
+    .data start:0x0214e2e0 end:0x0214e2e8
+
+src/data/ov102/data_0214e2e8.c:
+    complete
+    .data start:0x0214e2e8 end:0x0214e2f0
+
+src/data/ov102/data_0214e2f0.c:
+    complete
+    .data start:0x0214e2f0 end:0x0214e2f8
+
+src/data/ov102/data_0214e2f8.c:
+    complete
+    .data start:0x0214e2f8 end:0x0214e300
+
+src/data/ov102/data_0214e300.c:
+    complete
+    .data start:0x0214e300 end:0x0214e308
+
+src/data/ov102/data_0214e308.c:
+    complete
+    .data start:0x0214e308 end:0x0214e310
+
+src/data/ov102/data_0214e310.c:
+    complete
+    .data start:0x0214e310 end:0x0214e318
+
+src/data/ov102/data_0214e318.c:
+    complete
+    .data start:0x0214e318 end:0x0214e320
+
+src/data/ov102/data_0214e320.c:
+    complete
+    .data start:0x0214e320 end:0x0214e328
+
+src/data/ov102/data_0214e328.c:
+    complete
+    .data start:0x0214e328 end:0x0214e330
+
+src/data/ov102/data_0214e330.c:
+    complete
+    .data start:0x0214e330 end:0x0214e338
+
+src/data/ov102/data_0214e338.c:
+    complete
+    .data start:0x0214e338 end:0x0214e340
+
+src/data/ov102/data_0214e340.c:
+    complete
+    .data start:0x0214e340 end:0x0214e348
+
+src/data/ov102/data_0214e348.c:
+    complete
+    .data start:0x0214e348 end:0x0214e350
+
+src/data/ov102/data_0214e350.c:
+    complete
+    .data start:0x0214e350 end:0x0214e358
+
+src/data/ov102/data_0214e358.c:
+    complete
+    .data start:0x0214e358 end:0x0214e360
+
+src/data/ov102/data_0214e360.c:
+    complete
+    .data start:0x0214e360 end:0x0214e368
+
+src/data/ov102/data_0214e368.c:
+    complete
+    .data start:0x0214e368 end:0x0214e370
+
+src/data/ov102/data_0214e370.c:
+    complete
+    .data start:0x0214e370 end:0x0214e378
+
+src/data/ov102/data_0214e378.c:
+    complete
+    .data start:0x0214e378 end:0x0214e380
+
+src/data/ov102/data_0214e380.c:
+    complete
+    .data start:0x0214e380 end:0x0214e388
+
+src/data/ov102/data_0214e388.c:
+    complete
+    .data start:0x0214e388 end:0x0214e390
+
+src/data/ov102/data_0214e390.c:
+    complete
+    .data start:0x0214e390 end:0x0214e398
+
+src/data/ov102/data_0214e398.c:
+    complete
+    .data start:0x0214e398 end:0x0214e3a0
+
+src/data/ov102/data_0214e3a0.c:
+    complete
+    .data start:0x0214e3a0 end:0x0214e3a8
+
+src/data/ov102/data_0214e3a8.c:
+    complete
+    .data start:0x0214e3a8 end:0x0214e3b4
+
+src/data/ov102/data_0214e3b4.c:
+    complete
+    .data start:0x0214e3b4 end:0x0214e3cc
+
+src/data/ov102/data_0214e3cc.c:
+    complete
+    .data start:0x0214e3cc end:0x0214e3e8
+
+src/data/ov102/data_0214e3e8.c:
+    complete
+    .data start:0x0214e3e8 end:0x0214e404
+
+src/data/ov102/data_0214e404.c:
+    complete
+    .data start:0x0214e404 end:0x0214e420
+
+src/data/ov102/data_0214e420.c:
+    complete
+    .data start:0x0214e420 end:0x0214e43c
+
+src/data/ov102/data_0214e43c.c:
+    complete
+    .data start:0x0214e43c end:0x0214e458
+
+src/data/ov102/data_0214e458.c:
+    complete
+    .data start:0x0214e458 end:0x0214e47c
+
+src/data/ov102/data_0214e47c.c:
+    complete
+    .data start:0x0214e47c end:0x0214e4fc
+
 src/game/actors/d_a_bmb.cpp:
     complete
     .text start:0x0214a96c end:0x0214c748
     .data start:0x0214e4fc end:0x0214e5d4
     .bss start:0x0214e9c0 end:0x0214e9d0
+
+src/data/ov102/bss_0214e9dc.c:
+    complete
+    .bss start:0x0214e9dc end:0x0214e9e8
+
+src/data/ov102/bss_0214e9e8.c:
+    complete
+    .bss start:0x0214e9e8 end:0x0214e9f4
+
+src/data/ov102/bss_0214e9f4.c:
+    complete
+    .bss start:0x0214e9f4 end:0x0214ea00
+
+src/data/ov102/bss_0214ea00.c:
+    complete
+    .bss start:0x0214ea00 end:0x0214ea0c
+
+src/data/ov102/bss_0214ea0c.c:
+    complete
+    .bss start:0x0214ea0c end:0x0214ea18
+
+src/data/ov102/bss_0214ea18.c:
+    complete
+    .bss start:0x0214ea18 end:0x0214ea1c
+
+src/data/ov102/bss_0214ea1c.c:
+    complete
+    .bss start:0x0214ea1c end:0x0214ea20
+
+src/data/ov102/bss_0214ea20.c:
+    complete
+    .bss start:0x0214ea20 end:0x0214ea30
+
+src/data/ov102/bss_0214ea30.c:
+    complete
+    .bss start:0x0214ea30 end:0x0214ea3c
+
+src/data/ov102/bss_0214ea3c.c:
+    complete
+    .bss start:0x0214ea3c end:0x0214ea48
 
 src/game/actors/d_a_shl.cpp:
     complete
@@ -32,6 +324,22 @@ src/game/actors/d_a_shl.cpp:
     .ctor start:0x0214e0ac end:0x0214e0b0
     .data start:0x0214e5d4 end:0x0214e614
     .bss start:0x0214ea48 end:0x0214eaa0
+
+src/data/ov102/data_0214e614.c:
+    complete
+    .data start:0x0214e614 end:0x0214e620
+
+src/data/ov102/data_0214e620.c:
+    complete
+    .data start:0x0214e620 end:0x0214e62c
+
+src/data/ov102/data_0214e62c.c:
+    complete
+    .data start:0x0214e62c end:0x0214e650
+
+src/data/ov102/data_0214e650.c:
+    complete
+    .data start:0x0214e650 end:0x0214e6e0
 
 src/unnamed/ov102/__sinit_ov102_0214de70.c:
     complete
