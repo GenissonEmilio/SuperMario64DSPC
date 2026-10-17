@@ -1626,6 +1626,70 @@ src/game/stages/d_scene.cpp:
     .text start:0x0202e140 end:0x0202ec9c
 
     .bss start:0x0209f1e4 end:0x0209f1e8
+src/data/arm9/data_0209f204.c:
+    complete
+    .bss start:0x0209f204 end:0x0209f208
+
+src/data/arm9/data_0209f220.c:
+    complete
+    .bss start:0x0209f220 end:0x0209f224
+
+src/data/arm9/data_0209f240.c:
+    complete
+    .bss start:0x0209f240 end:0x0209f244
+
+src/data/arm9/data_0209f25c.c:
+    complete
+    .bss start:0x0209f25c end:0x0209f260
+
+src/data/arm9/data_0209f278.c:
+    complete
+    .bss start:0x0209f278 end:0x0209f27c
+
+src/data/arm9/data_0209f298.c:
+    complete
+    .bss start:0x0209f298 end:0x0209f29c
+
+src/data/arm9/data_0209f2c0.c:
+    complete
+    .bss start:0x0209f2c0 end:0x0209f2c4
+
+src/data/arm9/data_0209f2d8.c:
+    complete
+    .bss start:0x0209f2d8 end:0x0209f2dc
+
+src/data/arm9/data_0209f2fc.c:
+    complete
+    .bss start:0x0209f2fc end:0x0209f300
+
+src/data/arm9/data_0209f314.c:
+    complete
+    .bss start:0x0209f314 end:0x0209f318
+
+src/data/arm9/data_0209f330.c:
+    complete
+    .bss start:0x0209f330 end:0x0209f334
+
+src/data/arm9/data_0209f348.c:
+    complete
+    .bss start:0x0209f348 end:0x0209f34c
+
+src/data/arm9/data_0209f37c.c:
+    complete
+    .bss start:0x0209f37c end:0x0209f388
+
+src/data/arm9/data_0209f40c.c:
+    complete
+    .bss start:0x0209f40c end:0x0209f43c
+
+src/data/arm9/data_0209f4a2.c:
+    complete
+    .bss start:0x0209f4a2 end:0x0209f4a4
+
+src/data/arm9/data_0209f5c0.c:
+    complete
+    .bss start:0x0209f5c0 end:0x0209f5c4
+
 src/runtime/graphics/fader/d_wipe.cpp:
     complete
     .text start:0x0202ec9c end:0x0202fc98

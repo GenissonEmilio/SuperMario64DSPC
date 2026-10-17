@@ -4,6 +4,10 @@
     .ctor       start:0x020b9de4 end:0x020b9df4 kind:rodata align:4
     .data       start:0x020b9e00 end:0x020beb60 kind:data align:32
     .bss        start:0x020beb60 end:0x020bfec0 kind:bss align:32
+src/data/ov004/sMgTopScreenYOffset.c:
+    complete
+    .bss start:0x020beb6c end:0x020beb70
+
 src/minigames/d_s_mg_base.cpp:
     complete
     .text start:0x020ad660 end:0x020b2c84
@@ -19,6 +23,14 @@ src/minigames/unit020b2c84.cpp:
     .ctor start:0x020b9de8 end:0x020b9dec
     .data start:0x020bc6e8 end:0x020bc7d0
     .bss start:0x020bf41c end:0x020bf9e4
+
+src/data/ov004/data_ov004_020bc878.c:
+    complete
+    .data start:0x020bc878 end:0x020bc87c
+
+src/data/ov004/gMgCoinsInPlay.c:
+    complete
+    .bss start:0x020bfa18 end:0x020bfa1c
 
 src/minigames/unit020b4aa4.cpp:
     complete
