@@ -82,4 +82,5 @@ void Func_02048eb4()
 extern "C" {
 struct Data020a4b98 { int z0; int z4; void *s0; void *s1; };
 struct Data020a4b98 data_020a4b98;
+u16 data_020a117c[4];
 }

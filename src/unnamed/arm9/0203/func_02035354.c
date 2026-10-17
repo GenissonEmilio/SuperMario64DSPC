@@ -16,3 +16,5 @@ int func_02035354(A* a, A* b){
     }
     return 0;
 }
+
+extern unsigned int data_0209f288;

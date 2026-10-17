@@ -107,6 +107,7 @@ src/unnamed/ov075/func_ov075_02117f5c.c:
 src/unnamed/ov075/func_ov075_02117fe4.c:
     complete
     .text start:0x02117fe4 end:0x02118248
+    .data start:0x0211c8b0 end:0x0211c8b8
 src/unnamed/ov075/func_ov075_02118248.c:
     complete
     .text start:0x02118248 end:0x02118378

@@ -12,6 +12,7 @@ extern s8 data_0209fc64[4];
 
 extern u8 data_0209fc50;
 
+
 void func_02030dac(void)
 {
     int n = func_0203d890();

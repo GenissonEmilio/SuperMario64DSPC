@@ -13,3 +13,5 @@ void func_02019dfc(void)
     func_0205f9ac(1, data_0209d510);
     data_0209d4d4 = 0;
 }
+
+extern void *data_0209d4a8;

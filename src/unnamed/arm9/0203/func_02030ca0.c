@@ -12,6 +12,7 @@ extern char data_0209fc64[];
 extern unsigned char data_0209fc50;
 extern int data_0209fc68;
 
+
 void func_02030ca0(void) {
     int count;
     int i;

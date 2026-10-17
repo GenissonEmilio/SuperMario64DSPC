@@ -1,7 +1,7 @@
 #include "types.h"
 void *data_ov007_02104c20;
 void * data_ov007_02104c24;
-extern void *data_ov007_02104c1c;
+void *data_ov007_02104c1c;
 extern void *data_ov007_02104c18;
 
 struct Header { u32 pad[3]; u32 count; };

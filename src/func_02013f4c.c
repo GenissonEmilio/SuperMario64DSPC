@@ -89,3 +89,5 @@ void func_02013f4c(void)
     while ((int)*(volatile u16*)0x4000006 >= 0xc0) {}
     while ((int)*(volatile u16*)0x4000006 < 0xc0) {}
 }
+
+extern int data_020874cc[10] ;

@@ -13,3 +13,4 @@ int func_0205db2c(int a, int b, int c, int d)
 }
 
 extern char data_0209a5f4[8] ;
+extern int data_0209a074 ;

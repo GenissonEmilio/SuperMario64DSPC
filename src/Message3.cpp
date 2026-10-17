@@ -36,6 +36,7 @@ extern u8 data_0209fc7c;
 extern u8 data_0209fc80;
 extern u8 data_0209fc84;
 extern u8 data_0209fc88;
+
 extern u8 data_0209fc8c;
 extern u8 data_0209fc90;
 extern u8 data_0209fc98;
@@ -77,6 +78,7 @@ extern int data_0209285c[];
 extern void (*data_02092830[])(void);
 extern u8 data_0208f074[];extern u8 data_0208f174[256];
 
+extern u8 data_0208f174[];
 extern s32 data_0208ee44;
 extern int data_0209caa0[3];
 extern u32 data_0209b454;

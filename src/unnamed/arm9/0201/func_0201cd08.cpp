@@ -45,3 +45,7 @@ void func_0201cd08(int arg)
     Message_DrawCenteredLine(0x291, 0xa);
 }
 }
+
+extern "C" {
+void *data_0209d518;
+}

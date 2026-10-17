@@ -78,3 +78,4 @@ void func_0203df40(void)
 }
 
 extern int data_020a0f74;
+extern unsigned short data_020a0f1c;

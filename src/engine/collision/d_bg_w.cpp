@@ -355,3 +355,7 @@ int dBgW::Disable()
     }
     return 1;
 }
+
+extern "C" {
+u8 data_0209fc50;
+}

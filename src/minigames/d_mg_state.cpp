@@ -186,7 +186,7 @@ extern int data_ov004_020bc850;
 extern int data_ov004_020bc854;
 extern int data_ov004_020bc858;
 extern int data_ov004_020bc85c;
-extern int data_ov004_020bc860;
+int data_ov004_020bc860 = 96;
 extern int data_ov004_020bc864;
 extern int data_ov004_020bc868;
 /* Declaration order is the reverse of address order: mwcc emits these

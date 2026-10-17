@@ -1,7 +1,7 @@
 
 /* bss 0x0209d690..0x0209d694 */
 #pragma force_active on
-unsigned char data_0209d690[4];
+extern unsigned char data_0209d690[4];
 #pragma force_active off
 
 extern int func_0203da9c(void);

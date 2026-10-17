@@ -28,6 +28,9 @@ src/game/actors/d_a_f_pkn.cpp:
 src/data/merge/bss_02130e14.c:
     complete
     .bss start:0x02130e14 end:0x02130e1c
+src/data/park/bss_02130e24.c:
+    complete
+    .bss start:0x02130e24 end:0x02130e2c
 src/game/actors/d_a_pkn.cpp:
     complete
     .text start:0x0212eaf0 end:0x02130174

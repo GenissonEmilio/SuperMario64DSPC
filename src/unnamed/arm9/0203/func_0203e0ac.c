@@ -75,3 +75,4 @@ extern u16 *p11c4 ;
 }
 
 extern unsigned char data_020a0fa0[6];
+extern short data_020a0f34;

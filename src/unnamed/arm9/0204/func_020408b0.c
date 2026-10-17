@@ -17,6 +17,7 @@ extern void *data_020a0f54;
 extern unsigned short data_020a0f28;
 extern void *data_020a0f74;
 extern void *data_020a0f80;
+
 extern int data_020a0f58;
 extern int data_020a0f64;
 extern void *data_020a0f68;

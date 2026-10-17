@@ -9,7 +9,7 @@ u8 data_0209fca0[4];
 extern u8 data_0209fc84;
 extern u8 data_0209fc88;
 extern u8 data_0209fcd8;
-extern u8 data_02092818[];
+u8 data_02092818[12] = { 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0 };
 extern u16 data_02075d14[];
 extern u16 data_02075b14[];
 extern u8 data_0208f074[];

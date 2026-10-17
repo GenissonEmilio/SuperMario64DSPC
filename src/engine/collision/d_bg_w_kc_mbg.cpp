@@ -397,3 +397,7 @@ extern "C" void func_020398fc(dBgW_KcMbg *self)
 {
     *(u8 *)&self->unk_130 = 1;
 }
+
+extern "C" {
+u8 data_0209fc88;
+}

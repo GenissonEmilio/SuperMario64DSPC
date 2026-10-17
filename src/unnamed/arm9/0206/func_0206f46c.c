@@ -50,6 +50,7 @@ extern char data_0209a600[]; /* "inf" */
 extern char data_0209a604[8];
  /* "-NAN" */
 extern char data_0209a60c[]; /* "-nan" */
+
 extern char data_0209a614[]; /* "NAN" */
 extern char data_0209a618[]; /* "nan" */
 extern char data_0209a61c[]; /* "0x0p0" */

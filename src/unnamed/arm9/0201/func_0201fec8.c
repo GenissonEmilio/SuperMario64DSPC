@@ -46,3 +46,5 @@ void func_0201fec8(void)
     func_0201a96c(data_0209d574, saved);
     data_0209e64c = 1;
 }
+
+extern unsigned char data_0209d66c;

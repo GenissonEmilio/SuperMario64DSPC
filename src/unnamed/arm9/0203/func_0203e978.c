@@ -10,3 +10,4 @@ void func_0203e978(short *p)
 }
 
 extern unsigned char data_020a1164[2];
+extern void *data_020a0f80;

@@ -41,7 +41,7 @@ int data_0208eeac[8] = { -1, -16, -256, -0x1000, -0x10000, -0x100000, -0x1000000
 extern "C" {
 extern u8 data_0209d454;
 extern u8 data_0209d45c;
-extern extern u8 data_0209d64c;
+extern extern extern u8 data_0209d64c;
 extern u8 data_0209d650;
 extern u8 data_0209d658;
 extern u8 data_0209d65c;

@@ -20,6 +20,16 @@
       "name": ".bss",
       "start": "0x0209fc84",
       "end": "0x0209fc85"
+    },
+    {
+      "name": ".data",
+      "start": "0x0208f074",
+      "end": "0x0208f174"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209fc88",
+      "end": "0x0209fc89"
     }
   ],
   "data": [],

@@ -8,7 +8,8 @@ int data_0209cefc[300];
 extern "C" {
 extern int data_0209cef8[];
 
-extern int data_0208e738[];
+int data_0208e738[1] = { 1 };
+extern int data_0209cefc[];
 }
 
 /* 0xc-byte records in the common model data array at data_0209cefc,

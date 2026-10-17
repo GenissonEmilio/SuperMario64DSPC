@@ -51,6 +51,9 @@ src/data/merge/bss_02140538.c:
 src/data/merge/bss_02140588.c:
     complete
     .bss start:0x02140588 end:0x0214058c
+src/data/merge/bss_021405a8.c:
+    complete
+    .bss start:0x021405a8 end:0x021405ac
 src/minigames/unit020c8a30.cpp:
     complete
     .text start:0x020c8a30 end:0x020c8dd4

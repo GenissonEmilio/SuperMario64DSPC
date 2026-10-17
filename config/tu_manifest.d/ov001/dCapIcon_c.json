@@ -20,6 +20,11 @@
       "name": ".bss",
       "start": "0x020ad624",
       "end": "0x020ad628"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020ad630",
+      "end": "0x020ad634"
     }
   ],
   "functions": [

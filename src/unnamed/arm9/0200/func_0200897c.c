@@ -1,4 +1,4 @@
-short *data_0209b460;
+extern short *data_0209b460;
 #include "types.h"
 /* func_0200897c @ 0x0200897c, size 0x5c, ARM.
  * dCamera_c-cluster member taking (dCamera_c *self, void *arg).

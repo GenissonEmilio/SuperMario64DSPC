@@ -89,3 +89,7 @@ Vector3 dBgCh_Lin::GetClsnPos()
 {
     return lineEnd;
 }
+
+extern "C" {
+u16 data_0209f49c[1];
+}

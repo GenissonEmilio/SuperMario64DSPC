@@ -11,6 +11,7 @@ extern void Matrix4x3_ApplyInPlaceToRotationX(void *m, short a);
 extern void MulVec3Mat4x3(void *v, void *m, void *dst);
 extern short data_0209f4a0[1];
 extern unsigned char data_0209f4ae[];
+
 extern int data_020a0e68[];
 
 int func_020095e4(void *cam)

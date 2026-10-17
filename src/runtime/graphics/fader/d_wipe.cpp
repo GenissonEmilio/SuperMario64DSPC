@@ -53,7 +53,8 @@ extern "C" {
 u8 data_0209f5f8;   /* which display engine the wipe covers */
 }
 extern volatile u8  data_0209f5fc;   /* the next HBlank has a fresh line */
-extern volatile u32 data_0209f608;   /* table index the IRQ reads */
+extern volatile u32 data_0209f608;
+
 extern volatile u32 data_0209f60c;   /* table index the CPU fills */
 extern short        data_023c0000[];
 

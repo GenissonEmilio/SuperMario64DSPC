@@ -5,7 +5,8 @@ extern void func_0204f94c(int *p);
 
 extern int data_ov007_02103218;
 extern int data_ov007_02103220;
-extern int *data_ov007_02104bb8;
+int *data_ov007_02104bb8;
+extern char *data_ov007_02104bbc;
 
 void func_ov007_020be00c(void)
 {

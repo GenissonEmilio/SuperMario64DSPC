@@ -1,4 +1,5 @@
-extern int data_020874cc[];
+extern int data_020874cc[10];
+
 int func_02005060(void* c){
   *(int*)((char*)c+0x13c)=(int)data_020874cc;
   void* r0=*(void**)((char*)c+0x110);

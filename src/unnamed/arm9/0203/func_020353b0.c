@@ -10,3 +10,5 @@ void func_020353b0(char* c, int* p) {
         *(int*)(c+8) = p[1];
     }
 }
+
+extern unsigned int data_0209f33c;
