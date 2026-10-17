@@ -210,6 +210,10 @@ src/game/actors/d_a_obj_km2_fall_block.cpp:
     .ctor start:0x02112440 end:0x02112444
     .data start:0x021130ac end:0x021130b8
     .bss start:0x02113248 end:0x02113270
+src/data/ov045/rodata_02111e60.c:
+    complete
+    .rodata start:0x02111e60 end:0x02111e64
+
 src/data/ov045/rodata_02111e64.c:
     complete
     .rodata start:0x02111e64 end:0x02111e68
