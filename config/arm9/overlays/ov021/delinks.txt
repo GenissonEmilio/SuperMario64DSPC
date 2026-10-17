@@ -447,6 +447,10 @@ src/data/ov021/bss_02114a8c.c:
 src/unnamed/ov021/__sinit_ov021_02113500.c:
     complete
     .init start:0x02113500 end:0x02113688
+src/data/ov021/rodata_02112f10.c:
+    complete
+    .rodata start:0x02112f10 end:0x02112f18
+
 src/data/ov021/rodata_02112f18.c:
     complete
     .rodata start:0x02112f18 end:0x02112f1c
