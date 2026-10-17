@@ -14,14 +14,14 @@
  *
  * The 62 helpers that take the scene as their first argument are members
  * (the address is the method name; no ROM spelling survives), declared in
-* dScMgPanel_c . h . Some helpers retain local layout views and raw - offset * accesses where native member loads change the matching build . * The three empty handlers Shake_StateIdle , Banner_StateIdle and * IntroCard_StateDone are members too : the state tables point at them . 
+ * dScMgPanel_c.h. Some helpers retain local layout views and raw offset accesses where native member loads change the matching build. The three empty handlers Shake_StateIdle, Banner_StateIdle and IntroCard_StateDone are members too; the state tables point at them.
  *
  * Leftover, each measured against the matching build:
  * - Particle_DrawAll, Particle_UpdateAll, Particle_Spawn,
  *   Particle_ClearAll: `PanelPart *p = (PanelPart *)(scene + 0x46a8)`
  *   with p->x / p->show / p++ DIFFs. The 0x18 byte step stays.
  * - Scroll_Update, Scroll_Start: `PanelScroll *` at 0x4694
-* DIFFs . Scroll_Stop uses the native ` on ` member . * - Answer_StateFlipSolution , UpdateMoves : mWidth and mDelay stay raw ; 
+ *   DIFFs. Scroll_Stop uses the native `on` member. Answer_StateFlipSolution and UpdateMoves keep mWidth and mDelay raw;
  *   `(u16 *)(int)&mDelay` then an s16 compare DIFFs by 25 words.
  * - Answer_StateFindSolution, Answer_StateResetBoard, Scene_StateGameOver,
  *   Scene_StateShowAnswer, Scene_StateRewind, Scene_StatePlay: mKind
