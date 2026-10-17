@@ -1,6 +1,3 @@
-unsigned short data_0209f49e[1];
-extern unsigned char data_0209fc94;
-
 typedef struct A {
     int f0;
     int f4;
@@ -16,5 +13,3 @@ int func_02035354(A* a, A* b){
     }
     return 0;
 }
-
-extern unsigned int data_0209f288;

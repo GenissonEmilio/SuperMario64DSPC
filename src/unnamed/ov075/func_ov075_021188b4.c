@@ -60,26 +60,3 @@ void func_ov075_021188b4(char *c)
 
     *(int *)(c + 0x274) = 0;
 }
-
-/* .data 0x0211ca7c..0x0211cb64 */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern int data_ov075_0211caac[6] ;
-extern int data_ov075_0211ca94[6] ;
-extern int data_ov075_0211ca7c[6] ;
-int data_ov075_0211cae4[8] = {
-    (int)0xc18040f0u, 0x0000e280, (int)0xc1c040f0u, 0x0000e288, (int)0xc00040f0u, 0x0000e290, (int)0xc04040f0u, (int)0xffffe298u,
-};
-int data_ov075_0211cb04[8] = {
-    (int)0xc18040f0u, 0x0000e300, (int)0xc1c040f0u, 0x0000e308, (int)0xc00040f0u, 0x0000e310, (int)0xc04040f0u, (int)0xffffe318u,
-};
-int data_ov075_0211cac4[8] = {
-    (int)0xc18040f0u, 0x0000e200, (int)0xc1c040f0u, 0x0000e208, (int)0xc00040f0u, 0x0000e210, (int)0xc04040f0u, (int)0xffffe218u,
-};
-int data_ov075_0211cb24[8] = {
-    (int)0xc18040f0u, 0x0000e380, (int)0xc1c040f0u, 0x0000e388, (int)0xc00040f0u, 0x0000e390, (int)0xc04040f0u, (int)0xffffe398u,
-};
-int _ZTSN10dScEntry_c15graphCallback_cE[8] = {
-    0x6430314e, 0x6e456353, 0x5f797274, 0x67353163, 0x68706172, 0x6c6c6143, 0x6b636162, 0x0045635f,
-};
-#pragma section forcedata end

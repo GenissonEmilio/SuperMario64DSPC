@@ -1,6 +1,3 @@
-unsigned char data_0209f26c;
-static unsigned char data_0209f26c_pad[3];
-
 extern unsigned short func_0203da80(unsigned short x);
 extern int func_0203d950(int i);
 extern void func_02030790(void);
@@ -44,11 +41,3 @@ end:
         fn();
     return 1;
 }
-
-/* arm9-data-run 0x020986E0 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_020986e0[142] ;
-extern unsigned int data_02098918[144] ;
-#pragma pop
-/* end arm9-data-run 0x020986E0 */

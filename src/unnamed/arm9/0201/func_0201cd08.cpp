@@ -1,12 +1,4 @@
 //cpp
-extern "C" {
-unsigned char data_0209d688;
-static unsigned char data_0209d688_pad[3];
-
-}
-extern "C" {extern unsigned char data_0209d6b8;
-
-}
 #include "types.h"
 extern "C" {
 extern void func_0201eaac(void);
@@ -20,7 +12,6 @@ extern u8 data_0209d660;
 extern u8 data_0209d668;
 extern u8 data_0209d6a8;
 extern s16 data_0209d6d4;
-int data_0208ee44 = 1;
 void func_0201cd08(int arg)
 {
     volatile int li;
@@ -44,8 +35,4 @@ void func_0201cd08(int arg)
     data_0209d6d4 = data_0209d6d4 + 1;
     Message_DrawCenteredLine(0x291, 0xa);
 }
-}
-
-extern "C" {
-void *data_0209d518;
 }

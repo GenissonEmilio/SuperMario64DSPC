@@ -13,18 +13,7 @@ struct Bar {
 
 extern struct Foo *data_ov007_02103460;
 extern struct Bar data_ov007_02102ddc;
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-unsigned char data_ov007_020d7b04[80] = {
-    0, 0, 0, 0, 0, 0, 10, 10, 10, 9, 10, 10,
-    10, 10, 9, 9, 10, 9, 10, 10, 10, 10, 10, 9,
-    10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-    10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-    10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 10, 10,
-    10, 10, 10, 10, 10, 9, 10, 10, 10, 10, 10, 10,
-    10, 10, 10, 9, 10, 10, 0, 0
-};
-#pragma section forcerodata end
+extern unsigned char data_ov007_020d7b04[];
 extern unsigned char *data_ov007_02103474;
 
 extern void func_ov007_020b8860(int a, int b);

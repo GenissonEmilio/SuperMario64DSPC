@@ -13,14 +13,3 @@
 #include "ModelAnim2.h"
 
 ModelAnim2::ModelAnim2() : otherFile(0) {}
-
-/* arm9-data-run 0x0208E87C data */
-#pragma push
-#pragma explicit_zero_data on
-extern "C" {
-unsigned int _ZTV9ModelBase[3] = {
-    0x02017120, 0x020170E8, 0x00000000,
-};
-}
-#pragma pop
-/* end arm9-data-run 0x0208E87C */

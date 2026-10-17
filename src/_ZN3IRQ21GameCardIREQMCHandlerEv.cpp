@@ -9,9 +9,7 @@
  */
 typedef int (*CardCallback)(void);
 extern "C" CardCallback data_020a89a4;
-extern "C" {
-int data_020a89a0;
-}
+extern "C" int data_020a89a0;
 extern "C" int func_020610fc(void);
 
 namespace IRQ {

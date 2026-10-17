@@ -1,4 +1,2 @@
-char data_0209ee90[840];
+extern char data_0209ee90[];
 void func_02023408(void) { data_0209ee90[837] = 1; }
-
-extern unsigned int data_0209f224[1];

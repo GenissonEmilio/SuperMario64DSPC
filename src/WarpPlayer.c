@@ -1,9 +1,3 @@
-
-/* bss 0x0209d690..0x0209d694 */
-#pragma force_active on
-extern unsigned char data_0209d690[4];
-#pragma force_active off
-
 extern int func_0203da9c(void);
 extern unsigned char GetPlayerFlagByte(int i, int p);
 extern void func_0203db3c(int i, unsigned char v);

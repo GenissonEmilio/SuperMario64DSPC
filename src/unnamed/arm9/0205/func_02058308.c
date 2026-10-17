@@ -11,12 +11,11 @@ extern void SDK_IRQ_STACKSIZE(void);
 
 extern int data_020a6130;
 extern Mgr data_020a6134;
-extern char data_020a621c[348];
+extern char data_020a621c[];
 extern char data_020a613c[];
-void * data_020a612c;
+extern void *data_020a612c;
 extern char data_023c0000;
-extern char data_020a6188[148];
-
+extern char data_020a6188[];
 extern void func_02057e34(void);
 extern char data_020a6378[];
 extern u32 func_02057e48(u32 newVal);
@@ -77,5 +76,3 @@ void func_02058308(void)
     *(int *)(data_020a6188 + 0x70) = 0x20;
     *(int *)(data_020a6188 + 0x64) = 1;
 }
-
-extern char data_020a613c[12];

@@ -1,7 +1,4 @@
 //cpp
-extern "C" {
-int data_ov002_02111148;
-}
 /**
  * The positional sound emitter (SOUND_OBJ), actor 0x167.
  *

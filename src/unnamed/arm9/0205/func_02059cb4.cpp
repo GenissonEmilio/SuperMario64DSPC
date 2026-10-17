@@ -3,9 +3,7 @@
 
 extern "C" {
 extern volatile u16 data_020a644c;    /* 0x020a644c */
-extern "C" {
-u32 data_020a6450[2];
-}
+extern u32 data_020a6450[2];          /* 0x020a6450 */
 
 void func_02059cb4(void) {
     if (data_020a644c != 0)

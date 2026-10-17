@@ -22,16 +22,6 @@
       "name": ".data",
       "start": "0x0210d290",
       "end": "0x0210d378"
-    },
-    {
-      "name": ".bss",
-      "start": "0x02111188",
-      "end": "0x0211118a"
-    },
-    {
-      "name": ".bss",
-      "start": "0x02111180",
-      "end": "0x02111181"
     }
   ],
   "functions": [
@@ -226,14 +216,7 @@
       "evidence": "VS timer sprite list RenderVsTimer passes to OAM::Render; six OamAttr words; the last attr3 is 0xffff"
     }
   ],
-  "bss": [
-    {
-      "symbol": "data_ov002_02111188",
-      "address": "0x02111188",
-      "size": "0x2",
-      "evidence": "pause window this TU loads with 0xb4 and counts down"
-    }
-  ],
+  "bss": [],
   "compiler_only_output": [
     {
       "symbol": "_ZN7dBase_cD2Ev",

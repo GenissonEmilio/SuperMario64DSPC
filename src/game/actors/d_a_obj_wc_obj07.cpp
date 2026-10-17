@@ -70,7 +70,7 @@ extern "C" daObjWc_Obj07_c *daObjWc_Obj07_c_classInit()
 }
 
 // @symbol _ZN15daObjWc_Obj07_c13InitResourcesEv
-extern s32 daObjWc_Obj07_c::InitResources()
+s32 daObjWc_Obj07_c::InitResources()
 {
     return func_ov002_020b676c(this, &data_ov029_02113fd4, data_ov029_02113fc4);
 }

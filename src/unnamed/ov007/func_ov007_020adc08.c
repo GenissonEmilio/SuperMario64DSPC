@@ -47,15 +47,3 @@ int func_ov007_020adc08(int type, char* obj) {
     }
     return r5;
 }
-
-/* .rodata 0x020ccc44..0x020ccc48 */
-#pragma force_active on
-#pragma cplusplus on
-extern "C" {
-extern const unsigned int data_ov007_020ccc44[];
-const unsigned int data_ov007_020ccc44[1] = {
-    0x00000403u,
-};
-}
-#pragma cplusplus off
-#pragma force_active off

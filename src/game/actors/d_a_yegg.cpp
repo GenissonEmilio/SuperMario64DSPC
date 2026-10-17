@@ -432,7 +432,7 @@ void daYegg_c::func_ov002_020ec938(){
 /* State 3 (DROP), enter: plays the idle animation (file 0x0210eb78) at normal
  * speed, zeroes the horizontal speed and sets gravity to -0x2000 (-2 units
  * per frame squared). */
-extern void daYegg_c::func_ov002_020ec978() {
+void daYegg_c::func_ov002_020ec978() {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, *(void **)(data_ov002_0210eb78 + 4), 0, 0x1000, 0);
     mHorzSpeed = 0;
     mVertAccel = -0x2000;
@@ -1344,7 +1344,7 @@ fail:
 /* recovered: named members + shared header, real C++ method */
 /* Releases the two shared animation files and, if the egg pays a blue coin,
    unloads the blue-coin model InitResources loaded. */
-extern int daYegg_c::CleanupResources()
+int daYegg_c::CleanupResources()
 {
   ((SharedFilePtr *)(&data_ov002_0210e6b0))->Release();
   ((SharedFilePtr *)(&data_ov002_0210eb78))->Release();

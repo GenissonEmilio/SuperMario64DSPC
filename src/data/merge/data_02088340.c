@@ -1,5 +1,0 @@
-unsigned int data_02088340[18] = {
-    0x413, 0xdf02ffffU, 0xc903c9ffU, 0x6cffa707, 0x70ae603, 0xff000000U, 0x808ff, 0x2f002f,
-    0x308050a, 0, (unsigned int)&data_0208050a, 0, 0x108050a, 0, 0x60a050a, 0x460046,
-    0, 0
-};

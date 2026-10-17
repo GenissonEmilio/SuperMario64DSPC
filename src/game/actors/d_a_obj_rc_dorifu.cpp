@@ -118,7 +118,7 @@ extern "C" daObjDorifuResources data_ov036_02113e88[5] = {
 };
 
 // @symbol _ZN16daObjRc_Dorifu_c13InitResourcesEv
-extern s32 daObjRc_Dorifu_c::InitResources()
+s32 daObjRc_Dorifu_c::InitResources()
 {
     return daObjDorifu_c::InitResources(data_ov036_02113e88);
 }

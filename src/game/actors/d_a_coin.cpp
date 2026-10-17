@@ -627,7 +627,7 @@ void daCoin_c::func_ov002_020b1bfc()
  * floor's class, caps the speed at 0x1c000 and steers toward the slope. The
  * coin settles (BEHAVIOR_RESTING) once its vertical speed is spent. */
 // @symbol _ZN8daCoin_c19func_ov002_020b1cc0Ev
-extern void daCoin_c::func_ov002_020b1cc0()
+void daCoin_c::func_ov002_020b1cc0()
 {
     extern int data_ov002_020ff078[];
 

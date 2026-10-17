@@ -22,10 +22,9 @@
 
 extern "C" {
 extern void *data_020a4b68;
-int data_02099f24 = 1;
+extern int data_02099f24;
 extern int data_02082178[];
-extern int data_020a4ba8[], data_020a4b78[], data_020a4b98[], data_020a4b6c[];
-int data_020a4b88[4];
+extern int data_020a4ba8[], data_020a4b88[], data_020a4b78[], data_020a4b98[], data_020a4b6c[];
 extern void *func_02043fdc(void *list);
 }
 
@@ -186,5 +185,3 @@ extern "C" void func_02044334(Obj *self) {
         *ctr = *ctr - 1;
     } while (self->idx >= 0);
 }
-
-extern void * data_020a4b68;

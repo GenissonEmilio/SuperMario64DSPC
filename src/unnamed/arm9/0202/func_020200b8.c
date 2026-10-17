@@ -1,5 +1,3 @@
-extern int data_0209f60c;
-
 extern int GetPlayerFlagByte(int a0, int a1);
 
 unsigned char func_020200b8(void)

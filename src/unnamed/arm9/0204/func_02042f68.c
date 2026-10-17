@@ -1,9 +1,8 @@
-unsigned char data_020a4b40[8];
-
 extern int func_0203da3c(void);
 extern void func_02060890(void);
 extern void func_020603c8(int x);
 extern void func_0205a588(void *p, int v, int n);
+extern unsigned char data_020a4b40[];
 
 void func_02042f68(int a0, unsigned char *src)
 {

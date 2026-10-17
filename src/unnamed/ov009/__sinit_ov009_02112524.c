@@ -57,7 +57,7 @@ extern int data_ov009_02113e64[];
 extern int data_ov009_02113e70[];
 extern int data_ov009_02113e7c[];
 
-extern void __sinit_ov009_02112524(void)
+void __sinit_ov009_02112524(void)
 {
     func_02017acc(data_ov009_02113c68, ASSET_MC_WATER_BMD);
     func_020731dc(data_ov009_02113c68, func_02017ab4, data_ov009_02113c78);

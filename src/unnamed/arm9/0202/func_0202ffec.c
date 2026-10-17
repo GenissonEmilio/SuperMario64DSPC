@@ -23,7 +23,3 @@ void func_0202ffec(struct Quat *q1, struct Quat *q2, struct Quat *out)
     out->z = FX_MUL(w1, z2) + FX_MUL(z1, w2) + FX_MUL(x1, y2) - FX_MUL(y1, x2);
     out->w = FX_MUL(w1, w2) - FX_MUL(x1, x2) - FX_MUL(y1, y2) - FX_MUL(z1, z2);
 }
-
-/* arm9-data-run 0x0207FBF4 rodata */
-extern const unsigned int data_0207fbf4[259] ;
-/* end arm9-data-run 0x0207FBF4 */

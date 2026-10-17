@@ -1152,7 +1152,7 @@ void SlotBet_Reset(void *raw)
 }
 
 // @symbol _ZN12dScMgSlot1_c9betIcon_c6RenderEv
-extern void dScMgSlot1_c::betIcon_c::Render()
+void dScMgSlot1_c::betIcon_c::Render()
 {
     OAM::RenderSub((OamAttr *)data_ov006_0213e528[unk_010], unk_004, unk_006, -1, 1);
     int i;

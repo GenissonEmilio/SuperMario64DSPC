@@ -1,9 +1,3 @@
-
-/* bss 0x0209d6a8..0x0209d6ac */
-#pragma force_active on
-extern unsigned char data_0209d6a8[4];
-#pragma force_active off
-
 extern int GetPlayerFlagByte(int a0, int a1);
 unsigned char IsPlayerWarping(int a0)
 {

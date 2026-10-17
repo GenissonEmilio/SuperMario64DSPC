@@ -84,9 +84,7 @@ extern char data_ov075_0211c720[];
 extern char data_ov075_0211c730[];
 extern void *data_ov075_0211c954[];
 extern short data_ov075_0211d72c[];
-extern "C" {
-short data_ov075_0211d72e[1];
-}
+extern short data_ov075_0211d72e[];
 extern short data_ov075_0211d740[];
 extern short data_ov075_0211d742[];
 extern short data_ov075_0211d754[];
@@ -335,10 +333,4 @@ extern "C" void func_ov075_021160dc(char* c) {
         i++;
         elem = (Base*)((char*)elem + 0x24);
     } while (i < count);
-}
-
-extern short data_ov075_0211d740[1];
-/* .bss 0x0211d610..0x0211d614 */
-extern "C" {
-int data_ov075_0211d610[1];
 }

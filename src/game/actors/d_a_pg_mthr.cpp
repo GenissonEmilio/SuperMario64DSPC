@@ -209,7 +209,7 @@ int daPgMthr_c::Render()
 }
 
 // @symbol _ZN10daPgMthr_c16OnPendingDestroyEv
-extern void daPgMthr_c::OnPendingDestroy()
+void daPgMthr_c::OnPendingDestroy()
 {
 }
 
@@ -225,9 +225,9 @@ int daPgMthr_c::CleanupResources()
 }
 
 // @symbol _ZN10daPgMthr_c19func_ov018_021123d0Ei
-extern void daPgMthr_c::func_ov018_021123d0(int i)
+void daPgMthr_c::func_ov018_021123d0(int i)
 {
-    mState ;
+    mState = &data_ov018_02113c4c[i];
     func_ov018_02112398(this);
 }
 

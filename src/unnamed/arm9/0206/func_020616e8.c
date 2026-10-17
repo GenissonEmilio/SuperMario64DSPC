@@ -11,8 +11,7 @@ extern void func_0205ba64(int idx, void *fn);
 
 extern u16 data_020a89a8;
 extern int *data_020a89ac;
-extern int data_020a89b0[5];
-
+extern int data_020a89b0;
 extern int data_020a89c4;
 extern char data_020a8a40[];
 extern void func_02061188(void);
@@ -73,5 +72,3 @@ int func_020616e8(void *buf, int ch)
     func_0205ba64(0xa, (void *)func_02061188);
     return 0;
 }
-
-char data_020a8a40[2560];

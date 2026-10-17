@@ -59,5 +59,3 @@ void func_02059a60(struct Node *p, u64 key)
     data_020a6444[0] = p;
     func_02059c18(p);
 }
-
-struct Node * data_020a6444[2];

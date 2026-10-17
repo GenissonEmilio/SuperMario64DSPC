@@ -15,16 +15,6 @@
       "name": ".text",
       "start": "0x020ab110",
       "end": "0x020ab41c"
-    },
-    {
-      "name": ".bss",
-      "start": "0x020ad624",
-      "end": "0x020ad628"
-    },
-    {
-      "name": ".bss",
-      "start": "0x020ad630",
-      "end": "0x020ad634"
     }
   ],
   "functions": [
@@ -79,15 +69,7 @@
     }
   ],
   "data": [],
-  "bss": [
-    {
-      "symbol": "data_ov001_020ad624",
-      "address": "0x020ad624",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x20ad624..0x20ad628"
-    }
-  ],
+  "bss": [],
   "notes": [
     "Reconstructed by tools/tubuild.py create and then reconciled by hand. The file's own header comment records the two decisions that are load-bearing: `#pragma defer_codegen off` over ordinals 0 and 1 so the `opt_common_subs off` bracket binds to ordinal 1 alone, and the resulting split emission order (parse-time half ascending, deferred half descending).",
     "tubuild create reported one declaration CONFLICT, `func_ov001_020aa6cc`, declared `void func_ov001_020aa6cc(int r0)` by the legacy source for ordinal 1 and `void func_ov001_020aa6cc(int character)` by the one for ordinal 0. The two spellings differ only in the parameter name, so the merged TU keeps one declaration; nothing was left commented out.",

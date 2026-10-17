@@ -1,9 +1,6 @@
 #include "types.h"
 extern char **data_ov007_02104bc0;
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-int data_ov007_02103230 = -1;
-#pragma section forcedata end
+extern int data_ov007_02103230;
 extern char *data_ov007_0210342c;
 extern u16 data_ov007_020d7c58[];
 

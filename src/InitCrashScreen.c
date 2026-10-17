@@ -6,10 +6,7 @@ extern void ResetCrashScreen(void);
 extern void ShowCrashScreen(void);
 extern void _ZN2GX6DispOnEv(void);
 extern char data_0208a178;
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern char data_0208c178 ;
-#pragma section forcedata end
+extern char data_0208c178;
 
 void InitCrashScreen(void)
 {

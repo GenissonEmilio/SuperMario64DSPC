@@ -1,9 +1,3 @@
-
-/* bss 0x0209e664..0x0209e668 */
-#pragma force_active on
-unsigned char data_0209e664[4];
-#pragma force_active off
-
 extern int func_0202044c(char *thiz, int idx);
 extern void func_0202043c(char *thiz);
 
@@ -42,5 +36,3 @@ void func_02020768(char *thiz)
     *cnt -= 1;
     func_0202043c(thiz);
 }
-
-extern unsigned int data_0209d6e4[1];

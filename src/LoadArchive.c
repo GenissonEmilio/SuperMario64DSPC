@@ -14,7 +14,7 @@ extern int func_02018934(int a, int b, int c);
 
 int LoadArchive(int idx)
 {
-extern struct Entry *e ;
+    struct Entry *e = &data_0208ecf4[idx];
     if (e->field_0 == 0) {
         e->field_4 = data_020a0ea0;
         e->field_0 = func_02018934(e->field_c, e->field_10, e->field_4);

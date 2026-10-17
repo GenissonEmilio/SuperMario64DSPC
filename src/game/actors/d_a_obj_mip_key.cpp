@@ -320,7 +320,7 @@ int daObj_Mip_Key_c::CleanupResources()
 
 // @symbol _ZN15daObj_Mip_Key_c16OnPendingDestroyEv
 
-extern void daObj_Mip_Key_c::OnPendingDestroy()
+void daObj_Mip_Key_c::OnPendingDestroy()
 {
 }
 
@@ -328,7 +328,8 @@ extern void daObj_Mip_Key_c::OnPendingDestroy()
 
 int daObj_Mip_Key_c::Render()
 {
-    if (mState ;
+    if (mState == &data_ov085_0213072c) {
+        mAngleY += 0x500;
     }
     func_ov085_0212d2b8(this);
     mModel.Render(0);

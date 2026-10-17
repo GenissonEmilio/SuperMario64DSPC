@@ -1,9 +1,3 @@
-
-/* bss 0x0209d6e0..0x0209d6e4 */
-#pragma force_active on
-unsigned char data_0209d6e0[4];
-#pragma force_active off
-
 struct Pair { int a; int b; };
 
 int func_0202044c(char* this, int idx)
@@ -15,5 +9,3 @@ int func_0202044c(char* this, int idx)
     *(int*)(this + 0x1c) = 0;
     return 1;
 }
-
-extern unsigned int data_0209d6c4[1];

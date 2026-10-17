@@ -8,7 +8,7 @@ extern u8 data_0209fc50;
 extern u8 data_0209b2ec[];
 extern u8 data_0209b2f0[];
 extern char data_0209ee90[];
-char data_ov075_0211c8b0[8] = { 248, 128, 244, 1, 192, 20, 255, 255 };
+extern char data_ov075_0211c8b0[];
 
 extern int func_02030958(int idx);
 extern int *_ZN3OAM6RenderEbP7OamAttriiii5Fix12IiEi(int a, void *attr, int y, int x,

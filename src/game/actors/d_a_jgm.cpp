@@ -344,9 +344,9 @@ s32 daJgm_c::CleanupResources()
 }
 
 // @symbol _ZN7daJgm_c8SetStateEi
-extern void daJgm_c::SetState(int state)
+void daJgm_c::SetState(int state)
 {
-    mStateHandlers ;
+    mStateHandlers = &data_ov077_02127bc4[state];
     EnterState();
 }
 

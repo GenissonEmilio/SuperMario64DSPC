@@ -55,10 +55,3 @@ L_cache:
 L_end:
     bx      lr
 }
-
-/* arm9-data-run 0x02075650 rodata */
-extern const unsigned int data_02075670[8] ;
-extern const unsigned int data_02075650[8] ;
-extern const unsigned int data_02075690[8] ;
-/* end arm9-data-run 0x02075650 */
-

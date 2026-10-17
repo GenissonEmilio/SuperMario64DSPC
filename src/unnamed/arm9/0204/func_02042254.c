@@ -1,9 +1,8 @@
 #pragma opt_strength_reduction off
 
-char data_02099e6c[4] = { 114, 111, 109, 0 };
+extern char data_02099e6c[];
 extern int data_020a1fc0;
-char data_020a2400[4];
-
+extern char data_020a2400[];
 
 extern void *func_0205d23c(void *a, int b);
 extern unsigned int _ZN3IRQ7DisableEv(void);

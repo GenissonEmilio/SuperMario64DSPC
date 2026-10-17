@@ -39,9 +39,7 @@
 #include "NestedHeapIterator.h"
 #include "decl_NestedHeapIterator.h"
 
-extern "C" {
-int data_020a4d34;
-}
+extern int data_020a4d34;
 /* Zero BSS. func_0204df54 constructs this root later, with link offset 4.
  * A C++ definition would emit a static constructor; the cartridge does not. */
 #pragma cplusplus off
@@ -239,26 +237,3 @@ int NestedHeapIterator::Previous(HeapAllocator * h_)
   unsigned short off = mLinkOffset;
   return *(int*)(h+off);
 }
-
-/* arm9-data-run 0x0209A700 data */
-#pragma push
-#pragma explicit_zero_data on
-extern "C" {
-unsigned int _ZTISt9type_info[2] = {
-    0x0209A774, 0x0209A72C,
-};
-unsigned int _ZTIN3abi17__class_type_infoE[3] = {
-    0x0209A764, 0x0209A77C, 0x0209A700,
-};
-unsigned int _ZTIN3abi20__si_class_type_infoE[3] = {
-    0x0209A764, 0x0209A798, 0x0209A720,
-};
-unsigned int _ZTIN3abi21__vmi_class_type_infoE[3] = {
-    0x0209A764, 0x0209A7B8, 0x0209A720,
-};
-unsigned int _ZTSSt9type_info[4] = {
-    0x74397453, 0x5F657079, 0x6F666E69, 0x00000000,
-};
-}
-#pragma pop
-/* end arm9-data-run 0x0209A700 */

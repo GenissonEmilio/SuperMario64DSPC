@@ -1,5 +1,4 @@
 extern unsigned short data_020a0f1c;
-
 int func_0203d7d4(int arg){
   int b;
   if (arg != 0) return 1;
@@ -7,5 +6,3 @@ int func_0203d7d4(int arg){
   b = (*(volatile unsigned short*)0x27ffc40 == 2);
   return b != 0;
 }
-
-extern unsigned char data_020a0f00;

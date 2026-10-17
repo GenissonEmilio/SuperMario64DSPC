@@ -1,4 +1,3 @@
-int data_0209cddc;
 extern void Vec3_Sub(int *dest, const int *src1, const int *src2);
 
 void func_020089f8(int *obj)

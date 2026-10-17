@@ -562,8 +562,9 @@ extern int data_ov004_020beba8[];
    data_ov004_020beba8 from five words at data_ov004_020bea14 (bit 0 of
    data_ov004_020beb70 marks it built); the frame is picked by the low four
    bits of mTimer. */
-extern void Ent::DrawSparkle(){
-  if((s20adcc8::data_ov004_020beb70 & 1) ;
+void Ent::DrawSparkle(){
+  if((s20adcc8::data_ov004_020beb70 & 1) == 0){
+    int* s = s20adcc8::data_ov004_020bea14;
     int* d = s20adcc8::data_ov004_020beba8;
     d[0]=s[0];d[1]=s[0];d[2]=s[0];d[3]=s[0];d[4]=s[0];
     d[5]=s[4];d[6]=s[4];d[7]=s[3];d[8]=s[2];d[9]=s[1];
@@ -1022,7 +1023,7 @@ extern int sMgTopScreenYOffset;
 }
 }
 
-extern void dScMgBase_c::PaintSquare(int cx, int cy, int colour, int size)
+void dScMgBase_c::PaintSquare(int cx, int cy, int colour, int size)
 { using s20ae3b4::MultiCopy_Int; using s20ae3b4::_ZN2G213GetBG2CharPtrEv; using s20ae3b4::_ZN3G2S13GetBG0CharPtrEv; using s20ae3b4::_ZN3G2S13GetBG1CharPtrEv; using s20ae3b4::_ZN3G2S13GetBG2CharPtrEv; using s20ae3b4::_ZN3G2S13GetBG3CharPtrEv; using s20ae3b4::data_ov004_020beb64; using s20ae3b4::sMgTopScreenYOffset; using s20ae3b4::func_02054d88; using s20ae3b4::func_02054ea8; using s20ae3b4::func_02054efc;
     char *obj = (char *)this;
 
@@ -2239,7 +2240,7 @@ int dScMgBase_c::GetDisplayMode()
 }
 
 // @symbol _ZN11dScMgBase_c16OnPendingDestroyEv
-extern void dScMgBase_c::OnPendingDestroy()
+void dScMgBase_c::OnPendingDestroy()
 {
 }
 
@@ -3549,7 +3550,7 @@ extern int data_0208ee44;
 }
 }
 
-extern void dScMgBase_c::InitEngines()
+void dScMgBase_c::InitEngines()
 { using s20b265c::DecompressLZ16; using s20b265c::FreeGfxSlotsById; using s20b265c::GetGameLanguage; using s20b265c::Ov004_Deallocate; using s20b265c::_ZN2GX11LoadOBJPlttEPKvjj; using s20b265c::_ZN2GX12SetBankForBGEt; using s20b265c::_ZN2GX13SetBankForOBJEt; using s20b265c::_ZN2GX15SetBankForSubBGEt; using s20b265c::_ZN2GX16SetBankForSubOBJEt; using s20b265c::_ZN3GXS11LoadOBJPlttEPKvjj; using s20b265c::_ZN4CP1527FlushAndInvalidateDataCacheEjj; using s20b265c::data_0208ee44; using s20b265c::data_0209d454; using s20b265c::data_0209d45c; using s20b265c::data_0209d4a8; using s20b265c::data_ov004_020bbfe4; using s20b265c::sMgTopScreenYOffset; using s20b265c::Ov004_LoadFile; using s20b265c::Mg_ResetOverlays; using s20b265c::Mg_ResetBgOffsets; using s20b265c::Mg_DisableAllBanks;
     char *obj = (char *)this;
 
@@ -3703,7 +3704,7 @@ void Mg_DisableAllBanks(void) { _ZN2GX15DisableAllBanksEv(); }
 
 // @symbol _ZN11dScMgBase_c10OnDealDoneEv
 /* dScMgBase_c::OnDealDone - slot 21. */
-extern void dScMgBase_c::OnDealDone()
+void dScMgBase_c::OnDealDone()
 {
 }
 
@@ -3837,7 +3838,3 @@ extern "C" dScMgBase_c *_ZN11dScMgBase_cD0Ev(dScMgBase_c *thiz)
 #endif
 
 #pragma pop
-
-extern "C" {
-char sMgBannerGfxSlotUsed[4];
-}

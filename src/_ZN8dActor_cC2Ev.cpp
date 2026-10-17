@@ -57,7 +57,3 @@ dActor_c::dActor_c() : mActorListNode(this) {
         clipDistance = info[5];
     _ZN8dActor_c9SetRangesE5Fix12IiES1_S1_S1_(this, info[3], info[4], clipDistance, info[6]);
 }
-
-extern "C" {
-extern unsigned int data_0209b464;
-}

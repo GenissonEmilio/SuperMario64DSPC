@@ -61,7 +61,7 @@ extern "C" daMcFlag_c *daMcFlag_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN10daMcFlag_c13InitResourcesEv
-extern s32 daMcFlag_c::InitResources()
+s32 daMcFlag_c::InitResources()
 {
     mModelAnim.SetFile((BMD_File *)Model::LoadFile(data_ov009_02113eb8), 1, -1);
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(

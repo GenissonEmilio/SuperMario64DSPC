@@ -1,20 +1,13 @@
 #include "types.h"
 /* func_020494cc at 0x020494cc, size=0x298 (sibling of func_0204921c) */
-u16 data_020a4c48[2];
+extern u16 data_020a4c48[];
 extern int data_020a4c4c[];
 extern int data_020a4c54[];
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-extern int data_0208220c ;
-
-extern int data_02082208 ;
-
-extern int data_02082204 ;
-
-extern int data_02082200 ;
-
-extern int data_02082210 ;
-#pragma section forcerodata end
+extern int data_02082200;
+extern int data_02082204;
+extern int data_02082208;
+extern int data_0208220c;
+extern int data_02082210;
 
 void func_020494cc(void *a, int mode)
 {
@@ -90,5 +83,3 @@ void func_020494cc(void *a, int mode)
         data_020a4c48[1] = 0x100;
     }
 }
-
-extern int data_020a4c54[2];

@@ -12,58 +12,6 @@ src/game/actors/d_a_btfly.cpp:
     .data start:0x02147e20 end:0x02147e60
     .bss start:0x02148600 end:0x02148668
 
-src/data/ov100/data_02147e60.c:
-    complete
-    .data start:0x02147e60 end:0x02147e6c
-
-src/data/ov100/data_02147e6c.c:
-    complete
-    .data start:0x02147e6c end:0x02147e78
-
-src/data/ov100/data_02147e78.c:
-    complete
-    .data start:0x02147e78 end:0x02147e9c
-
-src/data/ov100/data_02147e9c.c:
-    complete
-    .data start:0x02147e9c end:0x02147f18
-
-src/data/ov100/data_02147f18.c:
-    complete
-    .data start:0x02147f18 end:0x02147f20
-
-src/data/ov100/data_02147f20.c:
-    complete
-    .data start:0x02147f20 end:0x02147f28
-
-src/data/ov100/data_02147f28.c:
-    complete
-    .data start:0x02147f28 end:0x02147f30
-
-src/data/ov100/data_02147f30.c:
-    complete
-    .data start:0x02147f30 end:0x02147f38
-
-src/data/ov100/data_02147f38.c:
-    complete
-    .data start:0x02147f38 end:0x02147f40
-
-src/data/ov100/data_02147f40.c:
-    complete
-    .data start:0x02147f40 end:0x02147f4c
-
-src/data/ov100/data_02147f4c.c:
-    complete
-    .data start:0x02147f4c end:0x02147f58
-
-src/data/ov100/data_02147f58.c:
-    complete
-    .data start:0x02147f58 end:0x02147f7c
-
-src/data/ov100/bss_02148670.c:
-    complete
-    .bss start:0x02148670 end:0x0214867c
-
 src/game/actors/d_a_ibl.cpp:
     complete
     .text start:0x02141f04 end:0x021431c4
@@ -76,134 +24,6 @@ src/game/actors/d_a_wanwan2.cpp:
     .ctor start:0x02147df0 end:0x02147df4
     .data start:0x02147ff8 end:0x02148014
     .bss start:0x021486a4 end:0x02148704
-
-src/data/ov100/data_02148014.c:
-    complete
-    .data start:0x02148014 end:0x02148020
-
-src/data/ov100/data_02148020.c:
-    complete
-    .data start:0x02148020 end:0x02148030
-
-src/data/ov100/data_02148030.c:
-    complete
-    .data start:0x02148030 end:0x02148054
-
-src/data/ov100/data_02148054.c:
-    complete
-    .data start:0x02148054 end:0x021480d0
-
-src/data/ov100/data_021480d0.c:
-    complete
-    .data start:0x021480d0 end:0x021480d4
-
-src/data/ov100/data_021480d4.c:
-    complete
-    .data start:0x021480d4 end:0x021480dc
-
-src/data/ov100/data_021480dc.c:
-    complete
-    .data start:0x021480dc end:0x021480e4
-
-src/data/ov100/data_021480e4.c:
-    complete
-    .data start:0x021480e4 end:0x021480ec
-
-src/data/ov100/data_021480ec.c:
-    complete
-    .data start:0x021480ec end:0x021480f4
-
-src/data/ov100/data_021480f4.c:
-    complete
-    .data start:0x021480f4 end:0x021480fc
-
-src/data/ov100/data_021480fc.c:
-    complete
-    .data start:0x021480fc end:0x02148104
-
-src/data/ov100/data_02148104.c:
-    complete
-    .data start:0x02148104 end:0x0214810c
-
-src/data/ov100/data_0214810c.c:
-    complete
-    .data start:0x0214810c end:0x02148114
-
-src/data/ov100/data_02148114.c:
-    complete
-    .data start:0x02148114 end:0x0214811c
-
-src/data/ov100/data_0214811c.c:
-    complete
-    .data start:0x0214811c end:0x02148124
-
-src/data/ov100/data_02148124.c:
-    complete
-    .data start:0x02148124 end:0x0214812c
-
-src/data/ov100/data_0214812c.c:
-    complete
-    .data start:0x0214812c end:0x02148134
-
-src/data/ov100/data_02148134.c:
-    complete
-    .data start:0x02148134 end:0x0214813c
-
-src/data/ov100/data_0214813c.c:
-    complete
-    .data start:0x0214813c end:0x02148144
-
-src/data/ov100/data_02148144.c:
-    complete
-    .data start:0x02148144 end:0x0214814c
-
-src/data/ov100/data_0214814c.c:
-    complete
-    .data start:0x0214814c end:0x02148158
-
-src/data/ov100/data_02148158.c:
-    complete
-    .data start:0x02148158 end:0x02148164
-
-src/data/ov100/data_02148164.c:
-    complete
-    .data start:0x02148164 end:0x02148188
-
-src/data/ov100/data_02148188.c:
-    complete
-    .data start:0x02148188 end:0x02148204
-
-src/data/ov100/bss_02148704.c:
-    complete
-    .bss start:0x02148704 end:0x02148708
-
-src/data/ov100/bss_02148708.c:
-    complete
-    .bss start:0x02148708 end:0x0214870c
-
-src/data/ov100/bss_0214870c.c:
-    complete
-    .bss start:0x0214870c end:0x02148710
-
-src/data/ov100/bss_02148710.c:
-    complete
-    .bss start:0x02148710 end:0x02148714
-
-src/data/ov100/bss_02148714.c:
-    complete
-    .bss start:0x02148714 end:0x02148718
-
-src/data/ov100/bss_02148718.c:
-    complete
-    .bss start:0x02148718 end:0x0214871c
-
-src/data/ov100/bss_0214871c.c:
-    complete
-    .bss start:0x0214871c end:0x02148720
-
-src/data/ov100/bss_02148720.c:
-    complete
-    .bss start:0x02148720 end:0x02148724
 
 src/game/actors/d_a_door.cpp:
     complete
@@ -221,62 +41,6 @@ src/game/actors/d_a_star_gate.cpp:
     .data start:0x02148334 end:0x02148448
     .bss start:0x02148934 end:0x021489a4
 
-src/data/ov100/data_02148448.c:
-    complete
-    .data start:0x02148448 end:0x02148450
-
-src/data/ov100/data_02148450.c:
-    complete
-    .data start:0x02148450 end:0x02148458
-
-src/data/ov100/data_02148458.c:
-    complete
-    .data start:0x02148458 end:0x02148460
-
-src/data/ov100/data_02148460.c:
-    complete
-    .data start:0x02148460 end:0x02148468
-
-src/data/ov100/data_02148468.c:
-    complete
-    .data start:0x02148468 end:0x02148470
-
-src/data/ov100/data_02148470.c:
-    complete
-    .data start:0x02148470 end:0x02148478
-
-src/data/ov100/data_02148478.c:
-    complete
-    .data start:0x02148478 end:0x02148480
-
-src/data/ov100/data_02148480.c:
-    complete
-    .data start:0x02148480 end:0x0214848c
-
-src/data/ov100/data_0214848c.c:
-    complete
-    .data start:0x0214848c end:0x02148498
-
-src/data/ov100/data_02148498.c:
-    complete
-    .data start:0x02148498 end:0x021484bc
-
-src/data/ov100/data_021484bc.c:
-    complete
-    .data start:0x021484bc end:0x02148538
-
-src/data/ov100/data_02148538.c:
-    complete
-    .data start:0x02148538 end:0x02148544
-
-src/data/ov100/data_02148544.c:
-    complete
-    .data start:0x02148544 end:0x02148558
-
-src/data/ov100/data_02148558.c:
-    complete
-    .data start:0x02148558 end:0x0214857c
-
 src/game/actors/d_a_fish.cpp:
     complete
     .text start:0x0214620c end:0x02146d7c
@@ -291,10 +55,6 @@ src/game/actors/d_a_obj_path_lift.cpp:
     .init start:0x02147d7c end:0x02147de8
     .ctor start:0x02147e00 end:0x02147e04
     .bss start:0x02148a54 end:0x02148a7c
-
-src/data/ov100/bss_02148a7c.c:
-    complete
-    .bss start:0x02148a7c end:0x02148a80
 
 src/unnamed/ov100/__sinit_ov100_021474e8.c:
     complete

@@ -2,13 +2,6 @@
  * Builds a translation matrix on the stack, then multiplies mF by it in-place.
  */
 
-
-
-/* bss 0x020a0e68..0x020a0e98 */
-#pragma force_active on
-unsigned char data_020a0e68[48];
-#pragma force_active off
-
 typedef int Fix12i;
 
 struct Matrix4x3 { char data[0x30]; };
@@ -22,5 +15,3 @@ void Matrix4x3_ApplyInPlaceToTranslation(struct Matrix4x3 *mF, Fix12i x, Fix12i 
     Matrix4x3_FromTranslation(&tmp, x, y, z);
     MulMat4x3Mat4x3(&tmp, mF, mF);
 }
-
-extern unsigned char gTouchX[1];

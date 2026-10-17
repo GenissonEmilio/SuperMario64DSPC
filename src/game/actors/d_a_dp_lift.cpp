@@ -191,7 +191,7 @@ s32 daDpLift_c::Behavior()
 // @symbol _ZN10daDpLift_c13InitResourcesEv
 #pragma push
 #pragma opt_strength_reduction off
-extern s32 daDpLift_c::InitResources()
+s32 daDpLift_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov025_02113ae0), 1, -1);
     mModel2.SetFile((BMD_File *)Model::LoadFile(data_ov002_0210d9f0), 1, -1);

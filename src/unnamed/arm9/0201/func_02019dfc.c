@@ -1,8 +1,5 @@
-
-/* bss 0x0209d508..0x0209d50c */
-int data_0209d508;
-
 extern unsigned char data_0209d4d4;
+extern int data_0209d508;
 extern int data_0209d510;
 extern int func_0205f9ac(int a, int b);
 
@@ -13,5 +10,3 @@ void func_02019dfc(void)
     func_0205f9ac(1, data_0209d510);
     data_0209d4d4 = 0;
 }
-
-extern void *data_0209d4a8;

@@ -1,1 +1,0 @@
-unsigned char _ZN3OAM14HEALTH_METER_0E[24];

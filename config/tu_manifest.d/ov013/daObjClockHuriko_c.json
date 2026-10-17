@@ -31,11 +31,6 @@
       "name": ".bss",
       "start": "0x02112280",
       "end": "0x02112294"
-    },
-    {
-      "name": ".rodata",
-      "start": "0x021116ac",
-      "end": "0x021116b0"
     }
   ],
   "functions": [

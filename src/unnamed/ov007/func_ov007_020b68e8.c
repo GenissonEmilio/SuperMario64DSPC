@@ -17,7 +17,3 @@ void func_ov007_020b68e8(void){
   int c=data_ov007_0210342c[0];
   *(int*)(c+0x184)=0;
 }
-
-int data_ov007_02102dc4[3] = {
-    0x626f6c67, 0x64206c61, 0x617461
-};

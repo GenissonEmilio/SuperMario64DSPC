@@ -128,7 +128,7 @@ extern "C" daObjCtKaitendai_c *daObjCtKaitendai_c_classInit_CT_MECHA07()
 }
 
 // @symbol _ZN18daObjCtKaitendai_c13InitResourcesEv
-extern int daObjCtKaitendai_c::InitResources()
+int daObjCtKaitendai_c::InitResources()
 {
     extern KaitendaiResources data_ov065_0211d35c[];
     Vector3 pos;

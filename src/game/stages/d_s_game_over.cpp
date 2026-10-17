@@ -445,7 +445,7 @@ s32 dScGameOver_c::Render()
 /* [4] 0x020b0810 -- vtable slot 12. Nothing to unwind; the slot exists only
  * so dScene_c's teardown has something to call. */
  // @symbol _ZN13dScGameOver_c16OnPendingDestroyEv
-extern void dScGameOver_c::OnPendingDestroy()
+void dScGameOver_c::OnPendingDestroy()
 {
 }
 

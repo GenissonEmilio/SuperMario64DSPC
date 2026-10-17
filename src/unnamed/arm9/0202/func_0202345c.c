@@ -5,5 +5,3 @@ void func_0202345c(void){
   void** vt = (void**)o[0];
   ((void(*)(void*))vt[2])(o);
 }
-
-extern unsigned int data_0209f244[1];

@@ -4,7 +4,6 @@ extern int data_020a6488;
 extern int data_020a6498;
 extern void **data_020a64a8[];
 extern void **data_020a6494;
-
 extern void **data_020a6484;
 extern int data_020a64a0;
 
@@ -41,5 +40,3 @@ void **func_0205b274(int flag)
     data_020a6488 = data_020a6488 + 1;
     return head;
 }
-
-extern void ** data_020a64a8[14];

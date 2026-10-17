@@ -1,15 +1,11 @@
-int data_02092138 = 0x80000000;
 #include "types.h"
-
-/* bss 0x0209d5b8..0x0209d64c */
-unsigned char data_0209d5b8[148];
-
 extern int _ZN6Memory8AllocateEji(u32 sz, int align);
 extern void func_02058200(void *c, int f, int a, int p, int s, int x);
 extern void func_02057f38(void *c, int v);
 extern void func_02058048(void *c);
-unsigned char data_0209d4f8;
+extern unsigned char data_0209d4f8;
 extern int data_0209d518;
+extern char data_0209d5b8[];
 
 #pragma opt_common_subs off
 #pragma opt_propagation off

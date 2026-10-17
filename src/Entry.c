@@ -58,19 +58,3 @@ asm void Entry(void) {
     ldr     lr, =0xffff0000
     bx      r1
 }
-
-/* arm9-data-run 0x02075398 rodata */
-extern const unsigned int data_02075398[24] ;
-extern const unsigned int data_020753f8[25] ;
-extern const unsigned int data_0207545c[26] ;
-extern const unsigned int data_020754c4[27] ;
-extern const unsigned int data_02075530[28] ;
-/* end arm9-data-run 0x02075398 */
-
-/* arm9-data-run 0x02086D70 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int _ZTI7fBase_c[2] ;
-extern unsigned int g_profile_CAMERA[2] ;
-#pragma pop
-/* end arm9-data-run 0x02086D70 */

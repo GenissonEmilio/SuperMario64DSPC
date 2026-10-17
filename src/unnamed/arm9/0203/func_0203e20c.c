@@ -1,7 +1,5 @@
 #include "types.h"
-extern u8 data_020a0f04;extern u8 data_020a0f08;
-
-extern unsigned char data_020a1064[0x40];
+extern u8 data_020a0f04;
 extern u8 data_020a0f08;
 extern u8 data_020a0f0c;
 extern volatile u16 data_020a0f1c;
@@ -23,7 +21,6 @@ extern u8 data_020a10fc[];
 extern u8 data_020a1112[];
 extern u8 data_020a1154[];
 extern u16 data_020a117c[4];
-
 extern u16 data_020a11a0[4];
 extern u16 data_020a11c4[4];
 extern s32 data_020a1680;
@@ -334,7 +331,3 @@ void func_0203e20c(void)
         } while (i < 0x11);
     }
 }
-
-#pragma force_active on
-unsigned char data_020a10fc[2];
-extern int data_020a0f5c;

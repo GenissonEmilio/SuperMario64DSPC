@@ -139,8 +139,3 @@ s32 daObjFl_UkiKi_c::CleanupResources()
     FloatingFloorLllBig_ClsnFile.Release();
     return 1;
 }
-
-/* .bss 0x0211462c..0x02114634 */
-extern "C" {
-int data_ov022_0211462c[2];
-}

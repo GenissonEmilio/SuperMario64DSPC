@@ -1,11 +1,9 @@
-int *data_0209f324;
 #include "types.h"
 #pragma opt_common_subs off
 extern int func_02054d88(void);
 extern void MultiCopy_Int(int *dst, int *src, int len);
 
 extern int data_0209fd00;
-
 extern u8 data_0209fc78;
 extern u8 data_0209fc7c;
 extern u8 data_0209fcd8;
@@ -100,13 +98,3 @@ void func_02031428(void)
 
     data_0209fc70 = data_0209fc70 + 3;
 }
-
-extern u32 data_0209fd5c[314];
-/* arm9-data-run 0x020991D8 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int _ZTV5dBgCh[2] ;
-extern unsigned int _ZTI10dBgCh_Actr[3] = {
-    0x0209A764, 0x020991EC, 0x020991C8,
-#pragma pop
-/* end arm9-data-run 0x020991D8 */

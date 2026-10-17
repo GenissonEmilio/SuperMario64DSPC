@@ -20,16 +20,6 @@
       "name": ".text",
       "start": "0x02023688",
       "end": "0x0202e118"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209f1f0",
-      "end": "0x0209f228"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209f1f4",
-      "end": "0x0209f1f5"
     }
   ],
   "functions": [

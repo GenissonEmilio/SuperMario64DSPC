@@ -10,7 +10,7 @@ extern int *data_ov007_02103478[];
 extern int data_ov007_020d7a5c[];
 extern int data_ov007_02102dd8;
 extern int data_ov007_02103464;
-extern extern int data_ov007_02103468;
+extern int data_ov007_02103468;
 extern int data_ov007_020d7a50[];
 void func_ov007_020b7eec(unsigned char *t)
 {
@@ -55,5 +55,3 @@ void func_ov007_020b7eec(unsigned char *t)
   r = func_ov007_020c94a0(0, (unsigned int) r);
   func_ov007_020b8b80(0, r, 0);
 }
-
-int data_ov007_02103468;

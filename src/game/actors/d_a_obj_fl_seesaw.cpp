@@ -130,7 +130,7 @@ s32 daObjFl_Seesaw_c::Behavior()
 
 /* Slot 0. */
 // @symbol _ZN16daObjFl_Seesaw_c13InitResourcesEv
-extern s32 daObjFl_Seesaw_c::InitResources()
+s32 daObjFl_Seesaw_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov022_021145a8), 1, -1);
     func_ov022_02111d48();

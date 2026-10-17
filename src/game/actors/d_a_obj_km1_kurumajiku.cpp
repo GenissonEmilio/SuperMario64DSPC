@@ -106,7 +106,7 @@ extern "C" KurumajikuSpawnInfo g_profile_KM1_KURUMAJIKU = {
 };
 
 // @symbol _ZN21daObjKm1_Kurumajiku_c13InitResourcesEv
-extern s32 daObjKm1_Kurumajiku_c::InitResources()
+s32 daObjKm1_Kurumajiku_c::InitResources()
 {
     return func_ov002_020b6c54(this, &data_ov043_02112344, kCartActorId);
 }

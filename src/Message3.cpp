@@ -22,21 +22,17 @@
 #include "decl_common.h"
 #include "PlayerInput.h"
 #include "Message.h"
-extern "C" {
-extern unsigned char data_0209fc78;
-}
 
 struct OamAttr;
 
 extern "C" {
-extern u8 data_0209fc6c;extern u8 data_0209fc70;
-
+extern u8 data_0209fc6c;
+extern u8 data_0209fc70;
 extern u8 data_0209fc74;
 extern u8 data_0209fc7c;
 extern u8 data_0209fc80;
 extern u8 data_0209fc84;
 extern u8 data_0209fc88;
-
 extern u8 data_0209fc8c;
 extern u8 data_0209fc90;
 extern u8 data_0209fc98;
@@ -76,8 +72,7 @@ extern u32 data_0209fd5c[];
 extern u8 data_02092818[];
 extern int data_0209285c[];
 extern void (*data_02092830[])(void);
-extern u8 data_0208f074[];extern u8 data_0208f174[256];
-
+extern u8 data_0208f074[];
 extern u8 data_0208f174[];
 extern s32 data_0208ee44;
 extern int data_0209caa0[3];
@@ -1500,7 +1495,3 @@ void Message::LoadTextVS()
     }
     Message::SetTextGlobalsVS();
 }
-
-extern "C" int data_0209285c[8] = {
-    -1, -0x22222223, -0x44444445, -0x66666667, 0x77777777, 0x55555555, 0x33333333, 0x11111111
-};

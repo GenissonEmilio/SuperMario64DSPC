@@ -267,4 +267,4 @@ void daObjCtMecha03_c::func_ov065_02119fe8()
  * the otherwise homeless D2 variant. */
 
 Mecha03ModelFilePtr data_ov065_0211d88c(ASSET_CT_MECHA_OBJ03_BMD);
-extern Mecha03ClsnFilePtr data_ov065_0211d894(ASSET_CT_MECHA_OBJ03_KCL);
+Mecha03ClsnFilePtr data_ov065_0211d894(ASSET_CT_MECHA_OBJ03_KCL);

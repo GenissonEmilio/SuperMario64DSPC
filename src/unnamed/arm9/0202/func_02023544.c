@@ -1,11 +1,4 @@
-unsigned char data_0209f1e0;
-
-/* data 0x02092110..0x02092114 */
-#pragma force_active on
-#pragma explicit_zero_data on
-unsigned char data_02092110[4] = { 255, 0, 0, 0 };
-#pragma explicit_zero_data off
-#pragma force_active off
+extern unsigned char data_0209f1e0;
 extern unsigned char data_0209b2fc;
 extern unsigned char gMgSaveDirty;
 extern void func_0202fd2c(void);

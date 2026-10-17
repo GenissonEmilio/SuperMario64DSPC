@@ -42,5 +42,3 @@ void CleanCommonModelDataArr(void)
     data_0209cef8 = 0;
     data_0209cef0 = 0;
 }
-
-int data_0209cef8;

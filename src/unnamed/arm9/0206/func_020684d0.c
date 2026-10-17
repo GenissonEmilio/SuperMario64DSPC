@@ -1,5 +1,5 @@
 struct Node { char pad[0x4b4]; struct Node* next; };
-struct Node* data_020a9d2c;
+extern struct Node* data_020a9d2c;
 
 void func_020684d0(struct Node* n){
   struct Node* p = data_020a9d2c;

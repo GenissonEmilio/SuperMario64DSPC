@@ -1,7 +1,4 @@
 //cpp
-extern "C" {
-int data_ov002_02111184;
-}
 /* leftovers:
  * - func_ov002_020fea68 and func_ov002_020fea4c stay extern "C"
  *   int* copies. The first argument is the caller's out-buffer, not
@@ -49,8 +46,4 @@ void func_ov002_020fea4c(int *a, int *b)
 {
     a[0] = b[3]; a[1] = b[4]; a[2] = b[5];
 }
-}
-
-extern "C" {
-unsigned int data_ov002_02111178[1];
 }

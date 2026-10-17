@@ -2,14 +2,6 @@
 // @symbol daPly_c_classInit
 #include "Player.h"
 
-
-extern "C" {
-/* bss 0x0210e8d0..0x0210e8d8 */
-#pragma force_active on
-unsigned char data_ov002_0210e8d0[8];
-#pragma force_active off
-}
-
 extern "C" {
 void *_ZN7fBase_cnwEj(unsigned int size);
 Player *_ZN6PlayerC1Ev(Player *player);

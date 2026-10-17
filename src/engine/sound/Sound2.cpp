@@ -11,14 +11,6 @@
 
 #include "types.h"
 
-
-extern "C" {
-/* bss 0x020a4ba8..0x020a4bb8 */
-#pragma force_active on
-unsigned char data_020a4ba8[16];
-#pragma force_active off
-}
-
 extern "C" {
 extern void func_02048fd4(int i);
 }
@@ -77,10 +69,4 @@ void Func_02048eb4()
     func_02048fd4(0);
 }
 
-}
-
-extern "C" {
-struct Data020a4b98 { int z0; int z4; void *s0; void *s1; };
-struct Data020a4b98 data_020a4b98;
-u16 data_020a117c[4];
 }

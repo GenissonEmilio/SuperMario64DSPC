@@ -31,10 +31,7 @@ typedef struct G2 {
 #define MASK(p) ((void*)(int)(p))
 
 extern G2 *data_ov007_0210342c;
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-extern unsigned char data_ov007_020d7610[12] ;
-#pragma section forcerodata end
+extern unsigned char data_ov007_020d7610[];
 extern void func_ov007_020c42f8(void *self);
 extern int func_ov007_020c3598(int a, int b, s8 *buf, int d);
 extern void func_ov007_020c4128(void *self, void *dest, int arg2);

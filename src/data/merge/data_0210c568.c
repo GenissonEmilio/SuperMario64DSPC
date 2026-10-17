@@ -1,3 +1,0 @@
-unsigned char _ZN3OAM20MM_SILVER_STAR_FADEDE[8] = {
-    248, 0, 248, 65, 156, 112, 255, 255
-};

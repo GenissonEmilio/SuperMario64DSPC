@@ -233,7 +233,3 @@ void dBgCh_SphCrr::SetUnderResult(const dBgPi &src_)
     mClsnResult3.owner = src_.owner;
     mClsnResult3.collider = src_.collider;
 }
-
-extern "C" {
-unsigned char data_0209f4ae[74];
-}

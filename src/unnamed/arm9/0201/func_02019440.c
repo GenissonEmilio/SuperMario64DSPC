@@ -1,8 +1,7 @@
-extern unsigned char data_0209d4e0;
 #include "types.h"
 extern int data_0209d4a8;
 extern int data_0209d4ac;
-int data_0209d4b0;
+extern int data_0209d4b0;
 
 extern void func_0203bd24(void);
 extern int func_02053be0(int enable);

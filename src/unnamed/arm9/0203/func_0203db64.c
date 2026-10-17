@@ -1,8 +1,4 @@
 #include "types.h"
-
-/* bss 0x020a1040..0x020a1044 */
-u16 data_020a1040[2];
-
 extern void CpuCopy8(void *dst, void *src, int n);
 extern void func_0205a588(void *dst, int c, int n);
 extern void func_02042778(void);
@@ -25,7 +21,7 @@ typedef struct {
 
 extern u8 data_020a0ef0;
 extern u8 data_020a1064[];
-u8 data_020a0fec[52];
+extern u8 data_020a0fec[];
 extern u16 data_020a1040[];
 extern u8 data_020a0fb8[];
 extern u8 data_020a0fa0[];
@@ -42,7 +38,6 @@ extern u8 data_020a0f04;
 extern u8 data_020a10fe[];
 extern u8 data_020a10a6[];
 extern u8 data_020a0f00;
-extern int data_020a0f58;
 
 typedef struct {
     u8 unk0;
@@ -153,5 +148,3 @@ void func_0203db64(void *arg0, void *arg1)
     }
     data_020a0ef0 = 1;
 }
-
-u8 data_02099e18 = 1;

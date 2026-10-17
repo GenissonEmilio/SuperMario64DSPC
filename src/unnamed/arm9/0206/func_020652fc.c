@@ -1,5 +1,5 @@
 #include "types.h"
-int data_020a94c0;
+extern int data_020a94c0;
 extern unsigned int _ZN3IRQ7DisableEv(void);
 extern void _ZN3IRQ7RestoreEj(unsigned int);
 extern void func_02065a84(int x);

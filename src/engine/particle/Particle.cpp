@@ -50,16 +50,13 @@
 #include "Particle__System.h"
 
 extern "C" {
-Particle::SysTracker *data_0209ee74;
 void func_0203cbc0(void *p);
 void func_02049ee8(void* manager, void* renderState);
 void DecompressLZ16(const void* src, void* dst);
 }
 
 extern int data_0209b3ec;
-extern "C" {
-u32 data_0209ee84;
-}
+extern u32 data_0209ee84;
 extern u32 data_0209ee8c;
 extern signed char data_0209f2f8;
 extern void* data_020a0ea0;

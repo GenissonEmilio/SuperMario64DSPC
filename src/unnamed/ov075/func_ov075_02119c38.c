@@ -1,5 +1,5 @@
 extern unsigned char data_0209d454;
-int data_ov075_0211d71c[4];
+extern int data_ov075_0211d71c[];
 extern void func_ov075_02116028(void* p, int v);
 extern void func_020337ec(void);
 extern void func_ov075_02115e8c(void* p, int a, int b, int d, int e);

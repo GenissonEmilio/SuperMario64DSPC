@@ -69,15 +69,7 @@ extern "C" {
 extern signed char data_0209f2f8;
 extern short data_02082214[];
 /* Second particle parameter per segment: 0xe61 + i * 0x689. */
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-short data_ov095_02136f98[12] = {
-    0xe61, 0x14ea, 0x1b73, 0x21fc, 0x2885, 0x2f0e, 0x3597, 0x3c20,
-    0x42a9, 0x4932, 0x4fbb, 0x5644
-};
-#pragma section forcerodata end
-}
+extern short data_ov095_02136f98[];
 extern unsigned short DecIfAbove0_Short(unsigned short *p);
 extern void MulVec3Mat4x3(int *v, void *m, int *dst);
 extern void Vec3_Add(int *out, int *a, int *b);

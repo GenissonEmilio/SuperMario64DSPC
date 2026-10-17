@@ -617,15 +617,7 @@ enum { kMtxPosVec = 2, kMtxPos = 1, kScale = 0x20000, kTriStrip = 2 };
 extern "C" {
 extern void func_02055388(void *m);
 extern void func_02055998(void *m);
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-int data_ov080_0212771c[16] = {
-    0x40000, 0, 0, 0, 0, -0x40000, 0, 0,
-    0, 0, 0x1000, 0, 0, 0, 0, 0x1000
-};
-#pragma section forcerodata end
-}
+extern int data_ov080_0212771c[];
 }
 /* texgen=NORMAL variant: no per-vertex TEXCOORD, positions at >>7. */
 #define EMIT_VTX7(v) \

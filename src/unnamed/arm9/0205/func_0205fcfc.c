@@ -1,5 +1,3 @@
-int data_020a810c;
-
 extern void func_0205feac(int a);
 
 typedef struct {
@@ -15,7 +13,7 @@ typedef struct {
 } FlagEntry;
 extern FlagEntry data_020a8138[];
 
-int data_020a8108;
+extern int data_020a8108;
 extern int data_020a810c;
 
 typedef struct {

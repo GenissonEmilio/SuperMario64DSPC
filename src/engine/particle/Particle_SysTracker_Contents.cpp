@@ -216,14 +216,3 @@ void SysTracker::Contents::Unlink(Entry& entry)
 }
 
 } // namespace Particle
-
-/* arm9-data-run 0x02090200 data */
-#pragma push
-#pragma explicit_zero_data on
-extern "C" {
-unsigned int data_02090200[2] = {
-    0x4D5F434D, 0x4C415445,
-};
-}
-#pragma pop
-/* end arm9-data-run 0x02090200 */

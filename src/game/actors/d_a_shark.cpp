@@ -227,7 +227,7 @@ extern "C" void func_ov090_02133904(daShark_c *self)
 }
 
 // @symbol _ZN9daShark_c16CleanupResourcesEv
-extern int daShark_c::CleanupResources()
+int daShark_c::CleanupResources()
 {
     data_ov090_021345a4.Release();
     data_ov090_021345ac.Release();

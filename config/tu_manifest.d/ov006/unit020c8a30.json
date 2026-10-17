@@ -17,21 +17,6 @@
       "name": ".text",
       "start": "0x020c8a30",
       "end": "0x020c8dd4"
-    },
-    {
-      "name": ".bss",
-      "start": "0x021405ac",
-      "end": "0x021405b0"
-    },
-    {
-      "name": ".data",
-      "start": "0x0213b0ec",
-      "end": "0x0213b0f0"
-    },
-    {
-      "name": ".bss",
-      "start": "0x021405bc",
-      "end": "0x021405c0"
     }
   ],
   "functions": [
@@ -106,30 +91,8 @@
       "ordinal": 9
     }
   ],
-  "data": [
-    {
-      "symbol": "data_ov006_0213b0ec",
-      "address": "0x0213b0ec",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM data 0x213b0ec..0x213b0f0"
-    }
-  ],
-  "bss": [
-    {
-      "symbol": "data_ov006_021405ac",
-      "address": "0x021405ac",
-      "size": "0x00000004",
-      "evidence": "one BSS word. The intact proof is stale; no ROM sha was rewritten."
-    },
-    {
-      "symbol": "data_ov006_021405bc",
-      "address": "0x021405bc",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x21405bc..0x21405c0"
-    }
-  ],
+  "data": [],
+  "bss": [],
   "notes": [
     "Text-only fold of ten one-function shards (Puff_DrawAll .. Puff_Nothing). Callers by relocation: the shards at 0x020c70d0..0x020c7278 (draw/update/reset), dScMgJump_c, dScMgJump2_c, dScMgTrampoline_c and dScMgTrampoline2_c (reset), dMgJump3DMario_c (claim, 0x020c7930) and the unit at 0x020c8dd4 (claim, 0x020c9f28 and later)."
   ],

@@ -1,5 +1,5 @@
 #pragma opt_common_subs off
-int data_ov007_02103444;
+extern int data_ov007_02103444;
 extern int data_ov007_02103448;
 int func_ov007_020b78d0(int x){
   int r3 = x << 1;

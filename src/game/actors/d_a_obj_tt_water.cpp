@@ -113,9 +113,9 @@ int daObjTtWater_c::Behavior()
 }
 
 // @symbol _ZN14daObjTtWater_c13InitResourcesEv
-extern int daObjTtWater_c::InitResources()
+int daObjTtWater_c::InitResources()
 {
-    void* m ;
+    void* m = Model::LoadFile(data_ov033_021124f0);
     mModel.SetFile((BMD_File*)m, 1, 0x14);
     TextureTransformer::Prepare(*(BMD_File *)data_ov033_021124f0.filePtr,
                                 *(BTA_File *)data_ov033_02111bc8);

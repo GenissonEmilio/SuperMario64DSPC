@@ -1,1 +1,0 @@
-Mecha03ClsnFilePtr data_ov065_0211d894(ASSET_CT_MECHA_OBJ03_KCL);

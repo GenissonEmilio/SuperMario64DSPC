@@ -1,7 +1,4 @@
-
-/* bss 0x020a11e4..0x020a15e4 */
-unsigned char data_020a11e4[1024];
-
+extern char data_020a11e4[];
 extern void func_02042254(void);
 extern void func_02058200(void *a, void *fn, void *c, void *d, int e, int f);
 extern void func_02058048(void *a);

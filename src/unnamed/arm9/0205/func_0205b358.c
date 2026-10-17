@@ -1,4 +1,3 @@
-
 struct Node5b1a4;
 
 typedef struct N5b358 {
@@ -60,5 +59,3 @@ void func_0205b358(void)
     func_0205b1a4((struct Node5b1a4 *)p);
     func_0205b070(1);
 }
-
-extern unsigned char data_020a7760[2024];

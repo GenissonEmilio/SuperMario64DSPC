@@ -198,7 +198,7 @@ extern S8 data_ov002_0210b6f8;
 extern S8 data_ov002_0210b6f0;
 extern S8 data_ov002_0210b6e0;
 
-extern void __sinit_ov002_02107370(void)
+void __sinit_ov002_02107370(void)
 {
     func_02017acc(&data_ov002_02110b50, ASSET_PEACH_LETTER_US_BMD);
     func_020731dc(&data_ov002_02110b50, (void*)&func_02017ab4, (void**)&data_ov002_02110dc4);

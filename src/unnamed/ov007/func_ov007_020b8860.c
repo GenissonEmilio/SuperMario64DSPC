@@ -1,9 +1,3 @@
-
-/* bss 0x02103464..0x02103468 */
-#pragma force_active on
-unsigned char data_ov007_02103464[4];
-#pragma force_active off
-
 extern int data_ov007_02102ddc[];
 extern int* data_ov007_02103478;
 extern int data_ov007_020d7a5c;

@@ -17,13 +17,7 @@ typedef struct {
 extern struct Ddc data_ov007_02102ddc;
 extern int *data_ov007_02103478;
 extern int data_ov007_020d7a5c;
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-unsigned short data_ov007_020d7a68[14] = {
-    0, 0x1f68, 0x1f69, 0x1f6a, 0x1f6c, 0x1f6d, 0x1f88, 0x1f89,
-    0x1f8a, 0x1f6b, 0x1f6f, 0x1f70, 0x1f6e, 0
-};
-#pragma section forcerodata end
+extern unsigned short data_ov007_020d7a68[];
 extern short data_ov007_020d7a84[];
 extern int data_ov007_02102dd8;
 extern int data_ov007_02103464;
@@ -131,5 +125,3 @@ void func_ov007_020b7a78(void)
         data_ov007_02103460->unk3C = data_ov007_02103460->unk40;
     }
 }
-
-int data_ov007_02102dd8 = 0xe;

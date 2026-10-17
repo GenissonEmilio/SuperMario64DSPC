@@ -1,6 +1,3 @@
-unsigned char data_0209f238;
-static unsigned char data_0209f238_pad[3];
-
 extern int func_0203da9c(void);
 extern int func_0203d950(int i);
 extern int func_0203d890(void);
@@ -11,7 +8,6 @@ extern unsigned char data_0209fc5c[];
 extern char data_0209fc64[];
 extern unsigned char data_0209fc50;
 extern int data_0209fc68;
-
 
 void func_02030ca0(void) {
     int count;
@@ -48,10 +44,3 @@ void func_02030ca0(void) {
         data_0209fc68 = 4;
     func_02020214(mask);
 }
-
-/* arm9-data-run 0x02097FD4 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_02097fd4[144] ;
-#pragma pop
-/* end arm9-data-run 0x02097FD4 */

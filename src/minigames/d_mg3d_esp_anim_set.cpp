@@ -343,9 +343,9 @@ dMg3DEspAnimSet_c::dMg3DEspAnimSet_c() {}
 /* ---- dMg3DEspModel_c --------------------------------------------------- */
 
 // @symbol _ZN15dMg3DEspModel_c14ResetTransformEv
-extern void dMg3DEspModel_c::ResetTransform()
+void dMg3DEspModel_c::ResetTransform()
 {
-    *(Matrix4x3*)((char*)this + 0x28) ;
+    *(Matrix4x3*)((char*)this + 0x28) = data_ov006_0213c85c;
 }
 
 // @symbol _ZN15dMg3DEspModel_c6RenderEv
@@ -478,7 +478,7 @@ void dMg3DEspModel_c::StartWait()
 }
 
 // @symbol _ZN15dMg3DEspModel_c4IdleEv
-extern void dMg3DEspModel_c::Idle()
+void dMg3DEspModel_c::Idle()
 {
 }
 

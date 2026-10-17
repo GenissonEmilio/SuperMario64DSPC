@@ -141,9 +141,11 @@ int daObjSimpleLift_c::Render()
 }
 
 // @symbol _ZN17daObjSimpleLift_c8BehaviorEv
-extern int daObjSimpleLift_c::Behavior()
+int daObjSimpleLift_c::Behavior()
 {
-    if (DecIfAbove0_Byte(&mPauseTimer) ;
+    if (DecIfAbove0_Byte(&mPauseTimer) == 0) {
+        if (DecIfAbove0_Short((unsigned short *)&mMoveTimer) == 0) {
+            mMoveTimer = data_ov091_02134504[mVariant];
             mPrevAngleY += 0x8000;
             mPauseTimer = 0xf;
         } else {

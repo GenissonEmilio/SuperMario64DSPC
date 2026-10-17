@@ -147,9 +147,9 @@ extern "C" void func_ov022_02111558(daObjFl_Ring_c *self, dActor_c *other)
 /* dBgW_KcMbg::SetFile takes Fix12<int> by value. An ordinary member call
  * triggers mwccarm's by-value-class parameter homing and changes the ROM ABI,
  * so that one call deliberately keeps the measured register-level spelling. */
-extern s32 daObjFl_Ring_c::InitResources()
+s32 daObjFl_Ring_c::InitResources()
 {
-    void *f ;
+    void *f = Model::LoadFile(*((daObjFl_Ring_c_Files *)&data_ov022_02113cc8)->mModelFile);
     mModel.SetFile((BMD_File *)f, 1, -1);
     UpdateModelPosAndRotY();
     UpdateClsnPosAndRot();

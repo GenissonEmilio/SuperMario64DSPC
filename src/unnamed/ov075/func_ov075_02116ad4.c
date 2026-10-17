@@ -1,8 +1,4 @@
 /* Runtime asset handles resolved through the overlay 0 file table. */
-
-/* bss 0x0211d888..0x0211d8a0 */
-unsigned char data_ov075_0211d888[24];
-
 enum func_ov075_02116ad4_AssetId {
     ASSET_D_2D_BATTLE_FRAMEWORK_GAMESTART_P_NSC_BIN = 0x025e
 };
@@ -26,6 +22,7 @@ extern struct fBase_c *_ZN7dBase_c5SpawnEjP7fBase_cii(u32 a, void *b, int c, int
 
 extern void *data_0208a0e4[];
 extern int data_ov075_0211c9a4[];
+extern const unsigned char data_ov075_0211d888[];
 extern const unsigned char data_ov075_0211d768[];
 extern const unsigned char data_ov075_0211d780[];
 extern void *data_0209f5c0;
@@ -71,10 +68,3 @@ int func_ov075_02116ad4(void *arg) {
     *(void **)((char *)arg + 0x50) = _ZN7dBase_c5SpawnEjP7fBase_cii(0x15a, data_0209f5c0, mode, 0);
     return 1;
 }
-
-/* .data 0x0211c7f8..0x0211c800 */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern int data_ov075_0211c7f8[2] ;
-#pragma section forcedata end
-extern int data_ov075_0211c9a4[5] ;

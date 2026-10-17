@@ -16,11 +16,6 @@
       "name": ".bss",
       "start": "0x020a4d38",
       "end": "0x020a4d44"
-    },
-    {
-      "name": ".data",
-      "start": "0x0209a700",
-      "end": "0x0209a73c"
     }
   ],
   "functions": [

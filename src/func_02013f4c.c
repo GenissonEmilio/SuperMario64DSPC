@@ -1,5 +1,5 @@
 #include "types.h"
-u32 data_0209cde4;
+extern u32 data_0209cde4;
 extern u8 data_0209cdcc;
 extern void* data_020a0e9c;
 extern void* data_020a0ea0;
@@ -89,5 +89,3 @@ void func_02013f4c(void)
     while ((int)*(volatile u16*)0x4000006 >= 0xc0) {}
     while ((int)*(volatile u16*)0x4000006 < 0xc0) {}
 }
-
-extern int data_020874cc[10] ;

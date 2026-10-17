@@ -1,7 +1,3 @@
-const char data_0208696c[32] = {
-    0x70, 0x49, 0x6e, 0x66, 0x6f, 0x2d, 0x3e, 0x6d, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x5b, 0x69, 0x5d, 0x2e, 0x6d, 0x5f, 0x56, 0x4d, 0x41, 0x20, 0x3d, 0x3d, 0x20, 0x6e, 0x56, 0x4d, 0x41, 0x00, 0x00
-};
-
 #include "types.h"
 #pragma opt_common_subs off
 #pragma opt_loop_invariants off
@@ -9,10 +5,6 @@ const char data_0208696c[32] = {
 #define LM(x) ((int*)(long long)(int)(x))
 #define EB(t, n) ((struct Arr *)((char *)(t) + ((n) << 4)))
 #define LM2(x) ((int*)(long long)(unsigned)(x))
-
-
-/* bss 0x020a9ec0..0x020a9ec8 */
-struct Arr * data_020a9ec0[2];
 
 struct Elem {
     u32 a, b, c, d;
@@ -32,10 +24,10 @@ typedef struct {
 
 extern struct Arr *data_020a9ec0[2];
 extern const char data_020868fc;
-extern const unsigned char data_0208690c[32] ;
-const char data_0208692c = 40;
-const char data_0208698c = 0x70;
+extern const char data_0208690c;
+extern const char data_0208692c;
 extern const char data_0208696c;
+extern const char data_0208698c;
 extern const char data_020869bc;
 extern const char data_020869dc;
 
@@ -111,7 +103,7 @@ int func_0206d32c(int type, u32 addr, u32 lma, u32 size) {
         } else if (ea <= addr) {
             if (vma64 < (unsigned long long)(u32)ea + (u32)table->elems[i].c) {
                 if (!(ea <= addr)) {
-                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12e, (const char *)data_0208690c, 1);
+                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12e, &data_0208690c, 1);
                 }
                 if (!((unsigned long long)(u32)table->elems[i].a + (u32)table->elems[i].c > vma64)) {
                     _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12f, &data_0208692c, 1);
@@ -132,7 +124,7 @@ int func_0206d32c(int type, u32 addr, u32 lma, u32 size) {
                     *LM(&srcb->elems[0].c) -= dstb->elems[0].c;
                 }
                 if (!(addr == table->elems[i].a)) {
-                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x13c, data_0208696c, 1);
+                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x13c, &data_0208696c, 1);
                 }
                 if (table->elems[i].c <= size) {
                     found = 1;

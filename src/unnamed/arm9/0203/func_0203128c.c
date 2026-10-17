@@ -1,6 +1,3 @@
-signed char data_0209f2f4;
-static unsigned char data_0209f2f4_pad[3];
-
 extern unsigned char* data_0209fd0c;
 extern unsigned char NumStars(void);
 extern int func_020138dc(void);
@@ -60,12 +57,3 @@ void func_0203128c(void){
     break;
   }
 }
-
-/* arm9-data-run 0x02099068 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_02099068[36] ;
-extern unsigned int data_020990f8[50] ;
-#pragma pop
-/* end arm9-data-run 0x02099068 */
-extern unsigned short data_02092808[4] ;

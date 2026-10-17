@@ -8,6 +8,3 @@ void FS_InitFile(int *s)
     s[4] = 0xc;
     s[3] = 0;
 }
-
-#pragma force_active on
-unsigned char data_020a7fc0[4];

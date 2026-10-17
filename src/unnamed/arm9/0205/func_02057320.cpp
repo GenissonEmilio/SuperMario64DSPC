@@ -1,8 +1,6 @@
 //cpp
 extern "C" {
-extern "C" {
-int data_020a6124;
-}
+extern int data_020a6124;
 extern void func_020572b8(int a, void *b, int c);
 extern void func_020570a8(void);
 extern void MultiStore_Int(int v, void *dst, int n);

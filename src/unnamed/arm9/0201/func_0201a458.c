@@ -1,6 +1,3 @@
-extern void * data_0209d524;
-
-
 /* func_0201a458 -- create the root heap over 0x0211d9c0..0x02140d80 and store it in
  * data_0209d524. Both callers (func_02034fbc in d_s_mb.cpp and dScDSMT_c's result-6
  * path) load overlays 100 and 102 right after, and 0x02140d80 is where ov100 is
@@ -14,6 +11,7 @@ extern void * data_0209d524;
 extern void *_ZN5mHeap6Heap_t14CreateRootHeapEPvj(void *start, unsigned int size);
 extern char OV075_BSS_END;
 extern char OV100_TEXT_START;
+extern void *data_0209d524;
 
 void func_0201a458(void) {
     data_0209d524 = _ZN5mHeap6Heap_t14CreateRootHeapEPvj(&OV075_BSS_END, (unsigned int)(&OV100_TEXT_START - &OV075_BSS_END));

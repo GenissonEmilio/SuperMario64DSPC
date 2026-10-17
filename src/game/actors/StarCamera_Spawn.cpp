@@ -26,23 +26,3 @@ extern "C" void *StarCamera_Spawn(void)
     if (p == 0) return p;
     return _ZN8dActor_cC1Ev(p);
 }
-
-/* .data 0x0210aa40..0x0210aab8 */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern "C" {
-int g_profile_STARBASE[7] = {
-    0x020ebe8c, 0x004200b4, 0x28000002, 0x00000000, 0x000c8000, 0x01000000, 0x01000000,
-};
-int g_profile_SILVER_STAR[7] = {
-    0x020ebed4, 0x004100b3, 0x28000002, 0x00032000, 0x001f4000, 0x01194000, 0x01000000,
-};
-int g_profile_STAR[7] = {
-    0x020ebf30, 0x004000b2, 0x20000002, 0x00032000, 0x001f4000, 0x01000000, 0x01000000,
-};
-int g_profile_STAR_CAMERA[9] = {
-    0x020ebe5c, 0x003f00b1, 0x00000000, 0x00000000, 0x000c8000, 0x00000000, 0x00000000, 0x00000000,
-    0x0210aa18,
-};
-}
-#pragma section forcedata end

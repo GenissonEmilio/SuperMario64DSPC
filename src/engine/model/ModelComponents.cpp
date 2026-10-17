@@ -150,18 +150,8 @@ void Geometry_MatrixMultiply3x3(void *m);
 void func_0205a358(int a0, int a1, int a2, int a3, int a4);
 void func_02059fa8(int ch);
 extern Vec3 data_02099f88;
-extern "C" {
-u32 data_020a4bd4;
-}
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-int data_02082190[12] = {
-    0x1000, 0, 0, 0, 0x1000, 0, 0, 0,
-    0x1000, 0, 0, 0
-};
-#pragma section forcerodata end
-}
+extern u32 data_020a4bd4;
+extern int data_02082190;
 extern void *data_020a4bd0;
 extern u8 data_020a4bbc;
 extern u16 data_02099f94[8];

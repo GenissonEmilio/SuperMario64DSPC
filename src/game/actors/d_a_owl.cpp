@@ -431,7 +431,7 @@ int daOwl_c::func_ov094_02135c28()
 // @symbol _ZN7daOwl_c19func_ov094_02135e64Ev
 /* Enter of the hover state: animation data_ov094_02136af0[1] at normal speed, random heading and a
  * 50..113 frame wander timer. */
-extern int daOwl_c::func_ov094_02135e64()
+int daOwl_c::func_ov094_02135e64()
 {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, (void *)data_ov094_02136af0.filePtr, 0,
                                                 0x1000, 0);
@@ -601,7 +601,7 @@ void daOwl_c::func_ov094_021362e0()
 }
 
 // @symbol _ZN7daOwl_c16CleanupResourcesEv
-extern int daOwl_c::CleanupResources()
+int daOwl_c::CleanupResources()
 {
     data_ov094_02136ae0.Release();
     data_ov094_02136af8.Release();

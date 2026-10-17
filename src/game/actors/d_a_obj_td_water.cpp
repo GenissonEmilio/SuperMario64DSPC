@@ -108,7 +108,7 @@ extern "C" daObjTdWater_c *daObjTdWater_c_classInit(void)
 }
 
 // @symbol _ZN14daObjTdWater_c13InitResourcesEv
-extern s32 daObjTdWater_c::InitResources()
+s32 daObjTdWater_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov032_02113afc), 1, 0x14);
 

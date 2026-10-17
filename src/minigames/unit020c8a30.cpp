@@ -1,7 +1,4 @@
 //cpp
-extern "C" {
-int data_ov006_021405ac;
-}
 /* ov006 sprite pool, 0x020c8a30..0x020c8dd4.
  *
  * Three 0x20-byte records at data_ov006_021404d8. Jump, Jump2,
@@ -19,24 +16,6 @@ int data_ov006_021405ac;
  * - The pool, the counter and the sprite table are overlay data,
  *   not this TU's.
  */
-
-
-
-extern "C" {
-/* bss 0x021405bc..0x021405c0 */
-#pragma force_active on
-unsigned char data_ov006_021405bc[4];
-#pragma force_active off
-}
-
-extern "C" {
-/* data 0x0213b0ec..0x0213b0f0 */
-#pragma force_active on
-#pragma explicit_zero_data on
-unsigned char data_ov006_0213b0ec[4] = { 3, 0, 0, 0 };
-#pragma explicit_zero_data off
-#pragma force_active off
-}
 
 typedef long long s64;
 
@@ -200,16 +179,4 @@ void Puff_DrawAll(void){
     p-=0x20;
   }
 }
-}
-
-extern "C" {
-extern int data_ov006_021405b4;
-unsigned int data_ov006_0213b0f0[1] = {3};
-/* .bss 0x021404dc..0x021404f0 */
-int data_ov006_021404e8[1];
-int data_ov006_021404e4[1];
-int data_ov006_021404e0[1];
-int data_ov006_021404dc[1];
-int data_ov006_021404ec[1];
-int data_ov006_02140518[8];
 }

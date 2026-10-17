@@ -116,7 +116,7 @@ extern "C" daObjDorifuResources data_ov043_02112518[5] = {
 };
 
 // @symbol _ZN17daObjKm1_Dorifu_c13InitResourcesEv
-extern s32 daObjKm1_Dorifu_c::InitResources()
+s32 daObjKm1_Dorifu_c::InitResources()
 {
     return daObjDorifu_c::InitResources(data_ov043_02112518);
 }

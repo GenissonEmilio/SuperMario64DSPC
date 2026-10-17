@@ -76,6 +76,3 @@ void func_0203df40(void)
 
     data_020a0f98 = data_020a0f04;
 }
-
-extern int data_020a0f74;
-extern unsigned short data_020a0f1c;

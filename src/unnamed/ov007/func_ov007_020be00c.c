@@ -1,12 +1,10 @@
-char * data_ov007_02104bbc;
-
 extern int func_ov007_020c3df4(int a, void *b);
 extern void func_0204f94c(int *p);
 
 extern int data_ov007_02103218;
 extern int data_ov007_02103220;
-int *data_ov007_02104bb8;
 extern char *data_ov007_02104bbc;
+extern int *data_ov007_02104bb8;
 
 void func_ov007_020be00c(void)
 {

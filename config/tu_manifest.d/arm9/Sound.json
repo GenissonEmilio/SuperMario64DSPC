@@ -17,31 +17,6 @@
       "name": ".text",
       "start": "0x02011654",
       "end": "0x02013548"
-    },
-    {
-      "name": ".data",
-      "start": "0x0208e434",
-      "end": "0x0208e438"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209b53c",
-      "end": "0x0209baa0"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209b480",
-      "end": "0x0209b481"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209b490",
-      "end": "0x0209b494"
-    },
-    {
-      "name": ".data",
-      "start": "0x0208776c",
-      "end": "0x02087858"
     }
   ],
   "functions": [
@@ -669,24 +644,8 @@
       "ordinal": 88
     }
   ],
-  "data": [
-    {
-      "symbol": "data_0208e434",
-      "address": "0x0208e434",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM data 0x208e434..0x208e438"
-    }
-  ],
-  "bss": [
-    {
-      "symbol": "data_0209b53c",
-      "address": "0x0209b53c",
-      "size": "0x564",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x209b53c..0x209baa0"
-    }
-  ],
+  "data": [],
+  "bss": [],
   "compiler_only_output": [],
   "notes": [
     "Text-only. The module state (data_0208e420..data_0208e498, data_0209b470..data_0209baa0, data_0209d574, data_0209f250/2f8/394, data_02092120) is all .bss: no initialized bytes exist for this TU to own, so data and bss claims stay empty and the entry promotes as text-only like the other namespace-module TUs.",

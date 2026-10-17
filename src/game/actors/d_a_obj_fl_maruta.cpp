@@ -58,14 +58,7 @@ void _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(
 
 /* daObjFlMaruta_c's collaborators. */
 void func_020393a4(dBgW_KcMbg *p, int v);
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-unsigned int data_ov022_02112c98[1] = {
-    0x7d0000
-};
-#pragma section forcerodata end
-}
+extern int data_ov022_02112c98[];
 
 /* Shared by the two flame helpers below. */
 int RandomIntInternal(int *seed);
@@ -99,7 +92,7 @@ daObjFlMaruta_c::~daObjFlMaruta_c()
 }
 
 // @symbol _ZN15daObjFlMaruta_c16CleanupResourcesEv
-extern int daObjFlMaruta_c::CleanupResources()
+int daObjFlMaruta_c::CleanupResources()
 {
     return func_ov080_021270dc(((void *)this), data_ov022_02112c9c);
 }

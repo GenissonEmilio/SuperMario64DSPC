@@ -119,10 +119,10 @@ extern "C" void func_ov029_021116c4(char *a, char *b)
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN15daObjWc_Obj02_c13InitResourcesEv
-extern int daObjWc_Obj02_c::InitResources()
+int daObjWc_Obj02_c::InitResources()
 {
     {
-        BMD_File *bmd ;
+        BMD_File *bmd = (BMD_File *)Model::LoadFile(data_ov029_02114250);
         mModel.SetFile(bmd, 1, -1);
     }
     UpdateModelPosAndRotY();

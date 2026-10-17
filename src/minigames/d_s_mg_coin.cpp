@@ -130,22 +130,7 @@ extern int data_ov006_0212e430[];
 extern u16 data_ov006_0212e334[];
 extern s16 data_02082214[];
 extern int data_ov006_021341ec;
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-unsigned int data_ov006_0212e364[3] = {
-    0xffffff58U, 0xffffff94U, 0xffffffd0U
-};
-
-unsigned int data_ov006_0212e358[3] = {
-    48, 112, 176
-};
-
-unsigned int data_ov006_0212e34c[3] = {
-    0, 0xc00, 0xfffff400U
-};
-#pragma section forcerodata end
-}
+extern int data_ov006_0212e364[];
 extern int *data_ov006_0213bf34[];
 extern int GetGameLanguage(void);
 extern void Mg_DrawCreditsIcon(int r0, int r1, int r2, int r3);
@@ -156,6 +141,7 @@ extern void *data_ov006_02136e24[];
 extern void *data_ov006_02134b4c[];
 extern void Mg_RenderSpriteBothPalMtx(void *obj, int x, int y, int w, int *vec);
 extern void func_020127a4(int a, int b, int c, int d);
+extern int data_ov006_0212e358[];
 extern void RenderOamBothScreens(void *a0, int a1, int a2, int a3, int a4, void *a5);
 extern void RenderOamMainScreen(int a, int b, int c, int d, int e);
 extern u16 data_ov006_0212e314[];
@@ -166,6 +152,7 @@ extern int data_ov006_0212e3d0[];
 extern int data_ov006_0212e3e8[];
 extern int data_ov006_0212e3a0[];
 extern int data_ov006_0212e3b8[];
+extern int data_ov006_0212e34c[];
 extern u16 data_ov006_0212e32c[];
 extern void FreeGfxSlotsById(int n);
 extern void Mg_PlayJingle(void *c);
@@ -385,7 +372,7 @@ void dScMgCoin_c::Bag_Release()
 }
 
 // @symbol _ZN11dScMgCoin_c10Bag_State0Ev
-extern void dScMgCoin_c::Bag_State0()
+void dScMgCoin_c::Bag_State0()
 {
 }
 
@@ -394,7 +381,8 @@ extern void dScMgCoin_c::Bag_State0()
    the records live in data_ov006_021417c8. */
 void dScMgCoin_c::Bag_Update()
 {
-    if (this->mBouncer.active ;
+    if (this->mBouncer.active == 0)
+        return;
 
     int state = this->mBouncer.state;
     (this->*data_ov006_021417c8[state].pmf)(0);
@@ -834,14 +822,14 @@ void dScMgCoin_c::DrawCoinValues()
 }
 
 // @symbol _ZN11dScMgCoin_c11Coin_State2Ev
-extern void dScMgCoin_c::Coin_State2()
+void dScMgCoin_c::Coin_State2()
 {
 }
 
 // @symbol _ZN11dScMgCoin_c11Coin_State1Ei
 void dScMgCoin_c::Coin_State1(int index)
 {
-    CoinView *scene ;
+    CoinView *scene = (CoinView *)this;
 
     scene->coin[index].y = scene->coin[index].y + scene->coin[index].vy;
     scene->coin[index].vy = scene->coin[index].vy + kGravity;
@@ -1126,7 +1114,7 @@ void dScMgCoin_c::Block_State5(int i)
 }
 
 // @symbol _ZN11dScMgCoin_c12Block_State4Ev
-extern void dScMgCoin_c::Block_State4()
+void dScMgCoin_c::Block_State4()
 {
 }
 
@@ -1135,7 +1123,7 @@ extern void dScMgCoin_c::Block_State4()
    data_ov006_0212e400, takes the coin's x and rests (state 4). */
 void dScMgCoin_c::Block_State3(int index)
 {
-    char *thiz ;
+    char *thiz = (char *)this;
     int off = index * 0x1c;
     int new_var;
     int *pa = (int *)((thiz + 0x466c) + off);
@@ -1641,7 +1629,7 @@ void dScMgCoin_c::Phase_State1()
 }
 
 // @symbol _ZN11dScMgCoin_c12Phase_State0Ev
-extern void dScMgCoin_c::Phase_State0()
+void dScMgCoin_c::Phase_State0()
 {
 }
 

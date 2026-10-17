@@ -59,21 +59,3 @@ extern "C" void *dScMgJump_c_classInit(void)
     }
     return p;
 }
-
-/* .data 0x0213cb98..0x0213cbb4 */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern "C" {
-int _ZTI11dScMgJump_c[3] = {
-    0x0209a764, 0x0213cba4, 0x0213c5c8,
-};
-int _ZTS11dScMgJump_c[4] = {
-    0x53643131, 0x4a674d63, 0x5f706d75, 0x00000063,
-}
-#pragma section forcedata end
-extern "C" int _ZTV11dScMgJump_c[36] = {
-    0x20ee690, 0x20e70e4, 0x20e70c0, 0x20edffc, 0x202e5f0, 0x20e6f60, 0x20ee27c, 0x20e7074,
-    0x202e3c8, 0x20ee034, 0x20e7040, 0x20e700c, 0x20b04e8, 0x204357c, 0x204349c, 0x2043494,
-    0x20edec0, 0x20edf54, 0x20ee994, 0x20ee8dc, 0x20b2990, 0x20b298c, 0x20ae198, 0x20ae1a0,
-    0x20e6e78, 0x20e6e54, 0x20e6e4c, 0x20e6d98, 0x20e6d8c, 0x20e6d24, 0x20e6cac, 0x20e72c0,
-    0x20b27f4, 0x20e7124, 0x20ae3b4, 0x20ad660

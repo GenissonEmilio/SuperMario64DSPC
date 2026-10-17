@@ -84,9 +84,9 @@ extern "C" daObjClockHuriko_c *daObjClockHuriko_c_classInit()
 /* daObjClockHuriko_c::InitResources -- vtable slot 0, ov013 0x0211133c.
  * A REAL MEMBER ON PURPOSE: the destructor is inline in the header, so this
  * class's key function is its first declared non-inline virtual. */
-extern s32 daObjClockHuriko_c::InitResources()
+s32 daObjClockHuriko_c::InitResources()
 {
-    void *f ;
+    void *f = Model::LoadFile(data_ov013_02112280);
     mModel.SetFile((BMD_File *)f, 1, -1);
     func_ov013_02111238(this);
     mAngSpeed = 0x100;
@@ -179,13 +179,3 @@ s32 daObjClockHuriko_c::CleanupResources()
 /* File-scope object: the pendulum model's SharedFilePtr, the one
  * construction __sinit_d_a_obj_clock_huriko.cpp performs. */
 ClockHurikoModelFilePtr data_ov013_02112280(ASSET_C2_HURIKO_BMD);
-
-/* .rodata 0x021116ac..0x021116b0 */
-#pragma force_active on
-extern "C" {
-extern const unsigned int data_ov013_021116ac[];
-const unsigned int data_ov013_021116ac[1] = {
-    0xffe0fe80u,
-};
-}
-#pragma force_active off

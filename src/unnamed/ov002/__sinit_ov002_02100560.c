@@ -20,7 +20,7 @@ extern void* data_ov002_0210da18;
 extern void* data_ov002_0210da90;
 extern void* data_ov002_0210da20;
 extern void* data_ov002_0210dac0;
-
+extern void* data_ov002_0210d9d8;
 extern void* data_ov002_0210dacc;
 extern void* data_ov002_0210da30;
 extern void* data_ov002_0210dae4;
@@ -28,6 +28,7 @@ extern void* data_ov002_0210d9e0;
 extern void* data_ov002_0210daf0;
 extern void* data_ov002_0210da48;
 extern void* data_ov002_0210db14;
+extern void* data_ov002_0210d9b8;
 extern void* data_ov002_0210db20;
 extern void* data_ov002_0210da50;
 extern void* data_ov002_0210db38;
@@ -35,16 +36,21 @@ extern void* data_ov002_0210d9f8;
 extern void* data_ov002_0210db44;
 extern void* data_ov002_0210da00;
 extern void* data_ov002_0210da60;
+extern void* data_ov002_0210d9c8;
 extern void* data_ov002_0210da6c;
 extern void* data_ov002_0210da58;
 extern void* data_ov002_0210da84;
+extern void* gPFlowerCloseModelFile;
 extern void* data_ov002_0210da9c;
+extern void* gPFlowerOpenModelFile;
 extern void* data_ov002_0210dad8;
 extern void* data_ov002_0210da40;
 extern void* data_ov002_0210dafc;
-extern extern void* data_ov002_0210d9a0;
+extern void* data_ov002_0210d9a0;
 extern void* data_ov002_0210db2c;
+extern void* data_ov002_0210d9c0;
 extern void* data_ov002_0210db50;
+extern void* data_ov002_0210d9a8;
 extern void* data_ov002_0210da78;
 extern void* data_ov002_0210da28;
 extern void* data_ov002_0210daa8;
@@ -52,21 +58,12 @@ extern void* data_ov002_0210d9e8;
 extern void* data_ov002_0210db08;
 extern void* data_ov002_0210da08;
 extern void* data_ov002_0210db5c;
-extern void *data_ov002_0210da38;
+extern void* data_ov002_0210da38;
 extern void* data_ov002_0210dab4;
 extern void* data_ov002_0210da10;
 extern void* data_ov002_0210db68;
 extern void* data_ov002_0210d9f0;
 extern void* data_ov002_0210db74;
-
-/* mwccarm emits the first bss object last. */
-extern unsigned char data_ov002_0210d9d8[8];
-extern unsigned char data_ov002_0210d9a8[8];
-extern unsigned char gPFlowerOpenModelFile[8];
-extern unsigned char data_ov002_0210d9b8[8];
-extern unsigned char data_ov002_0210d9c0[8];
-extern unsigned char data_ov002_0210d9c8[8];
-extern unsigned char gPFlowerCloseModelFile[8];
 
 void __sinit_ov002_02100560(void)
 {
@@ -119,5 +116,3 @@ void __sinit_ov002_02100560(void)
     func_02017acc(&data_ov002_0210d9f0, 0x9c0c);
     func_020731dc(&data_ov002_0210d9f0, (void*)&func_02017ab4, (void**)&data_ov002_0210db74);
 }
-
-void* data_ov002_0210d9a0;

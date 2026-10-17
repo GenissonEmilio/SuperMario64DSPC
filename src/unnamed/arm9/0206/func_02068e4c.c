@@ -1,8 +1,4 @@
 #include "types.h"
-
-/* bss 0x020a9db0..0x020a9db4 */
-short data_020a9db0[2];
-
 extern int _ZN3IRQ7DisableEv(void);
 extern void _ZN3IRQ7RestoreEj(int state);
 extern void MultiStore_Int(int val, int *dst, int len);
@@ -11,6 +7,7 @@ extern void CpuCopy8(u16 *a, char *b, int c);
 extern int func_02069038(void);
 extern char *data_020a9db8;
 extern int data_020a9db4;
+extern short data_020a9db0;
 extern u16 *data_0209a084;
 int func_02068e4c(int a0, u16 *a1, int a2, int a3, u16 a4, int a5)
 {
@@ -32,7 +29,7 @@ int func_02068e4c(int a0, u16 *a1, int a2, int a3, u16 a4, int a5)
   base2 = (char *) (((int) base1 + 0x371f) & (~0x1f));
   irq = _ZN3IRQ7DisableEv();
   fill_i = 0;
-  data_020a9db0[0] = (short) a5;
+  data_020a9db0 = (short) a5;
   data_020a9db4 = (int) base1;
   data_020a9db8 = base2;
   MultiStore_Int(fill_i, (int *) base1, 0x3700);
@@ -98,5 +95,3 @@ int func_02068e4c(int a0, u16 *a1, int a2, int a3, u16 a4, int a5)
   *((u16 *) (base2 + 0x1316)) = 1;
   return 0;
 }
-
-int data_020a9db4;

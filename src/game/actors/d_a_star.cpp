@@ -2767,7 +2767,7 @@ void daStar_c::func_ov002_020e7eb8() {
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN8daStar_c19func_ov002_020e7eb4Ev
 /* Does nothing (STATE_COLLECT_TALK calls it while the pose animation runs). */
-extern void daStar_c::func_ov002_020e7eb4() {
+void daStar_c::func_ov002_020e7eb4() {
 }
 
 /* -------------------------------------------------------------------------- */

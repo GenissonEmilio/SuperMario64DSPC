@@ -29,14 +29,6 @@
  */
 #include "dM3dGSph.h"
 
-
-extern "C" {
-/* bss 0x0209fd20..0x0209fd5c */
-#pragma force_active on
-unsigned char data_0209fd20[60];
-#pragma force_active off
-}
-
 dM3dGSph::dM3dGSph()
 {
 }
@@ -64,8 +56,4 @@ void dM3dGSph::SetRadius(Fix12i r)
 void dM3dGSph::GetCentre(Vector3 &out) const
 {
     out = centre;
-}
-
-extern "C" {
-int data_0209fd00;
 }

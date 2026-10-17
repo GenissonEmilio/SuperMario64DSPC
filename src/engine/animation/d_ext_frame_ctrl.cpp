@@ -32,14 +32,6 @@
  */
 #include "dExtFrameCtrl_c.h"
 
-
-extern "C" {
-/* bss 0x0209cef0..0x0209cef4 */
-#pragma force_active on
-unsigned char data_0209cef0[4];
-#pragma force_active off
-}
-
 extern "C" {
 int __aeabi_idivmod(int n, int d);
 /* SetAnimation's declared signature carries Fix12<int> by value and wall 6az
@@ -202,8 +194,4 @@ void dExtFrameCtrl_c::Copy(const dExtFrameCtrl_c &anim)
     numFramesAndFlags = anim.numFramesAndFlags;
     currFrame         = anim.currFrame;
     speed             = anim.speed;
-}
-
-extern "C" {
-unsigned char data_0209cae4[0x10];
 }

@@ -50,10 +50,3 @@ void Quaternion_FromVector3(Quat *out, Vec3 *a, Vec3 *b)
     out->z = data_02075b04.z;
     out->w = data_02075b04.w;
 }
-
-/* arm9-data-run 0x02092718 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_02092718[2] ;
-#pragma pop
-/* end arm9-data-run 0x02092718 */

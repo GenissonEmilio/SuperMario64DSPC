@@ -1,6 +1,6 @@
 extern int _ZN3IRQ7DisableEv(void);
 extern void _ZN3IRQ7RestoreEj(unsigned int);
-int data_020a637c[9];
+extern int data_020a637c[];
 
 struct Blk {
     int f0;

@@ -62,20 +62,3 @@ extern "C" void func_02013edc(int a, int b, int c)
 {
     func_02042fe4(a, b, c);
 }
-
-extern "C" {
-struct CamMode {
-    s32 nearDist;
-    s32 farDist;
-    s32 f08;
-    s32 f0c;
-    s32 f10;
-    s32 f14;
-    s32 f18;
-    s32 f1c;
-    s32 f20;
-    u16 f24;
-    u16 flags;
-};
-struct CamMode data_02086fcc = { 0, 0x7ffffff, 0xfffff0f7, 0xf09, 0x60000, 0, 0x7ffffff, 0xdfe60, 0x131d00, 0x105b, 0xa2 };
-}

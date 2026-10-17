@@ -394,14 +394,7 @@ int Mg_DrawTopLeftCounter(void *self);
 void Mg_DrawBlinkSprite(void *c, int a1, int a2);
 extern OamAttr *data_ov006_02138ae0[];
 extern char *data_ov006_0213ecb8[];
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-int data_ov006_0212edfc[4] = {
-    500, 0x7d0, 0xfa0, 0x1f40
-};
-#pragma section forcerodata end
-}
+extern int data_ov006_0212edfc[];
 extern OamAttr *data_ov006_02137a78[];
 extern OamAttr *data_ov006_02137a6c[];
 extern OamAttr *data_ov006_02138bd0[];
@@ -685,9 +678,11 @@ int cMgSmartball_wing_c::HitTest(int *p) {
  * main pair; then four OAM::Render calls draw a mirrored quad using the
  * eased angle at offset 0x32 (a BASE field -- see the header) to
  * spread each half away from vertical. */
-extern void cMgSmartball_wing_c::Update()
+void cMgSmartball_wing_c::Update()
 {
-    if (mTriggerCount <;
+    if (mTriggerCount <= 1) {
+        Mg_RenderSpriteBoth(data_ov006_02137994[0],
+            mCurrent0 >> 12, mCurrent1 >> 12, -1, 1);
         Mg_RenderSpriteBoth(data_ov006_02137994[1],
             mCurrent0 >> 12, (mCurrent1 >> 12) + 5, -1, 2);
     }
@@ -823,7 +818,7 @@ int cMgSmartball_pushswitch_c::CheckBall(int *p) {
 /* Slot 1. Draws two OAM sprites: the switch itself, selected by the base's
  * unk_031 flag (0/1 used directly as the table index), and a fixed second
  * frame beneath it. */
-extern void cMgSmartball_pushswitch_c::Update()
+void cMgSmartball_pushswitch_c::Update()
 {
     RenderOamBothScreens(data_ov006_02137a9c[unk_031],
                         mCurrent0 >> 12,
@@ -2281,9 +2276,10 @@ int cMgSmartball_propeller_c_Construct(char* c, int b, int d, int* s){
 /* Slot 1. Draws one of two sprite pairs depending on a byte flag read
  * through the base's mpManager scene pointer (offset 8, low byte) -- unrelated
  * to this class's own 0x34+ fields, which Update never touches at all. */
-extern void cMgSmartball_spring_c::Update()
+void cMgSmartball_spring_c::Update()
 {
-    if ((*(int *)((char *)mpManager + 8) & 0xff) ;
+    if ((*(int *)((char *)mpManager + 8) & 0xff) == 0) {
+        Mg_RenderSpriteBoth(data_ov006_02138a20[0], mCurrent0 >> 12, mCurrent1 >> 12, -1, 1);
         Mg_RenderSpriteBoth(data_ov006_02138a20[1], mCurrent0 >> 12, (mCurrent1 >> 12) + 5, -1, 2);
     } else {
         Mg_RenderSpriteBoth(data_ov006_02138a38[0], mCurrent0 >> 12, mCurrent1 >> 12, -1, 1);
@@ -6659,9 +6655,4 @@ extern "C" void *dScMgSmartball_c_classInit(void) {
 // @symbol SmartballObj_ElemCtor
 extern "C" void SmartballObj_ElemCtor(void)
 {
-}
-
-extern "C" {
-int data_ov006_02142c1c[9];
-int data_ov006_02142c40[32];
 }

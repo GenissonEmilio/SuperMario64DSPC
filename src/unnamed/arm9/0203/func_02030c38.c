@@ -1,6 +1,3 @@
-extern unsigned char data_0209f218;
-static unsigned char data_0209f218_pad[3];
-
 #include "types.h"
 extern int func_0203d950(int i);
 extern void func_02030790(void);
@@ -20,11 +17,3 @@ void func_02030c38(void)
         p++;
     }
 }
-
-extern unsigned char data_0209fc5d[3];
-/* arm9-data-run 0x02097CA4 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_02097ca4[204] ;
-#pragma pop
-/* end arm9-data-run 0x02097CA4 */

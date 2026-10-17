@@ -1,10 +1,8 @@
-void * data_020a8780;
-static unsigned char data_020a8780_pad[540];
-
 extern void func_0206002c(void);
 extern void func_02061138(void);
 extern void func_02060a64(void);
 extern char data_020a8180[];
+extern void *data_020a8780;
 
 void func_02060890(void)
 {

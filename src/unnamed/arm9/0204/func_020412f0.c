@@ -234,7 +234,3 @@ void func_020412f0(char *thiz)
     }
     }
 }
-
-extern u8 data_020a2408[1];
-
-extern u8 data_020a2409[7095];

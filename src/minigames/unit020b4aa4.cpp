@@ -1,7 +1,4 @@
 //cpp
-extern "C" {
-int data_ov004_020bc864 = 0xffffffa0;
-}
 /* unit020b4aa4 -- ov004 unit 0x020b4aa4..0x020b67e8: 43 functions, .text only.
  *
  * One translation unit of the shared minigame overlay, between unit020b2c84
@@ -90,16 +87,6 @@ int data_ov004_020bc864 = 0xffffffa0;
 #include "dScMgBase_c.h"
 #include "nitro/fx/fx.h"
 
-
-extern "C" {
-/* data 0x020bc898..0x020bc89c */
-#pragma force_active on
-#pragma explicit_zero_data on
-unsigned char data_ov004_020bc898[4] = { 108, 0, 0, 0 };
-#pragma explicit_zero_data off
-#pragma force_active off
-}
-
 struct Vec2i { int x, y; };
 
 /* One of the twenty records at sMgCoins. Positions are Fix12
@@ -184,7 +171,7 @@ extern int *sMgCoinsButtonSprites[];
 extern unsigned char *sMgCoinsDeltaSprites[];
 extern short gMgCoinsStatus; /* 1 when a sequence finishes; 2, 3, 4 while one runs */
 extern int sMgCoinsDelta;   /* the count MgCoins_DrawDelta shows */
-int sMgCoinsBetPlaced;   /* set once by MgCoins_PlaceBet */
+extern int sMgCoinsBetPlaced;   /* set once by MgCoins_PlaceBet */
 extern int sMgCoinsSoundPending;   /* the sequence's sound is still to play */
 extern int sMgCoinsLastLostAlt;   /* last sprite MgCoins_StepLoseOneMore stepped */
 extern int sMgCoinsPayoutLeft;   /* count MgCoins_StartPayout lays out */
@@ -1069,15 +1056,3 @@ extern "C" void Coin_FlyToCounter(Sprite* s) {
     ApproachLinear(sMgCoinsPayoutLeft, 0, 1);
     Coin_Reset(s);
 }
-
-extern "C" int gMgCoinsShowDelta = 1;
-/* .data 0x020bc868..0x020bc86c */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern "C" {
-unsigned int data_ov004_020bc868[1] = {
-    0x00000080u,
-};
-}
-#pragma section forcedata end
-unsigned char sMgCoinsVisible[686];

@@ -1,2 +1,0 @@
-/* .bss 0x0210f998..0x0210f9a4 */
-extern unsigned char data_ov002_0210f998[12];

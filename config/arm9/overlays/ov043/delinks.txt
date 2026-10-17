@@ -3,66 +3,6 @@
     .ctor       start:0x02111ae8 end:0x02111af8 kind:rodata align:4
     .data       start:0x02111b00 end:0x021125e0 kind:data align:32
     .bss        start:0x021125e0 end:0x02112720 kind:bss align:32
-src/data/ov043/data_02111b00.c:
-    complete
-    .data start:0x02111b00 end:0x02111b10
-
-src/data/ov043/data_02111b10.c:
-    complete
-    .data start:0x02111b10 end:0x02111b14
-
-src/data/ov043/data_02111b14.c:
-    complete
-    .data start:0x02111b14 end:0x02111b18
-
-src/data/ov043/data_02111b18.c:
-    complete
-    .data start:0x02111b18 end:0x02111b24
-
-src/data/ov043/data_02111b24.c:
-    complete
-    .data start:0x02111b24 end:0x02111b34
-
-src/data/ov043/data_02111b34.c:
-    complete
-    .data start:0x02111b34 end:0x02111b44
-
-src/data/ov043/data_02111b44.c:
-    complete
-    .data start:0x02111b44 end:0x02111b60
-
-src/data/ov043/data_02111b60.c:
-    complete
-    .data start:0x02111b60 end:0x02111b64
-
-src/data/ov043/data_02111b64.c:
-    complete
-    .data start:0x02111b64 end:0x02111b68
-
-src/data/ov043/data_02111b68.c:
-    complete
-    .data start:0x02111b68 end:0x02111b6c
-
-src/data/ov043/data_02111b6c.c:
-    complete
-    .data start:0x02111b6c end:0x02111b74
-
-src/data/ov043/data_02111b74.c:
-    complete
-    .data start:0x02111b74 end:0x02111b80
-
-src/data/ov043/data_02111b80.c:
-    complete
-    .data start:0x02111b80 end:0x02111bc0
-
-src/data/ov043/data_02111bc0.c:
-    complete
-    .data start:0x02111bc0 end:0x02111bd4
-
-src/data/ov043/data_02111bd4.c:
-    complete
-    .data start:0x02111bd4 end:0x02111c00
-
 src/game/actors/d_a_obj_km1_ukishima.cpp:
     complete
     .text start:0x021111a0 end:0x021113fc
@@ -70,126 +10,6 @@ src/game/actors/d_a_obj_km1_ukishima.cpp:
     .ctor start:0x02111ae8 end:0x02111aec
     .data start:0x02111c00 end:0x02111c40
     .bss start:0x021125e0 end:0x02112608
-
-src/data/ov043/data_02111c40.c:
-    complete
-    .data start:0x02111c40 end:0x02111c54
-
-src/data/ov043/data_02111c54.c:
-    complete
-    .data start:0x02111c54 end:0x02111c60
-
-src/data/ov043/data_02111c60.c:
-    complete
-    .data start:0x02111c60 end:0x02111c80
-
-src/data/ov043/data_02111c80.c:
-    complete
-    .data start:0x02111c80 end:0x02111ca0
-
-src/data/ov043/data_02111ca0.c:
-    complete
-    .data start:0x02111ca0 end:0x02111cc8
-
-src/data/ov043/data_02111cc8.c:
-    complete
-    .data start:0x02111cc8 end:0x02111d10
-
-src/data/ov043/data_02111d10.c:
-    complete
-    .data start:0x02111d10 end:0x02111d60
-
-src/data/ov043/data_02111d60.c:
-    complete
-    .data start:0x02111d60 end:0x02111dc0
-
-src/data/ov043/data_02111dc0.c:
-    complete
-    .data start:0x02111dc0 end:0x02111fc0
-
-src/data/ov043/data_02111fc0.c:
-    complete
-    .data start:0x02111fc0 end:0x0211208c
-
-src/data/ov043/data_0211208c.c:
-    complete
-    .data start:0x0211208c end:0x021120a4
-
-src/data/ov043/data_021120a4.c:
-    complete
-    .data start:0x021120a4 end:0x021120bc
-
-src/data/ov043/data_021120bc.c:
-    complete
-    .data start:0x021120bc end:0x021120d8
-
-src/data/ov043/data_021120d8.c:
-    complete
-    .data start:0x021120d8 end:0x021120f8
-
-src/data/ov043/data_021120f8.c:
-    complete
-    .data start:0x021120f8 end:0x02112104
-
-src/data/ov043/data_02112104.c:
-    complete
-    .data start:0x02112104 end:0x02112118
-
-src/data/ov043/data_02112118.c:
-    complete
-    .data start:0x02112118 end:0x02112138
-
-src/data/ov043/data_02112138.c:
-    complete
-    .data start:0x02112138 end:0x02112158
-
-src/data/ov043/data_02112158.c:
-    complete
-    .data start:0x02112158 end:0x02112178
-
-src/data/ov043/data_02112178.c:
-    complete
-    .data start:0x02112178 end:0x02112198
-
-src/data/ov043/data_02112198.c:
-    complete
-    .data start:0x02112198 end:0x021121b8
-
-src/data/ov043/data_021121b8.c:
-    complete
-    .data start:0x021121b8 end:0x021121c0
-
-src/data/ov043/data_021121c0.c:
-    complete
-    .data start:0x021121c0 end:0x021121dc
-
-src/data/ov043/data_021121dc.c:
-    complete
-    .data start:0x021121dc end:0x021121f8
-
-src/data/ov043/data_021121f8.c:
-    complete
-    .data start:0x021121f8 end:0x02112258
-
-src/data/ov043/data_02112258.c:
-    complete
-    .data start:0x02112258 end:0x02112270
-
-src/data/ov043/data_02112270.c:
-    complete
-    .data start:0x02112270 end:0x02112294
-
-src/data/ov043/data_02112294.c:
-    complete
-    .data start:0x02112294 end:0x02112320
-
-src/data/ov043/data_02112320.c:
-    complete
-    .data start:0x02112320 end:0x02112338
-
-src/data/ov043/data_02112338.c:
-    complete
-    .data start:0x02112338 end:0x02112344
 
 src/game/actors/d_a_obj_km1_kurumajiku.cpp:
     complete
@@ -199,18 +19,6 @@ src/game/actors/d_a_obj_km1_kurumajiku.cpp:
     .ctor start:0x02111aec end:0x02111af0
     .bss start:0x02112608 end:0x02112630
 
-src/data/ov043/data_02112350.c:
-    complete
-    .data start:0x02112350 end:0x021123e4
-
-src/data/ov043/data_021123e4.c:
-    complete
-    .data start:0x021123e4 end:0x02112404
-
-src/data/ov043/data_02112404.c:
-    complete
-    .data start:0x02112404 end:0x02112418
-
 src/game/actors/d_a_obj_km1_kuruma.cpp:
     complete
     .text start:0x02111518 end:0x02111630
@@ -219,34 +27,6 @@ src/game/actors/d_a_obj_km1_kuruma.cpp:
     .data start:0x02112418 end:0x02112424
     .bss start:0x02112630 end:0x02112658
 
-src/data/ov043/data_02112424.c:
-    complete
-    .data start:0x02112424 end:0x02112434
-
-src/data/ov043/data_02112434.c:
-    complete
-    .data start:0x02112434 end:0x0211244c
-
-src/data/ov043/data_0211244c.c:
-    complete
-    .data start:0x0211244c end:0x0211245c
-
-src/data/ov043/data_0211245c.c:
-    complete
-    .data start:0x0211245c end:0x02112494
-
-src/data/ov043/data_02112494.c:
-    complete
-    .data start:0x02112494 end:0x021124c4
-
-src/data/ov043/data_021124c4.c:
-    complete
-    .data start:0x021124c4 end:0x021124d4
-
-src/data/ov043/data_021124d4.c:
-    complete
-    .data start:0x021124d4 end:0x021124dc
-
 src/game/actors/d_a_obj_km1_dorifu.cpp:
     complete
     .text start:0x02111630 end:0x021117fc
@@ -254,7 +34,3 @@ src/game/actors/d_a_obj_km1_dorifu.cpp:
     .init start:0x02111940 end:0x02111ae8
     .ctor start:0x02111af4 end:0x02111af8
     .bss start:0x02112658 end:0x02112720
-src/data/ov043/data_021125dc.c:
-    complete
-    .data start:0x021125dc end:0x021125e0
-

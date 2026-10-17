@@ -16,23 +16,6 @@
  */
 #include "types.h"
 
-
-extern "C" {
-extern char data_02096f08[];
-extern char data_02097230[];
-extern char data_020975d4[];
-extern char data_02097950[];
-extern char data_02097ca4[];
-}
-extern "C" {
-/* data 0x0208a0e4..0x0208a0f8 */
-#pragma force_active on
-#pragma explicit_zero_data on
-unsigned int data_0208a0e4[5] = { (unsigned int)&data_02096f08, (unsigned int)&data_02097230, (unsigned int)&data_020975d4, (unsigned int)&data_02097950, (unsigned int)&data_02097ca4 };
-#pragma explicit_zero_data off
-#pragma force_active off
-}
-
 struct Vector3s_ForceDestructor {
     Vector3s v[2];
     ~Vector3s_ForceDestructor();

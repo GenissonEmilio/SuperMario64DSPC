@@ -7,28 +7,8 @@
 src/game/actors/d_a_obj_key.cpp:
     complete
     .text start:0x02130f00 end:0x02132880
-    .init start:0x021328d4 end:0x02132af4
     .rodata start:0x02132880 end:0x02132894
+    .init start:0x021328d4 end:0x02132af4
+    .ctor start:0x02132af4 end:0x02132af8
     .data start:0x02132b00 end:0x02132b4c
     .bss start:0x02132c40 end:0x02132d40
-src/data/merge/data_02132b4c.c:
-    complete
-    .data start:0x02132b4c end:0x02132b58
-src/data/merge/data_02132b58.c:
-    complete
-    .data start:0x02132b58 end:0x02132b68
-src/data/merge/data_02132b68.c:
-    complete
-    .data start:0x02132b68 end:0x02132b84
-src/data/merge/data_02132b84.c:
-    complete
-    .data start:0x02132b84 end:0x02132ba8
-src/data/merge/data_02132ba8.c:
-    complete
-    .data start:0x02132ba8 end:0x02132c40
-src/data/ov089/data_ov089_02132894.c:
-    complete
-    .rodata start:0x02132894 end:0x021328b4
-src/data/merge/rodata_021328b4.c:
-    complete
-    .rodata start:0x021328b4 end:0x021328d4

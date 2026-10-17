@@ -92,7 +92,7 @@ extern "C" AmiBouSpawnInfo g_profile_KM2_AMI_BOU = {
 };
 
 // @symbol _ZN18daObjKm2_Ami_Bou_c13InitResourcesEv
-extern s32 daObjKm2_Ami_Bou_c::InitResources()
+s32 daObjKm2_Ami_Bou_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov045_021131b0), 1, -1);
     if (param1 != kUnsetParam)

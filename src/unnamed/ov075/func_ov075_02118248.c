@@ -2,7 +2,7 @@
 extern u8 data_0209fc58;
 extern int data_ov075_0211d810;
 extern int data_ov075_0211d870;
-extern extern int data_ov075_0211d8b8;
+extern int data_ov075_0211d8b8;
 
 extern void func_ov075_02119dc4(int a, int* data);
 extern int func_0203da9c(void);
@@ -39,6 +39,3 @@ void func_ov075_02118248(char* self)
     func_ov075_0211a148(self, (int)&data_ov075_0211d8b8, 0x14);
     func_02012790(0x119);
 }
-
-int data_ov075_0211d8b8;
-static unsigned char data_ov075_0211d8b8_pad[0x14];

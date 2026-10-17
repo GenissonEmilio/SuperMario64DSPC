@@ -1,17 +1,8 @@
-unsigned char data_0209f254;
-static unsigned char data_0209f254_pad[3];
-
 #include "types.h"
-
-/* bss 0x0209fc5c..0x0209fc5d */
-u8 data_0209fc5c[1];
-
 extern int func_0203d890(void);
 extern u8 data_0209fc5c[];
-extern s8 data_0209fc64[4];
-
+extern s8 data_0209fc64[];
 extern u8 data_0209fc50;
-
 
 void func_02030dac(void)
 {
@@ -28,11 +19,3 @@ void func_02030dac(void)
     }
     data_0209fc50 = (u8)n;
 }
-
-/* arm9-data-run 0x02098214 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_02098214[138] ;
-extern unsigned int data_0209843c[169] ;
-#pragma pop
-/* end arm9-data-run 0x02098214 */

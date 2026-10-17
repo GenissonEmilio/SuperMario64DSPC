@@ -34,24 +34,17 @@
 #include "CapIcon.h"
 #include "SaveData.h"
 
-
-/* bss 0x020ad624..0x020ad628 */
-extern "C" {
-u8 data_ov001_020ad624[4];
-}
-
 extern "C" {
 
 extern int data_0209f3e8[];
 
 extern dCapIcon_c *data_ov001_020ad634[];
-u8 data_ov001_020ad630[4];
-u8 data_ov001_020ad62c[4];
-
+extern u8 data_ov001_020ad630[];
+extern u8 data_ov001_020ad62c[];
 extern u8 data_ov001_020ad628[];
 
 extern u8 data_ov001_020ad624;
-u8 data_ov001_020ad620;
+extern u8 data_ov001_020ad620;
 
 extern void func_ov001_020aa6b0(int *icon, int value);
 extern void func_ov001_020aa6cc(int character);
@@ -171,5 +164,5 @@ extern "C" void func_ov001_020ab2e4(void)
         data_ov001_020ad630[i] = 0;
     }
     data_ov001_020ad620 = 0;
-    data_ov001_020ad624[0] = 0;
+    data_ov001_020ad624 = 0;
 }

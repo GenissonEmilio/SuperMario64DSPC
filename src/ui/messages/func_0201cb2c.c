@@ -1,6 +1,3 @@
-unsigned char data_0209d670;
-static unsigned char data_0209d670_pad[3];
-
 #include "MessageBank.h"
 
 extern int gMessageBankBase;
@@ -19,5 +16,3 @@ void ParseMessageBankSections(void)
     gMessageDataSection = dataSection;
     gMessageEntries = bankBase + 0x30;
 }
-
-extern unsigned int data_0209d664[1];

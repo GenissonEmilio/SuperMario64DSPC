@@ -1,13 +1,10 @@
 //cpp
-extern "C" {extern unsigned char data_0209d6a0;
-
-}
 #include "types.h"
 #include "SaveData.h"
 extern u8 data_0209d660;
 extern u8 data_0209d654;
 extern s16 data_0209d6d4;
-extern extern u8 data_0209d67c;
+extern u8 data_0209d67c;
 extern u8 data_0209d670;
 extern s32 data_0208ee44;
 
@@ -60,5 +57,3 @@ void dScStage_c::UpdateMessage() {
         Message::DisplaySaving(0x296);
     }
 }
-
-u8 data_0209d67c;

@@ -23,12 +23,6 @@
 #include "dScStage_c.h"
 #include "dFdColor_c.h"
 
-
-/* bss 0x0209f1e4..0x0209f1e8 */
-extern "C" {
-void * data_0209f1e4;
-}
-
 struct Matrix2x2 { int m[4]; };
 
 /* The transition calls pass a second word to fader slots 3/4, whereas the
@@ -98,7 +92,7 @@ extern u8 data_02092660;
 
 extern u8   data_0209f1e0;
 
-dFdBrightness_c * data_0209f5bc;
+extern dFdBrightness_c *data_0209f5bc;
 extern dFdBrightness_c data_0209f5d0;
 extern u16  data_02092664;
 
@@ -424,10 +418,4 @@ void dScene_c::SetAndStopColorFader()
 {
     SetFaders(&data_0209f5e8);
     data_0209f5e8.speed = 0;
-}
-
-extern "C" {
-unsigned int data_0209f280[1];
-unsigned char data_0209f248[4];
-u8 data_0208f074[256] = { 7, 4, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6, 4, 6, 6, 5, 6, 6, 6, 6, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 7, 4, 8, 3, 6, 6, 3, 5, 5, 5, 5, 5, 6, 6, 5, 2, 5, 5, 4, 6, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 5, 6, 3, 3, 3, 3, 7, 6, 6, 0, 7, 0, 3, 6, 6, 9, 6, 6, 6, 9, 6, 5, 7, 0, 6, 0, 0, 3, 3, 6, 6, 6, 6, 8, 6, 9, 5, 5, 8, 0, 5, 6, 0, 3, 6, 6, 0, 6, 2, 6, 4, 5, 5, 9, 8, 6, 7, 9, 4, 6, 4, 4, 4, 5, 7, 3, 0, 3, 4, 9, 9, 9, 9, 7, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 6, 6, 4, 4, 6, 4, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 6, 5, 5, 8, 6, 5, 5, 5, 5, 4, 4, 4, 4, 5, 6, 5, 5, 5, 6, 5, 6, 5, 5, 5, 5, 5, 6, 5, 6, 4, 4, 6, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 7, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 };
 }

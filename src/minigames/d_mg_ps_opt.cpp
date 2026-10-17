@@ -19,12 +19,6 @@
 #include "dMgPsOpt_c.h"
 
 /* The blitter's 2x2 matrix. This panel always passes none. */
-
-/* rodata 0x020b9488..0x020b948c */
-#pragma force_active on
-extern static const unsigned int sMgCoinRiseFrames[1] ;
-#pragma force_active off
-
 struct M;
 
 /* {halfW, halfH} records laid down by __sinit_ov004_020b9b24, stride 4.

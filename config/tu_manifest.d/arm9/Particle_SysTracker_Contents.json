@@ -11,11 +11,6 @@
       "name": ".text",
       "start": "0x02021a04",
       "end": "0x02021e40"
-    },
-    {
-      "name": ".data",
-      "start": "0x02090200",
-      "end": "0x02090208"
     }
   ],
   "functions": [

@@ -9,9 +9,7 @@ struct G {
 
 extern void func_ov007_020bfd70(int a, int b, int *p0, int *p1);
 extern struct G *data_ov007_0210342c;
-const unsigned short data_ov007_020d7c58[2] = {
-    0x136, 0xf2
-};
+extern unsigned short data_ov007_020d7c58[];
 
 void func_ov007_020be7a8(int a0, unsigned short *out1, unsigned short *out2, int *out3)
 {

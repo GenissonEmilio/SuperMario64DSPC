@@ -7,9 +7,9 @@ extern void func_0206a694(void);
 extern void func_0206a634(void);
 
 extern int data_020a9de8;
-int data_020a9dec;
+extern int data_020a9dec;
 
-extern void func_0206a88c(void)
+void func_0206a88c(void)
 {
     if (data_020a9de8) return;
     data_020a9de8 = 1;

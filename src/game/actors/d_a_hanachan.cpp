@@ -727,7 +727,7 @@ void daHanachan_c::SetState(int state)
 
 /* Runs the current state's Main. */
 // @symbol _ZN12daHanachan_c9ExecStateEv
-extern void daHanachan_c::ExecState()
+void daHanachan_c::ExecState()
 {
     (this->*data_ov034_02114538[mState].mMain)();
 }

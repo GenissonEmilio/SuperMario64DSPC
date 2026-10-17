@@ -326,7 +326,7 @@ void dScMgTeresa_c::BigBoo_State8(int idx)
 
 
 // @symbol _ZN13dScMgTeresa_c13BigBoo_State7Ev
-extern void dScMgTeresa_c::BigBoo_State7()
+void dScMgTeresa_c::BigBoo_State7()
 {
 }
 
@@ -334,7 +334,7 @@ extern void dScMgTeresa_c::BigBoo_State7()
 // @symbol _ZN13dScMgTeresa_c13BigBoo_State6Ei
 void dScMgTeresa_c::BigBoo_State6(int index)
 {
-    struct BooWalk *base ;
+    struct BooWalk *base = (struct BooWalk *)this;
     void *data;
     base->boo[index].xVel = 0;
     base->boo[index].yVel = 0;
@@ -641,7 +641,7 @@ void dScMgTeresa_c::Marker_Draw()
 
 // @symbol _ZN13dScMgTeresa_c13Marker_UpdateEv
 /* Empty. Scene_State1 calls it with the object. */
-extern void dScMgTeresa_c::Marker_Update()
+void dScMgTeresa_c::Marker_Update()
 {
 }
 
@@ -649,7 +649,7 @@ extern void dScMgTeresa_c::Marker_Update()
 // @symbol _ZN13dScMgTeresa_c11Marker_ShowEv
 void dScMgTeresa_c::Marker_Show()
 {
-    mMarker.x ;
+    mMarker.x = 0x50000;
     mMarker.y = 0x40000;
     mMarker.active = 1;
     mMarker.visible = 1;

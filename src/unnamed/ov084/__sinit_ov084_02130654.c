@@ -17,10 +17,9 @@ extern void SharedFilePtr_Destruct_Anim(void);
 
 extern char data_ov084_02130dfc[];
 extern char data_ov084_02130e44[];
-char data_ov084_02130e14[8];
-
+extern char data_ov084_02130e14[];
 extern char data_ov084_02130e50[];
-char data_ov084_02130e24[8];
+extern char data_ov084_02130e24[];
 extern char data_ov084_02130e68[];
 extern char data_ov084_02130e0c[];
 extern char data_ov084_02130e74[];
@@ -70,5 +69,3 @@ void __sinit_ov084_02130654(void)
     data_ov084_02130e80[7] = data_ov084_02130bd4;
     data_ov084_02130e80[8] = data_ov084_02130be4;
 }
-
-char data_ov084_02130dfc[8];

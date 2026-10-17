@@ -61,5 +61,3 @@ extern "C" void func_02037464(char *c)
     query->clsnY = 0x80000000;
     query->hasClsn = 0;
 }
-
-extern void *volatile data_0209f3c4;

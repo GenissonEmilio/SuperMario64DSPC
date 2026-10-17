@@ -27,9 +27,3 @@ int *daStar_c_classInit_SILVER_STAR(void)
     }
     return p;
 }
-
-/* .data 0x0210ac00..0x0210ac7c */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern int _ZTV8daTree_c[31] ;
-#pragma section forcedata end

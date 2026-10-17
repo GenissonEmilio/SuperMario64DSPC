@@ -6,7 +6,3 @@ char* func_ov007_020c2304(void){
   func_ov007_020c22a0(p);
   return p;
 }
-
-int data_ov007_0210324c[1] = {
-    0x646170
-};

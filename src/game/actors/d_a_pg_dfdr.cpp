@@ -262,9 +262,9 @@ s32 daPgDfdr_c::CleanupResources()
 
 // @symbol _ZN10daPgDfdr_c19func_ov027_02111d70Ei
 /* Select state idx and run its enter function. */
-extern void daPgDfdr_c::func_ov027_02111d70(int idx)
+void daPgDfdr_c::func_ov027_02111d70(int idx)
 {
-    mStateTable ;
+    mStateTable = &((StatePair *)&data_ov027_02113ce4)[idx];
     func_ov027_02111d38();
 }
 

@@ -163,7 +163,7 @@ s32 daObjBk_Dossunbar_c::InitResources()
 }
 
 // @symbol _ZN19daObjBk_Dossunbar_c8BehaviorEv
-extern s32 daObjBk_Dossunbar_c::Behavior()
+s32 daObjBk_Dossunbar_c::Behavior()
 {
     (this->*(data_ov015_021149ec[mState].handler))();
     UpdateModelPosAndRotY();

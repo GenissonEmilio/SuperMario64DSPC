@@ -25,22 +25,9 @@ typedef struct Oam {
     u16 aff;
 } Oam;
 
-/* C, not C++: a C++ definition of this array emits an empty __sinit, and
-   0x02130a04 is already __sinit_ov006_02130a04. Declaration order is the
-   one that makes mwcc emit the .bss sections in address order. */
-#pragma cplusplus off
-int data_ov006_02141a44;
-extern void *data_ov006_02141a48;
-void *data_ov006_02141a50;
-void *data_ov006_02141a40;
-extern void *data_ov006_02141a4c;
-Oam data_ov006_02141a54[128];
-#pragma cplusplus on
-
 extern "C" {
 
 /* ov006's own data. */
-unsigned char data_ov006_0212e574[8] = {
 extern void *data_ov006_02141a48;
 extern void *data_ov006_02141a50;
 /* C, not C++: a C++ definition of this array emits an empty __sinit, and
@@ -48,13 +35,7 @@ extern void *data_ov006_02141a50;
 #pragma cplusplus off
 Oam data_ov006_02141a54[128];
 #pragma cplusplus on
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-    0, 64, 128, 192, 192, 0, 0, 0
-};
-#pragma section forcerodata end
-}
+extern unsigned char data_ov006_0212e574[];
 
 /* arm9 / ov004 globals with no project header. */
 extern unsigned char data_0209d454;

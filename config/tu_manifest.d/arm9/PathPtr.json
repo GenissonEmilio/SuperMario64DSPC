@@ -21,17 +21,7 @@
     {
       "name": ".bss",
       "start": "0x020a0d84",
-      "end": "0x020a0db0"
-    },
-    {
-      "name": ".bss",
-      "start": "0x020a0d84",
       "end": "0x020a0d88"
-    },
-    {
-      "name": ".data",
-      "start": "0x020994d4",
-      "end": "0x020994e0"
     }
   ],
   "functions": [
@@ -127,27 +117,6 @@
       "address": "0x020a0d84",
       "size": "0x4",
       "evidence": "level PathDef table pointer; the BSS word is 0 and SetPathTable stores the loaded table"
-    },
-    {
-      "symbol": "PATH_NODES",
-      "address": "0x020a0d88",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x20a0d88..0x20a0d8c"
-    },
-    {
-      "symbol": "NUM_PATHS",
-      "address": "0x020a0d8c",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x20a0d8c..0x20a0d90"
-    },
-    {
-      "symbol": "data_020a0d90",
-      "address": "0x020a0d90",
-      "size": "0x20",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x20a0d90..0x20a0db0"
     }
   ],
   "notes": [
@@ -213,7 +182,7 @@
         {
           "section": ".bss",
           "start": "0x020a0d84",
-          "end": "0x020a0db0",
+          "end": "0x020a0d88",
           "comparison": "NOBITS -- symbol/module gates"
         }
       ],
@@ -278,32 +247,6 @@
       "symbol": "_ZN7PathPtrC2Ev",
       "disposition": "deadstrip",
       "reason": "Vague-linkage base-subobject constructor emitted alongside C1; PathPtr is never a base class, so the cartridge retains only C1 and isolation discards the copy."
-    }
-  ],
-  "symbol_binding_rewrites": [
-    {
-      "symbol": "PATH_DEFS",
-      "from": "STB_LOCAL",
-      "to": "STB_GLOBAL",
-      "evidence": "File-scope static has internal linkage. DSD requires a global symbol at this address; the rewrite changes only the ELF binding."
-    },
-    {
-      "symbol": "PATH_NODES",
-      "from": "STB_LOCAL",
-      "to": "STB_GLOBAL",
-      "evidence": "File-scope static has internal linkage. DSD requires a global symbol at this address; the rewrite changes only the ELF binding."
-    },
-    {
-      "symbol": "NUM_PATHS",
-      "from": "STB_LOCAL",
-      "to": "STB_GLOBAL",
-      "evidence": "File-scope static has internal linkage. DSD requires a global symbol at this address; the rewrite changes only the ELF binding."
-    },
-    {
-      "symbol": "data_020a0d90",
-      "from": "STB_LOCAL",
-      "to": "STB_GLOBAL",
-      "evidence": "File-scope static has internal linkage. DSD requires a global symbol at this address; the rewrite changes only the ELF binding."
     }
   ]
 }

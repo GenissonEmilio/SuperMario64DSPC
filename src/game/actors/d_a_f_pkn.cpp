@@ -220,7 +220,7 @@ void daFPkn_c::SpawnDeathBurst()
 
 /* Empty. StateWait passes this in r0 and nothing reads it. */
 // @symbol _ZN8daFPkn_c21OnGroupMemberDefeatedEv
-extern void daFPkn_c::OnGroupMemberDefeated()
+void daFPkn_c::OnGroupMemberDefeated()
 {
 }
 

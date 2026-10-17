@@ -12,14 +12,7 @@
 
 #include "types.h"
 
-
-/* data 0x02099fd0..0x02099fd4 */
-#pragma explicit_zero_data on
-extern "C" {
-int data_02099fd0 = 3;
-}
-#pragma explicit_zero_data off
-
+extern int data_02099fd0;  // RENDER_DMA_CHANNEL: DMA channel number, -1 if none
 extern u32 data_020a60ac;  // texture upload window: base address
 extern u32 data_020a60b0;  // texture-palette VRAM base address
 extern u32 data_020a60b4;  // texture-palette bank selector (BeginLoadTexPltt result)
@@ -27,16 +20,8 @@ extern u32 data_020a60b8;  // texture bank selector (BeginLoadTex result)
 extern u32 data_020a60bc;  // texture upload window: secondary bank base
 extern u32 data_020a60c0;  // texture upload window: top of the base window
 extern u16 data_02086314[];
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-u16 data_02086324[1] = {
-    0
-};
-
-u16 data_02086326[1] = {
-    0
-};
-#pragma section forcerodata end
+extern u16 data_02086324[];
+extern u16 data_02086326[];
 extern u16 data_02086328[];
 
 extern "C" {

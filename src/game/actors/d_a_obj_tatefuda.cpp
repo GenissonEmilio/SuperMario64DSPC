@@ -683,7 +683,7 @@ void daObjTatefuda_c::Dropped(){
 // @symbol _ZN15daObjTatefuda_c8InitIdleEv
 /* IDLE, enter: nothing to do. The PMF record binds a member, so this
    receives `this` and ignores it. */
-extern void daObjTatefuda_c::InitIdle()
+void daObjTatefuda_c::InitIdle()
 {
 }
 

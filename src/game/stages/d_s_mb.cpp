@@ -37,9 +37,7 @@ void func_02012790(int x);
 void *_ZN5mHeap6Heap_t10SetDefaultEv(void *h);
 void func_0201a5f8(int t);
 void *func_0201a3e4(void);
-extern "C" {
-u32 data_020a0c60;
-}
+extern u32 data_020a0c60;
 extern void *data_020a0c5c;
 /* Linker-defined overlay IDs: the address is the overlay number. */
 extern int OVERLAY_100_ID;
@@ -57,7 +55,6 @@ extern s16 data_02082214[];
 extern u8 data_0209d45c;
 extern u8 data_0209d454;
 extern void *data_0209d4a8;
-
 extern int data_0208ee44;
 extern u8 func_0201a2f8[];
 
@@ -362,8 +359,4 @@ extern "C" void *dScMB_c_classInit(void)
         }
     }
     return p;
-}
-
-extern "C" {
-u8 data_0209f250;
 }

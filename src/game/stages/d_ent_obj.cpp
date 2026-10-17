@@ -288,10 +288,16 @@ int UnknownVsPlayer::func_ov075_0211427c(){
 }
 
 // @symbol _ZN15UnknownVsPlayer19func_ov075_021142fcEv
-extern void UnknownVsPlayer::func_ov075_021142fc(){
+void UnknownVsPlayer::func_ov075_021142fc(){
 }
 
-/* Movement state 9: until the figure is past x ;
+/* Movement state 9: until the figure is past x = 0x1c2000, keep its
+ * particle effect on bone 15. The bone's translation is carried into the
+ * scene by the model matrix, then scaled back up by 8 (the render matrices
+ * hold positions >> 3). */
+// @symbol _ZN15UnknownVsPlayer19func_ov075_02114300Ev
+void UnknownVsPlayer::func_ov075_02114300(){
+    if (mPosition.x >= 0x1c2000) return;
     Vector3 pos;
     Matrix4x3 *bone = &mModel.data.transforms[15];
     MulVec3Mat4x3(&bone->t, &mModel.mat4x3, &pos);
@@ -355,8 +361,9 @@ void UnknownVsPlayer::func_ov075_021143e4(){
  * fell-off flags and plays the fall sound. Far enough down it parks in
  * state 6. */
 // @symbol _ZN15UnknownVsPlayer19func_ov075_02114560Ev
-extern void UnknownVsPlayer::func_ov075_02114560(){
-    if (mPosition.z < data_ov075_0211b534[mPlayerNo] && mInAir ;
+void UnknownVsPlayer::func_ov075_02114560(){
+    if (mPosition.z < data_ov075_0211b534[mPlayerNo] && mInAir == 0) {
+        mVertSpeed = 0x2a000;
         mInAir = 1;
         _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
             &mModel, (void *)data_ov075_0211d41c.filePtr, 4, 0x40000000, 0x1000, 0);
@@ -443,13 +450,13 @@ void UnknownVsPlayer::func_ov075_021147d4(){
 }
 
 // @symbol _ZN15UnknownVsPlayer19func_ov075_02114890Ev
-extern void UnknownVsPlayer::func_ov075_02114890(){
+void UnknownVsPlayer::func_ov075_02114890(){
 }
 
 /* Start the run off the stage (movement state 5) from a standstill. */
 // @symbol _ZN15UnknownVsPlayer19func_ov075_02114894Ev
 void UnknownVsPlayer::func_ov075_02114894(){
-    mSpeed ;
+    mSpeed = 0;
     mVertSpeed = 0;
     _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(&mModel, (void *)data_ov075_0211d424.filePtr,
                                                        4, 0, 0x1000, 0);

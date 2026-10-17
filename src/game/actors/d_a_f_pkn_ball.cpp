@@ -96,22 +96,9 @@ extern void* _ZN8Particle6System3NewEjj5Fix12IiES2_S2_PK11Vector3_16fPNS_8Callba
 extern void Vec3_Asr(Vec3* d, Vec3* s, int sh);
 extern void Matrix4x3_FromTranslation(Matrix4x3* m, s32 x, s32 y, s32 z);
 extern void _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_j(void* thiz, void* sm, void* mtx, Fix12i f, Fix12i a, u32 b);
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-s32 data_ov002_02100334[5] = {
-    160, 261, 127, 160, 175
-};
-
-s32 data_ov002_02100320[5] = {
-    0x78000, 0x46000, 0x82000, 0x78000, 0x6e000
-};
-
-s32 data_ov002_02100348[5] = {
-    161, 262, 128, 161, 176
-};
-#pragma section forcerodata end
-}
+extern s32 data_ov002_02100320[];
+extern s32 data_ov002_02100334[];
+extern s32 data_ov002_02100348[];
 extern Matrix4x3 data_020a0e68;
 int func_ov002_020ad660(void* cc, void* pp, void* r5p, int flags);
 s16 Vec3_HorzAngle(const void* a, const void* b);

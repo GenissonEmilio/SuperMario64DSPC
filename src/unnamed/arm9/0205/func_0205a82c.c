@@ -9,5 +9,3 @@ void func_0205a82c(void) {
     func_0205b358();
     func_0205b524();
 }
-
-u32 data_020a6480[1];

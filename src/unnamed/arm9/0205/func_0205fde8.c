@@ -1,8 +1,8 @@
 extern unsigned short data_020a8104;
 extern int data_020a8114[2];
-extern extern short data_020a8138;
+extern short data_020a8138;
 extern char data_020a8124;
-int data_020a8110;
+extern int data_020a8110;
 extern void func_0205fcfc(void);
 extern void func_0205b858(void);
 extern int func_0205ba3c(int bit, int word);
@@ -25,5 +25,3 @@ void func_0205fde8(void)
     func_02058b9c(&data_020a8124);
     data_020a8110 = *(int *)0x27ffc3c;
 }
-
-short data_020a8138;

@@ -255,7 +255,7 @@ struct EnemyDeathC : dEnemyBase_c {
 };
 
 // @symbol _ZN6Aea30C19func_ov002_020aea2cEP8dActor_cP10dBgCh_Actr
-extern void Aea30C::func_ov002_020aea2c(dActor_c*, dBgCh_Actr*)
+void Aea30C::func_ov002_020aea2c(dActor_c*, dBgCh_Actr*)
 {
 }
 

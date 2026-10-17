@@ -9,82 +9,6 @@ src/game/actors/d_a_yurei_mucho.cpp:
     .text start:0x02115ee0 end:0x02116f98
     .bss start:0x0211d600 end:0x0211d620
 
-src/data/ov065/data_0211cb20.c:
-    complete
-    .data start:0x0211cb20 end:0x0211cb28
-
-src/data/ov065/data_0211cb28.c:
-    complete
-    .data start:0x0211cb28 end:0x0211cb30
-
-src/data/ov065/data_0211cb30.c:
-    complete
-    .data start:0x0211cb30 end:0x0211cb38
-
-src/data/ov065/data_0211cb38.c:
-    complete
-    .data start:0x0211cb38 end:0x0211cb40
-
-src/data/ov065/data_0211cb40.c:
-    complete
-    .data start:0x0211cb40 end:0x0211cb48
-
-src/data/ov065/data_0211cb48.c:
-    complete
-    .data start:0x0211cb48 end:0x0211cb50
-
-src/data/ov065/data_0211cb50.c:
-    complete
-    .data start:0x0211cb50 end:0x0211cb58
-
-src/data/ov065/data_0211cb58.c:
-    complete
-    .data start:0x0211cb58 end:0x0211cb60
-
-src/data/ov065/data_0211cb60.c:
-    complete
-    .data start:0x0211cb60 end:0x0211cb6c
-
-src/data/ov065/data_0211cb6c.c:
-    complete
-    .data start:0x0211cb6c end:0x0211cb80
-
-src/data/ov065/data_0211cb80.c:
-    complete
-    .data start:0x0211cb80 end:0x0211cba4
-
-src/data/ov065/data_0211cba4.c:
-    complete
-    .data start:0x0211cba4 end:0x0211cc20
-
-src/data/ov065/bss_0211d620.c:
-    complete
-    .bss start:0x0211d620 end:0x0211d62c
-
-src/data/ov065/bss_0211d62c.c:
-    complete
-    .bss start:0x0211d62c end:0x0211d638
-
-src/data/ov065/bss_0211d638.c:
-    complete
-    .bss start:0x0211d638 end:0x0211d644
-
-src/data/ov065/bss_0211d644.c:
-    complete
-    .bss start:0x0211d644 end:0x0211d660
-
-src/data/ov065/bss_0211d660.c:
-    complete
-    .bss start:0x0211d660 end:0x0211d670
-
-src/data/ov065/bss_0211d670.c:
-    complete
-    .bss start:0x0211d670 end:0x0211d680
-
-src/data/ov065/bss_0211d680.c:
-    complete
-    .bss start:0x0211d680 end:0x0211d690
-
 src/game/actors/d_a_basabasa.cpp:
     complete
     .text start:0x02116f98 end:0x02117f40
@@ -92,26 +16,6 @@ src/game/actors/d_a_basabasa.cpp:
     .ctor start:0x0211cae4 end:0x0211cae8
     .data start:0x0211cc20 end:0x0211cc60
     .bss start:0x0211d690 end:0x0211d720
-
-src/data/ov065/rodata_0211c078.c:
-    complete
-    .rodata start:0x0211c078 end:0x0211c080
-
-src/data/ov065/data_0211cc60.c:
-    complete
-    .data start:0x0211cc60 end:0x0211cc6c
-
-src/data/ov065/data_0211cc6c.c:
-    complete
-    .data start:0x0211cc6c end:0x0211cc7c
-
-src/data/ov065/data_0211cc7c.c:
-    complete
-    .data start:0x0211cc7c end:0x0211cca0
-
-src/data/ov065/data_0211cca0.c:
-    complete
-    .data start:0x0211cca0 end:0x0211cd1c
 
 src/game/actors/d_a_dossy.cpp:
     complete
@@ -121,114 +25,6 @@ src/game/actors/d_a_dossy.cpp:
     .ctor start:0x0211cae8 end:0x0211caec
     .data start:0x0211cd1c end:0x0211cd34
     .bss start:0x0211d720 end:0x0211d814
-
-src/data/ov065/rodata_0211c0a8.c:
-    complete
-    .rodata start:0x0211c0a8 end:0x0211c0c8
-
-src/data/ov065/rodata_0211c0c8.c:
-    complete
-    .rodata start:0x0211c0c8 end:0x0211c0d0
-
-src/data/ov065/rodata_0211c0d0.c:
-    complete
-    .rodata start:0x0211c0d0 end:0x0211c110
-
-src/data/ov065/data_0211cd34.c:
-    complete
-    .data start:0x0211cd34 end:0x0211cd40
-
-src/data/ov065/data_0211cd40.c:
-    complete
-    .data start:0x0211cd40 end:0x0211cd4c
-
-src/data/ov065/data_0211cd4c.c:
-    complete
-    .data start:0x0211cd4c end:0x0211cd58
-
-src/data/ov065/data_0211cd58.c:
-    complete
-    .data start:0x0211cd58 end:0x0211cd68
-
-src/data/ov065/data_0211cd68.c:
-    complete
-    .data start:0x0211cd68 end:0x0211cd84
-
-src/data/ov065/data_0211cd84.c:
-    complete
-    .data start:0x0211cd84 end:0x0211cda0
-
-src/data/ov065/data_0211cda0.c:
-    complete
-    .data start:0x0211cda0 end:0x0211cdc4
-
-src/data/ov065/data_0211cdc4.c:
-    complete
-    .data start:0x0211cdc4 end:0x0211ce48
-
-src/data/ov065/data_0211ce48.c:
-    complete
-    .data start:0x0211ce48 end:0x0211cec4
-
-src/data/ov065/data_0211cec4.c:
-    complete
-    .data start:0x0211cec4 end:0x0211cfa4
-
-src/data/ov065/data_0211cfa4.c:
-    complete
-    .data start:0x0211cfa4 end:0x0211cfa8
-
-src/data/ov065/data_0211cfa8.c:
-    complete
-    .data start:0x0211cfa8 end:0x0211cfac
-
-src/data/ov065/data_0211cfac.c:
-    complete
-    .data start:0x0211cfac end:0x0211cfb8
-
-src/data/ov065/data_0211cfb8.c:
-    complete
-    .data start:0x0211cfb8 end:0x0211cfd0
-
-src/data/ov065/data_0211cfd0.c:
-    complete
-    .data start:0x0211cfd0 end:0x0211cfd4
-
-src/data/ov065/data_0211cfd4.c:
-    complete
-    .data start:0x0211cfd4 end:0x0211cfd8
-
-src/data/ov065/data_0211cfd8.c:
-    complete
-    .data start:0x0211cfd8 end:0x0211cfe8
-
-src/data/ov065/data_0211cfe8.c:
-    complete
-    .data start:0x0211cfe8 end:0x0211d004
-
-src/data/ov065/data_0211d004.c:
-    complete
-    .data start:0x0211d004 end:0x0211d028
-
-src/data/ov065/data_0211d028.c:
-    complete
-    .data start:0x0211d028 end:0x0211d0a8
-
-src/data/ov065/data_0211d0a8.c:
-    complete
-    .data start:0x0211d0a8 end:0x0211d0b4
-
-src/data/ov065/data_0211d0b4.c:
-    complete
-    .data start:0x0211d0b4 end:0x0211d0c8
-
-src/data/ov065/data_0211d0c8.c:
-    complete
-    .data start:0x0211d0c8 end:0x0211d0ec
-
-src/data/ov065/data_0211d0ec.c:
-    complete
-    .data start:0x0211d0ec end:0x0211d16c
 
 src/game/actors/d_a_obj_ct_rotate_block.cpp:
     complete
@@ -252,34 +48,6 @@ src/game/actors/d_a_obj_ct_mecha04.cpp:
     .data start:0x0211d16c end:0x0211d1ac
     .bss start:0x0211d8b4 end:0x0211d904
 
-src/data/ov065/data_0211d1ac.c:
-    complete
-    .data start:0x0211d1ac end:0x0211d26c
-
-src/data/ov065/data_0211d26c.c:
-    complete
-    .data start:0x0211d26c end:0x0211d270
-
-src/data/ov065/data_0211d270.c:
-    complete
-    .data start:0x0211d270 end:0x0211d27c
-
-src/data/ov065/data_0211d27c.c:
-    complete
-    .data start:0x0211d27c end:0x0211d290
-
-src/data/ov065/data_0211d290.c:
-    complete
-    .data start:0x0211d290 end:0x0211d2b4
-
-src/data/ov065/data_0211d2b4.c:
-    complete
-    .data start:0x0211d2b4 end:0x0211d334
-
-src/data/ov065/data_0211d334.c:
-    complete
-    .data start:0x0211d334 end:0x0211d35c
-
 src/game/actors/d_a_obj_ct_mecha05.cpp:
     complete
     .text start:0x0211ab60 end:0x0211b360
@@ -295,50 +63,6 @@ src/game/actors/d_a_obj_ct_kaitendai.cpp:
     .data start:0x0211d35c end:0x0211d360
     .bss start:0x0211d92c end:0x0211d97c
 
-src/data/ov065/data_0211d360.c:
-    complete
-    .data start:0x0211d360 end:0x0211d434
-
-src/data/ov065/data_0211d434.c:
-    complete
-    .data start:0x0211d434 end:0x0211d440
-
-src/data/ov065/data_0211d440.c:
-    complete
-    .data start:0x0211d440 end:0x0211d454
-
-src/data/ov065/data_0211d454.c:
-    complete
-    .data start:0x0211d454 end:0x0211d470
-
-src/data/ov065/data_0211d470.c:
-    complete
-    .data start:0x0211d470 end:0x0211d494
-
-src/data/ov065/data_0211d494.c:
-    complete
-    .data start:0x0211d494 end:0x0211d514
-
-src/data/ov065/data_0211d514.c:
-    complete
-    .data start:0x0211d514 end:0x0211d520
-
-src/data/ov065/data_0211d520.c:
-    complete
-    .data start:0x0211d520 end:0x0211d530
-
-src/data/ov065/data_0211d530.c:
-    complete
-    .data start:0x0211d530 end:0x0211d544
-
-src/data/ov065/data_0211d544.c:
-    complete
-    .data start:0x0211d544 end:0x0211d568
-
-src/data/ov065/data_0211d568.c:
-    complete
-    .data start:0x0211d568 end:0x0211d600
-
 src/game/actors/d_a_obj_ct_mecha08.cpp:
     complete
     .text start:0x0211b7f0 end:0x0211bbdc
@@ -352,10 +76,6 @@ src/game/actors/d_a_obj_ct_mecha09.cpp:
     .init start:0x0211ca74 end:0x0211cae0
     .ctor start:0x0211cb04 end:0x0211cb08
     .bss start:0x0211d9cc end:0x0211d9f4
-
-src/data/ov065/bss_0211d9f4.c:
-    complete
-    .bss start:0x0211d9f4 end:0x0211da00
 
 src/unnamed/ov065/__sinit_ov065_0211c110.c:
     complete

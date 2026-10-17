@@ -1051,7 +1051,7 @@ void daNknk_c::func_ov062_021179e4() {
 }
 
 // @symbol _ZN8daNknk_c19func_ov062_02117994Ei
-extern void daNknk_c::func_ov062_02117994(int idx) {
+void daNknk_c::func_ov062_02117994(int idx) {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
         &mModelAnim,
         (BCA_File*)data_ov062_0211cee8[idx]->filePtr,

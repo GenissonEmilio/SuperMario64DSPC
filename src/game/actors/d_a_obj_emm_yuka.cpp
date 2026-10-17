@@ -153,7 +153,7 @@ int daObjEmmYuka_c::Behavior()
 }
 
 // @symbol _ZN14daObjEmmYuka_c13InitResourcesEv
-extern int daObjEmmYuka_c::InitResources()
+int daObjEmmYuka_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(*data_ov052_021125a0.model), 1, -1);
     UpdateModelPosAndRotY();

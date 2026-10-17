@@ -7,11 +7,3 @@ void nds_print(unsigned short* dst, volatile signed char* str) {
         ++str;
     }
 }
-
-/* arm9-data-run 0x0208E714 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int _ZTI8dClipper[2] ;
-extern unsigned int _ZTS8dClipper[5] ;
-#pragma pop
-/* end arm9-data-run 0x0208E714 */

@@ -11,22 +11,6 @@ src/game/actors/d_a_huwa.cpp:
     .ctor start:0x02128824 end:0x02128828
     .bss start:0x02128d60 end:0x02128d88
 
-src/data/ov081/data_02128840.c:
-    complete
-    .data start:0x02128840 end:0x0212884c
-
-src/data/ov081/data_0212884c.c:
-    complete
-    .data start:0x0212884c end:0x02128858
-
-src/data/ov081/data_02128858.c:
-    complete
-    .data start:0x02128858 end:0x0212887c
-
-src/data/ov081/data_0212887c.c:
-    complete
-    .data start:0x0212887c end:0x021288f8
-
 src/game/actors/d_a_snowman.cpp:
     complete
     .text start:0x02124090 end:0x02125f14
@@ -34,34 +18,6 @@ src/game/actors/d_a_snowman.cpp:
     .ctor start:0x02128828 end:0x0212882c
     .data start:0x021288f8 end:0x021289a4
     .bss start:0x02128d88 end:0x02128eb4
-
-src/data/ov081/data_021289a4.c:
-    complete
-    .data start:0x021289a4 end:0x021289a6
-
-src/data/ov081/data_021289a6.c:
-    complete
-    .data start:0x021289a6 end:0x021289a8
-
-src/data/ov081/data_021289a8.c:
-    complete
-    .data start:0x021289a8 end:0x021289b0
-
-src/data/ov081/data_021289b0.c:
-    complete
-    .data start:0x021289b0 end:0x021289bc
-
-src/data/ov081/data_021289bc.c:
-    complete
-    .data start:0x021289bc end:0x021289cc
-
-src/data/ov081/data_021289cc.c:
-    complete
-    .data start:0x021289cc end:0x021289f0
-
-src/data/ov081/data_021289f0.c:
-    complete
-    .data start:0x021289f0 end:0x02128a6c
 
 src/game/actors/d_a_snowball.cpp:
     complete
@@ -71,22 +27,6 @@ src/game/actors/d_a_snowball.cpp:
     .data start:0x02128a6c end:0x02128a7c
     .bss start:0x02128eb4 end:0x02128ec4
 
-src/data/ov081/data_02128a7c.c:
-    complete
-    .data start:0x02128a7c end:0x02128a88
-
-src/data/ov081/data_02128a88.c:
-    complete
-    .data start:0x02128a88 end:0x02128a98
-
-src/data/ov081/data_02128a98.c:
-    complete
-    .data start:0x02128a98 end:0x02128abc
-
-src/data/ov081/data_02128abc.c:
-    complete
-    .data start:0x02128abc end:0x02128b38
-
 src/game/actors/d_a_gmch.cpp:
     complete
     .text start:0x02126504 end:0x02127b34
@@ -95,50 +35,10 @@ src/game/actors/d_a_gmch.cpp:
     .data start:0x02128b38 end:0x02128bc8
     .bss start:0x02128ec4 end:0x02128fd0
 
-src/data/ov081/data_02128bc8.c:
-    complete
-    .data start:0x02128bc8 end:0x02128bd4
-
-src/data/ov081/data_02128bd4.c:
-    complete
-    .data start:0x02128bd4 end:0x02128be0
-
-src/data/ov081/data_02128be0.c:
-    complete
-    .data start:0x02128be0 end:0x02128c04
-
-src/data/ov081/data_02128c04.c:
-    complete
-    .data start:0x02128c04 end:0x02128c80
-
-src/data/ov081/data_02128c80.c:
-    complete
-    .data start:0x02128c80 end:0x02128c8c
-
-src/data/ov081/data_02128c8c.c:
-    complete
-    .data start:0x02128c8c end:0x02128ca0
-
-src/data/ov081/data_02128ca0.c:
-    complete
-    .data start:0x02128ca0 end:0x02128cc4
-
-src/data/ov081/data_02128cc4.c:
-    complete
-    .data start:0x02128cc4 end:0x02128d60
-
 src/game/actors/d_a_obj_ice_block.cpp:
     complete
     .text start:0x02127b34 end:0x021280d8
     .init start:0x021287b8 end:0x02128824
     .ctor start:0x02128834 end:0x02128838
     .bss start:0x02128fd0 end:0x02128ff8
-
-src/data/ov081/rodata_021280d8.c:
-    complete
-    .rodata start:0x021280d8 end:0x021280e8
-
-src/data/ov081/bss_02128ff8.c:
-    complete
-    .bss start:0x02128ff8 end:0x02129000
 

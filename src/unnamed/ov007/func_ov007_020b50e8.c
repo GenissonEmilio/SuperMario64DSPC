@@ -1,8 +1,7 @@
-int data_ov007_02103428;
-
 #include "types.h"
 #include "nitro/fx/fx.h"
 extern char *data_ov007_0210342c;
+extern int data_ov007_02103428;
 
 extern void func_ov007_020c1d8c(int i);
 extern void func_ov007_020b647c(int r0, int r1, short r2);

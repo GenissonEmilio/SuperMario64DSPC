@@ -1,8 +1,0 @@
-/* .data 0x0210c8e4..0x0210c8ec */
-#pragma push
-#pragma explicit_zero_data on
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern unsigned char _ZN3OAM23MM_VS_BLUE_YOSHI_ICON_SE[8] ;
-#pragma section forcedata end
-#pragma pop

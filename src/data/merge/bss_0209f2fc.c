@@ -1,1 +1,0 @@
-unsigned char data_0209f2fc[4];

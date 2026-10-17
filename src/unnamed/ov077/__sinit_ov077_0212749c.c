@@ -39,7 +39,7 @@ struct Dst {
 };
 extern struct Dst data_ov077_02127c28;
 
-extern void __sinit_ov077_0212749c(void)
+void __sinit_ov077_0212749c(void)
 {
     _ZN13SharedFilePtr9ConstructEj(data_ov077_02127c14, ASSET_TOGEZO_WALK_BCA);
     func_020731dc(data_ov077_02127c14, &SharedFilePtr_Destruct_Anim, data_ov077_02127c1c);

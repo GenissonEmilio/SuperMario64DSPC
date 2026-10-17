@@ -3,6 +3,3 @@ void func_0205d3e4(void *a, int b, int c)
 {
     func_0205d688(a, b, c, 1);
 }
-
-#pragma force_active on
-extern unsigned char data_020a649c[4];

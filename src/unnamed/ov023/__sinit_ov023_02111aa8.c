@@ -13,7 +13,7 @@ extern int data_ov023_0211209c[];
 extern int data_ov023_02112080[];
 extern int SharedFilePtr_Destruct_Clsn[];
 extern int data_ov023_02112090[];
-extern void __sinit_ov023_02111aa8(void)
+void __sinit_ov023_02111aa8(void)
 {
     func_02017acc(data_ov023_02112088, ASSET_FM_BATTAN_BMD);
     func_020731dc(data_ov023_02112088, func_02017ab4, data_ov023_0211209c);

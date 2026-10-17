@@ -10,9 +10,8 @@ extern void func_0204f7fc(int *p, int a, int b);
 extern int data_ov007_02104bb4;
 extern int data_ov007_02104bb0;
 extern int *data_ov007_02104bbc;
-int data_ov007_02104ba8;
-
-int data_ov007_02104ba4;
+extern int data_ov007_02104ba8;
+extern int data_ov007_02104ba4;
 extern int data_ov007_02104bac;
 
 void func_ov007_020bdbcc(int a0, int a1)

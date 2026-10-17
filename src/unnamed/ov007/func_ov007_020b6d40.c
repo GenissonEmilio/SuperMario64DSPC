@@ -4,10 +4,7 @@ extern int data_ov007_020d7e28[];
 extern int data_ov007_020d7e38[];
 extern int data_ov007_020d7e50[];
 extern int data_ov007_020d7ec8[];
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-extern u8 data_ov007_020d7a24[16] ;
-#pragma section forcerodata end
+extern u8 data_ov007_020d7a24[];
 
 extern int func_ov007_020b7594(int a, int b);
 extern void func_ov007_020b7320(char *c, int a, int b);

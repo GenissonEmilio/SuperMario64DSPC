@@ -1359,7 +1359,7 @@ void dScMgCurling_c::BringOutNextStone()
 
 // @symbol _ZN14dScMgCurling_c10Scene_IdleEv
 /* The scene's idle state. */
-extern void dScMgCurling_c::Scene_Idle()
+void dScMgCurling_c::Scene_Idle()
 {
 }
 
@@ -1631,9 +1631,9 @@ s32 dScMgCurling_c::Behavior()
 // @symbol _ZN14dScMgCurling_c13InitResourcesEv
 /* Slot 0. Loads the board and the stone graphics for both screens, the
  * palettes and the house, then starts the first round with a 0x40 delay. */
-extern s32 dScMgCurling_c::InitResources()
+s32 dScMgCurling_c::InitResources()
 {
-    char *a ;
+    char *a = Ov004_LoadFileByPath(&data_ov006_0213c394);
     char *b = Ov004_LoadFileByPath(&data_ov006_0213c3b4);
     void *f;
 

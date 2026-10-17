@@ -76,7 +76,7 @@ extern "C" daObjRc_Guruguru_c *daObjRc_Guruguru_c_classInit()
 /* dBgW_KcMbg::SetFile takes Fix12<int> by value. An ordinary member call
  * triggers mwccarm's by-value-class parameter homing and changes the ROM ABI,
  * so this one call deliberately retains the measured register-level view. */
-extern s32 daObjRc_Guruguru_c::InitResources()
+s32 daObjRc_Guruguru_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(
         *(SharedFilePtr *)data_ov036_02113d78[0]), 1, -1);

@@ -76,7 +76,7 @@ daObjFl_Ukiyuka_c::~daObjFl_Ukiyuka_c()
 // @symbol _ZN17daObjFl_Ukiyuka_c16CleanupResourcesEv
 /* Indexes the ov022 parameter table with mVariant, the one field this
  * class adds. */
-extern int daObjFl_Ukiyuka_c::CleanupResources()
+int daObjFl_Ukiyuka_c::CleanupResources()
 {
     return func_ov002_020b6424(this, &data_ov022_021140d4[mVariant]);
 }

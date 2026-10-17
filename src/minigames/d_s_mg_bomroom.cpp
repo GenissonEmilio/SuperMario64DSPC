@@ -46,37 +46,12 @@
 extern "C" {
 extern void Hud_RenderSprite(void* a0, int a1, int a2, int a3, int a4);
 extern int data_ov006_021344ec[];
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-u16 data_ov006_0212e2e8[16] = {
-    96, 96, 96, 72, 48, 96, 72, 72,
-    96, 32, 96, 72, 96, 96, 96, 96
-};
-
-int data_ov006_0212e2d8[2] = {
-    128, 128
-};
-
-int data_ov006_0212e2d0[2] = {
-    8, 184
-};
-
-int data_ov006_0212e2e0[2] = {
-    80, 80
-};
-
-int data_ov006_0212e2c0[2] = {
-    16, 180
-};
-
-int data_ov006_0212e2c8[2] = {
-    0, 256
-};
-#pragma section forcerodata end
-}
+extern int data_ov006_0212e2c8[];
+extern int data_ov006_0212e2e0[];
 extern int data_ov006_021342bc[];
 extern int data_ov006_021343b0[];
+extern int data_ov006_0212e2d8[];
+extern int data_ov006_0212e2d0[];
 extern int func_020126e8(int a);
 extern int func_02012468(int a, int b, int c, int d, int e, int f, int g, short h);
 extern unsigned char *data_ov006_0213bb08[];
@@ -91,12 +66,14 @@ extern void RenderOamMainScreen(int a0, int a1, int a2, int a3, int a4);
 extern void *data_ov006_02134f30;
 extern void *data_ov006_02133ae0[];
 extern void *data_ov006_02133a70[];
+extern int data_ov006_0212e2c0[];
 extern int Mg_GetSubmittedScore(void);
 extern int RandomIntInternal(int *seed);
 // local extern: this file needs a record-view spelling of one of the touch lanes (the ROM scales the slot in the addressing mode), which conflicts with PlayerInput.h; the header is not included and all five symbols are declared here.
 extern u8 gTouchX[];
 // local extern: see above.
 extern u8 gTouchY[];
+extern u16 data_ov006_0212e2e8[];
 extern int data_ov006_021416a0[];
 extern int LoadFile(int handle);
 extern void DecompressLZ16(void *src, void *dst);
@@ -346,14 +323,14 @@ void dScMgBomroom_c::SlotB2_State3(int index) {
 
 // @symbol _ZN14dScMgBomroom_c13SlotB2_State2Ev
 
-extern void dScMgBomroom_c::SlotB2_State2() {
+void dScMgBomroom_c::SlotB2_State2() {
 }
 
 
 // @symbol _ZN14dScMgBomroom_c13SlotB2_State1Ei
 
 void dScMgBomroom_c::SlotB2_State1(int index) {
-    char *raw ;
+    char *raw = (char *)this;
 
   char *rec;
   char *hi;
@@ -613,7 +590,7 @@ void dScMgBomroom_c::SlotA_State3(int index) {
 
 // @symbol _ZN14dScMgBomroom_c12SlotA_State2Ev
 
-extern void dScMgBomroom_c::SlotA_State2() {
+void dScMgBomroom_c::SlotA_State2() {
 }
 
 
@@ -623,7 +600,7 @@ extern void dScMgBomroom_c::SlotA_State2() {
 #pragma opt_strength_reduction off
 
 void dScMgBomroom_c::SlotA_State1(int index) {
-    char * raw ;
+    char * raw = (char *)this;
     mSlotsA[index].timer += 1;
     if (mSlotsA[index].timer < 5)
         return;
@@ -1229,7 +1206,7 @@ void dScMgBomroom_c::CheckColorComplete() {
 
 // @symbol _ZN14dScMgBomroom_c10Bomb_Roam4Ev
 
-extern void dScMgBomroom_c::Bomb_Roam4() {
+void dScMgBomroom_c::Bomb_Roam4() {
 }
 
 
@@ -1239,7 +1216,7 @@ extern void dScMgBomroom_c::Bomb_Roam4() {
 
 
 void dScMgBomroom_c::Bomb_Roam3(int index) {
-    char * raw ;
+    char * raw = (char *)this;
     int off = index << 6;
     if (mBombs[index].marchDelay != 0) {
         mBombs[index].marchDelay -= 1;
@@ -1287,7 +1264,7 @@ void dScMgBomroom_c::Bomb_Roam3(int index) {
 
 // @symbol _ZN14dScMgBomroom_c10Bomb_Roam2Ev
 
-extern void dScMgBomroom_c::Bomb_Roam2() {
+void dScMgBomroom_c::Bomb_Roam2() {
 }
 
 
@@ -1297,7 +1274,7 @@ extern void dScMgBomroom_c::Bomb_Roam2() {
 #pragma opt_common_subs off
 
 void dScMgBomroom_c::Bomb_Roam1(int index) {
-    char * raw ;
+    char * raw = (char *)this;
     int color, x;
     {
         s16 sine = data_02082214[((mBombs[index].angle) >> 4) * 2 + 1];

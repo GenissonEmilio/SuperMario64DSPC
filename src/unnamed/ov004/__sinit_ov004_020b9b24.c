@@ -29,7 +29,7 @@ extern char data_ov004_020bfe38[];
 extern char data_ov004_020bfe2c[];
 extern char data_ov004_020bfe14[];
 extern char data_ov004_020bfe08[];
-char data_ov004_020bfdb4[12];
+extern char data_ov004_020bfdb4[];
 extern char data_ov004_020bfdf0[];
 extern char data_ov004_020bfda8[];
 extern char data_ov004_020bfe5c[];
@@ -92,6 +92,3 @@ void __sinit_ov004_020b9b24(void)
   p = (short *) (&data_ov004_020bfeb4); p[0] = 0x20; p[1] = 0x10;
   func_020731dc(p, (void *) NoOpDestructor, data_ov004_020bfdfc);
 }
-
-extern unsigned char data_ov004_020bc8a4[0x4] ;
-char data_ov004_020bfda8[12];

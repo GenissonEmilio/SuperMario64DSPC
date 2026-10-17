@@ -458,8 +458,3 @@ place:
 }
 
 ChairModelFilePtr data_ov020_02114af0(ASSET_CHAIR_BMD);
-
-/* .bss 0x02114b04..0x02114b20 */
-extern "C" {
-unsigned int data_ov020_02114b04[7];
-}

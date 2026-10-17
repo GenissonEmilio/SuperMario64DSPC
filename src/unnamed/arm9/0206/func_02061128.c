@@ -5,7 +5,7 @@
 #include "types.h"
 
 typedef int (*fp)(void);
-fp data_020a89a4;
+extern fp data_020a89a4;
 
 void func_02061128(fp cb)
 {

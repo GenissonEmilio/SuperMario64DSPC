@@ -1,9 +1,3 @@
-
-/* bss 0x020a0edc..0x020a0ee4 */
-#pragma force_active on
-unsigned char data_020a0edc[8];
-#pragma force_active off
-
 struct E18 { unsigned short h; char _rest[0x24 - 2]; };
 extern struct E18 data_020a1162[];
 int func_0203dae4(int idx) {

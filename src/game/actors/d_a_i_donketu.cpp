@@ -97,9 +97,9 @@ extern "C" daIDonketu_c *daIDonketu_c_classInit(void)
  * daOts_c leaves slot 0 pure virtual (the word in its vtable is a literal zero), so
  * every one of its three children has to supply this. This one points the shared
  * file table at its own list and then claims a star slot. */
-extern int daIDonketu_c::InitResources()
+int daIDonketu_c::InitResources()
 {
-    mFileTable ;
+    mFileTable = (int)data_ov027_021138f4;
     int r = InitResourcesCommon();
     mStarIdx = param1 & 0xf;
     mStarSlot = TrackStar(mStarIdx, 2);

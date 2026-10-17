@@ -86,22 +86,6 @@
 // @symbol _ZN8dActor_c19BeforeInitResourcesEv
 /* ROM ordinal 90 -- _ZN8dActor_c19BeforeInitResourcesEv
  * 0x02011268  size 0x60 */
-
-/* bss 0x0209b468..0x0209b470 */
-
-extern "C" {
-/* data 0x02087094..0x020870e4 */
-#pragma force_active on
-#pragma explicit_zero_data on
-unsigned char data_02087094[80] = { 255, 255, 255, 7, 0, 236, 10, 0, 183, 245, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 250, 255, 255, 255, 255, 7, 0, 0, 19, 0, 0, 0, 28, 0, 91, 16, 226, 1, 0, 0, 0, 0, 255, 255, 255, 7, 0, 0, 0, 0, 0, 8, 0, 0, 128, 71, 2, 0, 224, 180, 1, 0, 255, 255, 255, 7, 0, 0, 0, 0, 0, 29, 19, 0, 199, 17, 166, 0 };
-#pragma explicit_zero_data off
-#pragma force_active off
-}
-
-extern "C" {
-unsigned char data_0209b468[8];
-}
-
 bool dActor_c::BeforeInitResources()
 {
     int spawnEvenIfKilledBefore;
@@ -280,6 +264,7 @@ void dActor_c::AfterRender(u32 vfSuccess)
  * 0x02010f3c  size 0x30 */
 extern "C" {
 extern dActor_c *func_02043f98(dActor_c **head, unsigned int id);
+extern void *data_0209b468;         /* the global actor list -- callers use &name */
 }
 dActor_c *dActor_c::FindWithID(u32 id)
 {
@@ -319,12 +304,10 @@ dActor_c *dActor_c::Next(const dActor_c *after)
 // @symbol func_02010e78
 /* ROM ordinal 79 -- func_02010e78
  * 0x02010e78  size 0x54 */
-s16 *data_0209b460;          /* spawn position, or null to leave it at 0 */
-                 /* spawn position, or null to leave it at 0 */
-extern s16 *data_0209b45c;          /* spawn rotation, or null */
-s16 data_0208e378;
-             /* spawn death-table id */
 extern "C" {
+extern s16 *data_0209b460;          /* spawn position, or null to leave it at 0 */
+extern s16 *data_0209b45c;          /* spawn rotation, or null */
+extern s16 data_0208e378;           /* spawn death-table id */
 }
 extern "C" void func_02010e78(const Vector3 *a, const Vector3_16 *b, s8 c, s16 d)
 {
@@ -504,6 +487,8 @@ extern "C" void _ZN8dActor_c18DropShadowScaleXYZER17dExtShadowModel_cR9Matrix4x3
  * 0x02010ad8  size 0xc4 */
 extern "C" {
 extern int Vec3_Dist(const void* a, const void* b);
+extern int data_0208e380;
+extern int data_0208e37c;
 extern unsigned char data_0209f21c;
 extern void* data_0209f394[];
 }
@@ -1155,7 +1140,7 @@ dActor_c *dActor_c::SpawnNumber(const Vector3 &pos, u32 value, bool packLowNibbl
  * 0x0200ff94  size 0xb0 */
 extern "C" {
 extern u8 data_0209f220[]; /* the star index this mission was entered for */
-extern s8 data_0209f2f8[4]; /* the current sublevel id */
+extern s8 data_0209f2f8[]; /* the current sublevel id */
 extern dActor_c *STAR_MARKERS[12]; /* 0x0209f40c */
 void SetStarMarker(s32 slot, dActor_c *actor, s32 markerType);
 int IsStarCollectedInCurLevel(u32 starIdx);
@@ -1216,14 +1201,7 @@ dActor_c *dActor_c::UntrackAndSpawnStar(s8 &trackStarID, u32 starID,
  * 0x0200fec8  size 0x4c */
 extern "C" {
 extern unsigned char data_0209f2c0[];
-extern "C" {
-#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
-#pragma section forcerodata begin
-int data_02075244[3] = {
-    0x2d000, 0x3e8000, 0xabe000
-};
-#pragma section forcerodata end
-}
+extern int data_02075244[];
 }
 s32 dActor_c::GetWaterHeightWDW()
 {
@@ -1676,13 +1654,4 @@ bool dActor_c::DetectRaycastClsn(Vector3 &start, Vector3 &end, bool storeHitPos)
         return true;
     }
     return false;
-}
-
-extern "C" {
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-int data_0208e37c = -0x80000000;
-
-int data_0208e380 = 0x7fffffff;
-#pragma section forcedata end
 }

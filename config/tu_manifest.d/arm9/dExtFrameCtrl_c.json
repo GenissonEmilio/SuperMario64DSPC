@@ -19,11 +19,6 @@
       "name": ".text",
       "start": "0x02015a7c",
       "end": "0x02015d38"
-    },
-    {
-      "name": ".bss",
-      "start": "0x0209cef0",
-      "end": "0x0209cef4"
     }
   ],
   "functions": [
@@ -120,15 +115,7 @@
     }
   ],
   "data": [],
-  "bss": [
-    {
-      "symbol": "data_0209cef0",
-      "address": "0x0209cef0",
-      "size": "0x4",
-      "binding": "STB_GLOBAL",
-      "evidence": "ROM bss 0x209cef0..0x209cef4"
-    }
-  ],
+  "bss": [],
   "notes": [
     "Text-only. The class's _ZTV/_ZTI/_ZTS stay in the cartridge .data at 0x0208e744..0x0208e858; this TU's copies are deadstrip-data, compared against the cartridge by romdata_check and then discarded.",
     "mwccarm emits .text in reverse source order, so the file is ROM-descending.",

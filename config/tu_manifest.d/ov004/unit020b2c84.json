@@ -32,17 +32,12 @@
     {
       "name": ".data",
       "start": "0x020bc6e8",
-      "end": "0x020bc860"
+      "end": "0x020bc7d0"
     },
     {
       "name": ".bss",
       "start": "0x020bf41c",
       "end": "0x020bf9e4"
-    },
-    {
-      "name": ".rodata",
-      "start": "0x020b944c",
-      "end": "0x020b948c"
     }
   ],
   "functions": [

@@ -1,5 +1,3 @@
-extern unsigned char data_0209f290;
-
 #include "types.h"
 // func_0200e6d8 - find player actor by parameter
 struct dActor_c {
@@ -10,7 +8,6 @@ struct dActor_c {
 
 extern struct dActor_c* _ZN8dActor_c10FindWithIDEj(u32 id);
 extern u8 data_0209f250;
-
 extern struct dActor_c* data_0209f394[];
 extern u32 data_0209b284[];
 

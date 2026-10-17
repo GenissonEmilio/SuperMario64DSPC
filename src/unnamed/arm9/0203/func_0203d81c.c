@@ -8,5 +8,3 @@ int func_0203d81c(void){
     }
     return 0;
 }
-
-extern short data_020a0f18;

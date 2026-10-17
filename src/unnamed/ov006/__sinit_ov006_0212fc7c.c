@@ -21,7 +21,7 @@ extern int data_ov006_02140944[];
 extern int data_ov006_02140848[];
 extern int data_ov006_02140950[];
 
-extern void __sinit_ov006_0212fc7c(void){
+void __sinit_ov006_0212fc7c(void){
   __cxa_vec_ctor(data_ov006_02140990, 4, 0x32c, (void*)TrmpLine_Reset, (void*)TrmpLine_Destroy);
   func_020731dc(0, (void*)TrmpLine_CleanupAll, data_ov006_021408cc);
   func_02017acc(data_ov006_02140850, ASSET_RINGA_BMD);
@@ -31,9 +31,3 @@ extern void __sinit_ov006_0212fc7c(void){
   func_02017acc(data_ov006_02140848, ASSET_RINGC_BMD);
   func_020731dc(data_ov006_02140848, (void*)func_02017ab4, data_ov006_02140950);
 }
-
-extern int data_ov006_02136fa4;
-extern int data_ov006_02136f94;
-extern int data_ov006_02136f8c;
-extern int data_ov006_02136f7c;
-extern int data_ov006_02137164;

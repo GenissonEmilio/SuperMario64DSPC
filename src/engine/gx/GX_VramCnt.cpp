@@ -50,9 +50,7 @@ struct GXVRamCnt {
     u16 sub_objExtPltt;
 };
 
-extern "C" {
-GXVRamCnt data_020a6088;
-}
+extern "C" GXVRamCnt data_020a6088;
 
 extern "C" {
 

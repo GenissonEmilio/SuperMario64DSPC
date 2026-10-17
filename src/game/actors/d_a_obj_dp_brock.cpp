@@ -102,7 +102,7 @@ extern "C" daObjDpBrock_c *daObjDpBrock_c_classInit()
 }
 
 // @symbol _ZN14daObjDpBrock_c13InitResourcesEv
-extern int daObjDpBrock_c::InitResources()
+int daObjDpBrock_c::InitResources()
 {
     mStepModel.SetFile((BMD_File *)Model::LoadFile(data_ov025_02113ab8), 1, -1);
     UpdateStepModelPosAndRotY();

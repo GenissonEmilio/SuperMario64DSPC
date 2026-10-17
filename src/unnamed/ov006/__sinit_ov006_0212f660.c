@@ -5,13 +5,7 @@ extern int data_ov006_021404d8;
 extern void Puff_Nothing(void);
 extern void Puff_CleanupAll(void);
 extern void* data_ov006_021404cc;
-extern void __sinit_ov006_0212f660(void) {
+void __sinit_ov006_0212f660(void) {
     __cxa_vec_ctor(&data_ov006_021404d8, 3, 0x20, (void*)Puff_Nothing, (void*)Puff_ElemDtor);
     func_020731dc(0, (void *)Puff_CleanupAll, (void**)&data_ov006_021404cc);
 }
-
-#pragma force_active on
-extern unsigned char data_ov006_02140538[4];
-extern int data_ov006_02134ed0;
-
-extern unsigned char data_ov006_02140588[0x4];

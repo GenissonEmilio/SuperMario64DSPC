@@ -186,23 +186,19 @@ extern int data_ov004_020bc850;
 extern int data_ov004_020bc854;
 extern int data_ov004_020bc858;
 extern int data_ov004_020bc85c;
-extern int data_ov004_020bc860 ;
+extern int data_ov004_020bc860;
 extern int data_ov004_020bc864;
 extern int data_ov004_020bc868;
-/* Declaration order is the reverse of address order: mwcc emits these
-   .data sections backwards. */
-extern "C" {
-int data_ov004_020bc890 = 0x60;
-int data_ov004_020bc88c = 0x80;
-int data_ov004_020bc888 = 0x80;
-int data_ov004_020bc884 = 0x60;
-int data_ov004_020bc880 = 0x80;
-int data_ov004_020bc87c = 0x60;
-int data_ov004_020bc878 = 0x80;
-int data_ov004_020bc874 = 0x28;
-int data_ov004_020bc870 = 0x80;
-int data_ov004_020bc86c = 0x80;
-}
+extern int data_ov004_020bc86c;
+extern int data_ov004_020bc870;
+extern int data_ov004_020bc874;
+extern int data_ov004_020bc878;
+extern int data_ov004_020bc87c;
+extern int data_ov004_020bc880;
+extern int data_ov004_020bc884;
+extern int data_ov004_020bc888;
+extern int data_ov004_020bc88c;
+extern int data_ov004_020bc890;
 extern int data_ov004_020bc894;
 extern int data_ov004_020bc898;
 extern int data_ov004_020bc89c;
@@ -213,22 +209,7 @@ extern int data_ov004_020bc8ac;
 extern int data_ov004_020bc8b0;
 extern int data_ov004_020bc8b4;
 extern int data_ov004_020bc8b8;
-extern "C" {
-extern unsigned char data_ov006_021373a4[];
-extern unsigned char data_ov006_021373fc[];
-extern unsigned char data_ov006_0213734c[];
-extern unsigned char data_ov006_021372f4[];
-extern unsigned char data_ov006_02137454[];
-}
-
-extern "C" {
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-unsigned int data_ov004_020bca44[5] = {
-    (unsigned int)&data_ov006_021373a4, (unsigned int)&data_ov006_021373fc, (unsigned int)&data_ov006_0213734c, (unsigned int)&data_ov006_021372f4, (unsigned int)&data_ov006_02137454
-};
-#pragma section forcedata end
-}
+extern unsigned char *data_ov004_020bca44[];
 
 /* Behavior and render records. Each comment names the member the record
    points at (ov004 relocs.txt). */

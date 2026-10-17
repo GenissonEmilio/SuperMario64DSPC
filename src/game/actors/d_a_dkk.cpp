@@ -81,9 +81,9 @@ extern "C" daDkk_c *daDkk_c_classInit()
 // @symbol _ZN7daDkk_c13InitResourcesEv
 /* Stores the file table, then either starts already airborne or raycasts
  * down for mProbeHeight. */
-extern int daDkk_c::InitResources()
+int daDkk_c::InitResources()
 {
-    mFileTable ;
+    mFileTable = (s32)data_ov025_02113814;
     int r = Init();
     if (param1 & 1) {
         mState = 6;

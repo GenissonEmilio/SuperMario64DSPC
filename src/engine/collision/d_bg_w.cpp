@@ -19,7 +19,7 @@
 #include "decl_common.h"
 
 extern "C" {
-void *data_020a0c80[24];
+extern void *data_020a0c80[];
 extern int SurfaceInfo_TestFlag0x20(int *p);
 extern int func_02037e38(unsigned int *p);
 }
@@ -354,8 +354,4 @@ int dBgW::Disable()
         data_020a0c80[i] = 0;
     }
     return 1;
-}
-
-extern "C" {
-u8 data_0209fc50;
 }

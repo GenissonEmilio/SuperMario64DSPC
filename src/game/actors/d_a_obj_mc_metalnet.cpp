@@ -88,7 +88,7 @@ extern "C" daObjMc_Metalnet_c *daObjMc_Metalnet_c_classInit(void)
  *                           word must be SET for the net to be removed.
  *   otherwise               the net is removed once the player has 150 stars.
  * Either way, mode 1 short-circuits both and the net always stays. */
-extern s32 daObjMc_Metalnet_c::InitResources()
+s32 daObjMc_Metalnet_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov009_02113e90), 1, -1);
     UpdateModelPosAndRotY();

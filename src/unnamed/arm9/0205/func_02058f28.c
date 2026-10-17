@@ -1,5 +1,4 @@
-unsigned int data_020a6378;
-
+extern unsigned int data_020a6378;
 
 unsigned int func_02058df4(int idx);
 void func_02058d6c(int idx, unsigned int val);

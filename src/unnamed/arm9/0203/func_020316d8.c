@@ -1,4 +1,3 @@
-char *data_0209f340;
 #include "types.h"
 extern u8 data_0209fcdc[];
 extern u8 data_0209fc78[];
@@ -72,13 +71,3 @@ void func_020316d8(int screen, int c, u32 x, void *buf)
         }
     }
 }
-
-/* arm9-data-run 0x02099204 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int _ZTS5dBgPc[2] ;
-extern unsigned int _ZTS5dBgPi[2] ;
-extern unsigned int _ZTV10dBgCh_Actr[2] ;
-extern unsigned int _ZTI5dBgPc[2] ;
-#pragma pop
-/* end arm9-data-run 0x02099204 */

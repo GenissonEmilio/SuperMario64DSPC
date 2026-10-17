@@ -314,7 +314,7 @@ void daPopoi_c::OnPendingDestroy()
  * TOUCHES NO FIELD. The ROM body takes no `this`; as a method it now receives
  * one and ignores it, which measured byte-free.
  */
-extern int daPopoi_c::CleanupResources()
+int daPopoi_c::CleanupResources()
 {
     data_ov077_02127c88.Release();
     data_ov077_02127ca0.Release();

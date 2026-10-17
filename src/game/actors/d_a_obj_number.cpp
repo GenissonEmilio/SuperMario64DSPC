@@ -88,7 +88,7 @@ extern "C" daObjNumber_c *daObjNumber_c_classInit(void)
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN13daObjNumber_c13InitResourcesEv
-extern s32 daObjNumber_c::InitResources()
+s32 daObjNumber_c::InitResources()
 {
     if (param1 & 0x10) {
         TextureSequence::LoadFile(data_ov002_0210da08);

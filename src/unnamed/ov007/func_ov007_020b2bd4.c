@@ -1,7 +1,3 @@
-const int data_ov007_020ccc48[2] = {
-    0x00000001, 0x00000002
-};
-
 extern int func_ov007_020b3f20(int x);
 extern void func_02044efc(void* a);
 extern void* func_ov007_020bc6d4(void* a, int b);
@@ -12,14 +8,10 @@ extern void func_02045ef8(void* a, void* b);
 extern void func_02046234(void* a, void* b);
 extern void func_ov007_020bbf98(void* a, int b);
 extern int data_ov007_020ccc48[];
-extern const char data_ov007_020ccc68[];
-const char data_ov007_020ccc80[36] = { 4, 0, 0, 0, 5, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0, 10, 0, 0, 0, 4, 0, 0, 0, 6, 0, 0, 0, 7, 0, 0, 0 };
-
-/* rodata 0x020ccc80..0x020ccca4 */
-#pragma force_active on
-#pragma force_active off
+extern char data_ov007_020ccc68[];
+extern char data_ov007_020ccc80[];
 extern int data_ov007_02103348[];
-int data_ov007_02103354[3];
+extern int data_ov007_02103354[];
 extern char data_ov007_020d7ee8[];
 
 void* func_ov007_020b2bd4(int a, int b)
@@ -48,11 +40,3 @@ void* func_ov007_020b2bd4(int a, int b)
     func_ov007_020bbf98(p, 3);
     return p;
 }
-
-char data_ov007_020d7ee8[36] = {
-    4, -37, 12, 2, -76, -39, 12, 2, -68, -38, 12, 2,
-    44, -38, 12, 2, -28, -39, 12, 2, 92, -38, 12, 2,
-    4, -37, 12, 2, 20, -38, 12, 2, -68, -38, 12, 2
-};
-
-int data_ov007_02103348[3];

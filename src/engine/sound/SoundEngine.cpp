@@ -1963,9 +1963,9 @@ extern "C" void func_0204fafc(void) {
 }
 
 // @symbol _ZN5Sound6Player19SetPlayableSeqCountEii
-extern void Sound::Player::SetPlayableSeqCount(int index, int count)
+void Sound::Player::SetPlayableSeqCount(int index, int count)
 {
-    data_020a4d6c[index].mPlayableSeqCount ;
+    data_020a4d6c[index].mPlayableSeqCount = (unsigned short)count;
 }
 
 // @symbol func_0204fa3c

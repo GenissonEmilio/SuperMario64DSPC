@@ -23,7 +23,7 @@ typedef struct {
 /* the +0x1a/+0x1c writes below land inside the data_020a8a00 buffer that
    immediately follows this 0x14-byte header */
 BufT data_020a89ec;
-char data_020a8a00[64];
+extern char data_020a8a00;
 
 void func_02061188(int unused, u16 *msg, int flag)
 {

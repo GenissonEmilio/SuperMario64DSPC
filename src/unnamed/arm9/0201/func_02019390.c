@@ -1,4 +1,3 @@
-short data_0209d47c[2];
 extern void func_0202345c(void);
 extern void func_02018efc(void);
 extern void _ZN3OAM5ResetEv(void);

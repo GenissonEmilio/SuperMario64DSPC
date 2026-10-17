@@ -10,7 +10,7 @@
 #include "common.h"
 
 extern "C" {
-Matrix4x3 data_0209b3ec;
+extern Matrix4x3 data_0209b3ec;
 extern Matrix4x3 data_0209b41c;
 extern void InvMat4x3(Matrix4x3* dst, Matrix4x3* inv);
 }

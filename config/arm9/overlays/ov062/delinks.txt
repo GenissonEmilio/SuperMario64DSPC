@@ -4,106 +4,9 @@
     .ctor       start:0x0211d8cc end:0x0211d8e0 kind:rodata align:4
     .data       start:0x0211d900 end:0x0211dde0 kind:data align:32
     .bss        start:0x0211dde0 end:0x0211e1a0 kind:bss align:32
-src/data/ov062/bss_0211dde0.c:
-    complete
-    .bss start:0x0211dde0 end:0x0211dde8
-
-src/data/ov062/bss_0211dde8.c:
-    complete
-    .bss start:0x0211dde8 end:0x0211ddf0
-
-src/data/ov062/bss_0211ddf0.c:
-    complete
-    .bss start:0x0211ddf0 end:0x0211ddf8
-
-src/data/ov062/bss_0211ddf8.c:
-    complete
-    .bss start:0x0211ddf8 end:0x0211de00
-
-src/data/ov062/bss_0211de00.c:
-    complete
-    .bss start:0x0211de00 end:0x0211de08
-
-src/data/ov062/bss_0211de08.c:
-    complete
-    .bss start:0x0211de08 end:0x0211de1c
-
-src/data/ov062/bss_0211de1c.c:
-    complete
-    .bss start:0x0211de1c end:0x0211de28
-
-src/data/ov062/bss_0211de28.c:
-    complete
-    .bss start:0x0211de28 end:0x0211de34
-
-src/data/ov062/bss_0211de34.c:
-    complete
-    .bss start:0x0211de34 end:0x0211de40
-
-src/data/ov062/bss_0211de40.c:
-    complete
-    .bss start:0x0211de40 end:0x0211de4c
-
-src/data/ov062/bss_0211de4c.c:
-    complete
-    .bss start:0x0211de4c end:0x0211de58
-
-src/data/ov062/bss_0211de58.c:
-    complete
-    .bss start:0x0211de58 end:0x0211de64
-
-src/data/ov062/bss_0211de64.c:
-    complete
-    .bss start:0x0211de64 end:0x0211de80
-
-src/data/ov062/bss_0211de80.c:
-    complete
-    .bss start:0x0211de80 end:0x0211de90
-
-src/data/ov062/bss_0211de90.c:
-    complete
-    .bss start:0x0211de90 end:0x0211dea0
-
-src/data/ov062/bss_0211dea0.c:
-    complete
-    .bss start:0x0211dea0 end:0x0211deb0
-
-src/data/ov062/bss_0211deb0.c:
-    complete
-    .bss start:0x0211deb0 end:0x0211dec0
-
-src/data/ov062/bss_0211dec0.c:
-    complete
-    .bss start:0x0211dec0 end:0x0211ded0
-
-src/data/ov062/bss_0211ded0.c:
-    complete
-    .bss start:0x0211ded0 end:0x0211dee0
-
-src/data/ov062/bss_0211dee0.c:
-    complete
-    .bss start:0x0211dee0 end:0x0211def0
-
-src/data/ov062/bss_0211def0.c:
-    complete
-    .bss start:0x0211def0 end:0x0211df00
-
-src/data/ov062/bss_0211df00.c:
-    complete
-    .bss start:0x0211df00 end:0x0211df10
-
-src/data/ov062/bss_0211df10.c:
-    complete
-    .bss start:0x0211df10 end:0x0211df14
-
 src/game/actors/d_a_holhei.cpp:
     complete
     .text start:0x02115ee0 end:0x021174cc
-
-    .bss start:0x0211df14 end:0x0211df18
-src/data/ov062/bss_0211df18.c:
-    complete
-    .bss start:0x0211df18 end:0x0211df28
 
 src/game/actors/d_a_nknk.cpp:
     complete
@@ -113,122 +16,6 @@ src/game/actors/d_a_nknk.cpp:
     .ctor start:0x0211d8d0 end:0x0211d8d4
     .bss start:0x0211df28 end:0x0211e004
 
-src/data/ov062/rodata_0211cf0c.c:
-    complete
-    .rodata start:0x0211cf0c end:0x0211cf30
-
-src/data/ov062/data_0211d900.c:
-    complete
-    .data start:0x0211d900 end:0x0211d908
-
-src/data/ov062/data_0211d908.c:
-    complete
-    .data start:0x0211d908 end:0x0211d910
-
-src/data/ov062/data_0211d910.c:
-    complete
-    .data start:0x0211d910 end:0x0211d918
-
-src/data/ov062/data_0211d918.c:
-    complete
-    .data start:0x0211d918 end:0x0211d920
-
-src/data/ov062/data_0211d920.c:
-    complete
-    .data start:0x0211d920 end:0x0211d928
-
-src/data/ov062/data_0211d928.c:
-    complete
-    .data start:0x0211d928 end:0x0211d930
-
-src/data/ov062/data_0211d930.c:
-    complete
-    .data start:0x0211d930 end:0x0211d938
-
-src/data/ov062/data_0211d938.c:
-    complete
-    .data start:0x0211d938 end:0x0211d940
-
-src/data/ov062/data_0211d940.c:
-    complete
-    .data start:0x0211d940 end:0x0211d948
-
-src/data/ov062/data_0211d948.c:
-    complete
-    .data start:0x0211d948 end:0x0211d950
-
-src/data/ov062/data_0211d950.c:
-    complete
-    .data start:0x0211d950 end:0x0211d958
-
-src/data/ov062/data_0211d958.c:
-    complete
-    .data start:0x0211d958 end:0x0211d960
-
-src/data/ov062/data_0211d960.c:
-    complete
-    .data start:0x0211d960 end:0x0211d968
-
-src/data/ov062/data_0211d968.c:
-    complete
-    .data start:0x0211d968 end:0x0211d970
-
-src/data/ov062/data_0211d970.c:
-    complete
-    .data start:0x0211d970 end:0x0211d978
-
-src/data/ov062/data_0211d978.c:
-    complete
-    .data start:0x0211d978 end:0x0211d980
-
-src/data/ov062/data_0211d980.c:
-    complete
-    .data start:0x0211d980 end:0x0211d988
-
-src/data/ov062/data_0211d988.c:
-    complete
-    .data start:0x0211d988 end:0x0211d990
-
-src/data/ov062/data_0211d990.c:
-    complete
-    .data start:0x0211d990 end:0x0211d998
-
-src/data/ov062/data_0211d998.c:
-    complete
-    .data start:0x0211d998 end:0x0211d9a0
-
-src/data/ov062/data_0211d9a0.c:
-    complete
-    .data start:0x0211d9a0 end:0x0211d9ac
-
-src/data/ov062/data_0211d9ac.c:
-    complete
-    .data start:0x0211d9ac end:0x0211d9bc
-
-src/data/ov062/data_0211d9bc.c:
-    complete
-    .data start:0x0211d9bc end:0x0211da5c
-
-src/data/ov062/data_0211da5c.c:
-    complete
-    .data start:0x0211da5c end:0x0211da68
-
-src/data/ov062/data_0211da68.c:
-    complete
-    .data start:0x0211da68 end:0x0211da74
-
-src/data/ov062/data_0211da74.c:
-    complete
-    .data start:0x0211da74 end:0x0211da90
-
-src/data/ov062/data_0211da90.c:
-    complete
-    .data start:0x0211da90 end:0x0211dab4
-
-src/data/ov062/data_0211dab4.c:
-    complete
-    .data start:0x0211dab4 end:0x0211db30
-
 src/game/actors/d_a_r_nk.cpp:
     complete
     .text start:0x0211975c end:0x0211af38
@@ -236,38 +23,6 @@ src/game/actors/d_a_r_nk.cpp:
     .ctor start:0x0211d8d4 end:0x0211d8d8
     .data start:0x0211db30 end:0x0211db60
     .bss start:0x0211e004 end:0x0211e0d4
-
-src/data/ov062/data_0211db60.c:
-    complete
-    .data start:0x0211db60 end:0x0211db6c
-
-src/data/ov062/data_0211db6c.c:
-    complete
-    .data start:0x0211db6c end:0x0211db78
-
-src/data/ov062/data_0211db78.c:
-    complete
-    .data start:0x0211db78 end:0x0211db9c
-
-src/data/ov062/data_0211db9c.c:
-    complete
-    .data start:0x0211db9c end:0x0211dc18
-
-src/data/ov062/data_0211dc18.c:
-    complete
-    .data start:0x0211dc18 end:0x0211dc24
-
-src/data/ov062/data_0211dc24.c:
-    complete
-    .data start:0x0211dc24 end:0x0211dc30
-
-src/data/ov062/data_0211dc30.c:
-    complete
-    .data start:0x0211dc30 end:0x0211dc54
-
-src/data/ov062/data_0211dc54.c:
-    complete
-    .data start:0x0211dc54 end:0x0211dcd0
 
 src/game/actors/d_a_r_flag.cpp:
     complete
@@ -283,22 +38,6 @@ src/game/actors/d_a_jango.cpp:
     .ctor start:0x0211d8dc end:0x0211d8e0
     .data start:0x0211dcd0 end:0x0211dd20
     .bss start:0x0211e0fc end:0x0211e1a0
-
-src/data/ov062/data_0211dd20.c:
-    complete
-    .data start:0x0211dd20 end:0x0211dd2c
-
-src/data/ov062/data_0211dd2c.c:
-    complete
-    .data start:0x0211dd2c end:0x0211dd38
-
-src/data/ov062/data_0211dd38.c:
-    complete
-    .data start:0x0211dd38 end:0x0211dd5c
-
-src/data/ov062/data_0211dd5c.c:
-    complete
-    .data start:0x0211dd5c end:0x0211dde0
 
 src/unnamed/ov062/__sinit_ov062_0211cf30.c:
     complete

@@ -960,7 +960,7 @@ void daDemo_c::func_ov002_020f2210()
 // @symbol _ZN8daDemo_c19func_ov002_020f2340Ev
 /* Draw the two centre sprites at x 0x80. */
 
-extern void daDemo_c::func_ov002_020f2340()
+void daDemo_c::func_ov002_020f2340()
 {
     OAM::RenderSub(&data_ov002_0210bddc, 0x80, mScroll->centerSpriteY[0]);
     OAM::RenderSub(&data_ov002_0210bddc, 0x80, mScroll->centerSpriteY[1]);
@@ -4695,7 +4695,7 @@ int daDemo_c::CleanupResources()
 // @symbol _ZN8daDemo_c16OnPendingDestroyEv
 /* daDemo_c::OnPendingDestroy -- vtable slot 12. The ROM body is empty: the
  * override exists only to occupy the slot. */
-extern void daDemo_c::OnPendingDestroy()
+void daDemo_c::OnPendingDestroy()
 {
 }
 
@@ -4705,7 +4705,11 @@ extern void daDemo_c::OnPendingDestroy()
 // @symbol _ZN8daDemo_c6RenderEv
 int daDemo_c::Render()
 {
-  if (param1 ; a plain Matrix4x3 pointer builds
+  if (param1 == 0x19){
+    /* Draw the model three times: copy INV_VIEW_MATRIX_ASR_3 into its
+       mat4x3, then for each entry of data_ov002_0210bb7c overwrite the
+       translation column and render. The {p, cur, src} struct is the
+       allocation shape the ROM compiles; a plain Matrix4x3 pointer builds
        the same size with different registers. */
     struct { char* p; char* cur; M48* src; } s;
     s.src = (M48*)&data_0209b41c;

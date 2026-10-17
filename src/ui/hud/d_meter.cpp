@@ -152,7 +152,7 @@ struct OamAttr;
 extern OamAttr* _ZN3OAM10LIFE_ICONSE[];
 extern OamAttr _ZN3OAM5TIMESE;
 extern void *data_0209f394[];
-u8 data_ov002_02111180;
+extern u8 data_ov002_02111180;
 extern void *data_0209f318;
 extern u8 data_0209f4ae[];
 extern int data_0208ee44;

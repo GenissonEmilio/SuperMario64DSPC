@@ -6,8 +6,7 @@
 #include "common.h"
 #include "PlayerInput.h"
 #include "nitro/fx/fx.h"
-extern u16 data_0209f49c[];extern u16 data_0209f49e[1];
-
+extern u16 data_0209f49c[];
 extern u16 data_0209f49e[];
 
 extern u32 func_02012790(u32 a);

@@ -1,6 +1,5 @@
 extern void Crash(void);
-char data_020a645c[4];
-
+extern char data_020a645c[];
 
 void func_02059e04(int a, unsigned int v)
 {

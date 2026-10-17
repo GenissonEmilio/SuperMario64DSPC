@@ -4,7 +4,7 @@ extern int data_020a64a0;
 extern int data_020a6760;
 extern volatile int data_020a64a8[];
 extern int data_020a64a4;
-extern extern int data_020a6490;
+extern int data_020a6490;
 
 extern void _ZN4CP1527FlushAndInvalidateDataCacheEjj(unsigned int a, unsigned int b);
 extern int IPCSend(unsigned int a, unsigned int c, unsigned int b);
@@ -38,5 +38,3 @@ int func_0205b070(int x)
     data_020a64a4 = data_020a64a4 + 1;
     return 1;
 }
-
-int data_020a6490;

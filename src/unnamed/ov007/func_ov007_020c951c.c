@@ -1,9 +1,8 @@
 #include "types.h"
-void *data_ov007_02104c20;
-void * data_ov007_02104c24;
-void *data_ov007_02104c1c;
+extern void *data_ov007_02104c20;
+extern void *data_ov007_02104c24;
+extern void *data_ov007_02104c1c;
 extern void *data_ov007_02104c18;
-
 struct Header { u32 pad[3]; u32 count; };
 struct Chunk { u32 magic; u32 size; };
 void func_ov007_020c951c(int unused, struct Header *h)
@@ -23,4 +22,3 @@ void func_ov007_020c951c(int unused, struct Header *h)
         p += ((struct Chunk *)p)->size;
     }
 }
-

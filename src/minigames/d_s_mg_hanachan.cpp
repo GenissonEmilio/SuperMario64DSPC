@@ -42,16 +42,3 @@ extern "C" void *dScMgHanachan_c_classInit(void) {
     }
     return scene;
 }
-
-/* .data 0x0213ca7c..0x0213ca9c */
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern "C" {
-int _ZTI15dScMgHanachan_c[3] = {
-    0x0209a764, 0x0213ca88, 0x020bbf6c,
-};
-int _ZTS15dScMgHanachan_c[5] = {
-    0x53643531, 0x48674d63, 0x63616e61, 0x5f6e6168, 0x00000063,
-};
-}
-#pragma section forcedata end

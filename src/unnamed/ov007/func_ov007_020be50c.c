@@ -6,15 +6,10 @@ extern void func_0204dc84(char *p);
 extern void func_ov007_020be8b8(void);
 
 extern int* data_ov007_0210342c;
-int* data_ov007_02104bc0;
+extern int* data_ov007_02104bc0;
 
 extern int data_ov007_020d7c6c;
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-int data_ov007_02103234[3] = {
-    0x66454432, 0x74636566, 0
-};
-#pragma section forcedata end
+extern int data_ov007_02103234;
 
 void func_ov007_020be50c(void)
 {

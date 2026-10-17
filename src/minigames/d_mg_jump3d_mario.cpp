@@ -468,7 +468,7 @@ void dMgJump3DMario_c::Draw()
 
 // @symbol _ZN16dMgJump3DMario_c6UpdateEv
 /* The per-frame update: gravity, integrate, dispatch mState. */
-extern void dMgJump3DMario_c::Update()
+void dMgJump3DMario_c::Update()
 {
     ApproachLinear(mVel.y, data_ov006_0213b010, data_ov006_0213b018);
     AddVec3(&mPos, &mVel, &mPos);

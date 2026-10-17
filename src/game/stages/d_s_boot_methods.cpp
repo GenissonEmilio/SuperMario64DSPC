@@ -30,9 +30,6 @@ enum dScBoot_c_AssetId {
 #include "decl_common.h"
 #include "MessageBank.h"
 #include "PlayerInput.h"
-extern "C" {
-extern u8 gTouchX[1];
-}
 
 #pragma opt_common_subs off
 
@@ -42,7 +39,6 @@ extern u8 data_0209f1e8;
 extern u16 data_020a0e58[];
 extern u16 data_020a0e5a[];
 extern int data_0208ee44;
-
 extern u8 data_0209d454;
 extern u8 data_0209d45c;
 extern dFdColor_c data_0209f5e8;

@@ -39,10 +39,3 @@ int func_020457f0(int v, int idx, int shift, int flag, int *tbl)
 
     return lo;
 }
-
-/* arm9-data-run 0x0209A08C data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_0209a08c[5] ;
-#pragma pop
-/* end arm9-data-run 0x0209A08C */

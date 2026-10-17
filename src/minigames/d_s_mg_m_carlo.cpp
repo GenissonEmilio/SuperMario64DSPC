@@ -403,9 +403,9 @@ s32 dScMgMCarlo_c::Render()
  * seeded with the deck size by SetupBoard and drained one card at a time
  * as the deal proceeds -- drawn as a number at (0xe8, 0x28), with the
  * gauge's frame sprite behind it at (0xe8, 0x18). */
-extern void dScMgMCarlo_c::RenderHud(void)
+void dScMgMCarlo_c::RenderHud(void)
 {
-    int deck ;
+    int deck = data_ov006_0213d56c;
     if (deck == 0) return;
     Mg_DrawNumber(0xe8, 0x28, deck, -1, -1, 0, 0);
     Hud_RenderSprite((void*)data_ov006_02133f18, 0xe8, 0x18, -1, -1);

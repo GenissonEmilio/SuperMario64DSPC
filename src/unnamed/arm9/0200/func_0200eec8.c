@@ -5,5 +5,3 @@ void func_0200eec8(void)
 {
     RunKuppaScript(data_02088610);
 }
-
-extern int data_0209b284[4];

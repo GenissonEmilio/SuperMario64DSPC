@@ -96,7 +96,3 @@ extern "C" unsigned func_020396dc(int **p, unsigned x)
 void dBgW_Kc::Virtual08()
 {
 }
-
-extern "C" {
-int data_0209fc68;
-}

@@ -8,9 +8,7 @@ extern u8 data_0209fc58[];
 extern int data_0209fc68;
 extern int data_0209fc60;
 extern u8 data_0209fc54;
-u8 data_0209f1d8;
-static unsigned char data_0209f1d8_pad[3];
-
+extern u8 data_0209f1d8;
 
 void func_02030aa4(int arg)
 {
@@ -31,10 +29,3 @@ void func_02030aa4(int arg)
     data_0209fc54 = 0;
     data_0209f1d8 = 1;
 }
-
-/* arm9-data-run 0x020975D4 data */
-#pragma push
-#pragma explicit_zero_data on
-extern unsigned int data_020975d4[223] ;
-#pragma pop
-/* end arm9-data-run 0x020975D4 */

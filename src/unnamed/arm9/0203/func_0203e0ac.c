@@ -30,7 +30,7 @@ void func_0203e0ac(void)
     H(p1154, 0x76) = H(p1040, 0xa);
 
     {
-extern u16 *p11c4 ;
+        u16 *p11c4 = (u16 *)data_020a11c4;
         H(p1154, 0x4c) = p11c4[0];
         H(p1154, 0x4e) = p11c4[1];
         H(p1154, 0x50) = p11c4[2];
@@ -73,6 +73,3 @@ extern u16 *p11c4 ;
         p1154 += 1;
     } while (i < 0x11);
 }
-
-extern unsigned char data_020a0fa0[6];
-extern short data_020a0f34;

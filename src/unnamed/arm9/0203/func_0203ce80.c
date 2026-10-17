@@ -1,4 +1,3 @@
-int data_020a0f84;
 // @symbol func_0203ce80
 /* recovered: shared common types */
 #include "common.h"

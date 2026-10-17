@@ -3,10 +3,7 @@ extern void FS_InitFile(int* s);
 extern void func_0205c4e4(void* self, int value);
 extern int func_0205c5e4(void* self, int x);
 extern void CpuCopy8(const void* src, void* dst, unsigned int size);
-#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
-#pragma section forcedata begin
-extern unsigned char data_0209a044[4] ;
-#pragma section forcedata end
+extern const unsigned char data_0209a044[];
 
 int func_0205bc88(char* c)
 {

@@ -155,7 +155,7 @@ int daPgRcer_c::Render()
 }
 
 // @symbol _ZN10daPgRcer_c16OnPendingDestroyEv
-extern void daPgRcer_c::OnPendingDestroy()
+void daPgRcer_c::OnPendingDestroy()
 {
 }
 
@@ -171,9 +171,9 @@ int daPgRcer_c::CleanupResources()
 }
 
 // @symbol _ZN10daPgRcer_c19func_ov019_021122dcEi
-extern void daPgRcer_c::func_ov019_021122dc(int state)
+void daPgRcer_c::func_ov019_021122dc(int state)
 {
-    mStateDesc ;
+    mStateDesc = &((daPgRcerState *)data_ov019_0211356c)[state];
     func_ov019_021122a4();
 }
 
