@@ -31,9 +31,17 @@ src/unnamed/ov007/func_ov007_020ade14.c:
     complete
     .text start:0x020ade14 end:0x020ade58
 
+src/data/ov007/rodata_020ccb54.c:
+    complete
+    .rodata start:0x020ccb54 end:0x020ccb5c
+
 src/data/ov007/rodata_020ccb5c.c:
     complete
     .rodata start:0x020ccb5c end:0x020ccb60
+
+src/data/ov007/rodata_020ccb60.c:
+    complete
+    .rodata start:0x020ccb60 end:0x020ccb68
 
 src/data/ov007/rodata_020ccb68.c:
     complete
@@ -379,6 +387,10 @@ src/data/ov007/rodata_020cccd0.c:
     complete
     .rodata start:0x020cccd0 end:0x020cccd4
 
+src/data/ov007/rodata_020cccd4.c:
+    complete
+    .rodata start:0x020cccd4 end:0x020cccdc
+
 src/data/ov007/rodata_020cccdc.c:
     complete
     .rodata start:0x020cccdc end:0x020ccce0
@@ -391,13 +403,25 @@ src/data/ov007/rodata_020ccce4.c:
     complete
     .rodata start:0x020ccce4 end:0x020ccce8
 
+src/data/ov007/rodata_020ccce8.c:
+    complete
+    .rodata start:0x020ccce8 end:0x020cccec
+
 src/data/ov007/rodata_020cccec.c:
     complete
     .rodata start:0x020cccec end:0x020cccf0
 
+src/data/ov007/rodata_020cccf0.c:
+    complete
+    .rodata start:0x020cccf0 end:0x020cccf4
+
 src/data/ov007/rodata_020cccf4.c:
     complete
     .rodata start:0x020cccf4 end:0x020cccf8
+
+src/data/ov007/rodata_020cccf8.c:
+    complete
+    .rodata start:0x020cccf8 end:0x020cccfc
 
 src/data/ov007/rodata_020cccfc.c:
     complete
@@ -575,6 +599,10 @@ src/data/ov007/rodata_020ccda8.c:
     complete
     .rodata start:0x020ccda8 end:0x020ccdac
 
+src/data/ov007/rodata_020ccdac.c:
+    complete
+    .rodata start:0x020ccdac end:0x020ccdb0
+
 src/data/ov007/rodata_020ccdb0.c:
     complete
     .rodata start:0x020ccdb0 end:0x020ccdb4
@@ -582,6 +610,10 @@ src/data/ov007/rodata_020ccdb0.c:
 src/data/ov007/rodata_020ccdb4.c:
     complete
     .rodata start:0x020ccdb4 end:0x020ccdb8
+
+src/data/ov007/rodata_020ccdb8.c:
+    complete
+    .rodata start:0x020ccdb8 end:0x020ccdbc
 
 src/data/ov007/rodata_020ccdbc.c:
     complete
@@ -2467,6 +2499,10 @@ src/data/ov007/rodata_020d75e4.c:
     complete
     .rodata start:0x020d75e4 end:0x020d75e8
 
+src/data/ov007/rodata_020d75e8.c:
+    complete
+    .rodata start:0x020d75e8 end:0x020d75f0
+
 src/data/ov007/rodata_020d75f0.c:
     complete
     .rodata start:0x020d75f0 end:0x020d75f1
@@ -2545,6 +2581,10 @@ src/unnamed/ov007/func_ov007_020b4c04.c:
 src/data/ov007/rodata_020d7658.c:
     complete
     .rodata start:0x020d7658 end:0x020d76a0
+
+src/data/ov007/rodata_020d76a0.c:
+    complete
+    .rodata start:0x020d76a0 end:0x020d76a1
 
 src/data/ov007/rodata_020d76a1.c:
     complete
