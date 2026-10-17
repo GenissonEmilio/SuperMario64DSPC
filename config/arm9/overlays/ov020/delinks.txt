@@ -17,6 +17,10 @@ src/game/actors/d_a_chair.cpp:
     .init start:0x0211372c end:0x02113768
     .ctor start:0x0211376c end:0x02113770
     .bss start:0x02114af0 end:0x02114b04
+src/data/ov020/rodata_021134e4.c:
+    complete
+    .rodata start:0x021134e4 end:0x021134e8
+
 src/data/ov020/rodata_021134e8.c:
     complete
     .rodata start:0x021134e8 end:0x021134ec
