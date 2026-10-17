@@ -1,0 +1,10 @@
+/* .data 0x021138c4..0x021138cc */
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned char data_ov020_021138c4[8] = {
+    0, 0, 0, 0, 0, 0, 0, 1
+};
+#pragma section forcedata end
+#pragma pop
