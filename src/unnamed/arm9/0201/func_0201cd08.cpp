@@ -1,4 +1,12 @@
 //cpp
+extern "C" {
+unsigned char data_0209d688;
+static unsigned char data_0209d688_pad[3];
+
+}
+extern "C" {extern unsigned char data_0209d6b8;
+
+}
 #include "types.h"
 extern "C" {
 extern void func_0201eaac(void);

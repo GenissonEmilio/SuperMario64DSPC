@@ -1,3 +1,5 @@
+int data_ov007_0210345c;
+
 extern void func_ov007_020c951c(int unused, void *h, void *extra);
 extern void MultiStore32Bytes(unsigned int val, int *dst, int len);
 extern void func_ov007_020c0308(unsigned short *dst, int b, int c);
@@ -8,7 +10,6 @@ extern void func_ov007_020b797c(void);
 extern void *data_ov007_02102ef8;
 extern int data_ov007_020d7a5c[3];
 extern short data_ov007_02103458;
-extern int data_ov007_0210345c;
 extern int data_ov007_02103464;
 extern int data_ov007_02103468;
 extern int data_ov007_02102dd8;

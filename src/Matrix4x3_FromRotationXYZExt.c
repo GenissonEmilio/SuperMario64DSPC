@@ -1,8 +1,9 @@
+extern const int IDENTITY_MATRIX4X3[12];
+
 extern void Matrix4x3_FromRotationZ(void *m, int angle);
 extern void Matrix4x3_FromRotationY(void *m, int angle);
 extern void Matrix4x3_FromRotationX(void *m, int angle);
 extern void MulMat4x3Mat4x3(void *a, void *b, void *c);
-extern int IDENTITY_MATRIX4X3[];
 
 struct Mtx { int v[12]; };
 

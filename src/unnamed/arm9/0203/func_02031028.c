@@ -1,3 +1,6 @@
+unsigned char data_0209f2b0;
+static unsigned char data_0209f2b0_pad[3];
+
 #include "types.h"
 extern u8 data_0209fc84;
 extern u8 data_0209fca0;

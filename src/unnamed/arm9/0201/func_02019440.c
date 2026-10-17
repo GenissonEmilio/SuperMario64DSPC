@@ -1,3 +1,5 @@
+unsigned char data_0209d4e0;
+unsigned char data_0209d4e0_pad[3];
 #include "types.h"
 extern int data_0209d4a8;
 extern int data_0209d4ac;

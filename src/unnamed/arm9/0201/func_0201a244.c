@@ -1,3 +1,4 @@
+int data_02092138 = 0x80000000;
 #include "types.h"
 extern int _ZN6Memory8AllocateEji(u32 sz, int align);
 extern void func_02058200(void *c, int f, int a, int p, int s, int x);

@@ -36,8 +36,8 @@ extern u8 data_0209d45c;
 extern u8 data_0209d454;
 extern u8 data_0209d64c;
 extern u8 data_0209d650;
-extern u8 data_0209d654;
-extern u8 data_0209d658;
+extern u8 data_0209d654;extern u8 data_0209d658;
+
 extern u8 data_0209d65c;
 extern u8 data_0209d660;
 extern u8 data_0209d664;
@@ -77,8 +77,8 @@ extern int data_0209d6fc;
    volatile here; plurality decl elsewhere is u8 *. */
 extern volatile int data_0209d6f4;
 extern s32 data_0209d704;
-extern s32 data_0209d74c[];
-extern u8 data_0208ee74[];
+extern s32 data_0209d74c[];extern u8 data_0208ee74[12];
+
 extern u8 data_0208f074[];
 extern u8 data_0209f20c;
 extern u8 data_0209f220;

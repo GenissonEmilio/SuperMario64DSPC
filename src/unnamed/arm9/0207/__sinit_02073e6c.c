@@ -1,3 +1,6 @@
+extern unsigned char data_020890a0[264];
+
+
 #include "types.h"
 extern void func_020731dc(void *, void *, void **);
 extern void *_ZN10dFdColor_cD1Ev(void *);
@@ -10,7 +13,6 @@ extern unsigned char data_02087664[];
 extern unsigned char data_0208753c[];
 extern unsigned char data_02087524[];
 extern unsigned char data_02088a94[];
-extern unsigned char data_020890a0[];
 extern unsigned char data_02088fb8[];
 extern unsigned char data_020876a4[];
 extern unsigned char data_020875fc[];

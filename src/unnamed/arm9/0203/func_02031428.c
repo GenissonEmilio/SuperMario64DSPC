@@ -1,3 +1,4 @@
+int *data_0209f324;
 #include "types.h"
 #pragma opt_common_subs off
 extern int func_02054d88(void);

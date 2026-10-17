@@ -4,6 +4,22 @@
     .ctor       start:0x0213356c end:0x021335e8 kind:rodata align:4
     .data       start:0x02133600 end:0x021402e0 kind:data align:32
     .bss        start:0x021402e0 end:0x021430a0 kind:bss align:32
+src/data/ov006/data_ov006_02133810.c:
+    complete
+    .data start:0x02133810 end:0x0213386c
+
+src/data/ov006/data_ov006_02134d40.c:
+    complete
+    .data start:0x02134d40 end:0x02134d4c
+
+src/data/ov006/data_ov006_02140304.c:
+    complete
+    .bss start:0x02140304 end:0x02140308
+
+src/data/ov006/data_ov006_0213734c.c:
+    complete
+    .data start:0x0213734c end:0x021373a4
+
 src/minigames/unit020bfec0.cpp:
     complete
     .text start:0x020bfec0 end:0x020c4048
@@ -30,6 +46,7 @@ src/minigames/unit020c8a30.cpp:
     complete
     .text start:0x020c8a30 end:0x020c8dd4
 
+    .bss start:0x021405ac end:0x021405b0
 src/minigames/d_mg_trmpln2_mario.cpp:
     complete
     .text start:0x020c8dd4 end:0x020cd744
@@ -39,6 +56,7 @@ src/minigames/d_mg_trmpln2_mario.cpp:
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018
+    .bss start:0x0214097c end:0x02140990
 
 src/minigames/d_s_mg_amida.cpp:
     complete

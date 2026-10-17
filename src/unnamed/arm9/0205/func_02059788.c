@@ -1,6 +1,7 @@
+int data_020a6434;
+
 extern unsigned short data_020a6430;
 extern int data_020a6438;
-extern int data_020a6434;
 extern void func_02059700(void);
 extern void func_02059624(int bit);
 extern void _ZN3IRQ13SetIRQHandlerEjPFvvE(unsigned int bit, void (*handler)(void));

@@ -1,3 +1,4 @@
+unsigned char gTouchEdge;
 extern void func_0205f270(void);
 extern void func_0205f1e4(void *p);
 extern void func_0205f0e0(void *p);

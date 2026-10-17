@@ -1,3 +1,6 @@
+unsigned char data_020a0f08;
+static unsigned char data_020a0f08_pad[3];
+
 #include "nitro/fx/fx.h"
 typedef short s16;
 typedef long long s64;

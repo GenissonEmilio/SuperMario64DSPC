@@ -17,6 +17,11 @@
       "name": ".text",
       "start": "0x020b4aa4",
       "end": "0x020b67e8"
+    },
+    {
+      "name": ".data",
+      "start": "0x020bc864",
+      "end": "0x020bc868"
     }
   ],
   "functions": [
@@ -322,7 +327,14 @@
       "ordinal": 42
     }
   ],
-  "data": [],
+  "data": [
+    {
+      "symbol": "data_ov004_020bc864",
+      "address": "0x020bc864",
+      "size": "0x00000004",
+      "evidence": "one data word, 0xffffffa0. The intact proof is stale; no ROM sha was rewritten."
+    }
+  ],
   "bss": [],
   "notes": [
     "Text only: this unit's .data (0x020bc7d0..0x020bc83c) and .bss (0x020bf9e4..0x020bfa56) stay ROM-owned and are reached by extern, as the one-function sources did; __sinit_ov004_020b9ad0 stays its own enrolled source.",

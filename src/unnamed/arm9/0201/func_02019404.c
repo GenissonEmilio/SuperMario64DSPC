@@ -1,3 +1,4 @@
+short data_0209d494[2];
 extern void* data_0209d4a8;
 void func_02019404(void){
   void** o = (void**)data_0209d4a8;

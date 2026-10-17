@@ -8,7 +8,9 @@ extern u8 data_0209fc58[];
 extern int data_0209fc68;
 extern int data_0209fc60;
 extern u8 data_0209fc54;
-extern u8 data_0209f1d8;
+u8 data_0209f1d8;
+static unsigned char data_0209f1d8_pad[3];
+
 
 void func_02030aa4(int arg)
 {

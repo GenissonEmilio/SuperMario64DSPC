@@ -1,3 +1,8 @@
+unsigned char data_0209d6b8;
+static unsigned char data_0209d6b8_pad[3];
+
+extern signed char data_0209f30c;
+
 #include "MessageBank.h"
 
 extern int GetOwnerLanguage(void);

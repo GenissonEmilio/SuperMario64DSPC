@@ -1,3 +1,6 @@
+extern void * data_020a0f60;
+
+
 extern void *_ZN6Memory8AllocateEji(unsigned int size, int align);
 extern void func_020672d0(void *thiz, int a1, int a2, int a3, int a4);
 extern void func_020616e8(void *p, int a1);
@@ -14,7 +17,6 @@ extern unsigned short data_020a0f28;
 extern void *data_020a0f74;
 extern void *data_020a0f80;
 extern int data_020a0f58;
-extern void *data_020a0f60;
 extern int data_020a0f64;
 extern void *data_020a0f68;
 extern char data_020a1064[];

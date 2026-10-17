@@ -1,3 +1,6 @@
+unsigned char data_0209f2d0;
+static unsigned char data_0209f2d0_pad[3];
+
 #include "types.h"
 extern void func_02031b84(int c);
 

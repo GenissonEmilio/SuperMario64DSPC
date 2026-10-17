@@ -1,4 +1,9 @@
 //cpp
+extern "C" {
+unsigned char data_0209d6a0;
+static unsigned char data_0209d6a0_pad[3];
+
+}
 /* Runtime asset handles resolved through the overlay 0 file table. */
 enum LoadFont_AssetId {
     ASSET_D_2D_MARIO_3DFONT_NCL_BIN = 0x0237
@@ -17,7 +22,9 @@ struct GX  { static void LoadBGPltt(void const *p, unsigned a, unsigned b); };
 struct GXS { static void LoadBGPltt(void const *p, unsigned a, unsigned b); };
 
 extern unsigned char data_0209d698;
-extern int data_0209d6f8;
+extern "C" {extern int data_0209d6f8;
+
+}
 extern unsigned char data_0209d660;
 extern short data_0209d6d4;
 

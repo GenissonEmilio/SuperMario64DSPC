@@ -1,3 +1,7 @@
+const int data_ov007_020ccc48[2] = {
+    0x00000001, 0x00000002
+};
+
 extern int func_ov007_020b3f20(int x);
 extern void func_02044efc(void* a);
 extern void* func_ov007_020bc6d4(void* a, int b);
@@ -7,7 +11,6 @@ extern void func_ov007_020bc658(void* c, void* r1, int r2);
 extern void func_02045ef8(void* a, void* b);
 extern void func_02046234(void* a, void* b);
 extern void func_ov007_020bbf98(void* a, int b);
-extern int data_ov007_020ccc48[];
 extern char data_ov007_020ccc68[];
 extern char data_ov007_020ccc80[];
 extern int data_ov007_02103348[];

@@ -1,3 +1,4 @@
+const int data_020755d4[3] = {0x0007d000, 0x0007d000, 0x0007d000};
 extern signed char data_0209f2f8;
 extern void* data_02092584[];
 extern int data_02092654;

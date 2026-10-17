@@ -1,5 +1,7 @@
-
 extern unsigned char data_0209d4e0;
+
+
+
 extern int data_0208ee4c;
 extern void func_0201a798(int id);
 extern int func_0203d7b8(void);

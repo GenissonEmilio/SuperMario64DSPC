@@ -1,3 +1,5 @@
+int data_ov007_02103474;
+
 typedef struct Obj {
   int x0;                 /* 0x00 */
   char pad4[12];          /* 0x04..0x0f */
@@ -19,7 +21,6 @@ extern Obj* data_ov007_0210346c;
 extern Obj* data_ov007_02103460;
 extern int data_ov007_02103484;
 extern int data_ov007_02103470;
-extern int data_ov007_02103474;
 extern struct Ddc data_ov007_02102ddc;
 extern Obj* func_ov007_020c44e4(int n);
 

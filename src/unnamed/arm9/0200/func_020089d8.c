@@ -1,3 +1,4 @@
+int data_0209b49c;
 struct S {
     char pad[0x90];
     int field_0x90;

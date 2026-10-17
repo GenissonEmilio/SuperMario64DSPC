@@ -1,3 +1,5 @@
+extern unsigned char data_0209f26c;
+
 typedef unsigned char u8;
 typedef unsigned int u32;
 typedef struct Vector3 { int x, y, z; } Vector3;

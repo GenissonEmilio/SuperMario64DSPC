@@ -1,3 +1,6 @@
+unsigned char data_0209f238;
+static unsigned char data_0209f238_pad[3];
+
 extern int func_0203da9c(void);
 extern int func_0203d950(int i);
 extern int func_0203d890(void);

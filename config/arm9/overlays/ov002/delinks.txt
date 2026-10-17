@@ -4,6 +4,18 @@
     .ctor       start:0x021080d0 end:0x02108138 kind:rodata align:4
     .data       start:0x02108140 end:0x0210d9a0 kind:data align:32
     .bss        start:0x0210d9a0 end:0x021111a0 kind:bss align:32
+src/data/ov002/data_ov002_0210d9b8.c:
+    complete
+    .bss start:0x0210d9b8 end:0x0210d9c0
+
+src/data/ov002/data_ov002_0210d9f0.c:
+    complete
+    .bss start:0x0210d9f0 end:0x0210d9f8
+
+src/data/ov002/data_ov002_0210da40.c:
+    complete
+    .bss start:0x0210da40 end:0x0210da48
+
 src/runtime/actor/d_enemy_base.cpp:
     complete
     .text start:0x020ad660 end:0x020aedbc
@@ -358,6 +370,10 @@ src/game/actors/d_a_demo.cpp:
     .data start:0x0210b8c0 end:0x0210b958
     .bss start:0x02110e24 end:0x0211110c
 
+src/data/ov002/data_ov002_0210c3a0.c:
+    complete
+    .data start:0x0210c3a0 end:0x0210c3a8
+
 src/_ZThn80_N8daDemo_c10anmModel_cD0Ev.cpp:
     complete
     .text start:0x020f8838 end:0x020f8848
@@ -374,6 +390,7 @@ src/game/actors/d_a_sound_obj.cpp:
     complete
     .text start:0x020f934c end:0x020f975c
 
+    .bss start:0x02111148 end:0x0211114c
 src/ui/hud/d_map.cpp:
     complete
     .text start:0x020f975c end:0x020fb8f8
@@ -392,6 +409,7 @@ src/engine/collision/d_m3d_g_lin.cpp:
     complete
     .text start:0x020fea4c end:0x020feabc
 
+    .bss start:0x02111184 end:0x02111188
 src/game/actors/d_a_propeller_heyho_fire.cpp:
     complete
     .text start:0x020feabc end:0x020ff014

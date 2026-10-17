@@ -1,3 +1,4 @@
+int data_020a0f38;
 extern short data_02082214[];
 
 void func_0203cd80(int *m, short angle)

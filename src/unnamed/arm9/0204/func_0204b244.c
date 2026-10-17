@@ -1,3 +1,9 @@
+void func_0204c0a8(int, int, void *);
+void func_0204c0e8(int, int, void *);
+void (*data_02099fbc[2])(int, int, void *) = {
+    func_0204c0a8, func_0204c0e8
+};
+
 #include "nitro/fx/fx.h"
 typedef unsigned int u32;
 typedef unsigned short u16;
@@ -70,7 +76,6 @@ typedef struct {
 } Self;
 
 extern s16 data_02082214[];
-extern void (*data_02099fbc[])(int, int, void *);
 extern void (*data_02099fb4[])(u8, u8);
 
 extern void func_020527e8(int *m, int sx, int sy, int sz);

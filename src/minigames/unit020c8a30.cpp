@@ -1,4 +1,7 @@
 //cpp
+extern "C" {
+int data_ov006_021405ac;
+}
 /* ov006 sprite pool, 0x020c8a30..0x020c8dd4.
  *
  * Three 0x20-byte records at data_ov006_021404d8. Jump, Jump2,

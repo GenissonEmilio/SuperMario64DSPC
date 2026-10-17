@@ -5,13 +5,13 @@
 
 typedef signed char s8;
 
-extern s8 data_0208eb54; /* archive a read mounted, -1 when none */
+s8 data_0208eb54[4] = {-1, 0, 0, 0}; /* archive index, -1 when none */
 extern void UnloadArchive(int i);
 
 void func_02018770(void) {
-    if (data_0208eb54 < 0) {
+    if (data_0208eb54[0] < 0) {
         return;
     }
-    UnloadArchive(data_0208eb54);
-    data_0208eb54 = -1;
+    UnloadArchive(data_0208eb54[0]);
+    data_0208eb54[0] = -1;
 }

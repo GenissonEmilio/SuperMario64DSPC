@@ -1,4 +1,7 @@
 //cpp
+extern "C" {
+int data_ov004_020bc864 = 0xffffffa0;
+}
 /* unit020b4aa4 -- ov004 unit 0x020b4aa4..0x020b67e8: 43 functions, .text only.
  *
  * One translation unit of the shared minigame overlay, between unit020b2c84

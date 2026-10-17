@@ -1,3 +1,4 @@
+void * data_020a0f60;
 typedef struct Vector3 { int x, y, z; } Vector3;
 
 extern void func_0203ce80(Vector3 *dst, Vector3 *src);

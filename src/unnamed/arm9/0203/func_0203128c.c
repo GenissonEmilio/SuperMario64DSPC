@@ -1,3 +1,6 @@
+signed char data_0209f2f4;
+static unsigned char data_0209f2f4_pad[3];
+
 extern unsigned char* data_0209fd0c;
 extern unsigned char NumStars(void);
 extern int func_020138dc(void);

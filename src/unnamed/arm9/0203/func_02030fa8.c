@@ -1,3 +1,6 @@
+unsigned char data_0209f290;
+static unsigned char data_0209f290_pad[3];
+
 typedef int s32;
 
 extern s32 GetOwnerLanguage(void);

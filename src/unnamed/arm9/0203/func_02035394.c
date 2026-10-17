@@ -1,3 +1,6 @@
+unsigned int data_0209f4f8[3][16];
+extern unsigned char data_0209fcc8;
+
 void func_02035394(unsigned char *dst, unsigned char *src)
 {
     *(unsigned char *)(dst + 4) = *(unsigned char *)(src + 4);

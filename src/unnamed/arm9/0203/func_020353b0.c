@@ -1,3 +1,6 @@
+int data_0209f60c;
+extern unsigned char *data_0209fd0c;
+
 void func_020353b0(char* c, int* p) {
     if (p == 0) {
         *(int*)(c+0xc) = 0;
