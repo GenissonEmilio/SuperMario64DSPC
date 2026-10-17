@@ -1,0 +1,15 @@
+/* .data 0x02099e24..0x02099e6c */
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned char data_02099e24[72] = {
+    87, 70, 83, 105, 95, 70, 111, 114, 99, 101, 87, 97,
+    107, 101, 117, 112, 67, 97, 114, 100, 40, 41, 32, 99,
+    97, 108, 108, 101, 100, 33, 32, 40, 117, 110, 107, 110,
+    111, 119, 110, 32, 98, 117, 103, 32, 104, 97, 115, 32,
+    98, 101, 101, 110, 32, 102, 111, 114, 99, 101, 45, 114,
+    101, 99, 111, 118, 101, 114, 101, 100, 41, 10, 0, 0
+};
+#pragma section forcedata end
+#pragma pop
