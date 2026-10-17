@@ -394,14 +394,6 @@
       "evidence": "df88a655 Behavior RouletteBoard_Update((C*)(c+0x530c)); recovered local RouletteSliderView; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
     },
     {
-      "path": "src/minigames/d_s_mg_smartball.cpp",
-      "rule": "raw-offset",
-      "match": "(char*)this+0x32",
-      "count": 24,
-      "reason": "Retain the existing per-reader signed/unsigned halfword angle at base+0x32 while replacing local shadow receivers with native members. The base header deliberately leaves this pad-region field unnamed because sibling readers disagree on signedness; retain those reads until a shared type is justified.",
-      "evidence": "df88a655 wing IsAtRest/RebuildVerts short reads at+0x32 and existing native SaveSnapshot/RestoreInitial; include/cMgSmartball_object_c.h; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
-    },
-    {
       "path": "src/minigames/unit020cd744.cpp",
       "rule": "raw-offset",
       "match": "(TextureTransformer*)(self+0x194",
@@ -432,6 +424,14 @@
       "count": 1,
       "reason": "Use real Model calls for the embedded model at slider+0x60; main already used ModelBase/Sub views at the same address. The containing slider remains partial; name the model member only once lifecycle and complete layout are established.",
       "evidence": "df88a655 Roulette slider render ModelBase/Sub at+0x60; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
+    },
+    {
+      "path": "include/cMgSmartball_wing_c.h",
+      "rule": "unknown-field",
+      "match": "unk_032",
+      "count": 1,
+      "reason": "The wing-only GetAngle accessor reads the existing byte pair at base+0x32 as s16. The base deliberately stores u8 bytes because ana, board, wing and propeller require different views; renaming this shared byte as a signed angle would misstate those readers. Keep this one explicit boundary until a shared representation justified by every consumer exists.",
+      "evidence": "include/cMgSmartball_object_c.h documents per-reader signedness across0x031..0x033; cMgSmartball_wing_c::GetAngle casts the named byte storage. Fresh b56 compile preserves the entire production-prepared Smartball object byte-for-byte versus a317608eec;132/132 owned strict function checks VERIFIED; build/review3955-smartball-proof/proof.json."
     }
   ]
 }
