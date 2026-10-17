@@ -7185,6 +7185,10 @@ src/game/actors/d_a_f_pkn_ball.cpp:
     .text start:0x020f8858 end:0x020f934c
 
     .rodata start:0x02100320 end:0x0210035c
+src/data/ov002/rodata_0210035c.c:
+    complete
+    .rodata start:0x0210035c end:0x02100360
+
 src/data/ov002/rodata_02100360.c:
     complete
     .rodata start:0x02100360 end:0x02100364
