@@ -6,7 +6,7 @@
  * SIZE 0x88, from _Znwj(0x88) in dScMgSmartball_c::SpawnObjects. Base ends at 0x34, so
  * this class adds 0x54 bytes.
  *
- * FIVE CONTROL FIELDS, TWO OF THEM NAMED. All five are zeroed by RestoreInitial, but
+ * FIVE CONTROL FIELDS. All five are zeroed by RestoreInitial, but
  * only two of these five control fields are read:
  *
  *   - 0x40 mTriggerCount is incremented by Trigger, which
@@ -26,9 +26,9 @@
  *
  * The other three (0x34, 0x38, 0x3c) are WRITTEN by Trigger on
  * the same call that bumps mTriggerCount -- 0x34 to 0x14 the first time and 0
- * after, 0x3c to 1, 0x38 to 0 -- and zeroed by RestoreInitial. NOTHING IN THE
- * TREE READS THEM BACK, so they keep unk_ names: the shape suggests a timer,
- * a flag and a counter, but a suggestion is not evidence.
+ * after, 0x3c to 1, 0x38 to 0 -- and zeroed by RestoreInitial. No reader has
+ * been identified for these fields. mTriggerTime, mTriggerPhase and
+ * mTriggerFlag are provisional names; their runtime roles remain uncertain.
  *
  * ONE FIELD DOES NOT APPEAR BELOW: offset 0x32, a 16-bit angle eased toward
  * 0x3000 by SaveSnapshot and zeroed by RestoreInitial and the constructor,
