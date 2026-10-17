@@ -636,5 +636,152 @@
       "full307_or_current_main_acceptance": false,
       "foreign_handoffs_accepted": false
     }
+  },
+  "current02cdf_composition_checkpoint_2026_10_16": {
+    "date_utc": "2026-10-17",
+    "actual_producer": "codex-yegg-native-current-dfd-astra-producer1016",
+    "source_authority_task": "yegg-native-current-dfd-continuation1016",
+    "class_history_issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3847",
+    "current_base": "02cdf40f9b02816fb647799077d90f1d70111a87",
+    "retained_PR3994_head": "84535386403b12a3f292430a85ac1992216ad79e",
+    "tested_composition_commit": "3367f819b2cbb36099d0de3f4c32379cecff7a02",
+    "composition_parents": [
+      "84535386403b12a3f292430a85ac1992216ad79e",
+      "02cdf40f9b02816fb647799077d90f1d70111a87"
+    ],
+    "scope": "Current-base continuation of the two existing typed result/member reads and their five authored Source/prose spans; all other current-main changes retained.",
+    "source": "src/game/actors/d_a_yegg.cpp",
+    "source_physical_sha256": "577d4ccb2322d137d9e325553329d0b62ffbd4f6b2a084167f3c1b6b3e565d07",
+    "preserved_landed_changes": [
+      "func_ov002_020ecfc8 uses Vec3_HorzAngle(&mPos, &r5->mPos).",
+      "func_ov002_020ed6cc uses &mPos as the second Vec3_HorzDist operand.",
+      "func_ov002_020edca4 passes &self->mCamSpacePos to PlayCharVoice."
+    ],
+    "pending_PR3995": "Its Player.h and mClimbClsn Source changes are not adopted.",
+    "typed_receiver_evidence": "The existing floor-result getter returns a borrowed dBgPi; its inherited dBgPc::surface is used directly. The Player inherits the already-declared Matrix4x3* mCarryMatrix at0xc8; its load retains the original M48 copy view, guards and volatile accesses. No header or object-lifetime reconstruction is added.",
+    "fresh_proof": {
+      "compiler": "2004/b56",
+      "control_compiles": 1,
+      "candidate_compiles": 1,
+      "source_basename": "d_a_yegg.cpp",
+      "functions": {
+        "count": 33,
+        "verified": 33,
+        "blind": 0,
+        "diffs": 0
+      },
+      "separate_initializer": {
+        "symbol": "__sinit_d_a_yegg.cpp",
+        "address": "0x02107118",
+        "bytes": 220,
+        "verdict": "VERIFIED",
+        "blind": 0,
+        "diffs": 0
+      },
+      "RAW": {
+        "bytes": 26808,
+        "sha256": "ed175da7ffd0772481935afbc654c750d459e9724362654c46a333bc32af1fa4",
+        "counts": {
+          "sections": 107,
+          "symbols": 236,
+          "typed_references": 292,
+          "sized_function_symbols": 36,
+          "sized_object_symbols": 21
+        }
+      },
+      "ordinary": {
+        "bytes": 26808,
+        "sha256": "b5358c2475f7bd8f4e76b92a3479ef64d57fc80d687a3e12830ff820f62a87da",
+        "counts": {
+          "sections": 107,
+          "symbols": 236,
+          "typed_references": 240,
+          "sized_function_symbols": 34,
+          "sized_object_symbols": 10
+        }
+      },
+      "whole_RAW_ordinary_inventory_and_typed_graphs_literal": true,
+      "complete_input_bracket_unchanged": true,
+      "route": "Existing current production intact-object preparation and all configured policy rows unchanged. Full inventories retain every emitted helper, metadata, storage section and typed reference; only configured33+INIT are counted as34 strict bodies.",
+      "elapsed_seconds": 38.187999999994645
+    },
+    "full_build": {
+      "command": "python tools/rombuild.py -j16 --no-rom",
+      "exit_code": 0,
+      "seconds": 136.18700000000536,
+      "modules_exact": 106,
+      "modules_total": 106,
+      "reproducing_functions": 11334,
+      "function_mismatches": 0,
+      "source_owned_data_claims": 338,
+      "source_owned_BSS_claims": 245,
+      "compile_log_lines": [
+        "2206 reused from cache, 0 compiled, 0 failed (20.8s)",
+        "2469 reused from cache, 1 compiled"
+      ],
+      "baseline_symbol_error_rows": [
+        "| [ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "| [ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary",
+        "| [ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "| [ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "| [ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "| [ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "| [ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "| [ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "| [ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary"
+      ],
+      "broader_data_diagnostic": {
+        "verified": 974,
+        "partial": 1559,
+        "differ": 1,
+        "unnamed": 15
+      },
+      "qualification": "The default build succeeded with exact modules and zero new symbol errors; inherited baseline symbol diagnostics and broader partial/differ/unnamed data remain. No extra stock CLI or historical failing TU CLI was replayed."
+    },
+    "scoped_gates": {
+      "tested_commit": "3367f819b2cbb36099d0de3f4c32379cecff7a02",
+      "prepush": {
+        "command": "python tools/prepush_linkcheck.py --range 02cdf40f9b02816fb647799077d90f1d70111a87..HEAD",
+        "exit_code": 0,
+        "checked": 34,
+        "verified": 34,
+        "warnings": 0,
+        "blocking": 0,
+        "seconds": 24.14100000000326,
+        "compile_accounting": "Generic CLI compile/cache/retry internals are not instrumented; no additional fresh probe credit claimed."
+      },
+      "declaration": {
+        "command": "python tools/check_decl_agreement.py --changed 02cdf40f9b02816fb647799077d90f1d70111a87",
+        "exit_code": 0,
+        "seconds": 9.76600000000326
+      },
+      "full_style": {
+        "command": "python tools/source_style.py --base 02cdf40f9b02816fb647799077d90f1d70111a87",
+        "exit_code": 0,
+        "findings": 0,
+        "format_deferrals": 0,
+        "patterns_only": false,
+        "seconds": 0.7650000000139698
+      },
+      "whitespace_exit_code": 0
+    },
+    "historical_retention": "All17 original current-main report values/order and the entire845 typed_result_access_checkpoint_2026_10_16 remain literal. Its DFD measurements, TU CLI refusal, attribution erratum and original finding dictionaries are historical and are not relabeled as current-base evidence.",
+    "remaining_reconstruction": "Partial/deferred: M48 copy view, Fix12 bridges, raw DOSUN access, unknown fields/numeric flags/helper names and the previously recorded ABI/lifetime limits remain. Existing actor union views are not newly proven genuine Vector3 lifetimes.",
+    "acceptance_limits": {
+      "producer_only": true,
+      "independent_current_composition_verification_pending": true,
+      "Source_consumers_accepted": 208,
+      "foundations": 4,
+      "remaining_migrations": 45,
+      "proof_dependencies_accepted": 30,
+      "proof_dependencies_remaining": 20,
+      "original_total": 307,
+      "full307_acceptance": false,
+      "counter_increment": 0,
+      "foreign_pending_Source_adopted": false,
+      "parent_formal_input_changed": false,
+      "queue_publish_release_or_public_push": false
+    },
+    "report_only_finalization": "This appendix follows the tested local merge; Source and all production trees remain literal to that tested merge."
   }
 }
