@@ -3,13 +3,101 @@
     .ctor       start:0x02126cd4 end:0x02126cd8 kind:rodata align:4
     .data       start:0x02126ce0 end:0x02126ee0 kind:data align:32
     .bss        start:0x02126ee0 end:0x02127140 kind:bss align:32
+src/data/ov078/data_02126ce0.c:
+    complete
+    .data start:0x02126ce0 end:0x02126e0c
+
 src/game/actors/d_a_bombking.cpp:
     complete
     .text start:0x02123740 end:0x02126660
     .data start:0x02126e0c end:0x02126ec8
     .bss start:0x02126ee0 end:0x02126f48
 
+src/data/ov078/data_02126ec8.c:
+    complete
+    .data start:0x02126ec8 end:0x02126ee0
+
 src/unnamed/ov078/__sinit_ov078_02126660.c:
     complete
     .init start:0x02126660 end:0x02126cd4
     .bss start:0x02126f48 end:0x02126ffc
+src/data/ov078/bss_02126ffc.c:
+    complete
+    .bss start:0x02126ffc end:0x0212700c
+
+src/data/ov078/bss_0212700c.c:
+    complete
+    .bss start:0x0212700c end:0x0212701c
+
+src/data/ov078/bss_0212701c.c:
+    complete
+    .bss start:0x0212701c end:0x0212702c
+
+src/data/ov078/bss_0212702c.c:
+    complete
+    .bss start:0x0212702c end:0x0212703c
+
+src/data/ov078/bss_0212703c.c:
+    complete
+    .bss start:0x0212703c end:0x0212704c
+
+src/data/ov078/bss_0212704c.c:
+    complete
+    .bss start:0x0212704c end:0x02127058
+
+src/data/ov078/bss_02127058.c:
+    complete
+    .bss start:0x02127058 end:0x0212706c
+
+src/data/ov078/bss_0212706c.c:
+    complete
+    .bss start:0x0212706c end:0x0212707c
+
+src/data/ov078/bss_0212707c.c:
+    complete
+    .bss start:0x0212707c end:0x0212708c
+
+src/data/ov078/bss_0212708c.c:
+    complete
+    .bss start:0x0212708c end:0x0212709c
+
+src/data/ov078/bss_0212709c.c:
+    complete
+    .bss start:0x0212709c end:0x021270ac
+
+src/data/ov078/bss_021270ac.c:
+    complete
+    .bss start:0x021270ac end:0x021270bc
+
+src/data/ov078/bss_021270bc.c:
+    complete
+    .bss start:0x021270bc end:0x021270cc
+
+src/data/ov078/bss_021270cc.c:
+    complete
+    .bss start:0x021270cc end:0x021270dc
+
+src/data/ov078/bss_021270dc.c:
+    complete
+    .bss start:0x021270dc end:0x021270ec
+
+src/data/ov078/bss_021270ec.c:
+    complete
+    .bss start:0x021270ec end:0x021270fc
+
+src/data/ov078/bss_021270fc.c:
+    complete
+    .bss start:0x021270fc end:0x0212710c
+
+src/data/ov078/bss_0212710c.c:
+    complete
+    .bss start:0x0212710c end:0x0212711c
+
+src/data/ov078/bss_0212711c.c:
+    complete
+    .bss start:0x0212711c end:0x02127124
+
+src/data/ov078/bss_02127124.c:
+    complete
+    .bss start:0x02127124 end:0x02127140
+
