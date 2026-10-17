@@ -252,6 +252,10 @@ src/game/actors/d_a_snm_bth.cpp:
     .init start:0x02112f70 end:0x02112fc4
     .ctor start:0x02112fd0 end:0x02112fd4
     .bss start:0x02113d04 end:0x02113d1c
+src/data/ov027/rodata_02112b14.c:
+    complete
+    .rodata start:0x02112b14 end:0x02112b18
+
 src/data/ov027/rodata_02112b18.c:
     complete
     .rodata start:0x02112b18 end:0x02112b1c
