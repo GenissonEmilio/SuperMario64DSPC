@@ -2000,10 +2000,10 @@ tail:
 
 
 // @symbol _ZN15dScMgHanachan_c8BehaviorEv
-s32 dScMgHanachan_c::Behavior()
+extern s32 dScMgHanachan_c::Behavior()
 {
 
-    data_ov006_02141fcc = data_ov006_02141fcc + 0x800;
+    data_ov006_02141fcc ;
     (((CB *)this)->*(*(PMF *)&mPhaseFn))();
     int i = 0;
     if (data_ov006_0213c958 > 0) {

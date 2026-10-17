@@ -1,0 +1,1 @@
+unsigned char _ZN15daObjTatefuda_c16CleanupResourcesEv[112];

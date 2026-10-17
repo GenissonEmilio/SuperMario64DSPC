@@ -1720,7 +1720,7 @@ int daKrb_c::CleanupResources()
 }
 
 // @symbol _ZN7daKrb_c16OnPendingDestroyEv
-void daKrb_c::OnPendingDestroy()
+extern void daKrb_c::OnPendingDestroy()
 {
 }
 

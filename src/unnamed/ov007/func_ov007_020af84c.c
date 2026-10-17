@@ -1,5 +1,8 @@
 extern char *data_ov007_0210342c;
-extern int data_ov007_020ccc20[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+extern int data_ov007_020ccc20[9] ;
+#pragma section forcerodata end
 
 extern void func_ov007_020c1d78(int i);
 extern void func_ov007_020b0244(void);

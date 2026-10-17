@@ -4,38 +4,157 @@
     .ctor       start:0x02127b88 end:0x02127b98 kind:rodata align:4
     .data       start:0x02127ba0 end:0x02128140 kind:data align:32
     .bss        start:0x02128140 end:0x021283a0 kind:bss align:32
+src/data/merge/rodata_021275dc.c:
+    complete
+    .rodata start:0x021275dc end:0x021275e4
+src/data/merge/rodata_021275e4.c:
+    complete
+    .rodata start:0x021275e4 end:0x021275ec
+src/data/merge/rodata_021275ec.c:
+    complete
+    .rodata start:0x021275ec end:0x02127600
+src/data/merge/rodata_02127600.c:
+    complete
+    .rodata start:0x02127600 end:0x02127618
 src/game/actors/d_a_btn.cpp:
     complete
-    .ctor start:0x02127b88 end:0x02127b8c
-
     .text start:0x02123740 end:0x02126648
     .init start:0x02127618 end:0x021279d4
     .data start:0x02127ba0 end:0x02127bc0
     .bss start:0x02128140 end:0x021282e0
+src/data/merge/data_02127bc0.c:
+    complete
+    .data start:0x02127bc0 end:0x02127bc8
+src/data/merge/data_02127bc8.c:
+    complete
+    .data start:0x02127bc8 end:0x02127bd0
+src/data/merge/data_02127bd0.c:
+    complete
+    .data start:0x02127bd0 end:0x02127bd8
+src/data/merge/data_02127bd8.c:
+    complete
+    .data start:0x02127bd8 end:0x02127be0
+src/data/merge/data_02127be0.c:
+    complete
+    .data start:0x02127be0 end:0x02127be8
+src/data/merge/data_02127be8.c:
+    complete
+    .data start:0x02127be8 end:0x02127bf0
+src/data/merge/data_02127bf0.c:
+    complete
+    .data start:0x02127bf0 end:0x02127bf8
+src/data/merge/data_02127bf8.c:
+    complete
+    .data start:0x02127bf8 end:0x02127c00
+src/data/merge/data_02127c00.c:
+    complete
+    .data start:0x02127c00 end:0x02127c08
+src/data/merge/data_02127c08.c:
+    complete
+    .data start:0x02127c08 end:0x02127c10
+src/data/merge/data_02127c10.c:
+    complete
+    .data start:0x02127c10 end:0x02127c18
+src/data/merge/data_02127c18.c:
+    complete
+    .data start:0x02127c18 end:0x02127c20
+src/data/merge/data_02127c20.c:
+    complete
+    .data start:0x02127c20 end:0x02127c28
+src/data/merge/data_02127c28.c:
+    complete
+    .data start:0x02127c28 end:0x02127c34
+src/data/merge/data_02127c34.c:
+    complete
+    .data start:0x02127c34 end:0x02127c40
+src/data/merge/data_02127c40.c:
+    complete
+    .data start:0x02127c40 end:0x02127c5c
+src/data/merge/data_02127c5c.c:
+    complete
+    .data start:0x02127c5c end:0x02127c80
+src/data/merge/data_02127c80.c:
+    complete
+    .data start:0x02127c80 end:0x02127cfc
+src/data/merge/data_02127cfc.c:
+    complete
+    .data start:0x02127cfc end:0x02127e7c
+src/data/merge/data_02127e7c.c:
+    complete
+    .data start:0x02127e7c end:0x02127e9c
 src/game/actors/d_a_klr.cpp:
     complete
-    .ctor start:0x02127b8c end:0x02127b90
-
     .text start:0x02126648 end:0x02126dbc
     .init start:0x021279d4 end:0x02127a10
     .data start:0x02127e9c end:0x02127eac
     .bss start:0x021282e0 end:0x021282f0
+src/data/merge/data_02127eac.c:
+    complete
+    .data start:0x02127eac end:0x02127eb8
+src/data/merge/data_02127eb8.c:
+    complete
+    .data start:0x02127eb8 end:0x02127ec4
+src/data/merge/data_02127ec4.c:
+    complete
+    .data start:0x02127ec4 end:0x02127ee8
+src/data/merge/data_02127ee8.c:
+    complete
+    .data start:0x02127ee8 end:0x02127f64
+src/data/merge/data_02127f64.c:
+    complete
+    .data start:0x02127f64 end:0x02127f70
+src/data/merge/data_02127f70.c:
+    complete
+    .data start:0x02127f70 end:0x02127f7c
+src/data/merge/data_02127f7c.c:
+    complete
+    .data start:0x02127f7c end:0x02127f94
+src/data/merge/data_02127f94.c:
+    complete
+    .data start:0x02127f94 end:0x02127fb8
+src/data/merge/data_02127fb8.c:
+    complete
+    .data start:0x02127fb8 end:0x02127fec
+src/data/merge/data_02127fec.c:
+    complete
+    .data start:0x02127fec end:0x02128038
+src/data/merge/data_02128038.c:
+    complete
+    .data start:0x02128038 end:0x02128058
 src/game/actors/d_a_obj_bk_killerdai.cpp:
     complete
-
     .text start:0x02126dbc end:0x021271e4
     .bss start:0x021282f0 end:0x021282f8
+src/data/merge/bss_021282f8.c:
+    complete
+    .bss start:0x021282f8 end:0x02128300
 src/data/park/bss_02128300.c:
     complete
     .bss start:0x02128300 end:0x02128308
+src/data/merge/bss_02128308.c:
+    complete
+    .bss start:0x02128308 end:0x02128310
+src/data/merge/bss_0212831c.c:
+    complete
+    .bss start:0x0212831c end:0x02128328
+src/data/merge/bss_02128328.c:
+    complete
+    .bss start:0x02128328 end:0x02128334
+src/data/merge/bss_02128334.c:
+    complete
+    .bss start:0x02128334 end:0x02128340
 src/game/actors/d_a_obj_bk_kabe.cpp:
     complete
-    .ctor start:0x02127b94 end:0x02127b98
-
     .text start:0x021271e4 end:0x021275dc
     .init start:0x02127acc end:0x02127b88
     .data start:0x02128058 end:0x0212805c
     .bss start:0x02128340 end:0x02128390
+src/data/merge/bss_02128390.c:
+    complete
+    .bss start:0x02128390 end:0x021283a0
+src/data/merge/data_0212805c.c:
+    complete
+    .data start:0x0212805c end:0x02128140
 src/unnamed/ov079/__sinit_ov079_02127a10.c:
     complete
     .init start:0x02127a10 end:0x02127acc

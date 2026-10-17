@@ -14,7 +14,12 @@ typedef struct Arg {
     Node *head;
 } Arg;
 
-extern int data_ov007_020d7d6c[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_ov007_020d7d6c[4] = {
+    1, 2, 4, 8
+};
+#pragma section forcerodata end
 extern void func_ov007_020c076c(Node *node, int flags);
 
 void func_ov007_020c03b0(Arg *arg) {

@@ -6,37 +6,167 @@
     .bss        start:0x0211edc0 end:0x0211efe0 kind:bss align:32
 src/game/actors/d_a_trs.cpp:
     complete
+    .ctor start:0x0211e6fc end:0x0211e700
+
     .text start:0x02115ee0 end:0x0211c600
     .init start:0x0211e29c end:0x0211e3cc
-    .ctor start:0x0211e6fc end:0x0211e700
     .bss start:0x0211edc0 end:0x0211ee98
+src/data/ov063/rodata_0211e1c0.c:
+    complete
 
+    .rodata start:0x0211e1c0 end:0x0211e1dc
+src/data/ov063/rodata_0211e1dc.c:
+    complete
+
+    .rodata start:0x0211e1dc end:0x0211e1e4
+src/data/ov063/rodata_0211e1e4.c:
+    complete
+
+    .rodata start:0x0211e1e4 end:0x0211e1ec
+src/data/ov063/rodata_0211e1ec.c:
+    complete
+
+    .rodata start:0x0211e1ec end:0x0211e22c
+src/data/ov063/rodata_0211e22c.c:
+    complete
+
+    .rodata start:0x0211e22c end:0x0211e26c
+src/data/ov063/rodata_0211e26c.c:
+    complete
+
+    .rodata start:0x0211e26c end:0x0211e27c
+src/data/ov063/data_0211e720.c:
+    complete
+
+    .data start:0x0211e720 end:0x0211e72c
+src/data/ov063/data_0211e72c.c:
+    complete
+
+    .data start:0x0211e72c end:0x0211e738
+src/data/ov063/data_0211e738.c:
+    complete
+
+    .data start:0x0211e738 end:0x0211e744
+src/data/ov063/data_0211e744.c:
+    complete
+
+    .data start:0x0211e744 end:0x0211e750
+src/data/ov063/data_0211e750.c:
+    complete
+
+    .data start:0x0211e750 end:0x0211e760
+src/data/ov063/data_0211e760.c:
+    complete
+
+    .data start:0x0211e760 end:0x0211e770
+src/data/ov063/data_0211e770.c:
+    complete
+
+    .data start:0x0211e770 end:0x0211e78c
+src/data/ov063/data_0211e78c.c:
+    complete
+
+    .data start:0x0211e78c end:0x0211e7a8
+src/data/ov063/data_0211e7a8.c:
+    complete
+
+    .data start:0x0211e7a8 end:0x0211e7c4
+src/data/ov063/data_0211e7c4.c:
+    complete
+
+    .data start:0x0211e7c4 end:0x0211e7e0
+src/data/ov063/data_0211e7e0.c:
+    complete
+
+    .data start:0x0211e7e0 end:0x0211e828
+src/data/ov063/data_0211e828.c:
+    complete
+
+    .data start:0x0211e828 end:0x0211e8ac
+src/data/ov063/data_0211e930.c:
+    complete
+
+    .data start:0x0211e930 end:0x0211e9ac
 src/game/actors/d_a_trs_trap.cpp:
     complete
-    .text start:0x0211c600 end:0x0211d270
-    .rodata start:0x0211e27c end:0x0211e29c
-    .init start:0x0211e3cc end:0x0211e590
     .ctor start:0x0211e700 end:0x0211e704
+
+    .text start:0x0211c600 end:0x0211d270
+    .init start:0x0211e3cc end:0x0211e590
+    .rodata start:0x0211e27c end:0x0211e29c
     .data start:0x0211e9ac end:0x0211e9cc
     .bss start:0x0211ee98 end:0x0211ef58
+src/data/ov063/data_0211e9cc.c:
+    complete
 
+    .data start:0x0211e9cc end:0x0211e9d8
+src/data/ov063/data_0211e9d8.c:
+    complete
+
+    .data start:0x0211e9d8 end:0x0211e9e8
+src/data/ov063/data_0211e9e8.c:
+    complete
+
+    .data start:0x0211e9e8 end:0x0211e9f8
+src/data/ov063/data_0211e9f8.c:
+    complete
+
+    .data start:0x0211e9f8 end:0x0211ea10
+src/data/park/data_0211ea10.c:
+    complete
+    .data start:0x0211ea10 end:0x0211ea88
+src/data/ov063/data_0211ea88.c:
+    complete
+
+    .data start:0x0211ea88 end:0x0211eb04
+src/data/ov063/data_0211eb04.c:
+    complete
+
+    .data start:0x0211eb04 end:0x0211eb10
 src/game/actors/d_a_trs_trap_classinits.cpp:
     complete
-    .text start:0x0211d270 end:0x0211d3a0
-    .data start:0x0211ea10 end:0x0211ea88
 
+    .text start:0x0211d270 end:0x0211d3a0
 src/game/actors/d_a_obj_th_fall_block.cpp:
     complete
+    .ctor start:0x0211e704 end:0x0211e708
+
     .text start:0x0211d3a0 end:0x0211d4b8
     .init start:0x0211e590 end:0x0211e5fc
-    .ctor start:0x0211e704 end:0x0211e708
     .data start:0x0211eb10 end:0x0211eb1c
     .bss start:0x0211ef58 end:0x0211ef80
+src/data/ov063/data_0211eb1c.c:
+    complete
 
+    .data start:0x0211eb1c end:0x0211ebd8
+src/data/ov063/data_0211ebd8.c:
+    complete
+
+    .data start:0x0211ebd8 end:0x0211ecd8
 src/game/actors/d_a_piano.cpp:
     complete
+    .ctor start:0x0211e708 end:0x0211e70c
     .text start:0x0211d4b8 end:0x0211e1c0
     .init start:0x0211e5fc end:0x0211e6fc
-    .ctor start:0x0211e708 end:0x0211e70c
     .data start:0x0211ecd8 end:0x0211ecf8
     .bss start:0x0211ef80 end:0x0211efdc
+src/data/ov063/data_0211ecf8.c:
+    complete
+
+    .data start:0x0211ecf8 end:0x0211ed04
+src/data/ov063/data_0211ed04.c:
+    complete
+
+    .data start:0x0211ed04 end:0x0211ed10
+src/data/ov063/data_0211ed10.c:
+    complete
+
+    .data start:0x0211ed10 end:0x0211ed34
+src/data/ov063/data_0211ed34.c:
+    complete
+
+    .data start:0x0211ed34 end:0x0211edc0
+src/data/ov063/bss_0211efdc.c:
+    complete
+
+    .bss start:0x0211efdc end:0x0211efe0

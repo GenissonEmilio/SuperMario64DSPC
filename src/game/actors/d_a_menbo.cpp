@@ -683,7 +683,7 @@ int daMenbo_c::func_ov090_02131c48()
 
 // @symbol _ZN9daMenbo_c19func_ov090_02131db0Ev
 /* Water-chase entry. The 0x40000000 flag is passed straight through. */
-int daMenbo_c::func_ov090_02131db0()
+extern int daMenbo_c::func_ov090_02131db0()
 {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(&mModelAnim, MENBO_BCA(data_ov090_02134488), 0x40000000, 0x1000, 0);
     unk_3a4 = 0x1000;
@@ -719,7 +719,7 @@ void func_ov090_02131e50(daMenbo_c *c)
 
 // @symbol _ZN9daMenbo_c16CleanupResourcesEv
 /* The model and the four anims, released in this order. */
-int daMenbo_c::CleanupResources()
+extern int daMenbo_c::CleanupResources()
 {
     data_ov090_021344a0.Release();
     data_ov090_02134488.Release();

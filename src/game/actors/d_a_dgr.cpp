@@ -267,7 +267,7 @@ s32 daDgr_c::Render()
 }
 
 // @symbol _ZN7daDgr_c16CleanupResourcesEv
-s32 daDgr_c::CleanupResources()
+extern s32 daDgr_c::CleanupResources()
 {
     data_ov025_02113a68.Release();
     data_ov025_02113a60.Release();

@@ -120,7 +120,7 @@ int daObjTbox_c::Render()
 /* Four releases: two handles live in this
  * overlay and two in ov002, borrowed from the always-resident module. The
  * ROM's order is own-first, borrowed-after. */
-int daObjTbox_c::CleanupResources()
+extern int daObjTbox_c::CleanupResources()
 {
     data_ov064_0211c96c.Release();
     data_ov064_0211c964.Release();

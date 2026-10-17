@@ -33,8 +33,12 @@ typedef struct {
 } Base;
 
 extern Base *data_ov007_0210342c;
-extern s16 data_ov007_020d761c[];
-extern s16 data_ov007_020d761e[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+extern s16 data_ov007_020d761e[5] ;
+
+extern s16 data_ov007_020d761c[1] ;
+#pragma section forcerodata end
 extern u8 data_ov007_020d75f0[];
 extern u8 data_ov007_020d75f1[];
 extern u8 data_ov007_020d75e0[];

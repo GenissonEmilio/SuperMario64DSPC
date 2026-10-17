@@ -101,8 +101,8 @@ s32 daObjTtFuta_c::Behavior() {
 }
 
 // @symbol _ZN13daObjTtFuta_c13InitResourcesEv
-s32 daObjTtFuta_c::InitResources() {
-  void *f = Model::LoadFile(data_ov033_021124c8);
+extern s32 daObjTtFuta_c::InitResources() {
+  void *f ;
   mModel.SetFile((BMD_File *)f, 1, -1);
   UpdateModelPosAndRotY();
   UpdateClsnPosAndRot();

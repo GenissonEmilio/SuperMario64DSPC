@@ -84,9 +84,9 @@ extern "C" daObjClockHuriko_c *daObjClockHuriko_c_classInit()
 /* daObjClockHuriko_c::InitResources -- vtable slot 0, ov013 0x0211133c.
  * A REAL MEMBER ON PURPOSE: the destructor is inline in the header, so this
  * class's key function is its first declared non-inline virtual. */
-s32 daObjClockHuriko_c::InitResources()
+extern s32 daObjClockHuriko_c::InitResources()
 {
-    void *f = Model::LoadFile(data_ov013_02112280);
+    void *f ;
     mModel.SetFile((BMD_File *)f, 1, -1);
     func_ov013_02111238(this);
     mAngSpeed = 0x100;

@@ -2283,10 +2283,7 @@ extern "C" void *dScMgPanel_c_classInit()
 extern "C" void *data_ov006_02136cf0[3];
 extern "C" void *data_ov006_02136d1c[3];
 
-void *data_ov006_021427d4[6] = {
-    data_ov006_02136cf0[0], data_ov006_02136cf0[1], data_ov006_02136cf0[2],
-    data_ov006_02136d1c[0], data_ov006_02136d1c[1], data_ov006_02136d1c[2],
-};
+extern void *data_ov006_021427d4[6] ;
 PanelStateFn data_ov006_02142888[8] = {
     &dScMgPanel_c::Scene_State0,
     &dScMgPanel_c::Scene_State1,

@@ -12,7 +12,12 @@ extern void func_ov007_020bbe60(int idx);
 extern char *data_ov007_02104ba0;
 extern char *data_ov007_02104b9c;
 extern char *data_ov007_0210342c;
-extern int data_ov007_020d7b60;
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_ov007_020d7b60[8] = {
+    0x1000, 100, 4, 64, -1, 0, 8, 819
+};
+#pragma section forcerodata end
 extern int data_ov007_020d7b80;
 
 void func_ov007_020b9880(int a0, int a1)

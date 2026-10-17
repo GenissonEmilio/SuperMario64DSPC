@@ -19,7 +19,7 @@ const char data_ov007_020ccc80[36] = { 4, 0, 0, 0, 5, 0, 0, 0, 7, 0, 0, 0, 8, 0,
 #pragma force_active on
 #pragma force_active off
 extern int data_ov007_02103348[];
-extern int data_ov007_02103354[];
+int data_ov007_02103354[3];
 extern char data_ov007_020d7ee8[];
 
 void* func_ov007_020b2bd4(int a, int b)
@@ -48,3 +48,11 @@ void* func_ov007_020b2bd4(int a, int b)
     func_ov007_020bbf98(p, 3);
     return p;
 }
+
+char data_ov007_020d7ee8[36] = {
+    4, -37, 12, 2, -76, -39, 12, 2, -68, -38, 12, 2,
+    44, -38, 12, 2, -28, -39, 12, 2, 92, -38, 12, 2,
+    4, -37, 12, 2, 20, -38, 12, 2, -68, -38, 12, 2
+};
+
+int data_ov007_02103348[3];

@@ -96,7 +96,7 @@ extern "C" daObjKm1_Ukishima_c *daObjKm1_Ukishima_c_classInit()
 /* dBgW_KcMbg::SetFile takes Fix12<int> by value. An ordinary member call
  * triggers mwccarm's by-value-class parameter homing and changes the ROM ABI,
  * so this one call deliberately retains the measured register-level view. */
-s32 daObjKm1_Ukishima_c::InitResources()
+extern s32 daObjKm1_Ukishima_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov043_021125e8), 1, -1);
     UpdateModelPosAndRotY();

@@ -139,7 +139,7 @@ extern "C" daObjShell_c *daObjShell_c_classInit()
 /* Both animations are loaded, then the model; the clam starts on the idle
  * animation at 0x0211c9bc. The cylinder is 0x64000 in both radius and height.
  */
-int daObjShell_c::InitResources()
+extern int daObjShell_c::InitResources()
 {
     dExtFrameCtrl_c::LoadFile(data_ov064_0211c9cc);
     dExtFrameCtrl_c::LoadFile(data_ov064_0211c9bc);
@@ -276,7 +276,7 @@ int daObjShell_c::Render()
  * between. InitResources loads them animations-first; the release order here
  * is model-first, which is the ROM's and is reproduced verbatim.
  */
-int daObjShell_c::CleanupResources()
+extern int daObjShell_c::CleanupResources()
 {
     data_ov064_0211c9c4.Release();
     data_ov064_0211c9cc.Release();

@@ -34,6 +34,11 @@
       "name": ".data",
       "start": "0x020bc860",
       "end": "0x020bc864"
+    },
+    {
+      "name": ".data",
+      "start": "0x020bca44",
+      "end": "0x020bca58"
     }
   ],
   "functions": [

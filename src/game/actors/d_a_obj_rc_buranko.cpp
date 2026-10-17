@@ -128,7 +128,7 @@ extern "C" daObjRcBuranko_c *daObjRcBuranko_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN16daObjRcBuranko_c13InitResourcesEv
-int daObjRcBuranko_c::InitResources()
+extern int daObjRcBuranko_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov036_02114028), 1, -1);
 

@@ -470,14 +470,14 @@ extern "C" void Cup_PickShuffleSpeed(char *raw)
 }
 
 // @symbol _ZN10dScMgCup_c9StateIdleEv
-void dScMgCup_c::StateIdle()
+extern void dScMgCup_c::StateIdle()
 {
 }
 
 // @symbol _ZN10dScMgCup_c11StateFinishEv
 void dScMgCup_c::StateFinish()
 {
-    mTimer -= 1;
+    mTimer -;
     if (mTimer > 0) return;
     if (mCorrect != 0) {
         if (mHudScore < 0x270f) mHudScore += 1;

@@ -91,7 +91,7 @@ extern "C" daObjC0Water_c *daObjC0Water_c_classInit()
 }
 
 // @symbol _ZN14daObjC0Water_c13InitResourcesEv
-int daObjC0Water_c::InitResources()
+extern int daObjC0Water_c::InitResources()
 {
     Model::LoadFile(data_ov012_021124d0);
     dBgW_Kc::LoadFile(data_ov012_021124c8);

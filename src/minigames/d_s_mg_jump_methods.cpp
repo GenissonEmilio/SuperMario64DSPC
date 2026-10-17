@@ -448,7 +448,7 @@ void dScMgJump_c::State_Final()
 
 // @symbol _ZN11dScMgJump_c10State_IdleEv
 /* An empty state. */
-void dScMgJump_c::State_Idle()
+extern void dScMgJump_c::State_Idle()
 {
 }
 
@@ -456,7 +456,7 @@ void dScMgJump_c::State_Idle()
 /* Slot 6: run the current state. */
 s32 dScMgJump_c::Behavior()
 {
-    C *c = (C *)this;
+    C *c ;
     (c->*c->m)();
     return 1;
 }
@@ -543,7 +543,7 @@ s32 dScMgJump_c::Render()
 
 // @symbol _ZN11dScMgJump_c16CleanupResourcesEv
 /* Slot 3. Releases the model file; `this` is never read. */
-s32 dScMgJump_c::CleanupResources()
+extern s32 dScMgJump_c::CleanupResources()
 {
     ((SharedFilePtr *)data_ov006_02142184)->Release();
     data_ov006_02142184 = 0;

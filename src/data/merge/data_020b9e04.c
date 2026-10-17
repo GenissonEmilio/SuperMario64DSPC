@@ -1,0 +1,1 @@
+unsigned char _ZN18daObjPowerUpItem_c13OnYoshiTryEatEv[4];

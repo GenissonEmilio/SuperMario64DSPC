@@ -57,7 +57,9 @@ void DecompressLZ16(const void* src, void* dst);
 }
 
 extern int data_0209b3ec;
-extern u32 data_0209ee84;
+extern "C" {
+u32 data_0209ee84;
+}
 extern u32 data_0209ee8c;
 extern signed char data_0209f2f8;
 extern void* data_020a0ea0;

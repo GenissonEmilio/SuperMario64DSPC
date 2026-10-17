@@ -148,7 +148,7 @@ int daObjEwmIceBlock_c::Behavior()
 }
 
 // @symbol _ZN18daObjEwmIceBlock_c13InitResourcesEv
-int daObjEwmIceBlock_c::InitResources()
+extern int daObjEwmIceBlock_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(*data_ov056_02113314[0]), 1, -1);
     UpdateModelPosAndRotY();

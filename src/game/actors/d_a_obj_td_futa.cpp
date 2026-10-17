@@ -77,7 +77,7 @@ extern "C" daObjTdFuta_c *daObjTdFuta_c_classInit()
 }
 
 // @symbol _ZN13daObjTdFuta_c13InitResourcesEv
-s32 daObjTdFuta_c::InitResources()
+extern s32 daObjTdFuta_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov032_02113ad4), 1, -1);
     UpdateModelPosAndRotY();

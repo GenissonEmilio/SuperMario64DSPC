@@ -98,9 +98,9 @@ extern "C" LondonSpawnInfo g_profile_FL_LONDON = {
 };
 
 // @symbol _ZN16daObjFl_London_c13InitResourcesEv
-s32 daObjFl_London_c::InitResources()
+extern s32 daObjFl_London_c::InitResources()
 {
-    void *f = Model::LoadFile(data_ov022_02114580);
+    void *f ;
     mModel.SetFile((BMD_File *)f, 1, -1);
     func_ov022_02111a1c(this);
     UpdateClsnPosAndRot();

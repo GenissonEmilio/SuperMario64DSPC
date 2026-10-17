@@ -78,9 +78,9 @@ extern void* data_ov006_02142984;
 extern S8 data_ov006_02142bd4;
 extern void* data_ov006_0214299c;
 
-void __sinit_ov006_021322bc(void)
+extern void __sinit_ov006_021322bc(void)
 {
-    data_ov006_02142ab4.a = 0x70000;
+    data_ov006_02142ab4.a ;
     data_ov006_02142ab4.b = 0x24000;
     func_020731dc(&data_ov006_02142ab4, (void*)&NullDestructor_0203d47c, (void**)&data_ov006_021429a8);
     { volatile S8* p = (volatile S8*)&data_ov006_02142abc; p->a = 0xa0000; p->b = 0x24000; }

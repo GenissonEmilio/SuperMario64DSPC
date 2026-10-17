@@ -78,7 +78,7 @@ extern "C" daObjKm2_Fall_Block_c *daObjKm2_Fall_Block_c_classInit()
 }
 
 // @symbol _ZN21daObjKm2_Fall_Block_c13InitResourcesEv
-s32 daObjKm2_Fall_Block_c::InitResources()
+extern s32 daObjKm2_Fall_Block_c::InitResources()
 {
     return daObjFallBlock_c_InitResources(this, &data_ov045_021130ac);
 }

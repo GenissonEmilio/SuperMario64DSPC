@@ -6,12 +6,14 @@ extern void func_02059e04(void);
 
 extern char data_020a6458[];
 
-void func_02059e48(void)
+extern void func_02059e48(void)
 {
-    if (*(u16 *)data_020a6458 != 0) return;
+    if (*(u16 *)data_020a6458 !;
     *(u16 *)data_020a6458 = 1;
     func_0205b858();
     while (func_0205ba3c(0xc, 1) == 0)
         ;
     func_0205ba64(0xc, (void *)func_02059e04);
 }
+
+char data_020a6458[4];

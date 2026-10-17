@@ -23,37 +23,51 @@ extern void SharedFilePtr_Destruct_Anim(void);
 extern void *_ZN7Vector3D1Ev(void *object);
 
 extern void* data_ov078_02126f38;
-extern void* data_ov078_02126f48;
+unsigned char data_ov078_02126ff0[12];
+
+unsigned char data_ov078_02126f48[12];
+
+unsigned char data_ov078_02126f54[12];
+
+unsigned char data_ov078_02126f60[12];
+
+unsigned char data_ov078_02126f6c[12];
+
+unsigned char data_ov078_02126f78[12];
+
+unsigned char data_ov078_02126f84[12];
+
+unsigned char data_ov078_02126f90[12];
+
+unsigned char data_ov078_02126f9c[12];
+
+unsigned char data_ov078_02126fa8[12];
+
+unsigned char data_ov078_02126fb4[12];
+
+unsigned char data_ov078_02126fc0[12];
+
+unsigned char data_ov078_02126fcc[12];
+
+unsigned char data_ov078_02126fd8[12];
+
+unsigned char data_ov078_02126fe4[12];
 extern void* data_ov078_02126f00;
-extern void* data_ov078_02126f54;
 extern void* data_ov078_02126f20;
-extern void* data_ov078_02126f60;
 extern void* data_ov078_02126f10;
-extern void* data_ov078_02126f6c;
 extern void* data_ov078_02126f08;
-extern void* data_ov078_02126f78;
 extern void* data_ov078_02126f18;
-extern void* data_ov078_02126f84;
 extern void* data_ov078_02126ee0;
-extern void* data_ov078_02126f90;
 extern void* data_ov078_02126ef0;
-extern void* data_ov078_02126f9c;
 extern void* data_ov078_02126f40;
-extern void* data_ov078_02126fa8;
 extern void* data_ov078_02126f30;
-extern void* data_ov078_02126fb4;
 extern void* data_ov078_02126ee8;
-extern void* data_ov078_02126fc0;
 extern void* data_ov078_02126f28;
-extern void* data_ov078_02126fcc;
 extern void* data_ov078_02126ef8;
-extern void* data_ov078_02126fd8;
 
 typedef struct { int x, y, z; } V3;
 extern V3 data_ov078_0212711c;
-extern void* data_ov078_02126fe4;
 extern V3 data_ov078_02127128;
-extern void* data_ov078_02126ff0;
 
 struct P2 { int a, b; };
 struct P4 { struct P2 lo, hi; };

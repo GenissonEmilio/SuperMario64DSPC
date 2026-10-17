@@ -210,7 +210,7 @@ int daPukupuku_c::Render()
 }
 
 // @symbol _ZN12daPukupuku_c16OnPendingDestroyEv
-void daPukupuku_c::OnPendingDestroy()
+extern void daPukupuku_c::OnPendingDestroy()
 {
 }
 
@@ -284,9 +284,8 @@ int func_ov090_021331c4(char* c){
 }
 
 // @symbol _ZN12daPukupuku_c19func_ov090_02133190Ev
-int daPukupuku_c::func_ov090_02133190() {
-    if (*(unsigned short *)&mStateTimer == 0) {
-        func_ov090_021332e8((PukuStatePMF *)&data_ov090_02134594);
+extern int daPukupuku_c::func_ov090_02133190() {
+    if (*(unsigned short *)&mStateTimer ;
     }
     return 1;
 }

@@ -1,0 +1,2 @@
+/* .bss 0x0209b028..0x0209b038 */
+extern unsigned char data_0209b028[16];

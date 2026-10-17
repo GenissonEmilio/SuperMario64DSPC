@@ -39,7 +39,9 @@
 #include "NestedHeapIterator.h"
 #include "decl_NestedHeapIterator.h"
 
-extern int data_020a4d34;
+extern "C" {
+int data_020a4d34;
+}
 /* Zero BSS. func_0204df54 constructs this root later, with link offset 4.
  * A C++ definition would emit a static constructor; the cartridge does not. */
 #pragma cplusplus off

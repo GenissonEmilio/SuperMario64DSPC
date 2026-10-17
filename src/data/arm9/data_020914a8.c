@@ -6,3 +6,9 @@ extern unsigned char dScBoot_c_classInit[];
 #pragma explicit_zero_data on
 extern unsigned int g_profile_BOOT[2] ;
 #pragma section forcedata end
+/* .data 0x020914a8..0x020914b0 */
+#pragma push
+unsigned int g_profile_BOOT[2] = {
+    (unsigned int)&dScBoot_c_classInit, 0x20000
+};
+#pragma pop

@@ -34,8 +34,8 @@
 
 
 /* bss 0x020a0d84..0x020a0db0 */
-static int NUM_PATHS;
-static char * PATH_NODES;
+extern static int NUM_PATHS;
+extern static char * PATH_NODES;
 static PathDef * PATH_DEFS;
 static char data_020a0d90[32];
 
@@ -45,7 +45,15 @@ static char data_020a0d90[32];
 
 extern "C" {
 void func_02018434(int a0, int a1, int a2);
-extern char data_020994d4[];
+unsigned int data_020994d4[3] = {
+extern "C" {
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+    0x4955422f, 0x4954444c, 0x454d
+};
+#pragma section forcedata end
+}
+extern char data_020a0d90[];
 }
 
 // @symbol func_0203ad84

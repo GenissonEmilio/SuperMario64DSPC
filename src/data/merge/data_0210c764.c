@@ -1,0 +1,3 @@
+unsigned char _ZN3OAM21MM_VS_BLUE_YOSHI_ICONE[8] = {
+    240, 0, 240, 129, 140, 177, 255, 255
+};

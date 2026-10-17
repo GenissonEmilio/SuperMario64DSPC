@@ -3,7 +3,10 @@
  * Matched byte-for-byte with mwccarm 1.2/sp2p3 (arm9 main).
  */
 
-extern signed char data_02075264[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+extern signed char data_02075264[52] ;
+#pragma section forcerodata end
 signed char GetLevelPart(int idx) {
     return data_02075264[idx];
 }

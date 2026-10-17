@@ -211,4 +211,5 @@ int data_ov006_021404e4[1];
 int data_ov006_021404e0[1];
 int data_ov006_021404dc[1];
 int data_ov006_021404ec[1];
+int data_ov006_02140518[8];
 }

@@ -107,7 +107,7 @@ extern "C" KurumaSpawnInfo g_profile_KM1_KURUMA = {
 };
 
 // @symbol _ZN17daObjKm1_Kuruma_c13InitResourcesEv
-s32 daObjKm1_Kuruma_c::InitResources()
+extern s32 daObjKm1_Kuruma_c::InitResources()
 {
     return func_ov002_020b6958(this, (ResourceDescriptor *)&data_ov043_02112418);
 }

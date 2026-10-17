@@ -226,7 +226,7 @@ int daPropeller_Heyho_Fire_c::CleanupResources()
 
 // @symbol _ZN24daPropeller_Heyho_Fire_c16OnPendingDestroyEv
 /* Empty. */
-void daPropeller_Heyho_Fire_c::OnPendingDestroy()
+extern void daPropeller_Heyho_Fire_c::OnPendingDestroy()
 {
 }
 

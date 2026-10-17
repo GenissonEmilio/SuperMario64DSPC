@@ -81,7 +81,9 @@ extern u8 data_0209d6e4[];
 extern u8 *data_0209d6f0;
 extern u8 *data_0209d6f4;
 extern int data_0209d6f8;
-extern int data_0209d700;
+extern "C" {
+int data_0209d700;
+}
 extern int data_0209d704;
 extern u8 data_0209d710[];
 int data_0209d74c[960];
@@ -1076,3 +1078,5 @@ unsigned char _ZTSN5dPa_c7level_c26checkWaterRippleCallback_cE[48] = {
 }
 #pragma pop
 /* end arm9-data-run 0x0208F464 */
+extern "C" int data_0208eecc[8] = {
+    -1, -0x22222223, -0x44444445, -0x66666667, 0x77777777, 0x55555555, 0x33333333, 0x11111111

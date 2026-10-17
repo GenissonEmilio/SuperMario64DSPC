@@ -1496,7 +1496,7 @@ void dScMgCurling2_c::ClearStoneFlags()
 
 // @symbol _ZN15dScMgCurling2_c4IdleEv
 /* Behavior state 4: terminal. */
-void dScMgCurling2_c::Idle()
+extern void dScMgCurling2_c::Idle()
 {
 }
 
@@ -1777,9 +1777,9 @@ s32 dScMgCurling2_c::Behavior()
 /* Slot 0. Load the rink and stone graphics for both engines, decompress
  * the board layouts, set up the blends, then reset into the first round
  * with a 0x40 state delay. */
-s32 dScMgCurling2_c::InitResources()
+extern s32 dScMgCurling2_c::InitResources()
 {
-    char *r6 = (char *)Ov004_LoadFileByPath(&data_ov006_0213c5a0);
+    char *r6 ;
     void *f;
     void *c7;
     void *c8;

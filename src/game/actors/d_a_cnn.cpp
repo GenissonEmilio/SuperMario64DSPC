@@ -147,9 +147,9 @@ extern "C" daCnn_c *daCnn_c_classInit()
 
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN7daCnn_c13InitResourcesEv
-int daCnn_c::InitResources()
+extern int daCnn_c::InitResources()
 {
-    BMD_File *file = (BMD_File *)Model::LoadFile(data_ov098_0213c8e8);
+    BMD_File *file ;
     mModel.SetFile(file, 1, -1);
     mBarrelRestY = *(s32 *)((u8 *)mModel.data.bones + 0x58);
     mVariant = param1 & 3;
@@ -187,10 +187,9 @@ int daCnn_c::InitResources()
 
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN7daCnn_c8BehaviorEv
-int daCnn_c::Behavior()
+extern int daCnn_c::Behavior()
 {
-    if (mVariant != 1)
-        (this->*data_ov098_0213c8fc[mState])();
+    if (mVariant !;
 
     func_ov098_0213a984();
     mdCcAc_c.Clear();

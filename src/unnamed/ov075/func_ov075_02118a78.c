@@ -10,7 +10,5 @@ void func_ov075_02118a78(void) {
 /* .data 0x0211cb80..0x0211cb84 */
 #pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
 #pragma section forcedata begin
-int data_ov075_0211cb80[1] = {
-    0x0211d21c,
-};
+extern int data_ov075_0211cb80[1] ;
 #pragma section forcedata end

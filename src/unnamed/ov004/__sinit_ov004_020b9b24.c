@@ -29,7 +29,7 @@ extern char data_ov004_020bfe38[];
 extern char data_ov004_020bfe2c[];
 extern char data_ov004_020bfe14[];
 extern char data_ov004_020bfe08[];
-extern char data_ov004_020bfdb4[];
+char data_ov004_020bfdb4[12];
 extern char data_ov004_020bfdf0[];
 extern char data_ov004_020bfda8[];
 extern char data_ov004_020bfe5c[];
@@ -94,3 +94,4 @@ void __sinit_ov004_020b9b24(void)
 }
 
 extern unsigned char data_ov004_020bc8a4[0x4] ;
+char data_ov004_020bfda8[12];

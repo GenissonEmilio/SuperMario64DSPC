@@ -7,7 +7,10 @@ extern int data_020a805c;
 int data_020a806c[2];
 extern int data_020a8064[2];
 extern int data_020a8074;
-extern int data_0209a048;
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern int data_0209a048 ;
+#pragma section forcedata end
 extern int func_0205da94;
 extern int func_0205db2c;
 extern int func_0205db24;

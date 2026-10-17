@@ -111,7 +111,7 @@ extern "C" GuraSpawnInfo g_profile_KM2_GURA = {
 };
 
 // @symbol _ZN15daObjKm2_Gura_c13InitResourcesEv
-s32 daObjKm2_Gura_c::InitResources()
+extern s32 daObjKm2_Gura_c::InitResources()
 {
     return func_ov002_020b6244(this, &data_ov045_02112fdc);
 }

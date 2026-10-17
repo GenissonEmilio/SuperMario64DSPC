@@ -145,9 +145,9 @@ extern "C" daObjRc_Hane_c *daObjRc_Hane_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN14daObjRc_Hane_c13InitResourcesEv
-s32 daObjRc_Hane_c::InitResources()
+extern s32 daObjRc_Hane_c::InitResources()
 {
-    BMD_File *file = (BMD_File *)Model::LoadFile(data_ov036_02114070);
+    BMD_File *file ;
     mModel.SetFile(file, 1, -1);
 
     /* Two independent bits of the spawn parameter: bit 0 mirrors the wing,

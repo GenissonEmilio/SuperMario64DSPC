@@ -1,6 +1,9 @@
 #include "types.h"
 extern void *data_ov007_02103370[];
-extern u16 data_ov007_020d7584[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+extern u16 data_ov007_020d7584[46] ;
+#pragma section forcerodata end
 extern void *(*data_ov007_02103368)(u16);
 extern void *(*data_ov007_0210336c)(void *);
 extern int func_ov007_020c3df4(int a, void *b);

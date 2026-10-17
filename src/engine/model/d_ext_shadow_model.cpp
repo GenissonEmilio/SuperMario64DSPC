@@ -116,13 +116,13 @@ int dExtShadowModel_c::DoSetFile(char *file, int a, int b)
 }
 
 // @symbol _ZN17dExtShadowModel_c10InitCuboidEv
-int dExtShadowModel_c::InitCuboid()
+extern int dExtShadowModel_c::InitCuboid()
 {
     return SetFile(&data_ov000_020ad524, 1, -1);
 }
 
 // @symbol _ZN17dExtShadowModel_c12InitCylinderEv
-int dExtShadowModel_c::InitCylinder()
+extern int dExtShadowModel_c::InitCylinder()
 {
     return SetFile(&data_ov000_020ad560, 1, -1);
 }

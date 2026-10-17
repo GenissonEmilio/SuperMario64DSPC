@@ -1,3 +1,4 @@
+/* .data 0x02091000..0x020914a0 */
 extern unsigned char data_0208fa8c[];
 extern unsigned char data_0208fb34[];
 extern unsigned char data_0208fa98[];
@@ -299,7 +300,7 @@ extern unsigned char data_0208f7f0[];
 #pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
 #pragma section forcedata begin
 #pragma explicit_zero_data on
-extern unsigned int data_02091000[296] = {
+unsigned int data_02091000[296] = {
     (unsigned int)data_0208fa8c, (unsigned int)data_0208fb34, (unsigned int)data_0208fa98, (unsigned int)data_0208fb88,
     (unsigned int)data_0208fb40, (unsigned int)data_0208f9a0, (unsigned int)data_0208fe64, (unsigned int)data_0208fe70,
     (unsigned int)data_0208f938, (unsigned int)data_0208fb64, (unsigned int)data_0208f988, (unsigned int)data_0208fb7c,
@@ -376,3 +377,5 @@ extern unsigned int data_02091000[296] = {
     (unsigned int)data_02090044, (unsigned int)data_0208fbb8, (unsigned int)data_0208fcd8, (unsigned int)data_0208f7f0,
 };
 #pragma section forcedata end
+#pragma push
+#pragma pop

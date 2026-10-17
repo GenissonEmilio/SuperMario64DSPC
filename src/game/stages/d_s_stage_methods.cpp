@@ -388,8 +388,16 @@ extern s16 data_020756b0[];
 extern void * const data_020756f0[12] = {
     (void *)0x0210da48, (void *)0x0210d9b8, (void *)0x0210da50, (void *)0x0210d9f8, (void *)0x0210da40, (void *)0x0210d9a0, (void *)0x0210d9c0, (void *)0x0210e7d8, (void *)0x0210e3a0, (void *)0x0211094c, (void *)0x0211095c, (void *)0x0210d9a8
 };
-extern unsigned char data_02075768[];
-extern u8 data_02075769[];
+unsigned char data_02075768[1] = {
+u8 data_02075769[1] = {
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+    3
+
+    32
+#pragma section forcerodata end
+}
 extern s8 data_0207576a[];
 extern OvTbl data_02075804[];
 extern int data_020758c8[];

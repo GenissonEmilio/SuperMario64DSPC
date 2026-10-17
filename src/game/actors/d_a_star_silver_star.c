@@ -31,10 +31,5 @@ int *daStar_c_classInit_SILVER_STAR(void)
 /* .data 0x0210ac00..0x0210ac7c */
 #pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
 #pragma section forcedata begin
-int _ZTV8daTree_c[31] = {
-    0x020ec22c, 0x02011268, 0x02011244, 0x020ec020, 0x02011220, 0x02011214, 0x020ec1d8, 0x02010fd4,
-    0x02010fc8, 0x020ec0a4, 0x02010f78, 0x02010f6c, 0x020ec0a0, 0x0204357c, 0x0204349c, 0x02043494,
-    0x020ebf8c, 0x020ebfcc, 0x02010160, 0x02010154, 0x0201014c, 0x02010148, 0x02010144, 0x02010140,
-    0x0201013c, 0x02010138, 0x02010134, 0x02010130, 0x0201012c, 0x02010124, 0x020100dc,
-};
+extern int _ZTV8daTree_c[31] ;
 #pragma section forcedata end

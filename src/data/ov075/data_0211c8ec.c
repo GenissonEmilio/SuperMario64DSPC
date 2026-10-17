@@ -1,0 +1,12 @@
+/* .data 0x0211c8ec..0x0211c8f8 */
+extern unsigned char _ZTVN3abi20__si_class_type_infoE[];
+extern unsigned char _ZTSN10dScEntry_c15graphCallback_cE[];
+extern unsigned char _ZTIN8dGraph_c10callback_cE[];
+
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern unsigned int _ZTIN10dScEntry_c15graphCallback_cE[3] ;
+#pragma section forcedata end
+#pragma pop

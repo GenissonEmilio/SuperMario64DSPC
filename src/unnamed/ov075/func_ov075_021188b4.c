@@ -64,15 +64,9 @@ void func_ov075_021188b4(char *c)
 /* .data 0x0211ca7c..0x0211cb64 */
 #pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
 #pragma section forcedata begin
-int data_ov075_0211caac[6] = {
-    0x0211cbc4, 0x00000004, 0x0211ce94, 0x00000004, 0x0211cec4, 0x00000004,
-};
-int data_ov075_0211ca94[6] = {
-    0x11f000f8, 0x0000e119, 0x11dd00ef, 0x0000e11a, 0x11e400fa, (int)0xffffe118u,
-};
-int data_ov075_0211ca7c[6] = {
-    0x01f800f8, 0x0000e119, 0x000b00ef, 0x0000e11a, 0x000400fa, (int)0xffffe118u,
-};
+extern int data_ov075_0211caac[6] ;
+extern int data_ov075_0211ca94[6] ;
+extern int data_ov075_0211ca7c[6] ;
 int data_ov075_0211cae4[8] = {
     (int)0xc18040f0u, 0x0000e280, (int)0xc1c040f0u, 0x0000e288, (int)0xc00040f0u, 0x0000e290, (int)0xc04040f0u, (int)0xffffe298u,
 };

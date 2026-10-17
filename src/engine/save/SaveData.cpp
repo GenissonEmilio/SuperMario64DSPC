@@ -415,4 +415,5 @@ void SaveData::SetCoinRecordIfHigher(s8 courseID, u8 coins)
 
 extern "C" {
 int data_0209caa0[5];
+unsigned char data_0209cad2[18];
 }

@@ -385,7 +385,7 @@ void daBasabasa_c::func_ov065_02117994()
 
 // @symbol _ZN12daBasabasa_c16CleanupResourcesEv
 /* Releases the four files InitResources claimed. */
-int daBasabasa_c::CleanupResources()
+extern int daBasabasa_c::CleanupResources()
 {
     data_ov065_0211d698.Release();
     data_ov065_0211d6a8.Release();

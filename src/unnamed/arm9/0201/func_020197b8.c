@@ -65,3 +65,4 @@ void func_020197b8(void) {
 }
 
 unsigned char data_0209d4f0;
+extern unsigned short data_0209d534[32];

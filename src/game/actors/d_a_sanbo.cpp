@@ -256,8 +256,8 @@ int daSanbo_c::CleanupResources()
 }
 
 // @symbol _ZN9daSanbo_c19func_ov096_02136928Ei
-void daSanbo_c::func_ov096_02136928(int a) {
-    mStateFunctions = data_ov096_02137b48 + (a << 1);
+extern void daSanbo_c::func_ov096_02136928(int a) {
+    mStateFunctions ;
     func_ov096_021368f0();
 }
 

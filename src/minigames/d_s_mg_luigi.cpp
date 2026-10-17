@@ -300,7 +300,7 @@ void dScMgLuigi_c::StartIris()
 }
 
 // @symbol _ZN12dScMgLuigi_c10DrawRewardEv
-void dScMgLuigi_c::DrawReward()
+extern void dScMgLuigi_c::DrawReward()
 {
     extern void *data_ov006_0213ce70[];
     extern char data_ov006_02137cd8[];
@@ -397,7 +397,7 @@ void dScMgLuigi_c::StartReward(int i) {
 }
 
 // @symbol _ZN12dScMgLuigi_c12DrawCurtainsEv
-void dScMgLuigi_c::DrawCurtains()
+extern void dScMgLuigi_c::DrawCurtains()
 {
     extern char *data_ov006_021350d8;
     int j;
@@ -701,7 +701,7 @@ void dScMgLuigi_c::TickTimer()
 }
 
 // @symbol _ZN12dScMgLuigi_c12DrawPicturesEv
-void dScMgLuigi_c::DrawPictures() {
+extern void dScMgLuigi_c::DrawPictures() {
     extern void *data_ov006_0213abc8[];
     int i;
     if (mState == 0)
@@ -925,7 +925,7 @@ void dScMgLuigi_c::MovePictureBounce(int i)
 // @symbol _ZN12dScMgLuigi_c15MovePictureSwayEi
 /* Sway. A new slot takes phase 0 and a signed x speed; a running slot
    coasts, flips at zero, and wraps at the screen edge. */
-void dScMgLuigi_c::MovePictureSway(int idx)
+extern void dScMgLuigi_c::MovePictureSway(int idx)
 {
     extern int data_ov006_0212e888[];
     extern int data_ov006_0212e898[];
@@ -998,7 +998,7 @@ void dScMgLuigi_c::MovePictureDriftRandom(int idx)
 
 // @symbol _ZN12dScMgLuigi_c21MovePictureDriftByRowEi
 /* Drift up or down from mRowDir of the slot's row. */
-void dScMgLuigi_c::MovePictureDriftByRow(int idx)
+extern void dScMgLuigi_c::MovePictureDriftByRow(int idx)
 {
     extern int data_ov006_0212e868[];
     extern s16 data_02082214[];
@@ -1034,7 +1034,7 @@ void dScMgLuigi_c::MovePictureDriftByRow(int idx)
 
 // @symbol _ZN12dScMgLuigi_c24MovePictureDriftByColumnEi
 /* Drift left or right from mColDir of the slot's column. */
-void dScMgLuigi_c::MovePictureDriftByColumn(int idx)
+extern void dScMgLuigi_c::MovePictureDriftByColumn(int idx)
 {
     extern int data_ov006_0212e858[];
     extern s16 data_02082214[];
@@ -1060,7 +1060,7 @@ void dScMgLuigi_c::MovePictureDriftByColumn(int idx)
 
 // @symbol _ZN12dScMgLuigi_c23MovePictureDriftByLevelEi
 /* Drift on the angle stored for this picture's speed. */
-void dScMgLuigi_c::MovePictureDriftByLevel(int idx)
+extern void dScMgLuigi_c::MovePictureDriftByLevel(int idx)
 {
     extern int data_ov006_0212e8d8[];
     extern s16 data_02082214[];
@@ -1081,7 +1081,7 @@ void dScMgLuigi_c::MovePictureDriftByLevel(int idx)
 
 // @symbol _ZN12dScMgLuigi_c21MovePictureDriftFixedEi
 /* Drift on a fixed angle of 0x6000. */
-void dScMgLuigi_c::MovePictureDriftFixed(int idx)
+extern void dScMgLuigi_c::MovePictureDriftFixed(int idx)
 {
     extern int data_ov006_0212e8c8[];
     extern s16 data_02082214[];

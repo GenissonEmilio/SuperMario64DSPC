@@ -139,3 +139,7 @@ int func_ov075_02116818(char *c)
 #pragma section forcedata begin
 extern int data_ov075_0211c7e0[2] ;
 #pragma section forcedata end
+extern int data_ov075_0211c97c[5] ;
+
+extern int data_ov075_0211c990[5] = {
+    0xa008, 0xa408, 0xa808, 0xac08, 0xb008

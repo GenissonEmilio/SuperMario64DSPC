@@ -77,3 +77,5 @@ void func_02058308(void)
     *(int *)(data_020a6188 + 0x70) = 0x20;
     *(int *)(data_020a6188 + 0x64) = 1;
 }
+
+extern char data_020a613c[12];

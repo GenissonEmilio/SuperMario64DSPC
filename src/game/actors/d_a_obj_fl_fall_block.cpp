@@ -68,7 +68,7 @@ extern "C" daObjFl_Fall_Block_c *daObjFl_Fall_Block_c_classInit()
 }
 
 // @symbol _ZN20daObjFl_Fall_Block_c13InitResourcesEv
-int daObjFl_Fall_Block_c::InitResources()
+extern int daObjFl_Fall_Block_c::InitResources()
 {
     return daObjFallBlock_c_InitResources(this, &data_ov022_0211427c);
 }

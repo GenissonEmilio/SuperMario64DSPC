@@ -10,8 +10,6 @@ void nds_printf(void *arg0, u32 fmt, ...)
 /* arm9-data-run 0x0208E6A4 data */
 #pragma push
 #pragma explicit_zero_data on
-unsigned int _ZTS10dCcAcPos_c[6] = {
-    0x43643031, 0x50634163, 0x635F736F, 0x00000000, 0x00000000, 0x0208E68C,
-};
+extern unsigned int _ZTS10dCcAcPos_c[6] ;
 #pragma pop
 /* end arm9-data-run 0x0208E6A4 */

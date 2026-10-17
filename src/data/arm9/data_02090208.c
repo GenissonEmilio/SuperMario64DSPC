@@ -2,7 +2,7 @@
 #pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
 #pragma section forcedata begin
 #pragma explicit_zero_data on
-extern unsigned int data_02090208[1] ;
+unsigned char data_02090208[4] = {
 extern unsigned int data_0209020c[3] ;
 extern unsigned int data_02090314[3] ;
 extern unsigned int data_02090278[3] ;
@@ -107,3 +107,8 @@ extern unsigned int data_02090798[5] ;
 extern unsigned int data_020907d4[5] ;
 extern unsigned int data_020907e8[5] ;
 #pragma section forcedata end
+/* .data 0x02090208..0x0209020c */
+#pragma push
+    78, 69, 84, 0
+};
+#pragma pop

@@ -9,7 +9,7 @@ typedef struct InputPair
 
 extern unsigned char data_020a0e44;
 extern u16 data_020a0e48[4];
-extern u16 data_020a0e50[4];
+u16 data_020a0e50[4];
 unsigned char data_020a0e58[2];
 
 extern u16 func_0203dae4(int idx);
@@ -39,3 +39,5 @@ void func_0203bc7c(void)
         p++;
     }
 }
+
+u16 data_020a0e48[4];

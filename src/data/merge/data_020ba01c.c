@@ -1,0 +1,1 @@
+unsigned char _ZN13daObjSwitch_c19func_ov002_020ba01cEiiii[4];

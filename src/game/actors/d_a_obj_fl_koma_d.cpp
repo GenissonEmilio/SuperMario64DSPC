@@ -75,7 +75,7 @@ daObjFl_Koma_D_c::~daObjFl_Koma_D_c()
 }
 
 // @symbol _ZN16daObjFl_Koma_D_c16CleanupResourcesEv
-int daObjFl_Koma_D_c::CleanupResources()
+extern int daObjFl_Koma_D_c::CleanupResources()
 {
     return func_ov002_020b66a8(this, &data_ov022_02113da4);
 }

@@ -119,16 +119,16 @@ extern "C" KaitendaiSpawnInfo g_profile_KM3_KAITENDAI = {
 };
 
 // @symbol _ZN20daObjKm3_Kaitendai_c13InitResourcesEv
-s32 daObjKm3_Kaitendai_c::InitResources()
+extern s32 daObjKm3_Kaitendai_c::InitResources()
 {
-    s16 angle = data_ov047_02112320;
+    s16 angle ;
     if ((param1 & 0xff) == 1)
         angle = data_ov047_02112324;
     return func_ov002_020b676c(this, &data_ov047_02112334, angle);
 }
 
 // @symbol _ZN20daObjKm3_Kaitendai_c16CleanupResourcesEv
-s32 daObjKm3_Kaitendai_c::CleanupResources()
+extern s32 daObjKm3_Kaitendai_c::CleanupResources()
 {
     return func_ov002_020b66a8(this, &data_ov047_02112334);
 }

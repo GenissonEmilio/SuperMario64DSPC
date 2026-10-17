@@ -33,3 +33,4 @@ extern unsigned int data_0209fca4[1];
 extern unsigned int _ZTI5dBgCh[4] ;
 #pragma pop
 /* end arm9-data-run 0x020991C8 */
+extern u8 data_02092810[8] ;

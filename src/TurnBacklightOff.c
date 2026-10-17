@@ -10,10 +10,8 @@ extern unsigned char data_0208ee3c ;
 /* arm9-data-run 0x0208F3A4 data */
 #pragma push
 #pragma explicit_zero_data on
-unsigned int _ZTVN5dPa_c7level_c24fitWaterSimpleCallback_cE[4] = {
-    0x02022640, 0x02022418, 0x00000000, 0x0208F390,
-};
-unsigned int _ZTVN5dPa_c7level_c14clipCallback_cE[4] = {
+extern unsigned int _ZTVN5dPa_c7level_c24fitWaterSimpleCallback_cE[4] ;
+extern unsigned int _ZTVN5dPa_c7level_c14clipCallback_cE[4] = {
     0x020226D0, 0x02021E70, 0x00000000, 0x0208F378,
 unsigned int _ZTVN5dPa_c7level_c26checkWaterRippleCallback_cE[4] = {
     0x020226D0, 0x020220A4, 0x00000000, 0x0208F36C,

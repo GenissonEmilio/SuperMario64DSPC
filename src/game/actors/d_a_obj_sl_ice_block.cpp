@@ -149,7 +149,7 @@ int daObjSlIceBlock_c::Behavior()
 }
 
 // @symbol _ZN17daObjSlIceBlock_c13InitResourcesEv
-int daObjSlIceBlock_c::InitResources()
+extern int daObjSlIceBlock_c::InitResources()
 {
     Model::LoadFile(data_ov027_02113be8);
     dBgW_Kc::LoadFile(data_ov027_02113be0);

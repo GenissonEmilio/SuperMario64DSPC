@@ -6,3 +6,7 @@ char* func_ov007_020c2068(void){
   func_ov007_020c2024(p);
   return p;
 }
+
+int data_ov007_02103240[3] = {
+    0x63756f74, 0x61705f68, 0x6c656e
+};

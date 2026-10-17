@@ -4,6 +4,10 @@
     .ctor       start:0x021230a4 end:0x021230b4 kind:rodata align:4
     .data       start:0x021230c0 end:0x02123500 kind:data align:32
     .bss        start:0x02123500 end:0x02123720 kind:bss align:32
+src/data/ov070/data_021230c0.c:
+    complete
+    .data start:0x021230c0 end:0x02123120
+
 src/game/actors/d_a_propeller_heyho.cpp:
     complete
     .text start:0x0211f000 end:0x02120570
@@ -22,6 +26,46 @@ src/game/actors/d_a_brq.cpp:
     .bss start:0x021235ec end:0x02123698
 
 
+src/data/ov070/rodata_021222e8.c:
+    complete
+    .rodata start:0x021222e8 end:0x02122594
+
+src/data/ov070/rodata_02122594.c:
+    complete
+    .rodata start:0x02122594 end:0x0212259c
+
+src/data/ov070/rodata_0212259c.c:
+    complete
+    .rodata start:0x0212259c end:0x021225e4
+
+src/data/ov070/rodata_021225e4.c:
+    complete
+    .rodata start:0x021225e4 end:0x0212262c
+
+src/data/ov070/rodata_0212262c.c:
+    complete
+    .rodata start:0x0212262c end:0x021226bc
+
+src/data/ov070/rodata_021226bc.c:
+    complete
+    .rodata start:0x021226bc end:0x0212279c
+
+src/data/ov070/rodata_0212279c.c:
+    complete
+    .rodata start:0x0212279c end:0x02122898
+
+src/data/ov070/rodata_02122898.c:
+    complete
+    .rodata start:0x02122898 end:0x02122954
+
+src/data/ov070/rodata_02122954.c:
+    complete
+    .rodata start:0x02122954 end:0x02122a6c
+
+src/data/ov070/rodata_02122a6c.c:
+    complete
+    .rodata start:0x02122a6c end:0x02122afc
+
 src/game/actors/d_a_krpa.cpp:
     complete
     .text start:0x02121118 end:0x02121b48
@@ -30,9 +74,65 @@ src/game/actors/d_a_krpa.cpp:
     .data start:0x021232f4 end:0x02123334
     .bss start:0x02123698 end:0x021236ec
 
+src/data/ov070/data_02123334.c:
+    complete
+    .data start:0x02123334 end:0x02123340
+
+src/data/ov070/data_02123340.c:
+    complete
+    .data start:0x02123340 end:0x0212334c
+
+src/data/ov070/data_0212334c.c:
+    complete
+    .data start:0x0212334c end:0x02123370
+
+src/data/ov070/data_02123370.c:
+    complete
+    .data start:0x02123370 end:0x021233ec
+
+src/data/ov070/data_021233ec.c:
+    complete
+    .data start:0x021233ec end:0x021233f4
+
+src/data/ov070/data_021233f4.c:
+    complete
+    .data start:0x021233f4 end:0x021233fc
+
+src/data/ov070/data_021233fc.c:
+    complete
+    .data start:0x021233fc end:0x02123404
+
+src/data/ov070/data_02123404.c:
+    complete
+    .data start:0x02123404 end:0x0212340c
+
+src/data/ov070/data_0212340c.c:
+    complete
+    .data start:0x0212340c end:0x02123418
+
+src/data/ov070/data_02123418.c:
+    complete
+    .data start:0x02123418 end:0x02123424
+
+src/data/ov070/data_02123424.c:
+    complete
+    .data start:0x02123424 end:0x02123448
+
+src/data/ov070/data_02123448.c:
+    complete
+    .data start:0x02123448 end:0x021234c4
+
+src/data/ov070/data_021234c4.c:
+    complete
+    .data start:0x021234c4 end:0x02123500
+
 src/game/actors/d_a_kp_fr.cpp:
     complete
     .text start:0x02121b48 end:0x02122244
     .init start:0x02123030 end:0x021230a4
     .ctor start:0x021230b0 end:0x021230b4
     .bss start:0x021236ec end:0x0212370c
+src/data/ov070/bss_0212370c.c:
+    complete
+    .bss start:0x0212370c end:0x02123720
+

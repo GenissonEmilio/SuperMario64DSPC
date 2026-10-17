@@ -150,7 +150,7 @@ extern "C" daObjKsWater_c *daObjKsWater_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN14daObjKsWater_c13InitResourcesEv
-int daObjKsWater_c::InitResources()
+extern int daObjKsWater_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov017_02111c88), 1, -1);
     /* SharedFilePtr is the 8-byte handle; +4 is the loaded BMD pointer. */

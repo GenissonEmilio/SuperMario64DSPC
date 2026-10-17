@@ -84,7 +84,9 @@ extern char data_ov075_0211c720[];
 extern char data_ov075_0211c730[];
 extern void *data_ov075_0211c954[];
 extern short data_ov075_0211d72c[];
-extern short data_ov075_0211d72e[];
+extern "C" {
+short data_ov075_0211d72e[1];
+}
 extern short data_ov075_0211d740[];
 extern short data_ov075_0211d742[];
 extern short data_ov075_0211d754[];

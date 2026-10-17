@@ -75,7 +75,7 @@ s32 daObjFire_c::OnYoshiTryEat()
 }
 
 // @symbol _ZN11daObjFire_c13OnTurnIntoEggER6Player
-void daObjFire_c::OnTurnIntoEgg(Player &player)
+extern void daObjFire_c::OnTurnIntoEgg(Player &player)
 {
 }
 

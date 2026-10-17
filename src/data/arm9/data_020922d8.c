@@ -4,7 +4,7 @@
 #pragma explicit_zero_data on
 extern unsigned int data_020922e0[2] ;
 extern unsigned int data_020922f0[2] ;
-extern unsigned int data_020922d8[2] ;
+unsigned char data_020922d8[8] = {
 extern unsigned int data_020922f8[2] ;
 extern unsigned int data_020922e8[2] ;
 extern unsigned int data_02092438[3] ;
@@ -55,3 +55,8 @@ extern unsigned int data_020924bc[4] ;
 extern unsigned int data_0209255c[5] ;
 extern unsigned int data_02092570[5] ;
 #pragma section forcedata end
+/* .data 0x020922d8..0x020922e0 */
+#pragma push
+    67, 97, 118, 101, 0, 0, 0, 0
+};
+#pragma pop

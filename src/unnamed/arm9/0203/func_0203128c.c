@@ -68,3 +68,4 @@ extern unsigned int data_02099068[36] ;
 extern unsigned int data_020990f8[50] ;
 #pragma pop
 /* end arm9-data-run 0x02099068 */
+extern unsigned short data_02092808[4] ;

@@ -106,7 +106,7 @@ extern "C" daObjWc_Obj03_c *daObjWc_Obj03_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN15daObjWc_Obj03_c13InitResourcesEv
-int daObjWc_Obj03_c::InitResources()
+extern int daObjWc_Obj03_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(data_ov029_02114270), 1, -1);
     _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(

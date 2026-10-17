@@ -338,7 +338,7 @@ extern "C" void func_ov021_021127b4(char *raw)
 }
 
 // @symbol _ZN9daGrock_c16CleanupResourcesEv
-int daGrock_c::CleanupResources()
+extern int daGrock_c::CleanupResources()
 {
     data_ov021_02114a50.Release();
     return 1;

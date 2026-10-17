@@ -574,7 +574,7 @@ s32 dScMgJump2_c::Render()
 // @symbol _ZN12dScMgJump2_c16CleanupResourcesEv
 /* Slot 3. data_ov006_021421b8 points at the model's file handle; it is
  * released and cleared. */
-s32 dScMgJump2_c::CleanupResources()
+extern s32 dScMgJump2_c::CleanupResources()
 {
     ((SharedFilePtr *)data_ov006_021421b8)->Release();
     data_ov006_021421b8 = 0;
@@ -640,8 +640,8 @@ void Jump2Popup_DrawAll(void) {
 }
 
 // @symbol _ZN4Node4LinkEv
-void Node::Link(){
-  *(void**)this = data_ov006_021421c0;
+extern void Node::Link(){
+  *(void**)this ;
   data_ov006_021421c0 = this;
 }
 

@@ -212,7 +212,7 @@ int daLinelift2_c::Render()
 }
 
 // @symbol _ZN13daLinelift2_c16CleanupResourcesEv
-int daLinelift2_c::CleanupResources()
+extern int daLinelift2_c::CleanupResources()
 {
     data_ov091_021344fc[mVariant]->Release();
     data_ov091_021344f4[mVariant]->Release();

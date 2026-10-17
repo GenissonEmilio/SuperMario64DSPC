@@ -1,0 +1,1 @@
+unsigned char _ZN9daChair_c18ApproachStateValueEPsS0_isis[128];

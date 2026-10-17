@@ -76,7 +76,7 @@ extern "C" daObjEmmLog_c *daObjEmmLog_c_classInit()
 // @symbol _ZN13daObjEmmLog_c13InitResourcesEv
 /* dBgW_KcMbg::SetFile takes Fix12<int> by value. An ordinary member call
  * triggers mwccarm's by-value-class parameter homing and changes the ROM ABI. */
-s32 daObjEmmLog_c::InitResources()
+extern s32 daObjEmmLog_c::InitResources()
 {
     mModel.SetFile((BMD_File *)Model::LoadFile(*data_ov052_021124d4.model), 1, -1);
     UpdateModelPosAndRotY();

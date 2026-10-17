@@ -80,16 +80,16 @@ extern "C" daObjRc_Kaitendai_c *daObjRc_Kaitendai_c_classInit()
 }
 
 // @symbol _ZN19daObjRc_Kaitendai_c13InitResourcesEv
-s32 daObjRc_Kaitendai_c::InitResources()
+extern s32 daObjRc_Kaitendai_c::InitResources()
 {
-    s16 angle = data_ov036_02113b18;
+    s16 angle ;
     if ((param1 & 0xff) == 1)
         angle = data_ov036_02113b1c;
     return func_ov002_020b676c(this, &data_ov036_02113b2c, angle);
 }
 
 // @symbol _ZN19daObjRc_Kaitendai_c16CleanupResourcesEv
-s32 daObjRc_Kaitendai_c::CleanupResources()
+extern s32 daObjRc_Kaitendai_c::CleanupResources()
 {
     return func_ov002_020b66a8(this, &data_ov036_02113b2c);
 }

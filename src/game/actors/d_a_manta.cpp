@@ -234,7 +234,7 @@ int daManta_c::func_ov090_021327e4()
 
 /* State init. Swim anim at 1.0, empty ring list. */
 // @symbol _ZN9daManta_c19func_ov090_02132a58Ev
-int daManta_c::func_ov090_02132a58()
+extern int daManta_c::func_ov090_02132a58()
 {
     _ZN9ModelAnim7SetAnimEP8BCA_Filei5Fix12IiEj(
         &mModelAnim, (BCA_File *)data_ov090_0213452c.filePtr, 0, 0x1000, 0);
@@ -287,7 +287,7 @@ void daManta_c::func_ov090_02132b14()
 }
 
 // @symbol _ZN9daManta_c16CleanupResourcesEv
-int daManta_c::CleanupResources()
+extern int daManta_c::CleanupResources()
 {
     data_ov090_02134524.Release();
     data_ov002_0210da10.Release();

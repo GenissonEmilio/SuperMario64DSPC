@@ -120,9 +120,9 @@ extern "C" daDsn_c *daDsn_c_classInit()
 /* Vtable slot 0. Stores this leaf's file table and starts the cycle at rest.
    data_ov091_02135138 is the table daDsnBase_c::Init reads: model, KCL,
    CLPS, BTP, then the two shadow extents. Overlay .data owns the bytes. */
-int daDsn_c::InitResources()
+extern int daDsn_c::InitResources()
 {
-    mFileTable = (int)data_ov091_02135138;
+    mFileTable ;
     int result = Init();
     mState = 0;
     mHoldTimer = 0;

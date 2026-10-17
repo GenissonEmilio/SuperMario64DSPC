@@ -1080,3 +1080,4 @@ unsigned int data_ov004_020bc868[1] = {
 };
 }
 #pragma section forcedata end
+unsigned char sMgCoinsVisible[686];

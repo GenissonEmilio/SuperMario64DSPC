@@ -57,7 +57,7 @@ extern void Matrix4x3_FromRotationY(void *, int);
 extern KumoModelFilePtr gOV039ObjKumoModelFile;
 extern int Vec3_Dist(const Vector3* a, const Vector3* b);
 void func_ov039_02111214(daObjKumo_c *t);
-extern int data_ov039_021118e0;
+extern extern int data_ov039_021118e0;
 }
 
 /* FILE-GLOBAL BY MEASUREMENT. `opt_propagation` is not positional in mwccarm
@@ -176,4 +176,4 @@ KumoModelFilePtr gOV039ObjKumoModelFile(ASSET_OBJ_KUMO_BMD);
  * the emissions do not tile, so the retail TU necessarily emitted these 8
  * bytes from an anonymous global of its own. This word pair reproduces
  * that layout and nothing else. */
-int data_ov039_021118f8[2];
+extern int data_ov039_021118f8[2];

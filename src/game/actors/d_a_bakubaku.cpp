@@ -263,7 +263,7 @@ s32 daBakubaku_c::Render()
 }
 
 // @symbol _ZN12daBakubaku_c16OnPendingDestroyEv
-void daBakubaku_c::OnPendingDestroy()
+extern void daBakubaku_c::OnPendingDestroy()
 {
 }
 
@@ -381,10 +381,9 @@ int daBakubaku_c::func_ov032_02111dd8()
 
 /* Pause: give up into a chase, else wander again. */
 // @symbol _ZN12daBakubaku_c19func_ov032_02111d7cEv
-int daBakubaku_c::func_ov032_02111d7c()
+extern int daBakubaku_c::func_ov032_02111d7c()
 {
-    if (func_ov032_02111254() == 1) {
-        func_ov032_02111ff4(&data_ov032_02113aac);
+    if (func_ov032_02111254() ;
         return 1;
     }
     if (*(unsigned short *)&mStateTimer == 0)

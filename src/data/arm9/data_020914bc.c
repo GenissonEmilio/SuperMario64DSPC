@@ -9,3 +9,9 @@ extern unsigned int _ZTS9dScBoot_c[];
 extern unsigned int _ZTS9dScBoot_c[3] ;
 extern unsigned int _ZTI9dScBoot_c[3] ;
 #pragma section forcedata end
+/* .data 0x020914bc..0x020914c8 */
+#pragma push
+unsigned char _ZTS9dScBoot_c[12] = {
+    57, 100, 83, 99, 66, 111, 111, 116, 95, 99, 0, 0
+};
+#pragma pop

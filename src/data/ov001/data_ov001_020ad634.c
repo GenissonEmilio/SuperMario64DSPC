@@ -1,2 +1,2 @@
 #pragma force_active on
-unsigned char data_ov001_020ad634[12];
+extern unsigned char data_ov001_020ad634[12];

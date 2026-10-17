@@ -72,7 +72,7 @@ extern "C" daObjCvShutter_c *daObjCvShutter_c_classInit()
 }
 
 // @symbol _ZN16daObjCvShutter_c13InitResourcesEv
-s32 daObjCvShutter_c::InitResources()
+extern s32 daObjCvShutter_c::InitResources()
 {
     return func_ov002_020bad10(this, &data_ov021_021148d0);
 }

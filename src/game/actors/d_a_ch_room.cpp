@@ -102,7 +102,7 @@ int daChRoom_c::Render()
 }
 
 // @symbol _ZN10daChRoom_c16OnPendingDestroyEv
-void daChRoom_c::OnPendingDestroy()
+extern void daChRoom_c::OnPendingDestroy()
 {
 }
 

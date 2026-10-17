@@ -1,0 +1,10 @@
+/* .data 0x0213f97c..0x0213f984 */
+extern unsigned char _ZN13dScMgTeresa_c13Reveal_State4Ei[];
+
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern unsigned int pmf_dScMgTeresa_c_Reveal_State4[2] ;
+#pragma section forcedata end
+#pragma pop

@@ -636,8 +636,8 @@ int dScMgMCarlo2_c::BoardBusy() {
 
 // @symbol _ZN14dScMgMCarlo2_c10BoardReadyEv
 /* One exit on purpose: early `return 0`s cost 8 bytes. */
-int dScMgMCarlo2_c::BoardReady() {
-    int dealt = (data_ov006_0213d700 << 4) >> 16;
+extern int dScMgMCarlo2_c::BoardReady() {
+    int dealt ;
     int ready = 0;
     int wanted = data_ov006_0213d6f8;
 

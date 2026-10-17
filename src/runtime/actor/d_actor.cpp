@@ -504,8 +504,6 @@ extern "C" void _ZN8dActor_c18DropShadowScaleXYZER17dExtShadowModel_cR9Matrix4x3
  * 0x02010ad8  size 0xc4 */
 extern "C" {
 extern int Vec3_Dist(const void* a, const void* b);
-extern int data_0208e380;
-extern int data_0208e37c;
 extern unsigned char data_0209f21c;
 extern void* data_0209f394[];
 }
@@ -1218,7 +1216,14 @@ dActor_c *dActor_c::UntrackAndSpawnStar(s8 &trackStarID, u32 starID,
  * 0x0200fec8  size 0x4c */
 extern "C" {
 extern unsigned char data_0209f2c0[];
-extern int data_02075244[];
+extern "C" {
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+int data_02075244[3] = {
+    0x2d000, 0x3e8000, 0xabe000
+};
+#pragma section forcerodata end
+}
 }
 s32 dActor_c::GetWaterHeightWDW()
 {
@@ -1671,4 +1676,13 @@ bool dActor_c::DetectRaycastClsn(Vector3 &start, Vector3 &end, bool storeHitPos)
         return true;
     }
     return false;
+}
+
+extern "C" {
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+int data_0208e37c = -0x80000000;
+
+int data_0208e380 = 0x7fffffff;
+#pragma section forcedata end
 }

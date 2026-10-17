@@ -124,9 +124,9 @@ extern "C" daObjC0_Switch_c *daObjC0_Switch_c_classInit()
  * mPosY -= 0x64000 and mPressed = 1 only run when data_0209caa0[2] & 0x80000
  * is set -- some other pillar in the group already reported pressed (see
  * OnGroundPounded), so this one starts sunk and pre-flagged. */
-int daObjC0_Switch_c::InitResources()
+extern int daObjC0_Switch_c::InitResources()
 {
-    void *mdl = Model::LoadFile(data_ov012_021124a8);
+    void *mdl ;
     mModel.SetFile((BMD_File *)mdl, 1, -1);
     if (data_0209caa0[2] & 0x80000) {
         mPosY -= 0x64000;

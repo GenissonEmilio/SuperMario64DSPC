@@ -75,14 +75,12 @@ void dThIcon_c::Behavior()
 }
 
 // @symbol _ZN9dThIcon_c6RenderEv
-void dThIcon_c::Render()
+extern void dThIcon_c::Render()
 {
 }
 
 /* .rodata 0x020ab5f8..0x020ab5fc */
-extern const int data_ov001_020ab5f8[1] = {
-    0x00000000,
-};
+extern const int data_ov001_020ab5f8[1] ;
 
 /* .bss 0x020ad640..0x020ad644 */
 int data_ov001_020ad640[1];

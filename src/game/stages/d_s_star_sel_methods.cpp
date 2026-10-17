@@ -465,7 +465,7 @@ sect2:
 
 // @symbol _ZN12dScStarSel_c16OnPendingDestroyEv
 // ROM 0x020ae6f0, size 0x4; vtable slot 12. Empty override.
-void dScStarSel_c::OnPendingDestroy()
+extern void dScStarSel_c::OnPendingDestroy()
 {
 }
 

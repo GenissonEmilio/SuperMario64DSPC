@@ -1500,3 +1500,7 @@ void Message::LoadTextVS()
     }
     Message::SetTextGlobalsVS();
 }
+
+extern "C" int data_0209285c[8] = {
+    -1, -0x22222223, -0x44444445, -0x66666667, 0x77777777, 0x55555555, 0x33333333, 0x11111111
+};

@@ -115,7 +115,7 @@ extern "C" daObjWlPolelift_c *daObjWlPolelift_c_classInit()
 // @symbol _ZN17daObjWlPolelift_c13InitResourcesEv
 /* Load the lift model, bind its path and collision state, and initialize the
  * actor-owned shadow and cylinder. */
-s32 daObjWlPolelift_c::InitResources()
+extern s32 daObjWlPolelift_c::InitResources()
 {
     model.SetFile((BMD_File *)Model::LoadFile(data_ov026_02113ea0), 1, -1);
     if ((data_0209caa0[1] & 0x204) == 0)

@@ -229,3 +229,5 @@ int func_ov007_020ba368(int t)
     }
     return done;
 }
+
+extern s16 data_ov007_02104b98[2];

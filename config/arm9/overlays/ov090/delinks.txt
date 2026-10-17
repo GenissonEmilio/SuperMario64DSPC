@@ -11,6 +11,18 @@ src/game/actors/d_a_menbo.cpp:
     .data start:0x021340e0 end:0x02134138
     .bss start:0x02134480 end:0x02134524
 
+src/data/ov090/data_02134138.c:
+    complete
+    .data start:0x02134138 end:0x02134144
+
+src/data/ov090/data_02134144.c:
+    complete
+    .data start:0x02134144 end:0x02134168
+
+src/data/ov090/data_02134168.c:
+    complete
+    .data start:0x02134168 end:0x021341e4
+
 src/game/actors/d_a_manta.cpp:
     complete
     .text start:0x0213269c end:0x02133034
@@ -18,6 +30,30 @@ src/game/actors/d_a_manta.cpp:
     .ctor start:0x021340c8 end:0x021340cc
     .data start:0x021341e4 end:0x021341f4
     .bss start:0x02134524 end:0x0213455c
+
+src/data/ov090/data_021341f4.c:
+    complete
+    .data start:0x021341f4 end:0x02134200
+
+src/data/ov090/data_02134200.c:
+    complete
+    .data start:0x02134200 end:0x0213420c
+
+src/data/ov090/data_0213420c.c:
+    complete
+    .data start:0x0213420c end:0x02134218
+
+src/data/ov090/data_02134218.c:
+    complete
+    .data start:0x02134218 end:0x0213423c
+
+src/data/ov090/data_0213423c.c:
+    complete
+    .data start:0x0213423c end:0x021342b8
+
+src/data/ov090/data_021342b8.c:
+    complete
+    .data start:0x021342b8 end:0x021342d8
 
 src/game/actors/d_a_pukupuku.cpp:
     complete
@@ -27,6 +63,22 @@ src/game/actors/d_a_pukupuku.cpp:
     .data start:0x021342d8 end:0x021342e4
     .bss start:0x0213455c end:0x021345a4
 
+src/data/ov090/data_021342e4.c:
+    complete
+    .data start:0x021342e4 end:0x021342f0
+
+src/data/ov090/data_021342f0.c:
+    complete
+    .data start:0x021342f0 end:0x02134300
+
+src/data/ov090/data_02134300.c:
+    complete
+    .data start:0x02134300 end:0x02134324
+
+src/data/ov090/data_02134324.c:
+    complete
+    .data start:0x02134324 end:0x021343a0
+
 src/game/actors/d_a_shark.cpp:
     complete
     .text start:0x0213367c end:0x02133ce8
@@ -34,4 +86,20 @@ src/game/actors/d_a_shark.cpp:
     .ctor start:0x021340d0 end:0x021340d4
     .data start:0x021343a0 end:0x021343b0
     .bss start:0x021345a4 end:0x021345e0
+
+src/data/ov090/data_021343b0.c:
+    complete
+    .data start:0x021343b0 end:0x021343bc
+
+src/data/ov090/data_021343bc.c:
+    complete
+    .data start:0x021343bc end:0x021343c8
+
+src/data/ov090/data_021343c8.c:
+    complete
+    .data start:0x021343c8 end:0x021343ec
+
+src/data/ov090/data_021343ec.c:
+    complete
+    .data start:0x021343ec end:0x02134480
 

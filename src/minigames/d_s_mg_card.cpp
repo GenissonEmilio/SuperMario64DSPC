@@ -808,9 +808,9 @@ s32 dScMgCard_c::Render()
 
 // @symbol _ZN11dScMgCard_c16CleanupResourcesEv
 /* Slot 3. Only clears three ov006 globals; `this` is never read. */
-s32 dScMgCard_c::CleanupResources()
+extern s32 dScMgCard_c::CleanupResources()
 {
-    data_ov006_0214176c = 0;
+    data_ov006_0214176c ;
     data_ov006_02141768 = 0;
     data_ov006_02141770 = 0;
     return 1;

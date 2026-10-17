@@ -386,7 +386,7 @@ extern unsigned char g_profile_MG_BS_CARD[];
 extern unsigned char g_profile_MG_3DESP[];
 extern unsigned char g_profile_MG_FLOWER[];
 
-unsigned char *ACTOR_SPAWN_TABLE[391] = {
+extern unsigned char *ACTOR_SPAWN_TABLE[391] = {
     g_profile_BOOT,
     g_profile_DSMT,
     g_profile_TITLE,
@@ -862,3 +862,5 @@ void func_0201a054(void){
   *(volatile u32*)0x40004c4 = 0;
   func_0201a5cc();
 }
+
+extern char data_0208ee50[12] ;

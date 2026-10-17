@@ -8,8 +8,8 @@ extern struct P2 data_ov002_0210c018;
 extern struct P2 data_ov002_0210c028;
 extern struct P2 data_ov002_0211110c[];
 
-void __sinit_ov002_02107f88(void) {
-    data_ov002_0211110c[0] = data_ov002_0210c040;
+extern void __sinit_ov002_02107f88(void) {
+    data_ov002_0211110c[0] ;
     data_ov002_0211110c[1] = data_ov002_0210c010;
     data_ov002_0211110c[2] = data_ov002_0210c020;
     data_ov002_0211110c[3] = data_ov002_0210c038;

@@ -150,3 +150,6 @@ void func_ov075_0211621c(char *c)
 #pragma section forcedata begin
 extern int data_ov075_0211c778[2] ;
 #pragma section forcedata end
+u8 data_ov075_0211c6e8[4] = {
+    32, 44, 72, 0
+};

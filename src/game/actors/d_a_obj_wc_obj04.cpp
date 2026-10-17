@@ -99,7 +99,7 @@ extern "C" daObjWc_Obj04_c *daObjWc_Obj04_c_classInit()
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 // @symbol _ZN15daObjWc_Obj04_c13InitResourcesEv
-int daObjWc_Obj04_c::InitResources()
+extern int daObjWc_Obj04_c::InitResources()
 {
     mModel2.SetFile((BMD_File *)Model::LoadFile(data_ov029_0211432c), 1, -1);
     func_ov029_02112710(this);

@@ -32,3 +32,6 @@ void func_ov007_020b782c(void)
 }
 
 void* data_ov007_0210344c;
+char data_ov007_02102dd0[8] = {
+    69, 102, 102, 101, 99, 116, 0, 0
+};

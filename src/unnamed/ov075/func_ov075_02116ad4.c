@@ -77,3 +77,4 @@ int func_ov075_02116ad4(void *arg) {
 #pragma section forcedata begin
 extern int data_ov075_0211c7f8[2] ;
 #pragma section forcedata end
+extern int data_ov075_0211c9a4[5] ;

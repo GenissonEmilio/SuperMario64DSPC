@@ -12,12 +12,35 @@ extern void func_ov007_020bf57c(char *arg0, int idx);
 extern int func_ov007_020b42d8(int index);
 extern void func_ov007_020beeb0(void);
 
-extern int data_ov007_020d7cb0;
-extern u8 data_ov007_020d7cf8[];
-extern u8 data_ov007_020d7c98[];
+int data_ov007_020d7cb0[6] = {
+u8 data_ov007_020d7cf8[104] = {
+u8 data_ov007_020d7c98[4] = {
+extern int data_ov007_02104bd4;
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 10, 0, 0, 0, 10, 0, 0, 16, 0, 0,
+    0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    31, 0, 0, 0, 255, 127, 0, 0, 2, 0, 0, 0,
+    32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 192, 18, 0, 0, 192, 18, 0,
+    0, 16, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 15, 0, 0, 0, 255, 127, 0, 0,
+    0, 0, 0, 0, 31, 0, 0, 0
+};
+
+u8 data_ov007_020d7cc8[48] = {
+    3, 0, 0, 0, 0, 16, 0, 0, 208, 7, 0, 0,
+    208, 7, 0, 0, 0, 0, 5, 0, 0, 16, 0, 0,
+    232, 3, 0, 0, 244, 1, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 0, 136, 8, 170, 10, 0, 1, 0, 1
+    0x1000, 0x9c4, 60, 0, 0x14000, 0
+u8 data_ov007_020d7c9c[20] = {
+    244, 1, 0, 0, 251, 255, 4, 0, 88, 255, 255, 255,
+    88, 2, 32, 3, 100, 0, 0, 0
+    0, 0, 0, 0
+#pragma section forcerodata end
 extern char *data_ov007_0210342c;
-extern u8 data_ov007_020d7c9c[];
-extern u8 data_ov007_020d7cc8[];
 
 void func_ov007_020bf428(void)
 {

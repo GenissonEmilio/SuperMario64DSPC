@@ -1,4 +1,4 @@
-extern unsigned char _ZTVN3abi17__class_type_infoE[];
+    (unsigned int)&_ZTVN3abi17__class_type_infoE, (unsigned int)&_ZTS8dFader_c
 extern unsigned char _ZTVN3abi20__si_class_type_infoE[];
 extern unsigned char _ZTS15dFdBrightness_c[];
 extern unsigned int _ZTS8dFader_c[];
@@ -23,3 +23,9 @@ extern unsigned int _ZTS8dFader_c[3] ;
 extern unsigned int _ZTS10dFdDummy_c[4] ;
 extern unsigned int _ZTS10dFdColor_c[4] ;
 #pragma section forcedata end
+/* .data 0x0208e9e0..0x0208e9e8 */
+extern unsigned char _ZTS8dFader_c[];
+#pragma push
+unsigned int _ZTI8dFader_c[2] = {
+};
+#pragma pop

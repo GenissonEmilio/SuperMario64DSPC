@@ -27,8 +27,16 @@ extern u32 data_020a60b8;  // texture bank selector (BeginLoadTex result)
 extern u32 data_020a60bc;  // texture upload window: secondary bank base
 extern u32 data_020a60c0;  // texture upload window: top of the base window
 extern u16 data_02086314[];
-extern u16 data_02086324[];
-extern u16 data_02086326[];
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+u16 data_02086324[1] = {
+    0
+};
+
+u16 data_02086326[1] = {
+    0
+};
+#pragma section forcerodata end
 extern u16 data_02086328[];
 
 extern "C" {
