@@ -41,6 +41,10 @@ src/game/stages/d_s_title.cpp:
     .rodata start:0x020b117c end:0x020b1180
     .data start:0x020b13a8 end:0x020b13b4
 
+src/data/ov003/rodata_020b1180.c:
+    complete
+    .rodata start:0x020b1180 end:0x020b1181
+
 src/data/ov003/rodata_020b132c.c:
     complete
     .rodata start:0x020b132c end:0x020b1338
@@ -48,6 +52,10 @@ src/data/ov003/rodata_020b132c.c:
 src/data/ov003/rodata_020b1338.c:
     complete
     .rodata start:0x020b1338 end:0x020b1344
+
+src/data/ov003/rodata_020b1344.c:
+    complete
+    .rodata start:0x020b1344 end:0x020b1350
 
 src/data/ov003/data_020b13b4.c:
     complete
