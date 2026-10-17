@@ -251,7 +251,7 @@ void dScMgMemory2_c::InitPlayers() {
     int markerCount;
     int markerIndex;
     int delay;
-    char *markerBase;
+    char *entry;
 
     if (gMgScene != 0)
         markerCount = gMgScene->mCredits;
@@ -260,7 +260,7 @@ void dScMgMemory2_c::InitPlayers() {
     if (markerCount >= 5)
         markerCount = 5;
 
-    markerBase = raw;
+    entry = raw;
     markerIndex = 0;
     mMaxMisses = (unsigned char)markerCount;
     if (markerCount <= 0)
@@ -268,11 +268,11 @@ void dScMgMemory2_c::InitPlayers() {
 
     delay = 0;
     do {
-        *(unsigned char *)(markerBase + 0x5398) = 1;
-        *(unsigned char *)(markerBase + 0x539a) = 0;
-        *(short *)(markerBase + 0x5396) = delay;
+        *(unsigned char *)(entry + 0x5398) = 1;
+        *(unsigned char *)(entry + 0x539a) = 0;
+        *(short *)(entry + 0x5396) = delay;
         markerIndex++;
-        markerBase += 0x14;
+        entry += 0x14;
         delay += 0x10;
     } while (markerIndex < markerCount);
 }
@@ -342,23 +342,22 @@ void dScMgMemory2_c::DrawCards() {
     char *raw = (char *)this;
     int cardIndex;
     int sprite, dimmed;
-    char *cardBase;
+    char *p;
 
-    /* cardBase walks the 20 cards. sMemory2CardFrameSprites is indexed [value][frame]. */
-    cardBase = raw;
+    /* p walks the 20 cards. sMemory2CardFrameSprites is indexed [value][frame]. */
+    p = raw;
     cardIndex = 0;
     do {
-        if (*(u8 *)(cardBase + 0x51ba) != 0) {
+        if (*(u8 *)(p + 0x51ba) != 0) {
             dimmed = 0;
             if (mState != STATE_JUDGE_PAIRS)
                 dimmed = 1;
-            sprite = sMemory2CardFrameSprites[*(u8 *)(cardBase + 0x51b8) * 5 +
-                                              *(u8 *)(cardBase + 0x51bd)];
-            Hud_RenderSprite(sMemory2CardSprites[sprite], *(int *)(cardBase + 0x51a8) >> 12,
-                             *(int *)(cardBase + 0x51ac) >> 12, -1, dimmed);
+            sprite = sMemory2CardFrameSprites[*(u8 *)(p + 0x51b8) * 5 + *(u8 *)(p + 0x51bd)];
+            Hud_RenderSprite(sMemory2CardSprites[sprite], *(int *)(p + 0x51a8) >> 12,
+                             *(int *)(p + 0x51ac) >> 12, -1, dimmed);
         }
         cardIndex += 1;
-        cardBase += 0x18;
+        p += 0x18;
     } while (cardIndex < 20);
 }
 #pragma pop
@@ -708,27 +707,27 @@ void *dScMgMemory2_c::RoundWaitDeal() {
     char *raw = (char *)this;
     int pending = 0;
     int cardIndex = 0;
-    char *cardBase = raw;
+    char *p = raw;
     for (; cardIndex < 0x14;) {
-        if (*(unsigned char *)(cardBase + 0x51bb) != 0) {
-            if (*(unsigned char *)(cardBase + 0x51bc) != CARD_IDLE) {
+        if (*(unsigned char *)(p + 0x51bb) != 0) {
+            if (*(unsigned char *)(p + 0x51bc) != CARD_IDLE) {
                 pending++;
                 break;
             }
         }
         cardIndex++;
-        cardBase += 0x18;
+        p += 0x18;
     }
     if (pending != 0)
         return raw;
-    cardBase = raw;
+    p = raw;
     cardIndex = 0;
     {
         unsigned char selectState = CARD_SELECT;
         for (; cardIndex < 0x14;) {
-            *(unsigned char *)(cardBase + 0x51bc) = selectState;
+            *(unsigned char *)(p + 0x51bc) = selectState;
             cardIndex++;
-            cardBase += 0x18;
+            p += 0x18;
         }
     }
     {
@@ -743,16 +742,16 @@ void dScMgMemory2_c::RoundReadyCards() {
     char *raw = (char *)this;
     int pending = 0;
     int cardIndex;
-    char *cardBase;
-    for (cardIndex = 0, cardBase = raw; cardIndex < 0x14; cardIndex++, cardBase += 0x18) {
-        if (*(unsigned char *)(cardBase + 0x51bb) != 0) {
-            if (*(unsigned char *)(cardBase + 0x51bc) == CARD_SELECT)
-                *(unsigned char *)(cardBase + 0x51bc) = CARD_IDLE;
+    char *p;
+    for (cardIndex = 0, p = raw; cardIndex < 0x14; cardIndex++, p += 0x18) {
+        if (*(unsigned char *)(p + 0x51bb) != 0) {
+            if (*(unsigned char *)(p + 0x51bc) == CARD_SELECT)
+                *(unsigned char *)(p + 0x51bc) = CARD_IDLE;
         }
     }
-    for (cardIndex = 0, cardBase = raw; cardIndex < 0x14; cardIndex++, cardBase += 0x18) {
-        if (*(unsigned char *)(cardBase + 0x51bb) != 0) {
-            if (*(unsigned char *)(cardBase + 0x51bc) != CARD_IDLE) {
+    for (cardIndex = 0, p = raw; cardIndex < 0x14; cardIndex++, p += 0x18) {
+        if (*(unsigned char *)(p + 0x51bb) != 0) {
+            if (*(unsigned char *)(p + 0x51bc) != CARD_IDLE) {
                 pending++;
                 break;
             }
@@ -932,15 +931,15 @@ void dScMgMemory2_c::ShuffleCards() {
     u8 difficulty = mDifficulty;
     if (difficulty == 0) {
         int cardIndex = 0;
-        char *cardBase = raw;
-        for (; cardIndex < 16; cardIndex++, cardBase += 0x18) {
+        char *p = raw;
+        for (; cardIndex < 16; cardIndex++, p += 0x18) {
             u32 cardValue =
                 1 + ((((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 8 >> 15);
             u8 *valueCount;
         check0:
             valueCount = (u8 *)(raw + cardValue + 0x53f2);
             if (*valueCount < 2) {
-                *(u8 *)(cardBase + 0x51b8) = cardValue;
+                *(u8 *)(p + 0x51b8) = cardValue;
                 (*valueCount)++;
             } else {
                 cardValue =
@@ -949,27 +948,27 @@ void dScMgMemory2_c::ShuffleCards() {
             }
         }
         int positionIndex = 0;
-        char *positionBase = raw;
-        for (; positionIndex < 16; positionIndex++, positionBase += 0x18) {
-            *(int *)(positionBase + 0x51a8) = 0x80000;
-            *(int *)(positionBase + 0x51ac) = -0x80000;
-            *(int *)(positionBase + 0x51b0) = 0x8000;
-            *(u8 *)(positionBase + 0x51ba) = 1;
-            *(u8 *)(positionBase + 0x51bc) = 0;
+        char *q = raw;
+        for (; positionIndex < 16; positionIndex++, q += 0x18) {
+            *(int *)(q + 0x51a8) = 0x80000;
+            *(int *)(q + 0x51ac) = -0x80000;
+            *(int *)(q + 0x51b0) = 0x8000;
+            *(u8 *)(q + 0x51ba) = 1;
+            *(u8 *)(q + 0x51bc) = 0;
         }
         ChoosePreviewCards();
         return;
     } else if (difficulty == 1) {
         int cardIndex = 0;
-        char *cardBase = raw;
-        for (; cardIndex < 18; cardIndex++, cardBase += 0x18) {
+        char *p = raw;
+        for (; cardIndex < 18; cardIndex++, p += 0x18) {
             u32 cardValue =
                 1 + ((((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 9 >> 15);
             u8 *valueCount;
         check1:
             valueCount = (u8 *)(raw + cardValue + 0x53f2);
             if (*valueCount < 2) {
-                *(u8 *)(cardBase + 0x51b8) = cardValue;
+                *(u8 *)(p + 0x51b8) = cardValue;
                 (*valueCount)++;
             } else {
                 cardValue =
@@ -978,27 +977,27 @@ void dScMgMemory2_c::ShuffleCards() {
             }
         }
         int positionIndex = 0;
-        char *positionBase = raw;
-        for (; positionIndex < 18; positionIndex++, positionBase += 0x18) {
-            *(int *)(positionBase + 0x51a8) = 0x80000;
-            *(int *)(positionBase + 0x51ac) = -0x80000;
-            *(int *)(positionBase + 0x51b0) = 0x8000;
-            *(u8 *)(positionBase + 0x51ba) = 1;
-            *(u8 *)(positionBase + 0x51bc) = 0;
+        char *q = raw;
+        for (; positionIndex < 18; positionIndex++, q += 0x18) {
+            *(int *)(q + 0x51a8) = 0x80000;
+            *(int *)(q + 0x51ac) = -0x80000;
+            *(int *)(q + 0x51b0) = 0x8000;
+            *(u8 *)(q + 0x51ba) = 1;
+            *(u8 *)(q + 0x51bc) = 0;
         }
         ChoosePreviewCards();
         return;
     } else {
         int cardIndex = 0;
-        char *cardBase = raw;
-        for (; cardIndex < 20; cardIndex++, cardBase += 0x18) {
+        char *p = raw;
+        for (; cardIndex < 20; cardIndex++, p += 0x18) {
             u32 cardValue =
                 1 + ((((u32)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff) * 10 >> 15);
             u8 *valueCount;
         check2:
             valueCount = (u8 *)(raw + cardValue + 0x53f2);
             if (*valueCount < 2) {
-                *(u8 *)(cardBase + 0x51b8) = cardValue;
+                *(u8 *)(p + 0x51b8) = cardValue;
                 (*valueCount)++;
             } else {
                 cardValue =
@@ -1007,13 +1006,13 @@ void dScMgMemory2_c::ShuffleCards() {
             }
         }
         int positionIndex = 0;
-        char *positionBase = raw;
-        for (; positionIndex < 20; positionIndex++, positionBase += 0x18) {
-            *(int *)(positionBase + 0x51a8) = 0x80000;
-            *(int *)(positionBase + 0x51ac) = -0x80000;
-            *(int *)(positionBase + 0x51b0) = 0x8000;
-            *(u8 *)(positionBase + 0x51ba) = 1;
-            *(u8 *)(positionBase + 0x51bc) = 0;
+        char *q = raw;
+        for (; positionIndex < 20; positionIndex++, q += 0x18) {
+            *(int *)(q + 0x51a8) = 0x80000;
+            *(int *)(q + 0x51ac) = -0x80000;
+            *(int *)(q + 0x51b0) = 0x8000;
+            *(u8 *)(q + 0x51ba) = 1;
+            *(u8 *)(q + 0x51bc) = 0;
         }
         ChoosePreviewCards();
         return;

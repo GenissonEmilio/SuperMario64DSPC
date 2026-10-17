@@ -28,3 +28,17 @@ The generated investigation JSON and patch dumps from the contributor tip are
 retired from this candidate; readable source and this provenance summary remain.
 The original artifacts remain recoverable from contributor history. No raw ROM
 byte dumps are reproduced here.
+
+Style review retains established receiver names for inherited raw-layout
+accesses where renaming would only create new ratchet fingerprints. Computed
+local names, comments, typed records and real API calls remain. Fourteen narrow
+exception rows document the remaining partial-layout/API boundaries with their
+inherited offset, access width, total occurrence cap and follow-up condition;
+they do not waive formatting or byte validation.
+
+Validation on the composed candidate at 005807df4f: full ROM 106/106 modules
+exact, 11,334 source functions reproducing, zero new symbol errors; declaration
+agreement reports no new disagreements or duplicate header declarations; port
+references 247/247 resolve. Subsequent receiver/formatting cleanup is compared
+against the independently compiled prepared objects, retaining identical bytes
+and relocations. Final check results are recorded in the PR review receipt.

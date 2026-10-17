@@ -339,29 +339,29 @@ extern "C" void Cup_DrawOamList(int scene, void *list, int x, int y, int scale, 
 
 extern "C" void Cup_UpdateAnim(char *raw, int cupIndex) {
     unsigned char flag;
-    char *cupByteBase = raw + cupIndex;
+    char *row = raw + cupIndex;
     int resetCupIndex;
-    cupByteBase += 0x5000;
-    flag = *((unsigned char *)(cupByteBase + 0x465));
+    row += 0x5000;
+    flag = *((unsigned char *)(row + 0x465));
     if (flag == 0) {
-        flag = *((unsigned char *)(cupByteBase + 0x462));
+        flag = *((unsigned char *)(row + 0x462));
         if (flag != 0) {
-            char *cupWordBase = raw + (cupIndex << 2);
-            cupWordBase += 0x5000;
-            *((int *)(cupWordBase + 0x434)) = 4;
+            char *out = raw + (cupIndex << 2);
+            out += 0x5000;
+            *((int *)(out + 0x434)) = 4;
         } else {
-            char *cupWordBase = raw + (cupIndex << 2);
-            cupWordBase += 0x5000;
-            *((int *)(cupWordBase + 0x434)) = 1;
+            char *out = raw + (cupIndex << 2);
+            out += 0x5000;
+            *((int *)(out + 0x434)) = 1;
         }
         resetCupIndex = cupIndex;
         goto epilogue;
     }
-    flag = *((unsigned char *)(cupByteBase + 0x462));
+    flag = *((unsigned char *)(row + 0x462));
     if (flag != 0) {
-        char *cupWordBase = raw + (cupIndex << 2);
-        cupWordBase += 0x5000;
-        *((int *)(cupWordBase + 0x434)) = 5;
+        char *out = raw + (cupIndex << 2);
+        out += 0x5000;
+        *((int *)(out + 0x434)) = 5;
         if ((*((unsigned char *)((raw + 0x5000) + 0x46d))) == 0xff) {
             if ((*((unsigned char *)((raw + 0x5000) + 0x469))) != 1) {
                 *((unsigned char *)((raw + 0x5000) + 0x46d)) = (unsigned char)cupIndex;
@@ -371,19 +371,19 @@ extern "C" void Cup_UpdateAnim(char *raw, int cupIndex) {
         goto epilogue;
     }
     {
-        char *cupWordBase = raw + (cupIndex << 2);
-        cupWordBase += 0x5000;
-        *((int *)(cupWordBase + 0x434)) = 2;
+        char *out = raw + (cupIndex << 2);
+        out += 0x5000;
+        *((int *)(out + 0x434)) = 2;
     }
     resetCupIndex = cupIndex;
 
     /* Every path assigns resetCupIndex before the shared epilogue; using cupIndex there, or
        assigning resetCupIndex once at the top, emits a 0xa0-byte body. */
 epilogue: {
-    char *cupWordBase = raw + (resetCupIndex << 2);
-    cupWordBase += 0x5000;
-    *((int *)(cupWordBase + 0x440)) = 0;
-    *((int *)(cupWordBase + 0x44c)) = 0;
+    char *out = raw + (resetCupIndex << 2);
+    out += 0x5000;
+    *((int *)(out + 0x440)) = 0;
+    *((int *)(out + 0x44c)) = 0;
 }
 }
 

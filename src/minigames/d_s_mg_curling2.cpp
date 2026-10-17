@@ -1211,14 +1211,14 @@ extern "C" void Curling2_ResolveStoneCollision(dScMgCurling2_c *self, int stoneI
  * 0x4000 base in the lower TU: folding them through &mStone[i] changes
  * the base rematerialization. */
 void dScMgCurling2_c::StoneSpin(int stoneIndex) {
-    char *stoneBase = (char *)this + stoneIndex * 0x30;
-    int heading = *(unsigned short *)(stoneBase + 0x4686);
+    char *o = (char *)this + stoneIndex * 0x30;
+    int heading = *(unsigned short *)(o + 0x4686);
     int tableOffset = (((heading >> 4) << 1) + 1) << 1;
     int cosHeading = *(short *)((char *)data_02082214 + tableOffset);
-    int speed = *(int *)(stoneBase + 0x4668);
+    int speed = *(int *)(o + 0x4668);
     long long product = (long long)cosHeading * speed;
     int velocityX = (int)(((unsigned long long)(product + 0x800)) >> 12);
-    *(short *)(stoneBase + 0x4682) = (short)((-velocityX) >> 2);
+    *(short *)(o + 0x4682) = (short)((-velocityX) >> 2);
 }
 
 // @symbol _ZN15dScMgCurling2_c10StoneSteerEi
@@ -1271,7 +1271,7 @@ void dScMgCurling2_c::StoneRest(int i) {
  * stop, run the collision step and the spin update, then feed the rolling
  * sound from speed and position. */
 void dScMgCurling2_c::StoneSlide(int stoneIndex) {
-    char *sceneBytes = (char *)this;
+    char *c = (char *)this;
     int stoneOffset;
     int zi;
     u16 *pHeading;
@@ -1290,16 +1290,16 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex) {
 
     stoneOffset = stoneIndex * 0x30;
 
-    pHeading = (u16 *)(sceneBytes + 0x4686 + stoneOffset);
-    pSpeed = (int *)(sceneBytes + 0x4668 + stoneOffset);
-    pX = (int *)(sceneBytes + 0x4660 + stoneOffset);
-    pY = (int *)(sceneBytes + 0x4664 + stoneOffset);
+    pHeading = (u16 *)(c + 0x4686 + stoneOffset);
+    pSpeed = (int *)(c + 0x4668 + stoneOffset);
+    pX = (int *)(c + 0x4660 + stoneOffset);
+    pY = (int *)(c + 0x4664 + stoneOffset);
 
     cosAngle = data_02082214[((*pHeading) >> 4) * 2 + 1];
     *pX += FX_MUL(cosAngle, *pSpeed);
     sinAngle = data_02082214[((*pHeading) >> 4) * 2];
     *pY += FX_MUL(sinAngle, *pSpeed);
-    *(u16 *)(sceneBytes + 0x4684 + stoneOffset) += *(u16 *)(sceneBytes + stoneOffset + 0x4682);
+    *(u16 *)(c + 0x4684 + stoneOffset) += *(u16 *)(c + stoneOffset + 0x4682);
 
     x = *pX;
     z = *pY;
@@ -1317,11 +1317,11 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex) {
     }
 
     if (zi + 0xc > 0xc0) {
-        *(u16 *)(sceneBytes + 0x4686 + stoneOffset) = -*(u16 *)(sceneBytes + 0x4686 + stoneOffset);
+        *(u16 *)(c + 0x4686 + stoneOffset) = -*(u16 *)(c + 0x4686 + stoneOffset);
         *pY = 0xb4000;
         func_02012718(0x1d4, *pX);
     } else if (zi - 0xc < -0xe0) {
-        *(u16 *)(sceneBytes + 0x4686 + stoneOffset) = -*(u16 *)(sceneBytes + 0x4686 + stoneOffset);
+        *(u16 *)(c + 0x4686 + stoneOffset) = -*(u16 *)(c + 0x4686 + stoneOffset);
         *pY = -0xd4000;
         func_02012718(0x1d4, *pX);
     }
@@ -1331,14 +1331,14 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex) {
     if (v <= 0x1c)
         v = 0x1c;
 
-    *(int *)(sceneBytes + 0x4668 + stoneOffset) -= v;
-    pd = (int *)(sceneBytes + 0x4668 + stoneOffset);
-    if (*(int *)(sceneBytes + 0x4668 + stoneOffset) <= 0) {
+    *(int *)(c + 0x4668 + stoneOffset) -= v;
+    pd = (int *)(c + 0x4668 + stoneOffset);
+    if (*(int *)(c + 0x4668 + stoneOffset) <= 0) {
         *pSpeed = 0;
-        *(u8 *)(sceneBytes + stoneIndex * 0x30 + 0x4688) = 2;
+        *(u8 *)(c + stoneIndex * 0x30 + 0x4688) = 2;
     }
 
-    Curling2_ResolveStoneCollision((dScMgCurling2_c *)sceneBytes, stoneIndex);
+    Curling2_ResolveStoneCollision((dScMgCurling2_c *)c, stoneIndex);
     StoneSpin(stoneIndex);
 
     v = *pd;
@@ -1346,8 +1346,8 @@ void dScMgCurling2_c::StoneSlide(int stoneIndex) {
     p = v >> 7;
     if (p >= 0x7f)
         p = 0x7f;
-    *(int *)(sceneBytes + 0x467c + stoneOffset) = func_02012468(
-        *(int *)(sceneBytes + 0x467c + stoneOffset), 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
+    *(int *)(c + 0x467c + stoneOffset) =
+        func_02012468(*(int *)(c + 0x467c + stoneOffset), 2, 0xe7, 7, p, w, func_020126e8(*pX), 0);
 }
 
 // @symbol _ZN15dScMgCurling2_c9StoneWaitEi

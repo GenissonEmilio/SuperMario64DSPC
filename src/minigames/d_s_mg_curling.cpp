@@ -1200,7 +1200,7 @@ void dScMgCurling_c::Stone_Collide(int idx) {
  * speed the stone stops (state 2). The collision and spin helpers run, and
  * the slide sound at 0x467c is retuned to the speed. */
 void dScMgCurling_c::Stone_Slide(int stoneIndex) {
-    char *sceneBytes = (char *)this;
+    char *c = (char *)this;
     int stoneOffset;
     int zi;
     u16 *pHeading;
@@ -1222,10 +1222,10 @@ void dScMgCurling_c::Stone_Slide(int stoneIndex) {
 
     stoneOffset = stoneIndex * 0x2c;
 
-    pHeading = (u16 *)(sceneBytes + 0x4686 + stoneOffset);
-    pSpeed = (int *)(sceneBytes + 0x4668 + stoneOffset);
-    pX = (int *)(sceneBytes + 0x4660 + stoneOffset);
-    pY = (int *)(sceneBytes + 0x4664 + stoneOffset);
+    pHeading = (u16 *)(c + 0x4686 + stoneOffset);
+    pSpeed = (int *)(c + 0x4668 + stoneOffset);
+    pX = (int *)(c + 0x4660 + stoneOffset);
+    pY = (int *)(c + 0x4664 + stoneOffset);
 
     cosAngle = data_02082214[((*pHeading) >> 4) * 2 + 1];
     *pX += FX_MUL(cosAngle, *pSpeed);

@@ -4830,15 +4830,15 @@ void dScMgSmartball_c::ResolveBallPair(int firstIndex, int secondIndex, u8 *firs
 #pragma opt_strength_reduction off
 #pragma opt_common_subs off
 void dScMgSmartball_c::CollideBalls() {
-    char *scene = (char *)this;
-    int ballCount = *(int *)(scene + 0x4668);
+    char *p = (char *)this;
+    int ballCount = *(int *)(p + 0x4668);
     int firstIndex, secondIndex;
     for (firstIndex = 0; firstIndex < ballCount; firstIndex++) {
         for (secondIndex = 0; secondIndex < ballCount; secondIndex++) {
-            int firstBall = (firstIndex >= 13) ? 0 : *(int *)(int)(scene + firstIndex * 4 + 0x4688);
-            int secondBall = (secondIndex >= 13) ? 0 : *(int *)(scene + secondIndex * 4 + 0x4688);
+            int firstBall = (firstIndex >= 13) ? 0 : *(int *)(int)(p + firstIndex * 4 + 0x4688);
+            int secondBall = (secondIndex >= 13) ? 0 : *(int *)(p + secondIndex * 4 + 0x4688);
             ResolveBallPair(firstIndex, secondIndex, (u8 *)firstBall, (u8 *)secondBall);
-            ballCount = *(int *)(scene + 0x4668);
+            ballCount = *(int *)(p + 0x4668);
         }
     }
 }

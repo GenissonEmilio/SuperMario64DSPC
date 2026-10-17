@@ -259,16 +259,15 @@ void dScMgSlot3_c::InitMainScreenBg() {
 extern "C" { /* .c-derived member: C linkage for the whole block */
 void Slot3_ReelDigits(char *sceneBytes, int reelIndex);
 // Keep the strided byte cursors: a native mStripLength read grows this body by 8 bytes.
-void Slot3_ReelDigits(char *sceneBytes, int reelIndex) {
-    int symbolIndex = (*(int *)(sceneBytes + reelIndex * 4 + 0x4fe4) >> 12) / 80;
+void Slot3_ReelDigits(char *c, int reelIndex) {
+    int symbolIndex = (*(int *)(c + reelIndex * 4 + 0x4fe4) >> 12) / 80;
     int column;
-    char *resultBytes = sceneBytes + reelIndex * 3;
-    char *stripBytes = sceneBytes + reelIndex * 5;
+    char *dst = c + reelIndex * 3;
+    char *stripBytes = c + reelIndex * 5;
     for (column = 0; column < 3; column++) {
-        *(unsigned char *)(resultBytes + 0x5031) =
-            *(unsigned char *)(stripBytes + symbolIndex + 0x501c);
-        symbolIndex = (symbolIndex + 1) % *(unsigned char *)(sceneBytes + 0x503a);
-        resultBytes += 1;
+        *(unsigned char *)(dst + 0x5031) = *(unsigned char *)(stripBytes + symbolIndex + 0x501c);
+        symbolIndex = (symbolIndex + 1) % *(unsigned char *)(c + 0x503a);
+        dst += 1;
     }
 }
 }

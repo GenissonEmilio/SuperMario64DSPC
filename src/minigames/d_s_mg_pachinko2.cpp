@@ -767,7 +767,7 @@ void dScMgPachinko2_c::Paddle_CheckBallHits(int idx) {
     char *scene = (char *)this;
     int i;
     u8(*recordStrides)[0x40];
-    u8 *paddleRecord;
+    u8 *slot;
     u8 paddleState;
     int *paddleX;
     int *paddleY;
@@ -779,7 +779,7 @@ void dScMgPachinko2_c::Paddle_CheckBallHits(int idx) {
     int innerBounceSpeed;
     int innerBounceVy;
     int *paddleVx;
-    u8 *ballRecord;
+    u8 *row;
     u8 *ballActive;
     u8 *ballPage;
     int *ballY;
@@ -791,43 +791,43 @@ void dScMgPachinko2_c::Paddle_CheckBallHits(int idx) {
 
     /* Preserve the address forms and temporary lifetimes for matching. */
     recordStrides = (u8(*)[0x40])scene;
-    paddleRecord = recordStrides[idx];
-    paddleState = paddleRecord[0x5296];
+    slot = recordStrides[idx];
+    paddleState = slot[0x5296];
     if (paddleState == 0)
         return;
     if (paddleState >= 0xc)
         return;
 
-    paddleX = (int *)(paddleRecord + 0x5260);
-    paddleY = (int *)(paddleRecord + 0x5264);
+    paddleX = (int *)(slot + 0x5260);
+    paddleY = (int *)(slot + 0x5264);
     edgeSpeed = 0x1800;
     negativeEdgeSpeed = -edgeSpeed;
-    ballsHeld = paddleRecord + 0x5299;
+    ballsHeld = slot + 0x5299;
     outerBounceSpeed = 0x2800;
     outerBounceVy = -outerBounceSpeed;
     innerBounceSpeed = 0x2000;
     innerBounceVy = -innerBounceSpeed;
     i = 0;
-    paddleVx = (int *)(paddleRecord + 0x5268);
+    paddleVx = (int *)(slot + 0x5268);
     clearFlag = i;
 
     do {
-        ballRecord = recordStrides[i];
-        ballActive = ballRecord + 0x4698;
+        row = recordStrides[i];
+        ballActive = row + 0x4698;
         if (*ballActive != 0) {
-            ballPage = ballRecord + 0x4000;
+            ballPage = row + 0x4000;
             if (ballPage[0x699] >= 2) {
-                ballVy = (int *)(ballRecord + 0x466c);
+                ballVy = (int *)(row + 0x466c);
                 if (*ballVy > 0x2000) {
-                    dx = (*paddleX - *(int *)(ballRecord + 0x4660)) >> 12;
-                    ballY = (int *)(ballRecord + 0x4664);
+                    dx = (*paddleX - *(int *)(row + 0x4660)) >> 12;
+                    ballY = (int *)(row + 0x4664);
                     dy = (*paddleY - *ballY) >> 12;
                     if (dx >= -0x30 && dx <= 0x30 && dy >= 0 && dy <= 8) {
                         /* Catch the center; the next two bands bounce the ball. */
                         if (dx >= -0x10 && dx <= 0x10) {
                             *ballsHeld = (u8)(*ballsHeld + 1);
-                            ballRecord[0x469a] = (u8)clearFlag;
-                            ballX = (int *)(ballRecord + 0x4660);
+                            row[0x469a] = (u8)clearFlag;
+                            ballX = (int *)(row + 0x4660);
                             *ballActive = (u8)clearFlag;
                             Spark_Spawn(*ballX, *ballY);
                             func_02012718(0x19a, *ballX);

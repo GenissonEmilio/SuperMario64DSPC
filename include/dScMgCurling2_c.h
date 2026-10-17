@@ -214,7 +214,7 @@ struct dScMgCurling2_c : dScMgBase_c {
     s32 mState;                       /* 0x5580, Behavior state, indexes sCurling2BehaviorTable */
     s32 mDragX;                       /* 0x5584, drag x (fx32) */
     s32 mDragY;                       /* 0x5588, drag y */
-    s32 mGrabX;                     /* 0x558c, drag x + grab x latch */
+    s32 mGrabX;                       /* 0x558c, drag x + grab x latch */
     s32 mSwingReferenceY;             /* 0x5590, drag y at the last direction change */
     s32 mGrabOffsetX;                 /* 0x5594, drag x offset from the stylus */
     s32 mGrabOffsetY;                 /* 0x5598, drag y offset */

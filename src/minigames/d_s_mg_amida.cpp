@@ -866,13 +866,13 @@ int dScMgAmida_c::ProbeRung(Point p1, Point p2) {
 #pragma push
 #pragma opt_common_subs off
 int dScMgAmida_c::StepWalker(int walker, int dir) {
-    char *sceneBytes = (char *)this;
+    char *p = (char *)this;
     int gridX, gridY;
     u8 lineMark;
     u8 *walkerMark;
 
-    gridX = *(int *)(sceneBytes + walker * 8 + 0x4660);
-    gridY = *(int *)(sceneBytes + walker * 8 + 0x4664) + 0xc0;
+    gridX = *(int *)(p + walker * 8 + 0x4660);
+    gridY = *(int *)(p + walker * 8 + 0x4664) + 0xc0;
 
     // Directions run across a 3x3 neighbourhood, skipping the centre.
     switch (dir) {
@@ -909,7 +909,7 @@ int dScMgAmida_c::StepWalker(int walker, int dir) {
     }
 
     {
-        u8 *marks = (u8 *)(sceneBytes + 0x4680);
+        u8 *marks = (u8 *)(p + 0x4680);
         lineMark = marks[walker];
         walkerMark = marks + walker;
     }
@@ -920,8 +920,8 @@ int dScMgAmida_c::StepWalker(int walker, int dir) {
             return 0;
 
         mWalkerDir[walker] = dir;
-        *(int *)(sceneBytes + walker * 8 + 0x4660) = gridX;
-        *(int *)(sceneBytes + walker * 8 + 0x4664) = gridY - 0xc0;
+        *(int *)(p + walker * 8 + 0x4660) = gridX;
+        *(int *)(p + walker * 8 + 0x4664) = gridY - 0xc0;
         return 1;
     } else {
         int progress500, soundPosition;
@@ -931,12 +931,11 @@ int dScMgAmida_c::StepWalker(int walker, int dir) {
 
         mWalkerDir[walker] = dir;
         *walkerMark = *(u8 *)(mInkGrid + gridX * 0x158 + gridY);
-        *(int *)(sceneBytes + walker * 8 + 0x4660) = gridX;
-        *(int *)(sceneBytes + walker * 8 + 0x4664) = gridY - 0xc0;
+        *(int *)(p + walker * 8 + 0x4660) = gridX;
+        *(int *)(p + walker * 8 + 0x4664) = gridY - 0xc0;
 
-        progress500 =
-            (*(int *)(sceneBytes + walker * 8 + 0x4664) + 0xd4) * 0x1f4 / (mLineEndY + 0xd4);
-        soundPosition = func_020126e8(*(int *)(sceneBytes + walker * 8 + 0x4660) << 0xc);
+        progress500 = (*(int *)(p + walker * 8 + 0x4664) + 0xd4) * 0x1f4 / (mLineEndY + 0xd4);
+        soundPosition = func_020126e8(*(int *)(p + walker * 8 + 0x4660) << 0xc);
         func_020126ac(0x1bf, 6, 0, progress500, soundPosition);
         return 1;
     }
@@ -1010,9 +1009,9 @@ void dScMgAmida_c::StepWalkers() {
             }
 
             {
-                int walkerCellBase = (int)sceneBytes + walker * 8;
+                int ent = (int)sceneBytes + walker * 8;
                 s32 progress500;
-                s32 *walkerY = (s32 *)(walkerCellBase + 0x4664);
+                s32 *walkerY = (s32 *)(ent + 0x4664);
                 s32 y = *walkerY;
                 s32 goalY = mLineEndY;
 
@@ -1058,7 +1057,7 @@ void dScMgAmida_c::StepWalkers() {
                                 break;
                             }
                         } else {
-                            walkerX = (s32 *)(walkerCellBase + 0x4660);
+                            walkerX = (s32 *)(ent + 0x4660);
                             x = *walkerX;
                             switch (x) {
                             case 0x20:

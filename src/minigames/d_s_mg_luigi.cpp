@@ -369,12 +369,12 @@ void dScMgLuigi_c::UpdateReward() {
         mReward.shown = 0;
         mReward.phase += 1;
         {
-            char *scene = (char *)gMgScene;
-            if (scene != 0) {
-                if (*(int *)(scene + 0xb4) < 0x270f)
-                    *(int *)(scene + 0xb4) += 1;
-                if (*(int *)(scene + 0xb4) > *(int *)(scene + 0xb8))
-                    *(int *)(scene + 0xb8) = *(int *)(scene + 0xb4);
+            char *g = (char *)gMgScene;
+            if (g != 0) {
+                if (*(int *)(g + 0xb4) < 0x270f)
+                    *(int *)(g + 0xb4) += 1;
+                if (*(int *)(g + 0xb4) > *(int *)(g + 0xb8))
+                    *(int *)(g + 0xb8) = *(int *)(g + 0xb4);
             }
         }
         Mg_SubmitScore(gMgScene != 0 ? gMgScene->mHudScore : 0);
@@ -768,30 +768,30 @@ void dScMgLuigi_c::DrawPenalties() {
 #pragma opt_common_subs off
 /* Walks from this. A pointer at mPenalty is 0x24 bytes short of this body. */
 void dScMgLuigi_c::UpdatePenalties() {
-    char *penaltyBase = (char *)this;
+    char *q = (char *)this;
     int penaltyIndex;
-    for (penaltyIndex = 0; penaltyIndex < 0x10; penaltyIndex++, penaltyBase += 0x14) {
-        if (*(u8 *)(penaltyBase + 0x4670) != 0) {
-            if (*(u8 *)(penaltyBase + 0x4672) == 0) {
-                if (*(u16 *)(penaltyBase + 0x466c) != 0) {
-                    *(u16 *)(penaltyBase + 0x466c) -= 1;
-                    if (*(short *)(penaltyBase + 0x466c) < 0)
-                        *(u16 *)(penaltyBase + 0x466c) = 0;
-                    *(int *)(penaltyBase + 0x4664) += *(int *)(penaltyBase + 0x4668);
-                    *(int *)(penaltyBase + 0x4668) += 0x100;
+    for (penaltyIndex = 0; penaltyIndex < 0x10; penaltyIndex++, q += 0x14) {
+        if (*(u8 *)(q + 0x4670) != 0) {
+            if (*(u8 *)(q + 0x4672) == 0) {
+                if (*(u16 *)(q + 0x466c) != 0) {
+                    *(u16 *)(q + 0x466c) -= 1;
+                    if (*(short *)(q + 0x466c) < 0)
+                        *(u16 *)(q + 0x466c) = 0;
+                    *(int *)(q + 0x4664) += *(int *)(q + 0x4668);
+                    *(int *)(q + 0x4668) += 0x100;
                 } else {
-                    *(u16 *)(penaltyBase + 0x466c) = 0x40;
-                    *(u8 *)(penaltyBase + 0x4672) += 1;
+                    *(u16 *)(q + 0x466c) = 0x40;
+                    *(u8 *)(q + 0x4672) += 1;
                 }
             } else {
-                if (*(u16 *)(penaltyBase + 0x466c) != 0) {
-                    *(u16 *)(penaltyBase + 0x466c) -= 1;
-                    if (*(short *)(penaltyBase + 0x466c) < 0)
-                        *(u16 *)(penaltyBase + 0x466c) = 0;
+                if (*(u16 *)(q + 0x466c) != 0) {
+                    *(u16 *)(q + 0x466c) -= 1;
+                    if (*(short *)(q + 0x466c) < 0)
+                        *(u16 *)(q + 0x466c) = 0;
                 } else {
-                    *(u16 *)(penaltyBase + 0x466c) = 0;
-                    *(u8 *)(penaltyBase + 0x4670) = 0;
-                    *(u8 *)(penaltyBase + 0x4671) = 0;
+                    *(u16 *)(q + 0x466c) = 0;
+                    *(u8 *)(q + 0x4670) = 0;
+                    *(u8 *)(q + 0x4671) = 0;
                 }
             }
         }
@@ -1782,7 +1782,7 @@ extern int sMgResultsBannerY;
 /* Same signature as dScMgBase_c::StartRound, or this stops overriding it.
    mLevel is re-read through an int* so the compare is not folded away. */
 void dScMgLuigi_c::StartRound(int mode) {
-    char *scene;
+    char *p;
     int *level;
 
     if (mFound != 0) {
@@ -1802,8 +1802,8 @@ void dScMgLuigi_c::StartRound(int mode) {
         if (gMgScene != 0)
             gMgScene->mHudScore = 0;
 
-        scene = (char *)gMgScene;
-        Mg_SubmitScore(scene != 0 ? *(int *)(scene + 0xb4) : 0);
+        p = (char *)gMgScene;
+        Mg_SubmitScore(p != 0 ? *(int *)(p + 0xb4) : 0);
     }
 
     FreeGfxSlotsById(0x1d);

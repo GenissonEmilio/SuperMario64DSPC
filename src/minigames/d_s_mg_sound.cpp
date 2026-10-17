@@ -650,7 +650,7 @@ void dScMgSound_c::DealNotes() {
         int xIndex;
         char *noteCursor;
         int yIndex;
-        char *pairBase;
+        char *q;
         u8 *pairUses;
         int layout;
 
@@ -672,10 +672,10 @@ void dScMgSound_c::DealNotes() {
             note->note.frame = 0;
             note->note.checked = 0;
             do {
-                pairBase = (char *)this + ((u32)(RND * pairCount) >> 15);
-                pairUses = (u8 *)LAUNDER(pairBase + 0x561a);
+                q = (char *)this + ((u32)(RND * pairCount) >> 15);
+                pairUses = (u8 *)LAUNDER(q + 0x561a);
             } while (*pairUses >= 2);
-            note->note.note = *(u8 *)(pairBase + 0x561f);
+            note->note.note = *(u8 *)(q + 0x561f);
             (*pairUses)++;
             xIndex += 2;
             noteCursor += 0x14;

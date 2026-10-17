@@ -624,7 +624,7 @@ void UnknownVsPlayer::func_ov075_02114b60() {
  * the body's matrix and is drawn with the texture sequence applied. */
 void UnknownVsPlayer::func_ov075_02114be4() {
     BMD_File *file;
-    char *material;
+    char *mat;
 
     func_020167a4(&mModel);
     func_ov075_02114b60();
@@ -634,10 +634,10 @@ void UnknownVsPlayer::func_ov075_02114be4() {
         ModelComponents *components = (ModelComponents *)LAUNDER(&mModel.data);
         unsigned int materialIndex;
         file = components->modelFile;
-        material = (char *)components->materials;
+        mat = (char *)components->materials;
         for (materialIndex = 0; materialIndex < file->numMaterials; materialIndex++) {
-            *(int *)(material + 0x20) = mMaterialColor;
-            material += sizeof(BMD_Material);
+            *(int *)(mat + 0x20) = mMaterialColor;
+            mat += sizeof(BMD_Material);
         }
         mModel.Model::Render(0);
         ModelAnim *animation = &mAnimation;
@@ -650,10 +650,10 @@ void UnknownVsPlayer::func_ov075_02114be4() {
         ModelComponents *components = (ModelComponents *)LAUNDER(&mAnimation.data);
         unsigned int materialIndex;
         file = components->modelFile;
-        material = (char *)components->materials;
+        mat = (char *)components->materials;
         for (materialIndex = 0; materialIndex < file->numMaterials; materialIndex++) {
-            *(int *)(material + 0x20) = mMaterialColor;
-            material += sizeof(BMD_Material);
+            *(int *)(mat + 0x20) = mMaterialColor;
+            mat += sizeof(BMD_Material);
         }
     }
 

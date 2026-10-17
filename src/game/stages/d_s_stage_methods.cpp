@@ -4735,7 +4735,8 @@ int dScStage_c::InitResources() {
         mode = data_0209f2d8;
         int vsModeReset = (mode == 1) ? 1 : 0;
 
-        if (vsModeReset || data_0209f26c == 2 || specialSublevel || nextLevel == 0x1D || nextLevel != previousLevel) {
+        if (vsModeReset || data_0209f26c == 2 || specialSublevel || nextLevel == 0x1D ||
+            nextLevel != previousLevel) {
             int row = 0;
             data_0209f34c = 0;
             do {
@@ -4928,7 +4929,8 @@ int dScStage_c::InitResources() {
         int faderIndex = 0;
         int faderOffset = 0;
         do {
-            ((dFdWipe_c *)((char *)data_0209f324 + faderOffset))->LoadAndSetFile(faderFileIds[faderIndex]);
+            ((dFdWipe_c *)((char *)data_0209f324 + faderOffset))
+                ->LoadAndSetFile(faderFileIds[faderIndex]);
             faderIndex += 1;
             faderOffset += 0x60;
         } while (faderIndex < 7);

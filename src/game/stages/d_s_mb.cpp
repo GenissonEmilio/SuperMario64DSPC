@@ -70,14 +70,14 @@ extern int _ZTV10dFdColor_c[];
 dScMB_c::~dScMB_c() {}
 
 // @symbol func_02034b1c
-void func_02034b1c(void *object, int owner) {
-    dScMB_c::graphCallback_c *callback = (dScMB_c::graphCallback_c *)object;
+void func_02034b1c(void *c, int owner) {
+    dScMB_c::graphCallback_c *callback = (dScMB_c::graphCallback_c *)c;
     callback->mOwner = (void *)owner;
     callback->mSpinAngle = 0;
     callback->mStillTimer = 0;
     callback->mEnabled = 1;
     callback->mAdvancing = 1;
-    *(u8 *)((char *)object + 0xf) = 0;
+    *(u8 *)((char *)c + 0xf) = 0;
 }
 
 // @symbol _ZN7dScMB_c15graphCallback_c14GraphCallback3Ev
