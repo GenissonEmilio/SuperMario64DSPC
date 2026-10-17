@@ -406,16 +406,16 @@
       "rule": "raw-offset",
       "match": "(TextureTransformer*)(self+0x194",
       "count": 1,
-      "reason": "Call the real TextureTransformer API on the existing embedded object at item+0x194. Main already uses this typed address through receiver c; model update migration uses self. Retire the raw expression when the containing item lifecycle/layout can name this member.",
-      "evidence": "df88a655 TrmpItem_UpdateMatrix TextureTransformer at c+0x194; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
+      "reason": "Call the real TextureTransformer API on the existing embedded object at item+0x194. Main already used the same embedded-object address through receiver c; this change uses the real typed API and model update migration uses self. Retire the raw expression when the containing item lifecycle/layout can name this member.",
+      "evidence": "df88a655 TrmpItem_UpdateMatrix handspelled TextureTransformer::Update at c+0x194; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
     },
     {
       "path": "src/minigames/unit020cd744.cpp",
       "rule": "raw-offset",
       "match": "(TextureTransformer*)(item+0x194",
       "count": 1,
-      "reason": "Call the real TextureTransformer API on the existing embedded object at item+0x194. Main already uses this typed address through receiver c; the native update uses item. Retire the raw expression when the containing item lifecycle/layout can name this member.",
-      "evidence": "df88a655 TrmpItem_Update TextureTransformer at c+0x194; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
+      "reason": "Call the real TextureTransformer API on the existing embedded object at item+0x194. Main already used the same embedded-object address through receiver c; this change uses the real typed API and the native update uses item. Retire the raw expression when the containing item lifecycle/layout can name this member.",
+      "evidence": "df88a655 TrmpItem_Update handspelled dExtFrameCtrl_c::Advance at c+0x194; notes/experiments/scene-physics3955-review.md; full106/106 ROM proof at005807df4f and independent prepared-object verification."
     },
     {
       "path": "src/minigames/d_s_mg_roulette_methods.cpp",
