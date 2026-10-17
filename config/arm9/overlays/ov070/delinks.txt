@@ -30,6 +30,10 @@ src/data/ov070/rodata_021222e8.c:
     complete
     .rodata start:0x021222e8 end:0x02122594
 
+src/data/ov070/rodata_02122594.c:
+    complete
+    .rodata start:0x02122594 end:0x0212259c
+
 src/data/ov070/rodata_0212259c.c:
     complete
     .rodata start:0x0212259c end:0x021225e4
