@@ -1,2 +1,46 @@
     .ctor       start:0x0213c960 end:0x0213c960 kind:rodata align:4
     .bss        start:0x0213c980 end:0x02140d80 kind:bss align:32
+src/data/ov099/bss_0213c98c.c:
+    complete
+    .bss start:0x0213c98c end:0x0213cb64
+
+src/data/ov099/bss_0213cb64.c:
+    complete
+    .bss start:0x0213cb64 end:0x0213d580
+
+src/data/ov099/bss_0213d580.c:
+    complete
+    .bss start:0x0213d580 end:0x0213d910
+
+src/data/ov099/bss_0213d910.c:
+    complete
+    .bss start:0x0213d910 end:0x0213e2f0
+
+src/data/ov099/bss_0213e2f0.c:
+    complete
+    .bss start:0x0213e2f0 end:0x0213e508
+
+src/data/ov099/bss_0213e508.c:
+    complete
+    .bss start:0x0213e508 end:0x0213f69c
+
+src/data/ov099/bss_0213f69c.c:
+    complete
+    .bss start:0x0213f69c end:0x0213f974
+
+src/data/ov099/bss_0213f974.c:
+    complete
+    .bss start:0x0213f974 end:0x0213fab8
+
+src/data/ov099/bss_0213fab8.c:
+    complete
+    .bss start:0x0213fab8 end:0x0213ffb8
+
+src/data/ov099/bss_0213ffb8.c:
+    complete
+    .bss start:0x0213ffb8 end:0x02140108
+
+src/data/ov099/bss_02140108.c:
+    complete
+    .bss start:0x02140108 end:0x02140d80
+
