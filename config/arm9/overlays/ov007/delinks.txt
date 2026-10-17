@@ -6,18 +6,22 @@
 src/unnamed/ov007/func_ov007_020ad660.c:
     complete
     .text start:0x020ad660 end:0x020ada70
+    .rodata start:0x020ccb54 end:0x020ccb7c
 src/unnamed/ov007/func_ov007_020ada70.cpp:
     complete
     .text start:0x020ada70 end:0x020adb84
 src/unnamed/ov007/func_ov007_020adb84.c:
     complete
     .text start:0x020adb84 end:0x020adbc8
+    .rodata start:0x020ccb7c end:0x020ccc20
 src/unnamed/ov007/func_ov007_020adbc8.c:
     complete
     .text start:0x020adbc8 end:0x020adc08
+    .rodata start:0x020ccc20 end:0x020ccc44
 src/unnamed/ov007/func_ov007_020adc08.c:
     complete
     .text start:0x020adc08 end:0x020add3c
+    .rodata start:0x020ccc44 end:0x020ccc48
 src/unnamed/ov007/func_ov007_020add3c.c:
     complete
     .text start:0x020add3c end:0x020ade14
@@ -252,6 +256,8 @@ src/data/merge/rodata_020ccc50.c:
     complete
 src/data/merge/rodata_020ccc50.c:
     complete
+src/data/merge/rodata_020ccc50.c:
+    complete
 src/unnamed/ov007/func_ov007_020b2cdc.c:
     complete
     .text start:0x020b2cdc end:0x020b2cf0
@@ -261,6 +267,12 @@ src/data/ov007/data_ov007_020ccc68.c:
 src/data/merge/rodata_020ccc80.c:
     complete
     .rodata start:0x020ccc80 end:0x020ccca4
+src/data/merge/rodata_020ccca4.c:
+    complete
+    .rodata start:0x020ccca4 end:0x020cdb34
+src/data/merge/rodata_020cdb4c.c:
+    complete
+    .rodata start:0x020cdb4c end:0x020cfe94
 src/data/merge/rodata_020d77dc.c:
     complete
     .rodata start:0x020d77dc end:0x020d77e0

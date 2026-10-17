@@ -515,3 +515,172 @@ extern "C" daGrock_c *daGrock_c_classInit()
  * and registers the destructor; the registration node is a compiler
  * temporary. */
 GrockModelFilePtr data_ov021_02114a50(ASSET_CV_GORO_ROCK_BMD);
+
+/* .rodata 0x02112f10..0x02113500 */
+#pragma force_active on
+extern "C" {
+extern const unsigned int data_ov021_02112f10[];
+extern const unsigned int data_ov021_02112f14[];
+extern const unsigned int data_ov021_02112f18[];
+extern const unsigned int data_ov021_02112f1c[];
+extern const unsigned int data_ov021_02112f20[];
+extern const unsigned int data_ov021_02112f2c[];
+extern const unsigned int data_ov021_02112f3c[];
+extern const unsigned int data_ov021_02112f58[];
+extern const unsigned int data_ov021_02112f7c[];
+extern const unsigned int data_ov021_02112fd0[];
+extern const unsigned int data_ov021_02112ffc[];
+extern const unsigned int data_ov021_021130cc[];
+extern const unsigned int data_ov021_021130d0[];
+extern const unsigned int data_ov021_02113228[];
+extern const unsigned int data_ov021_0211322c[];
+extern const unsigned int data_ov021_021132ec[];
+extern const unsigned int data_ov021_02113344[];
+extern const unsigned int data_ov021_021133a8[];
+extern const unsigned int data_ov021_02113434[];
+extern unsigned char data_ov021_021137e0[];
+extern unsigned char data_ov021_021137c0[];
+const unsigned int data_ov021_02112f10[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov021_02112f14[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov021_02112f18[1] = {
+    0x00001000u,
+};
+const unsigned int data_ov021_02112f1c[1] = {
+    0x00001000u,
+};
+const unsigned int data_ov021_02112f20[3] = {
+    0x0000ffffu, (unsigned int)data_ov021_021137c0, 0x00000001u,
+};
+const unsigned int data_ov021_02112f2c[4] = {
+    0x00000001u, 0x00000001u, 0x000000b5u, 0x000000b5u,
+};
+const unsigned int data_ov021_02112f3c[7] = {
+    0x0000ffffu, (unsigned int)data_ov021_021137e0, 0x00000001u, 0x00000001u,
+    0x00000001u, 0x000000b5u, 0x000000b5u,
+};
+const unsigned int data_ov021_02112f58[9] = {
+    0x00000000u, 0x00000017u, 0x0000002eu, 0x00000044u,
+    0x0000005bu, 0x00000072u, 0x00000089u, 0x0000009fu,
+    0x000000b6u,
+};
+const unsigned int data_ov021_02112f7c[21] = {
+    0x000000cdu, 0x000000e4u, 0x000000fau, 0x00000111u,
+    0x00000128u, 0x0000013fu, 0x00000155u, 0x0000016cu,
+    0x00000183u, 0x0000019au, 0x000001b0u, 0x000001c7u,
+    0x000001deu, 0x000001f5u, 0x0000020bu, 0x00000222u,
+    0x00000239u, 0x00000250u, 0x00000266u, 0x0000027du,
+    0x00000294u,
+};
+const unsigned int data_ov021_02112fd0[11] = {
+    0x000002abu, 0x000002c1u, 0x000002d8u, 0x000002efu,
+    0x00000306u, 0x0000031cu, 0x00000333u, 0x0000034au,
+    0x00000361u, 0x00000377u, 0x0000038eu,
+};
+const unsigned int data_ov021_02112ffc[52] = {
+    0x000003a5u, 0x000003bcu, 0x000003d2u, 0x000003e9u,
+    0x00000400u, 0x00000417u, 0x0000042eu, 0x00000444u,
+    0x0000045bu, 0x00000472u, 0x00000489u, 0x0000049fu,
+    0x000004b6u, 0x000004cdu, 0x000004e4u, 0x000004fau,
+    0x00000511u, 0x00000528u, 0x0000053fu, 0x00000555u,
+    0x0000056cu, 0x00000583u, 0x0000059au, 0x000005b0u,
+    0x000005c7u, 0x000005deu, 0x000005f5u, 0x0000060bu,
+    0x00000622u, 0x00000639u, 0x00000650u, 0x00000666u,
+    0x0000067du, 0x00000694u, 0x000006abu, 0x000006c1u,
+    0x000006d8u, 0x000006efu, 0x00000706u, 0x0000071cu,
+    0x00000733u, 0x0000074au, 0x00000761u, 0x00000777u,
+    0x0000078eu, 0x000007a5u, 0x000007bcu, 0x000007d2u,
+    0x000007e9u, 0x00000800u, 0x00000817u, 0x0000082eu,
+};
+const unsigned int data_ov021_021130cc[1] = {
+    0x00000844u,
+};
+const unsigned int data_ov021_021130d0[86] = {
+    0x0000085bu, 0x00000872u, 0x00000889u, 0x0000089fu,
+    0x000008b6u, 0x000008cdu, 0x000008e4u, 0x000008fau,
+    0x00000911u, 0x00000928u, 0x0000093fu, 0x00000955u,
+    0x0000096cu, 0x00000983u, 0x0000099au, 0x000009b0u,
+    0x000009c7u, 0x000009deu, 0x000009f5u, 0x00000a0bu,
+    0x00000a22u, 0x00000a39u, 0x00000a50u, 0x00000a66u,
+    0x00000a7du, 0x00000a94u, 0x00000aabu, 0x00000ac1u,
+    0x00000ad8u, 0x00000aefu, 0x00000b06u, 0x00000b1cu,
+    0x00000b33u, 0x00000b4au, 0x00000b61u, 0x00000b77u,
+    0x00000b8eu, 0x00000ba5u, 0x00000bbcu, 0x00000bd2u,
+    0x00000be9u, 0x00000c00u, 0x00000c17u, 0x00000c2eu,
+    0x00000c44u, 0x00000c5bu, 0x00000c72u, 0x00000c89u,
+    0x00000c9fu, 0x00000cb6u, 0x00000ccdu, 0x00000ce4u,
+    0x00000cfau, 0x00000d11u, 0x00000d28u, 0x00000d3fu,
+    0x00000d55u, 0x00000d6cu, 0x00000d83u, 0x00000d9au,
+    0x00000db0u, 0x00000dc7u, 0x00000ddeu, 0x00000df5u,
+    0x00000e0bu, 0x00000e22u, 0x00000e39u, 0x00000e50u,
+    0x00000e66u, 0x00000e7du, 0x00000e94u, 0x00000eabu,
+    0x00000ec1u, 0x00000ed8u, 0x00000eefu, 0x00000f06u,
+    0x00000f1cu, 0x00000f33u, 0x00000f4au, 0x00000f61u,
+    0x00000f77u, 0x00000f8eu, 0x00000fa5u, 0x00000fbcu,
+    0x00000fd2u, 0x00000fe9u,
+};
+const unsigned int data_ov021_02113228[1] = {
+    0x00001000u,
+};
+const unsigned int data_ov021_0211322c[48] = {
+    0x00000000u, 0x00000017u, 0x0000002eu, 0x00000044u,
+    0x0000005bu, 0x00000072u, 0x00000089u, 0x0000009fu,
+    0x000000b6u, 0x000000cdu, 0x000000e4u, 0x000000fau,
+    0x00000111u, 0x00000128u, 0x0000013fu, 0x00000155u,
+    0x0000016cu, 0x00000183u, 0x0000019au, 0x000001b0u,
+    0x000001c7u, 0x000001deu, 0x000001f5u, 0x0000020bu,
+    0x00000222u, 0x00000239u, 0x00000250u, 0x00000266u,
+    0x0000027du, 0x00000294u, 0x000002abu, 0x000002c1u,
+    0x000002d8u, 0x000002efu, 0x00000306u, 0x0000031cu,
+    0x00000333u, 0x0000034au, 0x00000361u, 0x00000377u,
+    0x0000038eu, 0x000003a5u, 0x000003bcu, 0x000003d2u,
+    0x000003e9u, 0x00000400u, 0x00000417u, 0x0000042eu,
+};
+const unsigned int data_ov021_021132ec[22] = {
+    0x00000444u, 0x0000045bu, 0x00000472u, 0x00000489u,
+    0x0000049fu, 0x000004b6u, 0x000004cdu, 0x000004e4u,
+    0x000004fau, 0x00000511u, 0x00000528u, 0x0000053fu,
+    0x00000555u, 0x0000056cu, 0x00000583u, 0x0000059au,
+    0x000005b0u, 0x000005c7u, 0x000005deu, 0x000005f5u,
+    0x0000060bu, 0x00000622u,
+};
+const unsigned int data_ov021_02113344[25] = {
+    0x00000639u, 0x00000650u, 0x00000666u, 0x0000067du,
+    0x00000694u, 0x000006abu, 0x000006c1u, 0x000006d8u,
+    0x000006efu, 0x00000706u, 0x0000071cu, 0x00000733u,
+    0x0000074au, 0x00000761u, 0x00000777u, 0x0000078eu,
+    0x000007a5u, 0x000007bcu, 0x000007d2u, 0x000007e9u,
+    0x00000800u, 0x00000817u, 0x0000082eu, 0x00000844u,
+    0x0000085bu,
+};
+const unsigned int data_ov021_021133a8[35] = {
+    0x00000872u, 0x00000889u, 0x0000089fu, 0x000008b6u,
+    0x000008cdu, 0x000008e4u, 0x000008fau, 0x00000911u,
+    0x00000928u, 0x0000093fu, 0x00000955u, 0x0000096cu,
+    0x00000983u, 0x0000099au, 0x000009b0u, 0x000009c7u,
+    0x000009deu, 0x000009f5u, 0x00000a0bu, 0x00000a22u,
+    0x00000a39u, 0x00000a50u, 0x00000a66u, 0x00000a7du,
+    0x00000a94u, 0x00000aabu, 0x00000ac1u, 0x00000ad8u,
+    0x00000aefu, 0x00000b06u, 0x00000b1cu, 0x00000b33u,
+    0x00000b4au, 0x00000b61u, 0x00000b77u,
+};
+const unsigned int data_ov021_02113434[51] = {
+    0x00000b8eu, 0x00000ba5u, 0x00000bbcu, 0x00000bd2u,
+    0x00000be9u, 0x00000c00u, 0x00000c17u, 0x00000c2eu,
+    0x00000c44u, 0x00000c5bu, 0x00000c72u, 0x00000c89u,
+    0x00000c9fu, 0x00000cb6u, 0x00000ccdu, 0x00000ce4u,
+    0x00000cfau, 0x00000d11u, 0x00000d28u, 0x00000d3fu,
+    0x00000d55u, 0x00000d6cu, 0x00000d83u, 0x00000d9au,
+    0x00000db0u, 0x00000dc7u, 0x00000ddeu, 0x00000df5u,
+    0x00000e0bu, 0x00000e22u, 0x00000e39u, 0x00000e50u,
+    0x00000e66u, 0x00000e7du, 0x00000e94u, 0x00000eabu,
+    0x00000ec1u, 0x00000ed8u, 0x00000eefu, 0x00000f06u,
+    0x00000f1cu, 0x00000f33u, 0x00000f4au, 0x00000f61u,
+    0x00000f77u, 0x00000f8eu, 0x00000fa5u, 0x00000fbcu,
+    0x00000fd2u, 0x00000fe9u, 0x00001000u,
+};
+}
+#pragma force_active off

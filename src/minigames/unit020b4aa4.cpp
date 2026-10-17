@@ -1071,3 +1071,12 @@ extern "C" void Coin_FlyToCounter(Sprite* s) {
 }
 
 extern "C" int gMgCoinsShowDelta = 1;
+/* .data 0x020bc868..0x020bc86c */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+unsigned int data_ov004_020bc868[1] = {
+    0x00000080u,
+};
+}
+#pragma section forcedata end

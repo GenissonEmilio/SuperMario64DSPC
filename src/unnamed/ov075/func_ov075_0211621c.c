@@ -144,3 +144,9 @@ void func_ov075_0211621c(char *c)
     }
   }
 }
+
+/* .data 0x0211c778..0x0211c780 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern int data_ov075_0211c778[2] ;
+#pragma section forcedata end

@@ -56,3 +56,16 @@ extern "C" void func_ov075_02116128(int unused, int slot, int dim)
         p++;
     }
 }
+
+/* .data 0x0211c708..0x0211c718 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int data_ov075_0211c708[2] = {
+    (int)0xc1e000e0u, (int)0xffff6080u,
+};
+int data_ov075_0211c710[2] = {
+    0x001c001f, (int)0xffffe11fu,
+};
+}
+#pragma section forcedata end

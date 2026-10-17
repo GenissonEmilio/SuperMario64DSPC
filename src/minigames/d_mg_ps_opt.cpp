@@ -22,7 +22,7 @@
 
 /* rodata 0x020b9488..0x020b948c */
 #pragma force_active on
-static const unsigned int sMgCoinRiseFrames[1] = { 20 };
+extern static const unsigned int sMgCoinRiseFrames[1] ;
 #pragma force_active off
 
 struct M;

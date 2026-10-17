@@ -1,0 +1,53 @@
+//cpp
+/* .data 0x020b5c6c..0x020b5e4c */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" unsigned int data_ov000_020b5dfc[10] = {
+    0x61746164, 0x656e652f, 0x692f796d, 0x746e6177, 0x77692f65, 0x65746e61, 0x6961775f, 0x6e655f74,
+    0x2e6c5f64, 0x00616362,
+};
+extern "C" unsigned int data_ov000_020b5dd4[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x6875726f, 0x682f6965, 0x6875726f, 0x735f6965, 0x67757274,
+    0x2e656c67, 0x00616362,
+};
+extern "C" unsigned int data_ov000_020b5dac[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e343079, 0x00707462,
+};
+extern "C" unsigned int data_ov000_020b5d84[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e343079, 0x00646d62,
+};
+extern "C" unsigned int data_ov000_020b5d5c[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e333079, 0x00707462,
+};
+extern "C" unsigned int data_ov000_020b5d34[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e333079, 0x00646d62,
+};
+extern "C" unsigned int data_ov000_020b5d0c[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e323079, 0x00707462,
+};
+extern "C" unsigned int data_ov000_020b5ce4[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e323079, 0x00646d62,
+};
+extern "C" unsigned int data_ov000_020b5cbc[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e313079, 0x00707462,
+};
+extern "C" unsigned int data_ov000_020b5c94[10] = {
+    0x61746164, 0x656e652f, 0x682f796d, 0x63616e61, 0x2f6e6168, 0x616e6168, 0x6e616863, 0x646f625f,
+    0x2e313079, 0x00646d62,
+};
+extern "C" unsigned int data_ov000_020b5c6c[10] = {
+    0x61746164, 0x656e652f, 0x672f796d, 0x67616d61, 0x69686375, 0x6d61672f, 0x63756761, 0x775f6968,
+    0x2e6b6c61, 0x00616362,
+};
+extern "C" unsigned int data_ov000_020b5e24[10] = {
+    0x61746164, 0x656e652f, 0x692f796d, 0x746e6177, 0x77692f65, 0x65746e61, 0x6961775f, 0x6e655f74,
+    0x2e725f64, 0x00616362,
+};
+#pragma section forcedata end

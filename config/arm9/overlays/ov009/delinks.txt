@@ -6,60 +6,63 @@
     .bss        start:0x02113c20 end:0x02113ee0 kind:bss align:32
 src/game/actors/d_a_s_bird_head.cpp:
     complete
-    .text start:0x021111a0 end:0x0211145c
 
+    .text start:0x021111a0 end:0x0211145c
 src/unnamed/ov009/func_ov009_0211145c.cpp:
     complete
+
     .text start:0x0211145c end:0x021115d8
     .data start:0x02112bc4 end:0x02112bdc
-
 src/data/ov009/data_ov009_02112bf8.c:
     complete
-    .data start:0x02112bf8 end:0x02112c08
 
+    .data start:0x02112bf8 end:0x02112c08
 src/data/ov009/data_ov009_02112c38.c:
     complete
-    .data start:0x02112c38 end:0x02112c44
 
+    .data start:0x02112c38 end:0x02112c44
 src/game/actors/d_a_s_bird.cpp:
     complete
+    .ctor start:0x02112b34 end:0x02112b38
+
     .text start:0x021115d8 end:0x02111a70
     .init start:0x02112458 end:0x02112524
-    .ctor start:0x02112b34 end:0x02112b38
     .data start:0x021138fc end:0x0211391c
     .bss start:0x02113c20 end:0x02113c68
-
+src/data/park/bss_02113cd4.c:
+    complete
+    .bss start:0x02113cd4 end:0x02113cd8
 src/data/ov009/data_ov009_02113d8c.c:
     complete
-    .bss start:0x02113d8c end:0x02113d90
 
+    .bss start:0x02113d8c end:0x02113d90
 src/data/ov009/data_ov009_02113de0.c:
     complete
-    .bss start:0x02113de0 end:0x02113dec
 
+    .bss start:0x02113de0 end:0x02113dec
 src/data/ov009/data_ov009_02113e34.c:
     complete
-    .bss start:0x02113e34 end:0x02113e40
 
+    .bss start:0x02113e34 end:0x02113e40
 src/game/actors/d_a_obj_mc_water.cpp:
     complete
-    .text start:0x02111a70 end:0x02111dc4
 
+    .text start:0x02111a70 end:0x02111dc4
 src/game/actors/d_a_obj_mc_metalnet.cpp:
     complete
+    .ctor start:0x02112b3c end:0x02112b40
+
     .text start:0x02111dc4 end:0x02112078
     .init start:0x02112a5c end:0x02112ac8
-    .ctor start:0x02112b3c end:0x02112b40
     .bss start:0x02113e88 end:0x02113eb0
-
 src/game/actors/d_a_mc_flag.cpp:
     complete
+    .ctor start:0x02112b40 end:0x02112b44
+
     .text start:0x02112078 end:0x02112228
     .init start:0x02112ac8 end:0x02112b34
-    .ctor start:0x02112b40 end:0x02112b44
     .bss start:0x02113eb0 end:0x02113ed8
-
 src/unnamed/ov009/__sinit_ov009_02112524.c:
     complete
-    .init start:0x02112524 end:0x02112a5c
 
+    .init start:0x02112524 end:0x02112a5c

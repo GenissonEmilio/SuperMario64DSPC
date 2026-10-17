@@ -133,3 +133,9 @@ int func_ov075_02116818(char *c)
     *(void **)(c + 0x50) = _ZN7dBase_c5SpawnEjP7fBase_cii(0x15a, data_0209f5c0, 1, 0);
     return 1;
 }
+
+/* .data 0x0211c7e0..0x0211c7e8 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern int data_ov075_0211c7e0[2] ;
+#pragma section forcedata end

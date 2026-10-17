@@ -74,3 +74,23 @@ extern "C" void func_ov063_0211d270(daTrsTrap_c *self, dActor_c *actor)
     if (isPlayer)
         self->mStandingActor = actor;
 }
+
+/* .data 0x0211ea10..0x0211ea88 */
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+extern "C" {
+int g_profile_MERRYGOROUND[7] = {
+    0x0211d2e0, 0x0038009f, 0x00000000, 0x00064000, 0x00064000, 0x01000000, 0x00a00000,
+};
+int g_profile_BOOKSHELF[7] = {
+    0x0211d320, 0x0037009e, 0x00000000, 0x00064000, 0x00064000, 0x01000000, 0x00a00000,
+};
+int g_profile_KAIDAN[7] = {
+    0x0211d360, 0x00350041, 0x00000000, 0x00064000, 0x00064000, 0x01000000, 0x00a00000,
+};
+int g_profile_TERESAPIT[9] = {
+    0x0211d2a0, 0x003900a0, 0x00000000, 0x00064000, 0x00064000, 0x01000000, 0x00a00000, 0x00000000,
+    0x0211e9cc,
+};
+}
+#pragma section forcedata end

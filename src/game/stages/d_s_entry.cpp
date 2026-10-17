@@ -336,3 +336,7 @@ extern "C" void func_ov075_021160dc(char* c) {
 }
 
 extern short data_ov075_0211d740[1];
+/* .bss 0x0211d610..0x0211d614 */
+extern "C" {
+int data_ov075_0211d610[1];
+}

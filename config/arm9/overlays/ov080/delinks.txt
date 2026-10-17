@@ -37,3 +37,5 @@ src/game/actors/d_a_pic_gate_methods.cpp:
 src/game/actors/d_a_obj_maruta.cpp:
     complete
     .text start:0x02126fbc end:0x0212766c
+    .rodata start:0x02127848 end:0x021278c0
+    .bss start:0x02128858 end:0x02128860

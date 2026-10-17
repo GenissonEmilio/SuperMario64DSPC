@@ -31,3 +31,8 @@ void* _ZN6PlayerC1Ev(void* c){
   return c;
 }
 }
+
+/* .bss 0x02110210..0x02110214 */
+extern "C" {
+int data_ov002_02110210[1];
+}

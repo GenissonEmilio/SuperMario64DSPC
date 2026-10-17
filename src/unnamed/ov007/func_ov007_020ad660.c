@@ -173,3 +173,43 @@ void func_ov007_020ad660(char *arg0)
         return;
     }
 }
+
+/* .rodata 0x020ccb6c..0x020ccb7c */
+#pragma force_active on
+#pragma cplusplus on
+extern "C" {
+extern const unsigned int data_ov007_020ccb6c[];
+extern const unsigned int data_ov007_020ccb68[];
+extern const unsigned int data_ov007_020ccb64[];
+extern const unsigned int data_ov007_020ccb60[];
+extern const unsigned int data_ov007_020ccb5c[];
+extern const unsigned int data_ov007_020ccb58[];
+extern const unsigned int data_ov007_020ccb54[];
+extern const unsigned int data_ov007_020ccb70[];
+const unsigned int data_ov007_020ccb6c[1] = {
+    0x00000002u,
+};
+const unsigned int data_ov007_020ccb68[1] = {
+    0x00000004u,
+};
+const unsigned int data_ov007_020ccb64[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov007_020ccb60[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov007_020ccb5c[1] = {
+    0x00000001u,
+};
+const unsigned int data_ov007_020ccb58[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov007_020ccb54[1] = {
+    0x00000000u,
+};
+const unsigned int data_ov007_020ccb70[3] = {
+    0x03020100u, 0x03020100u, 0x00000504u,
+};
+}
+#pragma cplusplus off
+#pragma force_active off

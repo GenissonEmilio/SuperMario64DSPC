@@ -179,3 +179,13 @@ s32 daObjClockHuriko_c::CleanupResources()
 /* File-scope object: the pendulum model's SharedFilePtr, the one
  * construction __sinit_d_a_obj_clock_huriko.cpp performs. */
 ClockHurikoModelFilePtr data_ov013_02112280(ASSET_C2_HURIKO_BMD);
+
+/* .rodata 0x021116ac..0x021116b0 */
+#pragma force_active on
+extern "C" {
+extern const unsigned int data_ov013_021116ac[];
+const unsigned int data_ov013_021116ac[1] = {
+    0xffe0fe80u,
+};
+}
+#pragma force_active off

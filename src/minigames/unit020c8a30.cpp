@@ -205,4 +205,10 @@ void Puff_DrawAll(void){
 extern "C" {
 extern int data_ov006_021405b4;
 unsigned int data_ov006_0213b0f0[1] = {3};
+/* .bss 0x021404dc..0x021404f0 */
+int data_ov006_021404e8[1];
+int data_ov006_021404e4[1];
+int data_ov006_021404e0[1];
+int data_ov006_021404dc[1];
+int data_ov006_021404ec[1];
 }

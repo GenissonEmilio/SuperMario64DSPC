@@ -10,6 +10,7 @@ src/game/actors/d_a_obj_tt_futa.cpp:
     .init start:0x021119e8 end:0x02111a54
     .ctor start:0x02111ac0 end:0x02111ac4
     .bss start:0x021124c0 end:0x021124e8
+    .rodata start:0x021116c8 end:0x021119e8
 
 src/game/actors/d_a_obj_tt_water.cpp:
     complete
