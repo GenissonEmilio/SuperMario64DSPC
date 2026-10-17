@@ -22,6 +22,11 @@
       "name": ".data",
       "start": "0x020bc864",
       "end": "0x020bc868"
+    },
+    {
+      "name": ".bss",
+      "start": "0x020bf9ec",
+      "end": "0x020bf9f0"
     }
   ],
   "functions": [
@@ -335,7 +340,14 @@
       "evidence": "one data word, 0xffffffa0. The intact proof is stale; no ROM sha was rewritten."
     }
   ],
-  "bss": [],
+  "bss": [
+    {
+      "symbol": "sMgCoinsBetPlaced",
+      "address": "0x020bf9ec",
+      "size": "0x4",
+      "evidence": "bet latch this TU clears and sets; symbols.txt names it sMgCoinsBetPlaced at the data_ov004_020bf9ec address"
+    }
+  ],
   "notes": [
     "Text only: this unit's .data (0x020bc7d0..0x020bc83c) and .bss (0x020bf9e4..0x020bfa56) stay ROM-owned and are reached by extern, as the one-function sources did; __sinit_ov004_020b9ad0 stays its own enrolled source.",
     "Folded from 43 one-function sources. The per-source extern declarations disagreed on type for a handful of symbols (sMgCoinsStep, sMgCoins, gMgScene, the ApproachLinear / Vec2_Sub spellings); the single declaration set in the unit source picks one type each and the bodies cast to match. ApproachLinear and ApproachLinear2 are declared as the C++ overloads (int&, int, int) and (short&, short, short), which mangle to the ROM's _Z14ApproachLinearRiii and _Z15ApproachLinear2Rsss.",

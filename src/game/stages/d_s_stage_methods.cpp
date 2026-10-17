@@ -324,7 +324,9 @@ extern u16 data_02075600[7];
 extern u16 data_02075620[];
 extern struct LevelReturnEntry data_02075638[];
 extern s16 data_020756b0[];
-extern void *data_020756f0[12];
+extern void * const data_020756f0[12] = {
+    (void *)0x0210da48, (void *)0x0210d9b8, (void *)0x0210da50, (void *)0x0210d9f8, (void *)0x0210da40, (void *)0x0210d9a0, (void *)0x0210d9c0, (void *)0x0210e7d8, (void *)0x0210e3a0, (void *)0x0211094c, (void *)0x0211095c, (void *)0x0210d9a8
+};
 extern unsigned char data_02075768[];
 extern u8 data_02075769[];
 extern s8 data_0207576a[];
@@ -4728,7 +4730,7 @@ int dScStage_c::CleanupResources() {
     u32 i;
 
     for (i = 0; i < 12; i++)
-        ((SharedFilePtr *)(data_020756f0[i]))->Release();
+extern ((SharedFilePtr *)(data_020756f0[i]))->Release();
 
     {
         int atEnd = (data_0209f2d8 == 2);

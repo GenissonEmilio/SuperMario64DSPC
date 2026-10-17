@@ -1016,7 +1016,7 @@ extern "C" void func_0201eaac(void)
     data_0209d69c = 0;
     data_0209d694 = 0;
     data_0209d6bc = 1;
-    data_0209d68c = 0;
+extern data_0209d68c ;
     data_0209d684 = 0;
     data_0209d6b8 = 0;
     data_0209d6c4 = 0;

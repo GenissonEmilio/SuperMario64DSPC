@@ -1162,7 +1162,7 @@ extern "C" void Trmp2Mario_EnterState7(char *c)
     *(int *)(c + 0x28) = 0;
     *(int *)(c + 0x24) = 0;
     *(int *)(c + 0x2c) = 0;
-    *(int *)(c + 0x3c) = data_020a0ebc[0];
+extern *(int *)(c + 0x3c) ;
     *(int *)(c + 0x40) = data_020a0ebc[1];
     *(int *)(c + 0x44) = data_020a0ebc[2];
     *(int *)(c + 0x48) = 0;

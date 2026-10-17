@@ -54,5 +54,5 @@ extern "C" void LoadFont(unsigned char arg)
     }
     Deallocate((void *)r4);
     data_0209d660 = 0;
-    data_0209d6d4 = -1;
+extern data_0209d6d4 ;
 }

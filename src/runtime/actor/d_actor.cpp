@@ -1141,7 +1141,7 @@ dActor_c *dActor_c::SpawnNumber(const Vector3 &pos, u32 value, bool packLowNibbl
  * 0x0200ff94  size 0xb0 */
 extern "C" {
 extern u8 data_0209f220[]; /* the star index this mission was entered for */
-extern s8 data_0209f2f8[]; /* the current sublevel id */
+extern s8 data_0209f2f8[4]; /* the current sublevel id */
 extern dActor_c *STAR_MARKERS[12]; /* 0x0209f40c */
 void SetStarMarker(s32 slot, dActor_c *actor, s32 markerType);
 int IsStarCollectedInCurLevel(u32 starIdx);

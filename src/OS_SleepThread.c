@@ -18,7 +18,7 @@ void func_02057f54(void);
 
 void OS_SleepThread(u16 *self) {
     u32 r4 = _ZN3IRQ7DisableEv();
-    struct Node *r2 = data_020a612c->node;
+extern struct Node *r2 ;
     if (self != 0) {
         u32 r0 = 1 << r2->unk6c;
         u16 r1 = *self;

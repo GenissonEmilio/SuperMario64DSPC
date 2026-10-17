@@ -65,7 +65,7 @@ void ShowCrashScreen(void)
     nds_printt(scr + 0x5e8, data_0208e538, (u32)func_020427c4());
     nds_print(scr, data_0208e548);
     nds_print(scr + 6, data_020a0d90);
-    cc = data_0209f2f8;
+extern cc ;
     nds_printf(scr + 0x40, data_0208e54c, cc, func_0202e118());
     nds_printf(scr + 0x80, data_0208e55c, data_0209f264);
     nds_printf(scr + 0xc0, data_0208e56c, data_0209f220);

@@ -10,7 +10,7 @@ extern void func_02018a40(unsigned i, int v);
 extern int func_0201a9fc(int* p);
 extern int func_0201a96c(int* self, int newVal);
 void func_ov000_020aa420(void){
-  int sb=func_0201a9ec(&data_0209d574);
+extern int sb;
   func_02018a58(0x80a);
   int r8=data_020a6134[2];
   int r7=func_02057e7c(r8);

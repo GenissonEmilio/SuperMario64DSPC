@@ -13,8 +13,7 @@ extern int func_0205b274(int a);
 int func_0205b070(int x)
 {
     if (data_020a648c == 0) return 1;
-    if (data_020a64a0 >= 8) {
-        if (x == 0) return 0;
+extern if (data_020a64a0 >;
         do {
             func_0205b274(1);
         } while (data_020a64a0 >= 8);

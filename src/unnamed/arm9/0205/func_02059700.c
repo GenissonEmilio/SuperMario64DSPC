@@ -1,5 +1,5 @@
 typedef unsigned long long u64;
-extern volatile u64 data_020a6438;
+volatile u64 data_020a6438;
 extern int data_020a6434;
 extern void func_02056e4c(int a, void *b, int c);
 extern void func_02059700(void);

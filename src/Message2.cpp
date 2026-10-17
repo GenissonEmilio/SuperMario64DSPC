@@ -47,7 +47,8 @@ extern u8 data_0209d678;
 extern u8 data_0209d680;
 extern u8 data_0209d684;extern u8 data_0209d688;
 
-extern u8 data_0209d68c;
+u8 data_0209d68c;
+extern u8 data_0209d688;
 extern u8 data_0209d690;
 extern u8 data_0209d694;
 extern u8 data_0209d698;
@@ -80,7 +81,7 @@ extern s32 data_0208ee44;
 extern u16 data_0208ee64[];
 extern u8 data_0208ee6c[];
 extern u8 data_0208ee74[];
-extern int data_0208ee8c[];
+extern int data_0208ee8c[8] ;
 extern int data_0208eeac[];
 extern int data_0208eecc[];
 extern u8 data_0208f074[];

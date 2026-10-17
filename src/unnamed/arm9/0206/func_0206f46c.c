@@ -43,6 +43,8 @@ extern char *func_020706b0(char *dst, const char *src);      /* strcpy */
 extern char *func_0206fb08(long num, char *buff_end, print_format format);extern char data_0209a5ec[8];
  /* "-INF" */
 extern char data_0209a5f4[]; /* "-inf" */
+extern char *func_0206fb08(long num, char *buff_end, print_format format);
+
 extern char data_0209a5fc[]; /* "INF" */
 extern char data_0209a600[]; /* "inf" */
 extern char data_0209a604[]; /* "-NAN" */

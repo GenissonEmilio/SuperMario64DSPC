@@ -183,3 +183,7 @@ void Puff_DrawAll(void){
   }
 }
 }
+
+extern "C" {
+extern int data_ov006_021405b4;
+}

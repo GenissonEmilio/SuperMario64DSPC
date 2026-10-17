@@ -17,7 +17,7 @@ extern "C" {
 extern int data_0209d514;
 extern int data_0208ee44;
 extern u8 data_0209d4f0;
-extern u16 data_0209d500;
+u16 data_0209d500;
 u16 data_0209d4fc;
 static unsigned char data_0209d4fc_pad[2];
 

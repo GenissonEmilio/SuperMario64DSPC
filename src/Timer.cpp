@@ -3,7 +3,7 @@
  * #pragma defer_codegen off stays. It emits .text in source order, which is
  * the ROM order 0x02019584..0x02019664. func_0201964c stays a free function;
  * Timer::Timer() would rename the symbol. func_02059650 is the tick read
- * (timer 0 at 0x4000100 plus the counter at data_020a6438). Its declaration
+extern * (timer 0 at 0x4000100 plus the counter at data_020a6438). Its declaration
  * is only in decl_common.h.
  */
 /* Timer: arm9 stopwatch. mTime is the start tick while running and the

@@ -34,3 +34,5 @@ int func_02043098(int idx, int b, int c, int d)
     data_020a4b50 = 0xffff;
     return r5;
 }
+
+unsigned short data_020a11c4[4];

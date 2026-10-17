@@ -13,7 +13,7 @@ extern int data_020a6130;
 extern Mgr data_020a6134;
 extern char data_020a621c[];
 extern char data_020a613c[];
-extern void *data_020a612c;
+void * data_020a612c;
 extern char data_023c0000;
 extern char data_020a6188[];
 extern void func_02057e34(void);

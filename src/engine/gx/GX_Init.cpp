@@ -8,7 +8,7 @@
  *
  * GX_DispOff parks the display mode (DISPCNT bits 16-17) in data_020a6084
  * and clears it, which blanks engine A; GX_DispOn puts it back, or selects
- * "graphics" when no mode was parked. data_02099fcc is the display-on flag:
+extern * "graphics" when no mode was parked. data_02099fcc is the display-on flag:
  * while it is clear, GX::SetGraphicsMode records the requested mode but
  * writes mode 0, so a mode change cannot light a display that is off.
  *
@@ -61,7 +61,7 @@
 
 extern "C" {
 
-extern u16 data_02099fcc; // display on (TRUE until GX_DispOff)
+u16 data_02099fcc = 0x1; // display on (TRUE until GX_DispOff)
 extern int data_02099fd0; // GX DMA channel, -1 if none
 extern u16 data_020a6084; // display mode parked by GX_DispOff
 

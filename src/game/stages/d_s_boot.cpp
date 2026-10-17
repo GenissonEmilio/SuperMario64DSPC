@@ -38,3 +38,7 @@ extern "C" dScBoot_c *dScBoot_c_classInit(void)
 {
     return new dScBoot_c();
 }
+
+extern "C" {
+signed char data_0209f2f8[4];
+}

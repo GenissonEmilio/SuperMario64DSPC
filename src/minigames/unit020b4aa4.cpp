@@ -174,7 +174,7 @@ extern int *sMgCoinsButtonSprites[];
 extern unsigned char *sMgCoinsDeltaSprites[];
 extern short gMgCoinsStatus; /* 1 when a sequence finishes; 2, 3, 4 while one runs */
 extern int sMgCoinsDelta;   /* the count MgCoins_DrawDelta shows */
-extern int sMgCoinsBetPlaced;   /* set once by MgCoins_PlaceBet */
+int sMgCoinsBetPlaced;   /* set once by MgCoins_PlaceBet */
 extern int sMgCoinsSoundPending;   /* the sequence's sound is still to play */
 extern int sMgCoinsLastLostAlt;   /* last sprite MgCoins_StepLoseOneMore stepped */
 extern int sMgCoinsPayoutLeft;   /* count MgCoins_StartPayout lays out */

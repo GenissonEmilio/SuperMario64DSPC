@@ -23,6 +23,6 @@ struct dCamera_c {
 };
 
 int func_02008b08(struct dCamera_c *cam) {
-    s16 dest = data_0209f4a0[gActivePlayerSlot].field_0x0;
+extern s16 dest ;
     return _Z15ApproachLinear2Rsss(&cam->field_0x19c, dest, dest != 0 ? 0xa0 : 0x400);
 }

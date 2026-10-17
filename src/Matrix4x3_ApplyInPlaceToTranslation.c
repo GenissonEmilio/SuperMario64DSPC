@@ -15,3 +15,5 @@ void Matrix4x3_ApplyInPlaceToTranslation(struct Matrix4x3 *mF, Fix12i x, Fix12i 
     Matrix4x3_FromTranslation(&tmp, x, y, z);
     MulMat4x3Mat4x3(&tmp, mF, mF);
 }
+
+extern unsigned char gTouchX[1];

@@ -3,6 +3,7 @@ char* func_0204a4c8(char* (*alloc)(int), int a, int b, int c, unsigned short arg
 int func_ov007_020b3f20(int a);
 void func_0204a17c(int a, int b);
 
+void *data_ov007_0210342c;
 extern char data_ov007_02102dd0[];
 extern void* data_ov007_02103448;
 extern int data_ov007_02103444;
@@ -14,7 +15,7 @@ void func_ov007_020b782c(void)
 {
     int i, j;
     data_ov007_02103448 = (void*)func_ov007_020c3df4((int)&data_ov007_02102dd0, (void*)0x3c00);
-    data_ov007_02103444 = 0;
+extern data_ov007_02103444 ;
     data_ov007_0210344c = func_0204a4c8(func_ov007_020b78d0, 2, 0xc8, 0x23, 0x25);
     i = 0;
     j = i;

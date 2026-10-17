@@ -1,6 +1,5 @@
 //cpp
 #include "typeinfo.h"
-
 // Deferred codegen emits each destructor's D2, D0, D1 group in that order and the
 // groups in reverse definition order, so the definitions below run base-to-leaf
 // to land cartridge order: vmi D0/D1, si D0/D1 (their emitted D2s deadstrip),

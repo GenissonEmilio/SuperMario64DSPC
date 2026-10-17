@@ -75,16 +75,16 @@ struct OamEntryRaw { u32 a01; u16 a2; u16 pad; };
 /* The (attr0, attr1) pair as Reset stores it. */
 struct OAMEntry { u32 a; u16 b; u16 pad; };
 
-extern u8  data_0209e660;    /* sub-OAM suppress flag / single-buffer select */
-extern int data_0209e664;    /* main-buffer fill counter */
-extern int data_0209e668;    /* main-buffer affine-slot counter */
-extern int data_0209e66c;    /* sub-buffer affine-slot counter */
-extern int data_0209e670;    /* sub-buffer fill counter */
-extern OamAttr data_0209e674[];  /* main OAM staging buffer: 128 x 8B */
-extern int data_0209e67c[];
-extern int data_0209e694[];
 #pragma cplusplus off
 struct OamAttr data_0209ea74[0x80]; /* sub OAM staging buffer: 128 x 8B */
+int data_0209e694[248];
+int data_0209e67c[6];
+struct OamAttr data_0209e674[1];
+int data_0209e670;
+int data_0209e66c;
+int data_0209e668;
+int data_0209e664;
+unsigned char data_0209e660;
 #pragma cplusplus on
 extern s16 data_02082214[];      /* sin/cos table, indexed by (angle >> 4) * 2 */
 extern unsigned char data_020755a0[];  /* OBJ width table, stride 4 */

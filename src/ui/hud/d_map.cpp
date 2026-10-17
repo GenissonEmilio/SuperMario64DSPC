@@ -107,7 +107,6 @@ extern int data_0208ee44;
 extern void *_ZN3OAM15MM_STAR_MARKERSE[];
 extern u8 data_0209f288;
 extern char _ZN3OAM11MM_RED_COINE[];
-extern u8 data_ov002_02111154[];
 extern u8 data_0209f370[];
 extern void *data_ov002_0210cac8[];
 extern void *data_ov002_0210c748[];
@@ -122,7 +121,6 @@ extern s32  data_0209d4b0;
 extern u8   data_0209f350[];
 extern s8   data_02092110;
 extern u8   data_0209f204;
-extern u8   data_ov002_02111150;
 extern u8   data_0209f4ac[];
 extern u8   data_0209d454;
 extern u8   data_0209f4a8[];
@@ -144,6 +142,9 @@ extern void UpdateMinimap(s32 *a, s32 b, s32 c, s32 d, s32 e);
 void Vec3_DivScalarInPlace(struct Vec3* v, int s);
 void Vec3_MulScalarInPlace(struct Vec3* v, int s);
 void Vec3_RotateYAndTranslate(struct Vec3* out, struct Vec3* in, short ang, struct Vec3* t);
+unsigned char data_ov002_02111150;
+unsigned int data_ov002_02111154[3];
+unsigned int data_ov002_02111160[3];
 struct Vec3 data_ov002_0211116c;
 }
 
@@ -512,7 +513,7 @@ int dMap_c::Render()
         }
 
         {
-            u8 *p1 = data_ov002_02111154;
+            u8 *p1 = (u8 *)data_ov002_02111154;
             u8 *p2 = data_0209f370;
             int vs2 = (data_0209f2d8 == 1);
             void **tbl = (vs2 != 0) ? data_ov002_0210cac8 : data_ov002_0210c748;
@@ -1062,4 +1063,8 @@ void _ZN6dMap_c15GetPosOnMinimapER7Vector3S1_5Fix12IiEsS1_(Vector3* out, Vector3
 extern "C" dMap_c *dMap_c_classInit()
 {
     return new dMap_c();
+}
+
+extern "C" {
+unsigned char data_ov002_0210c3a8 = 0xf8;
 }

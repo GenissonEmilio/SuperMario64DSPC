@@ -8,7 +8,7 @@
  * - OAM::Render and G2x::SetBlendBrightness stay local externs. Render's
  *   scale arguments are Fix12<int> by value, and SetBlendBrightness's u16
  *   parameters would emit a narrow.
- * - data_0209fc78 is a volatile macro in func_02033464 only. decl_common.h
+extern * - data_0209fc78 is a volatile macro in func_02033464 only. decl_common.h
  *   spells that byte plain, and the other functions in this file read it plain.
  * - data_0209f4a4 is s16[] in decl_common.h. func_020326ac indexes it with a
  *   byte stride, so the cast stays at that use.
@@ -22,6 +22,9 @@
 #include "decl_common.h"
 #include "PlayerInput.h"
 #include "Message.h"
+extern "C" {
+extern unsigned char data_0209fc78;
+}
 
 struct OamAttr;
 
@@ -216,7 +219,7 @@ extern "C" void func_02031cd4(void* arg)
         case 0xfe:
             entry = base + i;
             type = entry[2];
-            data_0209fd18 = type;
+extern data_0209fd18 ;
             v = entry[4] | (entry[3] << 8);
             if (type == 1 && v == 1)
                 func_02031028((int)arg);
@@ -282,7 +285,7 @@ extern "C" void func_02031e00(void)
                         return;
                     }
                     m = data_0209fca4;
-                    if (m == 1) { data_0209fcc8 = 4; data_0209fcd0 = 0; }
+extern if (m ; data_0209fcd0 ; }
                     else if (m == 2) { data_0209fcc8 = 6; data_0209fcd0 = 0; }
                     else if (m == 3) { data_0209fcc8 = 5; data_0209fcd0 = 0; }
                     else { data_0209fcc8 = 8; }

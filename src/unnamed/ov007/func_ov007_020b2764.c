@@ -1,6 +1,6 @@
 extern short func_ov007_020c3be0(void* a, unsigned short h1, unsigned short h2);
 
-struct S2 { unsigned short a, b; };extern const struct S2 data_ov007_020ccc50[];
+extern struct S2 { unsigned short a, b; };extern const struct S2 data_ov007_020ccc50[];
 extern const struct S2 data_ov007_020ccc5c[];
 
 extern char* data_ov007_0210342c;
@@ -16,7 +16,7 @@ void func_ov007_020b2764(int sl)
     do {
         obj = *(char**)(data_ov007_0210342c + sb * 4 + 0x108);
         *(unsigned short*)(obj + 0x4c) =
-            func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].a, data_ov007_020ccc5c[sb].a);
+extern func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].a, data_ov007_020ccc5c[sb].a);
         *(unsigned short*)(obj + 0x46) = *(unsigned short*)(obj + 0x4c);
         *(unsigned short*)(obj + 0x4a) =
             func_ov007_020c3be0((void*)sl, data_ov007_020ccc50[sb].b, data_ov007_020ccc5c[sb].b);

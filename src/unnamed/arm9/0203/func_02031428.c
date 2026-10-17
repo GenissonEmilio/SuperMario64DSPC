@@ -77,7 +77,7 @@ void func_02031428(void)
                 rem = col & 7;
                 blk = col >> 3;
                 wordIdx = blk << 3;
-                dst[wordIdx] = (data_0209287c[rem] & data_0209fd5c[rowIdx + 0]) | dst[wordIdx];
+extern dst[wordIdx] ;
                 *(u32 *)(((u64)(int)((char *)&dst[wordIdx] + 4) & ~0ULL)) = (data_0209287c[rem] & data_0209fd5c[rowIdx + 1]) | *(u32 *)(((u64)(int)((char *)&dst[wordIdx] + 4) & ~0ULL));
                 i2 = rowIdx + 2;
                 *(u32 *)(((u64)(int)((char *)&dst[wordIdx] + 8) & ~0ULL)) = (data_0209287c[rem] & data_0209fd5c[i2]) | *(u32 *)(((u64)(int)((char *)&dst[wordIdx] + 8) & ~0ULL));
