@@ -75,7 +75,7 @@ void _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES
 
 }
 
-SharedFilePtr data_ov002_0210da58;
+extern SharedFilePtr data_ov002_0210da58;
 extern unsigned char data_0209f2d8;
 extern void *data_0209f318;
 extern s16 data_02082214[];
