@@ -1,0 +1,2 @@
+/* .bss 0x0210ea18..0x0210ea20 */
+unsigned char data_ov002_0210ea18[8];

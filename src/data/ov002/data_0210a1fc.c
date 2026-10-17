@@ -1,0 +1,12 @@
+/* .data 0x0210a1fc..0x0210a204 */
+extern unsigned char _ZN6Player19func_ov002_020c9c4cEv[];
+
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned int data_ov002_0210a1fc[2] = {
+    (unsigned int)&_ZN6Player19func_ov002_020c9c4cEv, 0
+};
+#pragma section forcedata end
+#pragma pop

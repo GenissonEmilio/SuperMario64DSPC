@@ -1,0 +1,16 @@
+/* .data 0x0210d098..0x0210d0e8 */
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned char data_ov002_0210d098[80] = {
+    232, 0, 64, 128, 27, 145, 0, 0, 232, 128, 96, 64,
+    31, 145, 0, 0, 8, 64, 64, 64, 155, 145, 0, 0,
+    8, 0, 96, 0, 159, 145, 0, 0, 240, 64, 137, 193,
+    0, 161, 0, 0, 240, 64, 201, 193, 8, 161, 0, 0,
+    240, 0, 9, 128, 16, 161, 0, 0, 240, 128, 41, 128,
+    20, 161, 0, 0, 240, 0, 102, 64, 197, 161, 0, 0,
+    0, 0, 102, 64, 199, 161, 255, 255
+};
+#pragma section forcedata end
+#pragma pop

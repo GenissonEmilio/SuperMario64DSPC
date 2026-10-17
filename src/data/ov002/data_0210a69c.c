@@ -1,0 +1,15 @@
+/* .data 0x0210a69c..0x0210a6ac */
+extern unsigned char data_ov002_0210e690[];
+extern unsigned char data_ov002_0210eb20[];
+extern unsigned char data_ov002_0210e758[];
+extern unsigned char data_ov002_0210e7a8[];
+
+#pragma push
+#pragma explicit_zero_data on
+#pragma define_section forcedata ".data" ".data" ".data" data_mode=far_abs
+#pragma section forcedata begin
+unsigned int data_ov002_0210a69c[4] = {
+    (unsigned int)&data_ov002_0210e690, (unsigned int)&data_ov002_0210eb20, (unsigned int)&data_ov002_0210e758, (unsigned int)&data_ov002_0210e7a8
+};
+#pragma section forcedata end
+#pragma pop
