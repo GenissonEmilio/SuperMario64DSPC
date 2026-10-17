@@ -3,11 +3,311 @@
     .ctor       start:0x020b1350 end:0x020b1350 kind:rodata align:4
     .data       start:0x020b1360 end:0x020b18a0 kind:data align:32
     .bss        start:0x020b18a0 end:0x020b18a0 kind:bss align:32
+src/data/ov003/data_020b1360.c:
+    complete
+    .data start:0x020b1360 end:0x020b1368
+
+src/data/ov003/data_020b1368.c:
+    complete
+    .data start:0x020b1368 end:0x020b1370
+
+src/data/ov003/data_020b1370.c:
+    complete
+    .data start:0x020b1370 end:0x020b1378
+
+src/data/ov003/data_020b1378.c:
+    complete
+    .data start:0x020b1378 end:0x020b1380
+
+src/data/ov003/data_020b1380.c:
+    complete
+    .data start:0x020b1380 end:0x020b1388
+
+src/data/ov003/data_020b1388.c:
+    complete
+    .data start:0x020b1388 end:0x020b1390
+
+src/data/ov003/data_020b1390.c:
+    complete
+    .data start:0x020b1390 end:0x020b139c
+
+src/data/ov003/data_020b139c.c:
+    complete
+    .data start:0x020b139c end:0x020b13a8
+
 src/game/stages/d_s_title.cpp:
     complete
     .text start:0x020ad660 end:0x020addfc
     .rodata start:0x020b117c end:0x020b1180
     .data start:0x020b13a8 end:0x020b13b4
+
+src/data/ov003/rodata_020b132c.c:
+    complete
+    .rodata start:0x020b132c end:0x020b1338
+
+src/data/ov003/rodata_020b1338.c:
+    complete
+    .rodata start:0x020b1338 end:0x020b1344
+
+src/data/ov003/data_020b13b4.c:
+    complete
+    .data start:0x020b13b4 end:0x020b13c0
+
+src/data/ov003/data_020b13c0.c:
+    complete
+    .data start:0x020b13c0 end:0x020b13cc
+
+src/data/ov003/data_020b13cc.c:
+    complete
+    .data start:0x020b13cc end:0x020b13d8
+
+src/data/ov003/data_020b13d8.c:
+    complete
+    .data start:0x020b13d8 end:0x020b13e4
+
+src/data/ov003/data_020b13e4.c:
+    complete
+    .data start:0x020b13e4 end:0x020b13f0
+
+src/data/ov003/data_020b13f0.c:
+    complete
+    .data start:0x020b13f0 end:0x020b13fc
+
+src/data/ov003/data_020b13fc.c:
+    complete
+    .data start:0x020b13fc end:0x020b1408
+
+src/data/ov003/data_020b1408.c:
+    complete
+    .data start:0x020b1408 end:0x020b1414
+
+src/data/ov003/data_020b1414.c:
+    complete
+    .data start:0x020b1414 end:0x020b1420
+
+src/data/ov003/data_020b1420.c:
+    complete
+    .data start:0x020b1420 end:0x020b142c
+
+src/data/ov003/data_020b142c.c:
+    complete
+    .data start:0x020b142c end:0x020b1438
+
+src/data/ov003/data_020b1438.c:
+    complete
+    .data start:0x020b1438 end:0x020b1444
+
+src/data/ov003/data_020b1444.c:
+    complete
+    .data start:0x020b1444 end:0x020b1450
+
+src/data/ov003/data_020b1450.c:
+    complete
+    .data start:0x020b1450 end:0x020b145c
+
+src/data/ov003/data_020b145c.c:
+    complete
+    .data start:0x020b145c end:0x020b1468
+
+src/data/ov003/data_020b1468.c:
+    complete
+    .data start:0x020b1468 end:0x020b1474
+
+src/data/ov003/data_020b1474.c:
+    complete
+    .data start:0x020b1474 end:0x020b1480
+
+src/data/ov003/data_020b1480.c:
+    complete
+    .data start:0x020b1480 end:0x020b148c
+
+src/data/ov003/data_020b148c.c:
+    complete
+    .data start:0x020b148c end:0x020b1498
+
+src/data/ov003/data_020b1498.c:
+    complete
+    .data start:0x020b1498 end:0x020b14a4
+
+src/data/ov003/data_020b14a4.c:
+    complete
+    .data start:0x020b14a4 end:0x020b14b0
+
+src/data/ov003/data_020b14b0.c:
+    complete
+    .data start:0x020b14b0 end:0x020b14bc
+
+src/data/ov003/data_020b14bc.c:
+    complete
+    .data start:0x020b14bc end:0x020b14c8
+
+src/data/ov003/data_020b14c8.c:
+    complete
+    .data start:0x020b14c8 end:0x020b14d4
+
+src/data/ov003/data_020b14d4.c:
+    complete
+    .data start:0x020b14d4 end:0x020b14e0
+
+src/data/ov003/data_020b14e0.c:
+    complete
+    .data start:0x020b14e0 end:0x020b14ec
+
+src/data/ov003/data_020b14ec.c:
+    complete
+    .data start:0x020b14ec end:0x020b14f8
+
+src/data/ov003/data_020b14f8.c:
+    complete
+    .data start:0x020b14f8 end:0x020b1504
+
+src/data/ov003/data_020b1504.c:
+    complete
+    .data start:0x020b1504 end:0x020b1510
+
+src/data/ov003/data_020b1510.c:
+    complete
+    .data start:0x020b1510 end:0x020b1520
+
+src/data/ov003/data_020b1520.c:
+    complete
+    .data start:0x020b1520 end:0x020b1530
+
+src/data/ov003/data_020b1530.c:
+    complete
+    .data start:0x020b1530 end:0x020b1540
+
+src/data/ov003/data_020b1540.c:
+    complete
+    .data start:0x020b1540 end:0x020b1550
+
+src/data/ov003/data_020b1550.c:
+    complete
+    .data start:0x020b1550 end:0x020b1560
+
+src/data/ov003/data_020b1560.c:
+    complete
+    .data start:0x020b1560 end:0x020b1570
+
+src/data/ov003/data_020b1570.c:
+    complete
+    .data start:0x020b1570 end:0x020b1580
+
+src/data/ov003/data_020b1580.c:
+    complete
+    .data start:0x020b1580 end:0x020b1590
+
+src/data/ov003/data_020b1590.c:
+    complete
+    .data start:0x020b1590 end:0x020b15a0
+
+src/data/ov003/data_020b15a0.c:
+    complete
+    .data start:0x020b15a0 end:0x020b15b0
+
+src/data/ov003/data_020b15b0.c:
+    complete
+    .data start:0x020b15b0 end:0x020b15c0
+
+src/data/ov003/data_020b15c0.c:
+    complete
+    .data start:0x020b15c0 end:0x020b15d0
+
+src/data/ov003/data_020b15d0.c:
+    complete
+    .data start:0x020b15d0 end:0x020b15e0
+
+src/data/ov003/data_020b15e0.c:
+    complete
+    .data start:0x020b15e0 end:0x020b15f0
+
+src/data/ov003/data_020b15f0.c:
+    complete
+    .data start:0x020b15f0 end:0x020b1600
+
+src/data/ov003/data_020b1600.c:
+    complete
+    .data start:0x020b1600 end:0x020b1610
+
+src/data/ov003/data_020b1610.c:
+    complete
+    .data start:0x020b1610 end:0x020b1620
+
+src/data/ov003/data_020b1620.c:
+    complete
+    .data start:0x020b1620 end:0x020b1634
+
+src/data/ov003/data_020b1634.c:
+    complete
+    .data start:0x020b1634 end:0x020b1650
+
+src/data/ov003/data_020b1698.c:
+    complete
+    .data start:0x020b1698 end:0x020b169c
+
+src/data/ov003/data_020b169c.c:
+    complete
+    .data start:0x020b169c end:0x020b16a0
+
+src/data/ov003/data_020b16a0.c:
+    complete
+    .data start:0x020b16a0 end:0x020b16a4
+
+src/data/ov003/data_020b16a4.c:
+    complete
+    .data start:0x020b16a4 end:0x020b16a8
+
+src/data/ov003/data_020b16a8.c:
+    complete
+    .data start:0x020b16a8 end:0x020b16ac
+
+src/data/ov003/data_020b16ac.c:
+    complete
+    .data start:0x020b16ac end:0x020b16b4
+
+src/data/ov003/data_020b16b4.c:
+    complete
+    .data start:0x020b16b4 end:0x020b16bc
+
+src/data/ov003/data_020b16bc.c:
+    complete
+    .data start:0x020b16bc end:0x020b16c8
+
+src/data/ov003/data_020b16c8.c:
+    complete
+    .data start:0x020b16c8 end:0x020b16d4
+
+src/data/ov003/data_020b16d4.c:
+    complete
+    .data start:0x020b16d4 end:0x020b16e4
+
+src/data/ov003/data_020b16e4.c:
+    complete
+    .data start:0x020b16e4 end:0x020b1704
+
+src/data/ov003/data_020b174c.c:
+    complete
+    .data start:0x020b174c end:0x020b1750
+
+src/data/ov003/data_020b1750.c:
+    complete
+    .data start:0x020b1750 end:0x020b1758
+
+src/data/ov003/data_020b1758.c:
+    complete
+    .data start:0x020b1758 end:0x020b1764
+
+src/data/ov003/data_020b1764.c:
+    complete
+    .data start:0x020b1764 end:0x020b1774
+
+src/data/ov003/data_020b1774.c:
+    complete
+    .data start:0x020b1774 end:0x020b1784
+
+src/data/ov003/data_020b1784.c:
+    complete
+    .data start:0x020b1784 end:0x020b179c
 
 src/game/stages/d_s_star_sel_methods.cpp:
     complete
