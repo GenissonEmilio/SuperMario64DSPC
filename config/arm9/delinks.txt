@@ -260,6 +260,14 @@ src/unnamed/arm9/0200/func_02008550.cpp:
     .text start:0x02008550 end:0x0200897c
     .bss start:0x0209b138 end:0x0209b270
 
+src/data/arm9/data_0209b2e4.c:
+    complete
+    .bss start:0x0209b2e4 end:0x0209b2e8
+
+src/data/arm9/gMgMenuRow.c:
+    complete
+    .bss start:0x0209b308 end:0x0209b31c
+
 src/unnamed/arm9/0200/func_0200897c.c:
     complete
     .text start:0x0200897c end:0x020089d8
@@ -1447,6 +1455,10 @@ src/ui/messages/func_0201fe08.c:
     .text start:0x0201fe08 end:0x0201fec8
 
     .bss start:0x0209d6b8 end:0x0209d6bc
+src/data/arm9/data_0209d6d0.c:
+    complete
+    .bss start:0x0209d6d0 end:0x0209d6d4
+
 src/unnamed/arm9/0201/func_0201fec8.c:
     complete
     .text start:0x0201fec8 end:0x0201ffcc
@@ -2182,6 +2194,7 @@ src/Vec3_Add.c:
 src/unnamed/arm9/0203/func_0203d384.c:
     complete
     .text start:0x0203d384 end:0x0203d388
+    .rodata start:0x02082614 end:0x02082714
 
 src/unnamed/arm9/0203/func_0203d388.c:
     complete
@@ -2394,6 +2407,7 @@ src/unnamed/arm9/0203/func_0203e0ac.c:
 src/unnamed/arm9/0203/func_0203e20c.c:
     complete
     .text start:0x0203e20c end:0x0203e978
+    .bss start:0x020a10fc end:0x020a10fe
 
 src/unnamed/arm9/0203/func_0203e978.c:
     complete
@@ -2523,6 +2537,7 @@ src/unnamed/arm9/0204/func_020402a0.c:
 src/unnamed/arm9/0204/func_02040384.c:
     complete
     .text start:0x02040384 end:0x02040388
+    .bss start:0x020a11a0 end:0x020a11c4
 
 src/unnamed/arm9/0204/func_02040388.c:
     complete
@@ -3268,6 +3283,7 @@ src/unnamed/arm9/0205/func_020538b8.c:
 src/unnamed/arm9/0205/func_02053a8c.c:
     complete
     .text start:0x02053a8c end:0x02053a90
+    .data start:0x0209a614 end:0x0209a618
 
 src/engine/gx/GX_Init.cpp:
     complete
@@ -3524,6 +3540,7 @@ src/unnamed/arm9/0205/func_02057e00.c:
 src/unnamed/arm9/0205/func_02057e30.c:
     complete
     .text start:0x02057e30 end:0x02057e34
+    .bss start:0x020a6090 end:0x020a6092
 
 src/unnamed/arm9/0205/func_02057e34.c:
     complete
@@ -3620,6 +3637,7 @@ src/unnamed/arm9/0205/func_02058764.c:
 src/unnamed/arm9/0205/func_020587dc.c:
     complete
     .text start:0x020587dc end:0x020587e4
+    .bss start:0x020a60c4 end:0x020a60c8
 
 src/unnamed/arm9/0205/func_020587e4.c:
     complete
@@ -4198,6 +4216,7 @@ src/unnamed/arm9/0205/func_0205bad8.c:
 src/unnamed/arm9/0205/func_0205bbdc.c:
     complete
     .text start:0x0205bbdc end:0x0205bbe4
+    .bss start:0x020a6484 end:0x020a6488
 
 src/unnamed/arm9/0205/func_0205bbe4.c:
     complete
@@ -4342,6 +4361,7 @@ src/FS_ReadFile.c:
 src/unnamed/arm9/0205/func_0205d3e4.c:
     complete
     .text start:0x0205d3e4 end:0x0205d3f4
+    .bss start:0x020a649c end:0x020a64a0
 
 src/unnamed/arm9/0205/func_0205d3f4.c:
     complete
@@ -4382,6 +4402,7 @@ src/unnamed/arm9/0205/func_0205d714.c:
 src/FS_InitFile.c:
     complete
     .text start:0x0205d874 end:0x0205d89c
+    .bss start:0x020a7fc0 end:0x020a7fc4
 
 src/unnamed/arm9/0205/func_0205d89c.c:
     complete

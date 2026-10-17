@@ -86,3 +86,11 @@ extern "C" void func_ov009_0211145c(daSBird_c *self)
     self->mState = 3;
     self->mFlags &= ~0x10000;
 }
+
+extern "C" {
+#pragma force_active on
+unsigned char data_ov009_02112bc4[24] = {
+    0, 0, 80, 227, 6, 0, 0, 10, 92, 0, 148, 229, 0, 0, 80, 227,
+    12, 208, 141, 194, 240, 67, 189, 200,
+};
+}

@@ -331,3 +331,6 @@ void func_0203e20c(void)
         } while (i < 0x11);
     }
 }
+
+#pragma force_active on
+unsigned char data_020a10fc[2];

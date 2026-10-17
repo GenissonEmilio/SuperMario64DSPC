@@ -2323,3 +2323,8 @@ extern "C" void TrmpLine_Reset(char *p)
     p[808] = 0;
 }
 }
+
+extern "C" {
+#pragma force_active on
+unsigned char data_ov006_0214097c[20];
+}
