@@ -26,3 +26,5 @@ void func_ov007_020bfc54(void)
     func_ov007_020c3d1c(data_ov007_02104bd8);
     data_ov007_02104bd8 = 0;
 }
+
+char * data_ov007_02104bd8;

@@ -4,6 +4,9 @@
     .ctor       start:0x021080d0 end:0x02108138 kind:rodata align:4
     .data       start:0x02108140 end:0x0210d9a0 kind:data align:32
     .bss        start:0x0210d9a0 end:0x021111a0 kind:bss align:32
+src/data/merge/bss_0210d9a0.c:
+    complete
+    .bss start:0x0210d9a0 end:0x0210d9a8
 src/data/ov002/data_ov002_0210d9b8.c:
     complete
     .bss start:0x0210d9b8 end:0x0210d9c0
@@ -211,6 +214,9 @@ src/game/player/d_a_ply.cpp:
     complete
     .text start:0x020e6c0c end:0x020e6c40
     .bss start:0x0210e8d0 end:0x0210e8d8
+src/data/merge/bss_0210eb20.c:
+    complete
+    .bss start:0x0210eb20 end:0x0210eb28
 src/game/actors/d_a_star.cpp:
     complete
     .text start:0x020e6c40 end:0x020ebe5c
@@ -259,6 +265,7 @@ src/unnamed/ov002/func_ov002_020f02c8.c:
 src/unnamed/ov002/func_ov002_020f030c.c:
     complete
     .text start:0x020f030c end:0x020f035c
+    .data start:0x0210af70 end:0x0210aff4
 src/unnamed/ov002/func_ov002_020f035c.c:
     complete
     .text start:0x020f035c end:0x020f03c4
@@ -314,6 +321,9 @@ src/ui/hud/d_map.cpp:
     .text start:0x020f975c end:0x020fb8f8
     .data start:0x0210c3a8 end:0x0210c3b0
     .bss start:0x02111150 end:0x02111178
+src/data/merge/bss_02111178.c:
+    complete
+    .bss start:0x02111178 end:0x0211117c
 src/data/merge/data_0210ca0c.c:
     complete
     .data start:0x0210ca0c end:0x0210ca18

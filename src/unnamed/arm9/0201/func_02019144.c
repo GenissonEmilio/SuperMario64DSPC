@@ -59,3 +59,5 @@ void func_02019144(void)
     *(vu32 *)0x4001018 = (data_0209d47c & 0x1ff) | (0x1ff0000 & (data_0209d470 << 16));
     *(vu32 *)0x400101c = (data_0209d474 & 0x1ff) | (0x1ff0000 & (data_0209d488 << 16));
 }
+
+short data_0209d470;

@@ -12,3 +12,6 @@ void __sinit_ov006_0212f660(void) {
 
 #pragma force_active on
 extern unsigned char data_ov006_02140538[4];
+extern int data_ov006_02134ed0;
+
+extern unsigned char data_ov006_02140588[0x4];

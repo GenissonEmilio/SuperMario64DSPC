@@ -46,7 +46,7 @@ extern void* gPFlowerOpenModelFile;
 extern void* data_ov002_0210dad8;
 extern void* data_ov002_0210da40;
 extern void* data_ov002_0210dafc;
-extern void* data_ov002_0210d9a0;
+extern extern void* data_ov002_0210d9a0;
 extern void* data_ov002_0210db2c;
 extern void* data_ov002_0210d9c0;
 extern void* data_ov002_0210db50;
@@ -116,3 +116,5 @@ void __sinit_ov002_02100560(void)
     func_02017acc(&data_ov002_0210d9f0, 0x9c0c);
     func_020731dc(&data_ov002_0210d9f0, (void*)&func_02017ab4, (void**)&data_ov002_0210db74);
 }
+
+void* data_ov002_0210d9a0;

@@ -40,3 +40,5 @@ void **func_0205b274(int flag)
     data_020a6488 = data_020a6488 + 1;
     return head;
 }
+
+extern void ** data_020a64a8[14];

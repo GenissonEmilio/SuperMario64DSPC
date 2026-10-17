@@ -14,3 +14,5 @@ void func_020196cc(void)
     func_0203b9b4(data_0209d4b8, 0x4d2);
     SetSoundMode(data_0209d4b4[0]);
 }
+
+extern int data_0209d4b8[1];

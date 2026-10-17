@@ -30,12 +30,18 @@ src/minigames/unit020b4aa4.cpp:
 src/data/merge/bss_020bfa18.c:
     complete
     .bss start:0x020bfa18 end:0x020bfa1c
+src/data/merge/bss_020bfa24.c:
+    complete
+    .bss start:0x020bfa24 end:0x020bfa28
 src/data/park/data_020bc86c.c:
     complete
     .data start:0x020bc86c end:0x020bc894
 src/data/merge/data_020bc898.c:
     complete
     .data start:0x020bc898 end:0x020bc89c
+src/data/merge/data_020bc8a4.c:
+    complete
+    .data start:0x020bc8a4 end:0x020bc8a8
 src/data/ov004/data_ov004_020bc8b8.c:
     complete
     .data start:0x020bc8b8 end:0x020bc8bc

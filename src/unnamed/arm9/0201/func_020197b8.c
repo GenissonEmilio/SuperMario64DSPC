@@ -5,7 +5,7 @@ extern unsigned short data_020a0e58[];
 extern unsigned short data_0209d534[];
 extern int data_0209d51c;
 extern int data_020a0db0;
-extern unsigned char data_0209d4f0;
+extern extern unsigned char data_0209d4f0;
 extern unsigned char data_0209ee90[];
 extern int data_0209d514;
 extern unsigned char data_0209b480;
@@ -63,3 +63,5 @@ void func_020197b8(void) {
             func_02030e4c();
     } while (1);
 }
+
+unsigned char data_0209d4f0;

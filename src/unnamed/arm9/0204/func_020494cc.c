@@ -83,3 +83,5 @@ void func_020494cc(void *a, int mode)
         data_020a4c48[1] = 0x100;
     }
 }
+
+extern int data_020a4c54[2];

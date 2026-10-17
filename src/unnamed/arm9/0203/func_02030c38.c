@@ -20,3 +20,5 @@ void func_02030c38(void)
         p++;
     }
 }
+
+extern unsigned char data_0209fc5d[3];

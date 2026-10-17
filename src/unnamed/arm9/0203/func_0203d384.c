@@ -24,3 +24,4 @@ const unsigned char data_02082614[256] = {
     117, 7, 40, 14, 122, 7, 37, 14, 128, 7, 34, 14, 133, 7, 31, 14,
 };
 #pragma section forcerodata end
+extern unsigned int data_020a0ef0[1];

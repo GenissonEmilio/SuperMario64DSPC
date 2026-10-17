@@ -12,3 +12,5 @@ void func_ov075_02116c8c(void) {
     _ZN5Sound22StopLoadedMusic_Layer1Ej(0x3c);
     data_02092778[0] = 1;
 }
+
+signed char data_ov075_0211c6ec[4] = {0x33, 0x2b, 0x1d, 0x2a};

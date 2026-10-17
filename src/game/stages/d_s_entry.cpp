@@ -334,3 +334,5 @@ extern "C" void func_ov075_021160dc(char* c) {
         elem = (Base*)((char*)elem + 0x24);
     } while (i < count);
 }
+
+extern short data_ov075_0211d740[1];

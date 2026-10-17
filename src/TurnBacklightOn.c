@@ -5,3 +5,5 @@ void TurnBacklightOn(void) {
         data_0208ee3c = 1;
     }
 }
+
+unsigned int data_0209d4a0[1];

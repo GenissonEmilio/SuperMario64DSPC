@@ -8,7 +8,7 @@ extern int func_02043060(void *a);
 extern void func_02043180(int a, int b, int c, int d);
 extern void func_020433b8(char *self);
 
-extern unsigned short data_020a4b50;
+extern extern unsigned short data_020a4b50;
 extern Fn **data_020a4bb8;
 
 int func_02043098(int idx, int b, int c, int d)
@@ -39,3 +39,4 @@ int func_02043098(int idx, int b, int c, int d)
 }
 
 unsigned short data_020a11c4[4];
+unsigned short data_020a4b50;

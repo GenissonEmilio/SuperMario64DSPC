@@ -5,3 +5,5 @@ void TurnBacklightOff(void) {
         data_0208ee3c = 0;
     }
 }
+
+extern unsigned char data_0208ee3c ;

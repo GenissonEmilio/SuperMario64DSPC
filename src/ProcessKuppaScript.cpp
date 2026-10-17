@@ -13,7 +13,7 @@ extern "C" {
     void EndKuppaScript(void);
 
     extern unsigned char* data_0209fc48;
-    extern u16 data_0209b274;
+    extern extern u16 data_0209b274;
     extern u8 data_020a0e58[];
     extern u8 data_0209d66c;
     extern u32 data_0209fc4c;
@@ -181,3 +181,5 @@ extern "C" void ProcessKuppaScript(void)
     if (data_0209b274 == 0)
         data_0209b274--;
 }
+
+u16 data_0209b274;

@@ -12,7 +12,7 @@ extern char data_ov007_02102dd0[];
 extern void* data_ov007_02103448;
 extern int data_ov007_02103444;
 extern char* (func_ov007_020b78d0)(int);
-extern void* data_ov007_0210344c;
+extern extern void* data_ov007_0210344c;
 extern int data_ov007_02103450[];
 
 void func_ov007_020b782c(void)
@@ -29,3 +29,5 @@ void func_ov007_020b782c(void)
     } while (i < 2);
     func_0204a17c((int)data_ov007_0210344c, func_ov007_020b3f20(0x17));
 }
+
+void* data_ov007_0210344c;

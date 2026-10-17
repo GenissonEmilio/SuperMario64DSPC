@@ -56,3 +56,7 @@ void dView_c_EmitDestructor(dView_c *view)
 {
     view->~dView_c();
 }
+
+extern "C" {
+int data_0209fc48;
+}

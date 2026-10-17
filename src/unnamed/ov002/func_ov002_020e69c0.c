@@ -8,3 +8,5 @@ void func_ov002_020e69c0(void){
   for(i=2; i<0x20; i++){ *dst++ = *src++; }
   dst[0]=a; dst[1]=b;
 }
+
+extern unsigned int data_ov002_0210eb20[2];

@@ -48,10 +48,13 @@ src/minigames/d_mg_jump3d_mario.cpp:
 src/data/merge/bss_02140538.c:
     complete
     .bss start:0x02140538 end:0x0214053c
+src/data/merge/bss_02140588.c:
+    complete
+    .bss start:0x02140588 end:0x0214058c
 src/minigames/unit020c8a30.cpp:
     complete
     .text start:0x020c8a30 end:0x020c8dd4
-    .data start:0x0213b0ec end:0x0213b0f0
+    .data start:0x0213b0ec end:0x0213b0f4
     .bss start:0x021405ac end:0x021405b0
 src/data/ov006/data_ov006_021405b4.c:
     complete
@@ -64,6 +67,9 @@ src/minigames/d_mg_trmpln2_mario.cpp:
     .text start:0x020c8dd4 end:0x020cd744
     .data start:0x0213b11c end:0x0213b13c
     .bss start:0x021405d0 end:0x02140620
+src/data/merge/bss_02140818.c:
+    complete
+    .bss start:0x02140818 end:0x0214081c
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018

@@ -204,4 +204,5 @@ void Puff_DrawAll(void){
 
 extern "C" {
 extern int data_ov006_021405b4;
+unsigned int data_ov006_0213b0f0[1] = {3};
 }

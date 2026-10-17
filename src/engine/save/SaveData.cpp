@@ -412,3 +412,7 @@ void SaveData::SetCoinRecordIfHigher(s8 courseID, u8 coins)
     if (coins > data_0209cad2[courseID])
         data_0209cad2[courseID] = coins;
 }
+
+extern "C" {
+int data_0209caa0[5];
+}

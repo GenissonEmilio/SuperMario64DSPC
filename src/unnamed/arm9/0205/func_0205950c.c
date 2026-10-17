@@ -8,7 +8,7 @@ extern void _ZN4CP1510DisableMPUEv(void);
 
 typedef void (*MPUFunc)(u32*, u32);
 extern MPUFunc data_020a63a0;
-extern u32 data_020a63a4;
+extern extern u32 data_020a63a4;
 extern u32 data_020a63ac;
 
 void func_0205950c(void)
@@ -32,3 +32,5 @@ void func_0205950c(void)
     }
     _ZN4CP1510DisableMPUEv();
 }
+
+u32 data_020a63a4;

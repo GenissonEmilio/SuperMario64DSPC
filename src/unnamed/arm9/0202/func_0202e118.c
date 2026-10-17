@@ -15,3 +15,4 @@ void* func_0202e118(void){
 }
 
 short data_0209f4a0[1];
+extern unsigned int data_0209f260[1];

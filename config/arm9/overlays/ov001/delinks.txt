@@ -9,6 +9,9 @@ src/data/park/bss_020ad620.c:
 src/data/merge/bss_020ad624.c:
     complete
     .bss start:0x020ad624 end:0x020ad628
+src/data/merge/bss_020ad628.c:
+    complete
+    .bss start:0x020ad628 end:0x020ad62c
 src/data/ov001/data_ov001_020ad634.c:
     complete
     .bss start:0x020ad634 end:0x020ad640

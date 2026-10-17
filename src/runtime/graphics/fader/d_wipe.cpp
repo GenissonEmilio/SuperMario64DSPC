@@ -623,3 +623,7 @@ int dWipe_c::func_0202ec9c(int arg)
     unk_028 = 0;
     return 0;
 }
+
+extern "C" {
+unsigned int data_0209f29c[1];
+}

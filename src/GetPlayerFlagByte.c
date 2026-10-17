@@ -10,3 +10,4 @@ unsigned char GetPlayerFlagByte(int i, int p) {
 }
 
 extern int data_020a0f90;
+extern unsigned char data_020a1160[2];

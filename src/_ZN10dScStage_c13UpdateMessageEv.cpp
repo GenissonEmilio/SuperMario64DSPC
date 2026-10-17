@@ -60,3 +60,5 @@ void dScStage_c::UpdateMessage() {
         Message::DisplaySaving(0x296);
     }
 }
+
+u8 data_0209d67c;

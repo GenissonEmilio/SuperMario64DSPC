@@ -99,3 +99,5 @@ void func_02031428(void)
 
     data_0209fc70 = data_0209fc70 + 3;
 }
+
+extern u32 data_0209fd5c[314];

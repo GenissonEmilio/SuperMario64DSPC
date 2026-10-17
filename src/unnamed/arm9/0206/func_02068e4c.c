@@ -98,3 +98,5 @@ int func_02068e4c(int a0, u16 *a1, int a2, int a3, u16 a4, int a5)
   *((u16 *) (base2 + 0x1316)) = 1;
   return 0;
 }
+
+int data_020a9db4;
