@@ -342,6 +342,10 @@ src/game/actors/d_a_obj_fl_fall_block.cpp:
     .data start:0x0211427c end:0x02114288
     .bss start:0x02114640 end:0x02114668
 
+src/data/ov022/rodata_02112950.c:
+    complete
+    .rodata start:0x02112950 end:0x02112954
+
 src/data/ov022/rodata_02112954.c:
     complete
     .rodata start:0x02112954 end:0x02112958
