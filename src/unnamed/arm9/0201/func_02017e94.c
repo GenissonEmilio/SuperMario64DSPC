@@ -27,3 +27,12 @@ void func_02017e94(int key)
     if (func_0203d7b8() != 0) return;
     func_02017fd0(rgn);
 }
+
+/* arm9-data-run 0x0208EC88 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_0208ec9c[5] ;
+extern unsigned int data_0208ec88[5] ;
+extern unsigned int data_0208ecb0[5] ;
+#pragma pop
+/* end arm9-data-run 0x0208EC88 */

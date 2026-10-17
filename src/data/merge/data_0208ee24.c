@@ -1,0 +1,3 @@
+unsigned int _ZTSN8dGraph_c10callback_cE[6] = {
+    0x4764384E, 0x68706172, 0x3031635F, 0x6C6C6163, 0x6B636162, 0x0045635F,
+};

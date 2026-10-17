@@ -124,3 +124,21 @@ bool ApproachLinear(short &x, short target, short step)
     }
     return false;
 }
+
+/* arm9-data-run 0x02099468 data */
+#pragma push
+#pragma explicit_zero_data on
+extern "C" {
+unsigned int _ZTI14dBgW_KcMbgSclY[3] = {
+    0x0209A764, 0x02099474, 0x02099410,
+};
+unsigned int _ZTS14dBgW_KcMbgSclY[7] = {
+    0x42643431, 0x4B5F5767, 0x67624D63, 0x596C6353, 0x00000000, 0x00000000, 0x02099468,
+};
+unsigned int _ZTV14dBgW_KcMbgSclY[15] = {
+    0x0203AB68, 0x0203AB3C, 0x0203AA0C, 0x01FFD920, 0x0203A4DC, 0x02039E60, 0x0203A8FC, 0x0203A594,
+    0x0203A660, 0x02039438, 0x02039930, 0x02039924, 0x02039908, 0x00000000, 0x020992E4,
+};
+}
+#pragma pop
+/* end arm9-data-run 0x02099468 */

@@ -65,3 +65,10 @@ void LoadOverlay(int id)
   FS_LoadOverlay(0, id);
   func_0203d7b8();
 }
+
+/* arm9-data-run 0x0208F021 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned char data_0208f021[83] ;
+#pragma pop
+/* end arm9-data-run 0x0208F021 */

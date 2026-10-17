@@ -48,3 +48,10 @@ void func_02030ca0(void) {
         data_0209fc68 = 4;
     func_02020214(mask);
 }
+
+/* arm9-data-run 0x02097FD4 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02097fd4[144] ;
+#pragma pop
+/* end arm9-data-run 0x02097FD4 */

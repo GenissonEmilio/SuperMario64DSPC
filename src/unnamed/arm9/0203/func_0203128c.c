@@ -60,3 +60,11 @@ void func_0203128c(void){
     break;
   }
 }
+
+/* arm9-data-run 0x02099068 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02099068[36] ;
+extern unsigned int data_020990f8[50] ;
+#pragma pop
+/* end arm9-data-run 0x02099068 */

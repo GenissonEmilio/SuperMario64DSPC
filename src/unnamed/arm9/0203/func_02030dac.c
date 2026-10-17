@@ -28,3 +28,11 @@ void func_02030dac(void)
     }
     data_0209fc50 = (u8)n;
 }
+
+/* arm9-data-run 0x02098214 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02098214[138] ;
+extern unsigned int data_0209843c[169] ;
+#pragma pop
+/* end arm9-data-run 0x02098214 */

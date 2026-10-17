@@ -7,3 +7,12 @@ void func_0201473c(void *arg0, u32 fmtAddr, u32 val)
     func_0206e3dc(data_0209cde8, 0x100, fmtAddr, val);
     nds_print(arg0, data_0209cde8);
 }
+
+/* arm9-data-run 0x0208E6EC data */
+#pragma push
+#pragma explicit_zero_data on
+unsigned int data_0208e6ec[6] = {
+    0x020150A8, 0x0201507C, 0x00000000, 0x00000000, 0x00000000, 0x0208E680,
+};
+#pragma pop
+/* end arm9-data-run 0x0208E6EC */

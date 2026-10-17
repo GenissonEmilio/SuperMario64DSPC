@@ -24,3 +24,14 @@ void func_020458a8(struct Matrix3x3_Vecs* dst, struct Matrix3x3_Vecs* src)
     NormalizeVec3(&dst->v1, &src->v1);
     NormalizeVec3(&dst->v2, &src->v2);
 }
+
+/* arm9-data-run 0x0209A414 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned char data_0209a414[4] ;
+extern unsigned char data_0209a418[4] ;
+extern unsigned char data_0209a41c[8] ;
+extern unsigned char data_0209a424[8] ;
+extern unsigned char data_0209a42c[12] ;
+#pragma pop
+/* end arm9-data-run 0x0209A414 */

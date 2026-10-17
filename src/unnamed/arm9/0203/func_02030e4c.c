@@ -44,3 +44,11 @@ end:
         fn();
     return 1;
 }
+
+/* arm9-data-run 0x020986E0 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_020986e0[142] ;
+extern unsigned int data_02098918[144] ;
+#pragma pop
+/* end arm9-data-run 0x020986E0 */

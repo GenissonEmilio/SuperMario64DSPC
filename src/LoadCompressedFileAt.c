@@ -18,3 +18,12 @@ u32 LoadCompressedFileAt(u16 fileID, void *target)
     Deallocate(src);
     return size;
 }
+
+/* arm9-data-run 0x0208F278 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_0208f278[9] ;
+extern unsigned int data_0208f29c[13] ;
+extern unsigned int data_0208f2d0[13] ;
+#pragma pop
+/* end arm9-data-run 0x0208F278 */

@@ -1,0 +1,3 @@
+unsigned int _ZTS11dExtModel_c[6] = {
+    0x45643131, 0x6F4D7478, 0x5F6C6564, 0x00000063, 0x00000000, 0x0208E74C,
+};

@@ -16,3 +16,13 @@ void func_0203ccd4(int *m, short angle)
     m[0] = nx;
     m[2] = nz;
 }
+
+/* arm9-data-run 0x02099F28 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02099f38[2] ;
+extern unsigned int data_02099f30[2] ;
+extern unsigned int data_02099f28[2] ;
+extern unsigned int data_02099f40[2] ;
+#pragma pop
+/* end arm9-data-run 0x02099F28 */

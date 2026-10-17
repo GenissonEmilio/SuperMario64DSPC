@@ -13,3 +13,10 @@ void func_0203cd80(int *m, short angle)
     m[1] = o1;
     m[2] = o2;
 }
+
+/* arm9-data-run 0x02099F58 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02099f58[2] ;
+#pragma pop
+/* end arm9-data-run 0x02099F58 */

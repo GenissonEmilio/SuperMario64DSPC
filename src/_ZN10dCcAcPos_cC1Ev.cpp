@@ -12,3 +12,20 @@
 dCcAcPos_c::dCcAcPos_c()
 {
 }
+
+/* arm9-data-run 0x0208E74C data */
+#pragma push
+#pragma explicit_zero_data on
+extern "C" {
+unsigned int _ZTI15dExtAnmTexPat_c[3] = {
+    0x0209A764, 0x0208E824, 0x0208E744,
+};
+unsigned int _ZTI15dExtAnmTexSRT_c[3] = {
+    0x0209A764, 0x0208E810, 0x0208E744,
+};
+unsigned int _ZTI17dExtAnmMaterial_c[3] = {
+    0x0209A764, 0x0208E8D8, 0x0208E744,
+};
+}
+#pragma pop
+/* end arm9-data-run 0x0208E74C */

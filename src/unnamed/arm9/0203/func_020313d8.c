@@ -27,3 +27,9 @@ void func_020313d8(void) {
 }
 
 extern unsigned int data_0209fca4[1];
+/* arm9-data-run 0x020991C8 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int _ZTI5dBgCh[4] ;
+#pragma pop
+/* end arm9-data-run 0x020991C8 */

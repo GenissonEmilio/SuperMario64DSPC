@@ -31,3 +31,10 @@ void func_02030aa4(int arg)
     data_0209fc54 = 0;
     data_0209f1d8 = 1;
 }
+
+/* arm9-data-run 0x020975D4 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_020975d4[223] ;
+#pragma pop
+/* end arm9-data-run 0x020975D4 */

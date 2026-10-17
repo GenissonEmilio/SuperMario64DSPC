@@ -29,3 +29,10 @@ void func_02017fd0(CodeRegion *rgn)
     fillVal = 0xe6000010;
     MultiStore_Int(fillVal, ptr, len);
 }
+
+/* arm9-data-run 0x0208EE24 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int _ZTSN8dGraph_c10callback_cE[6] ;
+#pragma pop
+/* end arm9-data-run 0x0208EE24 */

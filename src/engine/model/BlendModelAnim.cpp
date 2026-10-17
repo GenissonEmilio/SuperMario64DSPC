@@ -147,3 +147,20 @@ extern "C" void _ZN14BlendModelAnim7SetAnimER8BCA_Fileii5Fix12IiEt(
         }
     }
 }
+
+/* arm9-data-run 0x0208E8C4 data */
+#pragma push
+#pragma explicit_zero_data on
+extern "C" {
+unsigned int _ZTS17dExtAnmMaterial_c[5] = {
+    0x45643731, 0x6E417478, 0x74614D6D, 0x61697265, 0x00635F6C,
+};
+unsigned int _ZTS17dExtSimpleModel_c[5] = {
+    0x45643731, 0x69537478, 0x656C706D, 0x65646F4D, 0x00635F6C,
+};
+unsigned int _ZTS19dExtBlendAnmModel_c[8] = {
+    0x45643931, 0x6C427478, 0x41646E65, 0x6F4D6D6E, 0x5F6C6564, 0x00000063, 0x00000000, 0x0208E794,
+};
+}
+#pragma pop
+/* end arm9-data-run 0x0208E8C4 */

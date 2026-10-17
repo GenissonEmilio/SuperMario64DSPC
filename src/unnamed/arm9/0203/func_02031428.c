@@ -102,3 +102,11 @@ void func_02031428(void)
 }
 
 extern u32 data_0209fd5c[314];
+/* arm9-data-run 0x020991D8 data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int _ZTV5dBgCh[2] ;
+extern unsigned int _ZTI10dBgCh_Actr[3] = {
+    0x0209A764, 0x020991EC, 0x020991C8,
+#pragma pop
+/* end arm9-data-run 0x020991D8 */

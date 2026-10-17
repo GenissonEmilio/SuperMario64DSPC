@@ -17,3 +17,10 @@ void func_0203cc28(int *p, int angle)
     p[0] = FX_MUL(s, x) - FX_MUL(c, z);
     p[1] = FX_MUL(c, x) + FX_MUL(s, z);
 }
+
+/* arm9-data-run 0x02099EDC data */
+#pragma push
+#pragma explicit_zero_data on
+extern unsigned int data_02099edc[18] ;
+#pragma pop
+/* end arm9-data-run 0x02099EDC */
