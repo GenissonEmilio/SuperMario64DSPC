@@ -316,6 +316,10 @@ src/game/actors/d_a_slide_box.cpp:
     .init start:0x02113a50 end:0x02113abc
     .ctor start:0x02113acc end:0x02113ad0
     .bss start:0x02114e6c end:0x02114e94
+src/data/ov016/rodata_0211354c.c:
+    complete
+    .rodata start:0x0211354c end:0x02113550
+
 src/data/ov016/rodata_02113550.c:
     complete
     .rodata start:0x02113550 end:0x02113554
