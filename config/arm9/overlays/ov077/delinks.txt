@@ -12,9 +12,137 @@ src/game/actors/d_a_jgm.cpp:
     .ctor start:0x021277cc end:0x021277d0
     .bss start:0x02127b20 end:0x02127c14
 
+src/data/ov077/bss_02127c14.c:
+    complete
+    .bss start:0x02127c14 end:0x02127c1c
+
+src/data/ov077/bss_02127c28.c:
+    complete
+    .bss start:0x02127c28 end:0x02127c88
+
 src/game/actors/d_a_tgz.cpp:
     complete
     .text start:0x02124b64 end:0x0212624c
+
+src/data/ov077/data_021277e0.c:
+    complete
+    .data start:0x021277e0 end:0x021277e8
+
+src/data/ov077/data_021277e8.c:
+    complete
+    .data start:0x021277e8 end:0x021277f0
+
+src/data/ov077/data_021277f0.c:
+    complete
+    .data start:0x021277f0 end:0x021277f8
+
+src/data/ov077/data_021277f8.c:
+    complete
+    .data start:0x021277f8 end:0x02127800
+
+src/data/ov077/data_02127800.c:
+    complete
+    .data start:0x02127800 end:0x02127808
+
+src/data/ov077/data_02127808.c:
+    complete
+    .data start:0x02127808 end:0x02127810
+
+src/data/ov077/data_02127810.c:
+    complete
+    .data start:0x02127810 end:0x02127818
+
+src/data/ov077/data_02127818.c:
+    complete
+    .data start:0x02127818 end:0x02127820
+
+src/data/ov077/data_02127820.c:
+    complete
+    .data start:0x02127820 end:0x02127828
+
+src/data/ov077/data_02127828.c:
+    complete
+    .data start:0x02127828 end:0x02127830
+
+src/data/ov077/data_02127830.c:
+    complete
+    .data start:0x02127830 end:0x0212783c
+
+src/data/ov077/data_0212783c.c:
+    complete
+    .data start:0x0212783c end:0x02127848
+
+src/data/ov077/data_02127848.c:
+    complete
+    .data start:0x02127848 end:0x0212786c
+
+src/data/ov077/data_0212786c.c:
+    complete
+    .data start:0x0212786c end:0x021278e8
+
+src/data/ov077/data_021278e8.c:
+    complete
+    .data start:0x021278e8 end:0x021278f0
+
+src/data/ov077/data_021278f0.c:
+    complete
+    .data start:0x021278f0 end:0x021278f8
+
+src/data/ov077/data_021278f8.c:
+    complete
+    .data start:0x021278f8 end:0x02127900
+
+src/data/ov077/data_02127900.c:
+    complete
+    .data start:0x02127900 end:0x02127908
+
+src/data/ov077/data_02127908.c:
+    complete
+    .data start:0x02127908 end:0x02127910
+
+src/data/ov077/data_02127910.c:
+    complete
+    .data start:0x02127910 end:0x02127918
+
+src/data/ov077/data_02127918.c:
+    complete
+    .data start:0x02127918 end:0x02127920
+
+src/data/ov077/data_02127920.c:
+    complete
+    .data start:0x02127920 end:0x02127928
+
+src/data/ov077/data_02127928.c:
+    complete
+    .data start:0x02127928 end:0x02127930
+
+src/data/ov077/data_02127930.c:
+    complete
+    .data start:0x02127930 end:0x02127938
+
+src/data/ov077/data_02127938.c:
+    complete
+    .data start:0x02127938 end:0x02127940
+
+src/data/ov077/data_02127940.c:
+    complete
+    .data start:0x02127940 end:0x02127948
+
+src/data/ov077/data_02127948.c:
+    complete
+    .data start:0x02127948 end:0x02127954
+
+src/data/ov077/data_02127954.c:
+    complete
+    .data start:0x02127954 end:0x02127960
+
+src/data/ov077/data_02127960.c:
+    complete
+    .data start:0x02127960 end:0x02127984
+
+src/data/ov077/data_02127984.c:
+    complete
+    .data start:0x02127984 end:0x02127a00
 
 src/game/actors/d_a_popoi.cpp:
     complete
@@ -23,6 +151,18 @@ src/game/actors/d_a_popoi.cpp:
     .ctor start:0x021277d4 end:0x021277d8
     .data start:0x02127a00 end:0x02127a68
     .bss start:0x02127c88 end:0x02127d40
+
+src/data/ov077/data_02127a68.c:
+    complete
+    .data start:0x02127a68 end:0x02127a74
+
+src/data/ov077/data_02127a74.c:
+    complete
+    .data start:0x02127a74 end:0x02127a98
+
+src/data/ov077/data_02127a98.c:
+    complete
+    .data start:0x02127a98 end:0x02127b20
 
 src/unnamed/ov077/__sinit_ov077_0212749c.c:
     complete
