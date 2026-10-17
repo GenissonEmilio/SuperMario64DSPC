@@ -18,6 +18,10 @@ src/game/actors/d_a_obj_tt_water.cpp:
     .ctor start:0x02111ac4 end:0x02111ac8
     .bss start:0x021124e8 end:0x02112510
 
+src/data/ov033/rodata_021116c8.c:
+    complete
+    .rodata start:0x021116c8 end:0x021116d0
+
 src/data/ov033/rodata_021116d0.c:
     complete
     .rodata start:0x021116d0 end:0x021116d4
