@@ -312,7 +312,6 @@ src/unnamed/ov002/func_ov002_020f02c8.c:
 src/unnamed/ov002/func_ov002_020f030c.c:
     complete
     .text start:0x020f030c end:0x020f035c
-    .bss start:0x0210d9a8 end:0x0210d9b0
 
 src/unnamed/ov002/func_ov002_020f035c.c:
     complete
@@ -403,7 +402,7 @@ src/game/actors/d_a_propeller_heyho_fire.cpp:
 src/unnamed/ov002/__sinit_ov002_02100560.c:
     complete
     .init start:0x02100560 end:0x02100938
-    .bss start:0x0210d9d8 end:0x0210d9e0
+    .bss start:0x0210d9a8 end:0x0210d9e0
 
 
 src/unnamed/ov002/__sinit_ov002_02100f84.c:

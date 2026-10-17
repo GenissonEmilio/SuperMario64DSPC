@@ -514,7 +514,7 @@ src/unnamed/arm9/0200/func_0200eec8.c:
 src/StartIntroCutscene.c:
     complete
     .text start:0x0200eedc end:0x0200ef04
-    .bss start:0x0209b2fc end:0x0209b2fd
+    .bss start:0x0209b2fc end:0x0209b300
 
 src/RunKuppaScript.c:
     complete
@@ -604,7 +604,7 @@ src/_ZN8dActor_cC2Ev.cpp:
 src/engine/sound/Sound.cpp:
     complete
     .text start:0x02011654 end:0x02013548
-    .bss start:0x0209b480 end:0x0209b481
+    .bss start:0x0209b480 end:0x0209b484
 
 src/GetLevelPart.c:
     complete
@@ -1247,7 +1247,7 @@ src/unnamed/arm9/0201/func_02019a58.c:
 src/unnamed/arm9/0201/func_02019ac4.c:
     complete
     .text start:0x02019ac4 end:0x02019dfc
-    .bss start:0x0209d4f4 end:0x0209d4f5
+    .bss start:0x0209d4f4 end:0x0209d4f8
 
 src/unnamed/arm9/0201/func_02019dfc.c:
     complete
@@ -1622,7 +1622,7 @@ src/runtime/graphics/fader/d_wipe.cpp:
     complete
     .text start:0x0202ec9c end:0x0202fc98
     .data start:0x020926d0 end:0x02092718
-    .bss start:0x0209f5f8 end:0x0209f5f9
+    .bss start:0x0209f5f8 end:0x0209f5fc
 
 src/engine/view/d_view.cpp:
     complete
@@ -1662,7 +1662,7 @@ src/unnamed/arm9/0203/func_02030500.c:
 src/unnamed/arm9/0203/func_02030790.c:
     complete
     .text start:0x02030790 end:0x02030838
-    .data start:0x02092778 end:0x02092779
+    .data start:0x02092778 end:0x0209277c
 
 src/unnamed/arm9/0203/func_02030838.c:
     complete
@@ -1733,12 +1733,12 @@ src/unnamed/arm9/0203/func_02030e4c.c:
 src/unnamed/arm9/0203/func_02030fa8.c:
     complete
     .text start:0x02030fa8 end:0x02031028
-    .bss start:0x0209fc84 end:0x0209fc85
+    .bss start:0x0209fc84 end:0x0209fc88
 
 src/unnamed/arm9/0203/func_02031028.c:
     complete
     .text start:0x02031028 end:0x02031154
-    .bss start:0x0209fcb0 end:0x0209fcb1
+    .bss start:0x0209fcb0 end:0x0209fcb4
 
 src/unnamed/arm9/0203/func_02031154.c:
     complete
@@ -2232,12 +2232,12 @@ src/unnamed/arm9/0203/func_0203d7b8.c:
 src/unnamed/arm9/0203/func_0203d7d4.c:
     complete
     .text start:0x0203d7d4 end:0x0203d81c
-    .bss start:0x020a0f00 end:0x020a0f01
+    .bss start:0x020a0f00 end:0x020a0f04
 
 src/unnamed/arm9/0203/func_0203d81c.c:
     complete
     .text start:0x0203d81c end:0x0203d854
-    .bss start:0x020a0f18 end:0x020a0f1a
+    .bss start:0x020a0f18 end:0x020a0f1c
 
 src/unnamed/arm9/0203/func_0203d854.c:
     complete
@@ -3256,7 +3256,7 @@ src/unnamed/arm9/0205/func_02053d9c.c:
 src/engine/gx/GX_VramCnt.cpp:
     complete
     .text start:0x02053e1c end:0x02054d38
-    .bss start:0x020a6088 end:0x020a60a2
+    .bss start:0x020a6088 end:0x020a60a4
 
 src/engine/gx/G2.cpp:
     complete

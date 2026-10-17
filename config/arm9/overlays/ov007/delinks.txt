@@ -590,6 +590,7 @@ src/unnamed/ov007/func_ov007_020b7764.cpp:
 src/unnamed/ov007/func_ov007_020b77ac.c:
     complete
     .text start:0x020b77ac end:0x020b782c
+    .bss start:0x02103438 end:0x0210343c
 
 src/unnamed/ov007/func_ov007_020b782c.c:
     complete
@@ -603,7 +604,6 @@ src/unnamed/ov007/func_ov007_020b78d0.c:
 src/unnamed/ov007/func_ov007_020b7914.c:
     complete
     .text start:0x020b7914 end:0x020b7948
-    .bss start:0x02103438 end:0x0210343c
 
 src/unnamed/ov007/func_ov007_020b7948.c:
     complete
@@ -668,6 +668,7 @@ src/unnamed/ov007/func_ov007_020b8500.c:
 src/unnamed/ov007/func_ov007_020b850c.c:
     complete
     .text start:0x020b850c end:0x020b8548
+    .bss start:0x0210346c end:0x02103470
 
 src/unnamed/ov007/func_ov007_020b8548.c:
     complete
@@ -681,7 +682,6 @@ src/unnamed/ov007/func_ov007_020b8690.c:
 src/unnamed/ov007/func_ov007_020b8714.c:
     complete
     .text start:0x020b8714 end:0x020b883c
-    .bss start:0x0210346c end:0x02103470
 
 src/unnamed/ov007/func_ov007_020b883c.c:
     complete

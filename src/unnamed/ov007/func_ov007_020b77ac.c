@@ -7,7 +7,7 @@ extern void func_0204a028(int a, void *fn);
 
 extern int data_ov007_02103440;
 extern int data_ov007_0210343c;
-extern int data_ov007_02103438;
+int data_ov007_02103438;
 extern int data_ov007_02103434;
 extern int data_ov007_0210344c;
 

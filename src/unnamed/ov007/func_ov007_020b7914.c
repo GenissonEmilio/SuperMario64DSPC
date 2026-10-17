@@ -1,5 +1,4 @@
 extern int data_ov007_02103438;
-int data_ov007_02103438;
 
 extern int data_ov007_02103434;
 int func_ov007_020b7914(int x,int cond){
