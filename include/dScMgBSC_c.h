@@ -153,17 +153,17 @@ struct dScMgBSC_c : dScMgSingle3DBase_c {
     };
 
     dMgBSCSharedState_c mShared; /* 0x4f38..0x51a8 */
-    CardPos mCardPos
-        [2];    /* 0x51a8 -- ctor __cxa_vec_ctor via func_0203d738, dtor NullDestructor_0203d47c */
-    s32 mState; /* 0x51b8 -- index into sBSCStateTable */
-    s32 mStateTimer;  /* 0x51bc */
-    s32 mChosenCard;  /* 0x51c0 */
-    s32 mOtherCard;   /* 0x51c4 */
-    s16 mCardsDealt;  /* 0x51c8 -- counter incremented by the dealer animation */
-    u8 mCardValue[2]; /* 0x51ca */
-    u8 mCardFrame[2]; /* 0x51cc */
-    u8 mRevealTick;   /* 0x51ce -- advances the card frame every four ticks */
-    u8 pad_51cf[1];   /* 0x51cf */
+    /* ctor __cxa_vec_ctor via func_0203d738, dtor NullDestructor_0203d47c */
+    CardPos mCardPos[2]; /* 0x51a8 */
+    s32 mState;          /* 0x51b8 -- index into sBSCStateTable */
+    s32 mStateTimer;     /* 0x51bc */
+    s32 mChosenCard;     /* 0x51c0 */
+    s32 mOtherCard;      /* 0x51c4 */
+    s16 mCardsDealt;     /* 0x51c8 -- counter incremented by the dealer animation */
+    u8 mCardValue[2];    /* 0x51ca */
+    u8 mCardFrame[2];    /* 0x51cc */
+    u8 mRevealTick;      /* 0x51ce -- advances the card frame every four ticks */
+    u8 pad_51cf[1];      /* 0x51cf */
 };
 
 #ifndef SM64DS_PLATFORM_PC

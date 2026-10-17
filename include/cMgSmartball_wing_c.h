@@ -38,9 +38,8 @@
  * now declares all three as u8, because migrating cMgSmartball_board_c
  * showed the region has no single type -- three children read the same three
  * bytes three incompatible ways, and this class's signed 16-bit angle at
- * 0x32-0x33 is one of them. The explicit `(char*)this + 0x32` cast stays for
- * exactly that reason: it states this reader's view without asserting it is
- * the region's type.
+ * 0x32-0x33 is one of them. A signed cast from the base's unk_032 byte
+ * states this reader's view without asserting it is the region's type.
  *
  * RebuildVerts stores eight collision vertices at 0x48..0x87. The first
  * four form one wing and the last four its mirror; HitTest splits each
@@ -60,6 +59,12 @@ struct cMgSmartball_wing_c : cMgSmartball_object_c {
        angle at its 0x3000 limit); Trigger is the piranha's feed bump;
        RebuildVerts rewrites the 0x48..0x87 fan from the 0x32 angle;
        HitTest is the ball-vs-wing collision routine. */
+    /* This reader interprets the existing two bytes as a signed wing angle.
+       The base keeps byte storage because other children use different views. */
+    s16 GetAngle() const {
+        return *(const s16 *)&unk_032;
+    }
+
     int IsSettled();
     void Trigger();
     void RebuildVerts();
@@ -86,6 +91,8 @@ struct cMgSmartball_wing_c : cMgSmartball_object_c {
 
 #ifndef SM64DS_PLATFORM_PC
 /* ROM layout under mwccarm; host ABI divergence is tracked separately. */
+typedef char cMgSmartball_wing_CollisionVertex_size_must_be_0x8
+    [sizeof(cMgSmartball_wing_c::CollisionVertex) == 0x8 ? 1 : -1];
 typedef char cMgSmartball_wing_c_size_must_be_0x88[sizeof(cMgSmartball_wing_c) == 0x88 ? 1 : -1];
 #endif
 
