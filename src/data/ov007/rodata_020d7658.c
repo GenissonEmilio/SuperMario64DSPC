@@ -1,0 +1,19 @@
+/* .rodata 0x020d7658..0x020d76a0 */
+#pragma define_section forcerodata ".rodata" ".rodata" ".rodata" data_mode=far_abs
+#pragma section forcerodata begin
+unsigned char data_ov007_020d766c[20] = {
+    0, 0, 0, 0, 208, 255, 255, 255, 240, 255, 255, 255,
+    48, 0, 0, 0, 16, 0, 0, 0
+};
+
+unsigned char data_ov007_020d7658[20] = {
+    0, 0, 0, 0, 216, 255, 255, 255, 240, 255, 255, 255,
+    40, 0, 0, 0, 16, 0, 0, 0
+};
+
+unsigned char data_ov007_020d7680[32] = {
+    0, 0, 128, 0, 168, 0, 0, 0, 48, 0, 0, 0,
+    38, 0, 168, 0, 176, 255, 0, 0, 0, 0, 219, 0,
+    168, 0, 80, 0, 0, 0, 0, 0
+};
+#pragma section forcerodata end
