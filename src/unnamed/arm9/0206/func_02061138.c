@@ -14,3 +14,5 @@ void func_02061138(void)
     _ZN3IRQ10EnableIRQsEj(0x100000);
     _ZN3IRQ7RestoreEj(state);
 }
+
+extern unsigned char data_020a8180[60];

@@ -6,3 +6,5 @@ int func_0203d7d4(int arg){
   b = (*(volatile unsigned short*)0x27ffc40 == 2);
   return b != 0;
 }
+
+extern unsigned char data_020a0f00;

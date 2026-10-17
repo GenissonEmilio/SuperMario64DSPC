@@ -32,7 +32,7 @@ typedef struct {
 
 extern struct Arr *data_020a9ec0[2];
 extern const char data_020868fc;
-extern const char data_0208690c;
+extern const unsigned char data_0208690c[32] ;
 extern const char data_0208692c;
 const char data_0208698c = 0x70;
 extern const char data_0208696c;
@@ -111,7 +111,7 @@ int func_0206d32c(int type, u32 addr, u32 lma, u32 size) {
         } else if (ea <= addr) {
             if (vma64 < (unsigned long long)(u32)ea + (u32)table->elems[i].c) {
                 if (!(ea <= addr)) {
-                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12e, &data_0208690c, 1);
+                    _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12e, (const char *)data_0208690c, 1);
                 }
                 if (!((unsigned long long)(u32)table->elems[i].a + (u32)table->elems[i].c > vma64)) {
                     _ZN4cstd8__assertEPKcS1_S1_i(&data_020868fc, (const char *)0x12f, &data_0208692c, 1);

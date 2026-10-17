@@ -17,7 +17,8 @@ extern void SharedFilePtr_Destruct_Anim(void);
 
 extern char data_ov084_02130dfc[];
 extern char data_ov084_02130e44[];
-extern char data_ov084_02130e14[];
+char data_ov084_02130e14[8];
+
 extern char data_ov084_02130e50[];
 extern char data_ov084_02130e24[];
 extern char data_ov084_02130e68[];

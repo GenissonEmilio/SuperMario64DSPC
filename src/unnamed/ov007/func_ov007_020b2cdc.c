@@ -13,3 +13,4 @@ extern int *data_ov007_02103360;
 int func_ov007_020b2cdc(void) { return data_ov007_02103360[0]; }
 
 extern const unsigned int data_ov007_020d77dc[1] ;
+extern const unsigned char data_ov007_020d7a5c[12] ;

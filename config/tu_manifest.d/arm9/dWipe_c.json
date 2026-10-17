@@ -27,6 +27,11 @@
       "name": ".bss",
       "start": "0x0209f648",
       "end": "0x0209fc48"
+    },
+    {
+      "name": ".bss",
+      "start": "0x0209f5f8",
+      "end": "0x0209f5f9"
     }
   ],
   "functions": [

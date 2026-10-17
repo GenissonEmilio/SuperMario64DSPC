@@ -27,3 +27,5 @@ s32 func_02030fa8(void)
         return 0;
     }
 }
+
+extern unsigned char data_0209fc84;

@@ -70,6 +70,9 @@ src/minigames/d_mg_trmpln2_mario.cpp:
 src/data/merge/bss_02140818.c:
     complete
     .bss start:0x02140818 end:0x0214081c
+src/data/merge/bss_02140828.c:
+    complete
+    .bss start:0x02140828 end:0x0214082c
 src/minigames/unit020cd744.cpp:
     complete
     .text start:0x020cd744 end:0x020d1018

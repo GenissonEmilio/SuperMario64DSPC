@@ -50,6 +50,7 @@
 #include "Particle__System.h"
 
 extern "C" {
+Particle::SysTracker *data_0209ee74;
 void func_0203cbc0(void *p);
 void func_02049ee8(void* manager, void* renderState);
 void DecompressLZ16(const void* src, void* dst);

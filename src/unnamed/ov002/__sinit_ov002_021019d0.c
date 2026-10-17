@@ -762,7 +762,8 @@ extern char data_ov002_0210eb98[];
 extern char data_ov002_0210eba0[];
 extern char data_ov002_0210eba8[];
 extern char data_ov002_0210ebb0[];
-extern struct SharedFilePtr data_ov002_0210ebb8;
+extern unsigned char data_ov002_0210ebb8[0x8];
+
 extern char data_ov002_0210ebc0[];
 extern char data_ov002_0210ebc8[];
 extern char data_ov002_0210ebd0[];

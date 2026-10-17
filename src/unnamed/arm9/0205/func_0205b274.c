@@ -4,6 +4,7 @@ extern int data_020a6488;
 extern int data_020a6498;
 extern void **data_020a64a8[];
 extern void **data_020a6494;
+
 extern void **data_020a6484;
 extern int data_020a64a0;
 

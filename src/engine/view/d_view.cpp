@@ -26,6 +26,10 @@
  */
 #include "dView_c.h"
 
+extern "C" {
+int data_0209fc4c;
+}
+
 void CopyToViewMat(const Matrix4x3 *mat);
 
 // @symbol func_0202fd2c

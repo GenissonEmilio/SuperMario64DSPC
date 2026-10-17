@@ -45,3 +45,11 @@ void __sinit_ov084_02130558(void)
     data_ov084_02130dc4.p4 = data_ov084_021309c4;
     data_ov084_02130dc4.p5 = data_ov084_021309d4;
 }
+
+extern char data_ov084_02130e14[];
+extern char data_ov084_02130e24[];
+extern char data_ov084_02130e0c[];
+extern char data_ov084_02130df4[];
+extern char data_ov084_02130e04[];
+extern char data_ov084_02130e1c[];
+extern const unsigned int data_ov084_021302f4[6] ;

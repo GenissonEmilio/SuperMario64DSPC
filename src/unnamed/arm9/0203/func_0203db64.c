@@ -42,6 +42,7 @@ extern u8 data_020a0f04;
 extern u8 data_020a10fe[];
 extern u8 data_020a10a6[];
 extern u8 data_020a0f00;
+extern int data_020a0f58;
 
 typedef struct {
     u8 unk0;

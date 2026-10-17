@@ -73,3 +73,5 @@ extern u16 *p11c4 ;
         p1154 += 1;
     } while (i < 0x11);
 }
+
+extern unsigned char data_020a0fa0[6];

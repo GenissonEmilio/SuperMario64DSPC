@@ -11,3 +11,5 @@ void func_0206116c(void)
     if (*p & 1)
         *p &= ~1;
 }
+
+extern int data_020a89b0[5];

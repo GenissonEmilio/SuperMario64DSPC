@@ -8,7 +8,8 @@ u8 data_0209fc5c[1];
 
 extern int func_0203d890(void);
 extern u8 data_0209fc5c[];
-extern s8 data_0209fc64[];
+extern s8 data_0209fc64[4];
+
 extern u8 data_0209fc50;
 
 void func_02030dac(void)

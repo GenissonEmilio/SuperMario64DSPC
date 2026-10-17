@@ -2,8 +2,12 @@
 // @symbol _ZN5Model23AddToCommonModelDataArrER8BMD_File
 #include "Model.h"
 extern "C" {
+int data_0209cefc[300];
+
+}
+extern "C" {
 extern int data_0209cef8[];
-extern int data_0209cefc[];
+
 extern int data_0208e738[];
 }
 

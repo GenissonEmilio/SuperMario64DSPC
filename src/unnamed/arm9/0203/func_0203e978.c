@@ -8,3 +8,5 @@ void func_0203e978(short *p)
     data_020a0f28 = *(unsigned short*)(p + 1);
     data_020a0f0c = 1;
 }
+
+extern unsigned char data_020a1164[2];

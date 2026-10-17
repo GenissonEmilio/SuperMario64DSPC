@@ -1,4 +1,4 @@
-unsigned char data_0209f218;
+extern unsigned char data_0209f218;
 static unsigned char data_0209f218_pad[3];
 
 #include "types.h"

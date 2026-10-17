@@ -428,4 +428,5 @@ void dScene_c::SetAndStopColorFader()
 
 extern "C" {
 unsigned int data_0209f280[1];
+unsigned char data_0209f248[4];
 }

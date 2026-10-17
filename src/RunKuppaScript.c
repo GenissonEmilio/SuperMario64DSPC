@@ -2,6 +2,7 @@ extern void *data_0209fc48;
 extern unsigned char data_0209f2d8;
 extern unsigned short data_0209b274;
 extern unsigned int data_0209b454;
+
 extern void ProcessKuppaScript(void);
 
 int RunKuppaScript(void *arg0)

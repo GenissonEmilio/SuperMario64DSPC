@@ -15,7 +15,8 @@ extern char data_020a621c[];
 extern char data_020a613c[];
 void * data_020a612c;
 extern char data_023c0000;
-extern char data_020a6188[];
+extern char data_020a6188[148];
+
 extern void func_02057e34(void);
 extern char data_020a6378[];
 extern u32 func_02057e48(u32 newVal);

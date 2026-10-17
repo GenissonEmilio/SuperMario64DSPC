@@ -13,3 +13,4 @@ void func_0205db78(void *a)
 }
 
 char data_0209a618[4] = "nan";
+extern char data_0209a604[8] ;

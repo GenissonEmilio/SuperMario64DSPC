@@ -25,3 +25,5 @@ const unsigned char data_02082614[256] = {
 };
 #pragma section forcerodata end
 extern unsigned int data_020a0ef0[1];
+extern unsigned char data_02099e20[4] = {
+    0x03, 0x00, 0x00, 0x00

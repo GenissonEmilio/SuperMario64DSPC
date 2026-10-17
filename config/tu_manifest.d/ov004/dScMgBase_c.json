@@ -40,7 +40,7 @@
     {
       "name": ".bss",
       "start": "0x020beb74",
-      "end": "0x020bf3e8"
+      "end": "0x020bf3ec"
     }
   ],
   "functions": [
@@ -1091,7 +1091,7 @@
         {
           "section": ".bss",
           "start": "0x020beb74",
-          "end": "0x020bf3e8",
+          "end": "0x020bf3ec",
           "comparison": "NOBITS -- symbol/module gates"
         }
       ],

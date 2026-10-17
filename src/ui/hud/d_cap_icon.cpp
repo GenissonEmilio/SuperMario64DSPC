@@ -46,7 +46,8 @@ extern int data_0209f3e8[];
 
 extern dCapIcon_c *data_ov001_020ad634[];
 extern u8 data_ov001_020ad630[];
-extern u8 data_ov001_020ad62c[];
+u8 data_ov001_020ad62c[4];
+
 extern u8 data_ov001_020ad628[];
 
 extern u8 data_ov001_020ad624;

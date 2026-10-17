@@ -47,7 +47,8 @@ extern char *func_0206fb08(long num, char *buff_end, print_format format);
 
 extern char data_0209a5fc[]; /* "INF" */
 extern char data_0209a600[]; /* "inf" */
-extern char data_0209a604[]; /* "-NAN" */
+extern char data_0209a604[8];
+ /* "-NAN" */
 extern char data_0209a60c[]; /* "-nan" */
 extern char data_0209a614[]; /* "NAN" */
 extern char data_0209a618[]; /* "nan" */

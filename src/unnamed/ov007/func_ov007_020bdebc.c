@@ -4,6 +4,8 @@ int data_ov007_02104bac;
 
 void func_0204fa2c(int* p, int a);
 
+int data_ov007_02104bb4;
+
 extern int  data_ov007_02104bb4;
 extern int  data_ov007_02104bb0;
 extern int* data_ov007_02104bbc;

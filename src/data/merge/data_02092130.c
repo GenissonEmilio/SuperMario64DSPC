@@ -1,0 +1,3 @@
+unsigned char data_02092130[4] = {
+    0xff, 0xff, 0xff, 0xff
+};

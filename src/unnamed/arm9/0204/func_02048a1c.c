@@ -1,4 +1,6 @@
 #include "types.h"
+extern int data_020a4bec;
+
 extern u32 data_02099fac;
 extern int data_020a4bec;
 int func_02049018(int *p);
