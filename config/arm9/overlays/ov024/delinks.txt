@@ -10,6 +10,10 @@ src/game/actors/d_a_obj_dl_pyramid.cpp:
     .init start:0x02112808 end:0x02112874
     .ctor start:0x02112874 end:0x02112878
     .bss start:0x02113960 end:0x02113988
+src/data/ov024/rodata_021118ac.c:
+    complete
+    .rodata start:0x021118ac end:0x021118b0
+
 src/data/ov024/rodata_021118b0.c:
     complete
     .rodata start:0x021118b0 end:0x021118b4
