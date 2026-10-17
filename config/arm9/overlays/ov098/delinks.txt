@@ -208,6 +208,10 @@ src/data/ov098/rodata_0213bf60.c:
     complete
     .rodata start:0x0213bf60 end:0x0213bf64
 
+src/data/ov098/rodata_0213bf64.c:
+    complete
+    .rodata start:0x0213bf64 end:0x0213bf68
+
 src/data/ov098/rodata_0213bf68.c:
     complete
     .rodata start:0x0213bf68 end:0x0213bf90
