@@ -4237,10 +4237,14 @@ sSoundPopsSprites kind:data(any) addr:0x0213f6f0
 sSoundNotePositions kind:data(any) addr:0x0213f6fc
 _ZTS12dScMgSound_c kind:data(any) addr:0x0213f708
 data_ov006_0213f718 kind:data(any) addr:0x0213f718
+sSoundNotePositions6 kind:data(any) addr:0x0213f718
 sSoundNotesSprites kind:data(any) addr:0x0213f730
 data_ov006_0213f74c kind:data(any) addr:0x0213f74c
+sSoundNotePositions8 kind:data(any) addr:0x0213f74c
 data_ov006_0213f76c kind:data(any) addr:0x0213f76c
+sSoundNotePositions10 kind:data(any) addr:0x0213f76c
 data_ov006_0213f794 kind:data(any) addr:0x0213f794
+sSoundNotePlaybackKinds kind:data(any) addr:0x0213f794
 sSoundNoteSfx kind:data(any) addr:0x0213f7e8
 _ZTV12dScMgSound_c kind:data(any) addr:0x0213f844
 pmf_dScMgTeresa_c_Boo_StateFound kind:data(any) addr:0x0213f8d4
