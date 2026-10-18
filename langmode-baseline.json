@@ -7,7 +7,7 @@
     "extern_vtable_classes": 53,
     "inline_asm": 5,
     "launder_or_forced": 78,
-    "launder_sites": 247
+    "launder_sites": 246
   },
   "exclusions": {
     "by_value_class_param": 53
@@ -41,14 +41,14 @@
       },
       "method": {
         "draft": 0,
-        "migrated": 5514,
+        "migrated": 5525,
         "unmigrated": 59
       }
     },
     "cpp_still_handspelled": 65,
     "mangled_c": 1,
-    "mangled_cpp": 6483,
-    "mangled_total": 6484,
+    "mangled_cpp": 6494,
+    "mangled_total": 6495,
     "nonmatching_drafts": 0,
     "unmigrated_total": 66
   },
