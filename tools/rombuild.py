@@ -60,11 +60,13 @@ import rombuild_check as RBC  # noqa: E402
 import romdata_check as RDC  # noqa: E402
 import layout_check as LAY  # noqa: E402
 import lcf_interior as LI  # noqa: E402
+import linker_alignment as LA  # noqa: E402
 import rombuild_profile as RP  # noqa: E402
 import srcpath as SP  # noqa: E402
 import relocs as RL  # noqa: E402
 import tu_manifest as TUM  # noqa: E402
 import dsd_pin as DSP  # noqa: E402
+import data_section_routes as DSR  # noqa: E402
 
 # Default compiler for the ROM build — same as the matching pin (tools/match.py
 # CANONICAL / notes/rom-build.md). config/rombuild-versions.txt carries per-file
@@ -845,13 +847,17 @@ def intact_tu_policies(enrolled=None, manifest=None):
             continue
         if entry.get("status") != "promoted":
             errors.append(f"{label}: enrolled intact-object entry is not promoted")
-        section_names = {row.get("name") for row in entry.get("sections", [])
-                         if isinstance(row, dict)}
+        section_rows = entry.get("sections", [])
+        if not isinstance(section_rows, list):
+            errors.append(f"{label}: intact-object section claims must be a list")
+            section_rows = []
+        section_names = {row.get("name") for row in section_rows
+                         if isinstance(row, dict) and isinstance(row.get("name"), str)}
         if ".text" not in section_names or not (section_names - {".text"}):
             errors.append(f"{label}: intact-object policy needs .text and non-text claims")
         mapped_sections = [
             f"{row.get('name')} -> {row.get('module_section')}"
-            for row in entry.get("sections", []) if isinstance(row, dict)
+            for row in section_rows if isinstance(row, dict)
             and row.get("module_section", row.get("name")) != row.get("name")]
         if mapped_sections:
             errors.append(f"{label}: intact-object input-section retargeting is not "
@@ -889,7 +895,10 @@ def intact_tu_policies(enrolled=None, manifest=None):
         ranges = linkcheck.get("tuRanges") or []
         expected_ranges = []
         seen_sections = set()
-        for row in entry.get("sections", []):
+        named_routes, routing_errors = DSR.routes(entry)
+        errors.extend(f"{label}: {error}" for error in routing_errors)
+        route_names = {row["name"] for row in named_routes}
+        for row in section_rows:
             try:
                 name = row["name"]
                 start, end = int(row["start"], 16), int(row["end"], 16)
@@ -898,8 +907,11 @@ def intact_tu_policies(enrolled=None, manifest=None):
                 continue
             # Duplicated from tubuild._TU_SECTION_NAMES on purpose: tubuild imports
             # this module, so the dependency cannot run the other way. Widen both.
-            if name not in (".text", ".rodata", ".init", ".ctor", ".data", ".bss",
-                            ".exception", ".exceptix") \
+            if not isinstance(name, str):
+                errors.append(f"{label}: intact-object manifest has an invalid section name")
+                continue
+            if (name not in (".text", ".rodata", ".init", ".ctor", ".data", ".bss",
+                             ".exception", ".exceptix") and name not in route_names) \
                     or start >= end:
                 errors.append(f"{label}: intact-object manifest has unsupported/invalid "
                               f"section claim {name!r}")
@@ -1283,6 +1295,10 @@ def main():
         print("[2/6] dsd lcf")
         run([str(DSD), "lcf", "-c", str(config_yaml)], "dsd lcf")
         report["phases"].append("dsd lcf")
+        try:
+            report["linkerAlignment"] = LA.verify_lcf(BUILD / "arm9.lcf")
+        except ValueError as error:
+            raise BuildError("linker alignment policy", 1, str(error)) from error
 
         # A partitioned TU's delinks name its src_tu/ merged file; widen the allowed
         # source roots so it enrolls like any other complete entry.
