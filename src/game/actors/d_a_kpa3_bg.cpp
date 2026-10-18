@@ -79,7 +79,7 @@ extern int data_0209b3ec;
 
 extern SharedFilePtr *const data_ov060_02119514[10];
 extern SharedFilePtr *const data_ov060_0211953c[10];
-extern CLPS_Block *data_ov060_0211a980[10];
+extern CLPS_Block *data_ov060_0211a980[];
 extern int data_0208e738[];
 
 void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(
@@ -430,9 +430,3 @@ extern "C" CLPS_Block data_ov008_02111720;
 extern "C" CLPS_Block data_ov008_021116a0;
 extern "C" CLPS_Block data_ov008_02111760;
 extern "C" CLPS_Block data_ov008_02111660;
-
-extern "C" CLPS_Block *data_ov060_0211a980[10] = {
-    &data_ov008_021116c0, &data_ov008_02111700, &data_ov008_02111740, &data_ov008_02111640,
-    &data_ov008_02111680, &data_ov008_021116e0, &data_ov008_02111720, &data_ov008_021116a0,
-    &data_ov008_02111760, &data_ov008_02111660,
-};
