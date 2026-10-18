@@ -325,6 +325,28 @@ class TerminalTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.license(configured_symbols=[dict(address=0x2122E3C, size=16)])
 
+    def test_unsized_final_initialized_object_cannot_be_zero_storage(self):
+        rows = [dict(address=0x2122E30, size=0, unknown_initialized_extent=True),
+                dict(address=0x2122E3C, size=0, unknown_initialized_extent=True)]
+        with self.assertRaisesRegex(ValueError, "configured symbol occupies"):
+            self.license(configured_symbols=rows)
+
+    def test_unsized_rtti_bounded_by_explicit_name_is_valid(self):
+        rows = [dict(address=0x2122E30, size=0, unknown_initialized_extent=True),
+                dict(address=0x2122E3C, size=15)]
+        self.assertEqual(self.license(configured_symbols=rows)["linkerFillBytes"], 1)
+
+    def test_census_distinguishes_unknown_from_explicit_zero(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            (root / "symbols.txt").write_text(
+                "unsized kind:data(any) addr:0x02000000\n"
+                "zero kind:data(byte[0]) addr:0x02000004\n"
+                "fixed kind:data(byte[15]) addr:0x02000008\n")
+            _, rows, _ = P.config_population(root)
+            self.assertEqual([row["unknown_initialized_extent"] for row in rows],
+                             [True, False, False])
+
     def test_relocation_in_or_to_fill(self):
         for row in (
             dict(site=0x2122E48, size=4, target=0),

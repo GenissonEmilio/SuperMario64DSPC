@@ -80,6 +80,16 @@ def license_terminal_fill(
     amount = terminal_extent(claim, emitted_end)
     for row in configured_symbols:
         address, size = integer(row["address"]), integer(row.get("size", 0))
+        if row.get("unknown_initialized_extent") and start <= address < end:
+            # DSD may infer storage through the next configured address or the
+            # logical section end. An unsized initialized row is not a zero-size
+            # label. Do not license bytes that this possible extent occupies.
+            following = [
+                integer(other["address"])
+                for other in configured_symbols
+                if address < integer(other["address"]) <= end
+            ]
+            size = min(following, default=end) - address
         if (
             size < 0
             or emitted_end <= address < end
@@ -542,6 +552,9 @@ def config_population(config_root):
                     address=address,
                     size=size,
                     initialized=kind.startswith("data("),
+                    unknown_initialized_extent=(
+                        kind.startswith("data(") and sized is None and array is None
+                    ),
                 )
             )
     pattern = re.compile(
