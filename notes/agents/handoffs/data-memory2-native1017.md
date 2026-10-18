@@ -73,3 +73,14 @@ ignored artifacts under `build/` in the producer worktree.
 Remaining scope is explicit: the shared sprite table and neighboring RTTI/data
 outside the 240-byte interval are not newly claimed. This is a coherent production
 data contribution, not a claim that the entire minigame data backlog is complete.
+
+The metadata follow-up resolves `memory2-verification-summary-001`: the current
+raw-verification criterion incorrectly retained an older, longer failure message.
+It was regenerated to report one existing initializer classification refusal and
+zero compiler-only policy errors. The source, delinks and symbol registry are
+byte-identical to tested commit `6307fbb9a852e30eb786785adf97f6123c7b7384`;
+every other manifest value, including historical link receipts, is unchanged.
+The full-ROM, production and provider proofs above belong to that exact predecessor.
+Independent verification of this follow-up must confirm functional input identity
+and the corrected diagnostic, rather than relabel those old receipts as new runs.
+Deferred finding `memory2-return-signature-001` remains open on issue #4020.

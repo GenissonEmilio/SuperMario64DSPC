@@ -564,12 +564,6 @@
     "build/run-memory2-provenance.py": "4949b2aa3295d0b09417e7eac91efe0d15715eb9eb4295a6ea154ddf8659937e",
     "build/memory2-retail-reference-install.json": "46af937c2ab837e4550f704e3954f227e4c13d515a53deb514d8d141350ff3db"
   },
-  "final_source_input_sha256": {
-    "src/minigames/d_s_mg_memory2.cpp": "b5d97fd31625ffb89495afceb39f051cb0c65abcca8423aff7359d227776a5b1",
-    "config/tu_manifest.d/ov006/dScMgMemory2_c.json": "9df3bae59031a5d8a97844556589afcc3738952dfe786dcb1c0a5570723d27cc",
-    "config/arm9/overlays/ov006/delinks.txt": "b4295edc7e726c1f5433a14a3819916f31a7f432acbf072c053c6b5b710b180b",
-    "config/arm9/overlays/ov006/symbols.txt": "d616f380023f129a22f6af67e71d185da16c40c495df11fe1d06971bb2b55e77"
-  },
   "provider_records": [
     {
       "symbol": "pmf_dScMgMemory2_c_ResultWait",
@@ -858,6 +852,33 @@
       "section": ".bss",
       "status": "source-storage-layout-verified",
       "errors": []
+    }
+  ],
+  "proof_commit": "6307fbb9a852e30eb786785adf97f6123c7b7384",
+  "tested_source_input_sha256": {
+    "src/minigames/d_s_mg_memory2.cpp": "b5d97fd31625ffb89495afceb39f051cb0c65abcca8423aff7359d227776a5b1",
+    "config/tu_manifest.d/ov006/dScMgMemory2_c.json": "9df3bae59031a5d8a97844556589afcc3738952dfe786dcb1c0a5570723d27cc",
+    "config/arm9/overlays/ov006/delinks.txt": "b4295edc7e726c1f5433a14a3819916f31a7f432acbf072c053c6b5b710b180b",
+    "config/arm9/overlays/ov006/symbols.txt": "d616f380023f129a22f6af67e71d185da16c40c495df11fe1d06971bb2b55e77"
+  },
+  "metadata_followup": {
+    "predecessor_commit": "6307fbb9a852e30eb786785adf97f6123c7b7384",
+    "finding_fixed": "memory2-verification-summary-001",
+    "manifest_changed_field": "verification.criteria.declared_function_set_equals_defined_function_set",
+    "previous_value": "FAIL-BY-DESIGN -- 30 unlicensed section/symbol(s), 1 compiler-only policy error(s)",
+    "regenerated_value": "FAIL-BY-DESIGN -- 1 unlicensed section/symbol(s), 0 compiler-only policy error(s)",
+    "source_delinks_symbols_byte_identical": true,
+    "all_other_manifest_values_identical": true,
+    "proof_scope": "Prior full-ROM/production/provider proofs remain explicitly bound to predecessor6307f; followup changes only current diagnostic and explanatory evidence. Independent verifier must confirm exact functional input identity.",
+    "current_manifest_sha256": "f6882f19136cd9e2d0b69bdb5317d9993e77648185f2bc44a5cc975158227b4a",
+    "raw_verify_log_sha256": "0ee64b658d3dc4c2e30e0823d828633bef57be004d751f9c7824fb92c96280d3"
+  },
+  "deferred_findings": [
+    {
+      "id": "memory2-return-signature-001",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4020",
+      "owner": "codex-memory2-native1017",
+      "summary": "Original RoundWaitDeal return signature unproven; existing declaration retained."
     }
   ]
 }
