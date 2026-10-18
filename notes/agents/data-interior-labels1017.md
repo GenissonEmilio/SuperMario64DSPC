@@ -30,13 +30,16 @@ Validation on this candidate:
   Strict dsd symbol diagnostics return to exactly the nine unchanged baseline
   errors; the cart interior-label error disappears. All object/input hashes are
   rechecked. This is a tool integration probe, not final production cart admission.
-- git diff --check passes. Independent verification and PR CI remain pending.
+- Independent verification of 0e6f7941f1ee1fa7771589d1c6c8c647731e813d passed
+  the same 90 tests, 12 additional adverse-input probes, and a fresh cart link.
+  The reviewer found only a trailing CR in this handoff, corrected in a
+  documentation-only follow-up. PR CI remains pending.
 
 Private reproducible probe:build/probe-cart-link.py; successful receipt:
 build/cart-link-probe-v3/proof.json. The earlier v1 probe's assertion expected a
 lowercase section name; the linker uses OV047. v2 verified the previous helper;
 v3 binds the final helper. No ROM/compiler inputs or private receipts are committed.
 
-Next:independently review this commit, publish its tooling PR, then compose the
-cart source on this exact dependency and refresh its control/TU/production proofs.
+Next:publish the tooling PR, then compose the cart source on this dependency
+and refresh its control/TU/production proofs.
 Do not merge without further authorization.
