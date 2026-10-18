@@ -1746,7 +1746,7 @@
           "comparison": "NOBITS -- symbol/module gates"
         },
         {
-          "section": ".rodata",
+          "section": ".rodata.after_sound",
           "start": "0x0212f0f0",
           "end": "0x0212f3ac",
           "differingBytes": 0,
@@ -1830,7 +1830,7 @@
             ]
           },
           {
-            "section": ".rodata",
+            "section": ".rodata.after_sound",
             "original": [
               5,
               7,
@@ -1950,7 +1950,7 @@
               ]
             },
             {
-              "section": ".rodata",
+              "section": ".rodata.after_sound",
               "original": [
                 5,
                 7,
