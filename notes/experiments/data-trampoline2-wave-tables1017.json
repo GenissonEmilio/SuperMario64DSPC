@@ -825,5 +825,67 @@
       "data_evidence.py"
     ],
     "scope": "Missing provenance modules only; candidate own production/tubuild/alignment tools used first and actual paths/hashes bound in provider proof"
+  },
+  "current_main_integration_1018": {
+    "base": "583274885377aa0645f0eba4cc37118c2202da7f",
+    "measured_runtime_commit": "ad4dd5ded2c751c871fe815eafeb874f203aed05",
+    "source_unchanged": true,
+    "owned_range": [
+      "0x0212f0f0",
+      "0x0212f3ac"
+    ],
+    "input_section": ".rodata",
+    "output_section": ".rodata.after_sound",
+    "relocation_source_label_updates": 24,
+    "fresh_owned_linkcheck_section_labels": 3,
+    "full_ROM_sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+    "production_provider_sha256": "7bb99c743510298162752762304b993f25fe089626752693704fe7727b76dce3",
+    "production_requests": 44,
+    "production_bindings_rehashed": 7176,
+    "preserved_ROM_gaps": [
+      {
+        "start": "0x212efc4",
+        "end": "0x212f0f0",
+        "size": 300,
+        "sha256": "66edfcbf07f802634b004b05a42b1683ac12791104495b3d582192bccc4c96e1",
+        "providers": [
+          "_dsd_gap@ov006_29.o"
+        ]
+      },
+      {
+        "start": "0x212f3ac",
+        "end": "0x212f4c4",
+        "size": 280,
+        "sha256": "6ba070f954264e6a385241a7d00cc04a2dfa6bd1a33b7fb3a268a97b669ec9fa",
+        "providers": [
+          "_dsd_gap@ov006_30.o"
+        ]
+      }
+    ],
+    "strict_functions_verified": 42,
+    "existing_initializer_blind": "BLIND-3; full64-byte initializer proved separately",
+    "baseline_symbol_errors": 9,
+    "new_symbol_errors": 0,
+    "inherited_findings_retained": 60,
+    "integration_finding": {
+      "id": "trampoline-current-sound-route-001",
+      "kind": "correctness",
+      "disposition": "fixed",
+      "location": "config/tu_manifest.d/ov006/dScMgTrampoline2_c.json; config/arm9/overlays/ov006/delinks.txt",
+      "summary": "Route complete700-byte native table range through current .rodata.after_sound, with matching24 relocation source labels and fresh owned linkcheck record.",
+      "reason": "Sound split the former global rodata container. The original .rodata claim no longer fits. The first route trial correctly failed24 WRONG-SECTION checks until all24 relocation SOURCE section labels followed the routed claim, preserving every address/type/kind/target/addend/module set. Normal admission then correctly rejected the historical linkcheck range label; regenerating the owned record from fresh scratch proof changes only its3 section labels. Guards and source remain unchanged. Fresh control/candidate/normal production reproduce all106modules and fullROMd1506, all44 requested providers pass, both300B/280B surrounding ROM gaps remain gap-owned. All9 baseline symbol errors remain with0new; initializer BLIND-3 remains separately covered by64B whole-storage proof.",
+      "evidence": [
+        "build/failed-route-trial.json",
+        "build/failed-route-scratch.log",
+        "build/failed-historical-admission.log",
+        "build/composition-proof.json",
+        "build/tu/ov006-dScMgTrampoline2_c/link/linkcheck.json",
+        "build/production-proof.json"
+      ]
+    },
+    "limits": [
+      "No unlanded Memory content. Prospective Memory coexistence is separate and conditional on actual landing.",
+      "Documentation-only final descendant requires independent review and terminal new-head private validation."
+    ]
   }
 }
