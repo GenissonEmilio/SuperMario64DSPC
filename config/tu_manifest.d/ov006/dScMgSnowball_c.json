@@ -40,9 +40,10 @@
       "end": "0x021430a0"
     },
     {
-      "name": ".rodata",
+      "name": ".rodata.after_sound",
       "start": "0x0212f3ac",
-      "end": "0x0212f4c4"
+      "end": "0x0212f4c4",
+      "input_section": ".rodata"
     }
   ],
   "functions": [
@@ -1722,7 +1723,7 @@
           "comparison": "NOBITS -- symbol/module gates"
         },
         {
-          "section": ".rodata",
+          "section": ".rodata.after_sound",
           "start": "0x0212f3ac",
           "end": "0x0212f4c4",
           "differingBytes": 0,
@@ -1818,7 +1819,7 @@
             ]
           },
           {
-            "section": ".rodata",
+            "section": ".rodata.after_sound",
             "original": [
               118,
               119,
