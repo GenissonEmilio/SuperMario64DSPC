@@ -9,7 +9,7 @@ rename operation previously refused those aliases before the TU could link.
 - Issue: https://github.com/tangosdev/sm64ds-decomp/issues/4021
 - Task/stage: `tools-elf-longnames1017`, `produce`.
 - Session/harness: `codex-elf-longnames-producer1017`, Codex.
-- Branch: `tools/elf-symbol-name-growth`.
+- Branch: `refs/heads/tools/elf-symbol-name-growth`.
 - Source, workflow and accepted input: `e8dc126bcda1865cce7a4a4cb920fb2095deefb9`.
 - Status: tooling candidate; independent review/verification and PR publication
   remain pending. The queue records this commit's immutable SHA.
