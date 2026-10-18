@@ -62,6 +62,7 @@ sys.path.insert(0, str(TOOLS))
 import build_pin as BP          # noqa: E402
 import enroll as EN             # noqa: E402
 import lcf_interior as LI       # noqa: E402
+import linker_alignment as LA   # noqa: E402
 import match as M               # noqa: E402
 import modules as MOD           # noqa: E402
 import objisolate as OI         # noqa: E402
@@ -3143,6 +3144,8 @@ def section_contribution(obj_bytes, section_name, start):
     offsets, and linked addresses for every symbol in those sections.  Section order,
     alignment, and ``sh_info`` are read from the real ELF rather than inferred from
     section names -- mwccarm emits many identically named `.data` sections in one TU.
+    The pinned DSD script's ALIGNALL(4) supplies the minimum input alignment;
+    generated scripts are checked before the scratch and production builds.
     """
     elf = ELFFile(io.BytesIO(obj_bytes))
     secs = list(elf.iter_sections())
@@ -3158,7 +3161,8 @@ def section_contribution(obj_bytes, section_name, start):
     image = bytearray()
     offsets = {}
     for shndx, sec in selected:
-        absolute = _align_up(start + len(image), sec.header["sh_addralign"])
+        absolute = _align_up(start + len(image),
+                             LA.effective_alignment(sec.header["sh_addralign"]))
         image.extend(b"\0" * (absolute - (start + len(image))))
         offsets[shndx] = len(image)
         size = sec.header["sh_size"]
@@ -3300,7 +3304,8 @@ def prepare_owned_nontext_section_order(obj_bytes, entry, claims):
         cursor = claim["start"]
         for shndx in desired:
             sec = secs[shndx]
-            cursor = _align_up(cursor, sec.header["sh_addralign"])
+            cursor = _align_up(cursor,
+                               LA.effective_alignment(sec.header["sh_addralign"]))
             if cursor != bases[shndx]:
                 reasons.append(f"retained {name} section[{shndx}] aligns at "
                                f"0x{cursor:08x}, manifest anchors require "
@@ -3992,7 +3997,7 @@ def content_tree_sha256(root):
 
 BASELINE_CONTROL_TOOLS = tuple(
     REPO / "tools" / name for name in (
-        "objisolate.py", "reloc_audit.py", "rombuild.py", "rombuild_cache.py",
+        "linker_alignment.py", "objisolate.py", "reloc_audit.py", "rombuild.py", "rombuild_cache.py",
         "rombuild_check.py", "rombuild_profile.py", "tu_manifest.py",
         "tu_production.py", "tubuild.py"))
 
@@ -5349,6 +5354,14 @@ def cmd_linkcheck(args):
         return 1
     print(f"      ok ({dt:.1f}s) -> {(scratch / 'arm9.lcf').relative_to(REPO).as_posix()}, "
           f"{(scratch / 'objects.txt').relative_to(REPO).as_posix()}")
+    try:
+        report["linkerAlignment"] = LA.verify_lcf(scratch / "arm9.lcf")
+    except ValueError as error:
+        print(f"\nREFUSED -- {error}")
+        report["result"] = "linker-alignment-refused"
+        report["linkerAlignment"] = {"error": str(error)}
+        _write_link_report(scratch, report)
+        return 1
     if partitioned:
         artifact_report = validate_partitioned_link_artifacts(
             scratch / "arm9.lcf", scratch / "objects.txt", entry, claims)
