@@ -147,7 +147,7 @@
     },
     "syntax": "py_compile passed",
     "dead_references": "No new dead references or broken links",
-    "committed_whitespace": "To be checked after final documentation commit"
+    "committed_whitespace": "Exact final-head diff check is recorded in the producer queue evidence; documentation commits do not alter measured tool inputs."
   },
   "runtime": {
     "historical_b7_scratch": "106 modules/full ROM d150, 8 source ranges, 9 baseline/0 new symbol errors; superseded selector guard",
