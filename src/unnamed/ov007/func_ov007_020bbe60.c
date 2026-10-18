@@ -7,18 +7,30 @@ extern void func_ov007_020c6784(void *self, int count, const int *p2, const void
  * Plotting the byte coordinates produces Mario, Luigi and Yoshi portraits.
  * Names are reconstructed from that evidence, not recovered identifiers.
  * The projector uses these as screen X/Y inputs and negates Y; depth is separate.
- * The nested stroke arrays remain ROM imports; threshold units are unknown.
+ * Nested coordinate/threshold pointer arrays remain ROM imports; their units are unknown.
  */
 static const int sPortraitStrokeCounts[6] = {30, 34, 36, 20, 32, 32};
-extern const int data_ov007_020cf700[30];
-extern const int data_ov007_020cfa70[34];
-extern const int data_ov007_020cfb84[36];
-extern const int data_ov007_020cef80[20];
-extern const int data_ov007_020cf96c[32];
-extern const int data_ov007_020cf8ec[32];
-static const int *sPortraitStrokePointCounts[6] = {data_ov007_020cf700, data_ov007_020cfa70,
-                                                   data_ov007_020cfb84, data_ov007_020cef80,
-                                                   data_ov007_020cf96c, data_ov007_020cf8ec};
+static const int sMarioFrontStrokePointCounts[30] = {16, 12, 10, 17, 7,  8, 52, 19, 16, 10,
+                                                     13, 12, 24, 12, 13, 3, 2,  12, 13, 3,
+                                                     77, 17, 20, 6,  8,  2, 2,  7,  7,  3};
+static const int sMarioSideStrokePointCounts[34] = {22, 9,  5,  5,  2,  15, 11, 4, 1,  8,  6,  25,
+                                                    25, 3,  21, 12, 5,  23, 10, 4, 14, 24, 30, 38,
+                                                    20, 12, 13, 11, 33, 31, 18, 1, 1,  2};
+/* The stored final one-point record is unused by the 36-stroke dispatcher. */
+static const int sLuigiStrokePointCounts[37] = {18, 7,  5,  14, 6,  3,  10, 7,  8,  20, 26, 20, 22,
+                                                6,  3,  14, 8,  20, 31, 3,  26, 14, 19, 9,  7,  35,
+                                                9,  17, 19, 5,  6,  9,  7,  6,  14, 8,  1};
+static const int sYoshiPlainStrokePointCounts[20] = {27, 14, 5,  8,  4,  3,  19, 10, 63, 11,
+                                                     9,  31, 15, 11, 22, 26, 5,  20, 5,  4};
+static const int sYoshiHeartStrokePointCounts[32] = {27, 14, 5,  8,  4,  3, 19, 10, 63, 11, 9,
+                                                     31, 15, 11, 22, 26, 5, 20, 5,  4,  28, 42,
+                                                     26, 3,  1,  4,  6,  6, 5,  5,  4,  3};
+static const int sYoshiStarStrokePointCounts[32] = {27, 14, 5,  8,  4,  3,  19, 10, 63, 11, 9,
+                                                    31, 15, 11, 22, 26, 5,  20, 5,  4,  37, 5,
+                                                    5,  8,  9,  7,  5,  10, 8,  7,  5,  7};
+static const int *sPortraitStrokePointCounts[6] = {
+    sMarioFrontStrokePointCounts, sMarioSideStrokePointCounts,  sLuigiStrokePointCounts,
+    sYoshiPlainStrokePointCounts, sYoshiHeartStrokePointCounts, sYoshiStarStrokePointCounts};
 extern const unsigned char *const data_ov007_020d7ffc[30];
 extern const unsigned char *const data_ov007_020d8464[34];
 extern const unsigned char *const data_ov007_020d85fc[36];

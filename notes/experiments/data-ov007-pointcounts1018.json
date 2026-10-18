@@ -1,0 +1,1409 @@
+{
+  "task": "data-ov007-pointcounts1018",
+  "issue": 4112,
+  "tested_base": "8d866a3620fa342c72cfb56d5d255f484878ced9",
+  "accepted_predecessor": "data-ov007-pathsets-native1018",
+  "accepted_predecessor_commit": "82b09998e4172cff8ac64de6d0ab1aa6a64e4dcb",
+  "predecessor_pr": 4114,
+  "predecessor_main_squash": "a50654de87cba073510e3e01df7025952bf38136",
+  "completion": "partial",
+  "scope": {
+    "new_bytes": 740,
+    "prior_bytes": 120,
+    "total_native_bytes": 860,
+    "objects": 11,
+    "luigi_stored": 37,
+    "luigi_selected": 36
+  },
+  "inherited_findings": {
+    "LANG-OV007-01": {
+      "disposition": "fixed",
+      "id": "LANG-OV007-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020bd648.cpp",
+      "reason": "G2x.h included and G2x::SetBlendAlpha call independently inspected and byte verified.",
+      "summary": "Use canonical G2x header and correctly sized final parameter."
+    },
+    "LANG-OV007-02": {
+      "disposition": "fixed",
+      "id": "LANG-OV007-02",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020af260.cpp and four cstd callers",
+      "reason": "div/mod declarations and calls match actual definition and byte checks.",
+      "summary": "Use real cstd namespace spelling."
+    },
+    "LANG-OV007-03": {
+      "disposition": "fixed",
+      "id": "LANG-OV007-03",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bd648.cpp and graphics helper calls",
+      "reason": "Namespace/static calls inspected against definitions and headers; no duplicated canonical declarations.",
+      "summary": "Use established GX/GXS namespaces and G3X header."
+    },
+    "LANG-OV007-04": {
+      "disposition": "fixed",
+      "id": "LANG-OV007-04",
+      "kind": "correctness",
+      "location": "notes/declaration-centralization.md:117; notes/global-data-migration.md:328; notes/mwccarm-codegen.md:6718,7131",
+      "reason": "Historical predecessor failure retained verbatim in inherited_findings. The four cited references now name existing .cpp paths for 020b7948, 020b8548, 020b1f2c and 020ca86c at the tested base; dead-reference checking passes. This task does not rename source paths or claim credit for that external correction.",
+      "summary": "Renamed source files leave four stale .c path references in three documentation files."
+    },
+    "OV007-PORTRAIT-NAMES-01": {
+      "disposition": "deferred",
+      "id": "OV007-PORTRAIT-NAMES-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "Plotting all 184 decoded paths identifies two Mario, one Luigi and three Yoshi drawings. Original identifiers and exact game-screen role remain unproven.",
+      "summary": "Portrait/stroke names are functional reconstructions."
+    },
+    "OV007-PATH-CONTRACTS-01": {
+      "disposition": "fixed",
+      "id": "OV007-PATH-CONTRACTS-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020c6784.c",
+      "reason": "All five original helper definitions, 812 code bytes and 20 relocations are preserved. The coordinate table object enters as const void* and is interpreted through its actual byte or 32-bit representation inside each mode; no universal nested pointer representation is assumed.",
+      "summary": "Replace integer-erased pointer arguments with sound mode-dependent pointer-table contracts."
+    },
+    "OV007-PATH-RETURN-01": {
+      "disposition": "fixed",
+      "id": "OV007-PATH-RETURN-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020c2b9c.c",
+      "reason": "Explicit return r and the pointer result type produce identical pinned-compiler function bytes and relocations. The prior void definition did not describe its observed caller contract.",
+      "summary": "Return the allocated path pointer consumed by both callers."
+    },
+    "OV007-PATH-ALLOCATOR-01": {
+      "disposition": "deferred",
+      "id": "OV007-PATH-ALLOCATOR-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020c2c68.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "This unchanged function returns an integer address while the existing declaration in 020c2b9c returns void*. Additional callers 020c2a04 and 020c690c remain outside the five-helper scope; no new disagreement is introduced.",
+      "summary": "Lower allocator integer-address ABI and its other callers remain historical debt."
+    },
+    "OV007-PATH-NESTED-STORAGE-01": {
+      "disposition": "deferred",
+      "id": "OV007-PATH-NESTED-STORAGE-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "config/arm9/overlays/ov007/delinks.txt",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "Only five top-level objects totaling 120 bytes are enrolled. Root read-only audit reports 24 nested index/count arrays totaling 2944 bytes; unique coordinate/threshold storage is shared across drawings, so 184 paths must not be duplicated as 184 independent objects. Future ownership/type/extent proof is required.",
+      "summary": "Nested stroke arrays remain ROM-owned imports."
+    },
+    "OV007-PATH-PROGRESS-01": {
+      "disposition": "deferred",
+      "id": "OV007-PATH-PROGRESS-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "Consumers compare running progress and interpolate between per-point values. The routine scales overall duration separately; frame/tick naming is not established.",
+      "summary": "Progress thresholds are cumulative interpolation values; literal timing units are unknown."
+    },
+    "OV007-PATH-ORIGINAL-TU-01": {
+      "disposition": "deferred",
+      "id": "OV007-PATH-ORIGINAL-TU-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "config/tu_manifest.d/ov007/AnimationPathSets.json",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "The existing one-function production file is admitted intact with its tables. Four helper files remain separately enrolled; raw scene/controller offsets and historical source boundaries are not reconstructed.",
+      "summary": "Intact ownership of a reconstructed carrier is not original-TU recovery."
+    },
+    "OV007-PATH-CONSTNESS-01": {
+      "disposition": "deferred",
+      "id": "OV007-PATH-CONSTNESS-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "The top-level pointers remain mutable initialized .data objects. Both coordinate modes copy source values into newly allocated arrays; no mutation of imported input tables is observed.",
+      "summary": "Const pointees describe observed read-only use; historical qualifier spelling is unknown."
+    },
+    "OV007-PATH-RELOCATION-LICENSE-01": {
+      "disposition": "fixed",
+      "id": "OV007-PATH-RELOCATION-LICENSE-01",
+      "kind": "correctness",
+      "location": "config/tu_manifest.d/ov007/AnimationPathSets.json",
+      "reason": "Initial scratch correctly refused all 24 data relocations because the producer used owned_relocations instead of relocations. The next attempt correctly refused eight text rows in the non-text license field. Both failed manifests/logs are preserved. The final field retains exactly 24 non-text source/target/addend/module records; text uses strict function verification. The actual prepared-object owned-section gate now passes without a waiver.",
+      "summary": "Use the actual per-word non-text relocation license schema."
+    },
+    "OV007-PORTRAIT-AXES-01": {
+      "disposition": "fixed",
+      "id": "OV007-PORTRAIT-AXES-01",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "reason": "Initial research followed inherited px/pz local names in 020c6e68. Independent review traced its actual 020bfe4c call: first input becomes v.x=a-0x80000, second becomes v.y=-(b-0x60000), and separate input c becomes depth v.z. Source now uses YCoords and yCoords; the misleading earlier interpretation and frozen attempt are retained as history. Numeric values and code behavior are unchanged.",
+      "summary": "The second portrait coordinate is screen Y, not depth Z."
+    }
+  },
+  "findings": [
+    {
+      "disposition": "fixed",
+      "id": "LANG-OV007-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020bd648.cpp",
+      "reason": "G2x.h included and G2x::SetBlendAlpha call independently inspected and byte verified.",
+      "summary": "Use canonical G2x header and correctly sized final parameter."
+    },
+    {
+      "disposition": "fixed",
+      "id": "LANG-OV007-02",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020af260.cpp and four cstd callers",
+      "reason": "div/mod declarations and calls match actual definition and byte checks.",
+      "summary": "Use real cstd namespace spelling."
+    },
+    {
+      "disposition": "fixed",
+      "id": "LANG-OV007-03",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bd648.cpp and graphics helper calls",
+      "reason": "Namespace/static calls inspected against definitions and headers; no duplicated canonical declarations.",
+      "summary": "Use established GX/GXS namespaces and G3X header."
+    },
+    {
+      "disposition": "fixed",
+      "id": "LANG-OV007-04",
+      "kind": "correctness",
+      "location": "notes/declaration-centralization.md:117; notes/global-data-migration.md:328; notes/mwccarm-codegen.md:6718,7131",
+      "reason": "Historical predecessor failure retained verbatim in inherited_findings. The four cited references now name existing .cpp paths for 020b7948, 020b8548, 020b1f2c and 020ca86c at the tested base; dead-reference checking passes. This task does not rename source paths or claim credit for that external correction.",
+      "summary": "Renamed source files leave four stale .c path references in three documentation files."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PORTRAIT-NAMES-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "Plotting all 184 decoded paths identifies two Mario, one Luigi and three Yoshi drawings. Original identifiers and exact game-screen role remain unproven.",
+      "summary": "Portrait/stroke names are functional reconstructions."
+    },
+    {
+      "disposition": "fixed",
+      "id": "OV007-PATH-CONTRACTS-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020c6784.c",
+      "reason": "All five original helper definitions, 812 code bytes and 20 relocations are preserved. The coordinate table object enters as const void* and is interpreted through its actual byte or 32-bit representation inside each mode; no universal nested pointer representation is assumed.",
+      "summary": "Replace integer-erased pointer arguments with sound mode-dependent pointer-table contracts."
+    },
+    {
+      "disposition": "fixed",
+      "id": "OV007-PATH-RETURN-01",
+      "kind": "correctness",
+      "location": "src/unnamed/ov007/func_ov007_020c2b9c.c",
+      "reason": "Explicit return r and the pointer result type produce identical pinned-compiler function bytes and relocations. The prior void definition did not describe its observed caller contract.",
+      "summary": "Return the allocated path pointer consumed by both callers."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PATH-ALLOCATOR-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020c2c68.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "This unchanged function returns an integer address while the existing declaration in 020c2b9c returns void*. Additional callers 020c2a04 and 020c690c remain outside the five-helper scope; no new disagreement is introduced.",
+      "summary": "Lower allocator integer-address ABI and its other callers remain historical debt."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PATH-NESTED-STORAGE-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "config/arm9/overlays/ov007/delinks.txt",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "The original predecessor wording remains verbatim in inherited_findings. This continuation now supplies all six complete point-count arrays740bytes, including Luigi37. All eighteen pointer arrays2220bytes and435 unique leaf symbols remain ROM-owned; their migration, alias preservation and declaration correction are separate work.",
+      "summary": "Nested stroke arrays remain ROM-owned imports."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PATH-PROGRESS-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "Consumers compare running progress and interpolate between per-point values. The routine scales overall duration separately; frame/tick naming is not established.",
+      "summary": "Progress thresholds are cumulative interpolation values; literal timing units are unknown."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PATH-ORIGINAL-TU-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "config/tu_manifest.d/ov007/AnimationPathSets.json",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "The existing one-function production file is admitted intact with its tables. Four helper files remain separately enrolled; raw scene/controller offsets and historical source boundaries are not reconstructed.",
+      "summary": "Intact ownership of a reconstructed carrier is not original-TU recovery."
+    },
+    {
+      "disposition": "deferred",
+      "id": "OV007-PATH-CONSTNESS-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "owner": "codex-ov007-pathsets-native1018",
+      "reason": "The top-level pointers remain mutable initialized .data objects. Both coordinate modes copy source values into newly allocated arrays; no mutation of imported input tables is observed.",
+      "summary": "Const pointees describe observed read-only use; historical qualifier spelling is unknown."
+    },
+    {
+      "disposition": "fixed",
+      "id": "OV007-PATH-RELOCATION-LICENSE-01",
+      "kind": "correctness",
+      "location": "config/tu_manifest.d/ov007/AnimationPathSets.json",
+      "reason": "Initial scratch correctly refused all 24 data relocations because the producer used owned_relocations instead of relocations. The next attempt correctly refused eight text rows in the non-text license field. Both failed manifests/logs are preserved. The final field retains exactly 24 non-text source/target/addend/module records; text uses strict function verification. The actual prepared-object owned-section gate now passes without a waiver.",
+      "summary": "Use the actual per-word non-text relocation license schema."
+    },
+    {
+      "disposition": "fixed",
+      "id": "OV007-PORTRAIT-AXES-01",
+      "kind": "reconstruction",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "reason": "Initial research followed inherited px/pz local names in 020c6e68. Independent review traced its actual 020bfe4c call: first input becomes v.x=a-0x80000, second becomes v.y=-(b-0x60000), and separate input c becomes depth v.z. Source now uses YCoords and yCoords; the misleading earlier interpretation and frozen attempt are retained as history. Numeric values and code behavior are unchanged.",
+      "summary": "The second portrait coordinate is screen Y, not depth Z."
+    },
+    {
+      "id": "OV007-COUNTS-STORAGE-01",
+      "kind": "reconstruction",
+      "disposition": "fixed",
+      "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "summary": "Distinguish stored Luigi37 from selected36 and preserve the unused final value.",
+      "reason": "The earlier read-only2944-byte nested probe described accessed extents, not complete storage. All four Luigi arrays have a coherent37th record: count1, X pointer020cccc4, Y pointer020cccb8, threshold pointer020ccd98. The three pointer words are configured relocations, not padding. The complete nested family is2960bytes. This task owns only740 count bytes, with the final Luigi1 included; dispatch remains36. The unused record purpose is unproven and remains covered by the existing reconstruction limits."
+    },
+    {
+      "id": "OV007-COUNTS-ROUTING-01",
+      "kind": "correctness",
+      "disposition": "fixed",
+      "location": "config/arm9/overlays/ov007/delinks.txt",
+      "summary": "Use complete native rodata sections without absorbing intervening ROM storage.",
+      "reason": "Five new ranges plus the existing24-byte selector range have explicit named sections; ordinary.data remains unchanged. Native objects fill all860 owned initialized bytes without alignment claims. The entire module rodata partition retains seven separate DSD regions. Normal actual-provider proof checks those exclusions, the18 pointer arrays and435 unique leaf ranges."
+    },
+    {
+      "id": "OV007-COUNTS-POINTER-CONTRACT-01",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "location": "include/decl_common.h:1471",
+      "summary": "The remaining pointer-table family needs a separately owned leaf declaration correction.",
+      "reason": "data_ov007_020cd72c is function-declared as void(void*) in the shared generated header but supplies twenty byte coordinates at LuigiX[9]. Fresh queue audit assigns that header to jump-contract-repair-0918. No shared-header edit, numeric-alias bypass or pointer-family migration occurs here. Follow up with its owner before enrolling the remaining2220 pointer bytes; full2960-byte private proof is retained as research only.",
+      "owner": "codex-ov007-pointcounts1018",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112"
+    },
+    {
+      "id": "OV007-COUNTS-PR-COMPOSITION-01",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "config/arm9/overlays/ov007/delinks.txt",
+      "summary": "Disclose shared-file composition with the separate open data-batch proposal.",
+      "reason": "The fully paginated audit has no exact carrier/count-range overlap, but PR4106 atf487f61ac9addec52c46d1556c1ceaac640c156e edits the same delinks file and adds unrelated plain.rodata claims inside ranges this candidate names explicitly. No otherPR content is overwritten. Current proof applies only to base8d866; future composition must remap those claims and rerun all relevant byte/provider checks. The initial shorthand no scope overlap is narrowed to exact data/source scope rather than file-level independence."
+    }
+  ],
+  "native": {
+    "status": "PASS",
+    "base": "8d866a3620fa342c72cfb56d5d255f484878ced9",
+    "base_object_sha256": "7b06f7e7445bfbc49896c47780d5f45ae73babaa3be4d10b91501813d307cffb",
+    "candidate_sha256": "cf2718d032550e7c57772f922a6351b6d22ff54722eca6c155ea5cc2e610fd61",
+    "prepared_sha256": "a32757d55d0d19c2a82c9eab43418f94eca5ba6e027e8d323f08a783193d362c",
+    "preserved_definitions": 6,
+    "preserved_function_bytes": 312,
+    "preserved_existing_relocations": 32,
+    "renamed_relocation_sites": [
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 0,
+        "new": "sMarioFrontStrokePointCounts",
+        "old": "data_ov007_020cf700",
+        "addend": 0
+      },
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 4,
+        "new": "sMarioSideStrokePointCounts",
+        "old": "data_ov007_020cfa70",
+        "addend": 0
+      },
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 8,
+        "new": "sLuigiStrokePointCounts",
+        "old": "data_ov007_020cfb84",
+        "addend": 0
+      },
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 12,
+        "new": "sYoshiPlainStrokePointCounts",
+        "old": "data_ov007_020cef80",
+        "addend": 0
+      },
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 16,
+        "new": "sYoshiHeartStrokePointCounts",
+        "old": "data_ov007_020cf96c",
+        "addend": 0
+      },
+      {
+        "object": "sPortraitStrokePointCounts",
+        "offset": 20,
+        "new": "sYoshiStarStrokePointCounts",
+        "old": "data_ov007_020cf8ec",
+        "addend": 0
+      }
+    ],
+    "new_objects": 6,
+    "new_native_bytes": 740,
+    "total_native_bytes": 860,
+    "alignment_bytes": 0,
+    "objects": [
+      {
+        "symbol": "sPortraitStrokeCounts",
+        "address": "0x20cdb34",
+        "size": 24,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "956905aa99d7a0b40754e803ad338822c3bfc01472f98b495f67ff64555a49d3"
+      },
+      {
+        "symbol": "sMarioFrontStrokePointCounts",
+        "address": "0x20cf700",
+        "size": 120,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "464a77fd2e83fbf71ad56e71f9811d9ddf15253240f5799ef47bec174f4e2481"
+      },
+      {
+        "symbol": "sMarioSideStrokePointCounts",
+        "address": "0x20cfa70",
+        "size": 136,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "b9c853ec991d9f5683f78664b22002874bde00353ff6ec36f5cae5c45d4c260d"
+      },
+      {
+        "symbol": "sLuigiStrokePointCounts",
+        "address": "0x20cfb84",
+        "size": 148,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "8854a75af5ccaf9188b03e776a20155937bc7400d92f5d4af64ba1631df46b75"
+      },
+      {
+        "symbol": "sYoshiPlainStrokePointCounts",
+        "address": "0x20cef80",
+        "size": 80,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "11470fe91ae2b703c95b1bb58f0283b260aaaa4adb061ca14a2feefdae0d6996"
+      },
+      {
+        "symbol": "sYoshiHeartStrokePointCounts",
+        "address": "0x20cf96c",
+        "size": 128,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "97bcd49a382a27e9d921c15d533d7409ce37e72797548ef586a7e842df88db32"
+      },
+      {
+        "symbol": "sYoshiStarStrokePointCounts",
+        "address": "0x20cf8ec",
+        "size": 128,
+        "section": ".rodata",
+        "binding": "STB_LOCAL",
+        "sha256": "417dc4a612ecf2911a416e130b7461734e6181dd07a248b35bac34376360e1d7"
+      },
+      {
+        "symbol": "sPortraitStrokePointCounts",
+        "address": "0x20d7e68",
+        "size": 24,
+        "section": ".data",
+        "binding": "STB_LOCAL",
+        "sha256": "544eb74f6da62136f75e7ed171f9435f1d7816584e1f3ed77e9763372d643b34"
+      },
+      {
+        "symbol": "sPortraitStrokeXCoords",
+        "address": "0x20d7e80",
+        "size": 24,
+        "section": ".data",
+        "binding": "STB_LOCAL",
+        "sha256": "4fa9a1e3dca8dd50b6635e1e5c328b06674eb83b11eb0a36e3e6ced0e28ab294"
+      },
+      {
+        "symbol": "sPortraitStrokeYCoords",
+        "address": "0x20d7e98",
+        "size": 24,
+        "section": ".data",
+        "binding": "STB_LOCAL",
+        "sha256": "c4672f6a917afa8015983dcee7cdceca46ffa70d5cc01909328462110a2d6654"
+      },
+      {
+        "symbol": "sPortraitStrokeProgressThresholds",
+        "address": "0x20d7eb0",
+        "size": 24,
+        "section": ".data",
+        "binding": "STB_LOCAL",
+        "sha256": "b2c2e3dddf4612bddf679e449334cf8e8582e07787266952acc8cdc026cfd0d2"
+      }
+    ],
+    "data_relocations": [
+      {
+        "source": "0x20d7e68",
+        "target": "sMarioFrontStrokePointCounts",
+        "address": "0x20cf700",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e6c",
+        "target": "sMarioSideStrokePointCounts",
+        "address": "0x20cfa70",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e70",
+        "target": "sLuigiStrokePointCounts",
+        "address": "0x20cfb84",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e74",
+        "target": "sYoshiPlainStrokePointCounts",
+        "address": "0x20cef80",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e78",
+        "target": "sYoshiHeartStrokePointCounts",
+        "address": "0x20cf96c",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e7c",
+        "target": "sYoshiStarStrokePointCounts",
+        "address": "0x20cf8ec",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e80",
+        "target": "data_ov007_020d7ffc",
+        "address": "0x20d7ffc",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e84",
+        "target": "data_ov007_020d8464",
+        "address": "0x20d8464",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e88",
+        "target": "data_ov007_020d85fc",
+        "address": "0x20d85fc",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e8c",
+        "target": "data_ov007_020d7f0c",
+        "address": "0x20d7f0c",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e90",
+        "target": "data_ov007_020d82e4",
+        "address": "0x20d82e4",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e94",
+        "target": "data_ov007_020d8164",
+        "address": "0x20d8164",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e98",
+        "target": "data_ov007_020d8074",
+        "address": "0x20d8074",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7e9c",
+        "target": "data_ov007_020d84ec",
+        "address": "0x20d84ec",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ea0",
+        "target": "data_ov007_020d8690",
+        "address": "0x20d8690",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ea4",
+        "target": "data_ov007_020d7f5c",
+        "address": "0x20d7f5c",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ea8",
+        "target": "data_ov007_020d8364",
+        "address": "0x20d8364",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7eac",
+        "target": "data_ov007_020d81e4",
+        "address": "0x20d81e4",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7eb0",
+        "target": "data_ov007_020d80ec",
+        "address": "0x20d80ec",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7eb4",
+        "target": "data_ov007_020d8574",
+        "address": "0x20d8574",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7eb8",
+        "target": "data_ov007_020d8724",
+        "address": "0x20d8724",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ebc",
+        "target": "data_ov007_020d7fac",
+        "address": "0x20d7fac",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ec0",
+        "target": "data_ov007_020d83e4",
+        "address": "0x20d83e4",
+        "module": "ov007"
+      },
+      {
+        "source": "0x20d7ec4",
+        "target": "data_ov007_020d8264",
+        "address": "0x20d8264",
+        "module": "ov007"
+      }
+    ],
+    "layouts": [
+      {
+        "name": ".rodata.portraitSelectors",
+        "start": "0x20cdb34",
+        "end": "0x20cdb4c",
+        "size": 24,
+        "symbols": {
+          "sPortraitStrokeCounts": {
+            "address": 34396980,
+            "size": 24,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 11
+          }
+        }
+      },
+      {
+        "name": ".data",
+        "start": "0x20d7e68",
+        "end": "0x20d7ec8",
+        "size": 96,
+        "symbols": {
+          "sPortraitStrokePointCounts": {
+            "address": 34438760,
+            "size": 24,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 5
+          },
+          "sPortraitStrokeYCoords": {
+            "address": 34438808,
+            "size": 24,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 9
+          },
+          "sPortraitStrokeProgressThresholds": {
+            "address": 34438832,
+            "size": 24,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 12
+          },
+          "sPortraitStrokeXCoords": {
+            "address": 34438784,
+            "size": 24,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 7
+          }
+        }
+      },
+      {
+        "name": ".rodata.yoshiPlainCounts",
+        "start": "0x20cef80",
+        "end": "0x20cefd0",
+        "size": 80,
+        "symbols": {
+          "sYoshiPlainStrokePointCounts": {
+            "address": 34402176,
+            "size": 80,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 14
+          }
+        }
+      },
+      {
+        "name": ".rodata.marioFrontCounts",
+        "start": "0x20cf700",
+        "end": "0x20cf778",
+        "size": 120,
+        "symbols": {
+          "sMarioFrontStrokePointCounts": {
+            "address": 34404096,
+            "size": 120,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 15
+          }
+        }
+      },
+      {
+        "name": ".rodata.yoshiVariantCounts",
+        "start": "0x20cf8ec",
+        "end": "0x20cf9ec",
+        "size": 256,
+        "symbols": {
+          "sYoshiStarStrokePointCounts": {
+            "address": 34404588,
+            "size": 128,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 16
+          },
+          "sYoshiHeartStrokePointCounts": {
+            "address": 34404716,
+            "size": 128,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 17
+          }
+        }
+      },
+      {
+        "name": ".rodata.marioSideCounts",
+        "start": "0x20cfa70",
+        "end": "0x20cfaf8",
+        "size": 136,
+        "symbols": {
+          "sMarioSideStrokePointCounts": {
+            "address": 34404976,
+            "size": 136,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 18
+          }
+        }
+      },
+      {
+        "name": ".rodata.luigiCounts",
+        "start": "0x20cfb84",
+        "end": "0x20cfc18",
+        "size": 148,
+        "symbols": {
+          "sLuigiStrokePointCounts": {
+            "address": 34405252,
+            "size": 148,
+            "bind": "STB_LOCAL",
+            "type": "STT_OBJECT",
+            "sectionIndex": 19
+          }
+        }
+      }
+    ],
+    "section_order": {
+      "groups": [
+        {
+          "section": ".rodata.portraitSelectors",
+          "original": [
+            11
+          ],
+          "desired": [
+            11
+          ],
+          "anchors": {
+            "11": [
+              {
+                "symbol": "sPortraitStrokeCounts",
+                "address": 34396980,
+                "sectionBase": 34396980
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".data",
+          "original": [
+            5,
+            7,
+            9,
+            12
+          ],
+          "desired": [
+            5,
+            12,
+            7,
+            9
+          ],
+          "anchors": {
+            "5": [
+              {
+                "symbol": "sPortraitStrokePointCounts",
+                "address": 34438760,
+                "sectionBase": 34438760
+              }
+            ],
+            "7": [
+              {
+                "symbol": "sPortraitStrokeYCoords",
+                "address": 34438808,
+                "sectionBase": 34438808
+              }
+            ],
+            "9": [
+              {
+                "symbol": "sPortraitStrokeProgressThresholds",
+                "address": 34438832,
+                "sectionBase": 34438832
+              }
+            ],
+            "12": [
+              {
+                "symbol": "sPortraitStrokeXCoords",
+                "address": 34438784,
+                "sectionBase": 34438784
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".rodata.yoshiPlainCounts",
+          "original": [
+            14
+          ],
+          "desired": [
+            14
+          ],
+          "anchors": {
+            "14": [
+              {
+                "symbol": "sYoshiPlainStrokePointCounts",
+                "address": 34402176,
+                "sectionBase": 34402176
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".rodata.marioFrontCounts",
+          "original": [
+            15
+          ],
+          "desired": [
+            15
+          ],
+          "anchors": {
+            "15": [
+              {
+                "symbol": "sMarioFrontStrokePointCounts",
+                "address": 34404096,
+                "sectionBase": 34404096
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".rodata.yoshiVariantCounts",
+          "original": [
+            16,
+            17
+          ],
+          "desired": [
+            17,
+            16
+          ],
+          "anchors": {
+            "16": [
+              {
+                "symbol": "sYoshiHeartStrokePointCounts",
+                "address": 34404716,
+                "sectionBase": 34404716
+              }
+            ],
+            "17": [
+              {
+                "symbol": "sYoshiStarStrokePointCounts",
+                "address": 34404588,
+                "sectionBase": 34404588
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".rodata.marioSideCounts",
+          "original": [
+            18
+          ],
+          "desired": [
+            18
+          ],
+          "anchors": {
+            "18": [
+              {
+                "symbol": "sMarioSideStrokePointCounts",
+                "address": 34404976,
+                "sectionBase": 34404976
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        },
+        {
+          "section": ".rodata.luigiCounts",
+          "original": [
+            19
+          ],
+          "desired": [
+            19
+          ],
+          "anchors": {
+            "19": [
+              {
+                "symbol": "sLuigiStrokePointCounts",
+                "address": 34405252,
+                "sectionBase": 34405252
+              }
+            ]
+          },
+          "terminalLinkerFillBytes": 0
+        }
+      ],
+      "objisolate": {
+        "reordered": [
+          {
+            "section": ".data",
+            "original": [
+              5,
+              7,
+              9,
+              12
+            ],
+            "desired": [
+              5,
+              12,
+              7,
+              9
+            ],
+            "slots": [
+              5,
+              7,
+              9,
+              12
+            ]
+          },
+          {
+            "section": ".rodata.yoshiVariantCounts",
+            "original": [
+              16,
+              17
+            ],
+            "desired": [
+              17,
+              16
+            ],
+            "slots": [
+              16,
+              17
+            ]
+          }
+        ],
+        "symbolIndices": 6,
+        "sectionLinks": 0,
+        "sectionInfos": 4,
+        "error": null
+      },
+      "routing": {
+        "routes": [
+          {
+            "sectionIndex": 11,
+            "from": ".rodata",
+            "to": ".rodata.portraitSelectors",
+            "address": "0x20cdb34",
+            "bytes": 24,
+            "symbols": [
+              "sPortraitStrokeCounts"
+            ]
+          },
+          {
+            "sectionIndex": 14,
+            "from": ".rodata",
+            "to": ".rodata.yoshiPlainCounts",
+            "address": "0x20cef80",
+            "bytes": 80,
+            "symbols": [
+              "sYoshiPlainStrokePointCounts"
+            ]
+          },
+          {
+            "sectionIndex": 15,
+            "from": ".rodata",
+            "to": ".rodata.marioFrontCounts",
+            "address": "0x20cf700",
+            "bytes": 120,
+            "symbols": [
+              "sMarioFrontStrokePointCounts"
+            ]
+          },
+          {
+            "sectionIndex": 16,
+            "from": ".rodata",
+            "to": ".rodata.yoshiVariantCounts",
+            "address": "0x20cf96c",
+            "bytes": 128,
+            "symbols": [
+              "sYoshiHeartStrokePointCounts"
+            ]
+          },
+          {
+            "sectionIndex": 17,
+            "from": ".rodata",
+            "to": ".rodata.yoshiVariantCounts",
+            "address": "0x20cf8ec",
+            "bytes": 128,
+            "symbols": [
+              "sYoshiStarStrokePointCounts"
+            ]
+          },
+          {
+            "sectionIndex": 18,
+            "from": ".rodata",
+            "to": ".rodata.marioSideCounts",
+            "address": "0x20cfa70",
+            "bytes": 136,
+            "symbols": [
+              "sMarioSideStrokePointCounts"
+            ]
+          },
+          {
+            "sectionIndex": 19,
+            "from": ".rodata",
+            "to": ".rodata.luigiCounts",
+            "address": "0x20cfb84",
+            "bytes": 148,
+            "symbols": [
+              "sLuigiStrokePointCounts"
+            ]
+          }
+        ],
+        "stringTable": {
+          "sectionIndex": 3,
+          "oldSize": 177,
+          "newSize": 353,
+          "shift": 176,
+          "appendedBytes": 174,
+          "paddingBytes": 2,
+          "error": null
+        }
+      }
+    },
+    "luigi": {
+      "stored_values": 37,
+      "selected_strokes": 36,
+      "last_stored_value": 1
+    },
+    "limit": "Raw and prepared native proof only; final-config control, scratch admission and actual default provider proof are separate gates."
+  },
+  "production": {
+    "status": "PASS",
+    "providers": 11,
+    "total_native_bytes": 860,
+    "new_native_bytes": 740,
+    "alignment_bytes": 0,
+    "owned_ranges": [
+      {
+        "start": "0x20bbe60",
+        "end": "0x20bbf98",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "5c260f4d85714ee86469d2374a4e81fd0bf9b00db3f5817c8ef9cfee4c59d257"
+      },
+      {
+        "start": "0x20cdb34",
+        "end": "0x20cdb4c",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "956905aa99d7a0b40754e803ad338822c3bfc01472f98b495f67ff64555a49d3"
+      },
+      {
+        "start": "0x20d7e68",
+        "end": "0x20d7ec8",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "a79eca0baf70dcdc91e6fe589bd6c48e96cfac210ea82d25c780e7d20baf1d21"
+      },
+      {
+        "start": "0x20cef80",
+        "end": "0x20cefd0",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "11470fe91ae2b703c95b1bb58f0283b260aaaa4adb061ca14a2feefdae0d6996"
+      },
+      {
+        "start": "0x20cf700",
+        "end": "0x20cf778",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "464a77fd2e83fbf71ad56e71f9811d9ddf15253240f5799ef47bec174f4e2481"
+      },
+      {
+        "start": "0x20cf8ec",
+        "end": "0x20cf9ec",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "65b1fc28b281377a8b20c750988502955d7d8aba0a90cb0989d97407f4dc49cf"
+      },
+      {
+        "start": "0x20cfa70",
+        "end": "0x20cfaf8",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "b9c853ec991d9f5683f78664b22002874bde00353ff6ec36f5cae5c45d4c260d"
+      },
+      {
+        "start": "0x20cfb84",
+        "end": "0x20cfc18",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "8854a75af5ccaf9188b03e776a20155937bc7400d92f5d4af64ba1631df46b75"
+      }
+    ],
+    "final_symbols": [
+      {
+        "symbol": "sPortraitStrokeCounts",
+        "address": "0x20cdb34",
+        "size": 24,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sMarioFrontStrokePointCounts",
+        "address": "0x20cf700",
+        "size": 120,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sMarioSideStrokePointCounts",
+        "address": "0x20cfa70",
+        "size": 136,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sLuigiStrokePointCounts",
+        "address": "0x20cfb84",
+        "size": 148,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sYoshiPlainStrokePointCounts",
+        "address": "0x20cef80",
+        "size": 80,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sYoshiHeartStrokePointCounts",
+        "address": "0x20cf96c",
+        "size": 128,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sYoshiStarStrokePointCounts",
+        "address": "0x20cf8ec",
+        "size": 128,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sPortraitStrokePointCounts",
+        "address": "0x20d7e68",
+        "size": 24,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sPortraitStrokeXCoords",
+        "address": "0x20d7e80",
+        "size": 24,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sPortraitStrokeYCoords",
+        "address": "0x20d7e98",
+        "size": 24,
+        "binding": "STB_LOCAL"
+      },
+      {
+        "symbol": "sPortraitStrokeProgressThresholds",
+        "address": "0x20d7eb0",
+        "size": 24,
+        "binding": "STB_LOCAL"
+      }
+    ],
+    "global_rodata_partition": [
+      {
+        "section": ".rodata",
+        "kind": "gap",
+        "start": "0x20ccb54",
+        "end": "0x20cdb34",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "f2019044f73c00816bdacadcdf1b1374a8768ee9b84ff202577420f550db40c5"
+      },
+      {
+        "section": ".rodata.portraitSelectors",
+        "kind": "source",
+        "start": "0x20cdb34",
+        "end": "0x20cdb4c",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "956905aa99d7a0b40754e803ad338822c3bfc01472f98b495f67ff64555a49d3"
+      },
+      {
+        "section": ".rodata.portraitGap1",
+        "kind": "gap",
+        "start": "0x20cdb4c",
+        "end": "0x20cef80",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "0d128879f37fd345036accb1ae16ce2148df27ba216d87135b695584871aa407"
+      },
+      {
+        "section": ".rodata.yoshiPlainCounts",
+        "kind": "source",
+        "start": "0x20cef80",
+        "end": "0x20cefd0",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "11470fe91ae2b703c95b1bb58f0283b260aaaa4adb061ca14a2feefdae0d6996"
+      },
+      {
+        "section": ".rodata.portraitGap2",
+        "kind": "gap",
+        "start": "0x20cefd0",
+        "end": "0x20cf700",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "eaf1968e938a7a49465ab46aea0ce2725c2ffa157ebad4e048a1560920f3dabb"
+      },
+      {
+        "section": ".rodata.marioFrontCounts",
+        "kind": "source",
+        "start": "0x20cf700",
+        "end": "0x20cf778",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "464a77fd2e83fbf71ad56e71f9811d9ddf15253240f5799ef47bec174f4e2481"
+      },
+      {
+        "section": ".rodata.portraitGap3",
+        "kind": "gap",
+        "start": "0x20cf778",
+        "end": "0x20cf8ec",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "43b8514c5ba2f8ce8ce42e07d470ef3d05aba7c5bc9059963db383542b942b26"
+      },
+      {
+        "section": ".rodata.yoshiVariantCounts",
+        "kind": "source",
+        "start": "0x20cf8ec",
+        "end": "0x20cf9ec",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "65b1fc28b281377a8b20c750988502955d7d8aba0a90cb0989d97407f4dc49cf"
+      },
+      {
+        "section": ".rodata.portraitGap4",
+        "kind": "gap",
+        "start": "0x20cf9ec",
+        "end": "0x20cfa70",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "a7e7966d5e2e0e15a43b01e8ac47431f09993ada3067cf71ed5c4f5f6e5d7e0f"
+      },
+      {
+        "section": ".rodata.marioSideCounts",
+        "kind": "source",
+        "start": "0x20cfa70",
+        "end": "0x20cfaf8",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "b9c853ec991d9f5683f78664b22002874bde00353ff6ec36f5cae5c45d4c260d"
+      },
+      {
+        "section": ".rodata.portraitGap5",
+        "kind": "gap",
+        "start": "0x20cfaf8",
+        "end": "0x20cfb84",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "3b17748d73edb34159485ce6c1f9c63affc93630e0fb62ab3815bd92ce8a88bf"
+      },
+      {
+        "section": ".rodata.luigiCounts",
+        "kind": "source",
+        "start": "0x20cfb84",
+        "end": "0x20cfc18",
+        "providers": [
+          "func_ov007_020bbe60.o"
+        ],
+        "sha256": "8854a75af5ccaf9188b03e776a20155937bc7400d92f5d4af64ba1631df46b75"
+      },
+      {
+        "section": ".rodata.portraitGapTail",
+        "kind": "gap",
+        "start": "0x20cfc18",
+        "end": "0x20d7db8",
+        "providers": [
+          "_dsd_gap@ov007_11.o"
+        ],
+        "sha256": "328ba8839d82d57170b65ca25f0b7aa4d38faabb1f9f6faa61f0d863bdc067fe"
+      }
+    ],
+    "other_helpers": [
+      {
+        "start": "0x20c6784",
+        "end": "0x20c684c",
+        "sha256": "8a7671dc0f23a187582205f7e1f743cab6e5e44c0c08c7e8804c57b2082c8016",
+        "providers": [
+          "func_ov007_020c6784.o"
+        ]
+      },
+      {
+        "start": "0x20c2acc",
+        "end": "0x20c2b38",
+        "sha256": "dc293834d6704b620f60b7998e61b58651c73d95b113130ad4a1529ccdd0d338",
+        "providers": [
+          "func_ov007_020c2acc.o"
+        ]
+      },
+      {
+        "start": "0x20c2b38",
+        "end": "0x20c2b9c",
+        "sha256": "b7262c418f404b2886913eb64247a3db703391c630695617d5eb0cfa792ecffa",
+        "providers": [
+          "func_ov007_020c2b38.o"
+        ]
+      },
+      {
+        "start": "0x20c2b9c",
+        "end": "0x20c2bf8",
+        "sha256": "e96832f49cd06d2554d3a1f9caf3a9df4b019f81ff6309a37a71c9a582020474",
+        "providers": [
+          "func_ov007_020c2b9c.o"
+        ]
+      }
+    ],
+    "all_bound_inputs_rechecked": 7178,
+    "committed_blobs_verified": 0,
+    "full_rom": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+    "leaf_exclusions_verified": 435,
+    "nested_pointer_exclusions_verified": 18,
+    "complete_private_proof": "build/final-ownership.json",
+    "complete_private_proof_sha256": "c90fb213bb7aafcddf9147c611511afb3c222f9bbae90cf36511c949a3f497fa"
+  },
+  "validation": {
+    "strict": "5 verified, 0 blind, 0 blocking",
+    "source_style": "0 findings",
+    "declaration_agreement": "no new disagreements",
+    "coverage": "740 new bytes; 0 relinquished",
+    "normal_production": "PASS"
+  },
+  "scope_audit": {
+    "base": "8d866a3620fa342c72cfb56d5d255f484878ced9",
+    "conflicts": [],
+    "open_prs": 3,
+    "fully_paginated": true,
+    "overlaps": [],
+    "ranges": [
+      {
+        "start": "0x20cef80",
+        "end": "0x20cefd0"
+      },
+      {
+        "start": "0x20cf700",
+        "end": "0x20cf778"
+      },
+      {
+        "start": "0x20cf8ec",
+        "end": "0x20cf9ec"
+      },
+      {
+        "start": "0x20cfa70",
+        "end": "0x20cfaf8"
+      },
+      {
+        "start": "0x20cfb84",
+        "end": "0x20cfc18"
+      }
+    ],
+    "new_bytes": 740,
+    "files": [
+      "src/unnamed/ov007/func_ov007_020bbe60.c",
+      "config/tu_manifest.d/ov007/AnimationPathSets.json",
+      "config/arm9/overlays/ov007/symbols.txt",
+      "config/arm9/overlays/ov007/delinks.txt",
+      "notes/agents/data-ov007-pointcounts1018.md",
+      "notes/experiments/data-ov007-pointcounts1018.json"
+    ],
+    "shared_file_overlaps": [
+      {
+        "number": 4106,
+        "head": "f487f61ac9addec52c46d1556c1ceaac640c156e",
+        "files": [
+          "config/arm9/overlays/ov007/delinks.txt"
+        ],
+        "exact_carrier_or_count_range_overlap": false,
+        "composition_required": "PR4106 adds unrelated plain.rodata source claims inside the new named module partition. Future integration must remap those section claims and run fresh full proof; no otherPR edits or composition claim here."
+      }
+    ]
+  }
+}
