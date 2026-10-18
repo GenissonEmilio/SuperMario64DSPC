@@ -84,3 +84,28 @@ run was stopped and discarded before it established production evidence.
 The wider global-data backlog, sibling collision blocks, and all ROM gap padding
 remain separate work. No whole-ROM source completion or original-name recovery is
 claimed. Publication is a PR for review; merging is outside this task's authority.
+
+## Formatting review follow-up
+
+Finding `cart-style-001` requested the pinned formatter on the newly added lines.
+clang-format 19.1.7 now reports zero findings and zero deferrals. Before/after
+complete raw compiler objects are byte-identical (8,352 bytes), SHA256
+`1dec8f239c7a7e06494dfe0d8c49cee3940837da9faa5218554418ba49c3f3d8`.
+The formatted source was then freshly whole-TU linked: all six ranges, all modules,
+and the full retail ROM pass, with the same nine baseline symbol diagnostics.
+
+The current standalone verification summary was also regenerated instead of
+retaining an older unlicensed-definition count. It reports 5/5 exact retail
+functions and clean relocation destinations, but refuses raw promotion for eleven
+unlicensed symbols (the initializer and ten base RTTI/type-name objects), with
+zero compiler-only policy errors. The normal TU pipeline separately licenses the
+initializer and externalizes those base definitions to their canonical homes;
+its successful six-range/full-ROM proof remains the production admission gate.
+Historical partitioned-link evidence is preserved. The corrected production
+receipt uses build/cart-clps-production-formatted.log; the standalone result is
+build/cart-standalone-current.log. An empty-string reset attempt exposed the
+existing verification-summary helper's indexing assumption; it was discarded,
+and removing the stale field allowed the normal tool to regenerate its result.
+
+The corrected final default production run and all four provider requests pass.
+Its full ROM again has the retail SHA256 above.

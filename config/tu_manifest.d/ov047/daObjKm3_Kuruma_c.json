@@ -937,9 +937,9 @@
     "criteria": {
       "every_declared_function_defined": "PASS",
       "every_declared_function_bytes_match": "PASS",
-      "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- raw object also emits compiler-only D2 plus 13 unlicensed RTTI/type-name/vtable definitions",
       "functions_occur_in_expected_order": "PASS",
-      "relocation_destinations_verified": "PASS"
+      "relocation_destinations_verified": "PASS",
+      "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- 11 unlicensed section/symbol(s), 0 compiler-only policy error(s)"
     },
     "compilerOnlyOutput": {
       "requested": [
@@ -951,13 +951,14 @@
         "_ZN13daObjKuruma_cD2Ev"
       ],
       "droppedSections": [
-        43,
         44,
         45,
-        46
+        46,
+        47
       ],
       "data": [],
-      "dataExternalized": []
+      "dataExternalized": [],
+      "canonicalDuplicates": []
     },
     "linkcheck": {
       "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",

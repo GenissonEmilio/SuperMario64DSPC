@@ -78,22 +78,18 @@ struct Km3KurumaClpsBlock {
     unsigned short entryCount;
     CLPS entries[1];
 };
-typedef char Km3KurumaClpsBlock_size_must_be_16[
-    sizeof(Km3KurumaClpsBlock) == 16 ? 1 : -1];
+typedef char Km3KurumaClpsBlock_size_must_be_16[sizeof(Km3KurumaClpsBlock) == 16 ? 1 : -1];
 
 /* One property entry: all twelve KCL prisms use index zero. The +6
  * halfword is interpreted as the count; the lookup checks only entrySize. */
 extern "C" const Km3KurumaClpsBlock gKm3KurumaClps = {
-    { 'C', 'L', 'P', 'S' }, 8, 1, { { 0x00000fc0, 0x000000ff } }
-};
+    {'C', 'L', 'P', 'S'}, 8, 1, {{0x00000fc0, 0x000000ff}}};
 
 /* Defined here because this TU owns the descriptor in overlay .data. */
 extern "C" ResourceDescriptor gKm3KurumaResources = {
-    &gKm3KurumaModelFile,
-    &gKm3KurumaCollisionFile,
+    &gKm3KurumaModelFile, &gKm3KurumaCollisionFile,
     /* SetFile retains this read-only block through its opaque legacy API. */
-    (CLPS_Block *)&gKm3KurumaClps
-};
+    (CLPS_Block *)&gKm3KurumaClps};
 
 #include "daObjKm3_Kuruma_c.h"
 #include "SpawnInfo.h"
