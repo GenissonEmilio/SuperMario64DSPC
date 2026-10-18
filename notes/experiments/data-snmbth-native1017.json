@@ -2,15 +2,15 @@
   "schema": "native-data-campaign-evidence-v1",
   "task": "data-snmbth-native1017",
   "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4064",
-  "producer": "codex-snmbth-native1017",
-  "base": "1b98141e598440a0432317b58678f3c5c088d558",
+  "producer": "codex-snmbth-compose1018",
+  "base": "37112dfd8a6860fe5675506cc3021ab2e2863cef",
   "dependency_pr": 4055,
   "workflow_commit": "18af52b49b9fb5663d417bdfa86109b7b157aaa3",
   "independent_review": "pending",
   "source_completion": "partial: native metadata production contribution; existing ABI/layout, original grouping and historical review limitations retained",
   "raw_object_proof": {
     "result": "pass",
-    "base": "1b98141e598440a0432317b58678f3c5c088d558",
+    "base": "37112dfd8a6860fe5675506cc3021ab2e2863cef",
     "base_sha256": "dc3f35ac9e4598a32bc709fc9e468e0c1118af133f3adb0cac792f385cf8b387",
     "native_sha256": "01b30c902b7ee9fba068f5765e038e19a552a60cf0819e66952466c5bd82ca80",
     "preserved_definitions": 34,
@@ -560,6 +560,16 @@
       "disposition": "deferred",
       "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4064",
       "owner": "Next independently claimed Snowman Breath reconstruction producer on issue 4064."
+    },
+    {
+      "id": "SNMBTH-PROSPECTIVE-BASE-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "PR target refs/heads/tools/linker-align1017 and final composition evidence",
+      "summary": "Prospective publication base advanced from1b981 to37112dfd with substantive source/tool changes.",
+      "reason": "The successor merges pinned37112dfd without changing Snowman source. Both fresh raw objects retain the prior hashes; final-configuration control, all five section ranges/41relocations, native rombuild five-provider proof/full vtable/init/ctor/aliases and106modules/fullROM all pass. Exact successor independent review remains the next stage; old400/base1b evidence is preserved separately.",
+      "owner": "codex-snmbth-native1017",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4064"
     }
   ],
   "inherited_findings_preserved_from_live_queue": "a4e6da1820ae8b8da392a46652bb21337707997b",
@@ -626,6 +636,172 @@
     }
   ],
   "validation": {
+    "stock_control": "link-verified",
+    "candidate": "scratch-data-verified",
+    "owned_sections": [
+      {
+        "section": ".init",
+        "start": "0x02112f70",
+        "end": "0x02112fc4",
+        "emittedBytes": 84,
+        "sizeOk": true,
+        "bytesOk": true,
+        "differingWords": 0,
+        "relocCount": 4
+      },
+      {
+        "section": ".ctor",
+        "start": "0x02112fd0",
+        "end": "0x02112fd4",
+        "emittedBytes": 4,
+        "sizeOk": true,
+        "bytesOk": true,
+        "differingWords": 0,
+        "relocCount": 1
+      },
+      {
+        "section": ".data",
+        "start": "0x02113b10",
+        "end": "0x02113bcc",
+        "emittedBytes": 188,
+        "sizeOk": true,
+        "bytesOk": true,
+        "differingWords": 0,
+        "relocCount": 36
+      },
+      {
+        "section": ".bss",
+        "start": "0x02113d04",
+        "end": "0x02113d1c",
+        "emittedBytes": 24,
+        "sizeOk": true,
+        "bytesOk": true,
+        "differingWords": 0,
+        "relocCount": 0
+      }
+    ],
+    "object_audit": {
+      "counts": {
+        "LICENSED": 25
+      },
+      "orderOk": true,
+      "nonLicensed": [],
+      "unlicensedSections": []
+    },
+    "licensed_nontext_relocations": 41,
+    "production_status": "passed",
+    "modules_exact": 106,
+    "full_rom_sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+    "requested_provider_objects": 5,
+    "full_vtable_initializer_ctor_and_alias_proof": {
+      "result": "pass",
+      "aliases": [
+        {
+          "name": "data_ov027_02113b7c",
+          "address": "0x2113b7c"
+        },
+        {
+          "name": "data_ov027_02113b80",
+          "address": "0x2113b80"
+        },
+        {
+          "name": "data_ov027_02113b90",
+          "address": "0x2113b90"
+        }
+      ],
+      "unclaimed_tail_map": [
+        "02113BCC 00000020 .data   data_ov016_02113bcc\t(_dsd_gap@ov016_1.o)",
+        "02113BCC 00000014 .data   data_ov027_02113bcc\t(_dsd_gap@ov027_3.o)",
+        "02113BCC 00000000 .data   .data\t(_dsd_gap@ov027_3.o)"
+      ],
+      "final_elf_sha256": "9e1b8bb7147fc8bdc45afaf767069449806aac213ae06876593832472dd4d16c",
+      "checks": [
+        {
+          "name": "new data",
+          "address": "0x2113b10",
+          "size": 188,
+          "retail_exact": true
+        },
+        {
+          "name": "full vtable",
+          "address": "0x2113b48",
+          "size": 132,
+          "retail_exact": true
+        },
+        {
+          "name": "native initializer",
+          "address": "0x2112f70",
+          "size": 84,
+          "retail_exact": true
+        },
+        {
+          "name": "constructor pointer",
+          "address": "0x2112fd0",
+          "size": 4,
+          "retail_exact": true
+        },
+        {
+          "name": "unclaimed tail",
+          "address": "0x2113bcc",
+          "size": 20,
+          "retail_exact": true
+        }
+      ],
+      "providers": {
+        "full vtable": [
+          "02113B50 0000007C .data   virtual table for daSnmBth_c\t(d_a_snm_bth.o)"
+        ],
+        "native initializer": [
+          "02112F70 00000000 .init   $a\t(d_a_snm_bth.o)",
+          "02112F70 00000054 .init   __sinit_d_a_snm_bth.cpp\t(d_a_snm_bth.o)"
+        ],
+        "registration node": [
+          "02113D04 0000000C .bss    @930\t(d_a_snm_bth.o)"
+        ],
+        "constructor pointer": [
+          "02112FD0 00000004 .ctor   .p__sinit_d_a_snm_bth.cpp\t(d_a_snm_bth.o)"
+        ]
+      },
+      "new_data_object_bytes": 185,
+      "natural_linker_alignment_bytes": 3
+    },
+    "baseline_symbol_errors": 9,
+    "new_symbol_errors": 0,
+    "focused_tool_tests": 62
+  },
+  "private_artifact_sha256": {
+    "build/snmbth-native-proof.json": "8044fbe290bffc4a7132ee390c17136283b0e342aae2f4ccb223e80e696214bd",
+    "build/snmbth-compose-gates.json": "b76c730c199ec2e9f990d2eb92fd367d7efc84d27f159dba1bae3870d23938cd",
+    "build/snmbth-compose-tools.log": "ee68eea5a2fd3c8b57d76c77d76f907c1cca1be8824c852f84b6ae0870447247",
+    "build/snmbth-compose-baseline.log": "9591ff5bc29f1ff4a9cded5d6657a2fe30e2f4f4af931cafa3c73f215107f76a",
+    "build/snmbth-compose-scratch.log": "89ef45ff0d61aa6d2ca8aa21df695304c26efd6af78f35f8d6badbb6491d4024",
+    "build/snmbth-compose-normal.log": "1d0f8e173c237290a459f919d3a5af6e25bd2d71e5ef52d4ad4bc8ecb7a14c17",
+    "build/snmbth-compose-production.json": "4e1ea0ae285bf8d4ca85b21d72a8aad97258cb29ffda754ff933d194e7e05d07",
+    "build/snmbth-production-final-ownership.json": "498dc678ea0e8ac23ca2ad797fd7deba7fcf11bb710d7cecb5ce18c703199588",
+    "build/run-snmbth-composition-gates.py": "796b500f8999ad35b8f4400ed05ab403195d0f52ae386fd03738281edce32a25",
+    "build/prove-snmbth-final-ownership.py": "04aaa78be04bc2348951055571887ff87bce7bebf84841066a6a0c11dedc2d54",
+    "build/verify-snmbth-native.py": "01a88f885d403a042e0a763712eff5e27c77f3abf5ced97e557aa4ebac7b3ebc"
+  },
+  "provider_interface_limit": "Native rombuild --data-provenance-requests binds five data/BSS objects. Full vtable, initializer, ctor pointer and aliases retain separate map/module-byte proof; unsupported ctor requests were a historical wrapper diagnostic only.",
+  "optional_romdata_diagnostic": {
+    "verified": 975,
+    "partial": 1559,
+    "differs": 1,
+    "unnamed": 15,
+    "verifiedBytes": 49144,
+    "totalRecords": 5298,
+    "differingSymbols": [
+      {
+        "module": "arm9",
+        "symbol": "_ZTV10dCcAcPos_c",
+        "addr": 34137860,
+        "bytes": 16
+      }
+    ]
+  },
+  "historical_producer_commit": "400abf63a9a871f3fce5f1b62a4524b2c8a43f92",
+  "historical_producer_base": "1b98141e598440a0432317b58678f3c5c088d558",
+  "historical_validation": {
     "stock_control": "link-verified",
     "candidate": "scratch-data-verified",
     "licensed_nontext_relocations": 41,
@@ -768,7 +944,7 @@
     "baseline_symbol_errors": 9,
     "new_symbol_errors": 0
   },
-  "private_artifact_sha256": {
+  "historical_artifact_sha256": {
     "build/snmbth-native-proof.json": "10879085af1fc8e65f91f0f6747fab786ef2719824008532088e3ca902fa0e90",
     "build/snmbth-baseline.log": "6a0edbb877a82278626adec73261cba7ca02614f77af6b866baa5638795be6e5",
     "build/snmbth-baseline-final.log": "5fafeb7a6f1444bf616bb086e5fbf48b1e2f1906b725596d7559d47701ad1d46",
@@ -791,21 +967,5 @@
     "build/prove-snmbth-final-ownership.py": "04aaa78be04bc2348951055571887ff87bce7bebf84841066a6a0c11dedc2d54",
     "build/verify-snmbth-native.py": "1dce3b59f014370ce4968a085ce9dbfb9b7f5838b638964593ce0a79a68c4078"
   },
-  "provider_interface_limit": "Auditor supports data/rodata/BSS; .ctor request refused before build. The corrected five-request run uses separate final-map/module proof for ctor, initializer and full vtable.",
-  "optional_romdata_diagnostic": {
-    "verified": 975,
-    "partial": 1559,
-    "differs": 1,
-    "unnamed": 15,
-    "verifiedBytes": 49116,
-    "totalRecords": 5298,
-    "differingSymbols": [
-      {
-        "module": "arm9",
-        "symbol": "_ZTV10dCcAcPos_c",
-        "addr": 34137860,
-        "bytes": 16
-      }
-    ]
-  }
+  "historical_artifact_worktree": "C:/tmp/sm64ds-snmbth-native1017"
 }
