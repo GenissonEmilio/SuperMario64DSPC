@@ -852,6 +852,13 @@ def intact_tu_policies(enrolled=None, manifest=None):
         if not isinstance(section_rows, list):
             errors.append(f"{label}: intact-object section claims must be a list")
             section_rows = []
+        try:
+            IB.prefix_policies(entry)
+            for row in section_rows:
+                if isinstance(row, dict):
+                    IB.terminal_policy(row)
+        except (KeyError, TypeError, ValueError) as exc:
+            errors.append(f"{label}: invalid initialized boundary policy: {exc}")
         section_names = {row.get("name") for row in section_rows
                          if isinstance(row, dict) and isinstance(row.get("name"), str)}
         if ".text" not in section_names or not (section_names - {".text"}):

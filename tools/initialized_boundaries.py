@@ -144,9 +144,19 @@ def verify_terminal_lcf(path, *, module, section, provider):
         raise ValueError("provider selector must occur exactly once")
     # A different object or wildcard selecting this section outside its markers
     # would still contribute bytes. Count the entire LCF, not only this provider.
-    all_selectors = re.findall(
-        r"[^\s(){};]+\s*\(\s*" + re.escape(section) + r"\s*\)", text
-    )
+    # DSD emits one literal input-section name per object selector. Do not
+    # interpret wildcard/list syntax optimistically: an earlier selector could
+    # consume this object's section before the licensed START marker.
+    all_selectors = []
+    builtins = {"ALIGN", "ALIGNALL", "AFTER", "WRITEW", "ADDR", "SIZEOF"}
+    for call in re.finditer(r"([^\s(){};]+)\s*\(", text):
+        if call[1] in builtins:
+            continue
+        literal = re.match(r"\s*(\.[A-Za-z0-9_.]+)\s*\)", text[call.end() :])
+        if not re.fullmatch(r"[A-Za-z0-9_@+.-]+\.o", call[1]) or literal is None:
+            raise ValueError("unsupported LCF input-section selector grammar")
+        if literal[1] == section:
+            all_selectors.append(call[1] + "(" + literal[1] + ")")
     if len(all_selectors) != 1 or re.fullmatch(selector, all_selectors[0]) is None:
         raise ValueError("logical section must have exactly one selector in LCF")
     pattern = (
