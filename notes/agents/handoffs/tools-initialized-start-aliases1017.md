@@ -5,7 +5,7 @@ This document describes this commit. The queue records its immutable output SHA.
 - Issue: [#4041](https://github.com/tangosdev/sm64ds-decomp/issues/4041).
 - Producer: `codex-initialized-start-aliases1017` (Codex).
 - Branch: `refs/heads/tools/initialized-start-aliases`.
-- Accepted dependency/base: `272e5e5b95ef1e028dfb5b9c22ec4e03fc9cdb80` (PR4036).
+- Accepted dependency/base: `272e5e5b95ef1e028dfb5b9c22ec4e03fc9cdb80` (PR #4036).
 - Activated workflow: `18af52b49b9fb5663d417bdfa86109b7b157aaa3`.
 - Independent verifier and final PR publication: parent campaign integrator;
   both remain pending at producer handoff. No merge is authorized.
@@ -41,21 +41,21 @@ is included. This tool change establishes no new Amida production ownership.
   `build/amida-alias-fixture/report.json`. A fresh pinned b56 compile exactly
   equals the frozen readable Amida scout object, SHA256
   `951d1537394fc3379c4f3b75466d9f6cb2e7c7eeaf17adba93bab1bedaf54209`.
-  The supported vtable rebias prepares the public symbol at section offset8 with
-  size148, from the complete156-byte compiler storage. The accepted base emits
-  no numeric alias; this change emits the alias at0x0213b918 with offset0.
+  The supported vtable rebias prepares the public symbol at section offset 8 with
+  size 148, from the complete 156-byte compiler storage. The accepted base emits
+  no numeric alias; this change emits the alias at 0x0213b918 with offset 0.
   Both prepared-object bytes and the source probe remain unchanged.
   Prepared-object SHA256:
   `fc192e4f47ef7b70754cfcdc9c5cd7ea0d4614af172dfb41d8040e6d452da955`.
-- The complete read-only Amida scout is preserved privately under the PR4015
+- The complete read-only Amida scout is preserved privately under the PR #4015
   worktree's `build/data-campaign/amida-native-scout1017/`: eight native objects,
-  407bytes plus one alignment byte,42relocations, and30functions/344relocations
+  407 bytes plus one alignment byte, 42 relocations, and 30 functions/344 relocations
   unchanged. This is native feasibility evidence, not an Amida source acceptance.
 - `python tools/rombuild.py -j16 --report-json build/tool-production.json`: PASS.
-  Fresh stock control and normal production both produce the full16MiB retail ROM
+  Fresh stock control and normal production both produce the full 16 MiB retail ROM
   SHA256 `d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8`.
-  Production reproduces106/106modules,11334functions,338data claims and245BSS
-  claims (31216bytes), with zero new strict-symbol errors against nine baseline
+  Production reproduces 106/106 modules, 11334 functions, 338 data claims and 245 BSS
+  claims (31216 bytes), with zero new strict-symbol errors against nine baseline
   diagnostics. All tested tool inputs remained byte-identical through the run.
   Broad optional ROM-data diagnostics still report one unrelated differing symbol;
   this is not a claim that the whole optional catalog is green.
