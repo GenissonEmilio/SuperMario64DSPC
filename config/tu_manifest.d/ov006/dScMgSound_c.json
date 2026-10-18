@@ -9,7 +9,8 @@
     "contiguous linker run: 0x2119904..0x211cb70, 81 function(s), from build/tu_map.json (tools/tu_map.py)",
     "class label(s): dScMgSound_c",
     "ONE-FUNCTION BOUNDARY EXTENSION to 0x0211cbd0, same shape as ov006/dScMgMemory2_c's: tools/tu_map.py cut dScMgSound_c_classInit (0x0211cb70, 0x60) into a unit of its own with no class label, because the cut is made on the symbol NAME and this factory is not spelled _ZN12dScMgSound_c... . It is immediately adjacent with no gap -- _ZN12dScMgSound_c13InitResourcesEv ends exactly at 0x0211cb70 and _ZN13dScMgTeresa_cD1Ev starts at 0x0211cbd0 -- it allocates _ZN7fBase_cnwEj(0x562c), which is sizeof(dScMgSound_c) and the source of the header's own size assert, it installs _ZTV12dScMgSound_c, and it constructs the 0x4f38 helper the destructor destroys. Nothing else in ov006 references it. It can only have been compiled where this class's definition was visible, so it is this TU's 82nd function.",
-    "module sinit corroboration: 31 sinit(s) / 31 .ctor entries, sinit_vs_tu=ok, corroborated=False (module-wide, NOT narrowed to this one TU -- see notes/tu-reconstruction-pilot-report.md sec 2 for the by-hand narrowing step)"
+    "module sinit corroboration: 31 sinit(s) / 31 .ctor entries, sinit_vs_tu=ok, corroborated=False (module-wide, NOT narrowed to this one TU -- see notes/tu-reconstruction-pilot-report.md sec 2 for the by-hand narrowing step)",
+    "2026-10-18 Sound constant continuation adds124 rodata bytes:111 native object bytes and13 zero ALIGNALL(4) alignment bytes. Two complete named rodata routes total376bytes including the existing252-byte motion family. The64-byte row-view region remains ROM-owned because fifth-pattern accesses cross four-element label windows; no fabricated array-bound recovery. The remaining488data bytes retain the separate ledger/signature continuation."
   ],
   "sections": [
     {
@@ -33,14 +34,21 @@
       "end": "0x02142e88"
     },
     {
-      "name": ".rodata",
-      "start": "0x0212ee40",
-      "end": "0x0212ef3c"
-    },
-    {
       "name": ".data",
       "start": "0x0213f6e4",
       "end": "0x0213f8d4"
+    },
+    {
+      "name": ".rodata.sound_tables",
+      "input_section": ".rodata",
+      "start": "0x0212ee0c",
+      "end": "0x0212ef5c"
+    },
+    {
+      "name": ".rodata.sound_note_offsets",
+      "input_section": ".rodata",
+      "start": "0x0212ef9c",
+      "end": "0x0212efc4"
     }
   ],
   "functions": [
@@ -934,23 +942,30 @@
           "comparison": "NOBITS -- symbol/module gates"
         },
         {
-          "section": ".rodata",
-          "start": "0x0212ee40",
-          "end": "0x0212ef3c",
+          "section": ".data",
+          "start": "0x0213f6e4",
+          "end": "0x0213f8d4",
           "differingBytes": 0,
           "firstDiff": null
         },
         {
-          "section": ".data",
-          "start": "0x0213f6e4",
-          "end": "0x0213f8d4",
+          "section": ".rodata.sound_tables",
+          "start": "0x0212ee0c",
+          "end": "0x0212ef5c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.sound_note_offsets",
+          "start": "0x0212ef9c",
+          "end": "0x0212efc4",
           "differingBytes": 0,
           "firstDiff": null
         }
       ],
       "objectAudit": {
         "counts": {
-          "LICENSED": 131
+          "LICENSED": 142
         },
         "emittedTextOrderIsRomAscending": true,
         "nonLicensedSymbols": [],
@@ -961,134 +976,163 @@
           {
             "section": ".init",
             "original": [
-              208
+              219
             ],
             "desired": [
-              208
+              219
             ]
           },
           {
             "section": ".ctor",
             "original": [
-              206
+              217
             ],
             "desired": [
-              206
+              217
             ]
           },
           {
             "section": ".bss",
             "original": [
-              48,
-              49,
-              50,
-              51,
-              52,
-              53,
-              54,
-              55,
-              56,
-              57,
-              58,
               59,
+              60,
               61,
+              62,
+              63,
+              64,
+              65,
               66,
-              69
+              67,
+              68,
+              69,
+              70,
+              72,
+              77,
+              80
             ],
             "desired": [
-              59,
-              54,
-              55,
-              61,
-              56,
-              49,
-              50,
-              57,
-              51,
-              58,
-              48,
-              52,
-              53,
+              70,
+              65,
               66,
-              69
-            ]
-          },
-          {
-            "section": ".rodata",
-            "original": [
-              10,
-              11,
-              12,
-              13,
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              22,
-              23,
-              24,
-              25,
-              30,
-              31,
-              34,
-              35,
-              36,
-              43,
-              44
-            ],
-            "desired": [
-              15,
-              16,
-              34,
-              23,
-              25,
-              30,
-              19,
-              43,
-              44,
-              18,
-              12,
-              11,
-              10,
-              22,
-              17,
-              35,
-              24,
-              31,
-              13,
-              14,
-              36
+              72,
+              67,
+              60,
+              61,
+              68,
+              62,
+              69,
+              59,
+              63,
+              64,
+              77,
+              80
             ]
           },
           {
             "section": ".data",
             "original": [
-              28,
-              39,
-              41,
-              46,
-              60,
-              62,
-              64,
-              65,
-              67,
-              68,
-              70
+              19,
+              26,
+              47,
+              53,
+              71,
+              73,
+              75,
+              76,
+              78,
+              79,
+              81
             ],
             "desired": [
+              26,
+              47,
+              19,
+              53,
+              71,
+              73,
+              75,
+              76,
+              78,
+              79,
+              81
+            ]
+          },
+          {
+            "section": ".rodata.sound_tables",
+            "original": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              13,
+              17,
+              18,
+              21,
+              24,
+              25,
               28,
-              41,
+              29,
+              30,
+              33,
+              34,
+              35,
+              36,
               39,
+              40,
+              43,
+              44,
+              45,
               46,
-              60,
-              62,
-              64,
-              65,
-              67,
-              68,
-              70
+              49,
+              50,
+              51,
+              54,
+              55
+            ],
+            "desired": [
+              5,
+              7,
+              6,
+              9,
+              10,
+              8,
+              13,
+              29,
+              39,
+              44,
+              43,
+              28,
+              33,
+              40,
+              36,
+              35,
+              45,
+              30,
+              50,
+              24,
+              51,
+              18,
+              25,
+              46,
+              49,
+              34,
+              21,
+              17,
+              55,
+              54
+            ]
+          },
+          {
+            "section": ".rodata.sound_note_offsets",
+            "original": [
+              56,
+              57
+            ],
+            "desired": [
+              56,
+              57
             ]
           }
         ],
@@ -1097,173 +1141,200 @@
             {
               "section": ".bss",
               "original": [
-                48,
-                49,
-                50,
-                51,
-                52,
-                53,
-                54,
-                55,
-                56,
-                57,
-                58,
                 59,
+                60,
                 61,
+                62,
+                63,
+                64,
+                65,
                 66,
-                69
+                67,
+                68,
+                69,
+                70,
+                72,
+                77,
+                80
               ],
               "desired": [
-                59,
-                54,
-                55,
-                61,
-                56,
-                49,
-                50,
-                57,
-                51,
-                58,
-                48,
-                52,
-                53,
+                70,
+                65,
                 66,
-                69
+                72,
+                67,
+                60,
+                61,
+                68,
+                62,
+                69,
+                59,
+                63,
+                64,
+                77,
+                80
               ],
               "slots": [
-                48,
-                49,
-                50,
-                51,
-                52,
-                53,
-                54,
-                55,
-                56,
-                57,
-                58,
                 59,
+                60,
                 61,
+                62,
+                63,
+                64,
+                65,
                 66,
-                69
-              ]
-            },
-            {
-              "section": ".rodata",
-              "original": [
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17,
-                18,
-                19,
-                22,
-                23,
-                24,
-                25,
-                30,
-                31,
-                34,
-                35,
-                36,
-                43,
-                44
-              ],
-              "desired": [
-                15,
-                16,
-                34,
-                23,
-                25,
-                30,
-                19,
-                43,
-                44,
-                18,
-                12,
-                11,
-                10,
-                22,
-                17,
-                35,
-                24,
-                31,
-                13,
-                14,
-                36
-              ],
-              "slots": [
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17,
-                18,
-                19,
-                22,
-                23,
-                24,
-                25,
-                30,
-                31,
-                34,
-                35,
-                36,
-                43,
-                44
+                67,
+                68,
+                69,
+                70,
+                72,
+                77,
+                80
               ]
             },
             {
               "section": ".data",
               "original": [
-                28,
-                39,
-                41,
-                46,
-                60,
-                62,
-                64,
-                65,
-                67,
-                68,
-                70
+                19,
+                26,
+                47,
+                53,
+                71,
+                73,
+                75,
+                76,
+                78,
+                79,
+                81
               ],
               "desired": [
-                28,
-                41,
-                39,
-                46,
-                60,
-                62,
-                64,
-                65,
-                67,
-                68,
-                70
+                26,
+                47,
+                19,
+                53,
+                71,
+                73,
+                75,
+                76,
+                78,
+                79,
+                81
               ],
               "slots": [
+                19,
+                26,
+                47,
+                53,
+                71,
+                73,
+                75,
+                76,
+                78,
+                79,
+                81
+              ]
+            },
+            {
+              "section": ".rodata.sound_tables",
+              "original": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                13,
+                17,
+                18,
+                21,
+                24,
+                25,
                 28,
+                29,
+                30,
+                33,
+                34,
+                35,
+                36,
                 39,
-                41,
+                40,
+                43,
+                44,
+                45,
                 46,
-                60,
-                62,
-                64,
-                65,
-                67,
-                68,
-                70
+                49,
+                50,
+                51,
+                54,
+                55
+              ],
+              "desired": [
+                5,
+                7,
+                6,
+                9,
+                10,
+                8,
+                13,
+                29,
+                39,
+                44,
+                43,
+                28,
+                33,
+                40,
+                36,
+                35,
+                45,
+                30,
+                50,
+                24,
+                51,
+                18,
+                25,
+                46,
+                49,
+                34,
+                21,
+                17,
+                55,
+                54
+              ],
+              "slots": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                13,
+                17,
+                18,
+                21,
+                24,
+                25,
+                28,
+                29,
+                30,
+                33,
+                34,
+                35,
+                36,
+                39,
+                40,
+                43,
+                44,
+                45,
+                46,
+                49,
+                50,
+                51,
+                54,
+                55
               ]
             }
           ],
-          "symbolIndices": 47,
+          "symbolIndices": 56,
           "sectionLinks": 0,
           "sectionInfos": 5,
           "error": null
@@ -2673,6 +2744,48 @@
   "production_mode": "intact-object",
   "rodata": [
     {
+      "symbol": "sSoundPop00Dirs",
+      "address": "0x212ee0c",
+      "size": "0x3",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundPitchCounts",
+      "address": "0x212ee10",
+      "size": "0x5",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundDealCounts",
+      "address": "0x212ee18",
+      "size": "0x5",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundNoteLayoutByPattern",
+      "address": "0x212ee20",
+      "size": "0x5",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundWinSpriteATimes",
+      "address": "0x212ee28",
+      "size": "0x8",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundPopSpawnKinds",
+      "address": "0x212ee30",
+      "size": "0x5",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundWinSpriteBTimes",
+      "address": "0x212ee38",
+      "size": "0x8",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
       "symbol": "sSoundPop04VX",
       "address": "0x0212ee40",
       "size": "0x0000000c"
@@ -2776,6 +2889,30 @@
       "symbol": "sSoundPop12XOffsets",
       "address": "0x0212ef30",
       "size": "0x0000000c"
+    },
+    {
+      "symbol": "sSoundNoteOpeningTimes",
+      "address": "0x212ef3c",
+      "size": "0x10",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundNoteClosingTimes",
+      "address": "0x212ef4c",
+      "size": "0x10",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundPairNoteOffsets",
+      "address": "0x212ef9c",
+      "size": "0x14",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
+    },
+    {
+      "symbol": "sSoundBankByLevel",
+      "address": "0x212efb0",
+      "size": "0x14",
+      "evidence": "Native const storage. Consumer widths and observed nonzero suffixes recorded in data-sound-rodata1018; original array boundaries are not claimed recovered."
     }
   ]
 }
