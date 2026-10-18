@@ -25,7 +25,10 @@ and requests X/Y bounds; its existing declaration debt is outside this change.
 - Pinned 2004/b56 focused linkcheck: VERIFIED, 320 bytes, no differences or blind relocations.
 - Changed-source formatting: zero findings or deferrals.
 - Declaration-agreement ratchet: no new disagreements or copied header declarations.
-- Whole-ROM build and committed-range linkcheck are recorded in the PR after completion.
+- Whole-ROM build: 106/106 modules exact, 11,334 source-built functions;
+  347/347 owned data claims reproduce. Committed-range linkcheck: 1/1 VERIFIED.
+  Baseline control retains nine pre-existing symbol diagnostics; the broad
+  ROM-data inventory reports one difference outside the owned-data claims.
 - Independent source and byte verification is required before marking the PR ready.
 
 ## Bounded shared-type experiment
@@ -43,7 +46,7 @@ Extract the following C++ block verbatim to `build/extrema/vector3.cpp`, then ru
 python tools/linkcheck.py --module ov007 --name func_ov007_020c2f14 --c build/extrema/vector3.cpp --addr 0x020c2f14 --size 320
 ```
 
-Experiment SHA-256 (UTF-8, LF): `6c5e581af8774a761f29f6bbebdb74594fdb1448b64a5d0b1287f12a6a93f827`.
+Experiment SHA-256 (UTF-8, LF): `f25a184717bdf3bbb709903b5c120bb64872a43d2c556dca7f494563ffaf96ba`.
 
 ```cpp
 //cpp
@@ -107,7 +110,8 @@ void func_ov007_020c2f14(Vector3 *points, int pointCount, int *outMinX, int *out
         *outMaxZ = maxZIndex;
     }
 }
-}```
+}
+```
 
 Observed result:
 
