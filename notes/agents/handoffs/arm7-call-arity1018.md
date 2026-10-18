@@ -29,7 +29,8 @@ added. This observation is not a claim that every other natural spelling fails.
 
 ## Runtime evidence
 
-At runtime address 0x027c41bc, the original `0239222C` stores 1 at [sp], sets
+The original `0239222C` starts at runtime address 0x027c41a4. Its instruction
+at 0x027c41bc stores 1 at [sp], then it sets
 r0 to sp+4, r1/r2 to zero and r3 to 0x14, then calls 0x027c1a04. The callee
 pushes eight bytes and reads the halfword at [sp+8], storing it into the request
 record at +0x16. This establishes the missing stack argument independently of
@@ -56,7 +57,7 @@ This is image equality, not a claim that the assembly stand-ins are decompiled C
 | Changed source | Storage range | Runtime range | Exact bytes | Checked call relocations |
 |---|---|---|---:|---:|
 | 02392134.c | 0x02392134..0x023921f0 | 0x027c40ac..0x027c4168 | 188 | 7 |
-| 0239222C.c | 0x0239222c..0x023922a8 | 0x027c41bc..0x027c4238 | 124 | 5 |
+| 0239222C.c | 0x0239222c..0x023922a8 | 0x027c41a4..0x027c4220 | 124 | 5 |
 
 The final production objects are byte-for-byte equal to their untouched base
 objects, including the existing exception sections. Focused linked-byte checks
