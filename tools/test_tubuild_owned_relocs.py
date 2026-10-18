@@ -82,24 +82,11 @@ def _layout(emitted_addend):
     """
     return {
         "bytes": bytes(range(16)),
-        "relocs": [
-            {
-                "offset": 0,
-                "type": R_ARM_ABS32,
-                "symbol": IMPORTED_VTABLE,
-                "addend": emitted_addend,
-                "targetSection": "SHN_UNDEF",
-            }
-        ],
-        "symbols": {
-            OWNED_SYMBOL: {
-                "address": DATA_START,
-                "size": 0x10,
-                "bind": "STB_GLOBAL",
-                "type": "STT_OBJECT",
-                "sectionIndex": 1,
-            }
-        },
+        "relocs": [{"offset": 0, "type": R_ARM_ABS32, "symbol": IMPORTED_VTABLE,
+                    "addend": emitted_addend, "targetSection": "SHN_UNDEF"}],
+        "symbols": {OWNED_SYMBOL: {"address": DATA_START, "size": 0x10,
+                                   "bind": "STB_GLOBAL", "type": "STT_OBJECT",
+                                   "sectionIndex": 1}},
         "inputSections": [1],
     }
 
@@ -108,67 +95,40 @@ def _entry(manifest_addend, target_address):
     return {
         "module": MODULE,
         "functions": [],
-        "data": [
-            {"symbol": OWNED_SYMBOL, "address": f"0x{DATA_START:08x}", "size": "0x10"}
-        ],
-        "relocations": [
-            {
-                "section": ".data",
-                "source": f"0x{RELOC_SOURCE:08x}",
-                "type": "R_ARM_ABS32",
-                "kind": "load",
-                "symbol": IMPORTED_VTABLE,
-                "addend": manifest_addend,
-                "target_module": "arm9",
-                "target_address": f"0x{target_address:08x}",
-            }
-        ],
+        "data": [{"symbol": OWNED_SYMBOL, "address": f"0x{DATA_START:08x}",
+                  "size": "0x10"}],
+        "relocations": [{"section": ".data", "source": f"0x{RELOC_SOURCE:08x}",
+                         "type": "R_ARM_ABS32", "kind": "load",
+                         "symbol": IMPORTED_VTABLE, "addend": manifest_addend,
+                         "target_module": "arm9",
+                         "target_address": f"0x{target_address:08x}"}],
     }
 
 
 class NormalizedUndefinedVtableAddend(unittest.TestCase):
     """The ``normalized_undefined_vtables`` addend arm, both halves."""
 
-    def verify(
-        self,
-        emitted_addend,
-        manifest_addend,
-        manifest_target,
-        configured_target=None,
-        import_address=IMPORT_PUBLIC,
-    ):
+    def verify(self, emitted_addend, manifest_addend, manifest_target,
+               configured_target=None, import_address=IMPORT_PUBLIC):
         entry = _entry(manifest_addend, manifest_target)
-        cfg = {
-            MODULE: {
-                RELOC_SOURCE: (
-                    "load",
-                    manifest_target if configured_target is None else configured_target,
-                    "arm9",
-                )
-            }
-        }
+        cfg = {MODULE: {RELOC_SOURCE: (
+            "load",
+            manifest_target if configured_target is None else configured_target,
+            "arm9")}}
         layout = _layout(emitted_addend)
-        with mock.patch.object(
-            TB, "section_contribution", lambda obj, name, start: (layout, None)
-        ):
+        with mock.patch.object(TB, "section_contribution",
+                               lambda obj, name, start: (layout, None)):
             return TB.verify_owned_sections(
-                b"",
-                entry,
-                CLAIMS,
+                b"", entry, CLAIMS,
                 name_index={IMPORTED_VTABLE: ("arm9", import_address)},
-                config_relocs=cfg,
-                sym_index={},
+                config_relocs=cfg, sym_index={},
                 target_reader=lambda mod, start, size: layout["bytes"][:size],
-                symbol_homes={},
-                bss_boundaries=set(),
-                public_address_points=True,
-                normalized_undefined_vtables=True,
-            )
+                symbol_homes={}, bss_boundaries=set(),
+                public_address_points=True, normalized_undefined_vtables=True)
 
     def row(self, result):
-        return next(
-            r for r in result["relocations"] if int(r["source"], 0) == RELOC_SOURCE
-        )
+        return next(r for r in result["relocations"]
+                    if int(r["source"], 0) == RELOC_SOURCE)
 
     def test_normalized_import_above_the_preamble_verifies(self):
         """Control: manifest 16 against emitted 8 is the arithmetic arm, and passes.
@@ -176,9 +136,8 @@ class NormalizedUndefinedVtableAddend(unittest.TestCase):
         Without this the fail-closed tests below could be passing for any reason
         at all -- a fixture that can never verify proves nothing about the branch.
         """
-        result = self.verify(
-            emitted_addend=8, manifest_addend=16, manifest_target=IMPORT_PUBLIC + 8
-        )
+        result = self.verify(emitted_addend=8, manifest_addend=16,
+                             manifest_target=IMPORT_PUBLIC + 8)
         self.assertTrue(result["ok"], result["errors"])
         row = self.row(result)
         self.assertEqual(row["verdict"], "OK")
@@ -193,18 +152,15 @@ class NormalizedUndefinedVtableAddend(unittest.TestCase):
         kind, type, symbol -- agrees, so ``else 0`` in place of ``else None``
         would call this relocation OK.  It must be WRONG-ADDEND.
         """
-        result = self.verify(
-            emitted_addend=0, manifest_addend=4, manifest_target=IMPORT_PUBLIC
-        )
+        result = self.verify(emitted_addend=0, manifest_addend=4,
+                             manifest_target=IMPORT_PUBLIC)
         row = self.row(result)
         self.assertEqual(row["verdict"], "WRONG-ADDEND")
         self.assertIsNone(row["expectedEmittedAddend"])
         self.assertEqual(row["expectedAddend"], 4)
         self.assertFalse(result["ok"])
-        self.assertTrue(
-            any("WRONG-ADDEND" in reason for reason in result["errors"]),
-            result["errors"],
-        )
+        self.assertTrue(any("WRONG-ADDEND" in reason for reason in result["errors"]),
+                        result["errors"])
 
     def test_sub_preamble_addend_is_not_silently_left_unbiased(self):
         """The other permissive rewrite: passing the raw addend through.
@@ -213,9 +169,8 @@ class NormalizedUndefinedVtableAddend(unittest.TestCase):
         set so that everything downstream lines up.  ``else expected_addend``
         would make this OK; the fail-closed arm must still refuse it.
         """
-        result = self.verify(
-            emitted_addend=4, manifest_addend=4, manifest_target=IMPORT_PUBLIC + 4
-        )
+        result = self.verify(emitted_addend=4, manifest_addend=4,
+                             manifest_target=IMPORT_PUBLIC + 4)
         row = self.row(result)
         self.assertEqual(row["verdict"], "WRONG-ADDEND")
         self.assertIsNone(row["expectedEmittedAddend"])
@@ -228,9 +183,8 @@ class NormalizedUndefinedVtableAddend(unittest.TestCase):
         address-point reference and normalizes to 0.  A ``>`` there would push
         the single most common case into the refusal arm.
         """
-        result = self.verify(
-            emitted_addend=0, manifest_addend=8, manifest_target=IMPORT_PUBLIC
-        )
+        result = self.verify(emitted_addend=0, manifest_addend=8,
+                             manifest_target=IMPORT_PUBLIC)
         self.assertTrue(result["ok"], result["errors"])
         row = self.row(result)
         self.assertEqual(row["verdict"], "OK")
@@ -250,12 +204,9 @@ class OwnedRelocationDestination(unittest.TestCase):
         the manifest and config both say public+8.  Dropping
         ``cand_addr != expected["target_address"]`` makes this OK.
         """
-        result = self.verify(
-            emitted_addend=8,
-            manifest_addend=16,
-            manifest_target=IMPORT_PUBLIC + 8,
-            import_address=IMPORT_PUBLIC + 4,
-        )
+        result = self.verify(emitted_addend=8, manifest_addend=16,
+                             manifest_target=IMPORT_PUBLIC + 8,
+                             import_address=IMPORT_PUBLIC + 4)
         row = self.row(result)
         self.assertEqual(row["verdict"], "WRONG-DEST")
         self.assertEqual(row["candidate"], f"0x{IMPORT_PUBLIC + 0xc:08x}")
@@ -269,17 +220,16 @@ class OwnedRelocationDestination(unittest.TestCase):
         elsewhere.  Dropping ``expected["target_address"] != cfg[1]`` makes this
         OK -- and a manifest that can name its own destination is not a check.
         """
-        result = self.verify(
-            emitted_addend=8,
-            manifest_addend=16,
-            manifest_target=IMPORT_PUBLIC + 8,
-            configured_target=IMPORT_PUBLIC + 0x100,
-        )
+        result = self.verify(emitted_addend=8, manifest_addend=16,
+                             manifest_target=IMPORT_PUBLIC + 8,
+                             configured_target=IMPORT_PUBLIC + 0x100)
         row = self.row(result)
         self.assertEqual(row["verdict"], "WRONG-DEST")
         self.assertEqual(row["candidate"], f"0x{IMPORT_PUBLIC + 8:08x}")
         self.assertEqual(row["configured"], f"0x{IMPORT_PUBLIC + 0x100:08x}")
         self.assertFalse(result["ok"])
+
+
 
 
 # Initialized linker boundaries share the same owned-byte verdict path.
