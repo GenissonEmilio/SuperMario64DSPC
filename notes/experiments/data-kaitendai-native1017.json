@@ -3287,5 +3287,134 @@
     "python tools/tubuild.py linkcheck ov047/daObjKm3_Kaitendai_c -j16",
     "python build/run-provenance.py -j16 --report-json build/final-production.json",
     "python tools/prepush_linkcheck.py --range 1b98141e598440a0432317b58678f3c5c088d558..HEAD"
-  ]
+  ],
+  "current_main_integration_1018": {
+    "tested_commit": "1f6c25005edc428a996b9a7f744f12aba4da61d0",
+    "tested_base": "f60e638b5054c4451316de058898c4bf211bf1f0",
+    "route": {
+      "output": ".rodata.kaitendai",
+      "input_section": ".rodata",
+      "start": "0x02111bf4",
+      "end": "0x02111c0c"
+    },
+    "unchanged_kuruma_range": [
+      "0x02111ab4",
+      "0x02111ac4"
+    ],
+    "rom_owned_gap": {
+      "section": ".data_mid",
+      "start": "0x02111ac4",
+      "end": "0x02111bf4",
+      "size": 304
+    },
+    "commands": [
+      "python tools/tubuild.py linkcheck --baseline --module ov047 -j16",
+      "python tools/tubuild.py linkcheck ov047/daObjKm3_Kaitendai_c -j16",
+      "python tools/rombuild.py -j16 --no-rom --report-json build/combined-routed-rombuild.json --data-provenance-requests build/combined-data-requests.json",
+      "python tools/prepush_linkcheck.py --range origin/main..HEAD"
+    ],
+    "scratch_result": "scratch-data-verified",
+    "rom": {
+      "bytes": 16777216,
+      "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+      "matchesStockRom": true
+    },
+    "module_fidelity": {
+      "modulesChecked": 106,
+      "modulesExact": 106,
+      "modulesExpectedOnly": 106,
+      "comparedBytes": 3049600,
+      "differingBytes": 0,
+      "unexpectedDifferingBytes": 0,
+      "percent": 100.0,
+      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b"
+    },
+    "source_build": {
+      "totalCodeFunctions": 11397,
+      "totalCodeBytes": 2238108,
+      "compiledFunctions": 11334,
+      "compiledBytes": 2225480,
+      "sourceFunctions": 11334,
+      "sourceBytes": 2225480,
+      "modFunctions": 0,
+      "modBytes": 0,
+      "sourceBytesPercent": 99.43577343005789,
+      "reproducingFunctions": 11334,
+      "reproducingBytes": 2225480,
+      "mismatchingFunctions": 0,
+      "mismatchingFunctionBytes": 0,
+      "differingSourceBytes": 0,
+      "sourceDataClaims": 354,
+      "sourceBssClaims": 247,
+      "sourceBssBytes": 31632,
+      "reproducingDataClaims": 354,
+      "reproducingDataClaimBytes": 15224,
+      "mismatchingDataClaims": 0,
+      "mismatchingDataClaimBytes": 0
+    },
+    "baseline_symbol_errors": 9,
+    "new_symbol_errors": 0,
+    "prepush": {
+      "verified": 5,
+      "warning": "existing initializer BLIND-6; complete initializer bytes and relocation destinations are separately covered by whole-object scratch and production link proofs",
+      "blocking": 0
+    },
+    "providers": [
+      {
+        "module": "ov047",
+        "symbol": "gKm3KaitendaiClps",
+        "address": 34675700,
+        "size": 24,
+        "source": "src/game/actors/d_a_obj_km3_kaitendai.cpp",
+        "section": ".rodata.kaitendai",
+        "status": "source-bytes-verified",
+        "provider_sha256": "d1059927db30a4e5443883436b2509a62be4a769dbd31393a4c30a35c569ab15"
+      },
+      {
+        "module": "ov047",
+        "symbol": "gKm3KurumaClps",
+        "address": 34675380,
+        "size": 16,
+        "source": "src/game/actors/d_a_obj_km3_kuruma.cpp",
+        "section": ".rodata",
+        "status": "source-bytes-verified",
+        "provider_sha256": "2e1c1f7af9617ff13b75a0932c4a2d889e1fbe3df5f7869ca6e6d65e2818c911"
+      },
+      {
+        "module": "ov047",
+        "symbol": "gKm3KaitendaiRotationIncrement",
+        "address": 34677536,
+        "size": 2,
+        "source": "src/game/actors/d_a_obj_km3_kaitendai.cpp",
+        "section": ".data",
+        "status": "source-bytes-verified",
+        "provider_sha256": "d1059927db30a4e5443883436b2509a62be4a769dbd31393a4c30a35c569ab15"
+      },
+      {
+        "module": "ov047",
+        "symbol": "gKm3KaitendaiAlternateRotationIncrement",
+        "address": 34677540,
+        "size": 2,
+        "source": "src/game/actors/d_a_obj_km3_kaitendai.cpp",
+        "section": ".data",
+        "status": "source-bytes-verified",
+        "provider_sha256": "d1059927db30a4e5443883436b2509a62be4a769dbd31393a4c30a35c569ab15"
+      }
+    ],
+    "artifact_sha256": {
+      "build\\current-control.log": "b3183a2cf30c82116e7313ae67b0f50af2e7751ab29be448eb0b01bffa27f5b9",
+      "build\\current-candidate-link.log": "d96c29dae8df29923e9138e8f21a384dad851d6393950e378e77d40aa5f26327",
+      "build\\combined-routed-rombuild.json": "02436e0390b77a73de157b840515a3cb89110279cffa4888d70fda64fed517c3",
+      "build\\current-prepush.log": "9d9285d6e39f761b717229761452ac315e3b3ecf0e1a03d1732d18975b0cb895"
+    },
+    "limits": "No source/header edits relative to accepted d273b164; all old source findings remain partial. This record adds integration evidence, not recovered original TU ownership. Nine strict symbol diagnostics are pre-existing and not a green symbols check. The 304-byte gap remains ROM-owned.",
+    "finding": {
+      "id": "kaitendai-current-main-section-order-001",
+      "location": "config/arm9/overlays/ov047/delinks.txt; config/tu_manifest.d/ov047/daObjKm3_Kaitendai_c.json",
+      "summary": "A shared ordinary rodata container for Kaitendai and Kuruma conflicts with their opposite code and data ordering in DSD.",
+      "kind": "correctness",
+      "disposition": "fixed",
+      "reason": "Actual DSD generation rejected the broad combined container. Route only the complete 24-byte Kaitendai compiler rodata input section to .rodata.kaitendai, retain Kuruma ordinary rodata and the 304-byte ROM-owned data gap. Fresh control/candidate whole-ROM equality and final production provider checks establish both actors still reproduce their licensed ranges."
+    }
+  }
 }

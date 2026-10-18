@@ -64,3 +64,28 @@ handle-layout and shared-interface findings on #4061, and records the fixed
 rotation-wording finding. Existing packed handle wrappers, numeric descriptor/
 handle names and address-named shared helpers remain future work. Independent
 verification and publication follow the immutable queue offer. No merge.
+
+## Current-main integration, 2026-10-18
+
+The integrated production inputs were tested at `1f6c25005edc428a996b9a7f744f12aba4da61d0`
+against main `f60e638b5054c4451316de058898c4bf211bf1f0`. Actor and header remain
+identical to the accepted `d273b164` candidate. The old ordinary `.rodata`
+description above records the original isolated proof. With Kuruma also on main,
+a broad shared container fails actual DSD generation because code and data
+orders differ. The accepted named-section router now sends Kaitendai's entire
+24-byte compiler `.rodata` to `.rodata.kaitendai`, at its original address.
+Kuruma retains its ordinary 16-byte `.rodata` range; the intervening 304 bytes
+remain ROM-owned `.data_mid`, with no new source ownership claim.
+
+A fresh source-independent control and six-range candidate link reproduce the
+same complete ROM hash recorded above. The normal production build passes all
+106 modules and verifies four requested native providers: both collision blocks
+and both Kaitendai halfwords. Five focused functions verify; the existing
+initializer BLIND-6 warning remains separately covered by whole-object linkage.
+There are zero new strict-symbol errors and nine pre-existing errors; that
+diagnostic is not reported as green. The experiment records commands, immutable
+input commit, provider identities, result bounds and report hashes. Subsequent
+changes to these two notes only document those measured inputs. All four prior
+source findings remain; `kaitendai-current-main-section-order-001` records the
+fixed integration fault. Independent queue review and fresh server validation
+are still required before merging.
