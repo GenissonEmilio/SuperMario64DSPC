@@ -62,6 +62,7 @@ sys.path.insert(0, str(TOOLS))
 import build_pin as BP          # noqa: E402
 import enroll as EN             # noqa: E402
 import lcf_interior as LI       # noqa: E402
+import linker_alignment as LA   # noqa: E402
 import match as M               # noqa: E402
 import modules as MOD           # noqa: E402
 import objisolate as OI         # noqa: E402
@@ -3143,6 +3144,8 @@ def section_contribution(obj_bytes, section_name, start):
     offsets, and linked addresses for every symbol in those sections.  Section order,
     alignment, and ``sh_info`` are read from the real ELF rather than inferred from
     section names -- mwccarm emits many identically named `.data` sections in one TU.
+    The pinned DSD script's ALIGNALL(4) supplies the minimum input alignment;
+    generated scripts are checked before the scratch and production builds.
     """
     elf = ELFFile(io.BytesIO(obj_bytes))
     secs = list(elf.iter_sections())
@@ -3158,7 +3161,8 @@ def section_contribution(obj_bytes, section_name, start):
     image = bytearray()
     offsets = {}
     for shndx, sec in selected:
-        absolute = _align_up(start + len(image), sec.header["sh_addralign"])
+        absolute = _align_up(start + len(image),
+                             LA.effective_alignment(sec.header["sh_addralign"]))
         image.extend(b"\0" * (absolute - (start + len(image))))
         offsets[shndx] = len(image)
         size = sec.header["sh_size"]
@@ -3300,7 +3304,8 @@ def prepare_owned_nontext_section_order(obj_bytes, entry, claims):
         cursor = claim["start"]
         for shndx in desired:
             sec = secs[shndx]
-            cursor = _align_up(cursor, sec.header["sh_addralign"])
+            cursor = _align_up(cursor,
+                               LA.effective_alignment(sec.header["sh_addralign"]))
             if cursor != bases[shndx]:
                 reasons.append(f"retained {name} section[{shndx}] aligns at "
                                f"0x{cursor:08x}, manifest anchors require "
@@ -3469,7 +3474,7 @@ def _configured_terminal_bss_end(module, claim, layout, owned_rows):
                 return None, [f"terminal BSS anchor has malformed BSS kind at symbols.txt:{number}"]
             if match.group(1) is not None:
                 size = int(match.group(1), 16 if match.group(1).startswith("0x") else 10)
-                if size <= 0 or address + size > 0x100000000:
+                if size < 0 or address + size > 0x100000000:
                     return None, [f"terminal BSS anchor has invalid size for {name}"]
                 if address < module_end and address + size > end:
                     return None, [f"configured BSS object {name} crosses the proposed end"]
@@ -3493,13 +3498,26 @@ def _configured_terminal_bss_end(module, claim, layout, owned_rows):
     _name, kind, address, size = configured[0]
     if not kind.startswith("bss(") or size is None:
         return None, [f"terminal BSS object {name} needs an explicit configured BSS size"]
+    if size == 0:
+        return None, [f"terminal BSS anchor cannot use zero-sized object {name}"]
     if address != emitted["address"] or size != emitted["size"]:
         return None, [f"terminal BSS object {name} disagrees with its configured address/size"]
     # A second configured label at the terminal address is ambiguous evidence.
     if sum(record[2] == address for record in records) != 1:
         return None, [f"terminal BSS object {name} has ambiguous configured aliases"]
-    if any(address < record[2] < end for record in records):
-        return None, [f"terminal BSS object {name} contains another configured symbol"]
+    # A native array may retain configured labels for its elements or fields.
+    # Only explicit zero-storage BSS aliases can coexist with this terminal extent;
+    # a positive size would overlap the full parent in DSD's baseline object.
+    # They cannot establish the end or describe another emitted/owned object.
+    for interior_name, interior_kind, interior_address, interior_size in records:
+        if not address < interior_address < end:
+            continue
+        if (not interior_kind.startswith("bss(") or interior_size != 0
+                or sum(r[0] == interior_name for r in records) != 1
+                or sum(r[2] == interior_address for r in records) != 1
+                or interior_name in layout.get("symbols", {})
+                or any(row.get("symbol") == interior_name for _section, row in owned_rows)):
+            return None, [f"terminal BSS object {name} contains another configured symbol"]
     declared = [row for section, row in owned_rows
                 if section == ".bss" and row.get("symbol") == name]
     if len(declared) != 1:
@@ -3979,7 +3997,7 @@ def content_tree_sha256(root):
 
 BASELINE_CONTROL_TOOLS = tuple(
     REPO / "tools" / name for name in (
-        "objisolate.py", "reloc_audit.py", "rombuild.py", "rombuild_cache.py",
+        "linker_alignment.py", "objisolate.py", "reloc_audit.py", "rombuild.py", "rombuild_cache.py",
         "rombuild_check.py", "rombuild_profile.py", "tu_manifest.py",
         "tu_production.py", "tubuild.py"))
 
@@ -5336,6 +5354,14 @@ def cmd_linkcheck(args):
         return 1
     print(f"      ok ({dt:.1f}s) -> {(scratch / 'arm9.lcf').relative_to(REPO).as_posix()}, "
           f"{(scratch / 'objects.txt').relative_to(REPO).as_posix()}")
+    try:
+        report["linkerAlignment"] = LA.verify_lcf(scratch / "arm9.lcf")
+    except ValueError as error:
+        print(f"\nREFUSED -- {error}")
+        report["result"] = "linker-alignment-refused"
+        report["linkerAlignment"] = {"error": str(error)}
+        _write_link_report(scratch, report)
+        return 1
     if partitioned:
         artifact_report = validate_partitioned_link_artifacts(
             scratch / "arm9.lcf", scratch / "objects.txt", entry, claims)
