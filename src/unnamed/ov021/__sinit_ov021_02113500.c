@@ -47,12 +47,27 @@ void __sinit_ov021_02113500(void)
     data_ov021_02114a20.z = 0xc8000;
     func_020731dc(&data_ov021_02114a20, _ZN7Vector3D1Ev, data_ov021_021149fc);
 
-    { volatile Vector3* p = (volatile Vector3*)&data_ov021_02114a2c; p->x = 0; p->y = 0x32000; p->z = -0xc8000; }
+    {
+        volatile Vector3 *p = (volatile Vector3 *)&data_ov021_02114a2c;
+        p->x = 0;
+        p->y = 0x32000;
+        p->z = -0xc8000;
+    }
     func_020731dc(&data_ov021_02114a2c, _ZN7Vector3D1Ev, data_ov021_02114a08);
 
-    { volatile Vector3* p = (volatile Vector3*)&data_ov021_02114a38; p->x = 0xc8000; p->y = 0x32000; p->z = 0; }
+    {
+        volatile Vector3 *p = (volatile Vector3 *)&data_ov021_02114a38;
+        p->x = 0xc8000;
+        p->y = 0x32000;
+        p->z = 0;
+    }
     func_020731dc(&data_ov021_02114a38, _ZN7Vector3D1Ev, data_ov021_021149d8);
 
-    { volatile Vector3* p = (volatile Vector3*)&data_ov021_02114a44; p->x = -0xc8000; p->y = 0x32000; p->z = 0; }
+    {
+        volatile Vector3 *p = (volatile Vector3 *)&data_ov021_02114a44;
+        p->x = -0xc8000;
+        p->y = 0x32000;
+        p->z = 0;
+    }
     func_020731dc(&data_ov021_02114a44, _ZN7Vector3D1Ev, data_ov021_021149cc);
 }
