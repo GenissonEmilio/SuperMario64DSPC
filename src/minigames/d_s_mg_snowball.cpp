@@ -172,7 +172,7 @@ extern void Matrix4x3_ApplyInPlaceToRotationY(void *m, short ang);
 extern struct Matrix4x3 data_020a0e68;
 extern char *_ZN2G212GetBG2ScrPtrEv(void);
 extern void MultiStore16(int val, char *dst, int n);
-extern u16 sSnowballCourseTiles[];
+extern const u16 sSnowballCourseTiles[][4];
 extern int RandomIntInternal(int *seed);
 extern int data_0209d4b8;
 extern void Mg_SetTopScreenYOffset(int);
@@ -2286,7 +2286,7 @@ void dScMgSnowball_c::BitA_StateDriftRight(int index) {
 extern "C" {
 extern int RandomIntInternal(int *seed);
 extern int data_0209d4b8;
-extern unsigned char data_ov006_0212f3b0[];
+extern const unsigned char sSnowballBitADriftStates[];
 }
 void dScMgSnowball_c::BitA_StatePause(int i) {
     char *o = (char *)this;
@@ -2299,9 +2299,9 @@ void dScMgSnowball_c::BitA_StatePause(int i) {
     }
     *(int *)(o + 0xbe9c + n) = 0;
     *(unsigned char *)(o + 0xbeb0 + n) =
-        data_ov006_0212f3b0[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
-                                << 1 >>
-                            15];
+        sSnowballBitADriftStates[(((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff)
+                                     << 1 >>
+                                 15];
     *(unsigned short *)(o + 0xbea8 + n) =
         (short)(unsigned char)((0x10 * (((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) &
                                         0x7fff)) >>
@@ -2440,7 +2440,7 @@ void dScMgSnowball_c::BitB_StateDriftRight(int index) {
 extern "C" {
 extern int RandomIntInternal(int *seed);
 extern int data_0209d4b8;
-extern unsigned char data_ov006_0212f3ac[];
+extern const unsigned char sSnowballBitBDriftStates[];
 }
 void dScMgSnowball_c::BitB_StatePause(int idx) {
     char *c = (char *)this;
@@ -2460,7 +2460,7 @@ void dScMgSnowball_c::BitB_StatePause(int idx) {
     v = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
     *(int *)(c + 0xbea0 + n) = (int)(((v << 5) >> 15) << 4) + 0x600;
     v = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
-    *(unsigned char *)(c + 0xbeb0 + n) = data_ov006_0212f3ac[(v << 1) >> 15];
+    *(unsigned char *)(c + 0xbeb0 + n) = sSnowballBitBDriftStates[(v << 1) >> 15];
     v = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
     *(short *)(c + 0xbea8 + n) = (unsigned char)((v << 4) >> 15);
     v = ((unsigned int)RandomIntInternal(&data_0209d4b8) >> 16) & 0x7fff;
@@ -2482,7 +2482,7 @@ void dScMgSnowball_c::Bit_RunKindB(int idx) {
 extern "C" {
 extern int RandomIntInternal(int *seed);
 extern int data_0209d4b8;
-extern int data_ov006_0212f3b4[];
+extern const int sSnowballBitKinds[];
 }
 void dScMgSnowball_c::Bit_PickKind(int idx) {
     char *self = (char *)this;
@@ -2490,7 +2490,7 @@ void dScMgSnowball_c::Bit_PickKind(int idx) {
     int b = 0;
     if (v == 5)
         b = 1;
-    *(unsigned char *)(self + idx * 0x24 + 0xbeaf) = data_ov006_0212f3b4[b];
+    *(unsigned char *)(self + idx * 0x24 + 0xbeaf) = sSnowballBitKinds[b];
     *(unsigned char *)(self + idx * 0x24 + 0xbeb0) = 0;
 }
 
@@ -2644,4 +2644,40 @@ extern "C" dScMgSnowball_c *dScMgSnowball_c_classInit(void) {
         return (dScMgSnowball_c *)dScMgSnowball_c_Construct((char *)p);
     }
     return (dScMgSnowball_c *)p;
+}
+
+/* Pause states choose right/left drift indices; Bit_PickKind chooses the
+ * two dispatch kinds. These descriptive names are reconstruction choices. */
+extern "C" {
+extern const unsigned char sSnowballBitBDriftStates[2] = {1, 2};
+extern const unsigned char sSnowballBitADriftStates[2] = {1, 2};
+extern const int sSnowballBitKinds[2] = {1, 2};
+/* Course IDs 0..32 select four u16 tiles per cell. */
+extern const u16 sSnowballCourseTiles[33][4] = {
+    {0xf200, 0xf200, 0xf200, 0xf200}, {0xf3c0, 0xf3c1, 0xf3e0, 0xf3e1},
+    {0xf3c3, 0xf3c4, 0xf3e3, 0xf3e4}, {0xf363, 0xf364, 0xf383, 0xf384},
+    {0xf366, 0xf367, 0xf386, 0xf387}, {0xf303, 0xf304, 0xf323, 0xf324},
+    {0xf306, 0xf307, 0xf326, 0xf327}, {0xf3cc, 0xf3cd, 0xf3ec, 0xf3ed},
+    {0xf369, 0xf36a, 0xf389, 0xf38a}, {0xf36c, 0xf36d, 0xf38c, 0xf38d},
+    {0xf309, 0xf30a, 0xf329, 0xf32a}, {0xf30c, 0xf30d, 0xf32c, 0xf32d},
+    {0xf3c6, 0xf3c7, 0xf3e6, 0xf3e7}, {0xf38e, 0xf38f, 0xf3ae, 0xf3af},
+    {0xf30f, 0xf310, 0xf32f, 0xf330}, {0xf312, 0xf313, 0xf332, 0xf333},
+    {0xf3d2, 0xf3d3, 0xf3f2, 0xf3f3}, {0xf3d5, 0xf3d6, 0xf3f5, 0xf3f6},
+    {0xf375, 0xf376, 0xf395, 0xf396}, {0xf378, 0xf379, 0xf398, 0xf399},
+    {0xf315, 0xf316, 0xf335, 0xf336}, {0xf318, 0xf319, 0xf338, 0xf339},
+    {0xf3de, 0xf3df, 0xf3fe, 0xf3ff}, {0xf37b, 0xf37c, 0xf39b, 0xf39c},
+    {0xf37e, 0xf37f, 0xf39e, 0xf39f}, {0xf31b, 0xf31c, 0xf33b, 0xf33c},
+    {0xf31e, 0xf31f, 0xf33e, 0xf33f}, {0xf3d5, 0xf38f, 0xf3f5, 0xf3af},
+    {0xf38e, 0xf3df, 0xf3ae, 0xf3ff}, {0xf240, 0xf241, 0xf260, 0xf261},
+    {0xf243, 0xf244, 0xf263, 0xf264}, {0xf2a0, 0xf2a1, 0xf2c0, 0xf2c1},
+    {0xf2a3, 0xf2a4, 0xf2c3, 0xf2c4},
+};
+extern int sMgTextSpritesEnglish[];
+extern int sMgTextSpritesSpanish[];
+extern int sMgTextSpritesFrench[];
+extern int sMgTextSpritesGerman[];
+extern int sMgTextSpritesItalian[];
+void *sSnowballTextSpritesByLanguage[5] = {sMgTextSpritesEnglish, sMgTextSpritesSpanish,
+                                           sMgTextSpritesFrench, sMgTextSpritesGerman,
+                                           sMgTextSpritesItalian};
 }

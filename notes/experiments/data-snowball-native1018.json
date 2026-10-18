@@ -1,0 +1,1518 @@
+{
+  "task": "data-snowball-native1018",
+  "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4103",
+  "base": "1da09450d80ecaf4357e5a9235631084e4b9a5a5",
+  "workflow": "18af52b49b9fb5663d417bdfa86109b7b157aaa3",
+  "completion": "partial",
+  "scope": "484 new bytes: five native arrays plus three existing ABI objects,478native+6internalalignment; existing120data/396init/4ctor/128BSS retained",
+  "findings": [
+    {
+      "disposition": "deferred",
+      "id": "ASSET-NAMING-RECONSTRUCTION-01",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/2750",
+      "kind": "reconstruction",
+      "location": "Source naming scope and existing actor/interface reconstruction",
+      "owner": "Original asset coordinator and subsequently claimed C++ reconstruction producers",
+      "reason": "Accepted partial readability scope; no class completion, original identifier, full declaration agreement or193warning relocation claim. Exact complete-object and module proofs independently preserve behavior. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Remaining reserved/encoded asset candidates and existing class/ABI/raw-field reconstruction debts are outside this evidenced naming slice."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R1",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_bomroom.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213bbb4 + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213bbb4. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgBomroom_c_classInit is now `return new dScMgBomroom_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R2",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_curling.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213c304 + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213c304. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgCurling_c_classInit is now `return new dScMgCurling_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R3",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_curling2.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213c510 + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213c510. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgCurling2_c_classInit is now `return new dScMgCurling2_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R4",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_pachinko.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213d9cc + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213d9cc. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgPachinko_c_classInit is now `return new dScMgPachinko_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R5",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_panel.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213e24c + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213e24c. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgPanel_c_classInit is now `return new dScMgPanel_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "fixed",
+      "id": "FAC-R6",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_teresa.c",
+      "reason": "Inspected in this candidate. The linked object's .text is byte-identical to the base's, the two call relocations keep their destinations, and the vptr literal moves from data_ov006_0213fa0c + 0 to the class's _ZTV + 0 after isolation, the same address 0x0213fa0c. Full ROM identical. The form matches the dScMgMemory2_c_classInit precedent. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "dScMgTeresa_c_classInit is now `return new dScMgTeresa_c;` in place of the mangled fBase_c::operator new call, the mangled base C2 call and a store of the unnamed data_ov006 label."
+    },
+    {
+      "disposition": "deferred",
+      "id": "FAC-R7",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3171",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_coin.cpp, src/d_s_mg3_d_esp.cpp, src/d_s_mg_flower.cpp, src/d_s_mg_slot3.c, src/minigames/d_s_mg_roulette.cpp, src/minigames/d_s_mg_slot1.cpp, src/d_s_mg_snowball.cpp",
+      "owner": "the tasks that reserve each class header, through the issue 3171 coordinator",
+      "reason": "Re-measured by the verifier for all seven: sizes and first differing words agree with the handoff and themes.md. The scratch-header claims hold for Coin (inline constructor, MATCHING at 0x48) and Snowball (out-of-line constructor, MATCHING at 0x34, but the call names _ZN15dScMgSnowball_cC1Ev, which 0x021295ac would have to carry). Each needed header change is recorded in the handoff and in themes.md theme 4. The kept files are untouched and their objects are byte-identical to the base's. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Seven of the thirteen reserved factories keep the hand-built form: `new` needs header changes in headers this task could not edit."
+    },
+    {
+      "disposition": "deferred",
+      "id": "FAC-R8",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/3171",
+      "kind": "reconstruction",
+      "location": "src/d_s_mg_bomroom.c, src/d_s_mg_curling.c, src/d_s_mg_curling2.c, src/d_s_mg_pachinko.c, src/d_s_mg_panel.c, src/d_s_mg_teresa.c",
+      "owner": "issue 3171 coordinator",
+      "reason": "Deliberate and required by the task: a rename would flip each factory's row under the filename rule in tools/check_profile_campaign.py, whose output is identical at base and candidate. rombuild, match.py, eligible.py and port/CMakeLists.txt all honour the marker, and theme 4 records the convention. A rename to .cpp belongs with a profile-registry update or the TU promotion that absorbs each factory. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The six files now hold C++ under a .c name, selected by the //cpp first line."
+    },
+    {
+      "disposition": "fixed",
+      "id": "NDT0922-01",
+      "kind": "correctness",
+      "location": "Original fifteen direct native D1 declaration sites",
+      "original_legacy_kind": "verification_dependency",
+      "reason": "All fifteen direct sites retain one receiver and pointer result; exact raw source matches the reviewed packet and all 1162 affected complete object pairs match. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The original missing-receiver dependency is corrected in the actual candidate."
+    },
+    {
+      "disposition": "fixed",
+      "id": "NDT0922-02",
+      "kind": "correctness",
+      "location": "tools/check_decl_agreement.py native receiver compatibility",
+      "original_legacy_kind": "prior_proposal_objection",
+      "reason": "The reviewed checker is already on base and unchanged in this candidate; opaque storage compatibility remains bounded without asserting a false concrete receiver type. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The rejected concrete receiver-type override remains absent."
+    },
+    {
+      "disposition": "fixed",
+      "id": "NDT0922-03",
+      "kind": "provenance",
+      "location": "Historical native-destructor scratch replay encoding",
+      "original_legacy_kind": "review_harness",
+      "reason": "All source/checker bindings use exact Git bytes and explicit UTF-8 decoding; the historical failure is retained as harness evidence, not a candidate defect. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The prior BOM/default-decoding harness failure remains resolved."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV2908-01",
+      "kind": "correctness",
+      "location": "Direct non-deleting destructor declarations in the reviewed source set",
+      "reason": "The independent raw declaration review accounts for all fifteen original D1 sites in this exact source commit. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Direct destructor receiver/result contracts are truthful."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV2908-02",
+      "kind": "correctness",
+      "location": "src/actors/player.cpp and static-destructor registration callers",
+      "reason": "The actual candidate preserves repaired pointer/pointer/node contracts, including both block-local Player declarations and calls. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Registration carries object and callback addresses as pointers."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV2908-03",
+      "kind": "correctness",
+      "location": "Constructor imports and array callback boundaries",
+      "reason": "The exact candidate contains 392 truthful constructor/Vector imports; repaired array counts/strides and callback conversions retain their measured ABI behavior. Native supersessions preserve current method batches. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Adjacent lifecycle declarations and selected runtime interfaces are reconciled."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV2908-04",
+      "kind": "provenance",
+      "location": "src/minigames/d_s_mg_roulette.cpp and owned lifecycle handoff",
+      "reason": "Roulette explicitly supplies its receiver and no longer claims a missing native-constructor symbol proves new cannot link. The handoff states the bounded interface scope, current source-only publication and retained native-reconstruction/address-view limits. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Source completion and ABI comments are accurate."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV-PACKET-01",
+      "kind": "correctness",
+      "location": "src/actors/player.cpp block-local registrar sites",
+      "reason": "Both declarations and calls retain pointer-valued object/destructor arguments and the existing registration-node pointer. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Both previously omitted registrar sites are corrected."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV-PACKET-02",
+      "kind": "correctness",
+      "location": "Complete lifecycle-family source census and declaration ledger",
+      "reason": "The checker is already merged. This candidate repairs the actual contracts and removes exactly 340 newly banked healed keys, preserving unrelated keys and the twelve Vector address-only rows. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The scoped checker dependencies are repaired in source."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV-PACKET-03",
+      "kind": "correctness",
+      "location": "Clipper C1/D1 entry views and static registration boundary",
+      "reason": "Typed pointer results and one receiver remain intact; the registration boundary carries the callback address without inventing a callable function prototype. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Clipper signatures and opaque callback transport remain truthful."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV-PACKET-04",
+      "kind": "correctness",
+      "location": "src/actors/player.cpp Vector destructor imports",
+      "reason": "All five are present in the independent raw census; all 22 original parser-omitted declarations remain accounted for without broadening the checker into block-local parsing. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The five omitted Player Vector imports are covered."
+    },
+    {
+      "disposition": "fixed",
+      "id": "STALE-ARRAY-RUNTIME-TEST",
+      "kind": "correctness",
+      "location": "tools/test_check_decl_agreement.py historical runtime fixtures",
+      "reason": "The already merged checker/tests retain isolated historical bad and corrected fixtures. The exact 40f4 successor ran all 226 tests with zero failures or skips. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The stale live-source assertion is replaced by honest isolated controls."
+    },
+    {
+      "disposition": "fixed",
+      "id": "RCV-SHADOW-01",
+      "kind": "correctness",
+      "location": "src_tu/actors/dScMgSlot1_c+dScMgSlot3_c.cpp:843; include/decl_common.h",
+      "reason": "The successor deletes only the stale local void-result import. The existing header supplies the truthful pointer result and receiver; its sole call ignores the result. Base and repaired Slot objects are completely identical. All eight affected shadow objects compile, with seven raw-identical and one limited to six measured local symbol-name bytes. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The corrected shared constructor interface exposed a contradictory duplicate in the Slot shadow TU."
+    },
+    {
+      "disposition": "fixed",
+      "id": "DATA-ROUTES-NAME-GUARD-001",
+      "kind": "correctness",
+      "location": "tools/data_section_routes.py; tools/tubuild.py; tools/rombuild.py",
+      "reason": "Nonstring name/module_section and malformed section-list guards now precede hash lookups; focused tests exercise lists, dictionaries, null and integers through both scratch claims and normal admission. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Early review reproduced unhashable malformed section names escaping structured refusal."
+    },
+    {
+      "disposition": "fixed",
+      "id": "DATA-ROUTES-POLICY-BINDING-001",
+      "kind": "provenance",
+      "location": "tools/tubuild.py; tools/data_provenance.py",
+      "reason": "The helper is an explicit baseline-control dependency and standalone snapshot input, with regressions. Normal actual-provider preparation additionally hashes all active Python tools. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The new routing policy must be part of baseline and standalone provider proof identity."
+    },
+    {
+      "disposition": "deferred",
+      "id": "DATA-ROUTES-DORIFU-CONTINUATION-001",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4069",
+      "kind": "reconstruction",
+      "location": "Private OV043 Dorifu fixture and future source ownership",
+      "owner": "codex-data-section-routes1018 and root global-data coordinator",
+      "reason": "A separate source task must reserve current leaf/config resources, retain prior class findings, review consumer-derived CLPS types and exact ownership, preserve the gaps, and obtain fresh independent production acceptance after this tool is accepted. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "The private native fixture does not enroll or independently accept Dorifu source, recover original names, or explain its five following eight-byte tails."
+    },
+    {
+      "disposition": "fixed",
+      "id": "NAMED-COVERAGE-ACCOUNTING-001",
+      "kind": "correctness",
+      "location": "tools/source_coverage.py",
+      "reason": "Parse full section names and normalize only build-supported initialized section families before interval accounting and waiver application. Tests retain module, family, source existence and byte-extent boundaries. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Named initialized ranges were silently omitted, hiding new ownership and reporting false loss when plain ranges became named."
+    },
+    {
+      "disposition": "fixed",
+      "id": "NAMED-COVERAGE-CI-DEPENDENCY-001",
+      "kind": "correctness",
+      "location": ".github/workflows/source-coverage.yml",
+      "reason": "Both pull-request and push path filters include tools/data_section_routes.py; no ROM or compiler dependency is introduced. Historical predecessor finding retained; unrelated class/tool scope is not re-authored or newly claimed by this Snowball continuation.",
+      "summary": "Coverage now imports the existing route-name classifier."
+    },
+    {
+      "id": "snowball-unowned-data-001",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "location": "ov006 path strings at0214009c and far sprite/OAM tables",
+      "summary": "Other Snowball storage remains unowned by this TU slice.",
+      "reason": "Four path strings and far sprite/OAM records remain required. No whole historical TU or class completion is claimed; actual final provider audit retains excluded storage.",
+      "owner": "codex-snowball-native1018 and subsequent separately claimed source/header owners",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4103"
+    },
+    {
+      "id": "snowball-path-declaration-001",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "location": "include/decl_common.h",
+      "summary": "Reserved shared scalar-char declarations block honest native array definitions for four path strings.",
+      "reason": "Owner jump-contract-repair-0918, linked PR2747, remains running. No shadow declaration, include-order bypass, header edit or ownership reclamation is used.",
+      "owner": "codex-snowball-native1018 and subsequent separately claimed source/header owners",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4103"
+    },
+    {
+      "id": "snowball-source-floor-001",
+      "kind": "reconstruction",
+      "disposition": "deferred",
+      "location": "src/minigames/d_s_mg_snowball.cpp and include/dScMgSnowball_c.h",
+      "summary": "Existing constructor/free helper, raw record views, Fix12 and optimizer/include-order constraints remain.",
+      "reason": "Preserve current codegen and accepted partial source. Native data additions do not reconcile inherited shadow/raw layouts or factory construction floor; all prior definitions remain byte/relocation identical modulo three data names.",
+      "owner": "codex-snowball-native1018 and subsequent separately claimed source/header owners",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4103"
+    },
+    {
+      "id": "snowball-vtable-prefix-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "config/tu_manifest.d/ov006/dScMgSnowball_c.json own vtable",
+      "summary": "Corrected inherited trailing-null-slot explanation.",
+      "reason": "Native full152 storage starts02140004 with zero/RTTI prefix; configured public144 begins0214000c. Eight bytes are the ABI prefix, not trailing slots. Own ABI rows now source-owned with native bindings."
+    },
+    {
+      "id": "snowball-binding-rationale-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "manifest symbol_binding_rewrites and defined_symbol_renames",
+      "summary": "Corrected unsupported DSD local-symbol prohibition and obsolete current temporary-name explanations.",
+      "reason": "Keep actual existing mappings and bindings unchanged as compatibility with configured identities. Current compiler temporary from/to rows are stated directly; no original-name claim or current inability to grow ELF names remains."
+    },
+    {
+      "id": "snowball-ancestor-rationale-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "manifest compiler_only_output",
+      "summary": "Corrected ancestor RTTI compiler-owner claim and coined-name impossibility assertion.",
+      "reason": "Ancestor RTTI has a canonical configured ROM home, which alone does not establish a base TU source provider. Vec2 destructor is a measured unconfigured four-byte body with no relocation callers, not necessarily absent because its reconstructed name is coined."
+    },
+    {
+      "id": "snowball-manifest-section-001",
+      "kind": "correctness",
+      "disposition": "fixed",
+      "location": "draft native rodata enrollment",
+      "summary": "Preparatory checker rejected four rodata anchors initially placed in the data list.",
+      "reason": "A row section attribute also did not change ownership-list semantics. Final manifest uses separate rodata list; complete native preparation verifies all five nontext claims and79relocations. Failed private trials are preserved; no guard changed."
+    },
+    {
+      "id": "snowball-overlay-alternatives-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "private configured relocation probe",
+      "summary": "Corrected initial assumption that each incoming target had one module home.",
+      "reason": "Keep complete configured overlays(0,4) alternatives exactly; resolved home must be licensed by that set. Forty-five new destinations are compared against the actual config/retail population."
+    },
+    {
+      "id": "snowball-current-evidence-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "manifest verification and historical research",
+      "summary": "Standalone text measurement and whole production ownership are explicitly distinguished.",
+      "reason": "Fresh standalone43/43 preserves one initializer classification refusal;44strict and six-range scratch independently verify initializer/ctor and data. Old receipts are archived, not retained as current own-metadata externalization evidence."
+    }
+  ],
+  "renames": {
+    "data_ov006_0212f3ac": "sSnowballBitBDriftStates",
+    "data_ov006_0212f3b0": "sSnowballBitADriftStates",
+    "data_ov006_0212f3b4": "sSnowballBitKinds"
+  },
+  "native_summary": {
+    "status": "PASS",
+    "base_sha256": "f1e50f47dc2a9c2128ab1a14415c5124ba1279d0298a06482b38efaae2ad21e5",
+    "candidate_sha256": "7d7bccc18deb3b68d85c87572da1d391fc3360dd6858e9747e03b5b8cbd2bf07",
+    "prior_definitions": 80,
+    "prior_functions": 47,
+    "prior_relocations": 416,
+    "renames": {
+      "data_ov006_0212f3ac": "sSnowballBitBDriftStates",
+      "data_ov006_0212f3b0": "sSnowballBitADriftStates",
+      "data_ov006_0212f3b4": "sSnowballBitKinds"
+    },
+    "scope": "Raw old definitions exact modulo3consumer-evidenced names; whole native data/init/ctor/BSS preparation proved, actual final provider/fullROM gates remain pending."
+  },
+  "new_objects": [
+    {
+      "name": "sSnowballBitBDriftStates",
+      "address": "0x212f3ac",
+      "size": 2,
+      "binding": "STB_GLOBAL",
+      "relocations": []
+    },
+    {
+      "name": "sSnowballBitADriftStates",
+      "address": "0x212f3b0",
+      "size": 2,
+      "binding": "STB_GLOBAL",
+      "relocations": []
+    },
+    {
+      "name": "sSnowballBitKinds",
+      "address": "0x212f3b4",
+      "size": 8,
+      "binding": "STB_GLOBAL",
+      "relocations": []
+    },
+    {
+      "name": "sSnowballCourseTiles",
+      "address": "0x212f3bc",
+      "size": 264,
+      "binding": "STB_GLOBAL",
+      "relocations": []
+    },
+    {
+      "name": "_ZTI15dScMgSnowball_c",
+      "address": "0x213ffd0",
+      "size": 12,
+      "binding": "STB_LOPROC",
+      "relocations": [
+        {
+          "offset": 0,
+          "kind": 2,
+          "target": "_ZTVN3abi20__si_class_type_infoE",
+          "addend": 8,
+          "retail_target": "0x209a764"
+        },
+        {
+          "offset": 4,
+          "kind": 2,
+          "target": "_ZTS15dScMgSnowball_c",
+          "addend": 0,
+          "retail_target": "0x213ffdc"
+        },
+        {
+          "offset": 8,
+          "kind": 2,
+          "target": "_ZTI19dScMgSingle3DBase_c",
+          "addend": 0,
+          "retail_target": "0x213bc64"
+        }
+      ]
+    },
+    {
+      "name": "_ZTS15dScMgSnowball_c",
+      "address": "0x213ffdc",
+      "size": 18,
+      "binding": "STB_LOPROC",
+      "relocations": []
+    },
+    {
+      "name": "sSnowballTextSpritesByLanguage",
+      "address": "0x213fff0",
+      "size": 20,
+      "binding": "STB_GLOBAL",
+      "relocations": [
+        {
+          "offset": 0,
+          "kind": 2,
+          "target": "sMgTextSpritesEnglish",
+          "addend": 0,
+          "retail_target": "0x21373a4"
+        },
+        {
+          "offset": 4,
+          "kind": 2,
+          "target": "sMgTextSpritesSpanish",
+          "addend": 0,
+          "retail_target": "0x21373fc"
+        },
+        {
+          "offset": 8,
+          "kind": 2,
+          "target": "sMgTextSpritesFrench",
+          "addend": 0,
+          "retail_target": "0x213734c"
+        },
+        {
+          "offset": 12,
+          "kind": 2,
+          "target": "sMgTextSpritesGerman",
+          "addend": 0,
+          "retail_target": "0x21372f4"
+        },
+        {
+          "offset": 16,
+          "kind": 2,
+          "target": "sMgTextSpritesItalian",
+          "addend": 0,
+          "retail_target": "0x2137454"
+        }
+      ]
+    },
+    {
+      "name": "_ZTV15dScMgSnowball_c",
+      "address": "0x2140004",
+      "size": 152,
+      "binding": "STB_GLOBAL",
+      "relocations": [
+        {
+          "offset": 4,
+          "kind": 2,
+          "target": "_ZTI15dScMgSnowball_c",
+          "addend": 0,
+          "retail_target": "0x213ffd0"
+        },
+        {
+          "offset": 8,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c13InitResourcesEv",
+          "addend": 0,
+          "retail_target": "0x2129268"
+        },
+        {
+          "offset": 12,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c19BeforeInitResourcesEv",
+          "addend": 0,
+          "retail_target": "0x20b0930"
+        },
+        {
+          "offset": 16,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c18AfterInitResourcesEj",
+          "addend": 0,
+          "retail_target": "0x210a6e4"
+        },
+        {
+          "offset": 20,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c16CleanupResourcesEv",
+          "addend": 0,
+          "retail_target": "0x21291f8"
+        },
+        {
+          "offset": 24,
+          "kind": 2,
+          "target": "_ZN8dScene_c22BeforeCleanupResourcesEv",
+          "addend": 0,
+          "retail_target": "0x202e5f0"
+        },
+        {
+          "offset": 28,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c21AfterCleanupResourcesEj",
+          "addend": 0,
+          "retail_target": "0x210a608"
+        },
+        {
+          "offset": 32,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c8BehaviorEv",
+          "addend": 0,
+          "retail_target": "0x21283a4"
+        },
+        {
+          "offset": 36,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c14BeforeBehaviorEv",
+          "addend": 0,
+          "retail_target": "0x210a698"
+        },
+        {
+          "offset": 40,
+          "kind": 2,
+          "target": "_ZN8dScene_c13AfterBehaviorEj",
+          "addend": 0,
+          "retail_target": "0x202e3c8"
+        },
+        {
+          "offset": 44,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c6RenderEv",
+          "addend": 0,
+          "retail_target": "0x2127d10"
+        },
+        {
+          "offset": 48,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c12BeforeRenderEv",
+          "addend": 0,
+          "retail_target": "0x210a664"
+        },
+        {
+          "offset": 52,
+          "kind": 2,
+          "target": "_ZN8dScene_c11AfterRenderEj",
+          "addend": 0,
+          "retail_target": "0x202e398"
+        },
+        {
+          "offset": 56,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c16OnPendingDestroyEv",
+          "addend": 0,
+          "retail_target": "0x20b04e8"
+        },
+        {
+          "offset": 60,
+          "kind": 2,
+          "target": "_ZN7fBase_c9Virtual34Ejj",
+          "addend": 0,
+          "retail_target": "0x204357c"
+        },
+        {
+          "offset": 64,
+          "kind": 2,
+          "target": "_ZN7fBase_c9Virtual38Ejj",
+          "addend": 0,
+          "retail_target": "0x204349c"
+        },
+        {
+          "offset": 68,
+          "kind": 2,
+          "target": "_ZN7fBase_c13OnHeapCreatedEv",
+          "addend": 0,
+          "retail_target": "0x2043494"
+        },
+        {
+          "offset": 72,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_cD1Ev",
+          "addend": 0,
+          "retail_target": "0x212568c"
+        },
+        {
+          "offset": 76,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_cD0Ev",
+          "addend": 0,
+          "retail_target": "0x212573c"
+        },
+        {
+          "offset": 80,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c10StartRoundEi",
+          "addend": 0,
+          "retail_target": "0x212921c"
+        },
+        {
+          "offset": 84,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c11CanEndStateEi",
+          "addend": 0,
+          "retail_target": "0x20b2994"
+        },
+        {
+          "offset": 88,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c11OnNewRecordEv",
+          "addend": 0,
+          "retail_target": "0x20b2990"
+        },
+        {
+          "offset": 92,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c10OnDealDoneEv",
+          "addend": 0,
+          "retail_target": "0x20b298c"
+        },
+        {
+          "offset": 96,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c16OnGraphCallback1Ev",
+          "addend": 0,
+          "retail_target": "0x20ae198"
+        },
+        {
+          "offset": 100,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c16OnGraphCallback0Ev",
+          "addend": 0,
+          "retail_target": "0x21291d4"
+        },
+        {
+          "offset": 104,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c16OnGraphCallback2Ev",
+          "addend": 0,
+          "retail_target": "0x2128fb8"
+        },
+        {
+          "offset": 108,
+          "kind": 2,
+          "target": "_ZN15dScMgSnowball_c16OnGraphCallback3Ev",
+          "addend": 0,
+          "retail_target": "0x21291b0"
+        },
+        {
+          "offset": 112,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c14GetDisplayModeEv",
+          "addend": 0,
+          "retail_target": "0x210a600"
+        },
+        {
+          "offset": 116,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c8OpenMenuEv",
+          "addend": 0,
+          "retail_target": "0x20af27c"
+        },
+        {
+          "offset": 120,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c9CloseMenuEv",
+          "addend": 0,
+          "retail_target": "0x20af04c"
+        },
+        {
+          "offset": 124,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c17SaveScreenForMenuEv",
+          "addend": 0,
+          "retail_target": "0x20af094"
+        },
+        {
+          "offset": 128,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c21RestoreScreenFromMenuEv",
+          "addend": 0,
+          "retail_target": "0x20aeed8"
+        },
+        {
+          "offset": 132,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c15InitSubScreenBgEv",
+          "addend": 0,
+          "retail_target": "0x20b2880"
+        },
+        {
+          "offset": 136,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c16InitMainScreenBgEv",
+          "addend": 0,
+          "retail_target": "0x20b27f4"
+        },
+        {
+          "offset": 140,
+          "kind": 2,
+          "target": "_ZN19dScMgSingle3DBase_c11InitEnginesEv",
+          "addend": 0,
+          "retail_target": "0x210a708"
+        },
+        {
+          "offset": 144,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c11PaintSquareEiiii",
+          "addend": 0,
+          "retail_target": "0x20ae3b4"
+        },
+        {
+          "offset": 148,
+          "kind": 2,
+          "target": "_ZN11dScMgBase_c12IsAltVariantEv",
+          "addend": 0,
+          "retail_target": "0x20ad660"
+        }
+      ]
+    }
+  ],
+  "new_destinations": [
+    {
+      "site": "0x213ffd0",
+      "symbol": "_ZTVN3abi20__si_class_type_infoE",
+      "addend": 8,
+      "configured_module": "arm9",
+      "configured_target": "0x209a764",
+      "abi_public_bias": 8
+    },
+    {
+      "site": "0x213ffd4",
+      "symbol": "_ZTS15dScMgSnowball_c",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x213ffdc",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x213ffd8",
+      "symbol": "_ZTI19dScMgSingle3DBase_c",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x213bc64",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x213fff0",
+      "symbol": "sMgTextSpritesEnglish",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21373a4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x213fff4",
+      "symbol": "sMgTextSpritesSpanish",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21373fc",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x213fff8",
+      "symbol": "sMgTextSpritesFrench",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x213734c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x213fffc",
+      "symbol": "sMgTextSpritesGerman",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21372f4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140000",
+      "symbol": "sMgTextSpritesItalian",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x2137454",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140008",
+      "symbol": "_ZTI15dScMgSnowball_c",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x213ffd0",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214000c",
+      "symbol": "_ZN15dScMgSnowball_c13InitResourcesEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x2129268",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140010",
+      "symbol": "_ZN11dScMgBase_c19BeforeInitResourcesEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b0930",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140014",
+      "symbol": "_ZN19dScMgSingle3DBase_c18AfterInitResourcesEj",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a6e4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140018",
+      "symbol": "_ZN15dScMgSnowball_c16CleanupResourcesEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21291f8",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214001c",
+      "symbol": "_ZN8dScene_c22BeforeCleanupResourcesEv",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x202e5f0",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140020",
+      "symbol": "_ZN19dScMgSingle3DBase_c21AfterCleanupResourcesEj",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a608",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140024",
+      "symbol": "_ZN15dScMgSnowball_c8BehaviorEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21283a4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140028",
+      "symbol": "_ZN19dScMgSingle3DBase_c14BeforeBehaviorEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a698",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214002c",
+      "symbol": "_ZN8dScene_c13AfterBehaviorEj",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x202e3c8",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140030",
+      "symbol": "_ZN15dScMgSnowball_c6RenderEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x2127d10",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140034",
+      "symbol": "_ZN19dScMgSingle3DBase_c12BeforeRenderEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a664",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140038",
+      "symbol": "_ZN8dScene_c11AfterRenderEj",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x202e398",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214003c",
+      "symbol": "_ZN11dScMgBase_c16OnPendingDestroyEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b04e8",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140040",
+      "symbol": "_ZN7fBase_c9Virtual34Ejj",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x204357c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140044",
+      "symbol": "_ZN7fBase_c9Virtual38Ejj",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x204349c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140048",
+      "symbol": "_ZN7fBase_c13OnHeapCreatedEv",
+      "addend": 0,
+      "configured_module": "arm9",
+      "configured_target": "0x2043494",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214004c",
+      "symbol": "_ZN15dScMgSnowball_cD1Ev",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x212568c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140050",
+      "symbol": "_ZN15dScMgSnowball_cD0Ev",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x212573c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140054",
+      "symbol": "_ZN15dScMgSnowball_c10StartRoundEi",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x212921c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140058",
+      "symbol": "_ZN11dScMgBase_c11CanEndStateEi",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b2994",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214005c",
+      "symbol": "_ZN11dScMgBase_c11OnNewRecordEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b2990",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140060",
+      "symbol": "_ZN11dScMgBase_c10OnDealDoneEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b298c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140064",
+      "symbol": "_ZN11dScMgBase_c16OnGraphCallback1Ev",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20ae198",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140068",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback0Ev",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21291d4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214006c",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback2Ev",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x2128fb8",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140070",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback3Ev",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x21291b0",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140074",
+      "symbol": "_ZN19dScMgSingle3DBase_c14GetDisplayModeEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a600",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140078",
+      "symbol": "_ZN11dScMgBase_c8OpenMenuEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20af27c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214007c",
+      "symbol": "_ZN11dScMgBase_c9CloseMenuEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20af04c",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140080",
+      "symbol": "_ZN11dScMgBase_c17SaveScreenForMenuEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20af094",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140084",
+      "symbol": "_ZN11dScMgBase_c21RestoreScreenFromMenuEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20aeed8",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140088",
+      "symbol": "_ZN11dScMgBase_c15InitSubScreenBgEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b2880",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x214008c",
+      "symbol": "_ZN11dScMgBase_c16InitMainScreenBgEv",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20b27f4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140090",
+      "symbol": "_ZN19dScMgSingle3DBase_c11InitEnginesEv",
+      "addend": 0,
+      "configured_module": "ov006",
+      "configured_target": "0x210a708",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140094",
+      "symbol": "_ZN11dScMgBase_c11PaintSquareEiiii",
+      "addend": 0,
+      "configured_module": "overlays(0,4)",
+      "configured_target": "0x20ae3b4",
+      "abi_public_bias": 0
+    },
+    {
+      "site": "0x2140098",
+      "symbol": "_ZN11dScMgBase_c12IsAltVariantEv",
+      "addend": 0,
+      "configured_module": "overlays(0,2,3,4,7)",
+      "configured_target": "0x20ad660",
+      "abi_public_bias": 0
+    }
+  ],
+  "open_pr_audit": [
+    {
+      "pr": 4099,
+      "head": "87f9e2b67166ef95064dcdd3f50bf661479c971c",
+      "base": "75ece80c18d825535cbaf669a761a2853f87c2f1",
+      "diff_file": "build/snowball-pr4099-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 4093,
+      "head": "9ae9e1ef33f11909ca6aeccfa59a15cbab4f43c2",
+      "base": "fe016346bcbc61bff55d103e348908234030588b",
+      "diff_file": "build/snowball-pr4093-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 4087,
+      "head": "77b878007ae71820181490b736badaca90369e5c",
+      "base": "6df96669b57659a72851c062344633bca1dc0fb8",
+      "diff_file": "build/snowball-pr4087-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 4077,
+      "head": "ac44b8909309d297192f209ee58d912ff4b3959d",
+      "base": "8b5c815a1e74595f0174494d775d834873dd3954",
+      "diff_file": "build/snowball-pr4077-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 4062,
+      "head": "52d9940f1a2987338375f2613984e6bc67afceba",
+      "base": "06586a6aae3f05886f95a906d0c97f539993264c",
+      "diff_file": "build/snowball-pr4062-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": [
+        {
+          "line": "+    .rodata start:0x0212f0f0 end:0x0212f3ac",
+          "reason": "Half-open interval ends at Snowball start; adjacent, not overlapping."
+        }
+      ]
+    },
+    {
+      "pr": 4057,
+      "head": "4364802b51623116d671d51832bd987d0d1db4dc",
+      "base": "a392d61e90ef03feff1bd78d293e01acf623cb75",
+      "diff_file": "build/snowball-pr4057-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 4053,
+      "head": "f1231f9a12419f01aab4ccdf2b39131ce6d2d77f",
+      "base": "5d16d3fa46e9689c797d1c18d4396ae2039c38f9",
+      "diff_file": "build/snowball-pr4053-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    },
+    {
+      "pr": 3937,
+      "head": "96a5819fb0c939045f2e9707c4811c7d0d2a4ba2",
+      "base": "385d784e5699bac1b38474e4f071a56fedd2e345",
+      "diff_file": "build/snowball-pr3937-current-config.diff",
+      "overlap_lines": [],
+      "adjacent_ranges": []
+    }
+  ],
+  "source_lineage": {
+    "base": "1da09450d80ecaf4357e5a9235631084e4b9a5a5",
+    "queue_commit": "043f30b046e46f23511beaaf5c57a21124ecb7f6",
+    "scope": "484 newly sourced bytes:8objects478bytes+6internalalignment; five newly defined arrays plus three existing compiler ABI objects. Existing120-byte PMF/profile group remains intact; new data claim extends it to324bytes.",
+    "ranges": [
+      [
+        34756236,
+        34776404
+      ],
+      [
+        34796460,
+        34796740
+      ],
+      [
+        34812896,
+        34813292
+      ],
+      [
+        34813412,
+        34813416
+      ],
+      [
+        34864984,
+        34865308
+      ],
+      [
+        34877472,
+        34877600
+      ]
+    ],
+    "resources": [
+      "class:dScMgSnowball_c",
+      "file:src/minigames/d_s_mg_snowball.cpp",
+      "file:config/tu_manifest.d/ov006/dScMgSnowball_c.json",
+      "file:config/arm9/overlays/ov006/symbols.txt",
+      "file:config/arm9/overlays/ov006/delinks.txt",
+      "file:notes/agents/data-snowball-native1018.md",
+      "file:notes/experiments/data-snowball-native1018.json",
+      "range:ov006:34756236:34776404",
+      "range:ov006:34796460:34796740",
+      "range:ov006:34812896:34813292",
+      "range:ov006:34813412:34813416",
+      "range:ov006:34864984:34865308",
+      "range:ov006:34877472:34877600"
+    ],
+    "conflicts": [],
+    "open_pr_overlap": [
+      {
+        "pr": 4099,
+        "head": "87f9e2b67166ef95064dcdd3f50bf661479c971c",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4093,
+        "head": "9ae9e1ef33f11909ca6aeccfa59a15cbab4f43c2",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4087,
+        "head": "77b878007ae71820181490b736badaca90369e5c",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4077,
+        "head": "ac44b8909309d297192f209ee58d912ff4b3959d",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4062,
+        "head": "52d9940f1a2987338375f2613984e6bc67afceba",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4057,
+        "head": "4364802b51623116d671d51832bd987d0d1db4dc",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 4053,
+        "head": "f1231f9a12419f01aab4ccdf2b39131ce6d2d77f",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt",
+          "config/arm9/overlays/ov006/symbols.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      },
+      {
+        "pr": 3937,
+        "head": "96a5819fb0c939045f2e9707c4811c7d0d2a4ba2",
+        "paths": [
+          "config/arm9/overlays/ov006/delinks.txt"
+        ],
+        "conclusion": "Shared module config overlap only; no leaf/header/manifest or overlapping numeric data proposal. Reconcile during later integration; external proposal unchanged."
+      }
+    ],
+    "predecessors": [
+      "asset-readability1014",
+      "mg-p1-factories-0926",
+      "native-destructor-repair-0922",
+      "tools-data-section-routes1018",
+      "tools-named-section-coverage1018"
+    ],
+    "read_only_headers": [
+      "include/dScMgSnowball_c.h",
+      "include/decl_common.h"
+    ],
+    "blockers": [
+      {
+        "task": "jump-contract-repair-0918",
+        "resource": "file:include/decl_common.h",
+        "scope": "Four path strings declared scalar char in shared header remain excluded; no declaration workaround."
+      }
+    ],
+    "remaining_scope": "Far sprite/OAM tables and path strings remain required. No full original TU/source-name claim.",
+    "private_probe": "C:/tmp/sm64ds-data-scout-current1018/build/snowball-after-capicon1018/proof.json",
+    "configured_destinations": "C:/tmp/sm64ds-data-scout-current1018/build/snowball-after-capicon1018/destinations.json",
+    "corrected_trials": [
+      "Observed4byte selector windows are2byte arrays plus2alignment each.",
+      "data_ov006_02140000 is fifth20byte language-pointer entry.",
+      "First private module assertion wrongly required singlemodule; full overlays(0,4) alternatives retained.",
+      "Manifest trailing-null VT description actually omits8byteprefix; nativefull152/public144 must be represented honestly."
+    ]
+  },
+  "validation": {
+    "status": "PASS-producer; independent acceptance pending",
+    "strict": "44/44 VERIFIED including initializer; zero warnings/blocking",
+    "standalone": "43/43 text MATCH; one initializer classification refusal retained separately",
+    "scratch": "Six complete ranges/106 modules/fullROMd150; nine baseline diagnostics and zero new",
+    "normal": "27 actual providers,372 complete data claims,247 BSS claims,11334 functions,106 exact modules/fullROMd150",
+    "static_checks": [
+      {
+        "command": [
+          "python",
+          "tools/source_style.py",
+          "--base",
+          "1da09450d80ecaf4357e5a9235631084e4b9a5a5"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-0.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/check_decl_agreement.py",
+          "--changed",
+          "1da09450d80ecaf4357e5a9235631084e4b9a5a5"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-1.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/source_coverage.py",
+          "--base",
+          "1da09450d80ecaf4357e5a9235631084e4b9a5a5"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-2.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/check_tubuild_conflicts.py",
+          "--list"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-3.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/check_rename_ledger.py"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-4.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/check_dead_references.py"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-5.log"
+      },
+      {
+        "command": [
+          "python",
+          "tools/port_refcheck.py"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-6.log"
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit": 0,
+        "log": "build/snowball-static-7.log"
+      }
+    ],
+    "optional_raw_diagnostic": [
+      {
+        "src": "src/_ZN10dCcAcPos_cD0Ev.cpp",
+        "symbol": "_ZTV10dCcAcPos_c",
+        "module": "arm9",
+        "addr": 34137860,
+        "differingBytes": 2
+      },
+      {
+        "src": "src/_ZN10dCcAcPos_cD1Ev.cpp",
+        "symbol": "_ZTV10dCcAcPos_c",
+        "module": "arm9",
+        "addr": 34137860,
+        "differingBytes": 2
+      }
+    ],
+    "proof_timing": "Runtime completed before final documentation/commit only. Final immutable evidence rehashes all7172 bound inputs and compares bound tracked blobs to committed bytes; no compiler/config/tool mismatch is reused."
+  },
+  "production": {
+    "status": "PASS",
+    "providers": 27,
+    "initialized_providers": 23,
+    "bss_providers": 4,
+    "new_native_objects": 8,
+    "new_native_bytes": 478,
+    "new_internal_alignment": 6,
+    "new_source_bytes": 484,
+    "owned_sections": [
+      {
+        "section": ".rodata",
+        "start": "0x212f3ac",
+        "end": "0x212f4c4",
+        "bytes": 280,
+        "relocations": 0,
+        "sha256": "6ba070f954264e6a385241a7d00cc04a2dfa6bd1a33b7fb3a268a97b669ec9fa"
+      },
+      {
+        "section": ".data",
+        "start": "0x213ff58",
+        "end": "0x214009c",
+        "bytes": 324,
+        "relocations": 60,
+        "sha256": "59bbefa5c824dea23b1d143c41f707f21c5d4d0b8ecc7005ca302969d6bfa13c"
+      },
+      {
+        "section": ".init",
+        "start": "0x21333e0",
+        "end": "0x213356c",
+        "bytes": 396,
+        "relocations": 18,
+        "sha256": "f4991d8897cb138387c3fe037833142c1d4ec490d3d9a768cdefe6ee347d4c3a"
+      },
+      {
+        "section": ".ctor",
+        "start": "0x21335e4",
+        "end": "0x21335e8",
+        "bytes": 4,
+        "relocations": 1,
+        "sha256": "4f6e228e5621a002625ea2f201a6dff09453610820c9ca5675fd66a3b5a1aceb"
+      }
+    ],
+    "final_symbols": [
+      {
+        "name": "_ZTI15dScMgSnowball_c",
+        "address": "0x213ffd0",
+        "size": 12,
+        "binding": "STB_LOPROC"
+      },
+      {
+        "name": "_ZTS15dScMgSnowball_c",
+        "address": "0x213ffdc",
+        "size": 18,
+        "binding": "STB_LOPROC"
+      },
+      {
+        "name": "_ZTV15dScMgSnowball_c",
+        "address": "0x214000c",
+        "size": 144,
+        "binding": "STB_GLOBAL"
+      },
+      {
+        "name": "sSnowballTextSpritesByLanguage",
+        "address": "0x213fff0",
+        "size": 20,
+        "binding": "STB_GLOBAL"
+      },
+      {
+        "name": "data_ov006_02140000",
+        "address": "0x2140000",
+        "size": 0,
+        "binding": "STB_GLOBAL"
+      },
+      {
+        "name": "__sinit_d_s_mg_snowball.cpp",
+        "address": "0x21333e0",
+        "size": 396,
+        "binding": "STB_GLOBAL"
+      },
+      {
+        "name": ".p__sinit_d_s_mg_snowball.cpp",
+        "address": "0x21335e4",
+        "size": 4,
+        "binding": "STB_GLOBAL"
+      }
+    ],
+    "excluded_storage": [
+      {
+        "label": "four excluded path strings",
+        "start": "0x214009c",
+        "bytes": 116,
+        "providers": [
+          "_dsd_gap@ov006_27.o"
+        ],
+        "sha256": "1f7764e098d9b7a57c10f37ebcbb7916366f16b787b1f02ffda288c08b34e02f"
+      },
+      {
+        "label": "previous rodata owner",
+        "start": "0x212f3a8",
+        "bytes": 4,
+        "providers": [
+          "_dsd_gap@ov006_24.o"
+        ],
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+      },
+      {
+        "label": "following initializer owner",
+        "start": "0x212f4c4",
+        "bytes": 4,
+        "providers": [
+          "d_mg3d_heyho_obj_adapter.o"
+        ],
+        "sha256": "1a47b23834e697ba5273dd727d774b74c5ea69e802a3ee8659a21408bb1488dc"
+      }
+    ],
+    "all_bound_inputs_rechecked": 7172,
+    "committed_blobs_verified": 0,
+    "full_rom": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8"
+  },
+  "private_artifacts": [
+    "build/snowball-native-proof.json",
+    "build/snowball-control.json",
+    "build/snowball-scratch.json",
+    "build/snowball-production.json",
+    "build/snowball-final-ownership.json",
+    "build/snowball-rationale-corrections.json",
+    "build/snowball-section-trial.json",
+    "build/snowball-incidental-restoration.json"
+  ]
+}
