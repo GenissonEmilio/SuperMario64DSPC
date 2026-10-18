@@ -34,6 +34,14 @@
       "location": "include/dScMgHanachan_c.h:112",
       "summary": "Public header-offset checker could not parse the native Phase mPhase field without a qualified size assertion.",
       "reason": "Add compiler-enforced sizeof(dScMgHanachan_c::Phase)==0x08 assertion. Existing checker now checks all8 outer offsets through data end0x4f65; compiler verifies padded sizeof0x4f68. Entire raw ELF output of both consumers is identical."
+    },
+    {
+      "id": "hanachan-offset-evidence-lf-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "notes/experiments/data-hanachan-offset1017.json",
+      "summary": "Committed JSON line endings failed whitespace checks; earlier working-tree diff check did not inspect the untracked added file.",
+      "reason": "Normalize JSON to UTF-8 LF, compare unchanged compiler/config/header blobs against1370 and run committed-range whitespace check before publication."
     }
   ],
   "compiler": "2004/b56",
@@ -101,7 +109,7 @@
     "new_local_header_redeclarations": 0,
     "port_references": 247,
     "port_stale": 0,
-    "diff_check": "pass"
+    "diff_check": "Committed-range git diff --check b7acba2fb5aed0e887869ba72ff60f7909afc2f6..HEAD must pass after this doc-only commit; final result is recorded in producer queue evidence."
   },
   "private_artifact_hashes": {
     "build/strict.json": "1b1a774a5b5f8ce9cd67f99316da69706461db9de8252437ff8aca60844149ba",
@@ -112,5 +120,10 @@
   },
   "final_header_sha256": "9f56d270ec0679e346af944a6ddc4664c466dbf49ac72ef1be54f54df434a97a",
   "independent_review": "Required against immutable follow-up candidate; producer does not self-accept.",
-  "completion": "CI defect fixed; inherited reconstruction remains partial."
+  "completion": "CI defect fixed; inherited reconstruction remains partial.",
+  "documentation_followup": {
+    "proof_commit": "1370cdcbfaca19b079a871f969599bd4a8bce2c3",
+    "reason": "The newly added JSON was written with CRLF, which failed committed-diff whitespace checks. Prior working-tree diff check omitted this untracked file, so it was insufficient evidence. Normalize only this documentation to UTF-8 LF and verify the committed diff.",
+    "functional_identity": "Every src/, include/ and config/ Git blob is identical to1370; only this evidence file changes. Root independently verified1370 with64strict entries,8offset fields,106modules,37providers and fullROMd150. No fresh compiler or full-ROM run is claimed for this doc-only follow-up."
+  }
 }
