@@ -34,7 +34,7 @@ the source type, member width, initializer behavior or original identifier.
 ## Dependency composition
 
 The review base is `e2a4ac2b61602d3e48e44404d1bf7c57418c6b3a`, published as
-`tools/data-foundation1017`. It composes independently accepted PR #4024 tip
+`refs/heads/tools/data-foundation1017`. It composes independently accepted PR #4024 tip
 `2801e012eea47be85d78732b81ff32c3df84e2fb` and PR #4025 tip
 `121ca67be3ac06751cc6d8106ff6487a76dc52fd` without conflicts. The original queue
 input is the latter tip. This composition supplies both longer compiler-local
