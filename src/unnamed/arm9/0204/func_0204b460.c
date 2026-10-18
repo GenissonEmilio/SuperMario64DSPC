@@ -72,7 +72,9 @@ typedef struct {
 /* No header declares these; each is spelled as its definition spells it
    (CrossVec3's vector is a Vec3_Fix12, NormalizeVec3 and MulVec3Mat3x3 take
    int*), so the calls below cast. */
-typedef struct { Fix12i x, y, z; } Vec3_Fix12;
+typedef struct {
+    Fix12i x, y, z;
+} Vec3_Fix12;
 extern void CrossVec3(const Vec3_Fix12 *a, const Vec3_Fix12 *b, Vec3_Fix12 *out);
 extern void NormalizeVec3(int *v, int *out);
 extern void Copy36Bytes(int *src, int *dst);

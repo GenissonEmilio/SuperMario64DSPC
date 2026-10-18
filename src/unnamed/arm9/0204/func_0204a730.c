@@ -34,9 +34,9 @@ typedef struct {
 typedef struct PtclNode {
     struct PtclNode *next; /* 0x00 */
     void *prev;            /* 0x04 */
-    Vector3 basePosition;     /* 0x08 */
-    Vector3 offset;           /* 0x14 */
-    Vector3 velocity;         /* 0x20 */
+    Vector3 basePosition;  /* 0x08 */
+    Vector3 offset;        /* 0x14 */
+    Vector3 velocity;      /* 0x20 */
     u16 lifetime;          /* 0x2c */
     u16 age;               /* 0x2e */
     u8 pad_30[0x6];
@@ -85,8 +85,8 @@ typedef struct {
     PtclList particles2; /* 0x10 */
     PtclDef *def;        /* 0x18 */
     s32 callbackFlags;   /* 0x1c */
-    Vector3 position;       /* 0x20 */
-    Vector3 velocity;       /* 0x2c -- added to every particle's offset each frame */
+    Vector3 position;    /* 0x20 */
+    Vector3 velocity;    /* 0x2c -- added to every particle's offset each frame */
     u16 age;             /* 0x38 */
     u8 pad_3a[0x1e];
     u8 emitInterval; /* 0x58 */
