@@ -28,7 +28,8 @@
       "end": "0x021119cc"
     },
     {
-      "name": ".rodata",
+      "name": ".rodata.kaitendai",
+      "input_section": ".rodata",
       "start": "0x02111bf4",
       "end": "0x02111c0c"
     },
