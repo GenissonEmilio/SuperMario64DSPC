@@ -41,6 +41,7 @@ src/minigames/unit020cd744.cpp:
 src/minigames/d_s_mg_amida.cpp:
     complete
     .text start:0x020d1018 end:0x020d5a54
+    .data start:0x0213b814 end:0x0213b9ac
 
 src/minigames/d_s_mg_bomroom.cpp:
     complete
@@ -66,7 +67,7 @@ src/minigames/d_s_mg_cup.cpp:
     .init start:0x021303d0 end:0x021304ac
     .ctor start:0x0213358c end:0x02133590
     .bss start:0x02141870 end:0x021418b0
-    .data start:0x0213c094 end:0x0213c0f4
+    .data start:0x0213bfe0 end:0x0213c1e4
 
 src/minigames/d_s_mg_curling.cpp:
     complete
@@ -98,6 +99,7 @@ src/minigames/d_s_mg_hanachan_methods.cpp:
     .text start:0x020ea280 end:0x020ede18
     .init start:0x02130df8 end:0x02130e9c
     .ctor start:0x021335a0 end:0x021335a4
+    .data start:0x0213c95c end:0x0213ca7c
     .bss start:0x02142018 end:0x02142044
 
 src/minigames/d_s_mg_hanachan.cpp:
