@@ -2160,9 +2160,9 @@ data_ov006_0212f238 kind:data(any) addr:0x0212f238
 data_ov006_0212f274 kind:data(any) addr:0x0212f274
 sTrmp2SpawnDefs kind:data(any) addr:0x0212f2b0
 sTrmp2ItemKinds kind:data(any) addr:0x0212f328
-data_ov006_0212f3ac kind:data(any) addr:0x0212f3ac
-data_ov006_0212f3b0 kind:data(any) addr:0x0212f3b0
-data_ov006_0212f3b4 kind:data(any) addr:0x0212f3b4
+sSnowballBitBDriftStates kind:data(any) addr:0x0212f3ac
+sSnowballBitADriftStates kind:data(any) addr:0x0212f3b0
+sSnowballBitKinds kind:data(any) addr:0x0212f3b4
 sSnowballCourseTiles kind:data(any) addr:0x0212f3bc
 __sinit_d_mg3d_heyho_obj_adapter.cpp kind:function(arm,size=0x68) addr:0x0212f4c4
 __sinit_d_mg_jump3d_mario.cpp kind:function(arm,size=0x134) addr:0x0212f52c

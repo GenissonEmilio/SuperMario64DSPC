@@ -10,7 +10,8 @@
     "WHY 0x021295ac..0x0212a520 BELONGS TO THIS CLASS. dScMgSnowball_c_Construct is dScMgSnowball_c's constructor: it calls _ZN11dScMgBase_cC2Ev, stores the vptr _ZTV19dScMgSingle3DBase_c, then _ZTV15dScMgSnowball_c (the class's own, address _ZTV+8), constructs mModel at 0xaba4 and the three element arrays that ~dScMgSnowball_c (0x0212568c) tears down in reverse, with SnowSpray_ElemDtor (in this TU) as the mArray3 element destructor and SnowSpray_ElemCtor (empty, 0x0212968c) as its constructor. The 17 functions after it are per-element and whole-array helpers on the 0x32-element, 0x24-byte array at this+0xbe94 (the field map in include/dScMgSnowball_c.h) and the pointer-to-member tables sSnowballBitStateTable/02143038/02143050/02143070. Only dScMgSnowball_c_classInit, which calls the constructor, is factory code.",
     "class label(s): dScMgSnowball_c",
     "module sinit corroboration: 31 sinit(s) / 31 .ctor entries, sinit_vs_tu=ok, corroborated=False (module-wide, NOT narrowed to this one TU -- see notes/tu-reconstruction-pilot-report.md sec 2 for the by-hand narrowing step)",
-    "CLASSINIT TAIL FOLD (2026-10-10): dScMgSnowball_c_classInit (0x0212a520, size 0x34), formerly src/d_s_mg_snowball.cpp, is folded in as the last function, so the TU is 43 functions over .text 0x0212568c..0x0212a554, ROM ordinals 0..42, ROM-ascending under #pragma defer_codegen off. Membership: the factory calls fBase_c::operator new(0xc59c) == sizeof(dScMgSnowball_c) (the header's static size assert) and hands the storage to dScMgSnowball_c_Construct, this TU's constructor body, which stores _ZTV15dScMgSnowball_c. It is spelled as dScMgSnowball_c::operator new(sizeof(dScMgSnowball_c)) plus the explicit constructor call because that constructor stays a free function."
+    "CLASSINIT TAIL FOLD (2026-10-10): dScMgSnowball_c_classInit (0x0212a520, size 0x34), formerly src/d_s_mg_snowball.cpp, is folded in as the last function, so the TU is 43 functions over .text 0x0212568c..0x0212a554, ROM ordinals 0..42, ROM-ascending under #pragma defer_codegen off. Membership: the factory calls fBase_c::operator new(0xc59c) == sizeof(dScMgSnowball_c) (the header's static size assert) and hands the storage to dScMgSnowball_c_Construct, this TU's constructor body, which stores _ZTV15dScMgSnowball_c. It is spelled as dScMgSnowball_c::operator new(sizeof(dScMgSnowball_c)) plus the explicit constructor call because that constructor stays a free function.",
+    "New native ranges are rodata0212f3ac..0212f4c4 and data0213ffd0..0214009c. Course renderer reads four u16 words perID, generator produces IDs0..32. Two u8[2] pause selectors feed states1/2; int[2] feeds kind1/2. Existing C++ class and initializer unchanged apart from inferred scalar target spellings. This reconstructs production ownership, not every originalTUglobal."
   ],
   "sections": [
     {
@@ -31,12 +32,17 @@
     {
       "name": ".data",
       "start": "0x0213ff58",
-      "end": "0x0213ffd0"
+      "end": "0x0214009c"
     },
     {
       "name": ".bss",
       "start": "0x02143020",
       "end": "0x021430a0"
+    },
+    {
+      "name": ".rodata",
+      "start": "0x0212f3ac",
+      "end": "0x0212f4c4"
     }
   ],
   "functions": [
@@ -447,6 +453,36 @@
       "size": "0x8",
       "binding": "STB_GLOBAL",
       "evidence": "PMF descriptor for Bit_StateFallStart, copied into sSnowballBitStateTable"
+    },
+    {
+      "symbol": "_ZTI15dScMgSnowball_c",
+      "address": "0x213ffd0",
+      "size": "0xc",
+      "binding": "STB_LOPROC",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "_ZTS15dScMgSnowball_c",
+      "address": "0x213ffdc",
+      "size": "0x12",
+      "binding": "STB_LOPROC",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "sSnowballTextSpritesByLanguage",
+      "address": "0x213fff0",
+      "size": "0x14",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "_ZTV15dScMgSnowball_c",
+      "address": "0x0214000c",
+      "size": "0x98",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names.",
+      "emitted_storage_address": "0x02140004",
+      "address_point_bias": 8
     }
   ],
   "bss": [
@@ -495,373 +531,17 @@
     "tubuild create warning (RESOLVED): CONFLICT: extern declaration 'RedrawCourse' differs between the legacy file that used to hold _ZN15dScMgSnowball_c6RenderEv and the one that held _ZN15dScMgSnowball_c13InitResourcesEv; kept the first, the other is commented out for review -- RESOLVED: kept `void RedrawCourse(char *)`, the typed view; the call sites in OnYoshiTryEat and InitResources, which had declared it `void *`, take an explicit (char *) cast. Verified: 23/23 MATCH.",
     "WIDENED to 0x0212a520: the 19 shards dScMgSnowball_c_Construct through Bit_InitAll are appended to src/minigames/d_s_mg_snowball.cpp in ROM order, each under its `// @symbol` marker. Their file-local struct and pointer-to-member typedefs carry the shard's address as a suffix so they cannot collide. Bit_DrawAll takes `void*` (include/decl_common.h declares it so) and casts to its local object type. The constructor keeps its C name: the ROM does not distinguish C1 from C2, so a rename to _ZN15dScMgSnowball_cC1Ev would be unsupported. Its own-vtable store is spelled `&_ZTV15dScMgSnowball_c[2]`, because this TU defines that symbol and objisolate requires the vptr-store addend to be at least the 8-byte vtable preamble.",
     "Folded __sinit_ov006_021333e0 into this TU. The four PMF tables are file-scope arrays, so mwcc emits __sinit_d_s_mg_snowball.cpp, the same 0x18c-byte initializer and the same eighteen relocations, plus fourteen {function, 0} descriptors and the eight-byte g_profile_MG_SNOWBALL word that sits between them. @2720, @2722, @2724, @2726, @2728, @2730, @2732, @2734 and @2736 are free and kept. @2710, @2712 and @2714 are already ov060's, and @2716 and @2718 are already ov002's, so defined_symbol_renames maps them to the unused same-length @2719, @2721, @2723, @2725 and @2727.",
-    "LOCAL WORKER NOTE: this machine's EU stock dump builds sha256 ddab9300b24aeae254192c2a30d812b07ece3adff83230e75c865ed915c9de40 (per #3691); the recorded rom.sha256 is the fleet-canonical d1506e90...c478e8 that every intact entry shares."
+    "LOCAL WORKER NOTE: this machine's EU stock dump builds sha256 ddab9300b24aeae254192c2a30d812b07ece3adff83230e75c865ed915c9de40 (per #3691); the recorded rom.sha256 is the fleet-canonical d1506e90...c478e8 that every intact entry shares.",
+    "Native-data continuation: five new native arrays plus three existing compiler ABI objects supply484newbytes (478objects+6internalalignment). The full vtable is152bytes including its8-byte ABI prefix at02140004; configured public storage is144bytes at0214000c. Earlier discarded-vtable rationale incorrectly called that prefix trailing null slots. data_ov006_02140000 is the fifth pointer inside the20-byte language table, not separate storage. Whole configured overlay alternatives are retained; path strings/shared declarations and far sprite tables remain excluded.",
+    "Provenance correction: ancestor RTTI canonical ROM home is not proof that its base TU supplies it; Vec2 reconstruction spelling is not evidence that an original destructor was necessarily absent. Current standalone verification covers43textfunctions and still refuses the separately owned initializer classification; all44 strict functions and six-range scratch link are separate complete checks."
   ],
-  "verification": {
-    "round": "tools/tubuild.py verify -- text-only, whole shadow TU compiled once",
-    "toolchain": "tools/mwccarm/2004/b56/mwccarm.exe",
-    "flags": "-O4,p -enum int -lang c++ -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
-    "object": "build/tu/ov006-dScMgSnowball_c/dScMgSnowball_c.o (gitignored)",
-    "comparison": "tools/match.py extract_func+compare (bytes/relocs) AND tools/objisolate.py plan() (relocation type/addend) AND tools/reloc_audit.py check_destinations() (relocation target identity)",
-    "functions_matched": 43,
-    "functions_declared": 43,
-    "compilerOnlyOutput": {
-      "requested": [
-        "_ZN15dScMgSnowball_cD2Ev",
-        "_ZN15dScMgSnowball_c4Vec2D1Ev",
-        "_ZN7Vector3D1Ev"
-      ],
-      "deadstripped": [
-        "_ZN15dScMgSnowball_c4Vec2D1Ev",
-        "_ZN15dScMgSnowball_cD2Ev",
-        "_ZN7Vector3D1Ev"
-      ],
-      "droppedSections": [
-        9,
-        10,
-        22,
-        23,
-        118,
-        119,
-        120,
-        121,
-        122,
-        123,
-        124,
-        125,
-        126,
-        127,
-        128,
-        129,
-        130,
-        131,
-        132,
-        133,
-        134,
-        135,
-        136,
-        137
-      ],
-      "data": [
-        "_ZTV15dScMgSnowball_c",
-        "_ZTI15dScMgSnowball_c",
-        "_ZTS15dScMgSnowball_c",
-        "_ZTI19dScMgSingle3DBase_c",
-        "_ZTS19dScMgSingle3DBase_c",
-        "_ZTI11dScMgBase_c",
-        "_ZTS11dScMgBase_c",
-        "_ZTI8dScene_c",
-        "_ZTS8dScene_c",
-        "_ZTI7dBase_c",
-        "_ZTS7dBase_c",
-        "_ZTI7fBase_c",
-        "_ZTS7fBase_c"
-      ],
-      "dataExternalized": [
-        "_ZTI11dScMgBase_c",
-        "_ZTI15dScMgSnowball_c",
-        "_ZTI19dScMgSingle3DBase_c",
-        "_ZTI7dBase_c",
-        "_ZTI7fBase_c",
-        "_ZTI8dScene_c",
-        "_ZTS11dScMgBase_c",
-        "_ZTS15dScMgSnowball_c",
-        "_ZTS19dScMgSingle3DBase_c",
-        "_ZTS7dBase_c",
-        "_ZTS7fBase_c",
-        "_ZTS8dScene_c",
-        "_ZTV15dScMgSnowball_c"
-      ]
-    },
-    "criteria": {
-      "every_declared_function_defined": "PASS",
-      "every_declared_function_bytes_match": "PASS",
-      "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- 6 unlicensed section/symbol(s), 0 compiler-only policy error(s)",
-      "functions_occur_in_expected_order": "PASS",
-      "relocation_destinations_verified": "PASS"
-    },
-    "linkcheck": {
-      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
-      "result": "scratch-data-verified",
-      "scratch": "build/tu/ov006-dScMgSnowball_c/link (gitignored)",
-      "phases": {
-        "delink": true,
-        "lcf": true,
-        "compile": true,
-        "link": true,
-        "checkModules": true,
-        "checkSymbols": false,
-        "rom": true
-      },
-      "tuRange": {
-        "start": "0x0212568c",
-        "end": "0x0212a554",
-        "differingBytes": 0,
-        "firstDiff": null
-      },
-      "tuRanges": [
-        {
-          "section": ".text",
-          "start": "0x0212568c",
-          "end": "0x0212a554",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".init",
-          "start": "0x021333e0",
-          "end": "0x0213356c",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".ctor",
-          "start": "0x021335e4",
-          "end": "0x021335e8",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".data",
-          "start": "0x0213ff58",
-          "end": "0x0213ffd0",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".bss",
-          "start": "0x02143020",
-          "end": "0x021430a0",
-          "comparison": "NOBITS -- symbol/module gates"
-        }
-      ],
-      "objectAudit": {
-        "counts": {
-          "LICENSED": 64
-        },
-        "emittedTextOrderIsRomAscending": true,
-        "nonLicensedSymbols": [],
-        "unlicensedSections": []
-      },
-      "nontextSectionOrder": {
-        "groups": [
-          {
-            "section": ".init",
-            "original": [
-              140
-            ],
-            "desired": [
-              140
-            ]
-          },
-          {
-            "section": ".ctor",
-            "original": [
-              138
-            ],
-            "desired": [
-              138
-            ]
-          },
-          {
-            "section": ".data",
-            "original": [
-              82,
-              84,
-              86,
-              88,
-              91,
-              93,
-              95,
-              97,
-              100,
-              102,
-              104,
-              106,
-              109,
-              111,
-              113
-            ],
-            "desired": [
-              106,
-              104,
-              102,
-              97,
-              88,
-              95,
-              84,
-              91,
-              93,
-              100,
-              111,
-              86,
-              82,
-              113,
-              109
-            ]
-          },
-          {
-            "section": ".bss",
-            "original": [
-              90,
-              99,
-              108,
-              115
-            ],
-            "desired": [
-              115,
-              90,
-              99,
-              108
-            ]
-          }
-        ],
-        "objisolate": {
-          "reordered": [
-            {
-              "section": ".data",
-              "original": [
-                82,
-                84,
-                86,
-                88,
-                91,
-                93,
-                95,
-                97,
-                100,
-                102,
-                104,
-                106,
-                109,
-                111,
-                113
-              ],
-              "desired": [
-                106,
-                104,
-                102,
-                97,
-                88,
-                95,
-                84,
-                91,
-                93,
-                100,
-                111,
-                86,
-                82,
-                113,
-                109
-              ],
-              "slots": [
-                82,
-                84,
-                86,
-                88,
-                91,
-                93,
-                95,
-                97,
-                100,
-                102,
-                104,
-                106,
-                109,
-                111,
-                113
-              ]
-            },
-            {
-              "section": ".bss",
-              "original": [
-                90,
-                99,
-                108,
-                115
-              ],
-              "desired": [
-                115,
-                90,
-                99,
-                108
-              ],
-              "slots": [
-                90,
-                99,
-                108,
-                115
-              ]
-            }
-          ],
-          "symbolIndices": 19,
-          "sectionLinks": 0,
-          "sectionInfos": 15,
-          "error": null
-        },
-        "errors": null
-      },
-      "linkedStorageAliases": null,
-      "symbolCheckNewVsBaseline": [],
-      "symbolCheckErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "symbolCheckBaselineErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
-      "rom": {
-        "bytes": 16777216,
-        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
-        "matchesStockRom": true
-      },
-      "linkerOutput": null
-    }
-  },
   "compiler_only_output": [
-    {
-      "symbol": "_ZTV15dScMgSnowball_c",
-      "disposition": "deadstrip-data",
-      "canonical_module": "ov006",
-      "canonical_address": "0x0214000c",
-      "reason": "The vtable this TU is the key function for. dScMgSnowball_c declares its destructor out of line and this file is the only definition, so mwccarm anchors the vague-linkage group here. ROM home ov006:0x0214000c (config/arm9/overlays/ov006/symbols.txt); the next configured symbol is sSnowballBgNclPath, so the cartridge copy is 0x90 while this object emits 0x98 -- the two extra words are the trailing null slots the cartridge table drops. D1/D0 and the class's own overrides odr-use this copy for their vptr stores; production isolation rebinds those relocations to the ROM home and deadstrips the duplicate."
-    },
-    {
-      "symbol": "_ZTI15dScMgSnowball_c",
-      "disposition": "deadstrip-data",
-      "canonical_module": "ov006",
-      "canonical_address": "0x0213ffd0",
-      "reason": "This class's own __si_class_type_info, emitted beside the vtable. ROM home ov006:0x0213ffd0, 0xc bytes up to _ZTS15dScMgSnowball_c at 0x0213ffdc -- the record that proves the class name this TU spells."
-    },
-    {
-      "symbol": "_ZTS15dScMgSnowball_c",
-      "disposition": "deadstrip-data",
-      "canonical_module": "ov006",
-      "canonical_address": "0x0213ffdc",
-      "reason": "Type-name string `15dScMgSnowball_c\u0000`, 0x12 bytes, which is exactly the size verify reports for the copy in this object. ROM home ov006:0x0213ffdc."
-    },
     {
       "symbol": "_ZTI19dScMgSingle3DBase_c",
       "disposition": "deadstrip-data",
       "canonical_module": "ov006",
       "canonical_address": "0x0213bc64",
-      "reason": "The direct base's type_info, dragged in as the __si_class_type_info base pointer of _ZTI15dScMgSnowball_c. ROM home ov006:0x0213bc64; dScMgSingle3DBase_c's own TU (src/minigames/d_s_mg_single3d_base.cpp) owns it."
+      "reason": "Ancestor RTTI duplicate has canonical configured ROM home ov006:0213bc64. This Snowball object does not own that storage; the configured home alone does not establish compiler ownership by its base-class TU. Preserve existing exact externalization policy."
     },
     {
       "symbol": "_ZTS19dScMgSingle3DBase_c",
@@ -929,12 +609,12 @@
     {
       "symbol": "_ZN15dScMgSnowball_cD2Ev",
       "disposition": "deadstrip",
-      "reason": "Homeless. One out-of-line destructor definition makes mwccarm emit three variants; the cartridge carries only D1 (ov006:0x0212568c, 0xb0) and D0 (ov006:0x0212573c, 0xc4). config/arm9/overlays/ov006/symbols.txt has no D2 row for this class and no address anywhere in config/ names one, so it has no ROM home: plain deadstrip, not deadstrip-duplicate. Its presence does not disturb the licensed run -- verify reports all 23 licensed functions in the expected ROM-ascending section order with it emitted."
+      "reason": "Unconfigured compiler-generated base destructor variant; D1/D0 remain licensed at0212568c/0212573c. No D2 ROM home is established; retain existing deadstrip policy."
     },
     {
       "symbol": "_ZN15dScMgSnowball_c4Vec2D1Ev",
       "disposition": "deadstrip",
-      "reason": "Homeless, and necessarily so: Vec2 is a nested type COINED in include/dScMgSnowball_c.h, so no cartridge symbol can spell it. Its user-declared empty destructor is the SROA-defeating lever that gives a local of that type a stack home in UpdateSnowball's frame; the 4-byte `bx lr` body it emits is never called and never reaches the ROM."
+      "reason": "Unconfigured four-byte emitted empty Vec2 destructor with no relocation callers in the current raw TU; retain existing deadstrip. Vec2 is a reconstruction name, which by itself cannot prove an original symbol was necessarily absent."
     },
     {
       "symbol": "_ZN7Vector3D1Ev",
@@ -966,62 +646,62 @@
     {
       "from": "@2729",
       "to": "@2723",
-      "evidence": "mwcc numbers this PMF descriptor @2714. ov060 already defines @2714, and objisolate cannot grow a name, so this row maps the compiled name to the unused same-length @2723."
+      "evidence": "Preserve current compiler temporary @2729 under existing configured identity @2723; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2731",
       "to": "@2719",
-      "evidence": "mwcc numbers this PMF descriptor @2716. ov002 already defines @2716, and objisolate cannot grow a name, so this row maps the compiled name to the unused same-length @2725."
+      "evidence": "Preserve current compiler temporary @2731 under existing configured identity @2719; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2733",
       "to": "@2721",
-      "evidence": "mwcc numbers this PMF descriptor @2718. ov002 already defines @2718, and objisolate cannot grow a name, so this row maps the compiled name to the unused same-length @2727."
+      "evidence": "Preserve current compiler temporary @2733 under existing configured identity @2721; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2745",
       "to": "@2730",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2745 now; licensed under the existing pin @2730"
+      "evidence": "Preserve current compiler temporary @2745 under existing configured identity @2730; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2743",
       "to": "@2728",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2743 now; licensed under the existing pin @2728"
+      "evidence": "Preserve current compiler temporary @2743 under existing configured identity @2728; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2741",
       "to": "@2726",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2741 now; licensed under the existing pin @2726"
+      "evidence": "Preserve current compiler temporary @2741 under existing configured identity @2726; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2737",
       "to": "@2722",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2737 now; licensed under the existing pin @2722"
+      "evidence": "Preserve current compiler temporary @2737 under existing configured identity @2722; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2735",
       "to": "@2720",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2735 now; licensed under the existing pin @2720"
+      "evidence": "Preserve current compiler temporary @2735 under existing configured identity @2720; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2739",
       "to": "@2724",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2739 now; licensed under the existing pin @2724"
+      "evidence": "Preserve current compiler temporary @2739 under existing configured identity @2724; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2749",
       "to": "@2734",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2749 now; licensed under the existing pin @2734"
+      "evidence": "Preserve current compiler temporary @2749 under existing configured identity @2734; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2751",
       "to": "@2736",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2751 now; licensed under the existing pin @2736"
+      "evidence": "Preserve current compiler temporary @2751 under existing configured identity @2736; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     },
     {
       "from": "@2747",
       "to": "@2732",
-      "evidence": "compiler temp; the types.h Vector3 ctors and main's sinit folds shift this TU's per-TU @NNN uniquifier, so mwcc emits it as @2747 now; licensed under the existing pin @2732"
+      "evidence": "Preserve current compiler temporary @2747 under existing configured identity @2732; initializer bytes and all relocation sites are unchanged. Earlier ordinal and same-length-only explanations were historical tool limitations, not current naming recovery."
     }
   ],
   "symbol_binding_rewrites": [
@@ -1029,97 +709,97 @@
       "symbol": "__sinit_d_s_mg_snowball.cpp",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "mwcc emits the TU initializer local; DSD requires a configured global relocation destination at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": ".p__sinit_d_s_mg_snowball.cpp",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "mwcc emits the ctor-table object local; DSD exposes owned symbols globally and cannot encode a local symbols.txt entry"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2725",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2727",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2723",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2719",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2721",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2720",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2722",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2724",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2726",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2728",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2730",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2732",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2734",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     },
     {
       "symbol": "@2736",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "compiler-emitted PMF descriptor; DSD requires a configured global symbol at the same exact address"
+      "evidence": "Preserve the existing configured GLOBAL identity and source-admission contract at the same exact address. Native compiler storage is LOCAL; this compatibility policy does not assert a DSD inability to encode local symbols."
     }
   ],
   "relocations": [
@@ -1462,6 +1142,855 @@
       "addend": 0,
       "target_module": "ov006",
       "target_address": "0x02129894"
+    },
+    {
+      "section": ".data",
+      "source": "0x213ffd0",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZTVN3abi20__si_class_type_infoE",
+      "addend": 8,
+      "target_module": "arm9",
+      "target_address": "0x209a764"
+    },
+    {
+      "section": ".data",
+      "source": "0x213ffd4",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZTS15dScMgSnowball_c",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x213ffdc"
+    },
+    {
+      "section": ".data",
+      "source": "0x213ffd8",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZTI19dScMgSingle3DBase_c",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x213bc64"
+    },
+    {
+      "section": ".data",
+      "source": "0x213fff0",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "sMgTextSpritesEnglish",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21373a4"
+    },
+    {
+      "section": ".data",
+      "source": "0x213fff4",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "sMgTextSpritesSpanish",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21373fc"
+    },
+    {
+      "section": ".data",
+      "source": "0x213fff8",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "sMgTextSpritesFrench",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x213734c"
+    },
+    {
+      "section": ".data",
+      "source": "0x213fffc",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "sMgTextSpritesGerman",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21372f4"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140000",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "sMgTextSpritesItalian",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x2137454"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140008",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZTI15dScMgSnowball_c",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x213ffd0"
+    },
+    {
+      "section": ".data",
+      "source": "0x214000c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c13InitResourcesEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x2129268"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140010",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c19BeforeInitResourcesEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b0930"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140014",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c18AfterInitResourcesEj",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a6e4"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140018",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c16CleanupResourcesEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21291f8"
+    },
+    {
+      "section": ".data",
+      "source": "0x214001c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN8dScene_c22BeforeCleanupResourcesEv",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x202e5f0"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140020",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c21AfterCleanupResourcesEj",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a608"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140024",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c8BehaviorEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21283a4"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140028",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c14BeforeBehaviorEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a698"
+    },
+    {
+      "section": ".data",
+      "source": "0x214002c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN8dScene_c13AfterBehaviorEj",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x202e3c8"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140030",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c6RenderEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x2127d10"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140034",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c12BeforeRenderEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a664"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140038",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN8dScene_c11AfterRenderEj",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x202e398"
+    },
+    {
+      "section": ".data",
+      "source": "0x214003c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c16OnPendingDestroyEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b04e8"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140040",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7fBase_c9Virtual34Ejj",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x204357c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140044",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7fBase_c9Virtual38Ejj",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x204349c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140048",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN7fBase_c13OnHeapCreatedEv",
+      "addend": 0,
+      "target_module": "arm9",
+      "target_address": "0x2043494"
+    },
+    {
+      "section": ".data",
+      "source": "0x214004c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_cD1Ev",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x212568c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140050",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_cD0Ev",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x212573c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140054",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c10StartRoundEi",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x212921c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140058",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c11CanEndStateEi",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b2994"
+    },
+    {
+      "section": ".data",
+      "source": "0x214005c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c11OnNewRecordEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b2990"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140060",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c10OnDealDoneEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b298c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140064",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c16OnGraphCallback1Ev",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20ae198"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140068",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback0Ev",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21291d4"
+    },
+    {
+      "section": ".data",
+      "source": "0x214006c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback2Ev",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x2128fb8"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140070",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN15dScMgSnowball_c16OnGraphCallback3Ev",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x21291b0"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140074",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c14GetDisplayModeEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a600"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140078",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c8OpenMenuEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20af27c"
+    },
+    {
+      "section": ".data",
+      "source": "0x214007c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c9CloseMenuEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20af04c"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140080",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c17SaveScreenForMenuEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20af094"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140084",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c21RestoreScreenFromMenuEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20aeed8"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140088",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c15InitSubScreenBgEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b2880"
+    },
+    {
+      "section": ".data",
+      "source": "0x214008c",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c16InitMainScreenBgEv",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20b27f4"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140090",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN19dScMgSingle3DBase_c11InitEnginesEv",
+      "addend": 0,
+      "target_module": "ov006",
+      "target_address": "0x210a708"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140094",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c11PaintSquareEiiii",
+      "addend": 0,
+      "target_module": "overlays(0,4)",
+      "target_address": "0x20ae3b4"
+    },
+    {
+      "section": ".data",
+      "source": "0x2140098",
+      "type": "R_ARM_ABS32",
+      "kind": "load",
+      "symbol": "_ZN11dScMgBase_c12IsAltVariantEv",
+      "addend": 0,
+      "target_module": "overlays(0,2,3,4,7)",
+      "target_address": "0x20ad660"
+    }
+  ],
+  "verification": {
+    "round": "Standalone emitted-text verification only; whole TU compiled once. Current production ownership and complete section proof are recorded separately by linkcheck.",
+    "toolchain": "tools/mwccarm/2004/b56/mwccarm.exe",
+    "flags": "-O4,p -enum int -lang c++ -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
+    "object": "build/tu/ov006-dScMgSnowball_c/d_s_mg_snowball.o (gitignored)",
+    "comparison": "tools/match.py extract_func+compare (bytes/relocs) AND tools/objisolate.py plan() (relocation type/addend) AND tools/reloc_audit.py check_destinations() (relocation target identity)",
+    "functions_matched": 43,
+    "functions_declared": 43,
+    "compilerOnlyOutput": {
+      "requested": [
+        "_ZN15dScMgSnowball_cD2Ev",
+        "_ZN15dScMgSnowball_c4Vec2D1Ev",
+        "_ZN7Vector3D1Ev"
+      ],
+      "deadstripped": [
+        "_ZN15dScMgSnowball_c4Vec2D1Ev",
+        "_ZN15dScMgSnowball_cD2Ev",
+        "_ZN7Vector3D1Ev"
+      ],
+      "droppedSections": [
+        9,
+        10,
+        22,
+        23,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143
+      ],
+      "data": [
+        "_ZTI19dScMgSingle3DBase_c",
+        "_ZTS19dScMgSingle3DBase_c",
+        "_ZTI11dScMgBase_c",
+        "_ZTS11dScMgBase_c",
+        "_ZTI8dScene_c",
+        "_ZTS8dScene_c",
+        "_ZTI7dBase_c",
+        "_ZTS7dBase_c",
+        "_ZTI7fBase_c",
+        "_ZTS7fBase_c"
+      ],
+      "dataExternalized": [
+        "_ZTI11dScMgBase_c",
+        "_ZTI19dScMgSingle3DBase_c",
+        "_ZTI7dBase_c",
+        "_ZTI7fBase_c",
+        "_ZTI8dScene_c",
+        "_ZTS11dScMgBase_c",
+        "_ZTS19dScMgSingle3DBase_c",
+        "_ZTS7dBase_c",
+        "_ZTS7fBase_c",
+        "_ZTS8dScene_c"
+      ],
+      "canonicalDuplicates": []
+    },
+    "criteria": {
+      "every_declared_function_defined": "PASS",
+      "every_declared_function_bytes_match": "PASS",
+      "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- 1 unlicensed section/symbol(s), 0 compiler-only policy error(s)",
+      "functions_occur_in_expected_order": "PASS",
+      "relocation_destinations_verified": "PASS"
+    },
+    "linkcheck": {
+      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
+      "result": "scratch-data-verified",
+      "scratch": "build/tu/ov006-dScMgSnowball_c/link (gitignored)",
+      "phases": {
+        "delink": true,
+        "lcf": true,
+        "compile": true,
+        "link": true,
+        "checkModules": true,
+        "checkSymbols": false,
+        "rom": true
+      },
+      "tuRange": {
+        "start": "0x0212568c",
+        "end": "0x0212a554",
+        "differingBytes": 0,
+        "firstDiff": null
+      },
+      "tuRanges": [
+        {
+          "section": ".text",
+          "start": "0x0212568c",
+          "end": "0x0212a554",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".init",
+          "start": "0x021333e0",
+          "end": "0x0213356c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".ctor",
+          "start": "0x021335e4",
+          "end": "0x021335e8",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".data",
+          "start": "0x0213ff58",
+          "end": "0x0214009c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".bss",
+          "start": "0x02143020",
+          "end": "0x021430a0",
+          "comparison": "NOBITS -- symbol/module gates"
+        },
+        {
+          "section": ".rodata",
+          "start": "0x0212f3ac",
+          "end": "0x0212f4c4",
+          "differingBytes": 0,
+          "firstDiff": null
+        }
+      ],
+      "objectAudit": {
+        "counts": {
+          "LICENSED": 72
+        },
+        "emittedTextOrderIsRomAscending": true,
+        "nonLicensedSymbols": [],
+        "unlicensedSections": []
+      },
+      "nontextSectionOrder": {
+        "groups": [
+          {
+            "section": ".init",
+            "original": [
+              146
+            ],
+            "desired": [
+              146
+            ]
+          },
+          {
+            "section": ".ctor",
+            "original": [
+              144
+            ],
+            "desired": [
+              144
+            ]
+          },
+          {
+            "section": ".data",
+            "original": [
+              82,
+              84,
+              86,
+              88,
+              91,
+              93,
+              95,
+              97,
+              100,
+              102,
+              104,
+              106,
+              109,
+              111,
+              113,
+              122,
+              124,
+              126,
+              127
+            ],
+            "desired": [
+              106,
+              104,
+              102,
+              97,
+              88,
+              95,
+              84,
+              91,
+              93,
+              100,
+              111,
+              86,
+              82,
+              113,
+              109,
+              127,
+              126,
+              122,
+              124
+            ]
+          },
+          {
+            "section": ".bss",
+            "original": [
+              90,
+              99,
+              108,
+              115
+            ],
+            "desired": [
+              115,
+              90,
+              99,
+              108
+            ]
+          },
+          {
+            "section": ".rodata",
+            "original": [
+              118,
+              119,
+              120,
+              121
+            ],
+            "desired": [
+              118,
+              119,
+              120,
+              121
+            ]
+          }
+        ],
+        "objisolate": {
+          "reordered": [
+            {
+              "section": ".data",
+              "original": [
+                82,
+                84,
+                86,
+                88,
+                91,
+                93,
+                95,
+                97,
+                100,
+                102,
+                104,
+                106,
+                109,
+                111,
+                113,
+                122,
+                124,
+                126,
+                127
+              ],
+              "desired": [
+                106,
+                104,
+                102,
+                97,
+                88,
+                95,
+                84,
+                91,
+                93,
+                100,
+                111,
+                86,
+                82,
+                113,
+                109,
+                127,
+                126,
+                122,
+                124
+              ],
+              "slots": [
+                82,
+                84,
+                86,
+                88,
+                91,
+                93,
+                95,
+                97,
+                100,
+                102,
+                104,
+                106,
+                109,
+                111,
+                113,
+                122,
+                124,
+                126,
+                127
+              ]
+            },
+            {
+              "section": ".bss",
+              "original": [
+                90,
+                99,
+                108,
+                115
+              ],
+              "desired": [
+                115,
+                90,
+                99,
+                108
+              ],
+              "slots": [
+                90,
+                99,
+                108,
+                115
+              ]
+            }
+          ],
+          "symbolIndices": 23,
+          "sectionLinks": 0,
+          "sectionInfos": 18,
+          "error": null
+        },
+        "errors": null
+      },
+      "linkedStorageAliases": null,
+      "symbolCheckNewVsBaseline": [],
+      "symbolCheckErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "symbolCheckBaselineErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
+      "rom": {
+        "bytes": 16777216,
+        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+        "matchesStockRom": true
+      },
+      "linkerOutput": null
+    }
+  },
+  "rodata": [
+    {
+      "symbol": "sSnowballBitBDriftStates",
+      "address": "0x212f3ac",
+      "size": "0x2",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "sSnowballBitADriftStates",
+      "address": "0x212f3b0",
+      "size": "0x2",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "sSnowballBitKinds",
+      "address": "0x212f3b4",
+      "size": "0x8",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
+    },
+    {
+      "symbol": "sSnowballCourseTiles",
+      "address": "0x212f3bc",
+      "size": "0x108",
+      "binding": "STB_GLOBAL",
+      "evidence": "Native scalar/table or compiler ABI object; raw bytes and configured destinations proved. See notes/agents/data-snowball-native1018.md for consumer bounds and inferred names."
     }
   ]
 }

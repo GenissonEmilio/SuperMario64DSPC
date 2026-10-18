@@ -242,8 +242,9 @@ src/minigames/d_s_mg_snowball.cpp:
     .text start:0x0212568c end:0x0212a554
     .init start:0x021333e0 end:0x0213356c
     .ctor start:0x021335e4 end:0x021335e8
-    .data start:0x0213ff58 end:0x0213ffd0
+    .data start:0x0213ff58 end:0x0214009c
     .bss start:0x02143020 end:0x021430a0
+    .rodata start:0x0212f3ac end:0x0212f4c4
 
 src/minigames/d_s_mg_flower.cpp:
     complete
