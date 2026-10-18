@@ -39,6 +39,7 @@ compiled reader (func_02058308, func_02058df4) links `Undefined`.
 import pathlib
 import re
 import struct
+import data_section_routes as DSR
 
 
 def initialized_interior_rows(config_root, objects_txt, definitions):
@@ -62,13 +63,14 @@ def _source_storage_interior_rows(config_root, objects_txt, definitions, bss=Fal
     from elftools.elf.elffile import ELFFile
 
     root = pathlib.Path(config_root)
-    sections = (".bss",) if bss else (".data", ".rodata")
     storage_type = "SHT_NOBITS" if bss else "SHT_PROGBITS"
     homes, claims = {}, []
     symbol_row = re.compile(r"^(\S+)\s+kind:(\S+)\s+addr:0x([0-9a-fA-F]+)")
     section_row = re.compile(
-        r"^\s+(" + "|".join(re.escape(s) for s in sections) +
-        r")\s+start:0x([0-9a-fA-F]+)\s+end:0x([0-9a-fA-F]+)")
+        r"^\s+(\.\S+)\s+start:0x([0-9a-fA-F]+)\s+end:0x([0-9a-fA-F]+)")
+
+    def supported_section(name):
+        return name == ".bss" if bss else DSR.initialized_kind(name) is not None
     for symbols in sorted(root.rglob("symbols.txt")):
         module = symbols.parent.relative_to(root).as_posix()
         for line in symbols.read_text(encoding="utf-8").splitlines():
@@ -98,7 +100,7 @@ def _source_storage_interior_rows(config_root, objects_txt, definitions, bss=Fal
                 complete = True
             else:
                 match = section_row.match(line)
-                if match:
+                if match and supported_section(match[1]):
                     ranges.append((match[1], int(match[2], 16), int(match[3], 16)))
         flush()
 
@@ -129,7 +131,7 @@ def _source_storage_interior_rows(config_root, objects_txt, definitions, bss=Fal
             section = elf.get_section(index)
             size, value = symbol["st_size"], symbol["st_value"]
             if (section["sh_type"] != storage_type
-                    or section.name not in sections
+                    or not supported_section(section.name)
                     or not size or value + size > section["sh_size"]):
                 continue
             objects.setdefault(symbol.name, []).append((path, section.name, size))
@@ -370,7 +372,7 @@ def _elf_names(data):
     return defined, imported
 
 
-def patch(lcf_path, objects_txt, config_root):
+def patch(lcf_path, objects_txt, config_root, *, initialized_prefixes=()):
     """Add the missing interior definitions and linker constants to `lcf_path`;
     return [(name, addr)].
 
@@ -380,7 +382,17 @@ def patch(lcf_path, objects_txt, config_root):
     aliases = bss_interior_rows(config_root, defined, imported, bss)
     aliases += initialized_interior_rows(config_root, objects_txt, defined)
     aliases += source_bss_interior_rows(config_root, objects_txt, defined)
+    # Only the shared initialized-boundary link planner supplies these records,
+    # after re-verifying the actual prepared objects and complete source claims.
+    # They are zero-storage LCF identities, not additional compiler OBJECTs.
+    for row in initialized_prefixes:
+        if row["identitySize"] != 0 or row["alias"] in defined:
+            raise ValueError("initialized prefix identity is already defined or has storage")
+        aliases.append((row["alias"], row["address"], row["publicSymbol"],
+                        -row["licensedStoragePrefixBytes"], row["module"]))
     aliases = sorted(set(aliases))
+    if len({row[0] for row in aliases}) != len(aliases):
+        raise ValueError("conflicting storage alias identities")
     rows = interior_rows(config_root) + list(LINKER_CONSTANTS.items())
     missing = sorted({(n, a) for n, a in rows
                       if n in imported and n not in defined}, key=lambda r: r[1])
