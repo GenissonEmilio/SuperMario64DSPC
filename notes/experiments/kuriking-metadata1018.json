@@ -518,6 +518,36 @@
       "reason": "An explicit correction identifies 0x02122e30 as the actual RTTI start and the preceding 12-byte bone array. Historical prose is not used as current ownership evidence.",
       "location": "config/tu_manifest.d/ov074/daKuriKing_c.json:notes",
       "disposition": "fixed"
+    },
+    {
+      "id": "KURI-METADATA-BINDING-RATIONALE-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "config/tu_manifest.d/ov074/daKuriKing_c.json:symbol_binding_rewrites",
+      "summary": "Inherited explanations falsely claimed DSD cannot encode local symbols.",
+      "reason": "Corrected both initializer/ctor explanations to the actual compatibility reason: retain existing configured GLOBAL identities and exact destinations. DSD supports local symbols. Rewrite rules, symbols and emitted objects are unchanged.",
+      "historical_rows": [
+        {
+          "symbol": "__sinit_d_a_kuri_king.cpp",
+          "from": "STB_LOCAL",
+          "to": "STB_GLOBAL",
+          "evidence": "mwcc emits the TU initializer local; DSD requires a configured global relocation destination at the same exact address"
+        },
+        {
+          "symbol": ".p__sinit_d_a_kuri_king.cpp",
+          "from": "STB_LOCAL",
+          "to": "STB_GLOBAL",
+          "evidence": "mwcc emits the ctor-table object local; DSD exposes owned symbols globally and cannot encode a local symbols.txt entry"
+        }
+      ]
+    },
+    {
+      "id": "KURI-METADATA-STALE-SNAPSHOT-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "config/tu_manifest.d/ov074/daKuriKing_c.json:verification",
+      "summary": "The purportedly current standalone snapshot still described six sections and discarded own metadata.",
+      "reason": "Moved the complete prior standalone snapshot into explicitly historical context without changing its original text. Current eight-range linkcheck admission is retained unchanged; normal provider proof covers native own RTTI/name/vtable. No obsolete standalone metrics are presented as current acceptance."
     }
   ],
   "scope": {
@@ -639,5 +669,7 @@
     "build/kuri-production.json",
     "build/kuri-final-ownership.json",
     "build/kuri-strict.json"
-  ]
+  ],
+  "rejected_candidate": "2ff356d05bae99687bda235ee2a6ee22a5361867",
+  "rework": "Provenance-only corrections requested by independent reviewer; unchanged source, policy rules and linkcheck admission. Fresh committed normal proof required."
 }

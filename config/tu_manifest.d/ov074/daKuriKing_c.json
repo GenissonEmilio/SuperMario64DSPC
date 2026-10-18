@@ -1004,13 +1004,13 @@
       "symbol": "__sinit_d_a_kuri_king.cpp",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "mwcc emits the TU initializer local; DSD requires a configured global relocation destination at the same exact address"
+      "evidence": "mwcc emits the TU initializer with local binding. Preserve the existing configured GLOBAL identity and exact relocation destination; this is a compatibility choice for this manifest, not a DSD limitation on local symbols."
     },
     {
       "symbol": ".p__sinit_d_a_kuri_king.cpp",
       "from": "STB_LOCAL",
       "to": "STB_GLOBAL",
-      "evidence": "mwcc emits the ctor-table object local; DSD exposes owned symbols globally and cannot encode a local symbols.txt entry"
+      "evidence": "mwcc emits the ctor-table object with local binding. Preserve the existing configured GLOBAL identity and exact four-byte ctor entry; DSD supports local symbols, so local syntax is not the reason for this retained rewrite."
     },
     {
       "symbol": "@668",
@@ -2848,77 +2848,83 @@
     "Native metadata owns216 linked bytes: five compiler objects totaling215 bytes and one explicitly licensed terminal ALIGN4 zero byte. The RTTI is12 bytes and its type name remains15 bytes; neither compiler object is padded or widened. Complete132-byte native vtable storage retains its124-byte public address point; data_ov074_02122eb0 is a zero-size LCF identity for the existing8-byte prefix, not another emitted object. The earlier216 exact-emission refusal and215 misaligned-ROM-gap trial remain historical failed experiments. Two typed SpawnInfo profiles and the native metadata are covered by complete source claims. Existing lifecycle,rodata,data,BSS claims remain unchanged. The32-byte rodata remainder and intervening/trailing data remain reconstruction work; their ownership is not inferred as padding. The boundary-tool runtime dependency is 09da716a1d67ad6b93b40c046fa83f9fa135be5e; independent tool and source acceptance are required before publication. Historical correction: the prior note misidentified 0x02122e24 as the RTTI start; the RTTI starts at 0x02122e30 after the 12-byte bone-index array."
   ],
   "verification": {
-    "round": "Current standalone text-function audit; native initializer classification refusal is separate from complete six-section scratch proof.",
-    "toolchain": "tools/mwccarm/2004/b56/mwccarm.exe",
-    "flags": "-O4,p -enum int -lang c++ -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
-    "object": "build/tu/ov074-daKuriKing_c/daKuriKing_c.o (gitignored)",
-    "comparison": "tools/match.py extract_func+compare (bytes/relocs) AND tools/objisolate.py plan() (relocation type/addend) AND tools/reloc_audit.py check_destinations() (relocation target identity)",
-    "functions_matched": 55,
-    "functions_declared": 55,
-    "compilerOnlyOutput": {
-      "requested": [
-        "_ZN12daKuriKing_cD2Ev",
-        "_ZN7Vector3D1Ev"
-      ],
-      "deadstripped": [
-        "_ZN12daKuriKing_cD2Ev",
-        "_ZN7Vector3D1Ev"
-      ],
-      "droppedSections": [
-        39,
-        40,
-        41,
-        180,
-        181,
-        182,
-        183,
-        184,
-        185,
-        186,
-        187,
-        188,
-        189,
-        190,
-        191,
-        192,
-        193,
-        194,
-        195,
-        196
-      ],
-      "data": [
-        "_ZTV12daKuriKing_c",
-        "_ZTI12daKuriKing_c",
-        "_ZTS12daKuriKing_c",
-        "_ZTI12dEnemyBase_c",
-        "_ZTS12dEnemyBase_c",
-        "_ZTI8dActor_c",
-        "_ZTS8dActor_c",
-        "_ZTI7dBase_c",
-        "_ZTS7dBase_c",
-        "_ZTI7fBase_c",
-        "_ZTS7fBase_c"
-      ],
-      "dataExternalized": [
-        "_ZTI12dEnemyBase_c",
-        "_ZTI12daKuriKing_c",
-        "_ZTI7dBase_c",
-        "_ZTI7fBase_c",
-        "_ZTI8dActor_c",
-        "_ZTS12dEnemyBase_c",
-        "_ZTS12daKuriKing_c",
-        "_ZTS7dBase_c",
-        "_ZTS7fBase_c",
-        "_ZTS8dActor_c",
-        "_ZTV12daKuriKing_c"
-      ]
-    },
-    "criteria": {
-      "every_declared_function_defined": "PASS",
-      "every_declared_function_bytes_match": "PASS",
-      "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- 1 unlicensed section/symbol(s), 0 compiler-only policy error(s)",
-      "functions_occur_in_expected_order": "PASS",
-      "relocation_destinations_verified": "PASS"
+    "round": "Current eight-range scratch linkcheck admission; the pre-metadata standalone snapshot is retained explicitly as history, not current native ownership. Normal production provider evidence is recorded separately.",
+    "historicalStandalone": {
+      "status": "Historical pre-metadata standalone audit; its compiler-only output and six-section description are superseded.",
+      "snapshot": {
+        "round": "Current standalone text-function audit; native initializer classification refusal is separate from complete six-section scratch proof.",
+        "toolchain": "tools/mwccarm/2004/b56/mwccarm.exe",
+        "flags": "-O4,p -enum int -lang c++ -char signed -interworking -proc arm946e -gccext,on -msgstyle gcc -Cpp_exceptions off",
+        "object": "build/tu/ov074-daKuriKing_c/daKuriKing_c.o (gitignored)",
+        "comparison": "tools/match.py extract_func+compare (bytes/relocs) AND tools/objisolate.py plan() (relocation type/addend) AND tools/reloc_audit.py check_destinations() (relocation target identity)",
+        "functions_matched": 55,
+        "functions_declared": 55,
+        "compilerOnlyOutput": {
+          "requested": [
+            "_ZN12daKuriKing_cD2Ev",
+            "_ZN7Vector3D1Ev"
+          ],
+          "deadstripped": [
+            "_ZN12daKuriKing_cD2Ev",
+            "_ZN7Vector3D1Ev"
+          ],
+          "droppedSections": [
+            39,
+            40,
+            41,
+            180,
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196
+          ],
+          "data": [
+            "_ZTV12daKuriKing_c",
+            "_ZTI12daKuriKing_c",
+            "_ZTS12daKuriKing_c",
+            "_ZTI12dEnemyBase_c",
+            "_ZTS12dEnemyBase_c",
+            "_ZTI8dActor_c",
+            "_ZTS8dActor_c",
+            "_ZTI7dBase_c",
+            "_ZTS7dBase_c",
+            "_ZTI7fBase_c",
+            "_ZTS7fBase_c"
+          ],
+          "dataExternalized": [
+            "_ZTI12dEnemyBase_c",
+            "_ZTI12daKuriKing_c",
+            "_ZTI7dBase_c",
+            "_ZTI7fBase_c",
+            "_ZTI8dActor_c",
+            "_ZTS12dEnemyBase_c",
+            "_ZTS12daKuriKing_c",
+            "_ZTS7dBase_c",
+            "_ZTS7fBase_c",
+            "_ZTS8dActor_c",
+            "_ZTV12daKuriKing_c"
+          ]
+        },
+        "criteria": {
+          "every_declared_function_defined": "PASS",
+          "every_declared_function_bytes_match": "PASS",
+          "declared_function_set_equals_defined_function_set": "FAIL-BY-DESIGN -- 1 unlicensed section/symbol(s), 0 compiler-only policy error(s)",
+          "functions_occur_in_expected_order": "PASS",
+          "relocation_destinations_verified": "PASS"
+        }
+      }
     },
     "linkcheck": {
       "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",

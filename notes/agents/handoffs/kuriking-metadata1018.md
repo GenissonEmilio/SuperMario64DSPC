@@ -125,5 +125,21 @@ The optional raw data diagnostic retains the pre-existing dCcAcPos vtable
 difference; it is not a claim that every emitted object in the repository matches.
 
 Independent tool/source review and committed-input verification remain required
-before publication. The experiment record retains 56 findings, including
+before publication. The experiment record retains 58 findings, including
 all 41 inherited source findings and relevant tool findings.
+
+## Independent-review correction
+
+The first source candidate `2ff356d05bae99687bda235ee2a6ee22a5361867`
+was returned for two provenance corrections. DSD supports local symbols; the
+initializer and ctor binding rewrites preserve this manifest's existing GLOBAL
+identities, rather than work around an inability to express local symbols. Both
+original explanations remain in the experiment history. The unchanged rewrite
+rules still preserve the exact native initializer and ctor destinations.
+
+The old standalone snapshot also called itself current while describing six
+sections and discarded own metadata. It is now explicitly historical in its
+entirety. The fresh eight-range linkcheck remains the active admission record;
+normal actual-provider proof is separate. These edits change no source bytes,
+configured ranges, compiler policy or linkcheck admission. Both findings remain
+in the review history, and the descendant receives fresh committed-input proof.
