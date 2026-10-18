@@ -1060,7 +1060,7 @@ OamAttr sCupFxTemplate3 = {0x00fc, 0x01fc, 0x15f7, 0xffff};
 OamAttr *sCupFxSprites[4] = {&sCupFxTemplate0, &sCupFxTemplate1, &sCupFxTemplate2,
                              &sCupFxTemplate3};
 /* Retail places this byte table on a four-byte boundary. */
-u8 sCupFxFrameSprites[14] __attribute__((aligned(4))) = {3, 2, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 2};
+u8 sCupFxFrameSprites[14] = {3, 2, 1, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 2};
 /* Eight signed pixel offsets used by the shuffle sparkle effects. */
 CupShuffleOffset sCupShuffleOffsets[8] = {{-40, 16}, {0, 24},   {15, 9},  {-30, 18},
                                           {5, 19},   {-20, 20}, {10, 14}, {-10, 22}};
