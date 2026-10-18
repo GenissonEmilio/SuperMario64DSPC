@@ -999,7 +999,7 @@
           "firstDiff": null
         },
         {
-          "section": ".rodata",
+          "section": ".rodata.kaitendai",
           "start": "0x02111bf4",
           "end": "0x02111c0c",
           "differingBytes": 0,
@@ -1048,7 +1048,7 @@
             ]
           },
           {
-            "section": ".rodata",
+            "section": ".rodata.kaitendai",
             "original": [
               31
             ],
