@@ -194,6 +194,21 @@
       "location": "config/tu_manifest.d/ov001/dCapIcon_c.json",
       "summary": "Regenerated stale text-only standalone/compiler-only records and qualified six-function declaration history.",
       "reason": "Fresh standalone7/7 retains only unconfigured C2/D2 deadstrip; own RTTI/name/vtable are now native owned objects. Earlier receipts remain in private historical snapshot; final scratch receipt must be freshly measured."
+    },
+    {
+      "id": "capicon-prepared-relocation-rationale-001",
+      "kind": "provenance",
+      "disposition": "fixed",
+      "location": "config/tu_manifest.d/ov001/dCapIcon_c.json notes and notes/agents/data-capicon-native1018.md",
+      "summary": "Documentation mistakes the raw ABI storage-prefix calculation for the actual prepared relocation.",
+      "reason": "Actual normal prepared provider inspected: public ABI symbol with addend0. Manifest/handoff now distinguish that normalization from raw storage+8 arithmetic. Re-preparation before/after rationale-only manifest change is byte/report identical.",
+      "owner": "codex-capicon-native1018",
+      "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4101",
+      "evidence": [
+        "build/own-metadata-layout.json",
+        "build/own-prepared-relocations.json",
+        "build/capicon-final-ownership.json"
+      ]
     }
   ],
   "validation": {
@@ -331,5 +346,20 @@
     "build/capicon-native-current/proof.json",
     "build/capicon-incidental-restoration.json",
     "build/capicon-historical-manifest.json"
-  ]
+  ],
+  "correction": {
+    "runtime_origin_commit": "f9fd54e4665411ceed3ede7791b702a0c4b4ad6a",
+    "changed_scope": "manifest rationale and documentation only",
+    "prepared_relocation": {
+      "offset": 0,
+      "type": 2,
+      "symbol": "_ZTVN3abi17__class_type_infoE",
+      "addend": 0,
+      "targetSection": "SHN_UNDEF"
+    },
+    "prepared_sha256": "7a46e1bc7e99c687d97f688a596c55a97c3d58880914764c0c6a4cfb0e58484a",
+    "preparation_before_after_identical": true,
+    "manifest_functional_fields_identical": true,
+    "limitation": "Original runtime and7172hash/4100blob proof belongs to f9fd54e466. Corrected manifest prose necessarily changes that one bound file hash; no fresh whole-ROM runtime is claimed for this documentation-only successor."
+  }
 }
