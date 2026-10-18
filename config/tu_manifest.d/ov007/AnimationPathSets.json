@@ -7,9 +7,9 @@
   "production_mode": "intact-object",
   "boundary_confidence": "low",
   "boundary_evidence": [
-    "The existing one-function production carrier supplies eleven complete native objects totaling860 bytes: prior120 selector bytes plus740 bytes of per-portrait point counts. No neighboring source is absorbed and historical TU identity remains unproven.",
-    "Five complete named rodata ranges cover six count arrays of30,34,37,20,32,32 signed32 values. The existing top-level dispatch still selects30,34,36,20,32,32 strokes; the extra Luigi value1 is stored but unused.",
-    "The six count extents end at configured independent object boundaries. Luigi storage includes its coherent37th record, supported by three matching trailing coordinate/threshold relocations. All18 pointer arrays and435 unique leaf imports remain ROM-owned."
+    "The existing production carrier now supplies26 native initialized objects2636bytes: prior860 selectors/counts plus1776 pointer bytes for five non-Luigi portraits. This is reconstructed ownership, not original TU identity.",
+    "Fifteen X/Y/progress pointer arrays occupy the complete contiguous interval020d7f0c..020d85fc;444 configured ABS32 destinations all resolve within overlay7. Shared leaf symbols are imported once per unique address.",
+    "Luigi stores37 records but dispatch selects36; its three pointer arrays444bytes remain ROM-owned because a leaf declaration conflicts with the separately reserved shared header. All435 unique leaf ranges remain unowned by this carrier."
   ],
   "sections": [
     {
@@ -24,9 +24,10 @@
       "input_section": ".rodata"
     },
     {
-      "name": ".data",
+      "name": ".data.portraitSelectors",
       "start": "0x020d7e68",
-      "end": "0x020d7ec8"
+      "end": "0x020d7ec8",
+      "input_section": ".data"
     },
     {
       "name": ".rodata.yoshiPlainCounts",
@@ -57,6 +58,12 @@
       "input_section": ".rodata",
       "start": "0x20cfb84",
       "end": "0x20cfc18"
+    },
+    {
+      "name": ".rodata.portraitPointers",
+      "input_section": ".rodata",
+      "start": "0x020d7f0c",
+      "end": "0x020d85fc"
     }
   ],
   "functions": [
@@ -110,6 +117,96 @@
       "address": "0x20cf8ec",
       "size": "0x80",
       "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioFrontStrokeXCoords",
+      "address": "0x20d7ffc",
+      "size": "0x78",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioFrontStrokeYCoords",
+      "address": "0x20d8074",
+      "size": "0x78",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioFrontStrokeProgressThresholds",
+      "address": "0x20d80ec",
+      "size": "0x78",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioSideStrokeXCoords",
+      "address": "0x20d8464",
+      "size": "0x88",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioSideStrokeYCoords",
+      "address": "0x20d84ec",
+      "size": "0x88",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sMarioSideStrokeProgressThresholds",
+      "address": "0x20d8574",
+      "size": "0x88",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiPlainStrokeXCoords",
+      "address": "0x20d7f0c",
+      "size": "0x50",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiPlainStrokeYCoords",
+      "address": "0x20d7f5c",
+      "size": "0x50",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiPlainStrokeProgressThresholds",
+      "address": "0x20d7fac",
+      "size": "0x50",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiHeartStrokeXCoords",
+      "address": "0x20d82e4",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiHeartStrokeYCoords",
+      "address": "0x20d8364",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiHeartStrokeProgressThresholds",
+      "address": "0x20d83e4",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiStarStrokeXCoords",
+      "address": "0x20d8164",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiStarStrokeYCoords",
+      "address": "0x20d81e4",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sYoshiStarStrokeProgressThresholds",
+      "address": "0x20d8264",
+      "size": "0x80",
+      "binding": "STB_LOCAL"
     }
   ],
   "data": [
@@ -140,16 +237,18 @@
   ],
   "bss": [],
   "notes": [
-    "The other four typed helper sources remain separately enrolled and unchanged. Both coordinate representations and the existing812 code bytes remain covered by strict/provider proof.",
-    "Portrait names are functional interpretations of the decoded screenX/Y plot; original identifiers, timing units, historical qualifier spelling and originalTU identity remain unknown.",
-    "All eighteen coordinate/threshold pointer arrays remain imports. Their complete storage includes37 Luigi entries even though the existing imported views and dispatcher access36.",
-    "Full nested pointer/leaf migration is separate: include/decl_common.h still function-declares data_ov007_020cd72c, a Luigi coordinate array. The shared header is not edited or bypassed here.",
-    "The unchanged lower allocator func_ov007_020c2c68 retains historical integer-address ABI debt and additional callers."
+    "The four other typed helpers remain separately enrolled and unchanged. Both coordinate modes and812 existing code bytes are preserved.",
+    "Portrait names follow the decoded screenX/Y plot; they are inferred, and original names, literal progress units, historical qualifiers and TU identity remain unknown.",
+    "Only the five non-Luigi pointer families are supplied. Luigi pointer tables remain imported views of36 accessed entries in37-entry stored arrays; no leaf data is enrolled.",
+    "The unresolved data_ov007_020cd72c function declaration in reserved decl_common.h is not renamed or bypassed. Full Luigi migration requires coordinated correction.",
+    "PR4117 is the accepted source dependency; PR4106 shares delinks and future composition requires remapping its unrelated plain data/rodata claims and fresh proof.",
+    "The unchanged lower allocator func_ov007_020c2c68 retains separate integer-address ABI debt.",
+    "All fifteen new const pointer arrays naturally emit .rodata, although their ROM addresses lie inside the former broad data interval. The explicit rodata route follows native section flags; source constness is not weakened to force placement."
   ],
   "relocations": [
     {
       "source": "0x20d7e68",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sMarioFrontStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -159,7 +258,7 @@
     },
     {
       "source": "0x20d7e6c",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sMarioSideStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -169,7 +268,7 @@
     },
     {
       "source": "0x20d7e70",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sLuigiStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -179,7 +278,7 @@
     },
     {
       "source": "0x20d7e74",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sYoshiPlainStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -189,7 +288,7 @@
     },
     {
       "source": "0x20d7e78",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sYoshiHeartStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -199,7 +298,7 @@
     },
     {
       "source": "0x20d7e7c",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "sYoshiStarStrokePointCounts",
       "type": "R_ARM_ABS32",
@@ -209,9 +308,9 @@
     },
     {
       "source": "0x20d7e80",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d7ffc",
+      "symbol": "sMarioFrontStrokeXCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d7ffc",
@@ -219,9 +318,9 @@
     },
     {
       "source": "0x20d7e84",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8464",
+      "symbol": "sMarioSideStrokeXCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8464",
@@ -229,7 +328,7 @@
     },
     {
       "source": "0x20d7e88",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "data_ov007_020d85fc",
       "type": "R_ARM_ABS32",
@@ -239,9 +338,9 @@
     },
     {
       "source": "0x20d7e8c",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d7f0c",
+      "symbol": "sYoshiPlainStrokeXCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d7f0c",
@@ -249,9 +348,9 @@
     },
     {
       "source": "0x20d7e90",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d82e4",
+      "symbol": "sYoshiHeartStrokeXCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d82e4",
@@ -259,9 +358,9 @@
     },
     {
       "source": "0x20d7e94",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8164",
+      "symbol": "sYoshiStarStrokeXCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8164",
@@ -269,9 +368,9 @@
     },
     {
       "source": "0x20d7e98",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8074",
+      "symbol": "sMarioFrontStrokeYCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8074",
@@ -279,9 +378,9 @@
     },
     {
       "source": "0x20d7e9c",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d84ec",
+      "symbol": "sMarioSideStrokeYCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d84ec",
@@ -289,7 +388,7 @@
     },
     {
       "source": "0x20d7ea0",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "data_ov007_020d8690",
       "type": "R_ARM_ABS32",
@@ -299,9 +398,9 @@
     },
     {
       "source": "0x20d7ea4",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d7f5c",
+      "symbol": "sYoshiPlainStrokeYCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d7f5c",
@@ -309,9 +408,9 @@
     },
     {
       "source": "0x20d7ea8",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8364",
+      "symbol": "sYoshiHeartStrokeYCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8364",
@@ -319,9 +418,9 @@
     },
     {
       "source": "0x20d7eac",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d81e4",
+      "symbol": "sYoshiStarStrokeYCoords",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d81e4",
@@ -329,9 +428,9 @@
     },
     {
       "source": "0x20d7eb0",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d80ec",
+      "symbol": "sMarioFrontStrokeProgressThresholds",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d80ec",
@@ -339,9 +438,9 @@
     },
     {
       "source": "0x20d7eb4",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8574",
+      "symbol": "sMarioSideStrokeProgressThresholds",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8574",
@@ -349,7 +448,7 @@
     },
     {
       "source": "0x20d7eb8",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
       "symbol": "data_ov007_020d8724",
       "type": "R_ARM_ABS32",
@@ -359,9 +458,9 @@
     },
     {
       "source": "0x20d7ebc",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d7fac",
+      "symbol": "sYoshiPlainStrokeProgressThresholds",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d7fac",
@@ -369,9 +468,9 @@
     },
     {
       "source": "0x20d7ec0",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d83e4",
+      "symbol": "sYoshiHeartStrokeProgressThresholds",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d83e4",
@@ -379,12 +478,4452 @@
     },
     {
       "source": "0x20d7ec4",
-      "section": ".data",
+      "section": ".data.portraitSelectors",
       "kind": "load",
-      "symbol": "data_ov007_020d8264",
+      "symbol": "sYoshiStarStrokeProgressThresholds",
       "type": "R_ARM_ABS32",
       "addend": 0,
       "target_address": "0x20d8264",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7ffc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4d4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4d4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8000",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd268",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd268",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8004",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd154",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd154",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8008",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd574",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd574",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d800c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8010",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd04c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd04c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8014",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce5c8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce5c8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8018",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd664",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd664",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d801c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8020",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd178",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd178",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8024",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd334",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd334",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8028",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2b0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2b0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d802c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdb4c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdb4c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8030",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2c8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2c8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8034",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd354",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd354",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8038",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd54",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd54",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d803c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd00",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd00",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8040",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2ec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2ec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8044",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd374",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd374",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8048",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd08",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd08",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d804c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ced00",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ced00",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8050",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd538",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd538",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8054",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd880",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd880",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8058",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce9c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce9c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d805c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfcc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfcc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8060",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccccc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccccc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8064",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccdc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccdc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8068",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d806c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8070",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd1c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd1c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8074",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4e4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4e4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8078",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd274",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd274",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d807c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd160",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd160",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8080",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd588",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd588",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8084",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf8c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf8c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8088",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd054",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd054",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d808c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce5fc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce5fc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8090",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd678",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd678",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8094",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd504",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd504",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8098",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd184",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd184",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d809c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd344",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd344",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2bc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2bc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdb64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdb64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2d4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2d4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd364",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd364",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd0c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd0c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccce0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccce0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2f8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2f8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd314",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd314",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd3c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd3c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ced50",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ced50",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd524",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd524",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd68c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd68c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cceb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cceb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfe4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfe4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccf4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccf4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf5c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf5c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd44",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd44",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce9f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce9f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce4d4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce4d4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce2f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce2f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ceafc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ceafc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d80fc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cde1c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cde1c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8100",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce034",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce034",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8104",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cfe94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cfe94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8108",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cecb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cecb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d810c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cea34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cea34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8110",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce31c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce31c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8114",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce630",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce630",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8118",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce504",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce504",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d811c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf2e4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf2e4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8120",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce534",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce534",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8124",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce664",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce664",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8128",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2e0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2e0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d812c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccffc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccffc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8130",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce564",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce564",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8134",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce698",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce698",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8138",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd22c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd22c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d813c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020d0060",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20d0060",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8140",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cea74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cea74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8144",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ceda0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ceda0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8148",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd99c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd99c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d814c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8150",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfdc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfdc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8154",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8158",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd3c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd3c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d815c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd58",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd58",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8160",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd220",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd220",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8464",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd924",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd924",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8468",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd100",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd100",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d846c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce1c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce1c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8470",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce6c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce6c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8474",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccfc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccfc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8478",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd474",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd474",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d847c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1c0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1c0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8480",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdb0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdb0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8484",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccbc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccbc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8488",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfbc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfbc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d848c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccefc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccefc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8490",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdb7c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdb7c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8494",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdbb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdbb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8498",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd2c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd2c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d849c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd8ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd8ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd298",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd298",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd954",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd954",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd118",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd118",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd434",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd434",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd9cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd9cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cde54",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cde54",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce22c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce22c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd6c8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd6c8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd208",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd208",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd324",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd324",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd19c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd19c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce074",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce074",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cde94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cde94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd5d8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd5d8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccca4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccca4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccca8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccca8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd04",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd04",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd93c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd93c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce84",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce84",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccde4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccde4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d84fc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccce4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccce4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8500",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd444",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd444",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8504",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8508",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd80",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd80",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d850c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccc8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccc8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8510",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfd4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfd4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8514",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cceec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cceec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8518",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdb98",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdb98",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d851c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdbd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdbd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8520",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd14",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd14",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8524",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd894",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd894",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8528",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1fc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1fc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d852c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdcc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdcc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8530",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd96c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd96c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8534",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd10c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd10c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8538",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd88",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd88",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d853c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd384",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd384",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8540",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd984",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd984",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8544",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cde74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cde74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8548",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce254",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce254",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d854c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd6dc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd6dc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8550",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd28c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd28c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8554",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd304",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd304",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8558",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1a8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1a8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d855c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce098",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce098",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8560",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdeb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdeb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8564",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd59c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd59c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8568",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccb0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccb0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d856c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccc0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccc0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8570",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8574",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf1d0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf1d0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8578",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce1b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce1b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d857c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd858",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd858",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8580",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd86c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd86c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8584",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd064",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd064",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8588",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce938",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce938",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d858c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce448",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce448",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8590",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd514",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd514",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8594",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8598",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf54",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf54",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d859c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdaec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdaec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf344",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf344",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf3a8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf3a8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd2a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd2a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cefd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cefd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce474",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce474",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd6a0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd6a0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf228",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf228",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce27c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce27c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce704",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce704",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf284",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf284",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf688",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf688",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cfcac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cfcac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cedf0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cedf0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce4a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce4a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce594",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce594",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce3c4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce3c4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf9ec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf9ec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf778",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf778",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ceb40",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ceb40",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccda4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccda4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccda0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccda0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d85f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd004",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd004",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f0c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdccc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdccc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f10",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd394",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd394",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f14",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce7c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce7c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f18",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd074",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd074",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f1c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f20",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd10",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd10",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f24",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd5ec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd5ec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f28",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd13c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd13c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f2c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce974",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce974",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f30",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f34",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f38",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf14",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf14",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f3c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd464",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd464",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f40",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1e4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1e4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f44",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd8f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd8f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f48",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdc94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdc94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f4c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f50",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f54",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce24",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce24",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f58",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd78",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd78",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f5c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdce8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdce8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f60",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd3a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd3a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f64",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccddc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccddc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f68",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd06c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd06c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f6c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f70",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd48",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd48",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f74",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd600",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd600",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f78",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd148",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd148",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f7c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce9b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce9b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f80",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1d8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1d8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f84",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f88",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f8c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd454",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd454",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f90",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f94",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd90c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd90c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f98",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdcb0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdcb0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7f9c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdc4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdc4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fa0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fa4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce4c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce4c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fa8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd6c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd6c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf5ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf5ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fb0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce774",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce774",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fb4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd704",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd704",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fb8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdfb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdfb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fbc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd484",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd484",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fc0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd214",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd214",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fc4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cebd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cebd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fc8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce2cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce2cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fcc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cff64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cff64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fd0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce3f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce3f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fd4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce104",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce104",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fd8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf870",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf870",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fdc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce8fc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce8fc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fe0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce41c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce41c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fe4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf178",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf178",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fe8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf544",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf544",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7fec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7ff0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cef30",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cef30",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7ff4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d7ff8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdccc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdccc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd394",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd394",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce7c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce7c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd074",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd074",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd10",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd10",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82fc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd5ec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd5ec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8300",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd13c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd13c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8304",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce974",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce974",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8308",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d830c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8310",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf14",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf14",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8314",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd464",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd464",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8318",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1e4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1e4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d831c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd8f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd8f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8320",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdc94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdc94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8324",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8328",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d832c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce24",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce24",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8330",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd78",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd78",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8334",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8338",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce36c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce36c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d833c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdbec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdbec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8340",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd18",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd18",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8344",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8348",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccda8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccda8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d834c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccebc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccebc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8350",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf14",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf14",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8354",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce2c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce2c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8358",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce0c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce0c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d835c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd84",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd84",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8360",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd40",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd40",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8364",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdce8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdce8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8368",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd3a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd3a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d836c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccddc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccddc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8370",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd06c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd06c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8374",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8378",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd48",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd48",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d837c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd600",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd600",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8380",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd148",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd148",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8384",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce9b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce9b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8388",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1d8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1d8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d838c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8390",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8394",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd454",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd454",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8398",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d839c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd90c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd90c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdcb0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdcb0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdc4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdc4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce4c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce4c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd6c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd6c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd90",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd90",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce398",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce398",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdc08",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdc08",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd28",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd28",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cccb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cccb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd8c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd8c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccecc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccecc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cceac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cceac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce04",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce04",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce3c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce3c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd9c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd9c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd24",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd24",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf5ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf5ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce774",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce774",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd704",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd704",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdfb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdfb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd484",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd484",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd214",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd214",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d83fc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cebd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cebd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8400",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce2cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce2cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8404",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cff64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cff64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8408",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce3f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce3f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d840c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce104",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce104",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8410",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf870",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf870",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8414",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce8fc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce8fc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8418",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce41c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce41c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d841c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf178",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf178",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8420",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf544",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf544",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8424",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8428",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cef30",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cef30",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d842c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8430",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8434",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf618",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf618",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8438",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cfd44",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cfd44",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d843c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf40c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf40c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8440",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd244",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd244",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8444",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd70",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd70",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8448",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd494",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd494",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d844c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cda74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cda74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8450",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cda8c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cda8c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8454",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd77c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd77c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8458",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7e0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7e0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d845c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4c4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4c4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8460",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd280",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd280",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8164",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdccc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdccc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8168",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd394",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd394",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d816c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce7c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce7c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8170",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd074",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd074",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8174",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8178",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd10",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd10",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d817c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd5ec",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd5ec",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8180",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd13c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd13c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8184",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce974",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce974",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8188",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d818c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8190",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf14",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf14",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8194",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd464",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd464",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8198",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1e4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1e4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d819c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd8f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd8f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdc94",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdc94",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce24",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce24",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd78",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd78",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce1dc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce1dc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce5c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce5c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd05c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd05c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd07c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd07c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf6c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf6c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdfc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdfc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd190",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd190",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd024",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd024",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdf4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdf4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf2c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf2c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81e4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdce8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdce8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81e8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd3a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd3a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81ec",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccddc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccddc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81f0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd06c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd06c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81f4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81f8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd48",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd48",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d81fc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd600",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd600",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8200",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd148",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd148",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8204",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce9b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce9b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8208",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1d8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1d8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d820c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd0b8",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd0b8",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8210",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf34",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf34",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8214",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd454",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd454",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8218",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd1f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd1f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d821c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd90c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd90c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8220",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdcb0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdcb0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8224",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdc4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdc4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8228",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d822c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce4c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce4c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8230",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccd6c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccd6c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8234",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce204",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce204",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8238",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce44",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce44",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d823c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce8c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce8c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8240",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd02c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd02c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8244",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd094",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd094",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8248",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d824c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cce54",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cce54",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8250",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd16c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd16c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8254",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccfc4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccfc4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8258",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf9c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf9c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d825c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccdbc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccdbc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8260",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ccf1c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ccf1c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8264",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf5ac",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf5ac",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8268",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce774",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce774",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d826c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd704",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd704",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8270",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdfb4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdfb4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8274",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd484",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd484",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8278",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd214",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd214",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d827c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cebd0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cebd0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8280",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce2cc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce2cc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8284",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cff64",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cff64",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8288",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce3f0",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce3f0",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d828c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce104",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce104",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8290",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf870",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf870",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8294",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce8fc",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce8fc",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d8298",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce41c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce41c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d829c",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf178",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf178",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82a0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cf544",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cf544",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82a4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7a4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7a4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82a8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cef30",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cef30",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82ac",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd7f4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd7f4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82b0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd4b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd4b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82b4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cfc18",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cfc18",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82b8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd808",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd808",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82bc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd81c",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd81c",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82c0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce054",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce054",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82c4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce194",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce194",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82c8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cde38",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cde38",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82cc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd844",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd844",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82d0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020ce344",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20ce344",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82d4",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdf74",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdf74",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82d8",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd04",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd04",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82dc",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cd6b4",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cd6b4",
+      "target_module": "ov007"
+    },
+    {
+      "source": "0x20d82e0",
+      "section": ".rodata.portraitPointers",
+      "kind": "load",
+      "symbol": "data_ov007_020cdd20",
+      "type": "R_ARM_ABS32",
+      "addend": 0,
+      "target_address": "0x20cdd20",
       "target_module": "ov007"
     }
   ],
@@ -531,7 +5070,7 @@
       "linkerOutput": null
     }
   },
-  "verification": {
+  "historical_pointcount_verification": {
     "round": "Point-count continuation: all eight scratch ranges and 24 non-text relocations verified; normal eleven-provider/full-ROM proof passed. Nine baseline symbol diagnostics remain, zero new. Prior 120-byte measurement is preserved in historical_selector_verification; independent immutable acceptance is separate.",
     "linkcheck": {
       "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
@@ -734,6 +5273,344 @@
           "symbolIndices": 6,
           "sectionLinks": 0,
           "sectionInfos": 4,
+          "error": null
+        },
+        "errors": null
+      },
+      "linkedStorageAliases": null,
+      "symbolCheckNewVsBaseline": [],
+      "symbolCheckErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "symbolCheckBaselineErrors": [
+        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
+        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
+        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
+        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
+        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
+      ],
+      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
+      "rom": {
+        "bytes": 16777216,
+        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
+        "matchesStockRom": true
+      },
+      "linkerOutput": null
+    }
+  },
+  "verification": {
+    "round": "Current non-Luigi pointer continuation: nine owned ranges and468 non-text relocations passed fresh final-config scratch admission; five functions strict-verified; normal26-provider/full-ROM proof passed. Earlier120-byte and860-byte verification snapshots remain historical. Immutable committed-head proof is recorded separately in queue evidence.",
+    "linkcheck": {
+      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
+      "result": "scratch-data-verified",
+      "scratch": "build/tu/ov007-AnimationPathSets/link (gitignored)",
+      "phases": {
+        "delink": true,
+        "lcf": true,
+        "compile": true,
+        "link": true,
+        "checkModules": true,
+        "checkSymbols": false,
+        "rom": true
+      },
+      "tuRange": {
+        "start": "0x020bbe60",
+        "end": "0x020bbf98",
+        "differingBytes": 0,
+        "firstDiff": null
+      },
+      "tuRanges": [
+        {
+          "section": ".text",
+          "start": "0x020bbe60",
+          "end": "0x020bbf98",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.portraitSelectors",
+          "start": "0x020cdb34",
+          "end": "0x020cdb4c",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".data.portraitSelectors",
+          "start": "0x020d7e68",
+          "end": "0x020d7ec8",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.yoshiPlainCounts",
+          "start": "0x020cef80",
+          "end": "0x020cefd0",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.marioFrontCounts",
+          "start": "0x020cf700",
+          "end": "0x020cf778",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.yoshiVariantCounts",
+          "start": "0x020cf8ec",
+          "end": "0x020cf9ec",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.marioSideCounts",
+          "start": "0x020cfa70",
+          "end": "0x020cfaf8",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.luigiCounts",
+          "start": "0x020cfb84",
+          "end": "0x020cfc18",
+          "differingBytes": 0,
+          "firstDiff": null
+        },
+        {
+          "section": ".rodata.portraitPointers",
+          "start": "0x020d7f0c",
+          "end": "0x020d85fc",
+          "differingBytes": 0,
+          "firstDiff": null
+        }
+      ],
+      "objectAudit": {
+        "counts": {
+          "LICENSED": 27
+        },
+        "emittedTextOrderIsRomAscending": true,
+        "nonLicensedSymbols": [],
+        "unlicensedSections": []
+      },
+      "nontextSectionOrder": {
+        "groups": [
+          {
+            "section": ".rodata.portraitSelectors",
+            "original": [
+              11
+            ],
+            "desired": [
+              11
+            ]
+          },
+          {
+            "section": ".data.portraitSelectors",
+            "original": [
+              5,
+              7,
+              9,
+              12
+            ],
+            "desired": [
+              9,
+              7,
+              5,
+              12
+            ]
+          },
+          {
+            "section": ".rodata.yoshiPlainCounts",
+            "original": [
+              18
+            ],
+            "desired": [
+              18
+            ]
+          },
+          {
+            "section": ".rodata.marioFrontCounts",
+            "original": [
+              23
+            ],
+            "desired": [
+              23
+            ]
+          },
+          {
+            "section": ".rodata.yoshiVariantCounts",
+            "original": [
+              36,
+              37
+            ],
+            "desired": [
+              37,
+              36
+            ]
+          },
+          {
+            "section": ".rodata.marioSideCounts",
+            "original": [
+              42
+            ],
+            "desired": [
+              42
+            ]
+          },
+          {
+            "section": ".rodata.luigiCounts",
+            "original": [
+              49
+            ],
+            "desired": [
+              49
+            ]
+          },
+          {
+            "section": ".rodata.portraitPointers",
+            "original": [
+              14,
+              16,
+              19,
+              21,
+              24,
+              26,
+              28,
+              30,
+              32,
+              34,
+              38,
+              40,
+              43,
+              45,
+              47
+            ],
+            "desired": [
+              19,
+              16,
+              14,
+              24,
+              26,
+              21,
+              30,
+              40,
+              34,
+              28,
+              38,
+              32,
+              47,
+              43,
+              45
+            ]
+          }
+        ],
+        "objisolate": {
+          "reordered": [
+            {
+              "section": ".data.portraitSelectors",
+              "original": [
+                5,
+                7,
+                9,
+                12
+              ],
+              "desired": [
+                9,
+                7,
+                5,
+                12
+              ],
+              "slots": [
+                5,
+                7,
+                9,
+                12
+              ]
+            },
+            {
+              "section": ".rodata.yoshiVariantCounts",
+              "original": [
+                36,
+                37
+              ],
+              "desired": [
+                37,
+                36
+              ],
+              "slots": [
+                36,
+                37
+              ]
+            },
+            {
+              "section": ".rodata.portraitPointers",
+              "original": [
+                14,
+                16,
+                19,
+                21,
+                24,
+                26,
+                28,
+                30,
+                32,
+                34,
+                38,
+                40,
+                43,
+                45,
+                47
+              ],
+              "desired": [
+                19,
+                16,
+                14,
+                24,
+                26,
+                21,
+                30,
+                40,
+                34,
+                28,
+                38,
+                32,
+                47,
+                43,
+                45
+              ],
+              "slots": [
+                14,
+                16,
+                19,
+                21,
+                24,
+                26,
+                28,
+                30,
+                32,
+                34,
+                38,
+                40,
+                43,
+                45,
+                47
+              ]
+            }
+          ],
+          "symbolIndices": 21,
+          "sectionLinks": 0,
+          "sectionInfos": 19,
           "error": null
         },
         "errors": null
