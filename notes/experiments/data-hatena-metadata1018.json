@@ -1296,6 +1296,14 @@
       "reason": "The native data work does not claim complete class reconstruction. Existing fixed-point ABI bridges, wrapper storage and unrelated offset views require separately measured continuation.",
       "owner": "Next claimed Hatena reconstruction producer",
       "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4076"
+    },
+    {
+      "id": "HATENA-HISTORICAL-BINDING-01",
+      "kind": "provenance",
+      "location": "config/tu_manifest.d/ov102/daObjHatenaBlock_c.json symbol_binding_rewrites initializer/ctor evidence",
+      "summary": "Inherited rewrite rationale incorrectly states DSD cannot encode local symbols and generically requires global initializer linkage.",
+      "disposition": "fixed",
+      "reason": "Replaced both inherited rationale strings with the bounded configured-identity compatibility reason. All actual binding rewrites, source, headers, addresses and relocation licenses are unchanged. The rejected wording and accepted f8 byte proofs remain historical evidence."
     }
   ],
   "production": {
@@ -1372,5 +1380,22 @@
       ],
       "exit_code": 0
     }
-  ]
+  ],
+  "binding_rationale_revision": {
+    "parent": "f8a18bda97d627cbd7bd7d9abf76d791cd0f43e6",
+    "changes": [
+      {
+        "symbol": "__sinit_d_a_obj_hatena_block.cpp",
+        "before": "mwcc emits the TU initializer local; DSD requires a configured global relocation destination at the same exact address",
+        "after": "The compiler emits the initializer with local binding. Retain its existing global binding for compatibility with this configuration's global initializer identity and relocation consumers. DSD supports local labels; this rewrite is a compatibility choice, not a format limitation."
+      },
+      {
+        "symbol": ".p__sinit_d_a_obj_hatena_block.cpp",
+        "before": "mwcc emits the ctor-table object local; DSD exposes owned symbols globally and cannot encode a local symbols.txt entry",
+        "after": "The compiler emits the constructor-table object with local binding. Retain its existing global binding for compatibility with this configuration's global constructor-table identity. DSD supports local labels, as the 42 native descriptors demonstrate; this rewrite is not required by the symbol-file format."
+      }
+    ],
+    "all_binding_rules_unchanged": true,
+    "source_and_header_unchanged": true
+  }
 }
