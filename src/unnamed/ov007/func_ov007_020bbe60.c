@@ -358,7 +358,7 @@ static const int sYoshiStarStrokePointCounts[32] = {27, 14, 5,  8,  4,  3,  19, 
 static const int *sPortraitStrokePointCounts[6] = {
     sMarioFrontStrokePointCounts, sMarioSideStrokePointCounts,  sLuigiStrokePointCounts,
     sYoshiPlainStrokePointCounts, sYoshiHeartStrokePointCounts, sYoshiStarStrokePointCounts};
-static const unsigned char *const sMarioFrontStrokeXCoords[30] = {
+static const unsigned char *sMarioFrontStrokeXCoords[30] = {
     data_ov007_020cd4d4, data_ov007_020cd268, data_ov007_020cd154, data_ov007_020cd574,
     data_ov007_020ccf94, data_ov007_020cd04c, data_ov007_020ce5c8, data_ov007_020cd664,
     data_ov007_020cd4f4, data_ov007_020cd178, data_ov007_020cd334, data_ov007_020cd2b0,
@@ -367,7 +367,7 @@ static const unsigned char *const sMarioFrontStrokeXCoords[30] = {
     data_ov007_020ced00, data_ov007_020cd538, data_ov007_020cd880, data_ov007_020cce9c,
     data_ov007_020ccfcc, data_ov007_020ccccc, data_ov007_020cccdc, data_ov007_020ccf64,
     data_ov007_020ccf34, data_ov007_020ccd1c};
-static const unsigned char *const sMarioSideStrokeXCoords[34] = {
+static const unsigned char *sMarioSideStrokeXCoords[34] = {
     data_ov007_020cd924, data_ov007_020cd100, data_ov007_020cce1c, data_ov007_020cce6c,
     data_ov007_020cccfc, data_ov007_020cd474, data_ov007_020cd1c0, data_ov007_020ccdb0,
     data_ov007_020cccbc, data_ov007_020ccfbc, data_ov007_020ccefc, data_ov007_020cdb7c,
@@ -378,13 +378,13 @@ static const unsigned char *const sMarioSideStrokeXCoords[34] = {
     data_ov007_020ce074, data_ov007_020cde94, data_ov007_020cd5d8, data_ov007_020ccca4,
     data_ov007_020ccca8, data_ov007_020ccd04};
 extern const unsigned char *const data_ov007_020d85fc[36];
-static const unsigned char *const sYoshiPlainStrokeXCoords[20] = {
+static const unsigned char *sYoshiPlainStrokeXCoords[20] = {
     data_ov007_020cdccc, data_ov007_020cd394, data_ov007_020cce7c, data_ov007_020cd074,
     data_ov007_020ccd74, data_ov007_020ccd10, data_ov007_020cd5ec, data_ov007_020cd13c,
     data_ov007_020ce974, data_ov007_020cd1cc, data_ov007_020cd0ac, data_ov007_020cdf14,
     data_ov007_020cd464, data_ov007_020cd1e4, data_ov007_020cd8f4, data_ov007_020cdc94,
     data_ov007_020cce64, data_ov007_020cd7b8, data_ov007_020cce24, data_ov007_020ccd78};
-static const unsigned char *const sYoshiHeartStrokeXCoords[32] = {
+static const unsigned char *sYoshiHeartStrokeXCoords[32] = {
     data_ov007_020cdccc, data_ov007_020cd394, data_ov007_020cce7c, data_ov007_020cd074,
     data_ov007_020ccd74, data_ov007_020ccd10, data_ov007_020cd5ec, data_ov007_020cd13c,
     data_ov007_020ce974, data_ov007_020cd1cc, data_ov007_020cd0ac, data_ov007_020cdf14,
@@ -393,7 +393,7 @@ static const unsigned char *const sYoshiHeartStrokeXCoords[32] = {
     data_ov007_020cdd74, data_ov007_020ce36c, data_ov007_020cdbec, data_ov007_020ccd18,
     data_ov007_020cccac, data_ov007_020ccda8, data_ov007_020ccebc, data_ov007_020ccf14,
     data_ov007_020cce2c, data_ov007_020cce0c, data_ov007_020ccd84, data_ov007_020ccd40};
-static const unsigned char *const sYoshiStarStrokeXCoords[32] = {
+static const unsigned char *sYoshiStarStrokeXCoords[32] = {
     data_ov007_020cdccc, data_ov007_020cd394, data_ov007_020cce7c, data_ov007_020cd074,
     data_ov007_020ccd74, data_ov007_020ccd10, data_ov007_020cd5ec, data_ov007_020cd13c,
     data_ov007_020ce974, data_ov007_020cd1cc, data_ov007_020cd0ac, data_ov007_020cdf14,
@@ -405,7 +405,7 @@ static const unsigned char *const sYoshiStarStrokeXCoords[32] = {
 static const unsigned char *const *sPortraitStrokeXCoords[6] = {
     sMarioFrontStrokeXCoords, sMarioSideStrokeXCoords,  data_ov007_020d85fc,
     sYoshiPlainStrokeXCoords, sYoshiHeartStrokeXCoords, sYoshiStarStrokeXCoords};
-static const unsigned char *const sMarioFrontStrokeYCoords[30] = {
+static const unsigned char *sMarioFrontStrokeYCoords[30] = {
     data_ov007_020cd4e4, data_ov007_020cd274, data_ov007_020cd160, data_ov007_020cd588,
     data_ov007_020ccf8c, data_ov007_020cd054, data_ov007_020ce5fc, data_ov007_020cd678,
     data_ov007_020cd504, data_ov007_020cd184, data_ov007_020cd344, data_ov007_020cd2bc,
@@ -414,7 +414,7 @@ static const unsigned char *const sMarioFrontStrokeYCoords[30] = {
     data_ov007_020ced50, data_ov007_020cd524, data_ov007_020cd68c, data_ov007_020cceb4,
     data_ov007_020ccfe4, data_ov007_020cccf4, data_ov007_020cccd0, data_ov007_020ccf5c,
     data_ov007_020ccfb4, data_ov007_020ccd44};
-static const unsigned char *const sMarioSideStrokeYCoords[34] = {
+static const unsigned char *sMarioSideStrokeYCoords[34] = {
     data_ov007_020cd93c, data_ov007_020cd0f4, data_ov007_020cce84, data_ov007_020ccde4,
     data_ov007_020ccce4, data_ov007_020cd444, data_ov007_020cd1b4, data_ov007_020ccd80,
     data_ov007_020cccc8, data_ov007_020ccfd4, data_ov007_020cceec, data_ov007_020cdb98,
@@ -425,13 +425,13 @@ static const unsigned char *const sMarioSideStrokeYCoords[34] = {
     data_ov007_020ce098, data_ov007_020cdeb4, data_ov007_020cd59c, data_ov007_020cccb0,
     data_ov007_020cccc0, data_ov007_020cccec};
 extern const unsigned char *const data_ov007_020d8690[36];
-static const unsigned char *const sYoshiPlainStrokeYCoords[20] = {
+static const unsigned char *sYoshiPlainStrokeYCoords[20] = {
     data_ov007_020cdce8, data_ov007_020cd3a4, data_ov007_020ccddc, data_ov007_020cd06c,
     data_ov007_020ccdb4, data_ov007_020ccd48, data_ov007_020cd600, data_ov007_020cd148,
     data_ov007_020ce9b4, data_ov007_020cd1d8, data_ov007_020cd0b8, data_ov007_020cdf34,
     data_ov007_020cd454, data_ov007_020cd1f0, data_ov007_020cd90c, data_ov007_020cdcb0,
     data_ov007_020ccdc4, data_ov007_020cd7cc, data_ov007_020cce4c, data_ov007_020ccd6c};
-static const unsigned char *const sYoshiHeartStrokeYCoords[32] = {
+static const unsigned char *sYoshiHeartStrokeYCoords[32] = {
     data_ov007_020cdce8, data_ov007_020cd3a4, data_ov007_020ccddc, data_ov007_020cd06c,
     data_ov007_020ccdb4, data_ov007_020ccd48, data_ov007_020cd600, data_ov007_020cd148,
     data_ov007_020ce9b4, data_ov007_020cd1d8, data_ov007_020cd0b8, data_ov007_020cdf34,
@@ -440,7 +440,7 @@ static const unsigned char *const sYoshiHeartStrokeYCoords[32] = {
     data_ov007_020cdd90, data_ov007_020ce398, data_ov007_020cdc08, data_ov007_020ccd28,
     data_ov007_020cccb4, data_ov007_020ccd8c, data_ov007_020ccecc, data_ov007_020cceac,
     data_ov007_020cce04, data_ov007_020cce3c, data_ov007_020ccd9c, data_ov007_020ccd24};
-static const unsigned char *const sYoshiStarStrokeYCoords[32] = {
+static const unsigned char *sYoshiStarStrokeYCoords[32] = {
     data_ov007_020cdce8, data_ov007_020cd3a4, data_ov007_020ccddc, data_ov007_020cd06c,
     data_ov007_020ccdb4, data_ov007_020ccd48, data_ov007_020cd600, data_ov007_020cd148,
     data_ov007_020ce9b4, data_ov007_020cd1d8, data_ov007_020cd0b8, data_ov007_020cdf34,
@@ -452,7 +452,7 @@ static const unsigned char *const sYoshiStarStrokeYCoords[32] = {
 static const unsigned char *const *sPortraitStrokeYCoords[6] = {
     sMarioFrontStrokeYCoords, sMarioSideStrokeYCoords,  data_ov007_020d8690,
     sYoshiPlainStrokeYCoords, sYoshiHeartStrokeYCoords, sYoshiStarStrokeYCoords};
-static const int *const sMarioFrontStrokeProgressThresholds[30] = {
+static const int *sMarioFrontStrokeProgressThresholds[30] = {
     data_ov007_020ce9f4, data_ov007_020ce4d4, data_ov007_020ce2f4, data_ov007_020ceafc,
     data_ov007_020cde1c, data_ov007_020ce034, data_ov007_020cfe94, data_ov007_020cecb4,
     data_ov007_020cea34, data_ov007_020ce31c, data_ov007_020ce630, data_ov007_020ce504,
@@ -461,7 +461,7 @@ static const int *const sMarioFrontStrokeProgressThresholds[30] = {
     data_ov007_020d0060, data_ov007_020cea74, data_ov007_020ceda0, data_ov007_020cd99c,
     data_ov007_020cdf94, data_ov007_020ccfdc, data_ov007_020ccfec, data_ov007_020cdd3c,
     data_ov007_020cdd58, data_ov007_020cd220};
-static const int *const sMarioSideStrokeProgressThresholds[34] = {
+static const int *sMarioSideStrokeProgressThresholds[34] = {
     data_ov007_020cf1d0, data_ov007_020ce1b8, data_ov007_020cd858, data_ov007_020cd86c,
     data_ov007_020cd064, data_ov007_020ce938, data_ov007_020ce448, data_ov007_020cd514,
     data_ov007_020ccd64, data_ov007_020cdf54, data_ov007_020cdaec, data_ov007_020cf344,
@@ -472,13 +472,13 @@ static const int *const sMarioSideStrokeProgressThresholds[34] = {
     data_ov007_020cf9ec, data_ov007_020cf778, data_ov007_020ceb40, data_ov007_020ccda4,
     data_ov007_020ccda0, data_ov007_020cd004};
 extern const int *const data_ov007_020d8724[36];
-static const int *const sYoshiPlainStrokeProgressThresholds[20] = {
+static const int *sYoshiPlainStrokeProgressThresholds[20] = {
     data_ov007_020cf5ac, data_ov007_020ce774, data_ov007_020cd704, data_ov007_020cdfb4,
     data_ov007_020cd484, data_ov007_020cd214, data_ov007_020cebd0, data_ov007_020ce2cc,
     data_ov007_020cff64, data_ov007_020ce3f0, data_ov007_020ce104, data_ov007_020cf870,
     data_ov007_020ce8fc, data_ov007_020ce41c, data_ov007_020cf178, data_ov007_020cf544,
     data_ov007_020cd7a4, data_ov007_020cef30, data_ov007_020cd7f4, data_ov007_020cd4b4};
-static const int *const sYoshiHeartStrokeProgressThresholds[32] = {
+static const int *sYoshiHeartStrokeProgressThresholds[32] = {
     data_ov007_020cf5ac, data_ov007_020ce774, data_ov007_020cd704, data_ov007_020cdfb4,
     data_ov007_020cd484, data_ov007_020cd214, data_ov007_020cebd0, data_ov007_020ce2cc,
     data_ov007_020cff64, data_ov007_020ce3f0, data_ov007_020ce104, data_ov007_020cf870,
@@ -487,7 +487,7 @@ static const int *const sYoshiHeartStrokeProgressThresholds[32] = {
     data_ov007_020cf618, data_ov007_020cfd44, data_ov007_020cf40c, data_ov007_020cd244,
     data_ov007_020ccd70, data_ov007_020cd494, data_ov007_020cda74, data_ov007_020cda8c,
     data_ov007_020cd77c, data_ov007_020cd7e0, data_ov007_020cd4c4, data_ov007_020cd280};
-static const int *const sYoshiStarStrokeProgressThresholds[32] = {
+static const int *sYoshiStarStrokeProgressThresholds[32] = {
     data_ov007_020cf5ac, data_ov007_020ce774, data_ov007_020cd704, data_ov007_020cdfb4,
     data_ov007_020cd484, data_ov007_020cd214, data_ov007_020cebd0, data_ov007_020ce2cc,
     data_ov007_020cff64, data_ov007_020ce3f0, data_ov007_020ce104, data_ov007_020cf870,

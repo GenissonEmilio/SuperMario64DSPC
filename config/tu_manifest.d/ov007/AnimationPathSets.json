@@ -7,9 +7,9 @@
   "production_mode": "intact-object",
   "boundary_confidence": "low",
   "boundary_evidence": [
-    "The existing production carrier now supplies26 native initialized objects2636bytes: prior860 selectors/counts plus1776 pointer bytes for five non-Luigi portraits. This is reconstructed ownership, not original TU identity.",
-    "Fifteen X/Y/progress pointer arrays occupy the complete contiguous interval020d7f0c..020d85fc;444 configured ABS32 destinations all resolve within overlay7. Shared leaf symbols are imported once per unique address.",
-    "Luigi stores37 records but dispatch selects36; its three pointer arrays444bytes remain ROM-owned because a leaf declaration conflicts with the separately reserved shared header. All435 unique leaf ranges remain unowned by this carrier."
+    "The selector consumes six portrait stroke sets. Data ownership in this one-function carrier is provisional; it does not establish an original translation-unit boundary.",
+    "The portrait controller lifecycle spans 25 consecutive functions at 020b8f50..020bbf98 using the same two state globals. This is the next consolidation scope; the generic path engine is a separate abstraction.",
+    "Fifteen pointer arrays occupy 020d7f0c..020d85fc inside the original configured data interval. Their pointer elements are mutable; their coordinate and threshold pointees are const."
   ],
   "sections": [
     {
@@ -60,8 +60,8 @@
       "end": "0x20cfc18"
     },
     {
-      "name": ".rodata.portraitPointers",
-      "input_section": ".rodata",
+      "name": ".data.portraitPointers",
+      "input_section": ".data",
       "start": "0x020d7f0c",
       "end": "0x020d85fc"
     }
@@ -116,6 +116,32 @@
       "symbol": "sYoshiStarStrokePointCounts",
       "address": "0x20cf8ec",
       "size": "0x80",
+      "binding": "STB_LOCAL"
+    }
+  ],
+  "data": [
+    {
+      "symbol": "sPortraitStrokePointCounts",
+      "address": "0x20d7e68",
+      "size": "0x18",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sPortraitStrokeXCoords",
+      "address": "0x20d7e80",
+      "size": "0x18",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sPortraitStrokeYCoords",
+      "address": "0x20d7e98",
+      "size": "0x18",
+      "binding": "STB_LOCAL"
+    },
+    {
+      "symbol": "sPortraitStrokeProgressThresholds",
+      "address": "0x20d7eb0",
+      "size": "0x18",
       "binding": "STB_LOCAL"
     },
     {
@@ -209,41 +235,14 @@
       "binding": "STB_LOCAL"
     }
   ],
-  "data": [
-    {
-      "symbol": "sPortraitStrokePointCounts",
-      "address": "0x20d7e68",
-      "size": "0x18",
-      "binding": "STB_LOCAL"
-    },
-    {
-      "symbol": "sPortraitStrokeXCoords",
-      "address": "0x20d7e80",
-      "size": "0x18",
-      "binding": "STB_LOCAL"
-    },
-    {
-      "symbol": "sPortraitStrokeYCoords",
-      "address": "0x20d7e98",
-      "size": "0x18",
-      "binding": "STB_LOCAL"
-    },
-    {
-      "symbol": "sPortraitStrokeProgressThresholds",
-      "address": "0x20d7eb0",
-      "size": "0x18",
-      "binding": "STB_LOCAL"
-    }
-  ],
   "bss": [],
   "notes": [
-    "The four other typed helpers remain separately enrolled and unchanged. Both coordinate modes and812 existing code bytes are preserved.",
-    "Portrait names follow the decoded screenX/Y plot; they are inferred, and original names, literal progress units, historical qualifiers and TU identity remain unknown.",
-    "Only the five non-Luigi pointer families are supplied. Luigi pointer tables remain imported views of36 accessed entries in37-entry stored arrays; no leaf data is enrolled.",
-    "The unresolved data_ov007_020cd72c function declaration in reserved decl_common.h is not renamed or bypassed. Full Luigi migration requires coordinated correction.",
-    "PR4117 is the accepted source dependency; PR4106 shares delinks and future composition requires remapping its unrelated plain data/rodata claims and fresh proof.",
-    "The unchanged lower allocator func_ov007_020c2c68 retains separate integer-address ABI debt.",
-    "All fifteen new const pointer arrays naturally emit .rodata, although their ROM addresses lie inside the former broad data interval. The explicit rodata route follows native section flags; source constness is not weakened to force placement."
+    "Names describe decoded portraits and consumer behavior; original identifiers, progress units and historical source boundaries are unproven.",
+    "The current carrier owns 26 initialized objects totaling 2,636 bytes. All 435 unique leaf arrays and three Luigi pointer arrays totaling 444 bytes remain ROM supplied.",
+    "Luigi has 37 stored records, of which dispatch selects 36. Its migration requires correction of the conflicting data_ov007_020cd72c declaration in separately reserved include/decl_common.h.",
+    "The lower allocator func_ov007_020c2c68 retains an integer-address return contract requiring separate matching work.",
+    "The former readonly-pointer route inside data was a reconstruction error. Pointer mutability now agrees with the original configured section kind; the native object must emit .data there.",
+    "PR #4106 also edits OV007 delinks; composition requires fresh relocation and full-ROM verification."
   ],
   "relocations": [
     {
@@ -488,7 +487,7 @@
     },
     {
       "source": "0x20d7ffc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4d4",
       "type": "R_ARM_ABS32",
@@ -498,7 +497,7 @@
     },
     {
       "source": "0x20d8000",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd268",
       "type": "R_ARM_ABS32",
@@ -508,7 +507,7 @@
     },
     {
       "source": "0x20d8004",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd154",
       "type": "R_ARM_ABS32",
@@ -518,7 +517,7 @@
     },
     {
       "source": "0x20d8008",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd574",
       "type": "R_ARM_ABS32",
@@ -528,7 +527,7 @@
     },
     {
       "source": "0x20d800c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf94",
       "type": "R_ARM_ABS32",
@@ -538,7 +537,7 @@
     },
     {
       "source": "0x20d8010",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd04c",
       "type": "R_ARM_ABS32",
@@ -548,7 +547,7 @@
     },
     {
       "source": "0x20d8014",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce5c8",
       "type": "R_ARM_ABS32",
@@ -558,7 +557,7 @@
     },
     {
       "source": "0x20d8018",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd664",
       "type": "R_ARM_ABS32",
@@ -568,7 +567,7 @@
     },
     {
       "source": "0x20d801c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4f4",
       "type": "R_ARM_ABS32",
@@ -578,7 +577,7 @@
     },
     {
       "source": "0x20d8020",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd178",
       "type": "R_ARM_ABS32",
@@ -588,7 +587,7 @@
     },
     {
       "source": "0x20d8024",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd334",
       "type": "R_ARM_ABS32",
@@ -598,7 +597,7 @@
     },
     {
       "source": "0x20d8028",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2b0",
       "type": "R_ARM_ABS32",
@@ -608,7 +607,7 @@
     },
     {
       "source": "0x20d802c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdb4c",
       "type": "R_ARM_ABS32",
@@ -618,7 +617,7 @@
     },
     {
       "source": "0x20d8030",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2c8",
       "type": "R_ARM_ABS32",
@@ -628,7 +627,7 @@
     },
     {
       "source": "0x20d8034",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd354",
       "type": "R_ARM_ABS32",
@@ -638,7 +637,7 @@
     },
     {
       "source": "0x20d8038",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd54",
       "type": "R_ARM_ABS32",
@@ -648,7 +647,7 @@
     },
     {
       "source": "0x20d803c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd00",
       "type": "R_ARM_ABS32",
@@ -658,7 +657,7 @@
     },
     {
       "source": "0x20d8040",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2ec",
       "type": "R_ARM_ABS32",
@@ -668,7 +667,7 @@
     },
     {
       "source": "0x20d8044",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd374",
       "type": "R_ARM_ABS32",
@@ -678,7 +677,7 @@
     },
     {
       "source": "0x20d8048",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd08",
       "type": "R_ARM_ABS32",
@@ -688,7 +687,7 @@
     },
     {
       "source": "0x20d804c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ced00",
       "type": "R_ARM_ABS32",
@@ -698,7 +697,7 @@
     },
     {
       "source": "0x20d8050",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd538",
       "type": "R_ARM_ABS32",
@@ -708,7 +707,7 @@
     },
     {
       "source": "0x20d8054",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd880",
       "type": "R_ARM_ABS32",
@@ -718,7 +717,7 @@
     },
     {
       "source": "0x20d8058",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce9c",
       "type": "R_ARM_ABS32",
@@ -728,7 +727,7 @@
     },
     {
       "source": "0x20d805c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfcc",
       "type": "R_ARM_ABS32",
@@ -738,7 +737,7 @@
     },
     {
       "source": "0x20d8060",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccccc",
       "type": "R_ARM_ABS32",
@@ -748,7 +747,7 @@
     },
     {
       "source": "0x20d8064",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccdc",
       "type": "R_ARM_ABS32",
@@ -758,7 +757,7 @@
     },
     {
       "source": "0x20d8068",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf64",
       "type": "R_ARM_ABS32",
@@ -768,7 +767,7 @@
     },
     {
       "source": "0x20d806c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf34",
       "type": "R_ARM_ABS32",
@@ -778,7 +777,7 @@
     },
     {
       "source": "0x20d8070",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd1c",
       "type": "R_ARM_ABS32",
@@ -788,7 +787,7 @@
     },
     {
       "source": "0x20d8074",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4e4",
       "type": "R_ARM_ABS32",
@@ -798,7 +797,7 @@
     },
     {
       "source": "0x20d8078",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd274",
       "type": "R_ARM_ABS32",
@@ -808,7 +807,7 @@
     },
     {
       "source": "0x20d807c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd160",
       "type": "R_ARM_ABS32",
@@ -818,7 +817,7 @@
     },
     {
       "source": "0x20d8080",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd588",
       "type": "R_ARM_ABS32",
@@ -828,7 +827,7 @@
     },
     {
       "source": "0x20d8084",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf8c",
       "type": "R_ARM_ABS32",
@@ -838,7 +837,7 @@
     },
     {
       "source": "0x20d8088",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd054",
       "type": "R_ARM_ABS32",
@@ -848,7 +847,7 @@
     },
     {
       "source": "0x20d808c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce5fc",
       "type": "R_ARM_ABS32",
@@ -858,7 +857,7 @@
     },
     {
       "source": "0x20d8090",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd678",
       "type": "R_ARM_ABS32",
@@ -868,7 +867,7 @@
     },
     {
       "source": "0x20d8094",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd504",
       "type": "R_ARM_ABS32",
@@ -878,7 +877,7 @@
     },
     {
       "source": "0x20d8098",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd184",
       "type": "R_ARM_ABS32",
@@ -888,7 +887,7 @@
     },
     {
       "source": "0x20d809c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd344",
       "type": "R_ARM_ABS32",
@@ -898,7 +897,7 @@
     },
     {
       "source": "0x20d80a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2bc",
       "type": "R_ARM_ABS32",
@@ -908,7 +907,7 @@
     },
     {
       "source": "0x20d80a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdb64",
       "type": "R_ARM_ABS32",
@@ -918,7 +917,7 @@
     },
     {
       "source": "0x20d80a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2d4",
       "type": "R_ARM_ABS32",
@@ -928,7 +927,7 @@
     },
     {
       "source": "0x20d80ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd364",
       "type": "R_ARM_ABS32",
@@ -938,7 +937,7 @@
     },
     {
       "source": "0x20d80b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd0c",
       "type": "R_ARM_ABS32",
@@ -948,7 +947,7 @@
     },
     {
       "source": "0x20d80b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccce0",
       "type": "R_ARM_ABS32",
@@ -958,7 +957,7 @@
     },
     {
       "source": "0x20d80b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2f8",
       "type": "R_ARM_ABS32",
@@ -968,7 +967,7 @@
     },
     {
       "source": "0x20d80bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd314",
       "type": "R_ARM_ABS32",
@@ -978,7 +977,7 @@
     },
     {
       "source": "0x20d80c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd3c",
       "type": "R_ARM_ABS32",
@@ -988,7 +987,7 @@
     },
     {
       "source": "0x20d80c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ced50",
       "type": "R_ARM_ABS32",
@@ -998,7 +997,7 @@
     },
     {
       "source": "0x20d80c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd524",
       "type": "R_ARM_ABS32",
@@ -1008,7 +1007,7 @@
     },
     {
       "source": "0x20d80cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd68c",
       "type": "R_ARM_ABS32",
@@ -1018,7 +1017,7 @@
     },
     {
       "source": "0x20d80d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cceb4",
       "type": "R_ARM_ABS32",
@@ -1028,7 +1027,7 @@
     },
     {
       "source": "0x20d80d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfe4",
       "type": "R_ARM_ABS32",
@@ -1038,7 +1037,7 @@
     },
     {
       "source": "0x20d80d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccf4",
       "type": "R_ARM_ABS32",
@@ -1048,7 +1047,7 @@
     },
     {
       "source": "0x20d80dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccd0",
       "type": "R_ARM_ABS32",
@@ -1058,7 +1057,7 @@
     },
     {
       "source": "0x20d80e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf5c",
       "type": "R_ARM_ABS32",
@@ -1068,7 +1067,7 @@
     },
     {
       "source": "0x20d80e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfb4",
       "type": "R_ARM_ABS32",
@@ -1078,7 +1077,7 @@
     },
     {
       "source": "0x20d80e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd44",
       "type": "R_ARM_ABS32",
@@ -1088,7 +1087,7 @@
     },
     {
       "source": "0x20d80ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce9f4",
       "type": "R_ARM_ABS32",
@@ -1098,7 +1097,7 @@
     },
     {
       "source": "0x20d80f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce4d4",
       "type": "R_ARM_ABS32",
@@ -1108,7 +1107,7 @@
     },
     {
       "source": "0x20d80f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce2f4",
       "type": "R_ARM_ABS32",
@@ -1118,7 +1117,7 @@
     },
     {
       "source": "0x20d80f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ceafc",
       "type": "R_ARM_ABS32",
@@ -1128,7 +1127,7 @@
     },
     {
       "source": "0x20d80fc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cde1c",
       "type": "R_ARM_ABS32",
@@ -1138,7 +1137,7 @@
     },
     {
       "source": "0x20d8100",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce034",
       "type": "R_ARM_ABS32",
@@ -1148,7 +1147,7 @@
     },
     {
       "source": "0x20d8104",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cfe94",
       "type": "R_ARM_ABS32",
@@ -1158,7 +1157,7 @@
     },
     {
       "source": "0x20d8108",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cecb4",
       "type": "R_ARM_ABS32",
@@ -1168,7 +1167,7 @@
     },
     {
       "source": "0x20d810c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cea34",
       "type": "R_ARM_ABS32",
@@ -1178,7 +1177,7 @@
     },
     {
       "source": "0x20d8110",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce31c",
       "type": "R_ARM_ABS32",
@@ -1188,7 +1187,7 @@
     },
     {
       "source": "0x20d8114",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce630",
       "type": "R_ARM_ABS32",
@@ -1198,7 +1197,7 @@
     },
     {
       "source": "0x20d8118",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce504",
       "type": "R_ARM_ABS32",
@@ -1208,7 +1207,7 @@
     },
     {
       "source": "0x20d811c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf2e4",
       "type": "R_ARM_ABS32",
@@ -1218,7 +1217,7 @@
     },
     {
       "source": "0x20d8120",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce534",
       "type": "R_ARM_ABS32",
@@ -1228,7 +1227,7 @@
     },
     {
       "source": "0x20d8124",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce664",
       "type": "R_ARM_ABS32",
@@ -1238,7 +1237,7 @@
     },
     {
       "source": "0x20d8128",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2e0",
       "type": "R_ARM_ABS32",
@@ -1248,7 +1247,7 @@
     },
     {
       "source": "0x20d812c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccffc",
       "type": "R_ARM_ABS32",
@@ -1258,7 +1257,7 @@
     },
     {
       "source": "0x20d8130",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce564",
       "type": "R_ARM_ABS32",
@@ -1268,7 +1267,7 @@
     },
     {
       "source": "0x20d8134",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce698",
       "type": "R_ARM_ABS32",
@@ -1278,7 +1277,7 @@
     },
     {
       "source": "0x20d8138",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd22c",
       "type": "R_ARM_ABS32",
@@ -1288,7 +1287,7 @@
     },
     {
       "source": "0x20d813c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020d0060",
       "type": "R_ARM_ABS32",
@@ -1298,7 +1297,7 @@
     },
     {
       "source": "0x20d8140",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cea74",
       "type": "R_ARM_ABS32",
@@ -1308,7 +1307,7 @@
     },
     {
       "source": "0x20d8144",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ceda0",
       "type": "R_ARM_ABS32",
@@ -1318,7 +1317,7 @@
     },
     {
       "source": "0x20d8148",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd99c",
       "type": "R_ARM_ABS32",
@@ -1328,7 +1327,7 @@
     },
     {
       "source": "0x20d814c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf94",
       "type": "R_ARM_ABS32",
@@ -1338,7 +1337,7 @@
     },
     {
       "source": "0x20d8150",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfdc",
       "type": "R_ARM_ABS32",
@@ -1348,7 +1347,7 @@
     },
     {
       "source": "0x20d8154",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfec",
       "type": "R_ARM_ABS32",
@@ -1358,7 +1357,7 @@
     },
     {
       "source": "0x20d8158",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd3c",
       "type": "R_ARM_ABS32",
@@ -1368,7 +1367,7 @@
     },
     {
       "source": "0x20d815c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd58",
       "type": "R_ARM_ABS32",
@@ -1378,7 +1377,7 @@
     },
     {
       "source": "0x20d8160",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd220",
       "type": "R_ARM_ABS32",
@@ -1388,7 +1387,7 @@
     },
     {
       "source": "0x20d8464",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd924",
       "type": "R_ARM_ABS32",
@@ -1398,7 +1397,7 @@
     },
     {
       "source": "0x20d8468",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd100",
       "type": "R_ARM_ABS32",
@@ -1408,7 +1407,7 @@
     },
     {
       "source": "0x20d846c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce1c",
       "type": "R_ARM_ABS32",
@@ -1418,7 +1417,7 @@
     },
     {
       "source": "0x20d8470",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce6c",
       "type": "R_ARM_ABS32",
@@ -1428,7 +1427,7 @@
     },
     {
       "source": "0x20d8474",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccfc",
       "type": "R_ARM_ABS32",
@@ -1438,7 +1437,7 @@
     },
     {
       "source": "0x20d8478",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd474",
       "type": "R_ARM_ABS32",
@@ -1448,7 +1447,7 @@
     },
     {
       "source": "0x20d847c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1c0",
       "type": "R_ARM_ABS32",
@@ -1458,7 +1457,7 @@
     },
     {
       "source": "0x20d8480",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdb0",
       "type": "R_ARM_ABS32",
@@ -1468,7 +1467,7 @@
     },
     {
       "source": "0x20d8484",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccbc",
       "type": "R_ARM_ABS32",
@@ -1478,7 +1477,7 @@
     },
     {
       "source": "0x20d8488",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfbc",
       "type": "R_ARM_ABS32",
@@ -1488,7 +1487,7 @@
     },
     {
       "source": "0x20d848c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccefc",
       "type": "R_ARM_ABS32",
@@ -1498,7 +1497,7 @@
     },
     {
       "source": "0x20d8490",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdb7c",
       "type": "R_ARM_ABS32",
@@ -1508,7 +1507,7 @@
     },
     {
       "source": "0x20d8494",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdbb4",
       "type": "R_ARM_ABS32",
@@ -1518,7 +1517,7 @@
     },
     {
       "source": "0x20d8498",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd2c",
       "type": "R_ARM_ABS32",
@@ -1528,7 +1527,7 @@
     },
     {
       "source": "0x20d849c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd8ac",
       "type": "R_ARM_ABS32",
@@ -1538,7 +1537,7 @@
     },
     {
       "source": "0x20d84a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd298",
       "type": "R_ARM_ABS32",
@@ -1548,7 +1547,7 @@
     },
     {
       "source": "0x20d84a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce74",
       "type": "R_ARM_ABS32",
@@ -1558,7 +1557,7 @@
     },
     {
       "source": "0x20d84a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd954",
       "type": "R_ARM_ABS32",
@@ -1568,7 +1567,7 @@
     },
     {
       "source": "0x20d84ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd118",
       "type": "R_ARM_ABS32",
@@ -1578,7 +1577,7 @@
     },
     {
       "source": "0x20d84b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd94",
       "type": "R_ARM_ABS32",
@@ -1588,7 +1587,7 @@
     },
     {
       "source": "0x20d84b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd434",
       "type": "R_ARM_ABS32",
@@ -1598,7 +1597,7 @@
     },
     {
       "source": "0x20d84b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd9cc",
       "type": "R_ARM_ABS32",
@@ -1608,7 +1607,7 @@
     },
     {
       "source": "0x20d84bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cde54",
       "type": "R_ARM_ABS32",
@@ -1618,7 +1617,7 @@
     },
     {
       "source": "0x20d84c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce22c",
       "type": "R_ARM_ABS32",
@@ -1628,7 +1627,7 @@
     },
     {
       "source": "0x20d84c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd6c8",
       "type": "R_ARM_ABS32",
@@ -1638,7 +1637,7 @@
     },
     {
       "source": "0x20d84c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd208",
       "type": "R_ARM_ABS32",
@@ -1648,7 +1647,7 @@
     },
     {
       "source": "0x20d84cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd324",
       "type": "R_ARM_ABS32",
@@ -1658,7 +1657,7 @@
     },
     {
       "source": "0x20d84d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd19c",
       "type": "R_ARM_ABS32",
@@ -1668,7 +1667,7 @@
     },
     {
       "source": "0x20d84d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce074",
       "type": "R_ARM_ABS32",
@@ -1678,7 +1677,7 @@
     },
     {
       "source": "0x20d84d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cde94",
       "type": "R_ARM_ABS32",
@@ -1688,7 +1687,7 @@
     },
     {
       "source": "0x20d84dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd5d8",
       "type": "R_ARM_ABS32",
@@ -1698,7 +1697,7 @@
     },
     {
       "source": "0x20d84e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccca4",
       "type": "R_ARM_ABS32",
@@ -1708,7 +1707,7 @@
     },
     {
       "source": "0x20d84e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccca8",
       "type": "R_ARM_ABS32",
@@ -1718,7 +1717,7 @@
     },
     {
       "source": "0x20d84e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd04",
       "type": "R_ARM_ABS32",
@@ -1728,7 +1727,7 @@
     },
     {
       "source": "0x20d84ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd93c",
       "type": "R_ARM_ABS32",
@@ -1738,7 +1737,7 @@
     },
     {
       "source": "0x20d84f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0f4",
       "type": "R_ARM_ABS32",
@@ -1748,7 +1747,7 @@
     },
     {
       "source": "0x20d84f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce84",
       "type": "R_ARM_ABS32",
@@ -1758,7 +1757,7 @@
     },
     {
       "source": "0x20d84f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccde4",
       "type": "R_ARM_ABS32",
@@ -1768,7 +1767,7 @@
     },
     {
       "source": "0x20d84fc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccce4",
       "type": "R_ARM_ABS32",
@@ -1778,7 +1777,7 @@
     },
     {
       "source": "0x20d8500",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd444",
       "type": "R_ARM_ABS32",
@@ -1788,7 +1787,7 @@
     },
     {
       "source": "0x20d8504",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1b4",
       "type": "R_ARM_ABS32",
@@ -1798,7 +1797,7 @@
     },
     {
       "source": "0x20d8508",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd80",
       "type": "R_ARM_ABS32",
@@ -1808,7 +1807,7 @@
     },
     {
       "source": "0x20d850c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccc8",
       "type": "R_ARM_ABS32",
@@ -1818,7 +1817,7 @@
     },
     {
       "source": "0x20d8510",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfd4",
       "type": "R_ARM_ABS32",
@@ -1828,7 +1827,7 @@
     },
     {
       "source": "0x20d8514",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cceec",
       "type": "R_ARM_ABS32",
@@ -1838,7 +1837,7 @@
     },
     {
       "source": "0x20d8518",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdb98",
       "type": "R_ARM_ABS32",
@@ -1848,7 +1847,7 @@
     },
     {
       "source": "0x20d851c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdbd0",
       "type": "R_ARM_ABS32",
@@ -1858,7 +1857,7 @@
     },
     {
       "source": "0x20d8520",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd14",
       "type": "R_ARM_ABS32",
@@ -1868,7 +1867,7 @@
     },
     {
       "source": "0x20d8524",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd894",
       "type": "R_ARM_ABS32",
@@ -1878,7 +1877,7 @@
     },
     {
       "source": "0x20d8528",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1fc",
       "type": "R_ARM_ABS32",
@@ -1888,7 +1887,7 @@
     },
     {
       "source": "0x20d852c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdcc",
       "type": "R_ARM_ABS32",
@@ -1898,7 +1897,7 @@
     },
     {
       "source": "0x20d8530",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd96c",
       "type": "R_ARM_ABS32",
@@ -1908,7 +1907,7 @@
     },
     {
       "source": "0x20d8534",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd10c",
       "type": "R_ARM_ABS32",
@@ -1918,7 +1917,7 @@
     },
     {
       "source": "0x20d8538",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd88",
       "type": "R_ARM_ABS32",
@@ -1928,7 +1927,7 @@
     },
     {
       "source": "0x20d853c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd384",
       "type": "R_ARM_ABS32",
@@ -1938,7 +1937,7 @@
     },
     {
       "source": "0x20d8540",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd984",
       "type": "R_ARM_ABS32",
@@ -1948,7 +1947,7 @@
     },
     {
       "source": "0x20d8544",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cde74",
       "type": "R_ARM_ABS32",
@@ -1958,7 +1957,7 @@
     },
     {
       "source": "0x20d8548",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce254",
       "type": "R_ARM_ABS32",
@@ -1968,7 +1967,7 @@
     },
     {
       "source": "0x20d854c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd6dc",
       "type": "R_ARM_ABS32",
@@ -1978,7 +1977,7 @@
     },
     {
       "source": "0x20d8550",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd28c",
       "type": "R_ARM_ABS32",
@@ -1988,7 +1987,7 @@
     },
     {
       "source": "0x20d8554",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd304",
       "type": "R_ARM_ABS32",
@@ -1998,7 +1997,7 @@
     },
     {
       "source": "0x20d8558",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1a8",
       "type": "R_ARM_ABS32",
@@ -2008,7 +2007,7 @@
     },
     {
       "source": "0x20d855c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce098",
       "type": "R_ARM_ABS32",
@@ -2018,7 +2017,7 @@
     },
     {
       "source": "0x20d8560",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdeb4",
       "type": "R_ARM_ABS32",
@@ -2028,7 +2027,7 @@
     },
     {
       "source": "0x20d8564",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd59c",
       "type": "R_ARM_ABS32",
@@ -2038,7 +2037,7 @@
     },
     {
       "source": "0x20d8568",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccb0",
       "type": "R_ARM_ABS32",
@@ -2048,7 +2047,7 @@
     },
     {
       "source": "0x20d856c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccc0",
       "type": "R_ARM_ABS32",
@@ -2058,7 +2057,7 @@
     },
     {
       "source": "0x20d8570",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccec",
       "type": "R_ARM_ABS32",
@@ -2068,7 +2067,7 @@
     },
     {
       "source": "0x20d8574",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf1d0",
       "type": "R_ARM_ABS32",
@@ -2078,7 +2077,7 @@
     },
     {
       "source": "0x20d8578",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce1b8",
       "type": "R_ARM_ABS32",
@@ -2088,7 +2087,7 @@
     },
     {
       "source": "0x20d857c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd858",
       "type": "R_ARM_ABS32",
@@ -2098,7 +2097,7 @@
     },
     {
       "source": "0x20d8580",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd86c",
       "type": "R_ARM_ABS32",
@@ -2108,7 +2107,7 @@
     },
     {
       "source": "0x20d8584",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd064",
       "type": "R_ARM_ABS32",
@@ -2118,7 +2117,7 @@
     },
     {
       "source": "0x20d8588",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce938",
       "type": "R_ARM_ABS32",
@@ -2128,7 +2127,7 @@
     },
     {
       "source": "0x20d858c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce448",
       "type": "R_ARM_ABS32",
@@ -2138,7 +2137,7 @@
     },
     {
       "source": "0x20d8590",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd514",
       "type": "R_ARM_ABS32",
@@ -2148,7 +2147,7 @@
     },
     {
       "source": "0x20d8594",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd64",
       "type": "R_ARM_ABS32",
@@ -2158,7 +2157,7 @@
     },
     {
       "source": "0x20d8598",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf54",
       "type": "R_ARM_ABS32",
@@ -2168,7 +2167,7 @@
     },
     {
       "source": "0x20d859c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdaec",
       "type": "R_ARM_ABS32",
@@ -2178,7 +2177,7 @@
     },
     {
       "source": "0x20d85a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf344",
       "type": "R_ARM_ABS32",
@@ -2188,7 +2187,7 @@
     },
     {
       "source": "0x20d85a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf3a8",
       "type": "R_ARM_ABS32",
@@ -2198,7 +2197,7 @@
     },
     {
       "source": "0x20d85a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd2a4",
       "type": "R_ARM_ABS32",
@@ -2208,7 +2207,7 @@
     },
     {
       "source": "0x20d85ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cefd0",
       "type": "R_ARM_ABS32",
@@ -2218,7 +2217,7 @@
     },
     {
       "source": "0x20d85b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce474",
       "type": "R_ARM_ABS32",
@@ -2228,7 +2227,7 @@
     },
     {
       "source": "0x20d85b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd6a0",
       "type": "R_ARM_ABS32",
@@ -2238,7 +2237,7 @@
     },
     {
       "source": "0x20d85b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf228",
       "type": "R_ARM_ABS32",
@@ -2248,7 +2247,7 @@
     },
     {
       "source": "0x20d85bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce27c",
       "type": "R_ARM_ABS32",
@@ -2258,7 +2257,7 @@
     },
     {
       "source": "0x20d85c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4a4",
       "type": "R_ARM_ABS32",
@@ -2268,7 +2267,7 @@
     },
     {
       "source": "0x20d85c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce704",
       "type": "R_ARM_ABS32",
@@ -2278,7 +2277,7 @@
     },
     {
       "source": "0x20d85c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf284",
       "type": "R_ARM_ABS32",
@@ -2288,7 +2287,7 @@
     },
     {
       "source": "0x20d85cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf688",
       "type": "R_ARM_ABS32",
@@ -2298,7 +2297,7 @@
     },
     {
       "source": "0x20d85d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cfcac",
       "type": "R_ARM_ABS32",
@@ -2308,7 +2307,7 @@
     },
     {
       "source": "0x20d85d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cedf0",
       "type": "R_ARM_ABS32",
@@ -2318,7 +2317,7 @@
     },
     {
       "source": "0x20d85d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce4a4",
       "type": "R_ARM_ABS32",
@@ -2328,7 +2327,7 @@
     },
     {
       "source": "0x20d85dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce594",
       "type": "R_ARM_ABS32",
@@ -2338,7 +2337,7 @@
     },
     {
       "source": "0x20d85e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce3c4",
       "type": "R_ARM_ABS32",
@@ -2348,7 +2347,7 @@
     },
     {
       "source": "0x20d85e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf9ec",
       "type": "R_ARM_ABS32",
@@ -2358,7 +2357,7 @@
     },
     {
       "source": "0x20d85e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf778",
       "type": "R_ARM_ABS32",
@@ -2368,7 +2367,7 @@
     },
     {
       "source": "0x20d85ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ceb40",
       "type": "R_ARM_ABS32",
@@ -2378,7 +2377,7 @@
     },
     {
       "source": "0x20d85f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccda4",
       "type": "R_ARM_ABS32",
@@ -2388,7 +2387,7 @@
     },
     {
       "source": "0x20d85f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccda0",
       "type": "R_ARM_ABS32",
@@ -2398,7 +2397,7 @@
     },
     {
       "source": "0x20d85f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd004",
       "type": "R_ARM_ABS32",
@@ -2408,7 +2407,7 @@
     },
     {
       "source": "0x20d7f0c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdccc",
       "type": "R_ARM_ABS32",
@@ -2418,7 +2417,7 @@
     },
     {
       "source": "0x20d7f10",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd394",
       "type": "R_ARM_ABS32",
@@ -2428,7 +2427,7 @@
     },
     {
       "source": "0x20d7f14",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce7c",
       "type": "R_ARM_ABS32",
@@ -2438,7 +2437,7 @@
     },
     {
       "source": "0x20d7f18",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd074",
       "type": "R_ARM_ABS32",
@@ -2448,7 +2447,7 @@
     },
     {
       "source": "0x20d7f1c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd74",
       "type": "R_ARM_ABS32",
@@ -2458,7 +2457,7 @@
     },
     {
       "source": "0x20d7f20",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd10",
       "type": "R_ARM_ABS32",
@@ -2468,7 +2467,7 @@
     },
     {
       "source": "0x20d7f24",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd5ec",
       "type": "R_ARM_ABS32",
@@ -2478,7 +2477,7 @@
     },
     {
       "source": "0x20d7f28",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd13c",
       "type": "R_ARM_ABS32",
@@ -2488,7 +2487,7 @@
     },
     {
       "source": "0x20d7f2c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce974",
       "type": "R_ARM_ABS32",
@@ -2498,7 +2497,7 @@
     },
     {
       "source": "0x20d7f30",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1cc",
       "type": "R_ARM_ABS32",
@@ -2508,7 +2507,7 @@
     },
     {
       "source": "0x20d7f34",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0ac",
       "type": "R_ARM_ABS32",
@@ -2518,7 +2517,7 @@
     },
     {
       "source": "0x20d7f38",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf14",
       "type": "R_ARM_ABS32",
@@ -2528,7 +2527,7 @@
     },
     {
       "source": "0x20d7f3c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd464",
       "type": "R_ARM_ABS32",
@@ -2538,7 +2537,7 @@
     },
     {
       "source": "0x20d7f40",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1e4",
       "type": "R_ARM_ABS32",
@@ -2548,7 +2547,7 @@
     },
     {
       "source": "0x20d7f44",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd8f4",
       "type": "R_ARM_ABS32",
@@ -2558,7 +2557,7 @@
     },
     {
       "source": "0x20d7f48",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdc94",
       "type": "R_ARM_ABS32",
@@ -2568,7 +2567,7 @@
     },
     {
       "source": "0x20d7f4c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce64",
       "type": "R_ARM_ABS32",
@@ -2578,7 +2577,7 @@
     },
     {
       "source": "0x20d7f50",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7b8",
       "type": "R_ARM_ABS32",
@@ -2588,7 +2587,7 @@
     },
     {
       "source": "0x20d7f54",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce24",
       "type": "R_ARM_ABS32",
@@ -2598,7 +2597,7 @@
     },
     {
       "source": "0x20d7f58",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd78",
       "type": "R_ARM_ABS32",
@@ -2608,7 +2607,7 @@
     },
     {
       "source": "0x20d7f5c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdce8",
       "type": "R_ARM_ABS32",
@@ -2618,7 +2617,7 @@
     },
     {
       "source": "0x20d7f60",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd3a4",
       "type": "R_ARM_ABS32",
@@ -2628,7 +2627,7 @@
     },
     {
       "source": "0x20d7f64",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccddc",
       "type": "R_ARM_ABS32",
@@ -2638,7 +2637,7 @@
     },
     {
       "source": "0x20d7f68",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd06c",
       "type": "R_ARM_ABS32",
@@ -2648,7 +2647,7 @@
     },
     {
       "source": "0x20d7f6c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdb4",
       "type": "R_ARM_ABS32",
@@ -2658,7 +2657,7 @@
     },
     {
       "source": "0x20d7f70",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd48",
       "type": "R_ARM_ABS32",
@@ -2668,7 +2667,7 @@
     },
     {
       "source": "0x20d7f74",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd600",
       "type": "R_ARM_ABS32",
@@ -2678,7 +2677,7 @@
     },
     {
       "source": "0x20d7f78",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd148",
       "type": "R_ARM_ABS32",
@@ -2688,7 +2687,7 @@
     },
     {
       "source": "0x20d7f7c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce9b4",
       "type": "R_ARM_ABS32",
@@ -2698,7 +2697,7 @@
     },
     {
       "source": "0x20d7f80",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1d8",
       "type": "R_ARM_ABS32",
@@ -2708,7 +2707,7 @@
     },
     {
       "source": "0x20d7f84",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0b8",
       "type": "R_ARM_ABS32",
@@ -2718,7 +2717,7 @@
     },
     {
       "source": "0x20d7f88",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf34",
       "type": "R_ARM_ABS32",
@@ -2728,7 +2727,7 @@
     },
     {
       "source": "0x20d7f8c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd454",
       "type": "R_ARM_ABS32",
@@ -2738,7 +2737,7 @@
     },
     {
       "source": "0x20d7f90",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1f0",
       "type": "R_ARM_ABS32",
@@ -2748,7 +2747,7 @@
     },
     {
       "source": "0x20d7f94",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd90c",
       "type": "R_ARM_ABS32",
@@ -2758,7 +2757,7 @@
     },
     {
       "source": "0x20d7f98",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdcb0",
       "type": "R_ARM_ABS32",
@@ -2768,7 +2767,7 @@
     },
     {
       "source": "0x20d7f9c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdc4",
       "type": "R_ARM_ABS32",
@@ -2778,7 +2777,7 @@
     },
     {
       "source": "0x20d7fa0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7cc",
       "type": "R_ARM_ABS32",
@@ -2788,7 +2787,7 @@
     },
     {
       "source": "0x20d7fa4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce4c",
       "type": "R_ARM_ABS32",
@@ -2798,7 +2797,7 @@
     },
     {
       "source": "0x20d7fa8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd6c",
       "type": "R_ARM_ABS32",
@@ -2808,7 +2807,7 @@
     },
     {
       "source": "0x20d7fac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf5ac",
       "type": "R_ARM_ABS32",
@@ -2818,7 +2817,7 @@
     },
     {
       "source": "0x20d7fb0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce774",
       "type": "R_ARM_ABS32",
@@ -2828,7 +2827,7 @@
     },
     {
       "source": "0x20d7fb4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd704",
       "type": "R_ARM_ABS32",
@@ -2838,7 +2837,7 @@
     },
     {
       "source": "0x20d7fb8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdfb4",
       "type": "R_ARM_ABS32",
@@ -2848,7 +2847,7 @@
     },
     {
       "source": "0x20d7fbc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd484",
       "type": "R_ARM_ABS32",
@@ -2858,7 +2857,7 @@
     },
     {
       "source": "0x20d7fc0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd214",
       "type": "R_ARM_ABS32",
@@ -2868,7 +2867,7 @@
     },
     {
       "source": "0x20d7fc4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cebd0",
       "type": "R_ARM_ABS32",
@@ -2878,7 +2877,7 @@
     },
     {
       "source": "0x20d7fc8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce2cc",
       "type": "R_ARM_ABS32",
@@ -2888,7 +2887,7 @@
     },
     {
       "source": "0x20d7fcc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cff64",
       "type": "R_ARM_ABS32",
@@ -2898,7 +2897,7 @@
     },
     {
       "source": "0x20d7fd0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce3f0",
       "type": "R_ARM_ABS32",
@@ -2908,7 +2907,7 @@
     },
     {
       "source": "0x20d7fd4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce104",
       "type": "R_ARM_ABS32",
@@ -2918,7 +2917,7 @@
     },
     {
       "source": "0x20d7fd8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf870",
       "type": "R_ARM_ABS32",
@@ -2928,7 +2927,7 @@
     },
     {
       "source": "0x20d7fdc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce8fc",
       "type": "R_ARM_ABS32",
@@ -2938,7 +2937,7 @@
     },
     {
       "source": "0x20d7fe0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce41c",
       "type": "R_ARM_ABS32",
@@ -2948,7 +2947,7 @@
     },
     {
       "source": "0x20d7fe4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf178",
       "type": "R_ARM_ABS32",
@@ -2958,7 +2957,7 @@
     },
     {
       "source": "0x20d7fe8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf544",
       "type": "R_ARM_ABS32",
@@ -2968,7 +2967,7 @@
     },
     {
       "source": "0x20d7fec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7a4",
       "type": "R_ARM_ABS32",
@@ -2978,7 +2977,7 @@
     },
     {
       "source": "0x20d7ff0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cef30",
       "type": "R_ARM_ABS32",
@@ -2988,7 +2987,7 @@
     },
     {
       "source": "0x20d7ff4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7f4",
       "type": "R_ARM_ABS32",
@@ -2998,7 +2997,7 @@
     },
     {
       "source": "0x20d7ff8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4b4",
       "type": "R_ARM_ABS32",
@@ -3008,7 +3007,7 @@
     },
     {
       "source": "0x20d82e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdccc",
       "type": "R_ARM_ABS32",
@@ -3018,7 +3017,7 @@
     },
     {
       "source": "0x20d82e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd394",
       "type": "R_ARM_ABS32",
@@ -3028,7 +3027,7 @@
     },
     {
       "source": "0x20d82ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce7c",
       "type": "R_ARM_ABS32",
@@ -3038,7 +3037,7 @@
     },
     {
       "source": "0x20d82f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd074",
       "type": "R_ARM_ABS32",
@@ -3048,7 +3047,7 @@
     },
     {
       "source": "0x20d82f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd74",
       "type": "R_ARM_ABS32",
@@ -3058,7 +3057,7 @@
     },
     {
       "source": "0x20d82f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd10",
       "type": "R_ARM_ABS32",
@@ -3068,7 +3067,7 @@
     },
     {
       "source": "0x20d82fc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd5ec",
       "type": "R_ARM_ABS32",
@@ -3078,7 +3077,7 @@
     },
     {
       "source": "0x20d8300",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd13c",
       "type": "R_ARM_ABS32",
@@ -3088,7 +3087,7 @@
     },
     {
       "source": "0x20d8304",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce974",
       "type": "R_ARM_ABS32",
@@ -3098,7 +3097,7 @@
     },
     {
       "source": "0x20d8308",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1cc",
       "type": "R_ARM_ABS32",
@@ -3108,7 +3107,7 @@
     },
     {
       "source": "0x20d830c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0ac",
       "type": "R_ARM_ABS32",
@@ -3118,7 +3117,7 @@
     },
     {
       "source": "0x20d8310",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf14",
       "type": "R_ARM_ABS32",
@@ -3128,7 +3127,7 @@
     },
     {
       "source": "0x20d8314",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd464",
       "type": "R_ARM_ABS32",
@@ -3138,7 +3137,7 @@
     },
     {
       "source": "0x20d8318",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1e4",
       "type": "R_ARM_ABS32",
@@ -3148,7 +3147,7 @@
     },
     {
       "source": "0x20d831c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd8f4",
       "type": "R_ARM_ABS32",
@@ -3158,7 +3157,7 @@
     },
     {
       "source": "0x20d8320",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdc94",
       "type": "R_ARM_ABS32",
@@ -3168,7 +3167,7 @@
     },
     {
       "source": "0x20d8324",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce64",
       "type": "R_ARM_ABS32",
@@ -3178,7 +3177,7 @@
     },
     {
       "source": "0x20d8328",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7b8",
       "type": "R_ARM_ABS32",
@@ -3188,7 +3187,7 @@
     },
     {
       "source": "0x20d832c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce24",
       "type": "R_ARM_ABS32",
@@ -3198,7 +3197,7 @@
     },
     {
       "source": "0x20d8330",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd78",
       "type": "R_ARM_ABS32",
@@ -3208,7 +3207,7 @@
     },
     {
       "source": "0x20d8334",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd74",
       "type": "R_ARM_ABS32",
@@ -3218,7 +3217,7 @@
     },
     {
       "source": "0x20d8338",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce36c",
       "type": "R_ARM_ABS32",
@@ -3228,7 +3227,7 @@
     },
     {
       "source": "0x20d833c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdbec",
       "type": "R_ARM_ABS32",
@@ -3238,7 +3237,7 @@
     },
     {
       "source": "0x20d8340",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd18",
       "type": "R_ARM_ABS32",
@@ -3248,7 +3247,7 @@
     },
     {
       "source": "0x20d8344",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccac",
       "type": "R_ARM_ABS32",
@@ -3258,7 +3257,7 @@
     },
     {
       "source": "0x20d8348",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccda8",
       "type": "R_ARM_ABS32",
@@ -3268,7 +3267,7 @@
     },
     {
       "source": "0x20d834c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccebc",
       "type": "R_ARM_ABS32",
@@ -3278,7 +3277,7 @@
     },
     {
       "source": "0x20d8350",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf14",
       "type": "R_ARM_ABS32",
@@ -3288,7 +3287,7 @@
     },
     {
       "source": "0x20d8354",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce2c",
       "type": "R_ARM_ABS32",
@@ -3298,7 +3297,7 @@
     },
     {
       "source": "0x20d8358",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce0c",
       "type": "R_ARM_ABS32",
@@ -3308,7 +3307,7 @@
     },
     {
       "source": "0x20d835c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd84",
       "type": "R_ARM_ABS32",
@@ -3318,7 +3317,7 @@
     },
     {
       "source": "0x20d8360",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd40",
       "type": "R_ARM_ABS32",
@@ -3328,7 +3327,7 @@
     },
     {
       "source": "0x20d8364",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdce8",
       "type": "R_ARM_ABS32",
@@ -3338,7 +3337,7 @@
     },
     {
       "source": "0x20d8368",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd3a4",
       "type": "R_ARM_ABS32",
@@ -3348,7 +3347,7 @@
     },
     {
       "source": "0x20d836c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccddc",
       "type": "R_ARM_ABS32",
@@ -3358,7 +3357,7 @@
     },
     {
       "source": "0x20d8370",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd06c",
       "type": "R_ARM_ABS32",
@@ -3368,7 +3367,7 @@
     },
     {
       "source": "0x20d8374",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdb4",
       "type": "R_ARM_ABS32",
@@ -3378,7 +3377,7 @@
     },
     {
       "source": "0x20d8378",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd48",
       "type": "R_ARM_ABS32",
@@ -3388,7 +3387,7 @@
     },
     {
       "source": "0x20d837c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd600",
       "type": "R_ARM_ABS32",
@@ -3398,7 +3397,7 @@
     },
     {
       "source": "0x20d8380",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd148",
       "type": "R_ARM_ABS32",
@@ -3408,7 +3407,7 @@
     },
     {
       "source": "0x20d8384",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce9b4",
       "type": "R_ARM_ABS32",
@@ -3418,7 +3417,7 @@
     },
     {
       "source": "0x20d8388",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1d8",
       "type": "R_ARM_ABS32",
@@ -3428,7 +3427,7 @@
     },
     {
       "source": "0x20d838c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0b8",
       "type": "R_ARM_ABS32",
@@ -3438,7 +3437,7 @@
     },
     {
       "source": "0x20d8390",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf34",
       "type": "R_ARM_ABS32",
@@ -3448,7 +3447,7 @@
     },
     {
       "source": "0x20d8394",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd454",
       "type": "R_ARM_ABS32",
@@ -3458,7 +3457,7 @@
     },
     {
       "source": "0x20d8398",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1f0",
       "type": "R_ARM_ABS32",
@@ -3468,7 +3467,7 @@
     },
     {
       "source": "0x20d839c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd90c",
       "type": "R_ARM_ABS32",
@@ -3478,7 +3477,7 @@
     },
     {
       "source": "0x20d83a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdcb0",
       "type": "R_ARM_ABS32",
@@ -3488,7 +3487,7 @@
     },
     {
       "source": "0x20d83a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdc4",
       "type": "R_ARM_ABS32",
@@ -3498,7 +3497,7 @@
     },
     {
       "source": "0x20d83a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7cc",
       "type": "R_ARM_ABS32",
@@ -3508,7 +3507,7 @@
     },
     {
       "source": "0x20d83ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce4c",
       "type": "R_ARM_ABS32",
@@ -3518,7 +3517,7 @@
     },
     {
       "source": "0x20d83b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd6c",
       "type": "R_ARM_ABS32",
@@ -3528,7 +3527,7 @@
     },
     {
       "source": "0x20d83b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd90",
       "type": "R_ARM_ABS32",
@@ -3538,7 +3537,7 @@
     },
     {
       "source": "0x20d83b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce398",
       "type": "R_ARM_ABS32",
@@ -3548,7 +3547,7 @@
     },
     {
       "source": "0x20d83bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdc08",
       "type": "R_ARM_ABS32",
@@ -3558,7 +3557,7 @@
     },
     {
       "source": "0x20d83c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd28",
       "type": "R_ARM_ABS32",
@@ -3568,7 +3567,7 @@
     },
     {
       "source": "0x20d83c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cccb4",
       "type": "R_ARM_ABS32",
@@ -3578,7 +3577,7 @@
     },
     {
       "source": "0x20d83c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd8c",
       "type": "R_ARM_ABS32",
@@ -3588,7 +3587,7 @@
     },
     {
       "source": "0x20d83cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccecc",
       "type": "R_ARM_ABS32",
@@ -3598,7 +3597,7 @@
     },
     {
       "source": "0x20d83d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cceac",
       "type": "R_ARM_ABS32",
@@ -3608,7 +3607,7 @@
     },
     {
       "source": "0x20d83d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce04",
       "type": "R_ARM_ABS32",
@@ -3618,7 +3617,7 @@
     },
     {
       "source": "0x20d83d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce3c",
       "type": "R_ARM_ABS32",
@@ -3628,7 +3627,7 @@
     },
     {
       "source": "0x20d83dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd9c",
       "type": "R_ARM_ABS32",
@@ -3638,7 +3637,7 @@
     },
     {
       "source": "0x20d83e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd24",
       "type": "R_ARM_ABS32",
@@ -3648,7 +3647,7 @@
     },
     {
       "source": "0x20d83e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf5ac",
       "type": "R_ARM_ABS32",
@@ -3658,7 +3657,7 @@
     },
     {
       "source": "0x20d83e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce774",
       "type": "R_ARM_ABS32",
@@ -3668,7 +3667,7 @@
     },
     {
       "source": "0x20d83ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd704",
       "type": "R_ARM_ABS32",
@@ -3678,7 +3677,7 @@
     },
     {
       "source": "0x20d83f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdfb4",
       "type": "R_ARM_ABS32",
@@ -3688,7 +3687,7 @@
     },
     {
       "source": "0x20d83f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd484",
       "type": "R_ARM_ABS32",
@@ -3698,7 +3697,7 @@
     },
     {
       "source": "0x20d83f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd214",
       "type": "R_ARM_ABS32",
@@ -3708,7 +3707,7 @@
     },
     {
       "source": "0x20d83fc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cebd0",
       "type": "R_ARM_ABS32",
@@ -3718,7 +3717,7 @@
     },
     {
       "source": "0x20d8400",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce2cc",
       "type": "R_ARM_ABS32",
@@ -3728,7 +3727,7 @@
     },
     {
       "source": "0x20d8404",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cff64",
       "type": "R_ARM_ABS32",
@@ -3738,7 +3737,7 @@
     },
     {
       "source": "0x20d8408",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce3f0",
       "type": "R_ARM_ABS32",
@@ -3748,7 +3747,7 @@
     },
     {
       "source": "0x20d840c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce104",
       "type": "R_ARM_ABS32",
@@ -3758,7 +3757,7 @@
     },
     {
       "source": "0x20d8410",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf870",
       "type": "R_ARM_ABS32",
@@ -3768,7 +3767,7 @@
     },
     {
       "source": "0x20d8414",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce8fc",
       "type": "R_ARM_ABS32",
@@ -3778,7 +3777,7 @@
     },
     {
       "source": "0x20d8418",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce41c",
       "type": "R_ARM_ABS32",
@@ -3788,7 +3787,7 @@
     },
     {
       "source": "0x20d841c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf178",
       "type": "R_ARM_ABS32",
@@ -3798,7 +3797,7 @@
     },
     {
       "source": "0x20d8420",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf544",
       "type": "R_ARM_ABS32",
@@ -3808,7 +3807,7 @@
     },
     {
       "source": "0x20d8424",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7a4",
       "type": "R_ARM_ABS32",
@@ -3818,7 +3817,7 @@
     },
     {
       "source": "0x20d8428",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cef30",
       "type": "R_ARM_ABS32",
@@ -3828,7 +3827,7 @@
     },
     {
       "source": "0x20d842c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7f4",
       "type": "R_ARM_ABS32",
@@ -3838,7 +3837,7 @@
     },
     {
       "source": "0x20d8430",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4b4",
       "type": "R_ARM_ABS32",
@@ -3848,7 +3847,7 @@
     },
     {
       "source": "0x20d8434",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf618",
       "type": "R_ARM_ABS32",
@@ -3858,7 +3857,7 @@
     },
     {
       "source": "0x20d8438",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cfd44",
       "type": "R_ARM_ABS32",
@@ -3868,7 +3867,7 @@
     },
     {
       "source": "0x20d843c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf40c",
       "type": "R_ARM_ABS32",
@@ -3878,7 +3877,7 @@
     },
     {
       "source": "0x20d8440",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd244",
       "type": "R_ARM_ABS32",
@@ -3888,7 +3887,7 @@
     },
     {
       "source": "0x20d8444",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd70",
       "type": "R_ARM_ABS32",
@@ -3898,7 +3897,7 @@
     },
     {
       "source": "0x20d8448",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd494",
       "type": "R_ARM_ABS32",
@@ -3908,7 +3907,7 @@
     },
     {
       "source": "0x20d844c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cda74",
       "type": "R_ARM_ABS32",
@@ -3918,7 +3917,7 @@
     },
     {
       "source": "0x20d8450",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cda8c",
       "type": "R_ARM_ABS32",
@@ -3928,7 +3927,7 @@
     },
     {
       "source": "0x20d8454",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd77c",
       "type": "R_ARM_ABS32",
@@ -3938,7 +3937,7 @@
     },
     {
       "source": "0x20d8458",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7e0",
       "type": "R_ARM_ABS32",
@@ -3948,7 +3947,7 @@
     },
     {
       "source": "0x20d845c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4c4",
       "type": "R_ARM_ABS32",
@@ -3958,7 +3957,7 @@
     },
     {
       "source": "0x20d8460",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd280",
       "type": "R_ARM_ABS32",
@@ -3968,7 +3967,7 @@
     },
     {
       "source": "0x20d8164",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdccc",
       "type": "R_ARM_ABS32",
@@ -3978,7 +3977,7 @@
     },
     {
       "source": "0x20d8168",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd394",
       "type": "R_ARM_ABS32",
@@ -3988,7 +3987,7 @@
     },
     {
       "source": "0x20d816c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce7c",
       "type": "R_ARM_ABS32",
@@ -3998,7 +3997,7 @@
     },
     {
       "source": "0x20d8170",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd074",
       "type": "R_ARM_ABS32",
@@ -4008,7 +4007,7 @@
     },
     {
       "source": "0x20d8174",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd74",
       "type": "R_ARM_ABS32",
@@ -4018,7 +4017,7 @@
     },
     {
       "source": "0x20d8178",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd10",
       "type": "R_ARM_ABS32",
@@ -4028,7 +4027,7 @@
     },
     {
       "source": "0x20d817c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd5ec",
       "type": "R_ARM_ABS32",
@@ -4038,7 +4037,7 @@
     },
     {
       "source": "0x20d8180",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd13c",
       "type": "R_ARM_ABS32",
@@ -4048,7 +4047,7 @@
     },
     {
       "source": "0x20d8184",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce974",
       "type": "R_ARM_ABS32",
@@ -4058,7 +4057,7 @@
     },
     {
       "source": "0x20d8188",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1cc",
       "type": "R_ARM_ABS32",
@@ -4068,7 +4067,7 @@
     },
     {
       "source": "0x20d818c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0ac",
       "type": "R_ARM_ABS32",
@@ -4078,7 +4077,7 @@
     },
     {
       "source": "0x20d8190",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf14",
       "type": "R_ARM_ABS32",
@@ -4088,7 +4087,7 @@
     },
     {
       "source": "0x20d8194",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd464",
       "type": "R_ARM_ABS32",
@@ -4098,7 +4097,7 @@
     },
     {
       "source": "0x20d8198",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1e4",
       "type": "R_ARM_ABS32",
@@ -4108,7 +4107,7 @@
     },
     {
       "source": "0x20d819c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd8f4",
       "type": "R_ARM_ABS32",
@@ -4118,7 +4117,7 @@
     },
     {
       "source": "0x20d81a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdc94",
       "type": "R_ARM_ABS32",
@@ -4128,7 +4127,7 @@
     },
     {
       "source": "0x20d81a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce64",
       "type": "R_ARM_ABS32",
@@ -4138,7 +4137,7 @@
     },
     {
       "source": "0x20d81a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7b8",
       "type": "R_ARM_ABS32",
@@ -4148,7 +4147,7 @@
     },
     {
       "source": "0x20d81ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce24",
       "type": "R_ARM_ABS32",
@@ -4158,7 +4157,7 @@
     },
     {
       "source": "0x20d81b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd78",
       "type": "R_ARM_ABS32",
@@ -4168,7 +4167,7 @@
     },
     {
       "source": "0x20d81b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce1dc",
       "type": "R_ARM_ABS32",
@@ -4178,7 +4177,7 @@
     },
     {
       "source": "0x20d81b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce5c",
       "type": "R_ARM_ABS32",
@@ -4188,7 +4187,7 @@
     },
     {
       "source": "0x20d81bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce34",
       "type": "R_ARM_ABS32",
@@ -4198,7 +4197,7 @@
     },
     {
       "source": "0x20d81c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd05c",
       "type": "R_ARM_ABS32",
@@ -4208,7 +4207,7 @@
     },
     {
       "source": "0x20d81c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd07c",
       "type": "R_ARM_ABS32",
@@ -4218,7 +4217,7 @@
     },
     {
       "source": "0x20d81c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf6c",
       "type": "R_ARM_ABS32",
@@ -4228,7 +4227,7 @@
     },
     {
       "source": "0x20d81cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdfc",
       "type": "R_ARM_ABS32",
@@ -4238,7 +4237,7 @@
     },
     {
       "source": "0x20d81d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd190",
       "type": "R_ARM_ABS32",
@@ -4248,7 +4247,7 @@
     },
     {
       "source": "0x20d81d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd024",
       "type": "R_ARM_ABS32",
@@ -4258,7 +4257,7 @@
     },
     {
       "source": "0x20d81d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf74",
       "type": "R_ARM_ABS32",
@@ -4268,7 +4267,7 @@
     },
     {
       "source": "0x20d81dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdf4",
       "type": "R_ARM_ABS32",
@@ -4278,7 +4277,7 @@
     },
     {
       "source": "0x20d81e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf2c",
       "type": "R_ARM_ABS32",
@@ -4288,7 +4287,7 @@
     },
     {
       "source": "0x20d81e4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdce8",
       "type": "R_ARM_ABS32",
@@ -4298,7 +4297,7 @@
     },
     {
       "source": "0x20d81e8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd3a4",
       "type": "R_ARM_ABS32",
@@ -4308,7 +4307,7 @@
     },
     {
       "source": "0x20d81ec",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccddc",
       "type": "R_ARM_ABS32",
@@ -4318,7 +4317,7 @@
     },
     {
       "source": "0x20d81f0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd06c",
       "type": "R_ARM_ABS32",
@@ -4328,7 +4327,7 @@
     },
     {
       "source": "0x20d81f4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdb4",
       "type": "R_ARM_ABS32",
@@ -4338,7 +4337,7 @@
     },
     {
       "source": "0x20d81f8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd48",
       "type": "R_ARM_ABS32",
@@ -4348,7 +4347,7 @@
     },
     {
       "source": "0x20d81fc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd600",
       "type": "R_ARM_ABS32",
@@ -4358,7 +4357,7 @@
     },
     {
       "source": "0x20d8200",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd148",
       "type": "R_ARM_ABS32",
@@ -4368,7 +4367,7 @@
     },
     {
       "source": "0x20d8204",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce9b4",
       "type": "R_ARM_ABS32",
@@ -4378,7 +4377,7 @@
     },
     {
       "source": "0x20d8208",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1d8",
       "type": "R_ARM_ABS32",
@@ -4388,7 +4387,7 @@
     },
     {
       "source": "0x20d820c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd0b8",
       "type": "R_ARM_ABS32",
@@ -4398,7 +4397,7 @@
     },
     {
       "source": "0x20d8210",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf34",
       "type": "R_ARM_ABS32",
@@ -4408,7 +4407,7 @@
     },
     {
       "source": "0x20d8214",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd454",
       "type": "R_ARM_ABS32",
@@ -4418,7 +4417,7 @@
     },
     {
       "source": "0x20d8218",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd1f0",
       "type": "R_ARM_ABS32",
@@ -4428,7 +4427,7 @@
     },
     {
       "source": "0x20d821c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd90c",
       "type": "R_ARM_ABS32",
@@ -4438,7 +4437,7 @@
     },
     {
       "source": "0x20d8220",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdcb0",
       "type": "R_ARM_ABS32",
@@ -4448,7 +4447,7 @@
     },
     {
       "source": "0x20d8224",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdc4",
       "type": "R_ARM_ABS32",
@@ -4458,7 +4457,7 @@
     },
     {
       "source": "0x20d8228",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7cc",
       "type": "R_ARM_ABS32",
@@ -4468,7 +4467,7 @@
     },
     {
       "source": "0x20d822c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce4c",
       "type": "R_ARM_ABS32",
@@ -4478,7 +4477,7 @@
     },
     {
       "source": "0x20d8230",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccd6c",
       "type": "R_ARM_ABS32",
@@ -4488,7 +4487,7 @@
     },
     {
       "source": "0x20d8234",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce204",
       "type": "R_ARM_ABS32",
@@ -4498,7 +4497,7 @@
     },
     {
       "source": "0x20d8238",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce44",
       "type": "R_ARM_ABS32",
@@ -4508,7 +4507,7 @@
     },
     {
       "source": "0x20d823c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce8c",
       "type": "R_ARM_ABS32",
@@ -4518,7 +4517,7 @@
     },
     {
       "source": "0x20d8240",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd02c",
       "type": "R_ARM_ABS32",
@@ -4528,7 +4527,7 @@
     },
     {
       "source": "0x20d8244",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd094",
       "type": "R_ARM_ABS32",
@@ -4538,7 +4537,7 @@
     },
     {
       "source": "0x20d8248",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfac",
       "type": "R_ARM_ABS32",
@@ -4548,7 +4547,7 @@
     },
     {
       "source": "0x20d824c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cce54",
       "type": "R_ARM_ABS32",
@@ -4558,7 +4557,7 @@
     },
     {
       "source": "0x20d8250",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd16c",
       "type": "R_ARM_ABS32",
@@ -4568,7 +4567,7 @@
     },
     {
       "source": "0x20d8254",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccfc4",
       "type": "R_ARM_ABS32",
@@ -4578,7 +4577,7 @@
     },
     {
       "source": "0x20d8258",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf9c",
       "type": "R_ARM_ABS32",
@@ -4588,7 +4587,7 @@
     },
     {
       "source": "0x20d825c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccdbc",
       "type": "R_ARM_ABS32",
@@ -4598,7 +4597,7 @@
     },
     {
       "source": "0x20d8260",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ccf1c",
       "type": "R_ARM_ABS32",
@@ -4608,7 +4607,7 @@
     },
     {
       "source": "0x20d8264",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf5ac",
       "type": "R_ARM_ABS32",
@@ -4618,7 +4617,7 @@
     },
     {
       "source": "0x20d8268",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce774",
       "type": "R_ARM_ABS32",
@@ -4628,7 +4627,7 @@
     },
     {
       "source": "0x20d826c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd704",
       "type": "R_ARM_ABS32",
@@ -4638,7 +4637,7 @@
     },
     {
       "source": "0x20d8270",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdfb4",
       "type": "R_ARM_ABS32",
@@ -4648,7 +4647,7 @@
     },
     {
       "source": "0x20d8274",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd484",
       "type": "R_ARM_ABS32",
@@ -4658,7 +4657,7 @@
     },
     {
       "source": "0x20d8278",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd214",
       "type": "R_ARM_ABS32",
@@ -4668,7 +4667,7 @@
     },
     {
       "source": "0x20d827c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cebd0",
       "type": "R_ARM_ABS32",
@@ -4678,7 +4677,7 @@
     },
     {
       "source": "0x20d8280",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce2cc",
       "type": "R_ARM_ABS32",
@@ -4688,7 +4687,7 @@
     },
     {
       "source": "0x20d8284",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cff64",
       "type": "R_ARM_ABS32",
@@ -4698,7 +4697,7 @@
     },
     {
       "source": "0x20d8288",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce3f0",
       "type": "R_ARM_ABS32",
@@ -4708,7 +4707,7 @@
     },
     {
       "source": "0x20d828c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce104",
       "type": "R_ARM_ABS32",
@@ -4718,7 +4717,7 @@
     },
     {
       "source": "0x20d8290",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf870",
       "type": "R_ARM_ABS32",
@@ -4728,7 +4727,7 @@
     },
     {
       "source": "0x20d8294",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce8fc",
       "type": "R_ARM_ABS32",
@@ -4738,7 +4737,7 @@
     },
     {
       "source": "0x20d8298",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce41c",
       "type": "R_ARM_ABS32",
@@ -4748,7 +4747,7 @@
     },
     {
       "source": "0x20d829c",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf178",
       "type": "R_ARM_ABS32",
@@ -4758,7 +4757,7 @@
     },
     {
       "source": "0x20d82a0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cf544",
       "type": "R_ARM_ABS32",
@@ -4768,7 +4767,7 @@
     },
     {
       "source": "0x20d82a4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7a4",
       "type": "R_ARM_ABS32",
@@ -4778,7 +4777,7 @@
     },
     {
       "source": "0x20d82a8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cef30",
       "type": "R_ARM_ABS32",
@@ -4788,7 +4787,7 @@
     },
     {
       "source": "0x20d82ac",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd7f4",
       "type": "R_ARM_ABS32",
@@ -4798,7 +4797,7 @@
     },
     {
       "source": "0x20d82b0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd4b4",
       "type": "R_ARM_ABS32",
@@ -4808,7 +4807,7 @@
     },
     {
       "source": "0x20d82b4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cfc18",
       "type": "R_ARM_ABS32",
@@ -4818,7 +4817,7 @@
     },
     {
       "source": "0x20d82b8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd808",
       "type": "R_ARM_ABS32",
@@ -4828,7 +4827,7 @@
     },
     {
       "source": "0x20d82bc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd81c",
       "type": "R_ARM_ABS32",
@@ -4838,7 +4837,7 @@
     },
     {
       "source": "0x20d82c0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce054",
       "type": "R_ARM_ABS32",
@@ -4848,7 +4847,7 @@
     },
     {
       "source": "0x20d82c4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce194",
       "type": "R_ARM_ABS32",
@@ -4858,7 +4857,7 @@
     },
     {
       "source": "0x20d82c8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cde38",
       "type": "R_ARM_ABS32",
@@ -4868,7 +4867,7 @@
     },
     {
       "source": "0x20d82cc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd844",
       "type": "R_ARM_ABS32",
@@ -4878,7 +4877,7 @@
     },
     {
       "source": "0x20d82d0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020ce344",
       "type": "R_ARM_ABS32",
@@ -4888,7 +4887,7 @@
     },
     {
       "source": "0x20d82d4",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdf74",
       "type": "R_ARM_ABS32",
@@ -4898,7 +4897,7 @@
     },
     {
       "source": "0x20d82d8",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd04",
       "type": "R_ARM_ABS32",
@@ -4908,7 +4907,7 @@
     },
     {
       "source": "0x20d82dc",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cd6b4",
       "type": "R_ARM_ABS32",
@@ -4918,7 +4917,7 @@
     },
     {
       "source": "0x20d82e0",
-      "section": ".rodata.portraitPointers",
+      "section": ".data.portraitPointers",
       "kind": "load",
       "symbol": "data_ov007_020cdd20",
       "type": "R_ARM_ABS32",
@@ -4926,726 +4925,5 @@
       "target_address": "0x20cdd20",
       "target_module": "ov007"
     }
-  ],
-  "historical_selector_verification": {
-    "round": "Native table enrollment; current scratch admission and independent normal provider proof required.",
-    "linkcheck": {
-      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
-      "result": "scratch-data-verified",
-      "scratch": "build/tu/ov007-AnimationPathSets/link (gitignored)",
-      "phases": {
-        "delink": true,
-        "lcf": true,
-        "compile": true,
-        "link": true,
-        "checkModules": true,
-        "checkSymbols": false,
-        "rom": true
-      },
-      "tuRange": {
-        "start": "0x020bbe60",
-        "end": "0x020bbf98",
-        "differingBytes": 0,
-        "firstDiff": null
-      },
-      "tuRanges": [
-        {
-          "section": ".text",
-          "start": "0x020bbe60",
-          "end": "0x020bbf98",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata",
-          "start": "0x020cdb34",
-          "end": "0x020cdb4c",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".data",
-          "start": "0x020d7e68",
-          "end": "0x020d7ec8",
-          "differingBytes": 0,
-          "firstDiff": null
-        }
-      ],
-      "objectAudit": {
-        "counts": {
-          "LICENSED": 6
-        },
-        "emittedTextOrderIsRomAscending": true,
-        "nonLicensedSymbols": [],
-        "unlicensedSections": []
-      },
-      "nontextSectionOrder": {
-        "groups": [
-          {
-            "section": ".rodata",
-            "original": [
-              11
-            ],
-            "desired": [
-              11
-            ]
-          },
-          {
-            "section": ".data",
-            "original": [
-              5,
-              7,
-              9,
-              12
-            ],
-            "desired": [
-              9,
-              7,
-              5,
-              12
-            ]
-          }
-        ],
-        "objisolate": {
-          "reordered": [
-            {
-              "section": ".data",
-              "original": [
-                5,
-                7,
-                9,
-                12
-              ],
-              "desired": [
-                9,
-                7,
-                5,
-                12
-              ],
-              "slots": [
-                5,
-                7,
-                9,
-                12
-              ]
-            }
-          ],
-          "symbolIndices": 4,
-          "sectionLinks": 0,
-          "sectionInfos": 4,
-          "error": null
-        },
-        "errors": null
-      },
-      "linkedStorageAliases": null,
-      "symbolCheckNewVsBaseline": [],
-      "symbolCheckErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "symbolCheckBaselineErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
-      "rom": {
-        "bytes": 16777216,
-        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
-        "matchesStockRom": true
-      },
-      "linkerOutput": null
-    }
-  },
-  "historical_pointcount_verification": {
-    "round": "Point-count continuation: all eight scratch ranges and 24 non-text relocations verified; normal eleven-provider/full-ROM proof passed. Nine baseline symbol diagnostics remain, zero new. Prior 120-byte measurement is preserved in historical_selector_verification; independent immutable acceptance is separate.",
-    "linkcheck": {
-      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
-      "result": "scratch-data-verified",
-      "scratch": "build/tu/ov007-AnimationPathSets/link (gitignored)",
-      "phases": {
-        "delink": true,
-        "lcf": true,
-        "compile": true,
-        "link": true,
-        "checkModules": true,
-        "checkSymbols": false,
-        "rom": true
-      },
-      "tuRange": {
-        "start": "0x020bbe60",
-        "end": "0x020bbf98",
-        "differingBytes": 0,
-        "firstDiff": null
-      },
-      "tuRanges": [
-        {
-          "section": ".text",
-          "start": "0x020bbe60",
-          "end": "0x020bbf98",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.portraitSelectors",
-          "start": "0x020cdb34",
-          "end": "0x020cdb4c",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".data",
-          "start": "0x020d7e68",
-          "end": "0x020d7ec8",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.yoshiPlainCounts",
-          "start": "0x020cef80",
-          "end": "0x020cefd0",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.marioFrontCounts",
-          "start": "0x020cf700",
-          "end": "0x020cf778",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.yoshiVariantCounts",
-          "start": "0x020cf8ec",
-          "end": "0x020cf9ec",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.marioSideCounts",
-          "start": "0x020cfa70",
-          "end": "0x020cfaf8",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.luigiCounts",
-          "start": "0x020cfb84",
-          "end": "0x020cfc18",
-          "differingBytes": 0,
-          "firstDiff": null
-        }
-      ],
-      "objectAudit": {
-        "counts": {
-          "LICENSED": 12
-        },
-        "emittedTextOrderIsRomAscending": true,
-        "nonLicensedSymbols": [],
-        "unlicensedSections": []
-      },
-      "nontextSectionOrder": {
-        "groups": [
-          {
-            "section": ".rodata.portraitSelectors",
-            "original": [
-              11
-            ],
-            "desired": [
-              11
-            ]
-          },
-          {
-            "section": ".data",
-            "original": [
-              5,
-              7,
-              9,
-              12
-            ],
-            "desired": [
-              5,
-              12,
-              7,
-              9
-            ]
-          },
-          {
-            "section": ".rodata.yoshiPlainCounts",
-            "original": [
-              14
-            ],
-            "desired": [
-              14
-            ]
-          },
-          {
-            "section": ".rodata.marioFrontCounts",
-            "original": [
-              15
-            ],
-            "desired": [
-              15
-            ]
-          },
-          {
-            "section": ".rodata.yoshiVariantCounts",
-            "original": [
-              16,
-              17
-            ],
-            "desired": [
-              17,
-              16
-            ]
-          },
-          {
-            "section": ".rodata.marioSideCounts",
-            "original": [
-              18
-            ],
-            "desired": [
-              18
-            ]
-          },
-          {
-            "section": ".rodata.luigiCounts",
-            "original": [
-              19
-            ],
-            "desired": [
-              19
-            ]
-          }
-        ],
-        "objisolate": {
-          "reordered": [
-            {
-              "section": ".data",
-              "original": [
-                5,
-                7,
-                9,
-                12
-              ],
-              "desired": [
-                5,
-                12,
-                7,
-                9
-              ],
-              "slots": [
-                5,
-                7,
-                9,
-                12
-              ]
-            },
-            {
-              "section": ".rodata.yoshiVariantCounts",
-              "original": [
-                16,
-                17
-              ],
-              "desired": [
-                17,
-                16
-              ],
-              "slots": [
-                16,
-                17
-              ]
-            }
-          ],
-          "symbolIndices": 6,
-          "sectionLinks": 0,
-          "sectionInfos": 4,
-          "error": null
-        },
-        "errors": null
-      },
-      "linkedStorageAliases": null,
-      "symbolCheckNewVsBaseline": [],
-      "symbolCheckErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "symbolCheckBaselineErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
-      "rom": {
-        "bytes": 16777216,
-        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
-        "matchesStockRom": true
-      },
-      "linkerOutput": null
-    }
-  },
-  "verification": {
-    "round": "Current non-Luigi pointer continuation: nine owned ranges and468 non-text relocations passed fresh final-config scratch admission; five functions strict-verified; normal26-provider/full-ROM proof passed. Earlier120-byte and860-byte verification snapshots remain historical. Immutable committed-head proof is recorded separately in queue evidence.",
-    "linkcheck": {
-      "round": "tools/tubuild.py linkcheck -- scratch dsd delink+lcf, whole-tree mwccarm, mwldarm link, linked-range and module byte comparison, dsd check symbols --fail, full ROM build",
-      "result": "scratch-data-verified",
-      "scratch": "build/tu/ov007-AnimationPathSets/link (gitignored)",
-      "phases": {
-        "delink": true,
-        "lcf": true,
-        "compile": true,
-        "link": true,
-        "checkModules": true,
-        "checkSymbols": false,
-        "rom": true
-      },
-      "tuRange": {
-        "start": "0x020bbe60",
-        "end": "0x020bbf98",
-        "differingBytes": 0,
-        "firstDiff": null
-      },
-      "tuRanges": [
-        {
-          "section": ".text",
-          "start": "0x020bbe60",
-          "end": "0x020bbf98",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.portraitSelectors",
-          "start": "0x020cdb34",
-          "end": "0x020cdb4c",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".data.portraitSelectors",
-          "start": "0x020d7e68",
-          "end": "0x020d7ec8",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.yoshiPlainCounts",
-          "start": "0x020cef80",
-          "end": "0x020cefd0",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.marioFrontCounts",
-          "start": "0x020cf700",
-          "end": "0x020cf778",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.yoshiVariantCounts",
-          "start": "0x020cf8ec",
-          "end": "0x020cf9ec",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.marioSideCounts",
-          "start": "0x020cfa70",
-          "end": "0x020cfaf8",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.luigiCounts",
-          "start": "0x020cfb84",
-          "end": "0x020cfc18",
-          "differingBytes": 0,
-          "firstDiff": null
-        },
-        {
-          "section": ".rodata.portraitPointers",
-          "start": "0x020d7f0c",
-          "end": "0x020d85fc",
-          "differingBytes": 0,
-          "firstDiff": null
-        }
-      ],
-      "objectAudit": {
-        "counts": {
-          "LICENSED": 27
-        },
-        "emittedTextOrderIsRomAscending": true,
-        "nonLicensedSymbols": [],
-        "unlicensedSections": []
-      },
-      "nontextSectionOrder": {
-        "groups": [
-          {
-            "section": ".rodata.portraitSelectors",
-            "original": [
-              11
-            ],
-            "desired": [
-              11
-            ]
-          },
-          {
-            "section": ".data.portraitSelectors",
-            "original": [
-              5,
-              7,
-              9,
-              12
-            ],
-            "desired": [
-              9,
-              7,
-              5,
-              12
-            ]
-          },
-          {
-            "section": ".rodata.yoshiPlainCounts",
-            "original": [
-              18
-            ],
-            "desired": [
-              18
-            ]
-          },
-          {
-            "section": ".rodata.marioFrontCounts",
-            "original": [
-              23
-            ],
-            "desired": [
-              23
-            ]
-          },
-          {
-            "section": ".rodata.yoshiVariantCounts",
-            "original": [
-              36,
-              37
-            ],
-            "desired": [
-              37,
-              36
-            ]
-          },
-          {
-            "section": ".rodata.marioSideCounts",
-            "original": [
-              42
-            ],
-            "desired": [
-              42
-            ]
-          },
-          {
-            "section": ".rodata.luigiCounts",
-            "original": [
-              49
-            ],
-            "desired": [
-              49
-            ]
-          },
-          {
-            "section": ".rodata.portraitPointers",
-            "original": [
-              14,
-              16,
-              19,
-              21,
-              24,
-              26,
-              28,
-              30,
-              32,
-              34,
-              38,
-              40,
-              43,
-              45,
-              47
-            ],
-            "desired": [
-              19,
-              16,
-              14,
-              24,
-              26,
-              21,
-              30,
-              40,
-              34,
-              28,
-              38,
-              32,
-              47,
-              43,
-              45
-            ]
-          }
-        ],
-        "objisolate": {
-          "reordered": [
-            {
-              "section": ".data.portraitSelectors",
-              "original": [
-                5,
-                7,
-                9,
-                12
-              ],
-              "desired": [
-                9,
-                7,
-                5,
-                12
-              ],
-              "slots": [
-                5,
-                7,
-                9,
-                12
-              ]
-            },
-            {
-              "section": ".rodata.yoshiVariantCounts",
-              "original": [
-                36,
-                37
-              ],
-              "desired": [
-                37,
-                36
-              ],
-              "slots": [
-                36,
-                37
-              ]
-            },
-            {
-              "section": ".rodata.portraitPointers",
-              "original": [
-                14,
-                16,
-                19,
-                21,
-                24,
-                26,
-                28,
-                30,
-                32,
-                34,
-                38,
-                40,
-                43,
-                45,
-                47
-              ],
-              "desired": [
-                19,
-                16,
-                14,
-                24,
-                26,
-                21,
-                30,
-                40,
-                34,
-                28,
-                38,
-                32,
-                47,
-                43,
-                45
-              ],
-              "slots": [
-                14,
-                16,
-                19,
-                21,
-                24,
-                26,
-                28,
-                30,
-                32,
-                34,
-                38,
-                40,
-                43,
-                45,
-                47
-              ]
-            }
-          ],
-          "symbolIndices": 21,
-          "sectionLinks": 0,
-          "sectionInfos": 19,
-          "error": null
-        },
-        "errors": null
-      },
-      "linkedStorageAliases": null,
-      "symbolCheckNewVsBaseline": [],
-      "symbolCheckErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "symbolCheckBaselineErrors": [
-        "[ERROR] Symbol '_deq' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad524' in ARM9 main at 0x020ad524 not found in linked binary",
-        "[ERROR] Symbol 'data_020ad560' in ARM9 main at 0x020ad560 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff98f4' in ITCM at 0x01ff98f4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff99a4' in ITCM at 0x01ff99a4 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9d40' in ITCM at 0x01ff9d40 not found in linked binary",
-        "[ERROR] Symbol 'func_01ff9e2c' in ITCM at 0x01ff9e2c not found in linked binary",
-        "[ERROR] Symbol 'overlay_100' in ARM9 main at 0x00000064 not found in linked binary",
-        "[ERROR] Symbol 'overlay_102' in ARM9 main at 0x00000066 not found in linked binary"
-      ],
-      "moduleSetSha256": "f9852ffaf80ef19662ab5535df4b13b935188ac3087b5b1d4561c089e4dd802b",
-      "rom": {
-        "bytes": 16777216,
-        "sha256": "d1506e90efae5e2d2cf119926a4ac2a291bd5ca78349d09d5024e1a918c478e8",
-        "matchesStockRom": true
-      },
-      "linkerOutput": null
-    }
-  }
+  ]
 }
