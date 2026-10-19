@@ -307,8 +307,8 @@
       "kind": "reconstruction",
       "disposition": "fixed",
       "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
-      "summary": "Distinguish stored Luigi 37 from selected36 and preserve the unused final value.",
-      "reason": "The earlier read-only 2944-byte nested probe described accessed extents, not complete storage. All four Luigi arrays have a coherent37th record: count1, X pointer020cccc4, Y pointer020cccb8, threshold pointer020ccd98. The three pointer words are configured relocations, not padding. The complete nested family is 2960 bytes. This task owns only 740 count bytes, with the final Luigi 1 included; dispatch remains36. The unused record purpose is unproven and remains covered by the existing reconstruction limits."
+      "summary": "Distinguish stored Luigi 37 from selected 36 and preserve the unused final value.",
+      "reason": "The earlier read-only 2944-byte nested probe described accessed extents, not complete storage. All four Luigi arrays have a coherent 37th record: count 1, X pointer 020cccc4, Y pointer 020cccb8, threshold pointer 020ccd98. The three pointer words are configured relocations, not padding. The complete nested family is 2960 bytes. This task owns only 740 count bytes, with the final Luigi 1 included; dispatch remains 36. The unused record purpose is unproven and remains covered by the existing reconstruction limits."
     },
     {
       "id": "OV007-COUNTS-ROUTING-01",
