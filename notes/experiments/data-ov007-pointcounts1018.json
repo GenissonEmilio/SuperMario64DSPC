@@ -271,8 +271,8 @@
       "kind": "reconstruction",
       "disposition": "fixed",
       "location": "src/unnamed/ov007/func_ov007_020bbe60.c",
-      "summary": "Distinguish stored Luigi 37 from selected36 and preserve the unused final value.",
-      "reason": "The earlier read-only 2944-byte nested probe described accessed extents, not complete storage. All four Luigi arrays have a coherent37th record: count1, X pointer020cccc4, Y pointer020cccb8, threshold pointer020ccd98. The three pointer words are configured relocations, not padding. The complete nested family is 2960 bytes. This task owns only 740 count bytes, with the final Luigi 1 included; dispatch remains36. The unused record purpose is unproven and remains covered by the existing reconstruction limits."
+      "summary": "Distinguish stored Luigi 37 from selected 36 and preserve the unused final value.",
+      "reason": "The earlier read-only 2944-byte nested probe described accessed extents, not complete storage. All four Luigi arrays have a coherent 37th record: count 1, X pointer 020cccc4, Y pointer 020cccb8, threshold pointer 020ccd98. The three pointer words are configured relocations, not padding. The complete nested family is 2960 bytes. This task owns only 740 count bytes, with the final Luigi 1 included; dispatch remains 36. The unused record purpose is unproven and remains covered by the existing reconstruction limits."
     },
     {
       "id": "OV007-COUNTS-ROUTING-01",
@@ -280,7 +280,7 @@
       "disposition": "fixed",
       "location": "config/arm9/overlays/ov007/delinks.txt",
       "summary": "Use complete native rodata sections without absorbing intervening ROM storage.",
-      "reason": "Five new ranges plus the existing24-byte selector range have explicit named sections; ordinary.data remains unchanged. Native objects fill all 860 owned initialized bytes without alignment claims. The entire module rodata partition retains seven separate DSD regions. Normal actual-provider proof checks those exclusions, the 18 pointer arrays and 435 unique leaf ranges."
+      "reason": "Five new ranges plus the existing 24-byte selector range have explicit named sections; ordinary.data remains unchanged. Native objects fill all 860 owned initialized bytes without alignment claims. The entire module rodata partition retains seven separate DSD regions. Normal actual-provider proof checks those exclusions, the 18 pointer arrays and 435 unique leaf ranges."
     },
     {
       "id": "OV007-COUNTS-POINTER-CONTRACT-01",
@@ -288,7 +288,7 @@
       "disposition": "deferred",
       "location": "include/decl_common.h:1471",
       "summary": "The remaining pointer-table family needs a separately owned leaf declaration correction.",
-      "reason": "data_ov007_020cd72c is function-declared as void(void*) in the shared generated header but supplies twenty byte coordinates at LuigiX[9]. Fresh queue audit assigns that header to jump-contract-repair-0918. No shared-header edit, numeric-alias bypass or pointer-family migration occurs here. Follow up with its owner before enrolling the remaining2220 pointer bytes; full2960-byte private proof is retained as research only.",
+      "reason": "data_ov007_020cd72c is function-declared as void(void*) in the shared generated header but supplies twenty byte coordinates at LuigiX[9]. Fresh queue audit assigns that header to jump-contract-repair-0918. No shared-header edit, numeric-alias bypass or pointer-family migration occurs here. Follow up with its owner before enrolling the remaining 2220 pointer bytes; full 2960-byte private proof is retained as research only.",
       "owner": "codex-ov007-pointcounts1018",
       "issue": "https://github.com/tangosdev/sm64ds-decomp/issues/4112"
     },
@@ -298,7 +298,7 @@
       "disposition": "fixed",
       "location": "config/arm9/overlays/ov007/delinks.txt",
       "summary": "Disclose shared-file composition with the separate open data-batch proposal.",
-      "reason": "The fully paginated audit has no exact carrier/count-range overlap, but PR #4106 atf487f61ac9addec52c46d1556c1ceaac640c156e edits the same delinks file and adds unrelated plain.rodata claims inside ranges this candidate names explicitly. No otherPR content is overwritten. Current proof applies only to base8d866; future composition must remap those claims and rerun all relevant byte/provider checks. The initial shorthand no scope overlap is narrowed to exact data/source scope rather than file-level independence."
+      "reason": "The fully paginated audit has no exact carrier/count-range overlap, but PR #4106 at f487f61ac9addec52c46d1556c1ceaac640c156e edits the same delinks file and adds unrelated plain.rodata claims inside ranges this candidate names explicitly. No otherPR content is overwritten. Current proof applies only to base 8d866; future composition must remap those claims and rerun all relevant byte/provider checks. The initial shorthand no scope overlap is narrowed to exact data/source scope rather than file-level independence."
     }
   ],
   "historical_status": "The original byte proof did not establish source ownership. PR #4117 remains a draft pending the controller reconstruction described in the correction note. Historical measurements are preserved in Git history.",
