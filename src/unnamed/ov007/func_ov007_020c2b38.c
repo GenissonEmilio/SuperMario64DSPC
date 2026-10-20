@@ -2,8 +2,8 @@
 
 extern void func_ov007_020c2d44(void *obj, int i);
 
-void *func_ov007_020c2b38(int pointCount, const int *xCoords,
-                       const int *yCoords, const int *progressThresholds) {
+void *func_ov007_020c2b38(int pointCount, const int *xCoords, const int *yCoords,
+                          const int *progressThresholds) {
     Ov007StrokePath *path = (Ov007StrokePath *)func_ov007_020c2b9c(pointCount, progressThresholds);
     int i;
     for (i = 0; i < pointCount; i++) {

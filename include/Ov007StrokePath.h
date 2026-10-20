@@ -21,13 +21,9 @@ typedef struct Ov007StrokePath {
     void *pointStorage; /* alternate representation: 12 bytes per point */
 } Ov007StrokePath;
 
-typedef char Ov007StrokePath_size_must_be_48[
-    sizeof(Ov007StrokePath) == 0x30 ? 1 : -1];
+typedef char Ov007StrokePath_size_must_be_48[sizeof(Ov007StrokePath) == 0x30 ? 1 : -1];
 
-enum {
-    OV007_PATH_PLANAR = 0,
-    OV007_PATH_HAS_PROGRESS = 1
-};
+enum { OV007_PATH_PLANAR = 0, OV007_PATH_HAS_PROGRESS = 1 };
 
 /* Keep the existing opaque pointer interface while the remaining engine
  * consumers are reconstructed. These entry points retain their C ABI. */
@@ -36,9 +32,9 @@ extern "C" {
 #endif
 
 void *func_ov007_020c2acc(int pointCount, const unsigned char *xCoords,
-                       const unsigned char *yCoords, const int *progressThresholds);
-void *func_ov007_020c2b38(int pointCount, const int *xCoords,
-                       const int *yCoords, const int *progressThresholds);
+                          const unsigned char *yCoords, const int *progressThresholds);
+void *func_ov007_020c2b38(int pointCount, const int *xCoords, const int *yCoords,
+                          const int *progressThresholds);
 void *func_ov007_020c2b9c(int pointCount, const int *progressThresholds);
 
 #ifdef __cplusplus
