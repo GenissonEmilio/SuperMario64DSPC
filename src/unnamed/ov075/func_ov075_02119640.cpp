@@ -1,3 +1,9 @@
+//cpp
+#include "dScEntry_c.h"
+
+extern dScEntry_c::StepSet data_ov075_0211d918;
+
+extern "C" {
 extern int Sound_PlayIfNotActive(int a, int b, int c, int d);
 extern void _ZN9dEntObj_c19func_ov075_02115134Ev(char* c);
 extern int func_0203da9c(void);
@@ -6,8 +12,6 @@ extern int func_0203da3c(void);
 extern void LoadTextNarcs(void);
 extern int LoadArchive(int idx);
 extern void func_02030aa4(int arg);
-extern void func_ov075_0211a194(char* c, void* p);
-extern int data_ov075_0211d918;
 
 void func_ov075_02119640(char* r4){
   *(int*)(r4 + 0x278) = Sound_PlayIfNotActive(*(int*)(r4 + 0x278), 2, 0x11d, 0);
@@ -20,5 +24,6 @@ void func_ov075_02119640(char* r4){
   LoadArchive(0);
   LoadArchive(1);
   func_02030aa4(1);
-  func_ov075_0211a194(r4, &data_ov075_0211d918);
+  reinterpret_cast<dScEntry_c *>(r4)->SetSteps(&data_ov075_0211d918);
+}
 }

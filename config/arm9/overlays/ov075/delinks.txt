@@ -63,15 +63,15 @@ src/unnamed/ov075/func_ov075_021165b0.c:
     complete
     .text start:0x021165b0 end:0x02116818
 
-src/unnamed/ov075/func_ov075_02116818.c:
+src/unnamed/ov075/func_ov075_02116818.cpp:
     complete
     .text start:0x02116818 end:0x02116ad4
 
-src/unnamed/ov075/func_ov075_02116ad4.c:
+src/unnamed/ov075/func_ov075_02116ad4.cpp:
     complete
     .text start:0x02116ad4 end:0x02116c38
 
-src/unnamed/ov075/func_ov075_02116c38.c:
+src/unnamed/ov075/func_ov075_02116c38.cpp:
     complete
     .text start:0x02116c38 end:0x02116c8c
 
@@ -95,7 +95,7 @@ src/unnamed/ov075/func_ov075_02116e00.c:
     complete
     .text start:0x02116e00 end:0x02116e44
 
-src/unnamed/ov075/func_ov075_02116e44.c:
+src/unnamed/ov075/func_ov075_02116e44.cpp:
     complete
     .text start:0x02116e44 end:0x02116ebc
 
@@ -139,7 +139,7 @@ src/unnamed/ov075/func_ov075_02117bc4.c:
     complete
     .text start:0x02117bc4 end:0x02117c0c
 
-src/unnamed/ov075/func_ov075_02117c0c.c:
+src/unnamed/ov075/func_ov075_02117c0c.cpp:
     complete
     .text start:0x02117c0c end:0x02117d80
 
@@ -159,7 +159,7 @@ src/unnamed/ov075/func_ov075_02117fe4.c:
     complete
     .text start:0x02117fe4 end:0x02118248
 
-src/unnamed/ov075/func_ov075_02118248.c:
+src/unnamed/ov075/func_ov075_02118248.cpp:
     complete
     .text start:0x02118248 end:0x02118378
 
@@ -171,7 +171,7 @@ src/unnamed/ov075/func_ov075_021184b0.cpp:
     complete
     .text start:0x021184b0 end:0x0211867c
 
-src/unnamed/ov075/func_ov075_0211867c.c:
+src/unnamed/ov075/func_ov075_0211867c.cpp:
     complete
     .text start:0x0211867c end:0x021188b4
 
@@ -199,7 +199,7 @@ src/unnamed/ov075/func_ov075_02118cd0.c:
     complete
     .text start:0x02118cd0 end:0x02118d1c
 
-src/unnamed/ov075/func_ov075_02118d1c.c:
+src/unnamed/ov075/func_ov075_02118d1c.cpp:
     complete
     .text start:0x02118d1c end:0x02118f38
 
@@ -227,7 +227,7 @@ src/_ZN10dScEntry_c17RenderWaitingTextEv.cpp:
     complete
     .text start:0x021194e4 end:0x02119640
 
-src/unnamed/ov075/func_ov075_02119640.c:
+src/unnamed/ov075/func_ov075_02119640.cpp:
     complete
     .text start:0x02119640 end:0x021196d0
 
@@ -235,7 +235,7 @@ src/unnamed/ov075/func_ov075_021196d0.c:
     complete
     .text start:0x021196d0 end:0x0211977c
 
-src/unnamed/ov075/func_ov075_0211977c.c:
+src/unnamed/ov075/func_ov075_0211977c.cpp:
     complete
     .text start:0x0211977c end:0x021197dc
 
@@ -243,7 +243,7 @@ src/unnamed/ov075/func_ov075_021197dc.c:
     complete
     .text start:0x021197dc end:0x021197e8
 
-src/unnamed/ov075/func_ov075_021197e8.c:
+src/unnamed/ov075/func_ov075_021197e8.cpp:
     complete
     .text start:0x021197e8 end:0x02119918
 
@@ -255,7 +255,7 @@ src/unnamed/ov075/func_ov075_021199d8.cpp:
     complete
     .text start:0x021199d8 end:0x02119b34
 
-src/unnamed/ov075/func_ov075_02119b34.c:
+src/unnamed/ov075/func_ov075_02119b34.cpp:
     complete
     .text start:0x02119b34 end:0x02119c38
 
@@ -263,15 +263,15 @@ src/unnamed/ov075/func_ov075_02119c38.c:
     complete
     .text start:0x02119c38 end:0x02119cc0
 
-src/unnamed/ov075/func_ov075_02119cc0.c:
+src/_ZN10dScEntry_c17UpdateStepFadeOutEv.cpp:
     complete
     .text start:0x02119cc0 end:0x02119d3c
 
-src/unnamed/ov075/func_ov075_02119d3c.c:
+src/_ZN10dScEntry_c16EnterStepFadeOutEv.cpp:
     complete
     .text start:0x02119d3c end:0x02119d78
 
-src/unnamed/ov075/func_ov075_02119d78.c:
+src/_ZN10dScEntry_c15UpdateStepDelayEv.cpp:
     complete
     .text start:0x02119d78 end:0x02119dc4
 
@@ -279,15 +279,15 @@ src/unnamed/ov075/func_ov075_02119dc4.cpp:
     complete
     .text start:0x02119dc4 end:0x0211a100
 
-src/unnamed/ov075/func_ov075_0211a100.c:
+src/_ZN10dScEntry_c19ChangeStepsWithFadeEPKNS_7StepSetE.cpp:
     complete
     .text start:0x0211a100 end:0x0211a148
 
-src/unnamed/ov075/func_ov075_0211a148.c:
+src/_ZN10dScEntry_c21ChangeStepsAfterDelayEPKNS_7StepSetEi.cpp:
     complete
     .text start:0x0211a148 end:0x0211a194
 
-src/unnamed/ov075/func_ov075_0211a194.cpp:
+src/_ZN10dScEntry_c8SetStepsEPKNS_7StepSetE.cpp:
     complete
     .text start:0x0211a194 end:0x0211a210
 

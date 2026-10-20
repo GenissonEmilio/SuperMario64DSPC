@@ -13,6 +13,9 @@
  * See notes/mwccarm-codegen.md 6c and 6bg.
  */
 #include "types.h"
+#include "dScEntry_c.h"
+
+extern int data_ov075_0211d930[];
 #include "G2x.h"
 #include "Sound.h"
 
@@ -25,7 +28,6 @@ extern void func_020338b0(int a, int b, int c, int d);
 extern void func_02012790(int x);
 extern int func_0203d974(void);
 extern int func_0203d9b4(void);
-extern void func_ov075_0211a148(char *c, int a, int b);
 
 }
 
@@ -38,7 +40,6 @@ extern u8 data_0209d45c;
 extern int data_02086b58[];
 extern int data_ov075_0211d71c[];
 extern int data_ov075_0211d920[];
-extern int data_ov075_0211d930[];
 
 struct P2 { int a, b; };
 struct P2Copy { int words[2]; };
@@ -121,7 +122,8 @@ extern "C" void func_ov075_02119dc4(EntryScene *self, int arg) {
             else
                 func_020338b0(0x125, 0xb0, 0x1a, -1);
             func_02030a78();
-            func_ov075_0211a148((char *)self, (int)data_ov075_0211d930, 0xb4);
+            reinterpret_cast<dScEntry_c *>(self)->ChangeStepsAfterDelay(
+                reinterpret_cast<const dScEntry_c::StepSet *>(data_ov075_0211d930), 0xb4);
             data_0209d45c = data_0209d45c & ~self->mExitMask;
             if (self->mExitMask)
                 *(struct P2Copy *)&self->mRenderStep = *(struct P2Copy *)data_02086b58;
@@ -133,7 +135,8 @@ extern "C" void func_ov075_02119dc4(EntryScene *self, int arg) {
                 if (st & bit) {
                     func_020338b0(0x125, 0xb0, 0x1c, (s8)(u8)i);
                     data_0209fc58 = data_0209fc58 & ~bit;
-                    func_ov075_0211a148((char *)self, arg, 0x78);
+                    reinterpret_cast<dScEntry_c *>(self)->ChangeStepsAfterDelay(
+                        reinterpret_cast<const dScEntry_c::StepSet *>(arg), 0x78);
                     func_02012790(0x12a);
                     break;
                 }

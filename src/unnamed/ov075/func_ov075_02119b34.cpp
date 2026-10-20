@@ -1,3 +1,10 @@
+//cpp
+#include "dScEntry_c.h"
+
+extern dScEntry_c::StepSet data_ov075_0211d8a0;
+extern dScEntry_c::StepSet data_ov075_0211d8d0;
+
+extern "C" {
 extern int func_0203da9c(void);
 extern int func_02033464(unsigned char a, signed char b, int c);
 extern void _ZN9dEntObj_c19func_ov075_02115134Ev(char* c);
@@ -5,14 +12,11 @@ extern int Sound_PlayIfNotActive(int a, int b, int c, int d);
 extern int TouchArea_Update(char* c, int a);
 extern int func_ov075_02116d9c(int unused, int id);
 extern void func_ov001_020ab3f0(void *r0);
-extern void func_ov075_0211a148(char* c, int a, int b);
 extern void func_02030a6c(void);
 extern void func_02012790(int n);
 
 extern unsigned char data_0209fc50;
 extern unsigned char data_0209fc5c[];
-extern int data_ov075_0211d8a0;
-extern int data_ov075_0211d8d0;
 
 void func_ov075_02119b34(char* c) {
     int r5 = func_0203da9c();
@@ -32,10 +36,11 @@ void func_ov075_02119b34(char* c) {
     }
     func_ov001_020ab3f0(c + 0x70);
     if (r4 <= 1) {
-        func_ov075_0211a148(c, (int)&data_ov075_0211d8a0, 0x14);
+        reinterpret_cast<dScEntry_c *>(c)->ChangeStepsAfterDelay(&data_ov075_0211d8a0, 0x14);
     } else {
         func_02030a6c();
-        func_ov075_0211a148(c, (int)&data_ov075_0211d8d0, 0x14);
+        reinterpret_cast<dScEntry_c *>(c)->ChangeStepsAfterDelay(&data_ov075_0211d8d0, 0x14);
     }
     func_02012790(0x117);
+}
 }

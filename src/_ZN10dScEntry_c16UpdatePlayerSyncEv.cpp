@@ -1,18 +1,18 @@
 //cpp
 #include "dScEntry_c.h"
 
+extern dScEntry_c::StepSet data_ov075_0211d768;
+
 extern "C" {
 int Sound_PlayIfNotActive(int, int, int, int);
 int func_0203d890();
 void func_020308b4(int);
 int func_020308a8();
 int func_0203d8fc();
-void func_ov075_0211a100(char *, int);
 u32 func_02012790(u32);
 extern u8 data_0209fc50;
 extern u8 data_0209fc54;
 extern u8 data_0208f274;
-extern u8 data_ov075_0211d768[];
 }
 
 // @symbol _ZN10dScEntry_c16UpdatePlayerSyncEv
@@ -47,7 +47,7 @@ void dScEntry_c::UpdatePlayerSync() {
     }
     case 3:
         if (func_020308a8()) {
-            func_ov075_0211a100((char *)this, (int)data_ov075_0211d768);
+            ChangeStepsWithFade(&data_ov075_0211d768);
             u8 observedPlayers = data_0208f274;
             int sessionPlayers = func_0203d890();
             if (observedPlayers == sessionPlayers) {

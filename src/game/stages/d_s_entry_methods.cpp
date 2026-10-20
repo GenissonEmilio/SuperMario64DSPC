@@ -25,8 +25,8 @@
  *   Its __cxa_vec_ctor calls take the icon_c and OamAnimation
  *   structors by address, which C++ cannot spell.
  * - The header names the entry object and shared step workspace; older
- *   callbacks still access that storage through offsets. 0x6c..0x70 remains
- *   opaque pending recovery of the transition step-set pointer.
+ *   callbacks still access some of that storage through offsets. The transition
+ *   helpers use the typed pending StepSet pointer at 0x6c.
  * - InitResources keeps its `int isResult = (actorID == 7)' flag locals.
  *   Folding the first one into its condition rewrites the function
  *   (999 words, measured).
@@ -125,7 +125,7 @@ s32 dScEntry_c::Render() {
     return 1;
 }
 
-/* Slot 6. Runs the sub-screen fade-out if one is in flight, then the
+/* Slot 6. Restores the sub-screen brightness after a step change, then the
  * per-frame step, then every live icon. */
 // @symbol _ZN10dScEntry_c8BehaviorEv
 s32 dScEntry_c::Behavior() {
