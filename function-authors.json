@@ -39915,7 +39915,7 @@
     },
     "ov075:0x02116d40": {
       "author": "tangosdev",
-      "name": "func_ov075_02116d40"
+      "name": "_ZN10dScEntry_c15ArePlayersReadyEv"
     },
     "ov075:0x02116d9c": {
       "author": "tangosdev",
@@ -40027,15 +40027,15 @@
     },
     "ov075:0x02118cd0": {
       "author": "tangosdev",
-      "name": "func_ov075_02118cd0"
+      "name": "_ZN10dScEntry_c23RenderCourseSelectTitleEv"
     },
     "ov075:0x02118d1c": {
       "author": "aitddlabs",
-      "name": "func_ov075_02118d1c"
+      "name": "_ZN10dScEntry_c18UpdateCourseSelectEv"
     },
     "ov075:0x02118f38": {
       "author": "tangosdev",
-      "name": "func_ov075_02118f38"
+      "name": "_ZN10dScEntry_c17EnterCourseSelectEv"
     },
     "ov075:0x021190a4": {
       "author": "lunavyqo",

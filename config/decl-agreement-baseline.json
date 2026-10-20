@@ -3123,7 +3123,7 @@
       ]
     },
     "TouchArea_Update": {
-      "src/unnamed/ov075/func_ov075_02118d1c.cpp": [
+      "src/_ZN10dScEntry_c18UpdateCourseSelectEv.cpp": [
         "return:unsigned char"
       ]
     },
@@ -6585,7 +6585,7 @@
       "src/unnamed/ov075/func_ov075_021188b4.c": [
         "return:void *"
       ],
-      "src/unnamed/ov075/func_ov075_02118f38.c": [
+      "src/_ZN10dScEntry_c17EnterCourseSelectEv.cpp": [
         "return:void *"
       ],
       "src/unnamed/ov075/func_ov075_0211919c.c": [
@@ -18488,7 +18488,7 @@
       "src/unnamed/ov075/func_ov075_02118378.c": [
         "return:int"
       ],
-      "src/unnamed/ov075/func_ov075_02118f38.c": [
+      "src/_ZN10dScEntry_c17EnterCourseSelectEv.cpp": [
         "return:int"
       ],
       "src/unnamed/ov075/func_ov075_0211944c.c": [
@@ -18513,12 +18513,12 @@
         "return:int"
       ]
     },
-    "data_ov075_0211d768": {
+    "EntryPlayerSelectIntroSteps": {
       "src/unnamed/ov075/func_ov075_021192bc.c": [
         "return:int []"
       ]
     },
-    "data_ov075_0211d780": {
+    "EntryCourseSelectSteps": {
       "src/unnamed/ov075/func_ov075_02116ad4.cpp": [
         "return:unsigned char []"
       ],
@@ -20371,7 +20371,7 @@
         "param:#1 int",
         "return:void"
       ],
-      "src/unnamed/ov075/func_ov075_02118d1c.cpp": [
+      "src/_ZN10dScEntry_c18UpdateCourseSelectEv.cpp": [
         "return:void"
       ],
       "src/unnamed/ov075/func_ov075_0211919c.c": [
@@ -22526,12 +22526,12 @@
       ]
     },
     "func_020202dc": {
-      "src/unnamed/ov075/func_ov075_02118d1c.cpp": [
+      "src/_ZN10dScEntry_c18UpdateCourseSelectEv.cpp": [
         "arity:0"
       ]
     },
     "func_02020364": {
-      "src/unnamed/ov075/func_ov075_02116d40.c": [
+      "src/_ZN10dScEntry_c15ArePlayersReadyEv.cpp": [
         "return:int"
       ]
     },
@@ -22667,7 +22667,7 @@
       "src/unnamed/ov075/func_ov075_02117f5c.c": [
         "param:#3 int"
       ],
-      "src/unnamed/ov075/func_ov075_02118f38.c": [
+      "src/_ZN10dScEntry_c17EnterCourseSelectEv.cpp": [
         "param:#3 int"
       ],
       "src/unnamed/ov075/func_ov075_0211944c.c": [
@@ -29461,7 +29461,7 @@
       "src/unnamed/ov075/func_ov075_0211867c.cpp": [
         "arity:1"
       ],
-      "src/unnamed/ov075/func_ov075_02118d1c.cpp": [
+      "src/_ZN10dScEntry_c18UpdateCourseSelectEv.cpp": [
         "arity:1"
       ],
       "src/_ZN10dScEntry_c23UpdatePlayerSelectIntroEv.cpp": [

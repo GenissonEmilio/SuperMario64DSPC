@@ -70,6 +70,10 @@ struct dScEntry_c : dScene_c {
     void UpdateStepDelay();
     void EnterStepFadeOut();
     void UpdateStepFadeOut();
+    int ArePlayersReady();
+    void EnterCourseSelect();
+    void UpdateCourseSelect();
+    void RenderCourseSelectTitle();
     void EnterPlayerSync();
     void UpdatePlayerSync();
     void RenderWaitingText();
@@ -86,6 +90,12 @@ struct dScEntry_c : dScene_c {
     virtual s32 Render();               /* slot  9 */
     virtual void OnPendingDestroy();    /* slot 12 */
 };
+
+// Inferred step-set names; storage remains in the overlay's existing BSS.
+extern dScEntry_c::StepSet EntryPlayerSelectIntroSteps;
+extern dScEntry_c::StepSet EntryCourseSelectSteps;
+extern dScEntry_c::StepSet EntryDelaySteps;
+extern dScEntry_c::StepSet EntryFadeOutSteps;
 
 struct dScEntry_c::graphCallback_c : dGraph_c::callback_c {
     void *compressedBg2Screen; /* 0x04 */

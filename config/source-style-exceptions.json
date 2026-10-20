@@ -560,6 +560,14 @@
       "count": 2,
       "reason": "Retained scalar ABI bridge for the Fix12-by-value OAM overload, carried from the old waiting renderer. OAM.h deliberately excludes this overload; RenderSub uses the shared header. Follow-up: replace the bridge when the Fix12 interface is reconstructed with matching call ABI.",
       "evidence": "include/OAM.h; notes/mwccarm-codegen.md section 6az; notes/agents/handoffs/entry-sync1018.md; ov075 0x021194e4 size0x15c links exactly with all six destinations verified."
+    },
+    {
+      "path": "src/_ZN10dScEntry_c23RenderCourseSelectTitleEv.cpp",
+      "rule": "handspelled-member",
+      "match": "_ZN3OAM6RenderEbP7OamAttriiii5Fix12IiES3_ii",
+      "count": 2,
+      "reason": "Retained scalar ABI bridge from the former course-title renderer. OAM.h deliberately excludes this Fix12-by-value overload, and its enrolled definition still uses the scalar extern C interface. Follow-up: replace the bridge when the Fix12 interface is reconstructed with matching caller and callee ABI.",
+      "evidence": "include/OAM.h; src/engine/oam/OAM.cpp; notes/mwccarm-codegen.md section 6az; former func_ov075_02118cd0.c at ov075 0x02118cd0 size 0x4c. The declaration and single call are inherited, not newly introduced interfaces."
     }
   ]
 }

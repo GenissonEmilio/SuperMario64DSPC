@@ -1,8 +1,6 @@
 //cpp
 #include "dScEntry_c.h"
 
-extern dScEntry_c::StepSet data_ov075_0211d768;
-
 extern "C" {
 int Sound_PlayIfNotActive(int, int, int, int);
 int func_0203d890();
@@ -47,7 +45,7 @@ void dScEntry_c::UpdatePlayerSync() {
     }
     case 3:
         if (func_020308a8()) {
-            ChangeStepsWithFade(&data_ov075_0211d768);
+            ChangeStepsWithFade(&EntryPlayerSelectIntroSteps);
             u8 observedPlayers = data_0208f274;
             int sessionPlayers = func_0203d890();
             if (observedPlayers == sessionPlayers) {
