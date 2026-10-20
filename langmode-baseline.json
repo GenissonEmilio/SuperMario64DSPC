@@ -57,11 +57,11 @@
     "local_body_no_include_cpp": 25,
     "local_struct_body": 702,
     "local_struct_body_cpp": 369,
-    "pad_layout": 131
+    "pad_layout": 129
   },
   "totals": {
-    "c_extension": 1826,
-    "cpp_extension": 678,
-    "src_files": 2504
+    "c_extension": 1819,
+    "cpp_extension": 675,
+    "src_files": 2494
   }
 }
