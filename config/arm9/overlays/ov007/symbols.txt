@@ -999,7 +999,7 @@ data_ov007_020cee40 kind:data(any) addr:0x020cee40
 data_ov007_020cee90 kind:data(any) addr:0x020cee90
 data_ov007_020ceee0 kind:data(any) addr:0x020ceee0
 data_ov007_020cef30 kind:data(any) addr:0x020cef30
-data_ov007_020cef80 kind:data(any) addr:0x020cef80
+sYoshiPlainStrokePointCounts kind:data(any) addr:0x020cef80 local
 data_ov007_020cefd0 kind:data(any) addr:0x020cefd0
 data_ov007_020cf024 kind:data(any) addr:0x020cf024
 data_ov007_020cf078 kind:data(any) addr:0x020cf078
@@ -1019,16 +1019,16 @@ data_ov007_020cf544 kind:data(any) addr:0x020cf544
 data_ov007_020cf5ac kind:data(any) addr:0x020cf5ac
 data_ov007_020cf618 kind:data(any) addr:0x020cf618
 data_ov007_020cf688 kind:data(any) addr:0x020cf688
-data_ov007_020cf700 kind:data(any) addr:0x020cf700
+sMarioFrontStrokePointCounts kind:data(any) addr:0x020cf700 local
 data_ov007_020cf778 kind:data(any) addr:0x020cf778
 data_ov007_020cf7f4 kind:data(any) addr:0x020cf7f4
 data_ov007_020cf870 kind:data(any) addr:0x020cf870
-data_ov007_020cf8ec kind:data(any) addr:0x020cf8ec
-data_ov007_020cf96c kind:data(any) addr:0x020cf96c
+sYoshiStarStrokePointCounts kind:data(any) addr:0x020cf8ec local
+sYoshiHeartStrokePointCounts kind:data(any) addr:0x020cf96c local
 data_ov007_020cf9ec kind:data(any) addr:0x020cf9ec
-data_ov007_020cfa70 kind:data(any) addr:0x020cfa70
+sMarioSideStrokePointCounts kind:data(any) addr:0x020cfa70 local
 data_ov007_020cfaf8 kind:data(any) addr:0x020cfaf8
-data_ov007_020cfb84 kind:data(any) addr:0x020cfb84
+sLuigiStrokePointCounts kind:data(any) addr:0x020cfb84 local
 data_ov007_020cfc18 kind:data(any) addr:0x020cfc18
 data_ov007_020cfcac kind:data(any) addr:0x020cfcac
 data_ov007_020cfd44 kind:data(any) addr:0x020cfd44

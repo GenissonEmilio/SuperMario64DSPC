@@ -1,5 +1,17 @@
     .text       start:0x020ad660 end:0x020ccb54 kind:code align:32
-    .rodata     start:0x020ccb54 end:0x020d7db8 kind:rodata align:4
+    .rodata start:0x020ccb54 end:0x020cdb34 kind:rodata align:4
+    .rodata.portraitSelectors start:0x020cdb34 end:0x020cdb4c kind:rodata align:4
+    .rodata.portraitGap1 start:0x020cdb4c end:0x020cef80 kind:rodata align:4
+    .rodata.yoshiPlainCounts start:0x020cef80 end:0x020cefd0 kind:rodata align:4
+    .rodata.portraitGap2 start:0x020cefd0 end:0x020cf700 kind:rodata align:4
+    .rodata.marioFrontCounts start:0x020cf700 end:0x020cf778 kind:rodata align:4
+    .rodata.portraitGap3 start:0x020cf778 end:0x020cf8ec kind:rodata align:4
+    .rodata.yoshiVariantCounts start:0x020cf8ec end:0x020cf9ec kind:rodata align:4
+    .rodata.portraitGap4 start:0x020cf9ec end:0x020cfa70 kind:rodata align:4
+    .rodata.marioSideCounts start:0x020cfa70 end:0x020cfaf8 kind:rodata align:4
+    .rodata.portraitGap5 start:0x020cfaf8 end:0x020cfb84 kind:rodata align:4
+    .rodata.luigiCounts start:0x020cfb84 end:0x020cfc18 kind:rodata align:4
+    .rodata.portraitGapTail start:0x020cfc18 end:0x020d7db8 kind:rodata align:4
     .ctor       start:0x020d7db8 end:0x020d7db8 kind:rodata align:4
     .data       start:0x020d7dc0 end:0x02103260 kind:data align:32
     .data.dsmtMeta0 start:0x02103260 end:0x02103290 kind:data align:4
@@ -814,8 +826,13 @@ src/unnamed/ov007/func_ov007_020bbd24.cpp:
 src/unnamed/ov007/func_ov007_020bbe60.c:
     complete
     .text start:0x020bbe60 end:0x020bbf98
-    .rodata start:0x020cdb34 end:0x020cdb4c
+    .rodata.portraitSelectors start:0x020cdb34 end:0x020cdb4c
     .data start:0x020d7e68 end:0x020d7ec8
+    .rodata.yoshiPlainCounts start:0x020cef80 end:0x020cefd0
+    .rodata.marioFrontCounts start:0x020cf700 end:0x020cf778
+    .rodata.yoshiVariantCounts start:0x020cf8ec end:0x020cf9ec
+    .rodata.marioSideCounts start:0x020cfa70 end:0x020cfaf8
+    .rodata.luigiCounts start:0x020cfb84 end:0x020cfc18
 
 src/unnamed/ov007/func_ov007_020bbf98.c:
     complete
