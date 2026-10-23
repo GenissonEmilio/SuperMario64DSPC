@@ -55,8 +55,8 @@
   "shadow_decls": {
     "local_body_no_include": 215,
     "local_body_no_include_cpp": 26,
-    "local_struct_body": 693,
-    "local_struct_body_cpp": 379,
+    "local_struct_body": 691,
+    "local_struct_body_cpp": 377,
     "pad_layout": 120
   },
   "totals": {
