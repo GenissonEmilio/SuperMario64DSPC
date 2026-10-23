@@ -1,3 +1,8 @@
+/* local extern: this TU owns compiler-numbered local labels that its
+   manifest records (defined_symbol_renames). Deleting a named-parameter
+   extern renumbers them, and this manifest cannot be remapped safely, so
+   the scalar extern stays and only the symbol name changed. See
+   notes/mwccarm-codegen.md 6az. */
 //cpp
 /**
  * daJgm_c -- Lakitu (`jgm`, JUGEM 265), ov077.
@@ -176,6 +181,7 @@ extern void MulMat4x3Mat4x3(void *a, void *b, void *out);
 extern void Vec3_LslInPlace(void *v, int sh);
 extern void Vec3_Asr(void *d, void *s, int sh);
 
+extern int _ZN8dActor_c22IsTooFarAwayFromPlayerEi(dActor_c *actor, int distance);
 extern void _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(
     TextureSequence *seq, void *file, int flags, int speed, unsigned int startFrame);
 extern int _ZN10dCcAcPos_c4InitEP8dActor_cRK7Vector35Fix12IiES6_jj(
@@ -277,7 +283,7 @@ s32 daJgm_c::InitResources()
 s32 daJgm_c::Behavior()
 {
     int v = param1;
-    if (IsTooFarAwayFromPlayer(v ? 0x1068000 : 0x7d0000))
+    if (_ZN8dActor_c22IsTooFarAwayFromPlayerEi(this, v ? 0x1068000 : 0x7d0000))
         return 1;
     UpdateState();
     UpdateModels();

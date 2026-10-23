@@ -1,3 +1,8 @@
+/* local extern: this TU owns compiler-numbered local labels that its
+   manifest records (defined_symbol_renames). Deleting a named-parameter
+   extern renumbers them, and this manifest cannot be remapped safely, so
+   the scalar extern stays and only the symbol name changed. See
+   notes/mwccarm-codegen.md 6az. */
 //cpp
 /* daObjMarioCap_c -- the lost Mario cap, ov002 (overlay_actors CAP(269);
  * RTTI ov002:0x021095ac names 15daObjMarioCap_c; profile
@@ -258,6 +263,8 @@ void  _ZN9dBgCh_GndD1Ev(dBgCh_Gnd *ray);
 
 /* SetRanges carries Fix12<int> by value; dActor_c.h deliberately omits it
    (notes/mwccarm-codegen.md 6az). A call is unaffected. */
+void _ZN8dActor_c9SetRangesEiiii(void *self, int offsetY, int radius, int clipDistance,
+                                 int farDistance);
 void  _ZN8dActor_c19DropShadowRadHeightER17dExtShadowModel_cR9Matrix4x35Fix12IiES5_j(
           void *self, void *shadow, void *matrix, int radius, int depth, int opacity);
 short _ZN8dActor_c12ReflectAngleE5Fix12IiES1_s(void *self, int nx, int nz, short ang);
@@ -830,7 +837,7 @@ int daObjMarioCap_c::Wait() {
         return 1;
     }
     if (mCarryMatrix == 0) {
-        SetRanges(0x32000, 0x32000, kClipFar, kClipFar);
+        _ZN8dActor_c9SetRangesEiiii(this, 0x32000, 0x32000, kClipFar, kClipFar);
     }
     CheckTouch();
     if (data_02092138 > mPosY) {
@@ -928,7 +935,7 @@ int daObjMarioCap_c::Fall() {
     if (mWithMeshClsn.IsOnGround()) {
       mHorzSpeed = 0;
       CheckTouch();
-      SetRanges(0x32000, 0x32000, kClipFar, kClipFar);
+      _ZN8dActor_c9SetRangesEiiii(this, 0x32000, 0x32000, kClipFar, kClipFar);
     }
   }
   if (data_02092138 > mPosY) {

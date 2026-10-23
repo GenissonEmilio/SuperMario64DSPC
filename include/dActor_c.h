@@ -244,8 +244,8 @@ struct dActor_c : dBase_c {
        2026-10-23, the honest parameter is the scalar Fix12i and both reproduce
        as real methods (0x02010e08/0x24 and 0x0200f70c/0x54).
        notes/mwccarm-codegen.md 6az. */
-    void SetRanges(Fix12i clipOffsetY, Fix12i clipRadius, Fix12i clipDistance, Fix12i farDistance);
-    int IsTooFarAwayFromPlayer(Fix12i threshold);
+    void SetRanges(Fix12i, Fix12i, Fix12i, Fix12i);
+    int IsTooFarAwayFromPlayer(Fix12i);
 
     bool IsPlayerInRange(s32 maxDist);
     bool IsPlayerInRange(const Vector3 &pos, s32 maxDist);

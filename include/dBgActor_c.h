@@ -66,8 +66,8 @@ struct dBgActor_c : dActor_c {
        _ZN10dBgActor_c13IsClsnInRangeEii and
        _ZN10dBgActor_c21IsClsnInRangeOnScreenEii, reproducing ov002
        0x020ee870/0xc4 and 0x020ee934/0x11c. notes/mwccarm-codegen.md 6az. */
-    int IsClsnInRange(Fix12i radius, Fix12i yOffset);
-    int IsClsnInRangeOnScreen(Fix12i radius, Fix12i yOffset);
+    int IsClsnInRange(Fix12i, Fix12i);
+    int IsClsnInRangeOnScreen(Fix12i, Fix12i);
 
     /* MEASURED, AND STILL TRUE: the by-value Fix12<int> here is confirmed by
        the body at ov002 0x020ee674, not inferred from the mangled name, so

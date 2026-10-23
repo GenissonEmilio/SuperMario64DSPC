@@ -234,6 +234,64 @@ Three things this batch adds to the recipe:
 Also worth knowing: `tools/name_roundtrip.py --symbol X` prints a SUMMARY, so
 the word MISMATCH appears in its output even when the count is 0. Read the
 `ROUND-TRIPS n 100.0%` line, not a grep for the word.
+### THE COMPILER'S NUMBERED LOCAL LABELS COUNT *NAMED* PARAMETERS (2026-10-23)
+
+AGENTS.md says a FILE RENAME moves compiler-numbered local symbols
+(`Bundle$902d_a_mky_cpp`, `@NNN` .bss/.data labels, `__sinit_<file>`). It is
+broader than that, and the mechanism is specific:
+
+**The counter advances per NAMED parameter in a declaration the TU has seen
+before the local class or label.** Two consequences, both measured:
+
+- **Adding a declaration to a SHARED HEADER renumbers labels in every
+  consumer.** Declaring `dActor_c::SetRanges` (four `Fix12i`) and
+  `dActor_c::IsTooFarAwayFromPlayer` (one) in `include/dActor_c.h` moved
+  `d_a_mky.cpp`'s `Bundle$976` to `$981` -- a file the branch never edited --
+  and shifted the `@NNN` labels of every other consumer by the same five. 227
+  TU manifests record such labels; the ROM build refuses each with
+  `isolate: defined symbol rename refused: defined rename source @N has 0 symbols`.
+- **DROPPING THE PARAMETER NAMES COSTS NOTHING.** Declaring the same methods as
+  `void SetRanges(Fix12i, Fix12i, Fix12i, Fix12i);` -- types only, no names --
+  leaves every counter where it was. `d_a_mky.cpp` is back to `Bundle$976` and
+  `ov002/da1up_c` reports no EXTRA labels. **This is the lever**: a header
+  declaration added for a rename should omit its parameter names, and then the
+  227-TU blast radius does not exist. Put the names on the definition, where
+  they document the code and cost nothing.
+
+The second, smaller cause is unavoidable and local: **deleting a local `extern`
+that had named parameters frees numbers in that TU**, so a TU whose own source
+the branch edited still renumbers. That set is bounded by the files actually
+edited. 68 of those manifests were remapped ascending-to-ascending against the
+labels the object now emits, each re-verified to `EXTRA == []`.
+
+**Ten could NOT be remapped, and the right move was to remove the cause.** Four
+report `rename destination @N already exists in object` -- the block shifted
+onto itself, so a per-label remap collides -- and six report only the FIRST
+stale source, because isolate stops there, so one run never yields a complete
+list. There is no supported regenerator: `defined_symbol_renames` is written by
+hand against private fixtures (`tools/test_canonical_duplicates.py` reads a
+`proof.json` that is not in the tree), and the sets encode measured boundary
+evidence. Guessing a map silently corrupts that evidence.
+
+So for those ten TUs -- one source each: `d_a_obj_mario_cap.cpp`,
+`d_a_obj_tatefuda.cpp`, `d_a_moray.cpp`, `d_a_pg_dfdr.cpp`, `d_a_nknk.cpp`,
+`d_a_jgm.cpp`, `d_a_pic_gate_methods.cpp`, `d_a_snowman.cpp`,
+`d_a_linelift2.cpp`, `d_a_btfly.cpp` -- the source keeps its scalar `extern`
+and only the SYMBOL NAME changed. The named parameters stay, so the labels do
+not move and the manifest stays correct untouched. This is the same
+rename-only shape `d_mg_trmpln2_mario.cpp` and `unit020bfec0.cpp` already use,
+and it is the cheap answer whenever a TU owns recorded labels: **a TU that
+records `defined_symbol_renames` should keep its named-parameter externs.**
+
+**How to check it.** `tubuild verify <tu>`'s verdict is NOT the signal --
+`ov002/da1up_c` reports `38/38 MATCH ... TEXT-VERIFIED` with every label wrong,
+because the verdict covers function bytes. The signal is the `EXTRA .data/.bss
+@NNN` lines in the same output: once a rename source matches what the object
+emits, isolate renames it and it stops being EXTRA. **A TU is clean when EXTRA
+is empty.** Sweep every manifest carrying an `@NNN` rename source, not just the
+TUs whose sources changed -- the header case hits files the branch never
+touched.
+
 ### BATCH 4: the range-check family, and the wall's own flagship example (2026-10-23)
 
 | old symbol | new symbol | addr/size |

@@ -1,3 +1,8 @@
+/* local extern: this TU owns compiler-numbered local labels that its
+   manifest records (defined_symbol_renames). Deleting a named-parameter
+   extern renumbers them, and this manifest cannot be remapped safely, so
+   the scalar extern stays and only the symbol name changed. See
+   notes/mwccarm-codegen.md 6az. */
 //cpp
 /* Koopa Troopa, separable from its shell (ov062/daNknk_c). Both the
  * normal and the small registry profiles construct this same class.
@@ -110,6 +115,7 @@ extern int RandomIntInternal(int *seed);
 extern int data_0209e650;
 extern short Vec3_HorzAngle(const Vector3* a, const Vector3* b);
 extern s16 _ZN8dActor_c12ReflectAngleE5Fix12IiES1_s(void *self, int a, int b, s16 ang);
+extern int _ZN8dActor_c22IsTooFarAwayFromPlayerEi(void *self, int d);
 
 extern SharedFilePtr* data_ov062_0211ced8[2];
 extern SharedFilePtr* data_ov062_0211cee0[2];
@@ -288,7 +294,7 @@ int daNknk_c::Behavior()
     }
 
     if (mDeathState == 0) {
-        if (IsTooFarAwayFromPlayer(0x5dc000) != 0)
+        if (_ZN8dActor_c22IsTooFarAwayFromPlayerEi(this, 0x5dc000) != 0)
             return 1;
 
         {

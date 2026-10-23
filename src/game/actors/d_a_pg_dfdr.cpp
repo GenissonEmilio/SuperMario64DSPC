@@ -1,3 +1,8 @@
+/* local extern: this TU owns compiler-numbered local labels that its
+   manifest records (defined_symbol_renames). Deleting a named-parameter
+   extern renumbers them, and this manifest cannot be remapped safely, so
+   the scalar extern stays and only the symbol name changed. See
+   notes/mwccarm-codegen.md 6az. */
 //cpp
 /* daPgDfdr_c -- Penguin Defender (PENGUIN_DEFENDER 258), ov027.
  *
@@ -80,6 +85,7 @@ void _ZN15TextureSequence7SetFileER8BTP_Filei5Fix12IiEj(void *self, void *file, 
 void _ZN10dBgW_KcMbg7SetFileEP8KCL_FileRK9Matrix4x35Fix12IiEsR10CLPS_Block(void *self, void *kcl, void *mat, int scale, short angY, void *clps);
 void _ZN7dCcAc_c4InitEP8dActor_c5Fix12IiES3_jj(void *self, void *actor, int radius, int height,
                                                unsigned flags, unsigned vuln);
+void _ZN10dBgActor_c21IsClsnInRangeOnScreenEii(void *self, int x, int z);
 
 void func_ov027_02111994(daPgDfdr_c *self);
 void func_ov027_02111b2c(daPgDfdr_c *self);
@@ -202,7 +208,7 @@ s32 daPgDfdr_c::InitResources()
 // @symbol _ZN10daPgDfdr_c8BehaviorEv
 s32 daPgDfdr_c::Behavior()
 {
-    IsClsnInRangeOnScreen(0, 0);
+    _ZN10dBgActor_c21IsClsnInRangeOnScreenEii(this, 0, 0);
     func_ov027_02111cfc();
     if (ClosestPlayer()->IsInsideOfCannon()) {
         mFlags &= ~kSkipRender;

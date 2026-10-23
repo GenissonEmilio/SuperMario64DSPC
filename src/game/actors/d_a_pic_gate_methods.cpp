@@ -1,3 +1,8 @@
+/* local extern: this TU owns compiler-numbered local labels that its
+   manifest records (defined_symbol_renames). Deleting a named-parameter
+   extern renumbers them, and this manifest cannot be remapped safely, so
+   the scalar extern stays and only the symbol name changed. See
+   notes/mwccarm-codegen.md 6az. */
 //cpp
 /* ov080/daPicGate_c -- picture gate (PICTURE_GATE 307).
  *
@@ -23,7 +28,7 @@
  * source order. The destructor pair and g_profile_PICTURE_GATE are outside
  * this run. The abutting registry factory daPicGate_c_classInit
  * (0x02126f8c) is written last, built by hand (see the note above it).
- * SetRanges is a real dActor_c method now (dActor_c.h declares it).
+ * SetRanges is the int adapter; dActor_c.h does not declare the member.
  *
  * deslop leftovers:
  * - func_ov080_021264ec and func_ov080_021269b8: mWavePhase += phaseStep
@@ -108,6 +113,7 @@ extern int data_0209caa0[];
 extern void MulMat4x3Mat4x3(const int *a, const int *b, int *out);
 extern Matrix4x3 data_0209b3ec;
 extern unsigned short DecIfAbove0_Short(unsigned short *p);
+extern void _ZN8dActor_c9SetRangesEiiii(void *self, int offsetY, int radius, int clip, int far);
 extern u8 data_ov080_02127714[];
 extern void func_020553a4(void *mtx);
 extern void *data_ov080_02127834;
@@ -135,6 +141,7 @@ namespace Memory { void *operator_new2(unsigned int size); }
 #define BuildGateMatrix func_ov080_0212555c
 #define LoadTexture func_ov080_02125630
 #define LoadMtx43 func_020553a4
+#define SetRanges _ZN8dActor_c9SetRangesEiiii
 #define kSave data_0209caa0
 #define kStates data_ov080_02128628
 #define kDefaultWave data_ov080_02127834
@@ -443,7 +450,7 @@ s32 daPicGate_c::InitResources() {
     {
         int width = (int)((unsigned char)(param1 & 0xf) + 1) * kCell;
         int height = (int)((unsigned char)((param1 >> 4) & 0xf) + 1) * kCell;
-        SetRanges(height / 2, width / 2 + kRangePad, kFar, kFar);
+        SetRanges(this, height / 2, width / 2 + kRangePad, kFar, kFar);
     }
     if ((unsigned char)((param1 >> 8) & 0x1f) == kPicUnclipped) {
         if ((unsigned char)((param1 >> 0xd) & 3) == 1)
