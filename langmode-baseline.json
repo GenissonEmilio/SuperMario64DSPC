@@ -3,8 +3,8 @@
   "codegen_hacks": {
     "cv_launder": 3,
     "cv_launder_sites": 6,
-    "extern_vtable": 28,
-    "extern_vtable_classes": 47,
+    "extern_vtable": 26,
+    "extern_vtable_classes": 44,
     "inline_asm": 5,
     "launder_or_forced": 68,
     "launder_sites": 215
@@ -16,12 +16,12 @@
     "by_kind": {
       "C1": {
         "draft": 0,
-        "migrated": 63,
+        "migrated": 69,
         "unmigrated": 2
       },
       "C2": {
         "draft": 0,
-        "migrated": 23,
+        "migrated": 25,
         "unmigrated": 0
       },
       "D0": {
@@ -31,7 +31,7 @@
       },
       "D1": {
         "draft": 0,
-        "migrated": 412,
+        "migrated": 418,
         "unmigrated": 2
       },
       "D2": {
@@ -41,14 +41,14 @@
       },
       "method": {
         "draft": 0,
-        "migrated": 5591,
+        "migrated": 5593,
         "unmigrated": 31
       }
     },
     "cpp_still_handspelled": 37,
     "mangled_c": 0,
-    "mangled_cpp": 6538,
-    "mangled_total": 6538,
+    "mangled_cpp": 6554,
+    "mangled_total": 6554,
     "nonmatching_drafts": 0,
     "unmigrated_total": 37
   },
