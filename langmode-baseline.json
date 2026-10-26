@@ -10,7 +10,7 @@
     "launder_sites": 215
   },
   "exclusions": {
-    "by_value_class_param": 13
+    "by_value_class_param": 12
   },
   "language_mode": {
     "by_kind": {
@@ -41,16 +41,16 @@
       },
       "method": {
         "draft": 0,
-        "migrated": 5607,
-        "unmigrated": 17
+        "migrated": 5609,
+        "unmigrated": 15
       }
     },
-    "cpp_still_handspelled": 20,
+    "cpp_still_handspelled": 18,
     "mangled_c": 0,
     "mangled_cpp": 6577,
     "mangled_total": 6577,
     "nonmatching_drafts": 0,
-    "unmigrated_total": 20
+    "unmigrated_total": 18
   },
   "shadow_decls": {
     "local_body_no_include": 210,
