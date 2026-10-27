@@ -6,8 +6,8 @@
     "extern_vtable": 16,
     "extern_vtable_classes": 31,
     "inline_asm": 5,
-    "launder_or_forced": 68,
-    "launder_sites": 215
+    "launder_or_forced": 67,
+    "launder_sites": 214
   },
   "exclusions": {
     "by_value_class_param": 2
@@ -55,9 +55,9 @@
   "shadow_decls": {
     "local_body_no_include": 186,
     "local_body_no_include_cpp": 24,
-    "local_struct_body": 689,
-    "local_struct_body_cpp": 442,
-    "pad_layout": 115
+    "local_struct_body": 688,
+    "local_struct_body_cpp": 441,
+    "pad_layout": 114
   },
   "totals": {
     "c_extension": 1377,
