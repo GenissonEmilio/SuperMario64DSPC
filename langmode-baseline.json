@@ -16,7 +16,7 @@
     "by_kind": {
       "C1": {
         "draft": 0,
-        "migrated": 82,
+        "migrated": 84,
         "unmigrated": 1
       },
       "C2": {
@@ -31,7 +31,7 @@
       },
       "D1": {
         "draft": 0,
-        "migrated": 431,
+        "migrated": 433,
         "unmigrated": 0
       },
       "D2": {
@@ -47,8 +47,8 @@
     },
     "cpp_still_handspelled": 7,
     "mangled_c": 0,
-    "mangled_cpp": 6792,
-    "mangled_total": 6792,
+    "mangled_cpp": 6796,
+    "mangled_total": 6796,
     "nonmatching_drafts": 0,
     "unmigrated_total": 7
   },
@@ -60,8 +60,8 @@
     "pad_layout": 111
   },
   "totals": {
-    "c_extension": 1359,
+    "c_extension": 1354,
     "cpp_extension": 914,
-    "src_files": 2273
+    "src_files": 2268
   }
 }
