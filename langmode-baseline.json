@@ -55,13 +55,13 @@
   "shadow_decls": {
     "local_body_no_include": 182,
     "local_body_no_include_cpp": 24,
-    "local_struct_body": 669,
-    "local_struct_body_cpp": 426,
+    "local_struct_body": 667,
+    "local_struct_body_cpp": 425,
     "pad_layout": 111
   },
   "totals": {
-    "c_extension": 1325,
-    "cpp_extension": 857,
-    "src_files": 2182
+    "c_extension": 1322,
+    "cpp_extension": 853,
+    "src_files": 2175
   }
 }
